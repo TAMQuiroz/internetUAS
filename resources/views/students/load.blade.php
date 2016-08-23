@@ -1,0 +1,89 @@
+@extends('app')
+@section('content')
+
+<div class="page-title">
+  <div class="title_left">
+    <h3> {{ $timeTable->Codigo }} - {{ $timeTable->courseXCicle->course->Nombre }} ({{ $timeTable->courseXCicle->course->Codigo }})</h3>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			
+			 <div class="x_title">
+	              <h2>{{ $title }}</h2>
+	              <div class="clearfix"></div>
+	          </div>
+			<div class="col-md-3 col-sm-3 col-xs-12" style="">
+
+			<!--
+				<a href="{{ URL::to('downloadExcel/xls') }}"><button class="btn btn-success">Download Excel xls</button></a>
+				<a href="{{ URL::to('downloadExcel/xlsx') }}"><button class="btn btn-success">Download Excel xlsx</button></a>
+				<a href="{{ URL::to('downloadExcel/csv') }}"><button class="btn btn-success">Download CSV</button></a>
+			-->
+				<form style="border: 4px  #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ route('upload.students') }}" class="form-horizontal" method="post" enctype="multipart/form-data" id="stuFileForm">
+					<input type="file" name="import_file" id="stuFile"/>
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" name="idTimeTable" value="{{ $timeTable->IdHorario }}">
+					<br>
+					<button class="btn btn-primary">Cargar alumnos</button>
+
+				</form>
+				<span id="errMsg" style="color:red">No ha seleccionado ningún archivo.</span>
+
+			</div>
+			</div>
+	</div>
+</div>
+			<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			@if ($studentsExist)
+			<div class=" sidebar-widget col-md-8 col-sm-8 col-xs-12" style="">
+				<div class="bs-docs-section " style="border: 4px  #a1a1a1;margin-top: 9px;padding: 10px;">
+					<ul class="bs-glyphicons-list">
+						<li class="delete-students-list" data-toggle="modal" data-target=".bs-example-modal-sm"
+							style="width:85px; border:1px solid #abd9ea; border-radius:5px; text-align:center; cursor:pointer" 
+   							onMouseOver="this.style.color='#abd9ea'; this.style.background='#E74C3C'"
+   							onMouseOut="this.style.color='#73879C'; this.style.background='#f9f9f9'">
+   							<i class="fa fa-remove" style="position:relative; float:right; font-size:22px; margin:-8px -8px 0 0"></i>
+							<span class="glyphicon glyphicon-copy" aria-hidden="true" style="font-size:51px"></span>
+							<span class="glyphicon-class">Alumnos del horario</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			@endif
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	//Code for showing error messages
+	@if( @Session::has('error') )
+	   toastr.error('{{ @Session::get('error') }}');
+	@endif
+
+	//validate upload file
+	$("#errMsg").hide();
+	$('#stuFileForm').submit(function(){
+	    valid = true;
+	    $("#errMsg").hide();
+	    if($("#stuFile").val() == ''){
+		    $("#errMsg").show();
+	    	valid =  false;
+    	}
+    	return valid
+	});
+
+	//delete students list
+	$('.delete-students-list').on("click", function(event){
+		var classId = $('input[name=idTimeTable]').val();
+		console.log(classId);
+		$('#modal-button').attr("href", baseUrl + "/myCourses/students/delete?timeTableId=" + classId);
+	});
+
+</script>
+@include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar la lista de alumnos? (Solo podrá hacerlo si los alumnos aún no han recibido calificaciones).', 'action' => '#', 'button' => 'Delete'])
+@endsection

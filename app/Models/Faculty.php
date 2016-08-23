@@ -1,0 +1,31 @@
+<?php
+
+namespace Intranet\Models;
+
+use Intranet\Models\Cicle;
+use Intranet\Models\AcademicUnit;
+use Illuminate\Database\Eloquent\Model;
+use Intranet\Models\Traits\LastUpdatedTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Faculty extends Model {
+    use SoftDeletes;
+    use LastUpdatedTrait;
+
+    protected $table = 'Especialidad';
+    protected $fillable = ['Codigo','Descripcion','Nombre', 'IdDocente'];
+    protected $primaryKey = "IdEspecialidad";
+
+    public function configurations(){
+        return $this->hasMany('Intranet\Models\ConfFaculty', 'IdConfEspecialidad');
+    }
+
+    public function coordinator()
+    {
+        return $this->hasOne('Intranet\Models\Teacher', 'IdDocente');
+    }
+
+    public function teacher(){
+        return $this->belongsTo('Intranet\Models\Teacher', 'IdDocente');
+    }
+}

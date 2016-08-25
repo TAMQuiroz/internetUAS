@@ -27,7 +27,7 @@ class PasswordService
     public function sendSetPasswordLink(User $user, $mail)
     {
         $token = $this->createToken($user);
-        
+
         $this->sendMailWithToken($mail, $user->Usuario, $token);
     }
 
@@ -35,10 +35,17 @@ class PasswordService
     {
         $password_link = url("/password_reset/{$token}");
 
-        Mail::send('emails.password_reset', compact('password_link', 'username'), function($m) use($mail) {
-            $m->subject('Cuenta Registrada');
-            $m->to($mail);
-        });
+        try
+        {
+            Mail::send('emails.password_reset', compact('password_link', 'username'), function($m) use($mail) {
+                $m->subject('Cuenta Registrada');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
     }
 
     /**

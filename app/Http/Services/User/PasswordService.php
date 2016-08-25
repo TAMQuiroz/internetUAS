@@ -27,7 +27,7 @@ class PasswordService
     public function sendSetPasswordLink(User $user, $mail)
     {
         $token = $this->createToken($user);
-
+        
         $this->sendMailWithToken($mail, $user->Usuario, $token);
     }
 

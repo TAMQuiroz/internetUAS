@@ -498,3 +498,7 @@ $api->version('v1', function ($api) {
         });
     });
 });
+
+
+
+//NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO

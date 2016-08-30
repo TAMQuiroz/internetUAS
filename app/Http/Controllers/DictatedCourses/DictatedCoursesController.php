@@ -52,6 +52,10 @@ class DictatedCoursesController extends BaseController {
 	}
 
 	public function update(Request $request) {
+		if(sizeof($request['check']) == 1){
+			return redirect()->back()->with('warning','Debe haber al menos un curso dictado en el ciclo');
+		}
+
 		try {
 			$code = $this->dictatedCoursesService->update($request->all());
 		} catch(\Exception $e) {

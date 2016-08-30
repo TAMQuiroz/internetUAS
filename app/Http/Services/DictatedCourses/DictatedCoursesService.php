@@ -107,16 +107,16 @@ class DictatedCoursesService {
 			for ($i=1; $i<count($_REQUEST['check']); $i++)
 			{	
 
-			$cursoCiclo = DictatedCourses::where('IdCurso',$_REQUEST['check'][$i])
-										 ->where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();
-			
-			if($cursoCiclo == null){
+				$cursoCiclo = DictatedCourses::where('IdCurso',$_REQUEST['check'][$i])
+											 ->where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();
+				
+				if($cursoCiclo == null){
 
-				$DictatedCourses =  DictatedCourses::create([
-					'IdCurso' => $_REQUEST['check'][$i],
-					'IdCicloAcademico' => Session::get('academic-cycle')->IdCicloAcademico
-				]);
-			}
+					$DictatedCourses =  DictatedCourses::create([
+						'IdCurso' => $_REQUEST['check'][$i],
+						'IdCicloAcademico' => Session::get('academic-cycle')->IdCicloAcademico
+					]);
+				}
 				
 			}
 			return 1;

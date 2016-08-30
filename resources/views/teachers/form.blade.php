@@ -82,7 +82,7 @@
 				<div class="form-group">
 					<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción </label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<textarea class="resizable_textarea form-control" id="teacherdescription" name="teacherdescription" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
+						<textarea class="resizable_textarea form-control" id="teacherdescription" maxlength="200" name="teacherdescription" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
 					</div>
 				</div> 
 				

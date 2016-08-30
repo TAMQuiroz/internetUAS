@@ -27,7 +27,7 @@
 						<div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción <span class="error">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<textarea class="form-control col-md-7 col-xs-12" id="description" name="description" rows="4" required="true" style="resize: vertical;">{{$suggestion->Descripcion}}</textarea>
+								<textarea class="form-control col-md-7 col-xs-12" id="description" name="description" rows="4" required="true" maxlength="100" style="resize: vertical;">{{$suggestion->Descripcion}}</textarea>
 							</div>
 						</div>
 						<div class="separator"></div>

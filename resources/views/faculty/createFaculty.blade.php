@@ -30,9 +30,9 @@
 				</div>
 			
 				<div class="form-group">
-					<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción </label>
+					<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción <span class="error">*</span></label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<textarea id="description" name="description"class="resizable_textarea form-control" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 87px;"></textarea>
+						<textarea id="description" name="description" class="resizable_textarea form-control" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 87px;" required="true"></textarea>
 					</div>
 				</div>
 

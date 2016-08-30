@@ -102,14 +102,14 @@ jQuery(function(){
     },
     messages: {
       code: {
-        required: "Debe ingresar un titulo",
-        maxlength: "El título no debe tener más de 10 caracteres",
+        required: "Debe ingresar un código",
+        maxlength: "El código no debe tener más de 10 caracteres",
         checkExists: "El código ingresado ya existe",
         codes: "Ingrese un código coherente"
       },
       theme: {
-        required: "Debe ingresar una descripción",
-        maxlength: "La descripción no debe tener más de 50 caracteres",
+        required: "Debe ingresar un tema relacionado",
+        maxlength: "El tema relacionado no debe tener más de 50 caracteres",
         lettersAndNumber: "Ingrese un tema relacionado coherente"
       },
       description: {
@@ -139,13 +139,13 @@ jQuery(function(){
     messages: {
       code: {
         required: "Debe ingresar un Código",
-        maxlength: "El Título no debe tener más de 10 caracteres",
+        maxlength: "El Código no debe tener más de 10 caracteres",
         checkIdenticadorEdit: "El código ingresado ya existe",
         codes: "Ingrese un código coherente"
       },
       theme: {
-        required: "Debe ingresar una descripción",
-        maxlength: "La Descripción no debe tener más de 50 caracteres",
+        required: "Debe ingresar un tema relacionado",
+        maxlength: "El tema relacionado no debe tener más de 50 caracteres",
         lettersAndNumber: "Ingrese un tema relacionado coherente"
       },
       description: {

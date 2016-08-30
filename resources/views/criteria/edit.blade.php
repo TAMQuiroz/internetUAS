@@ -34,7 +34,7 @@
                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Criterio</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <input id="criterioncode" class="form-control col-md-7 col-xs-12" type="hidden" name="criterioncode" value="{{ $criterion->IdCriterio }}">
-                  <input id="criterionname" class="form-control col-md-7 col-xs-12" type="text" name="criterionname" value="{{ $criterion->Nombre }}">
+                  <input id="criterionname" class="form-control col-md-7 col-xs-12" type="text" name="criterionname" maxlength="50" value="{{ $criterion->Nombre }}">
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@
                       <td class="levelValue">@if($lvl!=null){{ $lvl->Valor }}@endif</td>
                       <td>
                         <input hidden id="levelCodePast" name="levelCodePast[]" value="@if($lvl!=null){{ $lvl->IdNivelCriterio }}@endif"/>
-                        <input class="form-control col-md-7 col-xs-12" type="text" id="levelDescPast" name="levelDescPast[]" value="@if($lvl!=null){{ $lvl->Descripcion }}@endif"/>
+                        <input class="form-control col-md-7 col-xs-12" type="text" id="levelDescPast" name="levelDescPast[]" maxlength="200" required value="@if($lvl!=null){{ $lvl->Descripcion }}@endif"/>
                       </td>
                     </tr>
                   @endforeach

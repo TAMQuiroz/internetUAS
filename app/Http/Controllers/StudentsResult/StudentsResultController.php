@@ -160,6 +160,10 @@ class StudentsResultController extends BaseController {
     }
 
     public function updateContributions(Request $request) {
+        if(!isset($request['selectorContVal'])){
+            return redirect()->back()->with('warning','La matriz de aporte no puede estar vacia.');
+        }
+
         try {
             $this->coursesService->updateContributions($request->all());
         } catch (\Exception $e) {

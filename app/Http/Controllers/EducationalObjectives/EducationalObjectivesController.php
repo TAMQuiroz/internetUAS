@@ -49,10 +49,6 @@ class EducationalObjectivesController extends BaseController {
 
 	public function save(Request $request) {
 
-		if(!isset($request['stRstCheck'])){
-			return redirect()->back()->withInput()->with('warning','El objetivo educacional necesita al menos un identificador');
-		}
-
 		try {
 			$this->educationalObjetiveService->create($request->all());
 		} catch(\Exception $e) {

@@ -31,7 +31,9 @@
                               	<select name="cycleStart" id="cycleStart" class="form-control" required="true">
 									<option value="0">-- Seleccione --</option>
 									@foreach($semesters as $s)
-										<option {{ ($period->configuration->IdCicloInicio == $s->IdCicloAcademico)?'selected':'' }} numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
+										@if($s->deleted_at == null)
+											<option {{ ($period->configuration->IdCicloInicio == $s->IdCicloAcademico)?'selected':'' }} numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
+										@endif	
 									@endforeach
 								</select>
                             </div>
@@ -44,7 +46,9 @@
                               	<select name="cycleEnd" id="cycleEnd" class="form-control" required="true">
 									<option value="0">-- Seleccione --</option>
 									@foreach($semesters as $s)
-										<option {{ ($period->configuration->IdCicloFin == $s->IdCicloAcademico)?'selected':'' }} numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
+										@if($s->deleted_at == null)
+											<option {{ ($period->configuration->IdCicloFin == $s->IdCicloAcademico)?'selected':'' }} numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
+										@endif	
 									@endforeach
 								</select>
                             </div>

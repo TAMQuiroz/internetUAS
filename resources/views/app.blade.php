@@ -327,7 +327,7 @@
               </span>
               <span>&nbsp</span>
               <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
-              {{--<span class="label label-info hidden-xs hidden-sm">@if(Session::get('academic-cycle')!=null){{Session::get('academic-cycle')->academicCycle->Descripcion}}@endif</span>--}}
+              <span class="label label-info hidden-xs hidden-sm">@if(Session::get('academic-cycle')!=null){{Session::get('academic-cycle')->academicCycle->Descripcion}}@endif</span>
               @if(Session::has('academic-cycle'))
                 <span class="label label-danger col-10">
                   Días restantes para el fin de ciclo: {{ $diffForHumans }}

@@ -1,6 +1,7 @@
 <?php namespace Intranet\Http\Controllers\AcademicCycle;
 
 use View;
+use Intranet\Models\CoursexCycle;
 use Illuminate\Http\Request;
 use Intranet\Http\Services\AcademicCycle\AcademicCycleService;
 use Illuminate\Routing\Controller as BaseController;
@@ -39,8 +40,17 @@ class AcademicCycleController extends BaseController {
 	}
 
 	public function delete(Request $request) {
+
 		try{
-			$this->academicCycleService->delete($request);
+			$courses = CoursexCycle::where('IdCicloAcademico',$request['cycleId'])->count();
+
+			if($courses == 0){
+				$this->academicCycleService->delete($request);
+			}else{
+				return redirect()->back()->with('warning','El ciclo academico aun tiene cursos');			
+			}
+	
+			
 		} catch (\Exception $e) {
 			dd($e);
 		}

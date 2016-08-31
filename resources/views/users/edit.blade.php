@@ -51,7 +51,7 @@
                             <input type="text" id="validateCode" name="validateCode" hidden>
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Usuario <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" name="userusername" maxlength="30" required="required" onkeypress="return isNumberKey(event)" value="{{ $user->Usuario }}">
+                                <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" name="userusername" maxlength="30" required="required" onkeypress="return isNumberKey(event)" value="{{ $user->Usuario }}" disabled>
                             </div>
                         </div>
 

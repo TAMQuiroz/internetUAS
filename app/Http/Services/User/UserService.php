@@ -68,11 +68,12 @@ class UserService {
             $facultyCode = $request['facultyCode'];
         }
 
-        User::where('IdUsuario', $request['user-id'])
+        //because now we are not going to change the username, just the email
+        /*User::where('IdUsuario', $request['user-id'])
             ->update([
                 'Usuario' => $request['userusername'],
                 'IdPerfil' => $request['profilecode']
-            ]);
+            ]);*/
 
         Accreditor::where('IdAcreditador', $request['accreditor-id'])
             ->update([

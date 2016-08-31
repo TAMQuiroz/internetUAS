@@ -11,6 +11,4 @@ class AcademicCycle extends Model
     protected $table = 'CicloAcademico';
     protected $primaryKey = 'IdCicloAcademico';
     protected $fillable = ['Descripcion','Numero'];
-
-
 }

@@ -27,8 +27,8 @@ class AcademicCycleService {
 
 	public function delete($request) {	
 					
-		$academicCycle = AcademicCycle::find($request['cycleId']);
-		$academicCycle->delete();	
+		$academicCycle = AcademicCycle::where('IdCicloAcademico', $request['cycleId'])->first();
+		$academicCycle->delete();
 		
 	}
 

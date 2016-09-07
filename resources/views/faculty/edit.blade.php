@@ -11,7 +11,7 @@
               <div class="x_panel">
                 <div class="x_title">
                   <h2>Información de Especialidad</h2>
-                  
+                  {{ Form::button('Eliminar Especialidad',['class' => 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#modalDelete'])}}
                   <div class="clearfix"></div>
                 </div>
                 <form action="{{ route('update.faculty')}}" method="POST" id="formFacultyEdit" name="formFacultyEdit" novalidate="true" class="form-horizontal">
@@ -90,5 +90,6 @@
           </div>
         </div>
 <script src="{{ URL::asset('js/myvalidations/faculty.js')}}"></script>
+@include('modals.delete', ['message' => '¿Esta seguro que desea eliminar esta especialidad?', 'route' => route('delete.faculty', $fac->IdEspecialidad)])
 @include('modals.edit-modal', ['message' => '¿Desea guardar los cambios para esta especialidad?', 'action' => route('index.faculty'), 'button' => 'Save' ])
 @endsection

@@ -28,4 +28,8 @@ class Faculty extends Model {
     public function teacher(){
         return $this->belongsTo('Intranet\Models\Teacher', 'IdDocente');
     }
+
+    public function cycle(){
+        return $this->belongsTo('Intranet\Models\FacultyxCycle', 'IdEspecialidad');
+    }
 }

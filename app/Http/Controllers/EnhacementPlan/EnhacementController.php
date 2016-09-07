@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Intranet\Http\Services\ImprovementPlan\ImprovementPlanService;
-
+use Carbon\Carbon;
 use Intranet\Models\FileCertificate;
 use Intranet\Models\ActionPlan;
 use Intranet\Models\ImprovementPlan;
@@ -51,6 +51,14 @@ class EnhacementController extends BaseController {
     }
 
     public function save(Request $request) {
+
+        $then   = Carbon::createFromFormat('d/m/Y',$request['dateI']);
+        $now    = Carbon::now();
+
+        if($then < $now){
+            return redirect()->back()->with('warning','La fecha de inicio debe ser mayor a la fecha de hoy');
+        }
+
         try {
             $this->improvementPlanService->create($request->all());
         } catch(\Exception $e) {

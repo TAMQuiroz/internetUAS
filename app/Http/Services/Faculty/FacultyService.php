@@ -15,6 +15,7 @@ use Intranet\Models\Criterion;
 use Intranet\Models\CyclexResult;
 use Intranet\Models\PeriodxResult;
 use Intranet\Models\User;
+use Intranet\Models\FacultyxCycle;
 
 class FacultyService {
 
@@ -213,10 +214,19 @@ class FacultyService {
 		}
 	}
 
-	public function delete($request) {
-		$faculty = Faculty::where('IdEspecialidad', $request['facultyId'])->first();
+	public function delete($id) {
+
+		$faculty = Faculty::find($id);
+
+        $activeCycle = $faculty->cycle;
+        
+        if($activeCycle && $activeCycle->Vigente == 1){
+           return null;
+        }
+
 		$faculty->delete();
 
+		return 1;
 	}
 
 	public function find($id) {

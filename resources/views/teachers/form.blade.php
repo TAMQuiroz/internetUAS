@@ -20,7 +20,7 @@
 				<div class="form-group">
 					<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Código <span class="error">* </span></label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input class="form-control col-md-7 col-xs-12" type="text" name="teachercode" id="teachercode" required="true">
+						<input class="form-control col-md-7 col-xs-12" type="text" name="teachercode" id="teachercode" required="true" maxlength="8">
 					</div>
 				</div>
 				<!--

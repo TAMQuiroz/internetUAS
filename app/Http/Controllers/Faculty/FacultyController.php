@@ -114,13 +114,18 @@ class FacultyController extends BaseController
         return view('faculty.editCoordinator', $data);
     }
 
-    public function delete(Request $request) {
+    public function delete($id) {
+
         try{
-            $this->facultyService->delete($request);
+            $del = $this->facultyService->delete($id);
+
+            if($del == null){
+                return redirect()->back()->with('warning', 'No se puede eliminar la especialidad mientras se tengan ciclos activos');
+            }
         } catch (\Exception $e) {
             dd($e);
         }
-        return redirect()->route('index.faculty')->with('success', 'Se eliminó el horario con éxito');
+        return redirect()->route('index.faculty')->with('success', 'Se eliminó la especialidad con éxito');
     }
 
     public function view($id) {

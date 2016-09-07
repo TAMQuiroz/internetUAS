@@ -372,7 +372,7 @@ LOCK TABLES `CicloxCriterio` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `CicloxEspecialidad`
+-- Table structure for 
 --
 
 DROP TABLE IF EXISTS `CicloxEspecialidad`;

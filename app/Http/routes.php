@@ -171,7 +171,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/edit', ['as' => 'edit.faculty', 'uses' => 'Faculty\FacultyController@edit']);
         Route::get('/editCoordinator',['as'=>'editCoordinator.faculty','uses'=>'Faculty\FacultyController@editCoordinator']);
         Route::post('/updateCoordinator',['as'=>'updateCoordinator.faculty','uses'=>'Faculty\FacultyController@updateCoordinator']);
-        Route::get('/delete', ['as' => 'delete.faculty', 'uses' => 'Faculty\FacultyController@delete']);
+        Route::get('/delete/{id}', ['as' => 'delete.faculty', 'uses' => 'Faculty\FacultyController@delete']);
         Route::post('/update', ['as' => 'update.faculty', 'uses' => 'Faculty\FacultyController@update']);
         Route::get('/view/{id}', ['as' => 'view.faculty', 'uses' => 'Faculty\FacultyController@view']);
 

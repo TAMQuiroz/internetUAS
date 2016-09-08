@@ -81,9 +81,9 @@ class UserController extends BaseController {
             $this->userService->updateUser($request->all());
             $request['userCode'] = $request['user-id'];
             $user= $this->userService->getUser($request);
-            if(Hash::check($request['password'], $user->Contrasena)){
+            /*if(Hash::check($request['password'], $user->Contrasena)){
                 $this->passwordService->sendSetPasswordLink($user, $request->input('useremail'));
-            }
+            }*/
         } catch (\Exception $e) {
             dd($e);
         }
@@ -139,4 +139,18 @@ class UserController extends BaseController {
         }
         return json_encode($data);
     }
+
+    public function forgetPassword(Request $request){//manda el correo de reseteo de password
+        $data['userCode']=$request['user'];
+        $acc=$this->userService->getAccreditor($data);
+        $user=$this->userService->getUser($data);
+        $this->passwordService->sendSetPasswordLink($user, $acc['Correo']);
+        $name='userCode=' . $data['userCode'];
+
+        return redirect()->route('edit.users', $name)->with('success', 'El password ha sido reseteado');
+
+
+    }
+
+    
 }

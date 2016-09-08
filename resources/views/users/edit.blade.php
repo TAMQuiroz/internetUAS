@@ -92,7 +92,7 @@
 
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nueva Clave</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="password" class="form-control" placeholder="Contraseña" id="password"  name="password" maxlength="32" />
+                                <a href="{{ route('forgetPassword.users', ['user' => $user->IdUsuario]) }}" class="btn btn-default pull-left"> Resetear contraseña</a>
                             </div>
 
 

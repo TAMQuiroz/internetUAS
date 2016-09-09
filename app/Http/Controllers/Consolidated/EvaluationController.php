@@ -27,7 +27,7 @@ class EvaluationController extends BaseController {
 
     public function index() {
         try {
-            $data['academicCycle'] = $this->evaluationService->getAllAcademicCycle();
+            $data['academicCycle'] = $this->evaluationService->getAllAcademicCycles();
             $data['cycle']= null;
             $data['cyclexresult']= null;
             $data['dictatedcourses']= null;
@@ -42,7 +42,7 @@ class EvaluationController extends BaseController {
 
     public function view(Request $request) {
         try {
-            $data['academicCycle'] = $this->evaluationService->getAllAcademicCycle();
+            $data['academicCycle'] = $this->evaluationService->getAllAcademicCycles();
             $data['cycle']= $this->evaluationService->getCycle($request->all());
             $data['cyclexresult']= $this->evaluationService->getResults($request->all());
             $data['dictatedcourses']= $this->evaluationService->getCourses($request->all());

@@ -222,6 +222,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/update', ['as' => 'update.users', 'uses' => 'User\UserController@update']);
         Route::get('/view', ['as' => 'view.users', 'uses' => 'User\UserController@view']);
         Route::get('/getUsername/{code}', ['uses' => 'User\UserController@getUsername']);
+        Route::get('/forgetPassword', ['as' => 'forgetPassword.users', 'uses' => 'User\UserController@forgetPassword']);
     });
 
     //Courses routes

@@ -22,28 +22,40 @@ class PendingController extends Controller
             $currentCycle = Session::get('academic-cycle');
             $especialidad = Faculty::find($currentCycle->IdEspecialidad);
             $docentes = $especialidad->teachers;
+            $pending = [];
 
             foreach ($docentes as $docente) {
 
                 $horariosXDocente = $docente->schedules;
+                
                 foreach ($horariosXDocente as $horarioXDocente) {
                     
                     $horario = $horarioXDocente->timetable;
                     
-                    if($horario && !$horario->TotalAlumnos){
-                        var_dump($docente->Nombre);
-                        var_dump($horario->Codigo);
+                    if($horario){
+
+                        if($horario->TotalAlumnos){
+                            $status = 1;
+                        }else{
+                            $status = 0;
+                        }
+
+                        array_push($pending, [
+                            'horario'   => $horario, 
+                            'docente'   => $docente,
+                            'status'    => $status
+                        ]);
                     }
                 }
             }
-            //var_dump($docentes->schedules);
+            //var_dump($pending);
 
-            $data['currentCycle'] = $currentCycle;
+            $data['currentCycle']   = $currentCycle;
+            $data['pending']        = $pending;
         }else{
             var_dump('No encontro');
+            return redirect()->back()->with('warning', 'Esta especialidad no tiene un ciclo academico activo');
         }
-
-        die();
 
         return view('consolidated.pending.index', $data);
     }

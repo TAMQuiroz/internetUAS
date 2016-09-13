@@ -24,4 +24,8 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\Cicle', 'IdDocente');
     }
 
+    public function schedules(){
+        return $this->hasMany('Intranet\Models\TimeTablexTeacher','IdDocente');
+    }
+
 }

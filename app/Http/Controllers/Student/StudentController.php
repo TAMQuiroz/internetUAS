@@ -106,6 +106,12 @@ class StudentController extends BaseController {
 						$alumno->save();
 					}
 				}
+
+				//Agregar tamaño a tabla horario
+				$horario = TimeTable::find('IdHorario');
+				$horario->TotalAlumnos = $data->count();
+				$horario->save();
+
 			}else{
 				return redirect()->back()->with('warning', 'Hubo un problema con el archivo de excel');
 			}

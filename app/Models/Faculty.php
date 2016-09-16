@@ -32,4 +32,8 @@ class Faculty extends Model {
     public function cycle(){
         return $this->belongsTo('Intranet\Models\FacultyxCycle', 'IdEspecialidad');
     }
+
+    public function teachers(){
+        return $this->hasMany('Intranet\Models\Teacher', 'IdEspecialidad');
+    }
 }

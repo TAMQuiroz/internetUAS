@@ -59,21 +59,24 @@
                             <div class="form-group">
                                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Perfil:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select class="form-control" required="required"  name="profilecode" id="profilecode" >
+                                    <!--<select class="form-control" required="required"  name="profilecode" id="profilecode" >
 
-                                        <option value="">-- Seleccione --</option>
+                                        <option value="">-- Seleccione --</option>-->
 
                                         @foreach( $profiles as $prof)
                                             @if($prof->IdPerfil > 2)
                                                 @if ($user->IdPerfil==$prof->IdPerfil)
-                                                    <option value="{{$prof->IdPerfil}}" selected="">{{$prof->Nombre}}</option>
+                                                    <!--<option value="{{$prof->IdPerfil}}" selected="">{{$prof->Nombre}}</option>-->
+                                                    <input class="form-control col-md-7 col-xs-12" type="text" name="profile" maxlength="30" required="required" onkeypress="return isNumberKey(event)" value="{{ $prof->Nombre }}" disabled>
                                                 @else
-                                                    <option value="{{$prof->IdPerfil}}">{{$prof->Nombre}}</option>
+                                                    <!--<option value="{{$prof->IdPerfil}}">{{$prof->Nombre}}</option>-->
 
                                                 @endif
                                             @endif
                                         @endforeach
-                                    </select>
+                                    <!--</select>-->
+
+                                    
                                 </div>
                             </div>
 

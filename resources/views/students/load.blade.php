@@ -12,29 +12,31 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			
-			 <div class="x_title">
-	              <h2>{{ $title }}</h2>
-	              <div class="clearfix"></div>
-	          </div>
-			<div class="col-md-3 col-sm-3 col-xs-12" style="">
+		 	<div class="x_title">
+              	<h2>{{ $title }}</h2>
+              	<div class="clearfix"></div>
+     	 	</div>
 
-			<!--
-				<a href="{{ URL::to('downloadExcel/xls') }}"><button class="btn btn-success">Download Excel xls</button></a>
-				<a href="{{ URL::to('downloadExcel/xlsx') }}"><button class="btn btn-success">Download Excel xlsx</button></a>
-				<a href="{{ URL::to('downloadExcel/csv') }}"><button class="btn btn-success">Download CSV</button></a>
-			-->
-				<form style="border: 4px  #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ route('upload.students') }}" class="form-horizontal" method="post" enctype="multipart/form-data" id="stuFileForm">
-					<input type="file" name="import_file" id="stuFile"/>
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="idTimeTable" value="{{ $timeTable->IdHorario }}">
-					<br>
-					<button class="btn btn-primary">Cargar alumnos</button>
+     	 	<div class="row">
+     	 		<div class="col-md-6">
+	     	 		<form style="border: 4px  #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ route('upload.students') }}" class="form-horizontal" method="post" enctype="multipart/form-data" id="stuFileForm">
+						<input type="file" name="import_file" id="stuFile" accept=".xls,.xlsx" />
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<input type="hidden" name="idTimeTable" value="{{ $timeTable->IdHorario }}">
+						<br>
+						<button class="btn btn-primary">Cargar alumnos</button>
 
-				</form>
-				<span id="errMsg" style="color:red">No ha seleccionado ningún archivo.</span>
+					</form>
+					<span id="errMsg" style="color:red">No ha seleccionado ningún archivo.</span>
+     	 		</div>
 
-			</div>
-			</div>
+				<div class="col-md-6">
+					<div><b>Ejemplo de formato:</b></div>
+					{{ Html::image(asset('images/exampleExcel.png'), null ,['class' => 'img-responsive img-thumbnail'])}}
+				</div>
+     	 	</div>
+
+		</div>
 	</div>
 </div>
 			<div class="row">

@@ -64,9 +64,7 @@ class StudentController extends BaseController {
 
 		if(Input::hasFile('import_file')){
 			$path = Input::file('import_file')->getRealPath();
-			$data = Excel::load($path, function($reader) {
-				$reader->skip(7);
-			})->get();
+			$data = Excel::load($path, function($reader) {})->get();
 
 			if(!empty($data) && $data->count()){
 				//check if file was already imported
@@ -79,19 +77,43 @@ class StudentController extends BaseController {
 					}
 				}
 
+				$students = [];
 				foreach ($data as $key => $value) {
-					if (is_numeric($value[0])){
-						$insert[] = ['Codigo' => $value[0], 'Nombre' => $value[1],
+					if (is_numeric($value[1])){
+						$insert = [
+							'Codigo' => $value[1], 
+							'Nombre' => $value[2],
+							'ApellidoPaterno' => $value[3],
+							'ApellidoMaterno' => $value[4],
 							// other fields
 							'IdHorario' => $idTimeTable,
-							'created_at' => date('Y-m-d H:i:s'),
-							'updated_at' => date('Y-m-d H:i:s')];
+						];
+
+						array_push($students, $insert); 
+					}else{
+						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 					}
 				}
-				if(!empty($insert)){
-					DB::table('Alumno')->insert($insert);
-					//dd('Registros de alumnos subidos exitosamente');
+				
+				if(!empty($students)){
+					foreach ($students as $student) {
+						$alumno = new Student;
+						$alumno->Codigo = $student['Codigo']; 
+						$alumno->Nombre = $student['Nombre'];
+						$alumno->ApellidoPaterno = $student['ApellidoPaterno'];
+						$alumno->ApellidoMaterno = $student['ApellidoMaterno'];
+						$alumno->IdHorario = $student['IdHorario'];
+						$alumno->save();
+					}
 				}
+
+				//Agregar tamaño a tabla horario
+				$horario = TimeTable::find('IdHorario');
+				$horario->TotalAlumnos = $data->count();
+				$horario->save();
+
+			}else{
+				return redirect()->back()->with('warning', 'Hubo un problema con el archivo de excel');
 			}
 		}
 

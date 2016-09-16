@@ -271,9 +271,11 @@
                     @endif
                     @if(in_array(56,Session::get('actions')))
                       <li><a href="{{ route('index.results') }}">De Resultados de Medición</a></li>
-                  @endif
-
-                  <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
+                    @endif
+                    @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
+                      <li><a href="{{ route('pending.index')}}">De Evaluacion Pendiente</a></li>
+                    @endif
+                    <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
                   </ul>
                 </li>
               @endif

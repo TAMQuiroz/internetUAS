@@ -79,7 +79,7 @@
                               @foreach($stdRslt->aspects as $asp)
                                   @if($asp->Estado == 1)
                                       <option value="{{$asp->IdAspecto}}" class="studentsResult {{$stdRslt->IdResultadoEstudiantil}}">
-                                          {{ $asp->Nombre }}
+                                          {{ $asp->Nombre }} 
                                       </option>
                                   @endif
                               @endforeach
@@ -116,7 +116,7 @@
               @foreach ( $students as $stu)
                 <tr>
                   <td class=""> {{$stu->Codigo}} </td>
-                    <td class=""> {{$stu->Nombre}}</td>
+                    <td class=""> {{$stu->Nombre}} {{$stu->ApellidoPaterno}} {{$stu->ApellidoMaterno}}</td>
                     <!--#Columna de notas de criterios-->
                     @if($studentsResults != null)
                         @foreach($studentsResults as $stdRslt)

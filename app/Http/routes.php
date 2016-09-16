@@ -436,6 +436,8 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('/results/', ['as' => 'index.results', 'uses' => 'Consolidated\ResultsController@index']);
         Route::get('/results/download', ['as' => 'downloadAsPdf.results', 'uses' => 'Consolidated\ResultsController@downloadAsPdf']);
+
+        Route::get('/pending/', ['as' => 'pending.index', 'uses' => 'Consolidated\PendingController@index']);
     });
 
     //Profile Routes

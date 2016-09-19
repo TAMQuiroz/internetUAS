@@ -81,13 +81,13 @@
 
     <div class="col-md-3 left_col">
       <div class="left_col scroll-view">
-        <a href="">
-          <div class="navbar nav_title text-center" style="border: 0; margin-top:20px; height:auto;">
-            <img src="{{ URL::asset('images/uas.png')}}" class="img-circle img-responsive center-block" width="80px" style="display: inline-block;">
-            <br>
-            <h5 style="color: #FFF;" class="hidden-xs hidden-sm">University Accreditation System</h5>
-          </div>
-        </a>
+
+        <div class="navbar nav_title text-center" style="border: 0; margin-top:20px; height:auto;">
+          <img src="{{ URL::asset('images/uas.png')}}" class="img-circle img-responsive center-block" width="80px" style="display: inline-block;">
+          <br>
+          <h5 style="color: #FFF;" class="hidden-xs hidden-sm">University Accreditation System</h5>
+        </div>
+
         <div class="clearfix"></div>
         <div class="separator"></div>
         <!-- sidebar menu -->

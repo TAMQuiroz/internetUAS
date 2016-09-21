@@ -505,3 +505,40 @@ $api->version('v1', function ($api) {
 
 
 //NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO
+
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::group(['middleware' => 'investigation'], function(){
+
+        Route::group(['prefix' => 'investigacion'], function(){
+
+            //Home de investigacion
+            Route::get('/', ['as' => 'investigation.index', 'uses' => 'InvestigationController@index']);
+
+            //Administrar Investigador
+            Route::group(['prefix' => 'investigador'], function(){
+                Route::get('/', ['as' => 'investigador.index', 'uses' => 'InvestigatorController@index']);
+                Route::get('create', ['as' => 'investigador.create', 'uses' => 'InvestigatorController@create']);
+                Route::post('create', ['as' => 'investigador.store', 'uses' => 'InvestigatorController@store']);
+                Route::get('edit/{id}', ['as' => 'investigador.edit', 'uses' => 'InvestigatorController@edit']);
+                Route::post('edit/{id}', ['as' => 'investigador.update', 'uses' => 'InvestigatorController@update']);
+                Route::get('delete/{id}', ['as' => 'investigador.delete', 'uses' => 'InvestigatorController@destroy']);
+            });
+
+            //Administrar Grupo de Investigacion
+            Route::group(['prefix' => 'grupo'], function(){
+                Route::get('/', ['as' => 'grupo.index', 'uses' => 'GroupController@index']);
+                Route::get('create', ['as' => 'grupo.create', 'uses' => 'GroupController@create']);
+                Route::post('create', ['as' => 'grupo.store', 'uses' => 'GroupController@store']);
+                Route::get('edit/{id}', ['as' => 'grupo.edit', 'uses' => 'GroupController@edit']);
+                Route::post('edit/{id}', ['as' => 'grupo.update', 'uses' => 'GroupController@update']);
+                Route::get('delete/{id}', ['as' => 'grupo.delete', 'uses' => 'GroupController@destroy']);
+            });
+
+            
+
+        });
+
+    });
+
+});

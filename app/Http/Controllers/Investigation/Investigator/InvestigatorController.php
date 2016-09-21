@@ -1,10 +1,11 @@
 <?php
 
-namespace Intranet\Http\Controllers;
+namespace Intranet\Http\Controllers\Investigation\Investigator;
 
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
+use Intranet\Http\Controllers\Controller;
 
 class InvestigatorController extends Controller
 {

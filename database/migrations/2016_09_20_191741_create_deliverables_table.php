@@ -15,7 +15,7 @@ class CreateDeliverablesTable extends Migration
         Schema::create('deliverables', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->integer('id_project')->unsigned();
+            $table->integer('id_proyecto')->unsigned();
             $table->date('fecha_limite');
             $table->integer('porcen_avance');
             $table->softDeletes();

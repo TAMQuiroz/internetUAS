@@ -1,20 +1,14 @@
 <?php
 
-namespace Intranet\Http\Controllers;
+namespace Intranet\Http\Controllers\Investigation;
 
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
+use Intranet\Http\Controllers\Controller;
 
 class InvestigationController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('investigation');  
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +16,7 @@ class InvestigationController extends Controller
      */
     public function index()
     {
-        //
+        return view('investigation.index');
     }
 
     /**

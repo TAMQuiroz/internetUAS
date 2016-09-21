@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->integer('num_entregables');
             $table->date('fecha_ini');
             $table->date('fecha_fin');
-            $table->integer('id_group')->unsigned();
+            $table->integer('id_grupo')->unsigned();
             $table->integer('id_status')->unsigned();
             $table->softDeletes();
             $table->timestamps();

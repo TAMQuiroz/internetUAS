@@ -513,26 +513,26 @@ Route::group(['middleware' => 'auth'], function(){
         Route::group(['prefix' => 'investigacion'], function(){
 
             //Home de investigacion
-            Route::get('/', ['as' => 'investigation.index', 'uses' => 'InvestigationController@index']);
+            Route::get('/', ['as' => 'investigation.index', 'uses' => 'Investigation\InvestigationController@index']);
 
             //Administrar Investigador
             Route::group(['prefix' => 'investigador'], function(){
-                Route::get('/', ['as' => 'investigador.index', 'uses' => 'InvestigatorController@index']);
-                Route::get('create', ['as' => 'investigador.create', 'uses' => 'InvestigatorController@create']);
-                Route::post('create', ['as' => 'investigador.store', 'uses' => 'InvestigatorController@store']);
-                Route::get('edit/{id}', ['as' => 'investigador.edit', 'uses' => 'InvestigatorController@edit']);
-                Route::post('edit/{id}', ['as' => 'investigador.update', 'uses' => 'InvestigatorController@update']);
-                Route::get('delete/{id}', ['as' => 'investigador.delete', 'uses' => 'InvestigatorController@destroy']);
+                Route::get('/', ['as' => 'investigador.index', 'uses' => 'Investigation\Investigator\InvestigatorController@index']);
+                Route::get('create', ['as' => 'investigador.create', 'uses' => 'Investigation\Investigator\InvestigatorController@create']);
+                Route::post('create', ['as' => 'investigador.store', 'uses' => 'Investigation\Investigator\InvestigatorController@store']);
+                Route::get('edit/{id}', ['as' => 'investigador.edit', 'uses' => 'Investigation\Investigator\InvestigatorController@edit']);
+                Route::post('edit/{id}', ['as' => 'investigador.update', 'uses' => 'Investigation\Investigator\InvestigatorController@update']);
+                Route::get('delete/{id}', ['as' => 'investigador.delete', 'uses' => 'Investigation\Investigator\InvestigatorController@destroy']);
             });
 
             //Administrar Grupo de Investigacion
             Route::group(['prefix' => 'grupo'], function(){
-                Route::get('/', ['as' => 'grupo.index', 'uses' => 'GroupController@index']);
-                Route::get('create', ['as' => 'grupo.create', 'uses' => 'GroupController@create']);
-                Route::post('create', ['as' => 'grupo.store', 'uses' => 'GroupController@store']);
-                Route::get('edit/{id}', ['as' => 'grupo.edit', 'uses' => 'GroupController@edit']);
-                Route::post('edit/{id}', ['as' => 'grupo.update', 'uses' => 'GroupController@update']);
-                Route::get('delete/{id}', ['as' => 'grupo.delete', 'uses' => 'GroupController@destroy']);
+                Route::get('/', ['as' => 'grupo.index', 'uses' => 'Investigation\Group\GroupController@index']);
+                Route::get('create', ['as' => 'grupo.create', 'uses' => 'Investigation\Group\GroupController@create']);
+                Route::post('create', ['as' => 'grupo.store', 'uses' => 'Investigation\Group\GroupController@store']);
+                Route::get('edit/{id}', ['as' => 'grupo.edit', 'uses' => 'Investigation\Group\GroupController@edit']);
+                Route::post('edit/{id}', ['as' => 'grupo.update', 'uses' => 'Investigation\Group\GroupController@update']);
+                Route::get('delete/{id}', ['as' => 'grupo.delete', 'uses' => 'Investigation\Group\GroupController@destroy']);
             });
 
             

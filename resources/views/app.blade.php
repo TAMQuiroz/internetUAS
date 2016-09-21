@@ -301,6 +301,14 @@
                 </li>
               @endif
 
+              @if(Auth::user() && Auth::user()->IdPerfil == 2)
+              <li>
+                <a href="{{route('investigation.index')}}">
+                   <i class="fa fa-flask"></i> Investigacion
+                </a>
+              </li>
+              @endif
+              
             </ul>
           </div>
         </div>

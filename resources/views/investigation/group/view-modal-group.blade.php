@@ -27,10 +27,27 @@
         <div class="row" style="margin-top: 10px;">
           <div class="form-group">
           <div class="col-md-3 col-sm-3"></div>
+          <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Facultad:</label>
+          <div class="col-md-3 col-sm-3 col-xs-12" id="group-fac"></div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+          <div class="form-group">
+          <div class="col-md-3 col-sm-3"></div>
           <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripcion:</label>
           <div class="col-md-3 col-sm-3 col-xs-12" id="group-desc"></div>
           </div>
         </div>
+
+        <div class="row" style="margin-top: 10px;">
+          <div class="form-group">
+          <div class="col-md-3 col-sm-3"></div>
+          <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Lider:</label>
+          <div class="col-md-3 col-sm-3 col-xs-12" id="group-lider"></div>
+          </div>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

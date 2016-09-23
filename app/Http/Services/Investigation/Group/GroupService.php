@@ -40,9 +40,28 @@ class GroupService {
 
 	}
 
+    public function updateGroup($request, $id) {
+
+        Group::where('id', $id)
+            ->update(['nombre'=> $request['group-name'], 'descripcion' => $request['groupDescription'], 'id_lider' => $request['leaderCode']]);
+    }
+
+    public function deleteGroup($id) {
+        $group = Group::where('id', $id)->first();
+        $group->delete();
+    }
+
 	public function findGroup($request)
     {
+        //$group = Group::where('id', $request['groupId'])->first();
         $group = Group::where('id', $request['groupId'])->first();
+        return $group;
+    }
+
+    public function findGroupById($groupId)
+    {
+        //$group = Group::where('id', $request['groupId'])->first();
+        $group = Group::where('id', $groupId)->first();
         return $group;
     }
 }

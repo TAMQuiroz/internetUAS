@@ -88,7 +88,7 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($request)
+    public function view(Request $request)
     {
         try {
             $data['group'] = $this->groupService->findGroup($request->all());
@@ -106,7 +106,18 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        //$data['title'] = 'Edit Course';
+        $faculty_id = Session::get('faculty-code');
+        try {
+            $data['group'] = $this->groupService->findGroupById($id);
+            $data['faculties'] = $this->facultyService->retrieveAll();
+            $data['faculty'] = $this->facultyService->find($faculty_id);
+            $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        return view('investigation.group.editGroup', $data);
     }
 
     /**
@@ -118,7 +129,12 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $this->groupService->updateGroup($request->all(), $id);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        return redirect()->route('grupo.index')->with('success', 'Las modificaciones se han guardado exitosamente');
     }
 
     /**
@@ -129,6 +145,11 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $this->groupService->deleteGroup($id);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        return redirect()->route('grupo.index')->with('success', 'El registro ha sido eliminado exitosamente');
     }
 }

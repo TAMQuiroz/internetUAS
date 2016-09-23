@@ -12,9 +12,14 @@ class Group extends Model
 	use SoftDeletes;
     use LastUpdatedTrait;
 
-    protected $table = 'groups';
-    protected $primaryKey = "id";
     protected $fillable = ['nombre', 'id_especialidad', 'descripcion', 'id_lider'];
 
+    public function faculty(){
+  	  return $this->belongsTo('Intranet\Models\Faculty', 'id_especialidad');
+    }
+
+    public function leader(){
+  	  return $this->belongsTo('Intranet\Models\Teacher', 'id_lider');
+    }
 
 }

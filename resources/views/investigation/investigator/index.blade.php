@@ -58,6 +58,6 @@
     </div>
 </div>
 
-@include('modals.delete', ['message' => '¿Esta seguro que desea eliminar este investigador?', 'route' => route('investigador.delete',1)])
+@include('modals.delete', ['message' => '¿Esta seguro que desea eliminar este investigador?', 'route' => route('investigador.delete', $investigador->id)])
 
 @endsection

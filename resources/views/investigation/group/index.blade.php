@@ -45,7 +45,7 @@
                             <td hidden class="group-id">{{ $group->id }}</td>
                             <td class=" ">{{ $group->id }}</td>
                             <td class=" ">{{ $group->nombre }}</td>
-                            <td class=" ">{{ $group->id_lider }}</td>
+                            <td class=" ">{{ $group->leader->Nombre}} {{ $group->leader->ApellidoPaterno}} {{ $group->leader->ApellidoMaterno}}</td>
                             <td class=" ">
                                     <a class="btn btn-primary btn-xs view-group" onclick="show('{{$group->id}}')"><i class="fa fa-search"></i></a>
                                     <a href="{{ route('grupo.edit', ['id' => $group->id]) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>

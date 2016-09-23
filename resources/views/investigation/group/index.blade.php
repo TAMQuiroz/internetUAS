@@ -19,13 +19,8 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        @if(in_array(5,Session::get('actions')))
-                            <a href="{{ route('new.courses') }}" class="btn btn-success pull-right">
-                                <i class="fa fa-plus"></i> Nuevo Grupo</a>
-                        @else
-                            <a class="btn btn-success pull-right">
-                                <i class="fa fa-plus"></i> Nuevo Grupo</a>
-                        @endif
+                        <a href="{{ route('grupo.create') }}" class="btn btn-success pull-right">
+                            <i class="fa fa-plus"></i> Nuevo Grupo</a>
                     </div>
                 </div>
 
@@ -37,6 +32,7 @@
                     <tr class="headings">
                         <th class="column-title">Código </th>
                         <th class="column-title">Nombre </th>
+                        <th class="column-title">Lider </th>
                         <th class="column-title last">Acciones</th>
                         <th class="bulk-actions" colspan="7">
                             <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
@@ -44,10 +40,29 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($groups as $group)
+                        <tr class="even pointer">
+                            <td hidden class="group-id">{{ $group->id }}</td>
+                            <td class=" ">{{ $group->id }}</td>
+                            <td class=" ">{{ $group->nombre }}</td>
+                            <td class=" ">{{ $group->id_lider }}</td>
+                            <td class=" ">
+                         
+                                    <a class="btn btn-primary btn-xs view-group" onclick="show('{{$group->id}}')"><i class="fa fa-search"></i></a>
+
+
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <script src="{{ URL::asset('js/intranetjs/investigation/group/index-script.js')}}"></script>
+
+    @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar el curso?', 'action' => '#', 'button' => 'Delete'])
+    @include('investigation.group.view-modal-group', ['title' => 'Group #'])
 
 @endsection

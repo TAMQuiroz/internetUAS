@@ -303,9 +303,14 @@
 
               @if(Auth::user() && Auth::user()->IdPerfil == 2)
               <li>
-                <a href="{{route('investigation.index')}}">
-                   <i class="fa fa-flask"></i> Investigacion
+                <a>
+                   <i class="fa fa-flask"></i> Investigacion <span class="fa fa-chevron-down"></span>
                 </a>
+                <ul class="nav child_menu" style="display: none">
+                  <li><a href="{{route('investigation.index')}}">Inicio</a></li>
+                  <li><a href="{{route('investigador.index')}}"> Administrar Investigadores</a></li>
+                  <li><a href="{{route('grupo.index')}}"> Administrar Grupo de Investigación</a></li>
+                </ul>
               </li>
               @endif
               
@@ -327,13 +332,12 @@
             <li class="user-profile pull-left" >
               <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
               <span class="label label-default hidden-xs hidden-sm">
-              @if ( Session::get('user')->IdUsuario != 1)
-                <a href="{{route('edit.myUser', ['userCode' => Session::get('user')->IdUsuario])}}" style="color:#fff" onMouseOver="this.style.color='#26B99A'" onMouseOut="this.style.color='#fff'">
-              @endif
+              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+                  {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+              @else
                   {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
-              @if (Session::get('user')->IdPerfil != 1)
-                </a>
               @endif
+
               </span>
               <span>&nbsp</span>
               <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
@@ -674,6 +678,15 @@
   //Code for show success  messages
   @if( @Session::has('warning') )
     toastr.error('{{ @Session::get('warning') }}');
+  @endif
+</script>
+
+<script type="text/javascript">
+  //Code for show back error messages
+  @if (count($errors) > 0)
+    @foreach ($errors->all() as $error)
+        toastr.error('{{ @$error }}');
+    @endforeach
   @endif
 </script>
 <!-- /datepicker -->

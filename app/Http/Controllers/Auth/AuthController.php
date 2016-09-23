@@ -89,6 +89,7 @@ class AuthController extends Controller
                 array_push($actions, $per->IdAccion);
             }
 
+
             //$user = $this->authService->findTeacher($userSession->IdUsuario, $request['user'], $request['password']);
 
             //if($user==null) {
@@ -97,8 +98,12 @@ class AuthController extends Controller
 
             if($userSession->IdPerfil == 2 || $userSession->IdPerfil == 1){
                 $user = $this->authService->findTeacher($userSession->IdUsuario);
-            }else{
+            }else if($userSession->IdPerfil == 4){
                 $user = $this->authService->findAccreditor($userSession->IdUsuario);
+            }else if($userSession->IdPerfil == 5){
+                $user = $this->authService->findInvestigator($userSession->IdUsuario);
+            }else{
+                $user = null;
             }
 
             if($user == null) { //es admin

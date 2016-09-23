@@ -48,7 +48,7 @@
                                     <a href="{{ route('edit.profile', ['profileCode' => $profile->IdPerfil]) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                 @endif
 
-                                @if($profile->IdPerfil != 2 && $profile->IdPerfil != 1 && $profile->IdPerfil != 4 && $profile->IdPerfil != 3)
+                                @if($profile->IdPerfil != 2 && $profile->IdPerfil != 1 && $profile->IdPerfil != 4 && $profile->IdPerfil != 3 && $profile->IdPerfil != 5)
                                     @if(in_array(65,Session::get('actions')))
                                         <a href="" class="btn btn-danger btn-xs delete-profile" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-remove"></i></a>
                                     @endif

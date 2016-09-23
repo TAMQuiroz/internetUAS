@@ -95,7 +95,13 @@
               <li class="user-profile pull-left" >
                 <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
                 
-                <span class="label label-default hidden-xs hidden-sm">{{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}</span>
+                <span class="label label-default hidden-xs hidden-sm">
+                  @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+                      {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+                  @else
+                      {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
+                  @endif
+                </span>
               </li>
               <li>
                 <form method="GET" action="{{ url('logout') }}">

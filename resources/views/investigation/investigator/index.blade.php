@@ -38,26 +38,27 @@
 						</tr> 
 					</thead> 
 					<tbody> 
+						@foreach($investigadores as $investigador)
 						<tr> 
-							@foreach($investigadores as $investigador)
-								<td>{{$investigador->nombre}}</td> 
-								<td>{{$investigador->ape_paterno}}</td> 
-								<td>{{$investigador->ape_materno}}</td> 
-								<td>{{$investigador->correo}}</td> 
-								<td>{{$investigador->faculty->Nombre}}</td>
-								<td>
-									<a href="{{route('investigador.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-									<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modalDelete" title="Eliminar"><i class="fa fa-remove"></i></a>
-								</td>
-							@endforeach
+							<td>{{$investigador->nombre}}</td> 
+							<td>{{$investigador->ape_paterno}}</td> 
+							<td>{{$investigador->ape_materno}}</td> 
+							<td>{{$investigador->correo}}</td> 
+							<td>{{$investigador->faculty->Nombre}}</td>
+							<td>
+								<a href="{{route('investigador.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+								<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$investigador->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
+							</td>
 						</tr> 
+
+						@include('modals.delete', ['id'=> $investigador->id, 'message' => '¿Esta seguro que desea eliminar este investigador?', 'route' => route('investigador.delete', $investigador->id)])
+						@endforeach
+						
 					</tbody> 
 				</table>
 		  	</div>
 		</div>
     </div>
 </div>
-
-@include('modals.delete', ['message' => '¿Esta seguro que desea eliminar este investigador?', 'route' => route('investigador.delete', $investigador->id)])
 
 @endsection

@@ -65,7 +65,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Área',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::select('area', $areas, null, ['class' => 'form-control', 'required'])}}
+		    				{{Form::select('area', $areas, null, ['class' => 'form-control'])}}
 		    			</div>
 		    		</div>
 

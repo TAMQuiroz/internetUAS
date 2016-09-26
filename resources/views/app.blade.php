@@ -683,7 +683,7 @@
 
 <script type="text/javascript">
   //Code for show back error messages
-  @if (count($errors) > 0)
+  @if (@Session::has('errors'))
     @foreach ($errors->all() as $error)
         toastr.error('{{ @$error }}');
     @endforeach

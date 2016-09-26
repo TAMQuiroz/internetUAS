@@ -24,12 +24,23 @@ class InvestigatorRequest extends Request
     public function rules()
     {
         return [
-            'nombre' => 'required|max:50',
-            'apellido_paterno' => 'required|max:100',
-            'apellido_materno' => 'required|max:100',
+            'nombre' => 'alpha|required|max:50',
+            'apellido_paterno' => 'alpha|required|max:50',
+            'apellido_materno' => 'alpha|required|max:50',
             'correo' => 'required|email',
             'celular' => 'required|numeric',
             'especialidad' => 'required',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
         ];
     }
 }

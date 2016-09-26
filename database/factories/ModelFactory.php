@@ -11,11 +11,24 @@
 |
 */
 
-$factory->define(Intranet\User::class, function (Faker\Generator $faker) {
+$factory->define(Intranet\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'IdPerfil'          => 2,
+        'Usuario'           => $faker->userName,
+        'Contrasena'        => bcrypt(str_random(10)),
+    ];
+});
+
+$factory->define(Intranet\Models\Teacher::class, function (Faker\Generator $faker) {
+    return [
+    	'IdEspecialidad'    =>  1,
+    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8),
+        'Nombre'            =>  $faker->firstNameMale,
+        'ApellidoPaterno'   =>	$faker->lastName,
+        'ApellidoMaterno'   =>	$faker->lastName,
+        'Correo'			=>	$faker->email,
+        'Cargo'				=>	$faker->text,
+        'Vigente'			=>	1,
+        'Descripcion'		=>	$faker->text,
     ];
 });

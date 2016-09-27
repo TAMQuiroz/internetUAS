@@ -25,7 +25,7 @@ class AreaRequest extends Request
     {
         return [
             'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-            'descripcion'   => 'required|max:100',
+            'descripcion'   => 'regex:/^[\pL\s\-]+$/u|required|max:100',
         ];
     }
 }

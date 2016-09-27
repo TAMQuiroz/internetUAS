@@ -11,6 +11,9 @@ use Intranet\Http\Services\Faculty\FacultyService;
 use Intranet\Http\Services\Teacher\TeacherService;
 use Intranet\Http\Services\Investigation\Group\GroupService;
 
+use Intranet\Models\Investigator;
+use Intranet\Models\Group;
+
 class GroupController extends Controller
 {
     /**
@@ -88,15 +91,17 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function view(Request $request)
+    public function show($id)
     {
         try {
-            $data['group'] = $this->groupService->findGroup($request->all());
+            $data['group'] = Group::find($id);
         } catch(\Exception $e) {
             dd($e);
         }
-        return $data;
+        return view('investigation.group.show', $data);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -113,6 +118,17 @@ class GroupController extends Controller
             $data['faculties'] = $this->facultyService->retrieveAll();
             $data['faculty'] = $this->facultyService->find($faculty_id);
             $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
+
+            $ids = [];
+            $investigatorsXgroup = $data['group']->investigatorXgroups;
+            foreach ($investigatorsXgroup as $investigatorXgroup) {
+                array_push($ids,$investigatorXgroup->investigator->id);
+            }
+
+            $investigators = Investigator::whereNotIn('id',$ids)->get();
+
+
+            $data['investigators'] = $investigators;
         } catch (\Exception $e) {
             dd($e);
         }

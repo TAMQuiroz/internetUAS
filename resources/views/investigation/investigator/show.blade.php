@@ -5,7 +5,7 @@
 	<div class="col-md-12">
 		<div class="page-title">
 	        <div class="title_left">
-	            <h3>Investigador:</h3>
+	            <h3>Investigador</h3>
 	        </div>
 	    </div>
     </div>
@@ -86,13 +86,19 @@
 						<tr class="headings"> 
 							<th>Nombre</th> 
 							<th>Especialidad</th> 
+							<th>Acciones</th> 
 						</tr> 
 					</thead> 
 					<tbody> 
+						@foreach($investigador->investigatorXgroups as $investigadorXgroup)
 						<tr> 
-							<td>Ejemplo Nombre</td> 
-							<td>Ejemplo Especialidad</td> 
+							<td>{{$investigadorXgroup->group->nombre}}</td> 
+							<td>{{$investigadorXgroup->group->descripcion}}</td> 
+                            <td>
+                                <a href="{{route('grupo.show', $investigadorXgroup->group->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                            </td>
 						</tr> 
+						@endforeach
 					</tbody> 
 				</table>		  	
 		  	</div>

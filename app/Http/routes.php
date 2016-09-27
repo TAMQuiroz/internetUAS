@@ -534,11 +534,15 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'grupo.edit', 'uses' => 'Investigation\Group\GroupController@edit']);
                 Route::post('edit/{id}', ['as' => 'grupo.update', 'uses' => 'Investigation\Group\GroupController@update']);
                 Route::get('delete/{id}', ['as' => 'grupo.delete', 'uses' => 'Investigation\Group\GroupController@destroy']);
-                Route::get('/view', ['as' => 'grupo.view', 'uses' => 'Investigation\Group\GroupController@view']);
+                Route::get('show/{id}', ['as' => 'grupo.show', 'uses' => 'Investigation\Group\GroupController@show']);
+
+                //Seleccion de integrantes de grupo de investigacion
+                Route::group(['prefix' => 'afiliacion'], function(){
+                    Route::post('create', ['as' => 'afiliacion.store', 'uses' => 'Investigation\Affiliation\AffiliationController@store']);
+                    Route::get('delete/{id}', ['as' => 'afiliacion.delete', 'uses' => 'Investigation\Affiliation\AffiliationController@destroy']);
+                });         
             });         
-
         });
-
     });
 
     Route::group(['prefix' => 'area'], function(){    

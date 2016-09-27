@@ -47,8 +47,7 @@
                             <td class=" ">{{ $group->nombre }}</td>
                             <td class=" ">{{ $group->leader->Nombre}} {{ $group->leader->ApellidoPaterno}} {{ $group->leader->ApellidoMaterno}}</td>
                             <td class=" ">
-                                    <a class="btn btn-primary btn-xs view-group" onclick="show('{{$group->id}}')"><i class="fa fa-search"></i></a>
-                                    <a href="{{ route('grupo.edit', ['id' => $group->id]) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{route('grupo.show',$group->id)}}" class="btn btn-primary btn-xs view-group""><i class="fa fa-search"></i></a>
                                     <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-remove"></i></a>
                             </td>
                         </tr>
@@ -59,7 +58,6 @@
         </div>
     </div>
 
-    <script src="{{ URL::asset('js/intranetjs/investigation/group/index-group-script.js')}}"></script>
 
     @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar el grupo de investigación?', 'action' => '#', 'button' => 'Delete'])
     @include('investigation.group.view-modal-group')

@@ -24,12 +24,13 @@ class InvestigatorRequest extends Request
     public function rules()
     {
         return [
-            'nombre' => 'alpha|required|max:50',
-            'apellido_paterno' => 'alpha|required|max:50',
-            'apellido_materno' => 'alpha|required|max:50',
+            'nombre' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'apellido_paterno' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'apellido_materno' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
             'correo' => 'required|email',
-            'celular' => 'required|numeric',
-            'especialidad' => 'required',
+            'celular' => 'required|digits:9',
+            'especialidad' => 'numeric|required',
+            'area' => 'numeric|required',
         ];
     }
 

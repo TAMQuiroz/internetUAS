@@ -46,6 +46,9 @@ jQuery(function(){
             },
             especialidad: {
                 required: true,
+            },
+            descripcion: {
+                required: true,
             }
         },
         messages: {
@@ -77,6 +80,9 @@ jQuery(function(){
             },
             especialidad: {
                 required: "Debe ingresar una especialidad",
+            },
+            descripcion: {
+                required: "Debe ingresar una descripcion",
             },
         }
     });

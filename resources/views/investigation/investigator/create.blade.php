@@ -30,14 +30,14 @@
 		    		<div class="form-group">
 		    			{{Form::label('Apellido Paterno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('apellido_paterno',null,['class'=>'form-control', 'required', 'maxlength' => 100])}}
+		    				{{Form::text('apellido_paterno',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Apellido Materno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('apellido_materno',null,['class'=>'form-control', 'required', 'maxlength' => 100])}}
+		    				{{Form::text('apellido_materno',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
@@ -65,7 +65,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Área',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::select('area', $areas, null, ['class' => 'form-control'])}}
+		    				{{Form::select('area', $areas, null, ['class' => 'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 

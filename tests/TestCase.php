@@ -2,6 +2,7 @@
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+    // alias phpunit="vendor/bin/phpunit" in cmd
     /**
      * The base URL to use while testing the application.
      *

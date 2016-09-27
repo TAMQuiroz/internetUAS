@@ -23,21 +23,21 @@
 		    		<div class="form-group">
 		    			{{Form::label('Nombre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('nombre',$investigador->nombre,['class'=>'form-control', 'required', 'maxlength' => 10])}}
+		    				{{Form::text('nombre',$investigador->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Apellido Paterno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('apellido_paterno',$investigador->ape_paterno,['class'=>'form-control', 'required'])}}
+		    				{{Form::text('apellido_paterno',$investigador->ape_paterno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Apellido Materno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('apellido_materno',$investigador->ape_materno,['class'=>'form-control', 'required'])}}
+		    				{{Form::text('apellido_materno',$investigador->ape_materno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 

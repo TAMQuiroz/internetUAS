@@ -65,36 +65,39 @@ class InvestigatorController extends Controller
      */
     public function store(InvestigatorRequest $request)
     {
-        //Crear usuario
-        $usuario = new User;
-        $usuario->Usuario = $request['correo'];
-        $usuario->Contrasena = bcrypt(123);
-        $usuario->IdPerfil = 5;
-        
-        $usuario->save();
+        try {
+            //Crear usuario
+            $usuario = new User;
+            $usuario->Usuario       = $request['correo'];
+            $usuario->Contrasena    = bcrypt(123);
+            $usuario->IdPerfil      = 5;
+            
+            $usuario->save();
 
-        //Crear investigador
-        $investigator = new Investigator;
-        $investigator->nombre = $request['nombre'];
-        $investigator->ape_paterno = $request['apellido_paterno'];
-        $investigator->ape_materno = $request['apellido_materno'];
-        $investigator->correo = $request['correo'];
-        $investigator->celular = $request['celular'];
-        $investigator->id_especialidad = $request['especialidad'];
-        $investigator->id_area = $request['area'];
-        $investigator->id_usuario = $usuario->IdUsuario;
-        $investigator->Vigente = 1;
+            //Crear investigador
+            $investigator                   = new Investigator;
+            $investigator->nombre           = $request['nombre'];
+            $investigator->ape_paterno      = $request['apellido_paterno'];
+            $investigator->ape_materno      = $request['apellido_materno'];
+            $investigator->correo           = $request['correo'];
+            $investigator->celular          = $request['celular'];
+            $investigator->id_especialidad  = $request['especialidad'];
+            $investigator->id_area          = $request['area'];
+            $investigator->id_usuario       = $usuario->IdUsuario;
+            $investigator->Vigente          = 1;
 
-        $investigator->save();
+            $investigator->save();
 
-
-
-        //Enviar correo
-        if ($usuario) {
-            $this->passwordService->sendSetPasswordLink($usuario, $request['correo']);
+            //Enviar correo
+            if ($usuario) {
+                $this->passwordService->sendSetPasswordLink($usuario, $request['correo']);
+            }
+            
+            return redirect()->route('investigador.index')->with('success', 'El investigador se ha registrado exitosamente');
+        }catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
         
-        return redirect()->route('investigador.index')->with('success', 'El investigador se ha registrado exitosamente');
     }
 
     /**
@@ -122,14 +125,14 @@ class InvestigatorController extends Controller
      */
     public function edit($id)
     {
-        $investigador     = Investigator::find($id);
+        $investigador       = Investigator::find($id);
         $especialidades     = Faculty::lists('nombre', 'IdEspecialidad');
         $areas              = Area::lists('nombre','id');
 
         $data = [
             'especialidades'    =>  $especialidades,
             'areas'             =>  $areas,
-            'investigador'    =>  $investigador,
+            'investigador'      =>  $investigador,
         ];
 
         return view('investigation.investigator.edit', $data);
@@ -144,26 +147,30 @@ class InvestigatorController extends Controller
      */
     public function update(InvestigatorRequest $request, $id)
     {
-        //Crear investigador
-        $investigador = Investigator::find($id);
-        $investigador->nombre = $request['nombre'];
-        $investigador->ape_paterno = $request['apellido_paterno'];
-        $investigador->ape_materno = $request['apellido_materno'];
-        $investigador->correo = $request['correo'];
-        $investigador->celular = $request['celular'];
-        $investigador->id_especialidad = $request['especialidad'];
-        $investigador->id_area = $request['area'];
+        try {
+            //Crear investigador
+            $investigador                   = Investigator::find($id);
+            $investigador->nombre           = $request['nombre'];
+            $investigador->ape_paterno      = $request['apellido_paterno'];
+            $investigador->ape_materno      = $request['apellido_materno'];
+            $investigador->correo           = $request['correo'];
+            $investigador->celular          = $request['celular'];
+            $investigador->id_especialidad  = $request['especialidad'];
+            $investigador->id_area          = $request['area'];
 
-        $investigador->save();
+            $investigador->save();
 
-        //Crear usuario
-        $usuario = User::find($investigador->id_usuario);
-        $usuario->Usuario = $request['correo'];
-        $usuario->IdPerfil = 5;
-        
-        $usuario->save();
+            //Crear usuario
+            $usuario            = User::find($investigador->id_usuario);
+            $usuario->Usuario   = $request['correo'];
+            $usuario->IdPerfil  = 5;
+            
+            $usuario->save();
 
-        return redirect()->route('investigador.show',$id)->with('success', 'El investigador se ha actualizado exitosamente');
+            return redirect()->route('investigador.show',$id)->with('success', 'El investigador se ha actualizado exitosamente');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
     }
 
     /**
@@ -174,14 +181,18 @@ class InvestigatorController extends Controller
      */
     public function destroy($id)
     {
-        $investigador = Investigator::find($id);
-        $user = User::find($investigador->id_usuario);
-        
-        //Restricciones
+        try {
+            $investigador   = Investigator::find($id);
+            $user           = User::find($investigador->id_usuario);
+            
+            //Restricciones
 
-        $investigador->delete();
-        $user->delete();
+            $investigador->delete();
+            $user->delete();
 
-        return redirect()->route('investigador.index')->with('success', 'El investigador se ha eliminado exitosamente');
+            return redirect()->route('investigador.index')->with('success', 'El investigador se ha eliminado exitosamente');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }   
     }
 }

@@ -32,3 +32,25 @@ $factory->define(Intranet\Models\Teacher::class, function (Faker\Generator $fake
         'Descripcion'		=>	$faker->text,
     ];
 });
+
+$factory->define(Intranet\Models\Area::class, function (Faker\Generator $faker) {
+    return [
+        'nombre'          => $faker->jobTitle,
+        'descripcion'     => $faker->text,
+    ];
+});
+
+$factory->define(Intranet\Models\Investigator::class, function (Faker\Generator $faker) {
+    return [
+        'id_usuario'        => 2,
+        'nombre'            => $faker->firstNameMale,
+        'ape_paterno'       => $faker->lastName,
+        'ape_materno'       => $faker->lastName,
+        'correo'            => $faker->email,
+        'celular'           => 999999999,
+        'id_especialidad'   => 1,
+        'id_area'           => 1,
+        'Vigente'           => 1,
+    ];
+});
+

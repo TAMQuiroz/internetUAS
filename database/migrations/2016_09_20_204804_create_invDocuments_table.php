@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvDocumentsTable extends Migration
+class CreateInvdocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateInvDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invDocuments', function (Blueprint $table) {
+        Schema::create('invdocuments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('observacion');
             $table->integer('id_investigador')->unsigned();
@@ -31,6 +31,6 @@ class CreateInvDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('invDocuments');
+        Schema::drop('invdocuments');
     }
 }

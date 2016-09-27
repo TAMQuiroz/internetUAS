@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToInvestigatorXgroupsTable extends Migration
+class AddFkToInvestigatorxgroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddFkToInvestigatorXgroupsTable extends Migration
      */
     public function up()
     {
-        Schema::table('investigatorXgroups', function (Blueprint $table) {
+        Schema::table('investigatorxgroups', function (Blueprint $table) {
             $table->foreign('id_investigador')->references('id')->on('investigators');
             $table->foreign('id_grupo')->references('id')->on('groups');
         });
@@ -25,9 +25,9 @@ class AddFkToInvestigatorXgroupsTable extends Migration
      */
     public function down()
     {
-        Schema::table('investigatorXgroups', function (Blueprint $table) {
-            $table->dropForeign('investigatorXgroups_id_investigador_foreign');
-            $table->dropForeign('investigatorXgroups_id_grupo_foreign');
+        Schema::table('investigatorxgroups', function (Blueprint $table) {
+            $table->dropForeign('investigatorxgroups_id_investigador_foreign');
+            $table->dropForeign('investigatorxgroups_id_grupo_foreign');
         });
     }
 }

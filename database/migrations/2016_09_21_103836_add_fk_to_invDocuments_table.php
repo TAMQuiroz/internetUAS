@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToInvDocumentsTable extends Migration
+class AddFkToInvdocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddFkToInvDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('invDocuments', function (Blueprint $table) {
+        Schema::table('invdocuments', function (Blueprint $table) {
             $table->foreign('id_investigador')->references('id')->on('investigators');
             $table->foreign('id_entregable')->references('id')->on('deliverables');
         });
@@ -25,7 +25,7 @@ class AddFkToInvDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('invDocuments', function (Blueprint $table) {
+        Schema::table('invdocuments', function (Blueprint $table) {
             $table->dropForeign('invDocuments_id_investigador_foreign');
             $table->dropForeign('invDocuments_id_entregable_foreign');
         });

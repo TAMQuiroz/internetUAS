@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvestigatorXgroupsTable extends Migration
+class CreateInvestigatorxgroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateInvestigatorXgroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('investigatorXgroups', function (Blueprint $table) {
+        Schema::create('investigatorxgroups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_investigador')->unsigned();
             $table->integer('id_grupo')->unsigned();
@@ -28,6 +28,6 @@ class CreateInvestigatorXgroupsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('investigatorXgroups');
+        Schema::drop('investigatorxgroups');
     }
 }

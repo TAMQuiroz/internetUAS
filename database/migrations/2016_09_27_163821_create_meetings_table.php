@@ -13,7 +13,7 @@ class CreateMeetingsTable extends Migration
     public function up()
     {
         Schema::create('meetings', function (Blueprint $table) {
-            $table->increments('idMeeting');
+            $table->increments('id');
             $table->time('hora_ini');
             $table->time('hora_fin');
             $table->date('fecha');

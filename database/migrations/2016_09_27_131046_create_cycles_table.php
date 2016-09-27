@@ -14,7 +14,7 @@ class CreateCyclesTable extends Migration
     public function up()
     {
         Schema::create('cycles', function (Blueprint $table) {
-            $table->string('idCycle')->primary;
+            $table->string('id');
             $table->string('descripcion');
             $table->integer('numero');
             $table->timestamps();

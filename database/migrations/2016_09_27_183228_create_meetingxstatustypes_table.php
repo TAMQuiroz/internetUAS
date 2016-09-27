@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePSPprocessesTable extends Migration
+class CreateMeetingxstatustypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreatePSPprocessesTable extends Migration
      */
     public function up()
     {
-        Schema::create('PSPprocesses', function (Blueprint $table) {
-            $table->increments('idPspProcesses');
-            $table->integer('numFases');
-            $table->integer('numPlantillas');
-            $table->integer('maxTamPlantilla');
+        Schema::create('meetingxstatustypes', function (Blueprint $table) {
+            $table->integer('idMeeting')->unsigned();
+            $table->foreign('idMeeting')->references('id')->on('meetings');
+            $table->integer('idTipoEstado')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreatePSPprocessesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('PSPprocesses');
+        Schema::drop('meetingxstatustypes');
     }
 }

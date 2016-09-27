@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchedulesTable extends Migration
+class CreatePspgroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class CreateSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->increments('idSchedule');
-            $table->string('codigo');
-            $table->integer('totalAlumnos');
-            $table->integer('idPspProcess')->unsigned();
+        Schema::create('pspgroups', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('idTipoEstado')->unsigned();
+            $table->char('numero');
+            $table->string('descripcion');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('schedules');
+        Schema::drop('pspgroups');
     }
 }

@@ -13,7 +13,7 @@ class CreateTemplatesTable extends Migration
     public function up()
     {
         Schema::create('templates', function (Blueprint $table) {
-            $table->increments('idTemplate');
+            $table->increments('id');
             $table->integer('idPhase')->unsigned();
             $table->integer('idTipoEstado')->unsigned();
             $table->integer('idProfesor')->unsigned();

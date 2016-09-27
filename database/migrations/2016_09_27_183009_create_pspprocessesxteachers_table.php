@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePSPprocessesXphasesTable extends Migration
+class CreatePspprocessesxteachersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,10 @@ class CreatePSPprocessesXphasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('PSPprocessesXphases', function (Blueprint $table) {
-            $table->integer('idPhase')->unsigned();
+        Schema::create('pspprocessesxteachers', function (Blueprint $table) {
             $table->integer('idPspProcesses')->unsigned();
+            $table->foreign('idPspProcesses')->references('id')->on('pspprocesses');
+            $table->integer('idProfesor')->unsigned();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreatePSPprocessesXphasesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('PSPprocessesXphases');
+        Schema::drop('pspprocessesxteachers');
     }
 }

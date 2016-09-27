@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersXprofilesTable extends Migration
+class CreatePspprocessesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,11 @@ class CreateUsersXprofilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('usersXprofiles', function (Blueprint $table) {
-            $table->integer('idUser')->unsigned();
-            $table->integer('idProfile')->unsigned();
+        Schema::create('pspprocesses', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('numFases');
+            $table->integer('numPlantillas');
+            $table->integer('maxTamPlantilla');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateUsersXprofilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('usersXprofiles');
+        Schema::drop('pspprocesses');
     }
 }

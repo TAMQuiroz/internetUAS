@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePSPDocumentsTable extends Migration
+class CreatePspdocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class CreatePSPDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('PSPDocuments', function (Blueprint $table) {
-            $table->increments('idPSPDocument');
+        Schema::create('pspdocuments', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('ruta');
             $table->string('observaciones');
             $table->char('esObligatorio');
@@ -32,6 +32,6 @@ class CreatePSPDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('PSPDocuments');
+        Schema::drop('pspdocuments');
     }
 }

@@ -118,17 +118,8 @@ class GroupController extends Controller
             $data['faculties'] = $this->facultyService->retrieveAll();
             $data['faculty'] = $this->facultyService->find($faculty_id);
             $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
-
-            $ids = [];
-            $investigatorsXgroup = $data['group']->investigatorXgroups;
-            foreach ($investigatorsXgroup as $investigatorXgroup) {
-                array_push($ids,$investigatorXgroup->investigator->id);
-            }
-
-            $investigators = Investigator::whereNotIn('id',$ids)->get();
-
-
-            $data['investigators'] = $investigators;
+            $data['investigators'] = $this->groupService->getNotSelectedInvestigators($id);
+            
         } catch (\Exception $e) {
             dd($e);
         }

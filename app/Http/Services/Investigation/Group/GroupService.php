@@ -1,6 +1,7 @@
 <?php namespace Intranet\Http\Services\Investigation\Group;
 
 use Intranet\Models\Teacher;
+use Intranet\Models\Investigator;
 use Intranet\Models\Faculty;
 use Intranet\Models\User;
 use Intranet\Models\Accreditor;
@@ -63,5 +64,19 @@ class GroupService {
         //$group = Group::where('id', $request['groupId'])->first();
         $group = Group::where('id', $groupId)->first();
         return $group;
+    }
+
+    public function getNotSelectedInvestigators($id)
+    {
+        $group = Group::find($id);
+        $ids = [];
+        $investigatorsXgroup = $group->investigatorXgroups;
+        foreach ($investigatorsXgroup as $investigatorXgroup) {
+            array_push($ids,$investigatorXgroup->investigator->id);
+        }
+
+        $investigators = Investigator::whereNotIn('id',$ids)->get();
+
+        return $investigators;
     }
 }

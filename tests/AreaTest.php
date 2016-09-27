@@ -18,7 +18,6 @@ class AreaTest extends TestCase
         $this->assertTrue(true);
     }
 
-/*
     public function test_cr_are_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
@@ -333,5 +332,5 @@ class AreaTest extends TestCase
     		->see('Edicion de Areas')
     		->see('El formato de descripcion es inválido');
     }
-*/
+
 }

@@ -3,21 +3,17 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCyclesTable extends Migration
+class AddFkToSupervisor extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('cycles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('descripcion');
-            $table->integer('numero');
-            $table->timestamps();
+        Schema::table('supervisor', function (Blueprint $table) {
+             $table->foreign('idUser')->references('id')->on('users');
         });
     }
 
@@ -28,6 +24,8 @@ class CreateCyclesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cycles');
+        Schema::table('supervisor', function (Blueprint $table) {
+            $table->dropForeign('supervisor_idUser_foreign');
+        });
     }
 }

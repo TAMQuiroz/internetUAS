@@ -13,7 +13,8 @@ class AddFkToSupervisor extends Migration
     public function up()
     {
         Schema::table('supervisor', function (Blueprint $table) {
-             $table->foreign('idUser')->references('id')->on('users');
+             $table->foreign('idUser')->references('IdUsuario')->on('usuario');
+             $table->foreign('idFaculty')->references('IdEspecialidad')->on('especialidad');
         });
     }
 
@@ -26,6 +27,7 @@ class AddFkToSupervisor extends Migration
     {
         Schema::table('supervisor', function (Blueprint $table) {
             $table->dropForeign('supervisor_idUser_foreign');
+            $table->dropForeign('supervisor_idFaculty_foreign');
         });
     }
 }

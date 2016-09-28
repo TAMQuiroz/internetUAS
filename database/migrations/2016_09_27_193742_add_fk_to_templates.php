@@ -15,6 +15,8 @@ class AddFkToTemplates extends Migration
         Schema::table('templates', function (Blueprint $table) {
              $table->foreign('idPhase')->references('id')->on('phases');
              $table->foreign('idSupervisor')->references('id')->on('supervisor');
+             $table->foreign('idProfesor')->references('Codigo')->on('docente');
+             $table->foreign('idAdmin')->references('IdUsuario')->on('usuario');
         });
     }
 
@@ -28,6 +30,8 @@ class AddFkToTemplates extends Migration
         Schema::table('templates', function (Blueprint $table) {
             $table->dropForeign('templates_idPhase_foreign');
             $table->dropForeign('templates_idSupervisor_foreign');
+            $table->dropForeign('templates_idProfesor_foreign');
+            $table->dropForeign('templates_idAdmin_foreign');
         });
     }
 }

@@ -13,7 +13,7 @@ class AddFkToPspdocuments extends Migration
     public function up()
     {
         Schema::table('pspdocuments', function (Blueprint $table) {
-             $table->foreign('idStudent')->references('id')->on('students');
+             $table->foreign('idStudent')->references('idAlumno')->on('alumno');
              $table->foreign('idTemplate')->references('id')->on('templates');
         });
     }

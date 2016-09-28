@@ -14,7 +14,7 @@ class CreateSkillsxstudentsTable extends Migration
     {
         Schema::create('skillsxstudents', function (Blueprint $table) {
             $table->integer('idStudent')->unsigned();
-            $table->foreign('idStudent')->references('id')->on('students');
+            $table->foreign('idStudent')->references('id')->on('pspstudents');
             $table->integer('idCriterio')->unsigned();
             $table->foreign('idCriterio')->references('id')->on('skills');
             $table->timestamps();

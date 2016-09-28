@@ -14,7 +14,7 @@ class CreateSchedulesxcyclesTable extends Migration
     {
         Schema::create('schedulesxcycles', function (Blueprint $table) {
             $table->integer('idschedules')->unsigned();
-            $table->foreign('idschedules')->references('id')->on('schedules');
+            $table->foreign('idschedules')->references('IdHorario')->on('horario');
             $table->integer('idcycles')->unsigned();
             $table->foreign('idcycles')->references('id')->on('cycles');
             $table->timestamps();

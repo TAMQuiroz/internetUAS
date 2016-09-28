@@ -13,7 +13,7 @@ class AddFkToMeetings extends Migration
     public function up()
     {
         Schema::table('meetings', function (Blueprint $table) {
-             $table->foreign('idStudent')->references('idAlumno')->on('alumno');
+             $table->foreign('idStudent')->references('id')->on('pspstudents');
              $table->foreign('idSupervisor')->references('id')->on('supervisor');
         });
     }

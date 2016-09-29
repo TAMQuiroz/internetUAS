@@ -153,7 +153,10 @@ class GroupController extends Controller
     public function destroy($id)
     {
         try{
-            $this->groupService->deleteGroup($id);
+            $group = $this->groupService->deleteGroup($id);
+            if($group){
+                return redirect()->back()->with('warning', 'El grupo no se puede eliminar debido a que tiene investigadores asignados');
+            }
         } catch (\Exception $e) {
             dd($e);
         }

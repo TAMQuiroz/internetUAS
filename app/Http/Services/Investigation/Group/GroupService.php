@@ -48,8 +48,13 @@ class GroupService {
     }
 
     public function deleteGroup($id) {
-        $group = Group::where('id', $id)->first();
-        $group->delete();
+        $group = Group::find($id);
+        if($group && $group->investigatorXgroups){
+            return $group;
+        }else{
+            $group->delete();
+        }
+        return null;        
     }
 
 	public function findGroup($request)

@@ -17,10 +17,10 @@ class InvestigationMiddleware
     public function handle($request, Closure $next)
     {
 
-        if(Auth::user()->IdPerfil != 2){
-            return redirect('/myfaculties');
+        if(Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5){
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/myfaculties');
     }
 }

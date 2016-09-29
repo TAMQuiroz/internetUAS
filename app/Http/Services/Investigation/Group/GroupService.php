@@ -49,7 +49,7 @@ class GroupService {
 
     public function deleteGroup($id) {
         $group = Group::find($id);
-        if($group && $group->investigatorXgroups){
+        if($group && $group->investigators){
             return $group;
         }else{
             $group->delete();
@@ -75,9 +75,9 @@ class GroupService {
     {
         $group = Group::find($id);
         $ids = [];
-        $investigatorsXgroup = $group->investigatorXgroups;
-        foreach ($investigatorsXgroup as $investigatorXgroup) {
-            array_push($ids,$investigatorXgroup->investigator->id);
+        
+        foreach ($group->investigators as $investigator) {
+            array_push($ids,$investigator->id);
         }
 
         $investigators = Investigator::whereNotIn('id',$ids)->get();

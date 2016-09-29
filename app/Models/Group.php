@@ -22,7 +22,7 @@ class Group extends Model
   	  return $this->belongsTo('Intranet\Models\Teacher', 'id_lider');
     }
 
-    public function investigatorXgroups(){
-    	return $this->hasMany('Intranet\Models\InvestigatorXgroup', 'id_grupo');	
+    public function investigators(){
+    	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxgroups','id_grupo','id_investigador')->withPivot('id');	
     }
 }

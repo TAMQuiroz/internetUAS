@@ -23,18 +23,10 @@ class AffiliationController extends Controller
     {
         try {
             $group = Group::find($request['id_group']);
-            $investigator = Investigator::find($request['id_investigator']);
 
-            if($group && $investigator){
-                $investigatorXgroup = new Investigatorxgroup;
-                $investigatorXgroup->id_grupo = $group->id;
-                $investigatorXgroup->id_investigador = $investigator->id;
-                $investigatorXgroup->save();
+            $group->investigators()->attach($request['id_investigator']);
 
-                return redirect()->route('grupo.edit',$group->id)->with('success', 'El investigador se ha agregado exitosamente');
-            }else{
-                return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');    
-            }
+            return redirect()->route('grupo.edit',$group->id)->with('success', 'El investigador se ha agregado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -48,6 +40,7 @@ class AffiliationController extends Controller
      */
     public function destroy($id)
     {
+
         try {
             $investigatorXgroup = Investigatorxgroup::find($id);
 

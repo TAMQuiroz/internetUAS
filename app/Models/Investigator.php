@@ -18,7 +18,7 @@ class Investigator extends Model
         return $this->belongsTo('Intranet\Models\User', 'id_usuario');
     }
 
-    public function investigatorXgroups(){
-    	return $this->hasMany('Intranet\Models\InvestigatorXgroup', 'id_investigador');	
+    public function groups(){
+    	return $this->belongsToMany('Intranet\Models\Group','investigatorxgroups','id_investigador','id_grupo')->withPivot('id');	
     }
 }

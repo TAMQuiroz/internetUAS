@@ -90,12 +90,12 @@
 						</tr> 
 					</thead> 
 					<tbody> 
-						@foreach($investigador->investigatorXgroups as $investigadorXgroup)
+						@foreach($investigador->groups as $group)
 						<tr> 
-							<td>{{$investigadorXgroup->group->nombre}}</td> 
-							<td>{{$investigadorXgroup->group->descripcion}}</td> 
+							<td>{{$group->nombre}}</td> 
+							<td>{{$group->descripcion}}</td> 
                             <td>
-                                <a href="{{route('grupo.show', $investigadorXgroup->group->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                <a href="{{route('grupo.show', $group->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
                             </td>
 						</tr> 
 						@endforeach

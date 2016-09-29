@@ -96,19 +96,19 @@
                                     </tr> 
                                 </thead> 
                                 <tbody> 
-                                    @foreach($group->investigatorXgroups as $investigatorXgroup)
+                                    @foreach($group->investigators as $investigator)
                                     <tr> 
-                                        <td>{{$investigatorXgroup->investigator->nombre}}</td> 
-                                        <td>{{$investigatorXgroup->investigator->ape_paterno}}</td> 
-                                        <td>{{$investigatorXgroup->investigator->ape_materno}}</td> 
-                                        <td>{{$investigatorXgroup->investigator->faculty->Nombre}}</td>
+                                        <td>{{$investigator->nombre}}</td> 
+                                        <td>{{$investigator->ape_paterno}}</td> 
+                                        <td>{{$investigator->ape_materno}}</td> 
+                                        <td>{{$investigator->faculty->Nombre}}</td>
                                         <td>
-                                            <a href="{{route('investigador.show', $investigatorXgroup->investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-                                            <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#af{{$investigatorXgroup->investigator->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
+                                            <a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                            <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#af{{$investigator->pivot->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
                                         </td>
                                     </tr> 
 
-                                    @include('modals.delete', ['id'=> 'af'.$investigatorXgroup->investigator->id, 'message' => '¿Esta seguro que desea quitar este investigador del grupo?', 'route' => route('afiliacion.delete', $investigatorXgroup->id)])
+                                    @include('modals.delete', ['id'=> 'af'.$investigator->pivot->id, 'message' => '¿Esta seguro que desea quitar este investigador del grupo?', 'route' => route('afiliacion.delete', $investigator->pivot->id)])
                                     @endforeach
                                     
                                 </tbody> 

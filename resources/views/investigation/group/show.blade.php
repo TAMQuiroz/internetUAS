@@ -80,14 +80,14 @@
                         </tr> 
                     </thead> 
                     <tbody> 
-                        @foreach($group->investigatorXgroups as $investigatorXgroup)
+                        @foreach($group->investigators as $investigator)
                         <tr> 
-                            <td>{{$investigatorXgroup->investigator->nombre}}</td> 
-                            <td>{{$investigatorXgroup->investigator->ape_paterno}}</td> 
-                            <td>{{$investigatorXgroup->investigator->ape_materno}}</td> 
-                            <td>{{$investigatorXgroup->investigator->faculty->Nombre}}</td>
+                            <td>{{$investigator->nombre}}</td> 
+                            <td>{{$investigator->ape_paterno}}</td> 
+                            <td>{{$investigator->ape_materno}}</td> 
+                            <td>{{$investigator->faculty->Nombre}}</td>
                             <td>
-                                <a href="{{route('investigador.show', $investigatorXgroup->investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                <a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
                             </td>
                         </tr> 
                         @endforeach

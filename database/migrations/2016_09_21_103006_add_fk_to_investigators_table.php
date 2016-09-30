@@ -13,7 +13,7 @@ class AddFkToInvestigatorsTable extends Migration
     public function up()
     {
         Schema::table('investigators', function (Blueprint $table) {
-             $table->foreign('id_especialidad')->references('IdEspecialidad')->on('especialidad');
+             $table->foreign('id_especialidad')->references('IdEspecialidad')->on('Especialidad');
              $table->foreign('id_area')->references('id')->on('areas');
         });
     }

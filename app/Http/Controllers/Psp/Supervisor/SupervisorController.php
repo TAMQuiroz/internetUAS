@@ -1,12 +1,13 @@
 <?php
 
-namespace Intranet\Http\Controllers;
+namespace Intranet\Http\Controllers\Psp\Supervisor;
 
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
+use Intranet\Http\Controllers\Controller;
 
-class ModelAController extends Controller
+class SupervisorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class ModelAController extends Controller
      */
     public function index()
     {
-        //
+        return view('psp.supervisor.index');
     }
 
     /**
@@ -25,7 +26,7 @@ class ModelAController extends Controller
      */
     public function create()
     {
-        //
+        return view('psp.supervisor.create');
     }
 
     /**
@@ -47,7 +48,7 @@ class ModelAController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('psp.supervisor.show');
     }
 
     /**
@@ -58,7 +59,7 @@ class ModelAController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('psp.supervisor.edit');
     }
 
     /**

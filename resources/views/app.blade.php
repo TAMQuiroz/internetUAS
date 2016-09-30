@@ -314,6 +314,7 @@
                   <li><a href="{{route('investigador.index')}}"> Administrar Investigadores</a></li>
                   <li><a href="{{route('grupo.index')}}"> Administrar Grupo de Investigación</a></li>
                   <li><a href="{{route('area.index')}}"> Administrar Areas</a></li>
+                  <li><a href="{{route('evento.index')}}"> Administrar Eventos</a></li>
                   @endif
                 </ul>
               </li>

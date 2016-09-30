@@ -12,16 +12,15 @@
                     <h2>Información del Grupo</h2>
                     <div class="clearfix"></div>
                 </div>
-                <form action="{{ route('grupo.store') }}" method="POST" class="form-horizontal" id="formGroup">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                {{Form::open(['route'=>'grupo.store','files'=>true,'class'=>'form-horizontal','id'=>'formSuggestion'])}}
 
                     <div class="x_content">
 
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="groupName" class="form-control col-md-7 col-xs-12" type="text"
-                                       name="groupName" maxlength="100" required="required"
+                                <input id="nombre" class="form-control col-md-7 col-xs-12" type="text"
+                                       name="nombre" maxlength="50" required="required"
                                        onkeypress="return isNumberKey(event)">
                             </div>
                         </div>
@@ -36,16 +35,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción </label>
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción *</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea class="resizable_textarea form-control" id="groupDescription" maxlength="200" name="groupDescription" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
+                                <textarea class="resizable_textarea form-control" id="descripcion" maxlength="200" name="descripcion" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Lider <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="leaderCode" id="leaderCode" class="form-control" required="required">
+                                <select name="lider" id="lider" class="form-control" required="required">
                                     <option value="">-- Seleccione --</option>
                                     @foreach( $teachers as $teacher)
                                         <option value="{{$teacher->IdDocente}}">{{$teacher->Nombre}} {{$teacher->ApellidoPaterno}}</option>
@@ -54,6 +53,12 @@
                             </div>
                         </div> 
 
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Imagen <span class="error">*</span></label>
+                            <div class="col-md-6">
+                                {{Form::file('imagen', ['class'=>'form-control'])}}    
+                            </div>
+                            
                         </div>
 
                         <div class="row">
@@ -63,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                {{Form::close()}}
             </div>
         </div>
     </div>
@@ -82,5 +87,6 @@
     </script>
     <script src="{{ URL::asset('js/myvalidations/course.js')}}"></script>
     <script src="{{ URL::asset('js/myvalidations/regularprofessors.js')}}"></script>
+    <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script>
 
 @endsection

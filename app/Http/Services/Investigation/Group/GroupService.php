@@ -28,14 +28,24 @@ class GroupService {
             $especialidad = Session::get('user')->IdEspecialidad;
         }
 
-        //$facultyName = $request['facultyName'];
-
         $group = Group::create([
-            'nombre' => $request['groupName'],
+            'nombre' => $request['nombre'],
             'id_especialidad' => $especialidad,
-            'descripcion' => $request['groupDescription'],
-            'id_lider' => $request['leaderCode'],
+            'descripcion' => $request['descripcion'],
+            'id_lider' => $request['lider'],
+            'imagen' => null,
         ]);
+
+
+        if(isset($request['imagen']) && $request['imagen'] != ""){
+            $destinationPath = 'uploads/grupos/'; // upload path
+            $extension = $request['imagen']->getClientOriginalExtension();
+            $filename = $group->id.'.'.$extension; 
+            $request['imagen']->move($destinationPath, $filename);
+
+            $group->imagen = $destinationPath.$filename;
+            $group->save();
+        }
 
         return $group;
 
@@ -43,15 +53,36 @@ class GroupService {
 
     public function updateGroup($request, $id) {
 
-        Group::where('id', $id)
-            ->update(['nombre'=> $request['group-name'], 'descripcion' => $request['groupDescription'], 'id_lider' => $request['leaderCode']]);
+        $group = Group::find($id);
+        $group->update([
+            'nombre' => $request['nombre'], 
+            'descripcion' => $request['descripcion'], 
+            'id_lider' => $request['lider']
+        ]);
+        if(isset($request['imagen']) && $request['imagen'] != ""){
+            if(file_exists($group->imagen)){
+                unlink($group->imagen);
+            }
+
+            $destinationPath = 'uploads/grupos/'; // upload path
+            $extension = $request['imagen']->getClientOriginalExtension();
+            $filename = $group->id.'.'.$extension; 
+            $request['imagen']->move($destinationPath, $filename);
+
+            $group->imagen = $destinationPath.$filename;
+            $group->save();
+        }
     }
 
     public function deleteGroup($id) {
         $group = Group::find($id);
-        if($group && $group->investigators){
+        if($group && (count($group->investigators)!=0)){
             return $group;
         }else{
+            if(file_exists($group->imagen)){
+                unlink($group->imagen);
+            }
+
             $group->delete();
         }
         return null;        

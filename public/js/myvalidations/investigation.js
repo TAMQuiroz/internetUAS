@@ -49,7 +49,11 @@ jQuery(function(){
             },
             descripcion: {
                 required: true,
-            }
+                maxlength: 200,
+            },
+            lider: {
+                required: true,
+            },
         },
         messages: {
             nombre: {
@@ -83,6 +87,21 @@ jQuery(function(){
             },
             descripcion: {
                 required: "Debe ingresar una descripcion",
+            },
+            lider: {
+                required: "Debe ingresar un lider de investigacion",
+            },
+            ubicacion: {
+                required: "Debe ingresar una ubicacion",
+            },
+            fecha: {
+                required: "Debe ingresar una fecha",
+            },
+            hora: {
+                required: "Debe ingresar una hora",
+            },
+            duracion: {
+                required: "Debe ingresar una duracion",
             },
         }
     });

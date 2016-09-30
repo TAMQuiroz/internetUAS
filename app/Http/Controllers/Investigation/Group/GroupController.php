@@ -14,6 +14,8 @@ use Intranet\Http\Services\Investigation\Group\GroupService;
 use Intranet\Models\Investigator;
 use Intranet\Models\Group;
 
+use Intranet\Http\Requests\GroupRequest;
+
 class GroupController extends Controller
 {
     /**
@@ -74,7 +76,7 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GroupRequest $request)
     {
         try {
             $this->groupService->createGroup($request->all());
@@ -134,14 +136,14 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GroupRequest $request, $id)
     {
         try {
             $this->groupService->updateGroup($request->all(), $id);
         } catch (\Exception $e) {
             dd($e);
         }
-        return redirect()->route('grupo.index')->with('success', 'Las modificaciones se han guardado exitosamente');
+        return redirect()->route('grupo.show',$id)->with('success', 'Las modificaciones se han guardado exitosamente');
     }
 
     /**

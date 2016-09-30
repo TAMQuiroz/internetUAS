@@ -540,8 +540,19 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::group(['prefix' => 'afiliacion'], function(){
                     Route::post('create', ['as' => 'afiliacion.store', 'uses' => 'Investigation\Affiliation\AffiliationController@store']);
                     Route::get('delete/{id}', ['as' => 'afiliacion.delete', 'uses' => 'Investigation\Affiliation\AffiliationController@destroy']);
-                });         
-            });         
+                });
+            });    
+
+            //Administrar eventos
+            Route::group(['prefix' => 'evento'], function(){
+                Route::get('/', ['as' => 'evento.index', 'uses' => 'Investigation\Event\EventController@index']);
+                Route::get('create', ['as' => 'evento.create', 'uses' => 'Investigation\Event\EventController@create']);
+                Route::post('create', ['as' => 'evento.store', 'uses' => 'Investigation\Event\EventController@store']);
+                Route::get('show/{id}', ['as' => 'evento.show', 'uses' => 'Investigation\Event\EventController@show']);
+                Route::get('edit/{id}', ['as' => 'evento.edit', 'uses' => 'Investigation\Event\EventController@edit']);
+                Route::post('edit/{id}', ['as' => 'evento.update', 'uses' => 'Investigation\Event\EventController@update']);
+                Route::get('delete/{id}', ['as' => 'evento.delete', 'uses' => 'Investigation\Event\EventController@destroy']);
+            });     
         });
     });
 

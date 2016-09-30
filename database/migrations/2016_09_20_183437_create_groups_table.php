@@ -15,10 +15,10 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->integer('id_especialidad')->unsigned();
+            $table->integer('id_especialidad');
             $table->string('descripcion');
-            $table->string('imagen');
-            $table->integer('id_lider')->unsigned();
+            $table->string('imagen')->nullable();
+            $table->integer('id_lider');
             $table->softDeletes();
             $table->timestamps();
         });

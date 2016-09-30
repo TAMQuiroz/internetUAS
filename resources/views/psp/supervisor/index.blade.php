@@ -41,8 +41,8 @@
                             <td class="">Villanueva</td>
                             <td class="teacherEmail">claudia@pucp.pe</td>
                             <td class=" ">
-                            		<a class="btn btn-primary btn-xs view-user" ><i class="fa fa-search"></i></a>
-                                    <a href="{{ route('supervisor.edit', ['id' => 1]) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
+                            		<a class="btn btn-primary btn-xs" ><i class="fa fa-search"></i></a>
+                                    <a href="{{ route('supervisor.edit', 1) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                     <a class="btn btn-danger btn-xs delete-teacher" data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="fa fa-remove"></i></a>
                             </td>
                         </tr>

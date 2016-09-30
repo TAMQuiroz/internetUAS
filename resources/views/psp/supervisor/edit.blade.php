@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Nuevo Supervisor</h3>
+		<h3>Editar Supervisor</h3>
 	</div>
 </div>
 <div class="row">
@@ -12,21 +12,21 @@
                     <h2>Informacion del Supervisor</h2>
                     <div class="clearfix"></div>
                 </div>
-                <form action="{{ route('supervisor.update') }}" method="POST" class="form-horizontal" id="editSup" novalidate="true">
-                    <!--<input type="hidden" name="_token" value="{{ csrf_token() }}">-->
+                <form action="{{ route('supervisor.update',1) }}" method="POST" class="form-horizontal" id="editSup" novalidate="true">
+                    
 
                     <div class="x_content">
                     	<div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Código <span class="error">* </span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input class="form-control col-md-7 col-xs-12" type="text" name="teachercode" id="teachercode" required="true" maxlength="8">
+								<input class="form-control col-md-7 col-xs-12" type="text" name="teachercode" id="teachercode" required="true" maxlength="8" disabled>
 							</div>
 						</div>
                         <div class="form-group">
                             <input type="text" id="validateCode" name="validateCode" hidden>
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre(s)<span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="userfirstname" class="form-control col-md-7 col-xs-12" type="text" name="userfirstname" maxlength="20" required="required" onkeypress="return isNumberKey(event)">
+                                <input id="userfirstname" class="form-control col-md-7 col-xs-12" type="text" name="userfirstname" maxlength="20" required="required" onkeypress="return isNumberKey(event)" disabled>
                             </div>
                         </div>
 
@@ -34,7 +34,7 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Apellido Paterno <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userlastname" class="form-control col-md-7 col-xs-12" type="text" name="userlastname"
-                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)">
+                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)" disabled>
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Apellido Materno <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userspanishlastname" class="form-control col-md-7 col-xs-12" type="text" name="userspanishlastname"
-                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)">
+                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)" disabled>
                             </div>
                         </div>
 
@@ -74,7 +74,7 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre de Usuario <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" name="userusername"
-                                       maxlength="30" required="required" onkeypress="return isNumberKey(event)">
+                                       maxlength="30" required="required" onkeypress="return isNumberKey(event)" disabled>
                             </div>
                         </div>
 

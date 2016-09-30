@@ -301,6 +301,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/getEmail/{email}', ['uses' => 'Teacher\TeacherController@getEmail']);
     });
 
+
     //MyCourses routes
     Route::group(['prefix' => 'myCourses'], function() {
         Route::get('/', ['as' => 'index.myCourses', 'uses' => 'MyCourses\MyCoursesController@index']);
@@ -467,6 +468,141 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/edit', ['as' => 'edit.myUser', 'uses' => 'MyUser\MyUserController@edit']);
         Route::post('/update', ['as' => 'update.myUser', 'uses' => 'MyUser\MyUserController@update']);
     });
+
+        //PspGroups Luis Llanos
+
+    Route::group(['prefix' => 'pspGroups'], function() {
+        Route::get('/', ['as' => 'index.pspGroups', 'uses' => 'PspGroup\PspGroupController@index']);
+        Route::get('/new', ['as' => 'new.pspGroup', 'uses' => 'PspGroup\PspGroupController@create']);
+        Route::post('/save', ['as' => 'savePspGroup.pspGroups', 'uses' => 'PspGroup\PspGroupController@save']);
+        Route::get('/edit', ['as' => 'edit.pspGroup', 'uses' => 'PspGroup\PspGroupController@edit']);
+        Route::get('/delete', ['as' => 'delete.pspGroup', 'uses' => 'PspGroup\PspGroupController@delete']);
+        Route::post('/update', ['as' => 'updatePspGroup.pspGroups', 'uses' => 'PspGroup\PspGroupController@update']);
+        Route::get('/view', ['as' => 'view.pspGroup', 'uses' => 'PspGroup\PspGroupController@view']);
+        Route::post('/', ['as' => 'search.pspGroups', 'uses' => 'PspGroup\PspGroupController@search']);
+    });
+
+    //NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO
+
+   //PspProcess
+
+    Route::group(['prefix' => 'pspProcesses'], function() {
+        Route::get('/', ['as' => 'index.pspProcesses', 'uses' => 'PspProcess\PspProcessController@index']);
+        Route::get('/new', ['as' => 'new.pspProcess', 'uses' => 'PspProcess\PspProcessController@create']);
+        Route::post('/save', ['as' => 'savePspProcess.pspProcesses', 'uses' => 'PspProcess\PspProcessController@save']);
+        Route::get('/edit', ['as' => 'edit.pspProcess', 'uses' => 'PspProcess\PspProcessController@edit']);
+        Route::get('/delete', ['as' => 'delete.pspProcess', 'uses' => 'PspProcess\PspProcessController@delete']);
+        Route::post('/update', ['as' => 'updatePspProcess.pspProcesses', 'uses' => 'PspProcess\PspProcessController@update']);
+        Route::get('/view', ['as' => 'view.pspProcess', 'uses' => 'PspProcess\PspProcessController@view']);
+        Route::post('/', ['as' => 'search.pspProcesses', 'uses' => 'PspProcess\PspProcessController@search']);        
+    });
+
+//FreeHour
+
+    Route::group(['prefix' => 'freeHours'], function() {
+        Route::get('/', ['as' => 'index.freeHours', 'uses' => 'FreeHour\FreeHourController@index']);
+        Route::get('/new', ['as' => 'new.freehour', 'uses' => 'FreeHour\FreeHourController@create']);
+        Route::post('/save', ['as' => 'saveFreeHour.freeHours', 'uses' => 'FreeHour\FreeHourController@save']);
+        Route::get('/edit', ['as' => 'edit.freehour', 'uses' => 'FreeHour\FreeHourController@edit']);
+        Route::get('/delete', ['as' => 'delete.freehour', 'uses' => 'FreeHour\FreeHourController@delete']);
+        Route::post('/update', ['as' => 'updateFreeHour.freeHours', 'uses' => 'FreeHour\FreeHourController@update']);
+        Route::get('/view', ['as' => 'view.freehour', 'uses' => 'FreeHour\FreeHourController@view']);
+        Route::post('/', ['as' => 'search.freeHours', 'uses' => 'FreeHour\FreeHourController@search']);        
+    });
+
+//Meeting
+
+    Route::group(['prefix' => 'meetings'], function() {
+        Route::get('/', ['as' => 'index.meetings', 'uses' => 'Meeting\MeetingController@index']);
+        Route::get('/new', ['as' => 'new.meeting', 'uses' => 'Meeting\MeetingController@create']);
+        Route::post('/save', ['as' => 'saveMeeting.meetings', 'uses' => 'Meeting\MeetingController@save']);
+        Route::get('/edit', ['as' => 'edit.meeting', 'uses' => 'Meeting\MeetingController@edit']);
+        Route::get('/delete', ['as' => 'delete.meeting', 'uses' => 'Meeting\MeetingController@delete']);
+        Route::post('/update', ['as' => 'updateMeeting.meetings', 'uses' => 'Meeting\MeetingController@update']);
+        Route::get('/view', ['as' => 'view.meeting', 'uses' => 'Meeting\MeetingController@view']);
+        Route::post('/', ['as' => 'search.meetings', 'uses' => 'Meeting\MeetingController@search']);        
+    });
+
+//Phase
+
+    Route::group(['prefix' => 'phases'], function() {
+        Route::get('/', ['as' => 'index.phases', 'uses' => 'Phase\PhaseController@index']);
+        Route::get('/new', ['as' => 'new.phase', 'uses' => 'Phase\PhaseController@create']);
+        Route::post('/save', ['as' => 'savePhase.phases', 'uses' => 'Phase\PhaseController@save']);
+        Route::get('/edit', ['as' => 'edit.phase', 'uses' => 'Phase\PhaseController@edit']);
+        Route::get('/delete', ['as' => 'delete.phase', 'uses' => 'Phase\PhaseController@delete']);
+        Route::post('/update', ['as' => 'updatePhase.phases', 'uses' => 'Phase\PhaseController@update']);
+        Route::get('/view', ['as' => 'view.phase', 'uses' => 'Phase\PhaseController@view']);
+        Route::post('/', ['as' => 'search.phases', 'uses' => 'Phase\PhaseController@search']);        
+    });
+
+//Template
+
+
+    Route::group(['prefix' => 'templates'], function() {
+        Route::get('/', ['as' => 'index.templates', 'uses' => 'Template\TemplateController@index']);
+        Route::get('/new', ['as' => 'new.template', 'uses' => 'Template\TemplateController@create']);
+        Route::post('/save', ['as' => 'saveTemplate.templates', 'uses' => 'Template\TemplateController@save']);
+        Route::get('/edit', ['as' => 'edit.template', 'uses' => 'Template\TemplateController@edit']);
+        Route::get('/delete', ['as' => 'delete.template', 'uses' => 'Template\TemplateController@delete']);
+        Route::post('/update', ['as' => 'updateTemplate.templates', 'uses' => 'Template\TemplateController@update']);
+        Route::get('/view', ['as' => 'view.template', 'uses' => 'Template\TemplateController@view']);
+        Route::post('/', ['as' => 'search.templates', 'uses' => 'Template\TemplateController@search']);        
+    });
+
+//State
+
+    Route::group(['prefix' => 'states'], function() {
+        Route::get('/', ['as' => 'index.states', 'uses' => 'State\StateController@index']);
+        Route::get('/new', ['as' => 'new.state', 'uses' => 'State\StateController@create']);
+        Route::post('/save', ['as' => 'saveState.states', 'uses' => 'State\StateController@save']);
+        Route::get('/edit', ['as' => 'edit.state', 'uses' => 'State\StateController@edit']);
+        Route::get('/delete', ['as' => 'delete.state', 'uses' => 'State\StateController@delete']);
+        Route::post('/update', ['as' => 'updateState.states', 'uses' => 'State\StateController@update']);
+        Route::get('/view', ['as' => 'view.state', 'uses' => 'State\StateController@view']);
+        Route::post('/', ['as' => 'search.states', 'uses' => 'State\StateController@search']);        
+    });
+
+//Student
+
+    Route::group(['prefix' => 'students'], function() {
+        Route::get('/', ['as' => 'index.students', 'uses' => 'Student\StudentController@index']);
+        Route::get('/new', ['as' => 'new.student', 'uses' => 'Student\StudentController@create']);
+        Route::post('/save', ['as' => 'saveStudent.students', 'uses' => 'Student\StudentController@save']);
+        Route::get('/edit', ['as' => 'edit.student', 'uses' => 'Student\StudentController@edit']);
+        Route::get('/delete', ['as' => 'delete.student', 'uses' => 'Student\StudentController@delete']);
+        Route::post('/update', ['as' => 'updateStudent.students', 'uses' => 'Student\StudentController@update']);
+        Route::get('/view', ['as' => 'view.student', 'uses' => 'Student\StudentController@view']);
+        Route::post('/', ['as' => 'search.students', 'uses' => 'Student\StudentController@search']);        
+    });
+
+//PspDocument Lesly Elguera
+
+
+    Route::group(['prefix' => 'pspDocuments'], function() {
+        Route::get('/', ['as' => 'index.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@index']);
+        Route::get('/new', ['as' => 'new.pspDocument', 'uses' => 'PspDocument\PspDocumentController@create']);
+        Route::post('/save', ['as' => 'savePspDocument.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@save']);
+        Route::get('/edit', ['as' => 'edit.pspDocument', 'uses' => 'PspDocument\PspDocumentController@edit']);
+        Route::get('/delete', ['as' => 'delete.pspDocument', 'uses' => 'PspDocument\PspDocumentController@delete']);
+        Route::post('/update', ['as' => 'updatePspDocument.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@update']);
+        Route::get('/view', ['as' => 'view.pspDocument', 'uses' => 'PspDocument\PspDocumentController@view']);
+        Route::post('/', ['as' => 'search.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@search']);        
+    });
+
+//Skills
+
+    Route::group(['prefix' => 'skills'], function() {
+        Route::get('/', ['as' => 'index.skills', 'uses' => 'Skill\SkillController@index']);
+        Route::get('/new', ['as' => 'new.skill', 'uses' => 'Skill\SkillController@create']);
+        Route::post('/save', ['as' => 'saveSkill.skills', 'uses' => 'Skill\SkillController@save']);
+        Route::get('/edit', ['as' => 'edit.skill', 'uses' => 'Skill\SkillController@edit']);
+        Route::get('/delete', ['as' => 'delete.skill', 'uses' => 'Skill\SkillController@delete']);
+        Route::post('/update', ['as' => 'updateSkill.skills', 'uses' => 'Skill\SkillController@update']);
+        Route::get('/view', ['as' => 'view.skill', 'uses' => 'Skill\SkillController@view']);
+        Route::post('/', ['as' => 'search.skills', 'uses' => 'Skill\SkillController@search']);        
+    });
+    
 });
 
 //FILES DOWNLOAD
@@ -503,5 +639,3 @@ $api->version('v1', function ($api) {
 });
 
 
-
-//NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO

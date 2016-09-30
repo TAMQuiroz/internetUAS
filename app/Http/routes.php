@@ -544,6 +544,7 @@ Route::group(['middleware' => 'auth'], function(){
             });    
 
             //Administrar eventos
+
             Route::group(['prefix' => 'evento'], function(){
                 Route::get('/', ['as' => 'evento.index', 'uses' => 'Investigation\Event\EventController@index']);
                 Route::get('create', ['as' => 'evento.create', 'uses' => 'Investigation\Event\EventController@create']);

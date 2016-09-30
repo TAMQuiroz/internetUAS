@@ -52,6 +52,7 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(EventRequest $request)
     {
         try {
@@ -83,6 +84,7 @@ class EventController extends Controller
         }catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
+
     }
 
     /**
@@ -128,6 +130,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(EventRequest $request, $id)
     {
 
@@ -175,6 +178,6 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

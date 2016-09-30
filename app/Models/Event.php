@@ -13,4 +13,5 @@ class Event extends Model
     public function group(){
         return $this->belongsTo('Intranet\Models\Group', 'id_grupo');
     }
+
 }

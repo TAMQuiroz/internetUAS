@@ -12,8 +12,9 @@
                     <h2>Informacion del Supervisor</h2>
                     <div class="clearfix"></div>
                 </div>
-                <form action="{{ route('supervisor.store') }}" method="POST" class="form-horizontal" id="formUser" novalidate="true">
-                    <!--<input type="hidden" name="_token" value="{{ csrf_token() }}">-->
+                <form  class="form-horizontal" id="formUser" novalidate="true">
+                <!--<form action="{{ route('supervisor.store') }}" method="POST" class="form-horizontal" id="formUser" novalidate="true">-->
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <div class="x_content">
                     	<div class="form-group">
@@ -67,14 +68,6 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" 
                                    maxlength="30" required="required" >
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre de Usuario <span class="error">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" name="userusername"
-                                       maxlength="30" required="required" onkeypress="return isNumberKey(event)">
                             </div>
                         </div>
 

@@ -12,21 +12,21 @@
                     <h2>Informacion del Supervisor</h2>
                     <div class="clearfix"></div>
                 </div>
-                <form action="{{ route('supervisor.update',1) }}" method="POST" class="form-horizontal" id="editSup" novalidate="true">
-                    
+                <form  class="form-horizontal" id="editSup" novalidate="true">
+                <!--<form action="{{ route('supervisor.update',1) }}" method="POST" class="form-horizontal" id="editSup" novalidate="true">    -->
 
                     <div class="x_content">
                     	<div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Código <span class="error">* </span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input class="form-control col-md-7 col-xs-12" type="text" name="teachercode" id="teachercode" required="true" maxlength="8" disabled>
+								<input class="form-control col-md-7 col-xs-12" type="text" name="teachercode" id="teachercode" required="true" maxlength="8" value="20112188" >
 							</div>
 						</div>
                         <div class="form-group">
                             <input type="text" id="validateCode" name="validateCode" hidden>
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre(s)<span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="userfirstname" class="form-control col-md-7 col-xs-12" type="text" name="userfirstname" maxlength="20" required="required" onkeypress="return isNumberKey(event)" disabled>
+                                <input id="userfirstname" class="form-control col-md-7 col-xs-12" type="text" name="userfirstname" maxlength="20" required="required" onkeypress="return isNumberKey(event)" value="Claudia" >
                             </div>
                         </div>
 
@@ -34,7 +34,7 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Apellido Paterno <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userlastname" class="form-control col-md-7 col-xs-12" type="text" name="userlastname"
-                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)" disabled>
+                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)" value="Villanueva" >
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Apellido Materno <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userspanishlastname" class="form-control col-md-7 col-xs-12" type="text" name="userspanishlastname"
-                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)" disabled>
+                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)" value="Chirinos" >
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Correo <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="useremail" class="form-control col-md-7 col-xs-12" type="text" name="useremail"
-                                       maxlength="30" required="required" onkeypress="return isNumberKey(event)">
+                                       maxlength="30" required="required" onkeypress="return isNumberKey(event)" value="claudia@pucp.pe">
                             </div>
                         </div>
 
@@ -58,7 +58,7 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Teléfono <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" 
-                                   maxlength="30" required="required" >
+                                   maxlength="30" required="required" value="1231234">
                             </div>
                         </div>
 
@@ -66,18 +66,16 @@
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Dirección <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" 
-                                   maxlength="30" required="required" >
+                                   maxlength="30" required="required" value="Av Mundo 1234">
                             </div>
                         </div>
+                        <div class="clearfix"></div>
+                        <div class="separator"></div>
 
-                        <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre de Usuario <span class="error">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="userusername" class="form-control col-md-7 col-xs-12" type="text" name="userusername"
-                                       maxlength="30" required="required" onkeypress="return isNumberKey(event)" disabled>
-                            </div>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nueva Clave</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <a href="" class="btn btn-default pull-left"> Resetear contraseña</a>
                         </div>
-
 
                         <div class="clearfix"></div>
                         <div class="separator"></div>

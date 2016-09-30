@@ -11,11 +11,46 @@
 |
 */
 
-$factory->define(Intranet\User::class, function (Faker\Generator $faker) {
+$factory->define(Intranet\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'IdPerfil'          => 2,
+        'Usuario'           => $faker->userName,
+        'Contrasena'        => bcrypt(str_random(10)),
     ];
 });
+
+$factory->define(Intranet\Models\Teacher::class, function (Faker\Generator $faker) {
+    return [
+    	'IdEspecialidad'    =>  1,
+    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8),
+        'Nombre'            =>  $faker->firstNameMale,
+        'ApellidoPaterno'   =>	$faker->lastName,
+        'ApellidoMaterno'   =>	$faker->lastName,
+        'Correo'			=>	$faker->email,
+        'Cargo'				=>	$faker->text,
+        'Vigente'			=>	1,
+        'Descripcion'		=>	$faker->text,
+    ];
+});
+
+$factory->define(Intranet\Models\Area::class, function (Faker\Generator $faker) {
+    return [
+        'nombre'          => $faker->jobTitle,
+        'descripcion'     => $faker->text,
+    ];
+});
+
+$factory->define(Intranet\Models\Investigator::class, function (Faker\Generator $faker) {
+    return [
+        'id_usuario'        => 2,
+        'nombre'            => $faker->firstNameMale,
+        'ape_paterno'       => $faker->lastName,
+        'ape_materno'       => $faker->lastName,
+        'correo'            => $faker->email,
+        'celular'           => 999999999,
+        'id_especialidad'   => 1,
+        'id_area'           => 1,
+        'Vigente'           => 1,
+    ];
+});
+

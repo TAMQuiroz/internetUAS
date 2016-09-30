@@ -26,8 +26,8 @@ class AddFkToInvdocumentsTable extends Migration
     public function down()
     {
         Schema::table('invdocuments', function (Blueprint $table) {
-            $table->dropForeign('invDocuments_id_investigador_foreign');
-            $table->dropForeign('invDocuments_id_entregable_foreign');
+            $table->dropForeign('invdocuments_id_investigador_foreign');
+            $table->dropForeign('invdocuments_id_entregable_foreign');
         });
     }
 }

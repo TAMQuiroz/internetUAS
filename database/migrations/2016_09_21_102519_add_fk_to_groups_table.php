@@ -14,7 +14,7 @@ class AddFkToGroupsTable extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
              $table->foreign('id_especialidad')->references('IdEspecialidad')->on('Especialidad');
-             $table->foreign('id_lider')->references('IdDocente')->on('Docentes');
+             $table->foreign('id_lider')->references('IdDocente')->on('Docente');
         });
     }
 

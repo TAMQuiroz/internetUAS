@@ -511,13 +511,13 @@ Route::group(['middleware' => 'auth'], function(){
 
 //FreeHour
 
-        Route::group(['prefix' => 'freeHours'], function() {
+        Route::group(['prefix' => 'freeHour'], function() {
             Route::get('/', ['as' => 'index.freeHours', 'uses' => 'FreeHour\FreeHourController@index']);
             Route::get('/new', ['as' => 'new.freehour', 'uses' => 'FreeHour\FreeHourController@create']);
             Route::post('/save', ['as' => 'saveFreeHour.freeHours', 'uses' => 'FreeHour\FreeHourController@save']);
-            Route::get('/edit', ['as' => 'edit.freehour', 'uses' => 'FreeHour\FreeHourController@edit']);
-            Route::get('/delete', ['as' => 'delete.freehour', 'uses' => 'FreeHour\FreeHourController@delete']);
-            Route::post('/update', ['as' => 'updateFreeHour.freeHours', 'uses' => 'FreeHour\FreeHourController@update']);
+            Route::get('/edit/{id}', ['as' => 'edit.freehour', 'uses' => 'FreeHour\FreeHourController@edit']);
+            Route::post('/edit/{id}', ['as' => 'update.freehour', 'uses' => 'FreeHour\FreeHourController@update']);
+            Route::get('/delete', ['as' => 'delete.freehour', 'uses' => 'FreeHour\FreeHourController@delete']);            
             Route::get('/view', ['as' => 'view.freehour', 'uses' => 'FreeHour\FreeHourController@view']);
             Route::post('/', ['as' => 'search.freeHours', 'uses' => 'FreeHour\FreeHourController@search']);        
         });
@@ -555,9 +555,9 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('/', ['as' => 'index.templates', 'uses' => 'Template\TemplateController@index']);
             Route::get('/new', ['as' => 'new.template', 'uses' => 'Template\TemplateController@create']);
             Route::post('/save', ['as' => 'saveTemplate.templates', 'uses' => 'Template\TemplateController@save']);
-            Route::get('/edit', ['as' => 'edit.template', 'uses' => 'Template\TemplateController@edit']);
+            Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Template\TemplateController@edit']);
             Route::get('/delete', ['as' => 'delete.template', 'uses' => 'Template\TemplateController@delete']);
-            Route::post('/update', ['as' => 'updateTemplate.templates', 'uses' => 'Template\TemplateController@update']);
+            Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Template\TemplateController@update']);
             Route::get('/view', ['as' => 'view.template', 'uses' => 'Template\TemplateController@view']);
             Route::post('/', ['as' => 'search.templates', 'uses' => 'Template\TemplateController@search']);        
         });

@@ -571,12 +571,12 @@ Route::group(['middleware' => 'auth'], function(){
             
             Route::group(['prefix' => 'proyecto'], function(){    
                 Route::get('/', ['as' => 'proyecto.index', 'uses' => 'Investigation\Project\ProjectController@index']);
-                Route::get('create', ['as' => 'proyecto.create', 'uses' => 'Investigation\Proyect\ProyectController@create']);
-                Route::post('create', ['as' => 'proyecto.store', 'uses' => 'Investigation\Proyect\ProyectController@store']);
-                Route::get('show/{id}', ['as' => 'proyecto.show', 'uses' => 'Investigation\Proyect\ProyectController@show']);
-                Route::get('edit/{id}', ['as' => 'proyecto.edit', 'uses' => 'Investigation\Proyect\ProyectController@edit']);
-                Route::post('edit/{id}', ['as' => 'proyecto.update', 'uses' => 'Investigation\Proyect\ProyectController@update']);
-                Route::get('delete/{id}', ['as' => 'proyecto.delete', 'uses' => 'Investigation\Proyect\ProyectController@destroy']);
+                Route::get('create', ['as' => 'proyecto.create', 'uses' => 'Investigation\Project\ProjectController@create']);
+                Route::post('create', ['as' => 'proyecto.store', 'uses' => 'Investigation\Project\ProjectController@store']);
+                Route::get('show/{id}', ['as' => 'proyecto.show', 'uses' => 'Investigation\Project\ProjectController@show']);
+                Route::get('edit/{id}', ['as' => 'proyecto.edit', 'uses' => 'Investigation\Project\ProjectController@edit']);
+                Route::post('edit/{id}', ['as' => 'proyecto.update', 'uses' => 'Investigation\Project\ProjectController@update']);
+                Route::get('delete/{id}', ['as' => 'proyecto.delete', 'uses' => 'Investigation\Project\ProjectController@destroy']);
             });
 
         });      

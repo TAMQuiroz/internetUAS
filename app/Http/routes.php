@@ -553,18 +553,34 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'evento.edit', 'uses' => 'Investigation\Event\EventController@edit']);
                 Route::post('edit/{id}', ['as' => 'evento.update', 'uses' => 'Investigation\Event\EventController@update']);
                 Route::get('delete/{id}', ['as' => 'evento.delete', 'uses' => 'Investigation\Event\EventController@destroy']);
-            });     
-        });
-    });
+            }); 
 
-    Route::group(['prefix' => 'area'], function(){    
-        Route::get('/', ['as' => 'area.index', 'uses' => 'Investigation\Area\AreaController@index']);
-        Route::get('create', ['as' => 'area.create', 'uses' => 'Investigation\Area\AreaController@create']);
-        Route::post('create', ['as' => 'area.store', 'uses' => 'Investigation\Area\AreaController@store']);
-        Route::get('show/{id}', ['as' => 'area.show', 'uses' => 'Investigation\Area\AreaController@show']);
-        Route::get('edit/{id}', ['as' => 'area.edit', 'uses' => 'Investigation\Area\AreaController@edit']);
-        Route::post('edit/{id}', ['as' => 'area.update', 'uses' => 'Investigation\Area\AreaController@update']);
-        Route::get('delete/{id}', ['as' => 'area.delete', 'uses' => 'Investigation\Area\AreaController@destroy']);
-    });
+            //Administrar areas
+
+            Route::group(['prefix' => 'area'], function(){    
+                Route::get('/', ['as' => 'area.index', 'uses' => 'Investigation\Area\AreaController@index']);
+                Route::get('create', ['as' => 'area.create', 'uses' => 'Investigation\Area\AreaController@create']);
+                Route::post('create', ['as' => 'area.store', 'uses' => 'Investigation\Area\AreaController@store']);
+                Route::get('show/{id}', ['as' => 'area.show', 'uses' => 'Investigation\Area\AreaController@show']);
+                Route::get('edit/{id}', ['as' => 'area.edit', 'uses' => 'Investigation\Area\AreaController@edit']);
+                Route::post('edit/{id}', ['as' => 'area.update', 'uses' => 'Investigation\Area\AreaController@update']);
+                Route::get('delete/{id}', ['as' => 'area.delete', 'uses' => 'Investigation\Area\AreaController@destroy']);
+            });
+
+            //Administrar proyectos
+            
+            Route::group(['prefix' => 'proyecto'], function(){    
+                Route::get('/', ['as' => 'proyecto.index', 'uses' => 'Investigation\Project\ProjectController@index']);
+                Route::get('create', ['as' => 'proyecto.create', 'uses' => 'Investigation\Proyect\ProyectController@create']);
+                Route::post('create', ['as' => 'proyecto.store', 'uses' => 'Investigation\Proyect\ProyectController@store']);
+                Route::get('show/{id}', ['as' => 'proyecto.show', 'uses' => 'Investigation\Proyect\ProyectController@show']);
+                Route::get('edit/{id}', ['as' => 'proyecto.edit', 'uses' => 'Investigation\Proyect\ProyectController@edit']);
+                Route::post('edit/{id}', ['as' => 'proyecto.update', 'uses' => 'Investigation\Proyect\ProyectController@update']);
+                Route::get('delete/{id}', ['as' => 'proyecto.delete', 'uses' => 'Investigation\Proyect\ProyectController@destroy']);
+            });
+
+        });      
+
+    });  
 
 });

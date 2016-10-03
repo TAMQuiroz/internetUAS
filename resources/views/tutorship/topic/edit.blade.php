@@ -5,7 +5,7 @@
 	<div class="col-md-12">
 		<div class="page-title">
 	        <div class="title_left">
-	            <h3>Edició de Tema</h3>
+	            <h3>Edición de Tema</h3>
 	        </div>
 	    </div>
     </div>

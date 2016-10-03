@@ -275,7 +275,7 @@
 
 <script src="{{ URL::asset('js/myvalidations/confFaculty.js')}}"></script>
 <script src="{{ URL::asset('js/myvalidations/periods.js')}}"></script>
-@include('modals.delete', ['message' => '¿Esta seguro que desea eliminar este periodo?', 'route' => route('endPeriod.faculty', $period->IdPeriodo)])
+@include('modals.delete', ['id'=>'modalDelete','message' => '¿Esta seguro que desea eliminar este periodo?', 'route' => route('endPeriod.faculty', $period->IdPeriodo)])
 @include('periods.modals-measures')
 
 <script src="{{ URL::asset('js/intranetjs/period/edit-script.js')}}"></script>

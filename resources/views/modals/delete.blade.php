@@ -1,4 +1,4 @@
-<div id="modalDelete" class="modal fade" tabindex="-1" role="dialog">
+<div id="{{$id}}" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,7 +11,7 @@
       <div class="modal-footer">
         {{ Form::button('Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal'])}}
         <a href="{{ $route }}">
-        	{{ Form::button('Eliminar', ['class' => 'btn btn-danger'])}}
+          {{ Form::button('Eliminar', ['class' => 'btn btn-danger'])}}
         </a>
       </div>
     </div>

@@ -15,10 +15,12 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->text('descripcion');
             $table->integer('num_entregables');
             $table->date('fecha_ini');
             $table->date('fecha_fin');
             $table->integer('id_grupo')->unsigned();
+            $table->integer('id_area')->unsigned();
             $table->integer('id_status')->unsigned();
             $table->softDeletes();
             $table->timestamps();

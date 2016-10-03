@@ -16,7 +16,13 @@ class FreeHourController extends Controller
      */
     public function index()
     {
+        //$freehours = freeHour::get();
+
+        /*$data = [
+            'freehours'    =>  $freehours,
+        ];*/
         return view('freeHour.index');
+        //return view('freeHour.index', $data);
     }
 
     /**

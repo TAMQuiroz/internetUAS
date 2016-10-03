@@ -17,6 +17,7 @@ class CreateFreehoursTable extends Migration
             $table->date('fecha');
             $table->integer('hora');
             $table->integer('cantidad');
+            $table->integer('idSupervisor')->unsigned();
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
+use Intranet\Models\Template;
 
 class TemplateController extends Controller
 {
@@ -38,7 +39,23 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $template = new Template;
+            $template->idPhase       = 1;
+            $template->idTipoEstado  = 1;
+            $template->idProfesor  = 1;
+            $template->idSupervisor  = 1;
+            $template->idAdmin  = 1;
+            $template->titulo  = "plantilla1";
+            $template->ruta  = "ruta";
+            //$template->obligatorio  = $request['obligatorio'];
+            $template->obligatorio  = 1;
+            $template->save();
+            return redirect()->route('template.index')->with('success', 'La plantilla se ha registrado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+        return view('template.index');
     }
 
     /**

@@ -21,6 +21,7 @@ class CreateTemplatesTable extends Migration
             $table->integer('idAdmin')->unsigned();
             $table->string('titulo');
             $table->string('ruta');
+            $table->integer('obligatorio');
             $table->timestamps();
         });
     }

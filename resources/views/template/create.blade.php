@@ -13,7 +13,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <form  class="form-horizontal" id="formUser" novalidate="true">
-                <!--<form action="{{ route('supervisor.store') }}" method="POST" class="form-horizontal" id="formUser" novalidate="true">-->
+                <form action="{{ route('store.template') }}" method="POST" class="form-horizontal" id="formUser" novalidate="true">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <div class="x_content">
@@ -30,21 +30,21 @@
                             <input type="text" id="validateCode" name="validateCode" hidden>
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Titulo* <span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="userfirstname" class="form-control col-md-7 col-xs-12" type="text" name="userfirstname" maxlength="20" required="required" onkeypress="return isNumberKey(event)">
-                            </div>
+                                <input id="titulo" class="form-control col-md-7 col-xs-12" type="text" name="titulo" maxlength="20" required="required" onkeypress="return isNumberKey(event)">
+                            </div>                            
                         </div>
 
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Buscar Archivo <span class="error">*</span></label>
-                            <input type='file' name='userFile'>
+                            <input type='file' id='ruta' name='ruta'>
                         </div>
 
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Obligatorio* <span class="error">*</span></label>
                             <div class="col-md-1 col-sm-1 col-xs-12">
-                                <input id="userspanishlastname" class="form-control col-md-7 col-xs-12" type="checkbox" name="userspanishlastname"
+                                <input id="obligatorio" class="form-control col-md-7 col-xs-12" type="checkbox" name="obligatorio"
                                        maxlength="20" required="required" onkeypress="return isNumberKey(event)">
-                            </div>
+                            </div>                            
                         </div>     
 
                         <div class="clearfix"></div>

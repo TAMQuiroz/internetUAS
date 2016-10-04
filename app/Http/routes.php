@@ -508,6 +508,15 @@ $api->version('v1', function ($api) {
 
 Route::group(['middleware' => 'auth'], function(){
 
+    Route::group(['prefix' => 'status'], function(){    
+        Route::get('/', ['as' => 'status.index', 'uses' => 'Status\StatusController@index']);
+        Route::get('create', ['as' => 'status.create', 'uses' => 'Status\StatusController@create']);
+        Route::post('create', ['as' => 'status.store', 'uses' => 'Status\StatusController@store']);
+        Route::get('edit/{id}', ['as' => 'status.edit', 'uses' => 'Status\StatusController@edit']);
+        Route::post('edit/{id}', ['as' => 'status.update', 'uses' => 'Status\StatusController@update']);
+        Route::get('delete/{id}', ['as' => 'status.delete', 'uses' => 'Status\StatusController@destroy']);
+    });
+
     Route::group(['middleware' => 'investigation'], function(){
 
         Route::group(['prefix' => 'investigacion'], function(){
@@ -561,7 +570,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/', ['as' => 'area.index', 'uses' => 'Investigation\Area\AreaController@index']);
                 Route::get('create', ['as' => 'area.create', 'uses' => 'Investigation\Area\AreaController@create']);
                 Route::post('create', ['as' => 'area.store', 'uses' => 'Investigation\Area\AreaController@store']);
-                Route::get('show/{id}', ['as' => 'area.show', 'uses' => 'Investigation\Area\AreaController@show']);
+                //Route::get('show/{id}', ['as' => 'area.show', 'uses' => 'Investigation\Area\AreaController@show']);
                 Route::get('edit/{id}', ['as' => 'area.edit', 'uses' => 'Investigation\Area\AreaController@edit']);
                 Route::post('edit/{id}', ['as' => 'area.update', 'uses' => 'Investigation\Area\AreaController@update']);
                 Route::get('delete/{id}', ['as' => 'area.delete', 'uses' => 'Investigation\Area\AreaController@destroy']);

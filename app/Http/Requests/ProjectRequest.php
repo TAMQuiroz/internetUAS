@@ -24,7 +24,13 @@ class ProjectRequest extends Request
     public function rules()
     {
         return [
-            //
+            'nombre'            =>  'required|max:100',
+            'num_entregables'   =>  'required|numeric',
+            'fecha_ini'         =>  'required|date|after:today',
+            'fecha_fin'         =>  'required|date|after:fecha_ini',
+            'grupo'             =>  'required|numeric',
+            'area'              =>  'required|numeric',
+            'descripcion'       =>  'required|max:100',
         ];
     }
 }

@@ -299,6 +299,7 @@
                     @if(in_array(64,Session::get('actions')))
                       <li><a href="{{ route('index.academicCycle')}}">Ciclo Académico</a></li>
                     @endif
+                    <li><a href="{{route('status.index')}}">Administracion de status</a></li>
 
                   </ul>
                 </li>

@@ -653,4 +653,73 @@ $api->version('v1', function ($api) {
             $api->get('/faculties/{id}/teachers', 'Faculty\FacultyController@getTeachers');
         });
     });
+
+});
+
+
+
+//NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO
+
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::group(['middleware' => 'investigation'], function(){
+
+        Route::group(['prefix' => 'investigacion'], function(){
+
+            //Home de investigacion
+            Route::get('/', ['as' => 'investigation.index', 'uses' => 'Investigation\InvestigationController@index']);
+
+            //Administrar Investigador
+            Route::group(['prefix' => 'investigador'], function(){
+                Route::get('/', ['as' => 'investigador.index', 'uses' => 'Investigation\Investigator\InvestigatorController@index']);
+                Route::get('create', ['as' => 'investigador.create', 'uses' => 'Investigation\Investigator\InvestigatorController@create']);
+                Route::post('create', ['as' => 'investigador.store', 'uses' => 'Investigation\Investigator\InvestigatorController@store']);
+                Route::get('show/{id}', ['as' => 'investigador.show', 'uses' => 'Investigation\Investigator\InvestigatorController@show']);
+                Route::get('edit/{id}', ['as' => 'investigador.edit', 'uses' => 'Investigation\Investigator\InvestigatorController@edit']);
+                Route::post('edit/{id}', ['as' => 'investigador.update', 'uses' => 'Investigation\Investigator\InvestigatorController@update']);
+                Route::get('delete/{id}', ['as' => 'investigador.delete', 'uses' => 'Investigation\Investigator\InvestigatorController@destroy']);
+            });
+
+            //Administrar Grupo de Investigacion
+            Route::group(['prefix' => 'grupo'], function(){
+                Route::get('/', ['as' => 'grupo.index', 'uses' => 'Investigation\Group\GroupController@index']);
+                Route::get('create', ['as' => 'grupo.create', 'uses' => 'Investigation\Group\GroupController@create']);
+                Route::post('create', ['as' => 'grupo.store', 'uses' => 'Investigation\Group\GroupController@store']);
+                Route::get('edit/{id}', ['as' => 'grupo.edit', 'uses' => 'Investigation\Group\GroupController@edit']);
+                Route::post('edit/{id}', ['as' => 'grupo.update', 'uses' => 'Investigation\Group\GroupController@update']);
+                Route::get('delete/{id}', ['as' => 'grupo.delete', 'uses' => 'Investigation\Group\GroupController@destroy']);
+                Route::get('show/{id}', ['as' => 'grupo.show', 'uses' => 'Investigation\Group\GroupController@show']);
+
+                //Seleccion de integrantes de grupo de investigacion
+                Route::group(['prefix' => 'afiliacion'], function(){
+                    Route::post('create', ['as' => 'afiliacion.store', 'uses' => 'Investigation\Affiliation\AffiliationController@store']);
+                    Route::get('delete/{id}', ['as' => 'afiliacion.delete', 'uses' => 'Investigation\Affiliation\AffiliationController@destroy']);
+                });
+            });    
+
+            //Administrar eventos
+
+            Route::group(['prefix' => 'evento'], function(){
+                Route::get('/', ['as' => 'evento.index', 'uses' => 'Investigation\Event\EventController@index']);
+                Route::get('create', ['as' => 'evento.create', 'uses' => 'Investigation\Event\EventController@create']);
+                Route::post('create', ['as' => 'evento.store', 'uses' => 'Investigation\Event\EventController@store']);
+                Route::get('show/{id}', ['as' => 'evento.show', 'uses' => 'Investigation\Event\EventController@show']);
+                Route::get('edit/{id}', ['as' => 'evento.edit', 'uses' => 'Investigation\Event\EventController@edit']);
+                Route::post('edit/{id}', ['as' => 'evento.update', 'uses' => 'Investigation\Event\EventController@update']);
+                Route::get('delete/{id}', ['as' => 'evento.delete', 'uses' => 'Investigation\Event\EventController@destroy']);
+            });     
+        });
+    });
+
+    Route::group(['prefix' => 'area'], function(){    
+        Route::get('/', ['as' => 'area.index', 'uses' => 'Investigation\Area\AreaController@index']);
+        Route::get('create', ['as' => 'area.create', 'uses' => 'Investigation\Area\AreaController@create']);
+        Route::post('create', ['as' => 'area.store', 'uses' => 'Investigation\Area\AreaController@store']);
+        Route::get('show/{id}', ['as' => 'area.show', 'uses' => 'Investigation\Area\AreaController@show']);
+        Route::get('edit/{id}', ['as' => 'area.edit', 'uses' => 'Investigation\Area\AreaController@edit']);
+        Route::post('edit/{id}', ['as' => 'area.update', 'uses' => 'Investigation\Area\AreaController@update']);
+        Route::get('delete/{id}', ['as' => 'area.delete', 'uses' => 'Investigation\Area\AreaController@destroy']);
+    });
+
+
 });

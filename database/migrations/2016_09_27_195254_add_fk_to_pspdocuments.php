@@ -15,6 +15,7 @@ class AddFkToPspdocuments extends Migration
         Schema::table('pspdocuments', function (Blueprint $table) {
              $table->foreign('idStudent')->references('id')->on('pspstudents');
              $table->foreign('idTemplate')->references('id')->on('templates');
+             $table->foreign('idTipoEstado')->references('id')->on('statuses');
         });
     }
 
@@ -28,6 +29,7 @@ class AddFkToPspdocuments extends Migration
         Schema::table('pspdocuments', function (Blueprint $table) {
             $table->dropForeign('pspdocuments_idStudent_foreign');
             $table->dropForeign('pspdocuments_idTemplate_foreign');
+            $table->dropForeign('pspdocuments_idTipoEstado_foreign');
         });  
     }
 }

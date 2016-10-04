@@ -56,9 +56,12 @@ class TemplateController extends Controller
             $template->idProfesor  = 1;
             $template->idSupervisor  = 1;
             $template->idAdmin  = 1;
-            $template->titulo  = $request['titulo'];;
-            $template->ruta  = $request['ruta'];;
-            $template->obligatorio  = 1;
+            $template->titulo  = $request['titulo'];
+            $template->ruta  = $request['ruta'];
+            if($request['obligatorio']==true)
+                $template->obligatorio  = 1;
+            else
+                $template->obligatorio  = 2;
             $template->save();
             return redirect()->route('index.templates')->with('success', 'La plantilla se ha registrado exitosamente');
         } catch (Exception $e) {

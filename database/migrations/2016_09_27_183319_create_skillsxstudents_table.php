@@ -17,6 +17,7 @@ class CreateSkillsxstudentsTable extends Migration
             $table->foreign('idStudent')->references('id')->on('pspstudents');
             $table->integer('idCriterio')->unsigned();
             $table->foreign('idCriterio')->references('id')->on('skills');
+            $table->integer('nota');
             $table->timestamps();
         });
     }

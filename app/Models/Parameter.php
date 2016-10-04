@@ -4,7 +4,7 @@ namespace Intranet\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Parameter extends Model
-{
+class Parameter extends Model{
+	use SoftDeletes;
     protected $fillable = ['duracionCita'];
 }

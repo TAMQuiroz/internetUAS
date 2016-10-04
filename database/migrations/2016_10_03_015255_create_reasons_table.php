@@ -15,7 +15,7 @@ class CreateReasonsTable extends Migration
         Schema::create('reasons', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tipo')->unsigned();
-            $table->string('nombre');
+            $table->string('nombre');            
             $table->timestamps();
         });
     }

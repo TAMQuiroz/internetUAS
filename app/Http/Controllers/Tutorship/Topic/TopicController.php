@@ -5,6 +5,7 @@ namespace Intranet\Http\Controllers\Tutorship\Topic;
 use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests;
+use Intranet\Http\Requests\TopicRequest;
 use Intranet\Models\Topic;
 class TopicController extends Controller{
     /**
@@ -37,7 +38,7 @@ class TopicController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TopicRequest $request)
     {
         try {
             $tema = new Topic;
@@ -72,7 +73,7 @@ class TopicController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TopicRequest $request, $id)
     {
         try {
             $topic = Topic::find($id);

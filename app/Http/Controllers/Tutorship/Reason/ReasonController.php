@@ -6,6 +6,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Reason;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
+use Intranet\Http\Requests\ReasonRequest;
 
 class ReasonController extends Controller{
     
@@ -25,7 +26,7 @@ class ReasonController extends Controller{
     }
 
     
-    public function store(Request $request)
+    public function store(ReasonRequest $request)
     {
         try {
             $motivo = new Reason;
@@ -54,7 +55,7 @@ class ReasonController extends Controller{
         return view('tutorship.reason.edit', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(ReasonRequest $request, $id)
     {
         try {
             $reason = Reason::find($id);

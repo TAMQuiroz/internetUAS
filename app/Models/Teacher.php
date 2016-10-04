@@ -10,7 +10,7 @@ class Teacher extends Model {
 
     protected $table = 'Docente';
     protected $primaryKey = 'IdDocente';
-    protected $fillable = ['IdEspecialidad', 'IdUsuario','Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno', 'Correo', 'Vigente', 'Descripcion', 'Cargo'];
+    protected $fillable = ['IdEspecialidad', 'IdUsuario','Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno', 'Correo', 'Vigente', 'rolTutoria','rolEvaluaciones','oficina','telefono','anexo','Descripcion', 'Cargo'];
 
     public function faculty(){
         return $this->belongsTo('Intranet\Models\Faculty', 'IdEspecialidad');

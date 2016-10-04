@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSupervisorTable extends Migration
+class CreateSupervisorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateSupervisorTable extends Migration
      */
     public function up()
     {
-        Schema::create('supervisor', function (Blueprint $table) {
+        Schema::create('supervisors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombres');
             $table->string('contraseña');
@@ -36,6 +36,6 @@ class CreateSupervisorTable extends Migration
      */
     public function down()
     {
-        Schema::drop('supervisor');
+        Schema::drop('supervisors');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToSupervisor extends Migration
+class AddFkToSupervisors extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddFkToSupervisor extends Migration
      */
     public function up()
     {
-        Schema::table('supervisor', function (Blueprint $table) {
+        Schema::table('supervisors', function (Blueprint $table) {
              $table->foreign('idUser')->references('IdUsuario')->on('usuario');
              $table->foreign('idFaculty')->references('IdEspecialidad')->on('especialidad');
         });
@@ -25,9 +25,9 @@ class AddFkToSupervisor extends Migration
      */
     public function down()
     {
-        Schema::table('supervisor', function (Blueprint $table) {
-            $table->dropForeign('supervisor_idUser_foreign');
-            $table->dropForeign('supervisor_idFaculty_foreign');
+        Schema::table('supervisors', function (Blueprint $table) {
+            $table->dropForeign('supervisors_idUser_foreign');
+            $table->dropForeign('supervisors_idFaculty_foreign');
         });
     }
 }

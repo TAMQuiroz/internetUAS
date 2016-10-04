@@ -14,7 +14,7 @@ class AddFkToMeetings extends Migration
     {
         Schema::table('meetings', function (Blueprint $table) {
              $table->foreign('idStudent')->references('id')->on('pspstudents');
-             $table->foreign('idSupervisor')->references('id')->on('supervisor');
+             $table->foreign('idSupervisor')->references('id')->on('supervisors');
         });
     }
 

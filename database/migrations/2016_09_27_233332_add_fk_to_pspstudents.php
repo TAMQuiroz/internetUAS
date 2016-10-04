@@ -16,7 +16,7 @@ class AddFkToPspstudents extends Migration
              $table->foreign('idUser')->references('IdUsuario')->on('usuario');
              $table->foreign('idPspGroup')->references('id')->on('pspgroup');
              $table->foreign('idFaculty')->references('IdEspecialidad')->on('especialidad');
-             $table->foreign('idSupervisor')->references('id')->on('supervisor');
+             $table->foreign('idSupervisor')->references('id')->on('supervisors');
         });
     }
 

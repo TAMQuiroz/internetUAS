@@ -556,8 +556,8 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('/new', ['as' => 'new.template', 'uses' => 'Template\TemplateController@create']);
             Route::post('/new', ['as' => 'store.template', 'uses' => 'Template\TemplateController@store']);
             Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Template\TemplateController@edit']);
-            Route::get('/delete', ['as' => 'delete.template', 'uses' => 'Template\TemplateController@delete']);
             Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Template\TemplateController@update']);
+            Route::get('/delete/{id}', ['as' => 'delete.template', 'uses' => 'Template\TemplateController@destroy']);            
             Route::get('/view', ['as' => 'view.template', 'uses' => 'Template\TemplateController@view']);
             Route::post('/', ['as' => 'search.templates', 'uses' => 'Template\TemplateController@search']);        
         });

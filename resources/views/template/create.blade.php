@@ -12,7 +12,6 @@
                     <h2>Informacion del Documento</h2>
                     <div class="clearfix"></div>
                 </div>
-                <form  class="form-horizontal" id="formUser" novalidate="true">
                 <form action="{{ route('store.template') }}" method="POST" class="form-horizontal" id="formUser" novalidate="true">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -20,7 +19,7 @@
                     	<div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fase* <span class="error">* </span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<select class="form-control col-md-7 col-xs-12" name="hall" id="hall" value="3">
+								<select class="form-control col-md-7 col-xs-12" name="fase" id="fase" value="3">
                                   <option>1</option>
                                   <option>2</option>
                                 </select>                                

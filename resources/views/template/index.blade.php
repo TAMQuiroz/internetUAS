@@ -27,24 +27,29 @@
                         <th class="column-title">Titulo</th>
                         <th class="column-title">Plantilla</th>
                         <th class="column-title">Obligatorio</th>
-                        <th class="column-title">Fase</th>
-                        <th class="column-title last">Acciones</th>
-                        <th class="bulk-actions" colspan="7">
-                            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                        </th>
+                        <th class="column-title">Fase</th>   
+                        <th colspan="2">Acciones</th>                     
                     </tr>
                     </thead>
                     <tbody>
-                    	<tr class="even pointer">
-                            <td class="">Ficha de Inscripcion</td>
-                            <td class=" ">FichaInscr.xls</td>
-                            <td class="">Obligatorio</td>
-                            <td class="">1</td>
-                            <td class=" ">
-                                    <a href="{{ route('template.edit',1) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
-                                    <a class="btn btn-danger btn-xs delete-teacher" data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="fa fa-remove"></i></a>
+                        @foreach($templates as $template)
+                        <tr> 
+                            <td>{{$template->titulo}}</td> 
+                            <td>{{$template->ruta}}</td> 
+                            @if($template->obligatorio==1)
+                            <td>obligatorio</td> 
+                            @else
+                            <td>no obligatorio</td> 
+                            @endif
+                            <td>{{$template->idPhase}}</td> 
+                            <td>
+                                <a href="{{route('template.edit', $template->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
+                                <!--<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$template->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>-->
+                                <a class="btn btn-danger btn-xs" href="{{route('delete.template', $template->id)}}" onclick="return confirm('Esta seguro que desea eliminar este plantilla?')"><i class="fa fa-remove"></i></a>
                             </td>
-                        </tr>
+                        </tr> 
+                    
+                        @endforeach
                     </tbody>
                 </table>
             </div>

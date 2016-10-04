@@ -10,6 +10,10 @@ use Intranet\Models\Template;
 
 class TemplateController extends Controller
 {
+
+    public function __construct() {
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +22,13 @@ class TemplateController extends Controller
     public function index()
     {
         //
-         return view('template.index');
+        $templates = Template::get();
+
+        $data = [
+            'templates'    =>  $templates,
+        ];
+        return view('template.index', $data);
+        //return view('template.index');
     }
 
     /**
@@ -41,17 +51,16 @@ class TemplateController extends Controller
     {
         try {
             $template = new Template;
-            $template->idPhase       = 1;
+            $template->idPhase       = $request['fase'];
             $template->idTipoEstado  = 1;
             $template->idProfesor  = 1;
             $template->idSupervisor  = 1;
             $template->idAdmin  = 1;
-            $template->titulo  = "plantilla1";
-            $template->ruta  = "ruta";
-            //$template->obligatorio  = $request['obligatorio'];
+            $template->titulo  = $request['titulo'];;
+            $template->ruta  = $request['ruta'];;
             $template->obligatorio  = 1;
             $template->save();
-            return redirect()->route('template.index')->with('success', 'La plantilla se ha registrado exitosamente');
+            return redirect()->route('index.templates')->with('success', 'La plantilla se ha registrado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -100,6 +109,16 @@ class TemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $template   = Template::find($id);
+            
+            //Restricciones
+
+            $template->delete();
+
+            return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        } 
     }
 }

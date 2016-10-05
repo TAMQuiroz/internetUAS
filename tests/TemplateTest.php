@@ -6,7 +6,10 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TemplateTest extends TestCase
 {
+    
     use DatabaseMigrations;
+
+
     /**
      * A basic test example.
      *
@@ -17,7 +20,7 @@ class TemplateTest extends TestCase
         $this->assertTrue(true);
     }
 
-   /* public function test_cr_are_01()
+    public function test_cr_are_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -26,14 +29,13 @@ class TemplateTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/templates/create')
-    		->select(1, 'fase')
-    		->type('Plantilla1','titulo')
+    		->select('1', 'fase')
+            ->type('Plantilla','titulo')
     		->attach('../uploads/templates/1.docx','ruta')
     		->check('obligatorio')
     		->press('Guardar')
-    		->seePageIs('/psp/templates/')
-    		->see('Documentos')
-    		->see('La plantilla se ha registrado exitosamente');
+    		->seePageIs('/psp/templates')
+    		->see('Documentos',true);
     }
 
     public function test_cr_are_02()
@@ -45,31 +47,28 @@ class TemplateTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/templates/create')
-    		->select(2, 'fase')
-    		->type('Plantilla2','titulo')
-    		->attach('../uploads/templates/2.docx','ruta')
+    		->select(1, 'fase')
+            ->type('Plantilla3','titulo')
     		->press('Guardar')
-    		->seePageIs('/psp/templates/')
-    		->see('Documentos')
-    		->see('La plantilla se ha registrado exitosamente');
-    }*/
+    		->seePageIs('/psp/templates/create')
+            ->see('Debe ingresar una Plantilla',true);            
+    }
+
 
     public function test_cr_are_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        //$user = factory(Intranet\Models\Template::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/templates/create')
-    		//->select(1, 'fase')
-    		->press('Guardar')
-    		->seePageIs('/psp/templates/create');
-    		//->see('Nuevo Documento')
-    		//->see('Debe ingresar una Plantilla');
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/templates/create')
+            ->select(1, 'fase')
+            ->attach('../uploads/templates/2.png','ruta')
+            ->press('Guardar')
+            ->seePageIs('/psp/templates/create')
+            ->see('Debe ingresar un titulo',true);            
     }
-
 
 }

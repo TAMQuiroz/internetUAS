@@ -7,6 +7,7 @@ use Auth;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Template;
+use Intranet\Http\Requests\TemplateRequest;
 
 class TemplateController extends Controller
 {
@@ -47,7 +48,7 @@ class TemplateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TemplateRequest $request)
     {
         try {
             $template = new Template;
@@ -75,7 +76,7 @@ class TemplateController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
-        return view('template.index');
+        
     }
 
     /**
@@ -138,7 +139,6 @@ class TemplateController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
-        return view('template.index');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Intranet\Http\Requests;
 
 use Intranet\Http\Requests\Request;
 
-class freeHourRequest extends Request
+class TemplateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class freeHourRequest extends Request
     public function rules()
     {
         return [
-            'fecha'        => 'required',
-            'hora'   => 'numeric|required',
-            'cantidad'   => 'numeric|required',
+            'fase'        => 'required',
+            'titulo'   => 'required|max:100',
+            'obligatorio'    => 'bool',
+            'ruta'   => 'file|required',
         ];
     }
 }

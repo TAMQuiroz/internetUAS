@@ -12,37 +12,33 @@
                     <h2>Informacion del Documento</h2>
                     <div class="clearfix"></div>
                 </div>
-                <form action="{{ route('store.template') }}" method="POST" class="form-horizontal" id="formUser" novalidate="true">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <div class="x_content">
+                    {{Form::open(['route' => 'store.template', 'files'=>true, 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                     	<div class="form-group">
-							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fase* <span class="error">* </span></label>
+                            {{Form::label('Fase *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<select class="form-control col-md-7 col-xs-12" name="fase" id="fase" value="3">
-                                  <option>1</option>
-                                  <option>2</option>
-                                </select>                                
+								{{Form::select('fase', [1=>'1',2=>'2'], null, ['class' => 'form-control', 'required'])}}                              
 							</div>
 						</div>
                         <div class="form-group">
-                            <input type="text" id="validateCode" name="validateCode" hidden>
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Titulo* <span class="error">*</span></label>
+                            {{Form::label('Titulo *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="titulo" class="form-control col-md-7 col-xs-12" type="text" name="titulo" maxlength="20" required="required" onkeypress="return isNumberKey(event)">
+                                {{Form::text('titulo',null,['class'=>'form-control', 'required', 'maxlength' => 100])}}
                             </div>                            
                         </div>
 
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Buscar Archivo <span class="error">*</span></label>
-                            <input type='file' id='ruta' name='ruta'>
+                            {{Form::label('ruta',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{Form::file('ruta', ['class'=>'form-control','required'])}} 
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Obligatorio* <span class="error">*</span></label>
+                            {{Form::label('Obligatorio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-1 col-sm-1 col-xs-12">
-                                <input id="obligatorio" class="form-control col-md-7 col-xs-12" type="checkbox" name="obligatorio"
-                                       maxlength="20" required="required" onkeypress="return isNumberKey(event)">
+                            {{Form::checkbox('obligatorio',1,false, ['class' => 'form-control'])}}
                             </div>                            
                         </div>     
 
@@ -50,12 +46,12 @@
                         <div class="separator"></div>
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
-                                <button class="btn btn-success pull-right" name="btnSave" type="submit">Guardar</button>
+                                {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
                                 <a href="{{ route('index.templates') }}" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>
+                        {{Form::close()}}
                     </div>
-                </form>
 
             </div>
         </div>

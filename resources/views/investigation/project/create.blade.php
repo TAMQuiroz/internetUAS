@@ -56,7 +56,7 @@
 		    		</div>
 
 		    		<div class="form-group">
-		    			{{Form::label('Grupo *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Area *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-6">
 		    				{{Form::select('area', $areas, null, ['class' => 'form-control', 'required'])}}
 		    			</div>
@@ -72,7 +72,7 @@
 		    		<div class="row">
 						<div class="col-md-9 col-sm-12 col-xs-12">
 							{{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-							<a class="btn btn-default pull-right" href="{{ route('evento.index') }}">Cancelar</a>
+							<a class="btn btn-default pull-right" href="{{ route('proyecto.index') }}">Cancelar</a>
 						</div>
 					</div>
 		    	{{Form::close()}}

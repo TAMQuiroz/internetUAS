@@ -45,7 +45,11 @@
 							<td>{{$proyecto->fecha_fin}}</td> 
 							<td>{{$proyecto->area->nombre}}</td> 
 							<td>{{count($proyecto->investigators)}}</td>
-							<td>{{$proyecto->status->nombre}}</td>
+							<td>
+							@if($proyecto->status)
+								{{$proyecto->status->nombre}}
+							@endif
+							</td>
 							<td>
 								<a href="{{route('proyecto.show', $proyecto->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
 								<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$proyecto->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>

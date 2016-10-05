@@ -112,6 +112,7 @@ jQuery(function(){
             },
             num_entregables: {
                 required: "Debe ingresar una cantidad de entregables",
+                min: "Debe poner un numero mayor a 0",
             }
         }
     });

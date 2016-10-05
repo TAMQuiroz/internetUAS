@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="page-title">
             <div class="title_left">
-                <h3></h3>
+                <h3>Proyecto</h3>
             </div>
         </div>
     </div>
@@ -15,69 +15,84 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Informacion del Grupo</h3>
+                <h3 class="panel-title">Información</h3>
             </div>
-
             <div class="panel-body">
-                <div class="form-horizontal col-md-8">
+
+                <div class="form-horizontal col-md-6">
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Código</label>
-                        <div class="col-md-8 col-sm-6 col-xs-12">
-                            <input id="group-code" class="form-control col-md-7 col-xs-12" type="text" name="group-code" value="{{ $group->id }}" readonly="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre <span class="error"> * </span></label>
-                        <div class="col-md-8 col-sm-6 col-xs-12">
-                            <input id="group-name" class="form-control col-md-7 col-xs-12" type="text" name="group-name" value="{{ $group->nombre }}" maxlength="100" required="required" readonly="">
+                        {{Form::label('Nombre *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::text('nombre',$proyecto->nombre,['class'=>'form-control', 'readonly', 'maxlength' => 50])}}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad <span class="error">*</span></label>
-                        <div class="col-md-8 col-sm-6 col-xs-12">
-                            <input id="facultyName" class="form-control col-md-7 col-xs-12" type="text" name="facultyName" value="{{ $group->faculty->Nombre }}" readonly>
+                        {{Form::label('Número de entregables *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::text('num_entregables',$proyecto->num_entregables,['class'=>'form-control', 'readonly'])}}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción </label>
-                        <div class="col-md-8 col-sm-6 col-xs-12">
-                            <textarea class="resizable_textarea form-control" id="groupDescription" maxlength="200" readonly="" name="groupDescription" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;">{{$group->descripcion}}</textarea>
+                        {{Form::label('Fecha de inicio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::text('fecha_ini',$proyecto->fecha_ini,['id'=>'fecha_ini','class'=>'form-control', 'readonly','min'=>\Carbon\Carbon::today()->toDateString()])}}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Lider <span class="error">*</span></label>
-                        <div class="col-md-8 col-sm-6 col-xs-12">
-                            {{Form::text('lider', $group->leader->Nombre.' '.$group->leader->ApellidoPaterno.' '.$group->leader->ApellidoMaterno, ['class'=>'form-control','readonly'])}}
+                        {{Form::label('Fecha de Fecha fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::text('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin','class'=>'form-control', 'readonly','min'=>\Carbon\Carbon::today()->toDateString()])}}
                         </div>
-                    </div> 
+                    </div>
+
+                    <div class="form-group">
+                        {{Form::label('Grupo *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::text('grupo', $proyecto->group->nombre, ['class' => 'form-control', 'readonly'])}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{Form::label('Area *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::text('area', $proyecto->area->nombre, ['class' => 'form-control', 'readonly'])}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{Form::label('Descripcion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::textarea('descripcion', $proyecto->descripcion, ['class' => 'form-control', 'readonly', 'rows'=>'5', 'maxlength'=>200])}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{Form::label('Estado *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-8">
+                            {{Form::text('estado', $proyecto->status->nombre, ['class' => 'form-control', 'readonly'])}}
+                        </div>
+                    </div>
 
                     <div class="row">
-                        <div class="col-md-11 col-sm-9 col-xs-9">
-                            <a href="{{route('grupo.edit', $group->id)}}">
-                                <button class="btn btn-success submit pull-right" type="submit">Editar</button>
-                            </a>
-                            <a href="{{ route('grupo.index') }}" class="btn btn-default pull-right"> Regresar</a>
+                        <div class="col-md-11 col-sm-12 col-xs-12">
+                            <a class="btn btn-success pull-right" href="{{ route('proyecto.edit',$proyecto->id) }}">Editar</a>
+                            <a class="btn btn-default pull-right" href="{{ route('proyecto.index') }}">Regresar</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="row">
-                        Imagen del grupo:
-                    </div>
-                    <div class="row">
-                        @if($group->imagen)
-                        {{Html::image(asset($group->imagen), null, ['class'=>'img-thumbnail'])}}
-                        @endif
+                        Diagrama de Gantt:
                     </div>
                 </div>
             </div>
 
             <div class="panel-heading">
-                <h3 class="panel-title">Integrantes del Grupo</h3>
+                <h3 class="panel-title">Investigadores</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
@@ -86,27 +101,68 @@
                             <th>Nombre</th> 
                             <th>Apellido Paterno</th> 
                             <th>Apellido Materno</th> 
+                            <th>Correo</th> 
                             <th>Especialidad</th> 
                             <th colspan="2">Acciones</th>
                         </tr> 
                     </thead> 
                     <tbody> 
-                        @foreach($group->investigators as $investigator)
+                        @foreach($proyecto->investigators as $investigador)
                         <tr> 
-                            <td>{{$investigator->nombre}}</td> 
-                            <td>{{$investigator->ape_paterno}}</td> 
-                            <td>{{$investigator->ape_materno}}</td> 
-                            <td>{{$investigator->faculty->Nombre}}</td>
+                            <td>{{$investigador->nombre}}</td> 
+                            <td>{{$investigador->ape_paterno}}</td> 
+                            <td>{{$investigador->ape_materno}}</td> 
+                            <td>{{$investigador->correo}}</td> 
+                            <td>{{$investigador->faculty->Nombre}}</td>
                             <td>
-                                <a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                <a href="{{route('investigador.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
                             </td>
                         </tr> 
                         @endforeach
+                        
+                    </tbody> 
+                </table>
+            </div>
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Entregables</h3>
+            </div>
+            <div class="panel-body">
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{{route('entregable.index')}}" class="btn btn-success pull-right">Mis entregables</a>
+                    </div>
+                </div>
+
+                <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
+                    <thead> 
+                        <tr class="headings"> 
+                            <th>Nombre</th> 
+                            <th>Responsable</th> 
+                            <th>Fecha de entrega</th> 
+                            <th colspan="2">Acciones</th>
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                        @foreach($proyecto->deliverables as $deliverable)
+                        <tr> 
+                            <td>{{$deliverable->nombre}}</td> 
+                            <td>Responsables</td> 
+                            <td>{{$deliverable->fecha_limite}}</td> 
+                            <td>
+                                <a href="{{route('entregable.show', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                <a href="{{route('entregable.download', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-download"></i></a>
+                            </td>
+                        </tr> 
+                        @endforeach
+                        
                     </tbody> 
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 
 @endsection

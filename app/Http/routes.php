@@ -547,8 +547,8 @@ Route::group(['middleware' => 'auth'], function(){
 
                 //Seleccion de integrantes de grupo de investigacion
                 Route::group(['prefix' => 'afiliacion'], function(){
-                    Route::post('create', ['as' => 'afiliacion.store', 'uses' => 'Investigation\Affiliation\AffiliationController@store']);
-                    Route::get('delete/{id}', ['as' => 'afiliacion.delete', 'uses' => 'Investigation\Affiliation\AffiliationController@destroy']);
+                    Route::post('create', ['as' => 'grupo.afiliacion.store', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@store']);
+                    Route::get('delete/{id}', ['as' => 'grupo.afiliacion.delete', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroy']);
                 });
             });    
 
@@ -586,6 +586,25 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'proyecto.edit', 'uses' => 'Investigation\Project\ProjectController@edit']);
                 Route::post('edit/{id}', ['as' => 'proyecto.update', 'uses' => 'Investigation\Project\ProjectController@update']);
                 Route::get('delete/{id}', ['as' => 'proyecto.delete', 'uses' => 'Investigation\Project\ProjectController@destroy']);
+
+                //Seleccion de integrantes de proyecto
+                Route::group(['prefix' => 'afiliacion'], function(){
+                    Route::post('create', ['as' => 'proyecto.afiliacion.store', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@store']);
+                    Route::get('delete/{id}', ['as' => 'proyecto.afiliacion.delete', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroy']);
+                });
+            });
+
+            //Administrar entregables
+            
+            Route::group(['prefix' => 'entregable'], function(){    
+                Route::get('/', ['as' => 'entregable.index', 'uses' => 'Investigation\Deliverable\DeliverableController@index']);
+                Route::get('create', ['as' => 'entregable.create', 'uses' => 'Investigation\Deliverable\DeliverableController@create']);
+                Route::post('create', ['as' => 'entregable.store', 'uses' => 'Investigation\Deliverable\DeliverableController@store']);
+                Route::get('show/{id}', ['as' => 'entregable.show', 'uses' => 'Investigation\Deliverable\DeliverableController@show']);
+                Route::get('edit/{id}', ['as' => 'entregable.edit', 'uses' => 'Investigation\Deliverable\DeliverableController@edit']);
+                Route::post('edit/{id}', ['as' => 'entregable.update', 'uses' => 'Investigation\Deliverable\DeliverableController@update']);
+                Route::get('delete/{id}', ['as' => 'entregable.delete', 'uses' => 'Investigation\Deliverable\DeliverableController@destroy']);
+                Route::get('download/{id}', ['as' => 'entregable.download', 'uses' => 'Investigation\Deliverable\DeliverableController@destroy']);
             });
 
         });      

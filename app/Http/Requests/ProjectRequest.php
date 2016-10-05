@@ -25,7 +25,7 @@ class ProjectRequest extends Request
     {
         return [
             'nombre'            =>  'required|max:100',
-            'num_entregables'   =>  'required|numeric',
+            'num_entregables'   =>  'required|numeric|min:1',
             'fecha_ini'         =>  'required|date|after:today',
             'fecha_fin'         =>  'required|date|after:fecha_ini',
             'grupo'             =>  'required|numeric',

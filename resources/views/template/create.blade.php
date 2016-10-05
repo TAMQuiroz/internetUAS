@@ -56,5 +56,5 @@
             </div>
         </div>
     </div>
-
+<script src="{{ URL::asset('js/myvalidations/template.js')}}"></script>
 @endsection

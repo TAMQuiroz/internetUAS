@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TemplateTest extends TestCase
 {
+    use DatabaseMigrations;
     /**
      * A basic test example.
      *
@@ -51,25 +52,24 @@ class TemplateTest extends TestCase
     		->seePageIs('/psp/templates/')
     		->see('Documentos')
     		->see('La plantilla se ha registrado exitosamente');
-    }
+    }*/
 
     public function test_cr_are_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        //$user = factory(Intranet\Models\Template::class)->make();
 
     	$this->actingAs($user)
             ->withSession([
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/templates/create')
-    		->select(1, 'fase')
-    		->type('Plantilla3','titulo')
-    		->attach(null,'ruta')
+    		//->select(1, 'fase')
     		->press('Guardar')
-    		->seePageIs('/psp/templates/create')
-    		->see('Nuevo Documento')
-    		->see('Selecciona un archivo');
-    }*/
+    		->seePageIs('/psp/templates/create');
+    		//->see('Nuevo Documento')
+    		//->see('Debe ingresar una Plantilla');
+    }
 
 
 }

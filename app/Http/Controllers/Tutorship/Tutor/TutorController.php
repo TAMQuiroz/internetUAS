@@ -7,6 +7,7 @@ use Intranet\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
+use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
 
 class TutorController extends Controller
 {
@@ -16,13 +17,17 @@ class TutorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $tutors = Teacher::get()->where('rolTutoria', 1); //falta acotar por la especialidad
-
+    {     
+        // dd(Session::get('faculty-code'));
+        // dd(Session::all());
+        // dd(Session::get('user'));
+        $idEspecialidad = Session::get('faculty-code');
+        $tutors = Teacher::get()->where('rolTutoria', 1)->where('IdEspecialidad', $idEspecialidad);
         $data = [
             'tutors'    =>  $tutors,
         ];
         return view('tutorship.tutor.index', $data);
+     
     }
 
     /**
@@ -32,7 +37,8 @@ class TutorController extends Controller
      */
     public function create()
     {
-        $teachers = Teacher::get()->where('rolTutoria', null); //falta acotar por la especialidad      
+        $idEspecialidad = Session::get('faculty-code');
+        $teachers = Teacher::get()->where('rolTutoria', null)->where('IdEspecialidad', $idEspecialidad); //falta acotar por la especialidad      
         $checks = array($teachers->count());
 
         $data = [

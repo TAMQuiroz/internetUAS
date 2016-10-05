@@ -568,9 +568,24 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('delete/{id}', ['as' => 'area.delete', 'uses' => 'Investigation\Area\AreaController@destroy']);
     });
 
+    //MODULO UAS PARA TUTORIA
+    Route::group(['prefix' => 'uas'], function(){
+        //Coordinadores de tutoria
+        Route::group(['prefix' => 'coordinadoresTutoria'], function(){    
+            Route::get('/', ['as' => 'coordinadorTutoria.index', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@index']);
+            Route::get('create', ['as' => 'coordinadorTutoria.create', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@create']);
+            Route::post('create', ['as' => 'coordinadorTutoria.store', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@store']);
+            Route::get('show/{id}', ['as' => 'coordinadorTutoria.show', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@show']);
+            Route::get('edit/{id}', ['as' => 'coordinadorTutoria.edit', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@edit']);
+            Route::post('edit/{id}', ['as' => 'coordinadorTutoria.update', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@update']);
+            Route::get('delete/{id}', ['as' => 'coordinadorTutoria.delete', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@destroy']);
+        });
+
+
+    });
+
 
     //MODULO DE TUTORIA
-
     Route::group(['prefix' => 'tutoria'], function(){
     //Temas de citas
         Route::group(['prefix' => 'temas'], function(){    
@@ -611,6 +626,17 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
             Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
             Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
+        });
+
+        //Alumnos de la especialidad
+        Route::group(['prefix' => 'alumnos'], function(){    
+            Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
+            Route::get('create', ['as' => 'alumno.create', 'uses' => 'Tutorship\Tutstudent\TutstudentController@create']);
+            Route::post('create', ['as' => 'alumno.store', 'uses' => 'Tutorship\Tutstudent\TutstudentController@store']);
+            Route::get('show/{id}', ['as' => 'alumno.show', 'uses' => 'Tutorship\Tutstudent\TutstudentController@show']);
+            Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
+            Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
+            Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
         });
 
     });

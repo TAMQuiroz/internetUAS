@@ -16,7 +16,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{ route('new.template') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo Documento</a>
+                        <a href="{{ route('create.template') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo Documento</a>
                     </div>
                 </div>
                 <div class="clearfix"></div>

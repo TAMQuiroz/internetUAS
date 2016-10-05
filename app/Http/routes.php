@@ -553,8 +553,8 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::group(['prefix' => 'templates'], function() {
             Route::get('/', ['as' => 'index.templates', 'uses' => 'Template\TemplateController@index']);
-            Route::get('/new', ['as' => 'new.template', 'uses' => 'Template\TemplateController@create']);
-            Route::post('/new', ['as' => 'store.template', 'uses' => 'Template\TemplateController@store']);
+            Route::get('/create', ['as' => 'create.template', 'uses' => 'Template\TemplateController@create']);
+            Route::post('/create', ['as' => 'store.template', 'uses' => 'Template\TemplateController@store']);
             Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Template\TemplateController@edit']);
             Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Template\TemplateController@update']);
             Route::get('/delete/{id}', ['as' => 'delete.template', 'uses' => 'Template\TemplateController@destroy']);            

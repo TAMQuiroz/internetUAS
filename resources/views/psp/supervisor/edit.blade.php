@@ -69,13 +69,13 @@
                                    maxlength="30" required="required" value="Av Mundo 1234">
                             </div>
                         </div>
-                        <div class="clearfix"></div>
+                        <!--<div class="clearfix"></div>
                         <div class="separator"></div>
 
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nueva Clave</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <a href="" class="btn btn-default pull-left"> Resetear contraseña</a>
-                        </div>
+                        </div>-->
 
                         <div class="clearfix"></div>
                         <div class="separator"></div>

@@ -15,7 +15,7 @@ class CreatePspprocessesxteachersTable extends Migration
         Schema::create('pspprocessesxteachers', function (Blueprint $table) {
             $table->integer('idPspProcesses')->unsigned();
             $table->foreign('idPspProcesses')->references('id')->on('pspprocesses');
-            $table->integer('idProfesor')->unsigned();
+            $table->integer('idProfesor');
             $table->foreign('idProfesor')->references('IdDocente')->on('docente');
             $table->timestamps();
         });

@@ -13,7 +13,7 @@ class CreateSchedulesxcyclesTable extends Migration
     public function up()
     {
         Schema::create('schedulesxcycles', function (Blueprint $table) {
-            $table->integer('idschedules')->unsigned();
+            $table->integer('idschedules');
             $table->foreign('idschedules')->references('IdHorario')->on('horario');
             $table->integer('idcycles')->unsigned();
             $table->foreign('idcycles')->references('id')->on('cycles');

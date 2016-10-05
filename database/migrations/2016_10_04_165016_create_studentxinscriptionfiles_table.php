@@ -17,7 +17,7 @@ class CreateStudentxinscriptionfilesTable extends Migration
             $table->foreign('idInscriptionFile')->references('id')->on('inscriptionfiles');
             $table->integer('idStudent')->unsigned();
             $table->foreign('idStudent')->references('id')->on('pspstudents');
-            $table->integer('aceptaTerminos');
+            $table->integer('aceptaTerminos')->unsigned();
             $table->foreign('aceptaTerminos')->references('id')->on('statuses');
             $table->integer('notaFinal');
             $table->timestamps();

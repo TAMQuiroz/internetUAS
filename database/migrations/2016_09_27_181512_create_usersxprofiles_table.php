@@ -13,9 +13,9 @@ class CreateUsersxprofilesTable extends Migration
     public function up()
     {
         Schema::create('usersxprofiles', function (Blueprint $table) {
-            $table->integer('iduser')->unsigned();
+            $table->integer('iduser');
             $table->foreign('iduser')->references('IdUsuario')->on('usuario');
-            $table->integer('idprofile')->unsigned();
+            $table->integer('idprofile');
             $table->foreign('idprofile')->references('IdPerfil')->on('perfil');
             $table->timestamps();
         });

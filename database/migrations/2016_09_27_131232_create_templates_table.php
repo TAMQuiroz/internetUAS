@@ -16,9 +16,9 @@ class CreateTemplatesTable extends Migration
             $table->increments('id');
             $table->integer('idPhase')->unsigned();
             $table->integer('idTipoEstado')->unsigned();
-            $table->integer('idProfesor')->unsigned()->nullable();
+            $table->integer('idProfesor')->nullable();
             $table->integer('idSupervisor')->unsigned()->nullable();
-            $table->integer('idAdmin')->unsigned()->nullable();
+            $table->integer('idAdmin')->nullable();
             $table->string('titulo');
             $table->string('ruta');
             $table->integer('obligatorio');

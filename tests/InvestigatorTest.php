@@ -44,7 +44,7 @@ class InvestigatorTest extends TestCase
     		->see('El investigador se ha registrado exitosamente');
     }
 
-/*
+
     public function test_cr_inv_02()
     {
         $area = factory(Intranet\Models\Area::class)->create();
@@ -962,5 +962,5 @@ class InvestigatorTest extends TestCase
             ->see('Investigador')
             ->see('celular debe tener 9 dígitos');
     }
-*/
+
 }

@@ -20,11 +20,11 @@ class CreateSupervisorsTable extends Migration
             $table->string('correo');
             $table->string('direccion');
             $table->string('telefono');
-            $table->char('estado');
             $table->string('codigoTrabajador');
             $table->integer('idFaculty');
             $table->integer('idUser');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -8,13 +8,11 @@ use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Template;
 use Intranet\Http\Requests\TemplateRequest;
+use Intranet\Http\Requests\TemplateEditRequest;
 
 class TemplateController extends Controller
 {
 
-    public function __construct() {
-
-    }
     /**
      * Display a listing of the resource.
      *
@@ -76,7 +74,7 @@ class TemplateController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
-        
+
     }
 
     /**
@@ -113,7 +111,7 @@ class TemplateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TemplateEditRequest $request, $id)
     {
         try {
             $template = Template::find($id);

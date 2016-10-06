@@ -4,7 +4,7 @@ namespace Intranet\Http\Requests;
 
 use Intranet\Http\Requests\Request;
 
-class TemplateRequest extends Request
+class TemplateEditRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +27,7 @@ class TemplateRequest extends Request
             'fase'        => 'required',
             'titulo'   => 'regex:/^[\pL\s\-]+$/u|required|max:100',
             'obligatorio'    => 'bool',
-            'ruta'   => 'file|required',
-        ];
-    }
-    public function messages()
-    {
-        return [
+            'ruta'   => 'file',
         ];
     }
 }

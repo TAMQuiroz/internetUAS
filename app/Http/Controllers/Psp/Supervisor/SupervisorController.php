@@ -82,20 +82,23 @@ class SupervisorController extends Controller
 
             $userId = Auth::User()->IdUsuario;
             $profileId = Auth::User()->IdPerfil;
-            
+            $teacher=null;
             //si idperfil 1 o 2
             switch ($profileId) {
                 case 1:
                     $teacher       = Teacher::find($userId);
-                    $supervisor->IdFaculty       = $teacher->IdEspecialidad;
                     break;
                 case 2:
                     $teacher       = Teacher::find($userId);
-                    $supervisor->IdFaculty       = $teacher->IdEspecialidad;
                     break;
                 default: $supervisor->IdFaculty       = 1;
             }
 
+            if($teacher==null){
+                $supervisor->IdFaculty       = 1;    
+            }else{
+                $supervisor->IdFaculty       = $teacher->IdEspecialidad;
+            }
             $supervisor->save();
 
             //Enviar correo

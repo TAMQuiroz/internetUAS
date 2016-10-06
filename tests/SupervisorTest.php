@@ -24,7 +24,7 @@ class SupervisorTest extends TestCase
     	$this->actingAs($user)
             ->withSession([
 	    		'actions' => [],
-	    		'user' => $user
+	    		'user' => factory(Intranet\Models\Teacher::class)->make()
     		])->visit('/psp/supervisor/create')
     		->type('20101010','codigo')
     		->type('Laura','nombres')

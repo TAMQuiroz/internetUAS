@@ -108,7 +108,7 @@ class AreaController extends Controller
             $area->descripcion  = $request['descripcion'];
             $area->save();
 
-            return redirect()->route('area.show', $id)->with('success', 'El area se ha actualizado exitosamente');
+            return redirect()->route('area.index')->with('success', 'El area se ha actualizado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

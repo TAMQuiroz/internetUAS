@@ -40,7 +40,7 @@
 							<td>{{$area->nombre}}</td> 
 							<td>{{$area->descripcion}}</td> 
 							<td>
-								<a href="{{route('area.show', $area->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+								<a href="{{route('area.edit', $area->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-pencil"></i></a>
 								<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$area->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
 							</td>
 						</tr> 

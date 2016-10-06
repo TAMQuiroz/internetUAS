@@ -484,15 +484,14 @@ Route::group(['middleware' => 'auth'], function(){
 
         //PspGroups Luis Llanos
 
-        Route::group(['prefix' => 'pspGroups'], function() {
-            Route::get('/', ['as' => 'index.pspGroups', 'uses' => 'PspGroup\PspGroupController@index']);
-            Route::get('/new', ['as' => 'new.pspGroup', 'uses' => 'PspGroup\PspGroupController@create']);
-            Route::post('/save', ['as' => 'savePspGroup.pspGroups', 'uses' => 'PspGroup\PspGroupController@save']);
-            Route::get('/edit', ['as' => 'edit.pspGroup', 'uses' => 'PspGroup\PspGroupController@edit']);
-            Route::get('/delete', ['as' => 'delete.pspGroup', 'uses' => 'PspGroup\PspGroupController@delete']);
-            Route::post('/update', ['as' => 'updatePspGroup.pspGroups', 'uses' => 'PspGroup\PspGroupController@update']);
-            Route::get('/view', ['as' => 'view.pspGroup', 'uses' => 'PspGroup\PspGroupController@view']);
-            Route::post('/', ['as' => 'search.pspGroups', 'uses' => 'PspGroup\PspGroupController@search']);
+        Route::group(['prefix' => 'pspGroup'], function() {
+            Route::get('/', ['as' => 'pspGroup.index', 'uses' => 'Psp\PspGroup\PspGroupController@index']);
+            Route::get('create', ['as' => 'pspGroup.create', 'uses' => 'Psp\PspGroup\PspGroupController@create']);
+            Route::post('create', ['as' => 'pspGroup.store', 'uses' => 'Psp\PspGroup\PspGroupController@store']);
+            Route::get('show/{id}', ['as' => 'pspGroup.show', 'uses' => 'Psp\PspGroup\PspGroupController@show']);
+            Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
+            Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
+            Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
         });
         
 

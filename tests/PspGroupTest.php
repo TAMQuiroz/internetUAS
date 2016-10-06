@@ -14,7 +14,7 @@ class PspGroupTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_cr_gro_01(){
+    public function test_psp_gro_01(){
     	$user = factory(Intranet\Models\User::class)->make();
         
     	$this->actingAs($user)
@@ -30,7 +30,7 @@ class PspGroupTest extends TestCase
     		->see('El grupo se ha registrado exitosamente');
     }
 
-    public function test_cr_gro_02(){
+    public function test_psp_gro_02(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -48,7 +48,7 @@ class PspGroupTest extends TestCase
     		->see('El numero de grupo debe tener 1 sola cifra');
     }
 
-    public function test_cr_gro_03(){
+    public function test_psp_gro_03(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -66,7 +66,7 @@ class PspGroupTest extends TestCase
     		->see('El campo numero es obligatorio');
     }
 
-    public function test_cr_gro_04(){
+    public function test_psp_gro_04(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -84,7 +84,7 @@ class PspGroupTest extends TestCase
     		->see('Debe ingresar solo numeros');    
     }
 
-    public function test_cr_gro_05(){
+    public function test_psp_gro_05(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -102,7 +102,7 @@ class PspGroupTest extends TestCase
     		->see('Observacion no debe ser mayor que 50 caracteres');
     }
 
-    public function test_cr_gro_06(){
+    public function test_psp_gro_06(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -120,7 +120,7 @@ class PspGroupTest extends TestCase
     		->see('El campo observacion es obligatorio');
     }
 
-    public function test_cr_gro_07(){
+    public function test_psp_gro_07(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -138,7 +138,7 @@ class PspGroupTest extends TestCase
     		->see('El grupo se ha registrado exitosamente');
     }
 
-    public function test_cr_gro_08(){
+    public function test_psp_gro_08(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)

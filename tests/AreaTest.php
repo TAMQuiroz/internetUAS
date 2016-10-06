@@ -334,3 +334,4 @@ class AreaTest extends TestCase
     }
 
 }
+ 

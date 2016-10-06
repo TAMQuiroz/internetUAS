@@ -19,6 +19,14 @@ $factory->define(Intranet\Models\User::class, function (Faker\Generator $faker) 
     ];
 });
 
+$factory->defineAs(Intranet\Models\User::class, 'coordinador_especialidad',function (Faker\Generator $faker) {
+    return [
+        'IdPerfil'          => 1,//coordinador de especialidad
+        'Usuario'           => $faker->userName,
+        'Contrasena'        => bcrypt(str_random(10)),
+    ];
+});
+
 $factory->define(Intranet\Models\Teacher::class, function (Faker\Generator $faker) {
     return [
     	'IdEspecialidad'    =>  1,

@@ -39,6 +39,6 @@ class CreateStudensTable extends Migration
      */
     public function down()
     {
-        Schema::drop('students');
+        Schema::drop('tutstudents');
     }
 }

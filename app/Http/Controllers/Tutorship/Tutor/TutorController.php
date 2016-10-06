@@ -21,6 +21,9 @@ class TutorController extends Controller
         // dd(Session::get('faculty-code'));
         // dd(Session::all());
         // dd(Session::get('user'));
+        
+
+
         $idEspecialidad = Session::get('faculty-code');
         $tutors = Teacher::get()->where('rolTutoria', 1)->where('IdEspecialidad', $idEspecialidad);
         $data = [
@@ -54,17 +57,23 @@ class TutorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        foreach($request['check'] as $idTeacher => $value){
-            try {
+        if($request['check']!=null){
+            foreach($request['check'] as $idTeacher => $value){
+                try {
                 //se cambia el rol del profesor a TUTOR
-                DB::table('docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 1]);
-                
-            } catch (Exception $e) {
-                return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+                    DB::table('docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 1]);
+
+                } catch (Exception $e) {
+                    return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+                }
             }
+            return redirect()->route('tutor.index')->with('success', 'Se guardaron los tutores exitosamente');
         }
+        else{
+            return redirect()->route('tutor.index');
+        }        
         //VUELVE A la lista de tutores
-        return redirect()->route('tutor.index')->with('success', 'Se guardaron los tutores exitosamente');
+        
 
     }
 

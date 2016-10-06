@@ -42,16 +42,22 @@ class CoordTutorshipController extends Controller
     
 
     public function store(Request $request){
-        foreach($request['check'] as $idTeacher => $value){
-            try {
+
+        if($request['check']!=null){
+            foreach($request['check'] as $idTeacher => $value){
+                try {
                 //se cambia el rol del profesor a COORDINADOR DE TUTORIA
-                DB::table('docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 2]);
-            } catch (Exception $e) {
-                return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+                    DB::table('docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 2]);
+                } catch (Exception $e) {
+                    return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+                }
             }
-        }
         //VUELVE A la lista de coordinadores
-        return redirect()->route('coordinadorTutoria.index')->with('success', 'Se guardaron los coordinadores exitosamente');
+            return redirect()->route('coordinadorTutoria.index')->with('success', 'Se guardaron los coordinadores exitosamente');
+        }
+        else{
+            return redirect()->route('coordinadorTutoria.index');
+        }
 
     }
 

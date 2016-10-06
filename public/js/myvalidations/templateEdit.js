@@ -24,7 +24,7 @@ jQuery(function(){
                 maxlength: 100,
             },
             ruta: {
-                required: true,
+                required: false,
             },
             obligatorio:{
                 required: false,

@@ -11,14 +11,38 @@ use Intranet\Models\Status;
 
 class StatusController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexType()
     {
-        $statuses = Status::get();
+        $data = [
+            'tipos'    =>  
+            [
+                0 => 'Proyectos',
+                1   =>  'Documentos de PSP',
+                2   =>  'Estudiante de PSP',
+                3   =>  'Reuniones de PSP',
+                4   =>  'Templates',
+                5   =>  'Archivo de inscripcion',
+            ],
+        ];
+
+        return view('status.indexType', $data);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($id)
+    {
+
+        $statuses = Status::where('tipo_estado',$id)->get();
 
         $data = [
             'statuses'    =>  $statuses,
@@ -38,6 +62,11 @@ class StatusController extends Controller
             'tipos'    =>  
             [
                 0 => 'Proyectos',
+                1   =>  'Documentos de PSP',
+                2   =>  'Estudiante de PSP',
+                3   =>  'Reuniones de PSP',
+                4   =>  'Templates',
+                5   =>  'Archivo de inscripcion',
             ],
         ];
 

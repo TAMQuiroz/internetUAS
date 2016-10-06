@@ -509,7 +509,8 @@ $api->version('v1', function ($api) {
 Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => 'status'], function(){    
-        Route::get('/', ['as' => 'status.index', 'uses' => 'Status\StatusController@index']);
+        Route::get('/', ['as' => 'status.indexType', 'uses' => 'Status\StatusController@indexType']);
+        Route::get('index/{id}', ['as' => 'status.index', 'uses' => 'Status\StatusController@index']);
         Route::get('create', ['as' => 'status.create', 'uses' => 'Status\StatusController@create']);
         Route::post('create', ['as' => 'status.store', 'uses' => 'Status\StatusController@store']);
         Route::get('edit/{id}', ['as' => 'status.edit', 'uses' => 'Status\StatusController@edit']);

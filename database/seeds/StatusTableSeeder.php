@@ -9,6 +9,17 @@ class StatusTableSeeder extends Seeder
      *
      * @return void
      */
+
+    /**
+        0   =>  Proyecto
+        1   =>  Documentos de PSP
+        2   =>  Estudiante de PSP
+        3   =>  Reuniones de PSP
+        4   =>  Templates
+        5   =>  Archivo de inscripcion
+
+     */
+
     public function run()
     {
         DB::table('statuses')->insert(['nombre' => 'En progreso', 'tipo_estado' => 0]);

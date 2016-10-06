@@ -38,22 +38,15 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody> 
-                    <input type="checkbox" id="user_project_1" name="check[4]" value="1" />                   
-                        @foreach($teachers as $index=>$teacher)  
-                        
+                    <tbody>                     
+                        @foreach($teachers as $index=>$teacher)                         
                         <tr class="even pointer">
                             <td hidden class="group-id">{{ $teacher->IdDocente }}</td> 
                             <td class="">{{ $teacher->Codigo }}</td>
                             <td class="">{{ $teacher->ApellidoPaterno.' '.$teacher->ApellidoMaterno.', '.$teacher->Nombre }}</td>                            
-                            <!-- <td class="">                                
+                            <td class="">                                
                                 {{Form::checkbox('check['.$teacher->IdDocente.']',1 , false, array('class' => 'check'))}}
-                            </td> -->
-                            <td class="">  
-                                <input type="checkbox" id="user_project_1" name="check1" value="1" />                              
-                                <!-- {{Form::checkbox('check',1 , false, array('class' => 'check'))}} -->
                             </td>
-
                         </tr>                        
                         @endforeach
                     </tbody>

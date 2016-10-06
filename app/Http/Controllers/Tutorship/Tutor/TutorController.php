@@ -67,7 +67,7 @@ class TutorController extends Controller
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
             }
-            return redirect()->route('tutor.index')->with('success', 'Se guardaron los tutores exitosamente');
+            return redirect()->route('tutor.index')->with('success', 'Se guardaron los tutores exitosamentee');
         }
         else{
             return redirect()->route('tutor.index');

@@ -744,8 +744,8 @@ CREATE TABLE `Docente` (
   `Correo` varchar(100) DEFAULT NULL,
   `Cargo` varchar(100) DEFAULT NULL,
   `Vigente` int(11) NOT NULL,
-  `rolTutoria` int(11) NULL,/* 0 = TUTOR DESACTIVADO, 1=TUTOR ACTIVO,  2= COORDINADOR DE TUTORIA, 3 = COORDINADOR TUTORIA DESACTIVADO */
-  `rolEvaluaciones` int(11) NULL, /*! 1 = ADMINISTRADOR DE EVALUACIONES, 2 = EVALUADOR */
+  `rolTutoria` int(11) NULL,
+  `rolEvaluaciones` int(11) NULL, 
   `oficina` varchar(20) NULL,
   `telefono` varchar(20) NULL,
   `anexo` varchar(20) NULL,

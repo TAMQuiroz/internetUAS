@@ -13,7 +13,7 @@ class TutorTest extends TestCase
 	use DatabaseMigrations;
 	use WithoutMiddleware;
 
-	public function test_tutoria_asignar_tutor_01()
+	public function test_tutoria_asignar_tutor_ok()
 	{
         $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
         $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
@@ -39,11 +39,12 @@ class TutorTest extends TestCase
     		'actions' => [],
     		'user' => factory(Intranet\Models\Teacher::class)->make()
     		])->visit('/tutoria/tutores/create')
-    	  	->check('check[4]')    		
-    	->press('Guardar')
-    	->seePageIs('tutoria/dddddtutores/')
-    	->see('Tutores')
-    	->see('Se guardaron los tutores exitosamente');
+      ->see('Flores');
+      // ->check('check[1]')		
+      // ->press('Guardar')
+      // ->seePageIs('tutoria/tutores/')
+      // ->see('Tutores')
+      // ->see('Se guardaron los tutores exitosamente');
 
 
 		// $crawler->filter('checkbox')->first();
@@ -58,5 +59,20 @@ class TutorTest extends TestCase
   //   	->seePageIs('/tutoria/tutores/')
   //   	->see('Tutores')
   //   	->see('Se guardaron los tutores exitosamente');
+    }
+
+    public function test_tutoria_no_asignar_tutor()
+    {
+        $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
+        $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
+        $this->actingAs($user)//entro al sistema con ese usuario
+      ->withSession([
+        'actions' => [],
+        'user' => factory(Intranet\Models\Teacher::class)->make()
+        ])->visit('/tutoria/tutores/create')         
+      ->press('Guardar')
+      ->seePageIs('tutoria/tutores/')
+      ->see('Tutores')
+      ->dontSee('Se guardaron los tutores exitosamente');
     }
 }

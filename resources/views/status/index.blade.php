@@ -57,7 +57,7 @@
 				</table>
 				<div class="row">
 					<div class="col-md-12">
-						<a class="btn btn-default pull-right" href="{{ route('status.indexType') }}">Regresar</a>
+						<a class="btn btn-default pull-right" href="{{ route('status.indexType') }}">Cancelar</a>
 					</div>
 				</div>
 		  	</div>

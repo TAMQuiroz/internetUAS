@@ -39,6 +39,10 @@ class EventController extends Controller
     {
         $groups     = Group::lists('nombre', 'id');
 
+        if($groups->isEmpty()){
+            return redirect()->back()->with('warning','Primero debe crear grupos');
+        }
+
         $data = [
             'groups'    =>  $groups,
         ];

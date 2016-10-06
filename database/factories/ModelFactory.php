@@ -54,3 +54,9 @@ $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator 
     ];
 });
 
+$factory->define(Intranet\Models\Template::class, function (Faker\Generator $faker) {
+    return [
+        'idPhase'          => 1,
+        'titulo'          => $faker->text,
+    ];
+});

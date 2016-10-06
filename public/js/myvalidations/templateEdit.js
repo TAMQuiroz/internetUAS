@@ -39,7 +39,7 @@ jQuery(function(){
                 maxlength: "El titulo no debe tener más de 100 caracteres",
             },
             ruta: {
-                required: "Debe ingresar una Plantilla",
+                
             },
             obligatorio: {
                 

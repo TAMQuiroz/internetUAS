@@ -551,14 +551,14 @@ Route::group(['middleware' => 'auth'], function(){
 
 
         Route::group(['prefix' => 'templates'], function() {
-            Route::get('/', ['as' => 'index.templates', 'uses' => 'Template\TemplateController@index']);
-            Route::get('/create', ['as' => 'create.template', 'uses' => 'Template\TemplateController@create']);
-            Route::post('/create', ['as' => 'store.template', 'uses' => 'Template\TemplateController@store']);
-            Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Template\TemplateController@edit']);
-            Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Template\TemplateController@update']);
-            Route::get('/delete/{id}', ['as' => 'delete.template', 'uses' => 'Template\TemplateController@destroy']);            
-            Route::get('/view', ['as' => 'view.template', 'uses' => 'Template\TemplateController@view']);
-            Route::post('/', ['as' => 'search.templates', 'uses' => 'Template\TemplateController@search']);        
+            Route::get('/', ['as' => 'index.templates', 'uses' => 'Psp\Template\TemplateController@index']);
+            Route::get('/create', ['as' => 'create.template', 'uses' => 'Psp\Template\TemplateController@create']);
+            Route::post('/create', ['as' => 'store.template', 'uses' => 'Psp\Template\TemplateController@store']);
+            Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
+            Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
+            Route::get('/delete/{id}', ['as' => 'delete.template', 'uses' => 'Psp\Template\TemplateController@destroy']);            
+            Route::get('/view', ['as' => 'view.template', 'uses' => 'Psp\Template\TemplateController@view']);
+            Route::post('/', ['as' => 'search.templates', 'uses' => 'Psp\Template\TemplateController@search']);        
         });
 
 //State

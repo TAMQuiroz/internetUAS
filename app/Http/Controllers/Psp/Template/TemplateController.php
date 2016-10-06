@@ -1,6 +1,6 @@
 <?php 
 
-namespace Intranet\Http\Controllers\Template;
+namespace Intranet\Http\Controllers\Psp\Template;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -26,7 +26,7 @@ class TemplateController extends Controller
         $data = [
             'templates'    =>  $templates,
         ];
-        return view('template.index', $data);
+        return view('psp.template.index', $data);
         //return view('template.index');
     }
 
@@ -37,7 +37,7 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        return view('template.create');
+        return view('psp.template.create');
     }
 
     /**
@@ -101,7 +101,7 @@ class TemplateController extends Controller
         $data = [
             'template'    =>  $template,
         ];
-        return view('template.edit', $data);
+        return view('psp.template.edit', $data);
     }
 
     /**

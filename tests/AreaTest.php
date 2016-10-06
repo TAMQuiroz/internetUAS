@@ -34,7 +34,7 @@ class AreaTest extends TestCase
     		->see('Lista de Areas')
     		->see('El area se ha registrado exitosamente');
     }
-
+/*
     public function test_cr_are_02()
     {
     	$user = factory(Intranet\Models\User::class)->make();
@@ -332,5 +332,5 @@ class AreaTest extends TestCase
     		->see('Edicion de Areas')
     		->see('El formato de descripcion es inválido');
     }
-
+*/
 }

@@ -19,7 +19,7 @@ class TemplateTest extends TestCase
     {
         $this->assertTrue(true);
     }
-
+/*
     public function test_cr_tem_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
@@ -53,6 +53,40 @@ class TemplateTest extends TestCase
             ->press('Guardar')
             ->seePageIs('/psp/templates')
             ->see('Documentos');
+    }
+*/
+    public function test_cr_tem_01()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/templates/create')
+            ->select(1, 'fase')
+            ->type('Plantilla','titulo')
+            ->press('Guardar')
+            ->seePageIs('/psp/templates')
+            ->see('Documentos');           
+    }
+
+    public function test_cr_tem_02()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/templates/create')
+            ->select(1, 'fase')
+            ->type('Plantilla','titulo')
+            ->attach('../uploads/templates/1.docx','ruta')
+            ->check('obligatorio')
+            ->press('Guardar')
+            ->seePageIs('/psp/templates')
+            ->see('Documentos');           
     }
 
     public function test_cr_tem_03()

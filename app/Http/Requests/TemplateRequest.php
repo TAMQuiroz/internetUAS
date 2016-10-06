@@ -25,7 +25,7 @@ class TemplateRequest extends Request
     {
         return [
             'fase'        => 'required',
-            'titulo'   => 'regex:/^[\pL\s\-]+$/u|required|max:100',
+            'titulo'   => 'required|max:100',
             'obligatorio'    => 'bool',
             'ruta'   => 'file',
         ];

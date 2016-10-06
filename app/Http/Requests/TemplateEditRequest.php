@@ -25,9 +25,14 @@ class TemplateEditRequest extends Request
     {
         return [
             'fase'        => 'required',
-            'titulo'   => 'regex:/^[\pL\s\-]+$/u|required|max:100',
-            'obligatorio'    => 'bool',
+            'titulo'   => 'required|max:100',
+            'obligatorio'    => '',
             'ruta'   => 'file',
+        ];
+    }
+    public function messages()
+    {
+        return [
         ];
     }
 }

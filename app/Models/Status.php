@@ -5,7 +5,9 @@ namespace Intranet\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Area extends Model
+class Status extends Model
 {
-    use SoftDeletes;
+	use SoftDeletes;
+	
+    protected $table = 'statuses';
 }

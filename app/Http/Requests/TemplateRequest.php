@@ -27,7 +27,7 @@ class TemplateRequest extends Request
             'fase'        => 'required',
             'titulo'   => 'regex:/^[\pL\s\-]+$/u|required|max:100',
             'obligatorio'    => 'bool',
-            'ruta'   => 'file|required',
+            'ruta'   => 'file',
         ];
     }
     public function messages()

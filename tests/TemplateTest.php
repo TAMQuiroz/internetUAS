@@ -20,7 +20,7 @@ class TemplateTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_cr_are_01()
+    public function test_cr_tem_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -38,7 +38,7 @@ class TemplateTest extends TestCase
     		->see('Documentos');
     }
 
-    public function test_cr_are_02()
+    public function test_cr_tem_02()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -55,7 +55,7 @@ class TemplateTest extends TestCase
             ->see('Documentos');
     }
 
-    public function test_cr_are_03()
+    public function test_cr_tem_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -75,7 +75,7 @@ class TemplateTest extends TestCase
     }
 
 
-    public function test_cr_are_04()
+    public function test_cr_tem_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -91,8 +91,8 @@ class TemplateTest extends TestCase
             ->see('Nuevo Documento');
             //->see('Debe ingresar un titulo');            
     }
-
-    public function test_cr_are_05()
+/*
+    public function test_cr_tem_05()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -108,10 +108,8 @@ class TemplateTest extends TestCase
             ->see('Nuevo Documento');
             //->see('Debe ingresar una Plantilla');            
     }
-
-   
-
-        public function test_ed_are_01()
+*/
+        public function test_ed_tem_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $template   = factory(Intranet\Models\Template::class)->create();
@@ -131,7 +129,7 @@ class TemplateTest extends TestCase
             //->see('Debe ingresar un titulo');            
     }
 
-        public function test_ed_are_02()
+        public function test_ed_tem_02()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $template   = factory(Intranet\Models\Template::class)->create();
@@ -149,7 +147,7 @@ class TemplateTest extends TestCase
             //->see('Debe ingresar un titulo');            
     }
 
-            public function test_ed_are_03()
+            public function test_ed_tem_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $template   = factory(Intranet\Models\Template::class)->create();
@@ -167,7 +165,7 @@ class TemplateTest extends TestCase
             //->see('El titulo no debe tener más de 100 caracteres');           
     }
 
-            public function test_ed_are_04()
+            public function test_ed_tem_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $template   = factory(Intranet\Models\Template::class)->create();

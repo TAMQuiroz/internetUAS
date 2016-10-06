@@ -103,7 +103,24 @@ jQuery(function(){
             duracion: {
                 required: "Debe ingresar una duracion",
             },
+            fecha_ini: {
+                required: "Debe ingresar una fecha de inicio",
+            },
+            fecha_fin: {
+                required: "Debe ingresar una fecha de fin",
+                min: "Debe ingresar una fecha superior a la fecha inicial",
+            },
+            num_entregables: {
+                required: "Debe ingresar una cantidad de entregables",
+                min: "Debe poner un numero mayor a 0",
+            }
         }
+    });
+
+    //Fechas
+    $('#fecha_ini').change(function(){
+        fecha_ini = $(this).val();
+        $('#fecha_fin').attr('min',fecha_ini);
     });
 
 });

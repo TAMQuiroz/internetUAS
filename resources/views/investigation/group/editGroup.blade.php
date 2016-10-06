@@ -127,7 +127,7 @@
                                         </td>
                                     </tr> 
 
-                                    @include('modals.delete', ['id'=> 'af'.$investigator->pivot->id, 'message' => '¿Esta seguro que desea quitar este investigador del grupo?', 'route' => route('afiliacion.delete', $investigator->pivot->id)])
+                                    @include('modals.delete', ['id'=> 'af'.$investigator->pivot->id, 'message' => '¿Esta seguro que desea quitar este investigador del grupo?', 'route' => route('grupo.afiliacion.delete', $investigator->pivot->id)])
                                     @endforeach
                                     
                                 </tbody> 
@@ -159,7 +159,7 @@
                                         <td>{{$investigator->ape_materno}}</td> 
                                         <td>{{$investigator->faculty->Nombre}}</td> 
                                         <td>
-                                            {{Form::open(['route' => ['afiliacion.store'], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                                            {{Form::open(['route' => ['grupo.afiliacion.store'], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                                                 <a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
                                                 {{Form::button('<i class="fa fa-plus"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit'])}}
 

@@ -49,6 +49,10 @@ class InvestigatorController extends Controller
         $especialidades     = Faculty::lists('nombre', 'IdEspecialidad');
         $areas              = Area::lists('nombre','id');
 
+        if($areas->isEmpty()){
+            return redirect()->back()->with('warning','Primero debe crear areas');
+        }
+
         $data = [
             'especialidades'    =>  $especialidades,
             'areas'             =>  $areas,

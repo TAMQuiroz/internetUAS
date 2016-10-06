@@ -14,6 +14,7 @@ class AddFkToProjectsTable extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->foreign('id_grupo')->references('id')->on('groups');
+            $table->foreign('id_area')->references('id')->on('areas');
             $table->foreign('id_status')->references('id')->on('statuses');
         });
     }
@@ -27,6 +28,7 @@ class AddFkToProjectsTable extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->dropForeign('projects_id_grupo_foreign');
+            $table->dropForeign('projects_id_area_foreign');
             $table->dropForeign('projects_id_status_foreign');
         });
     }

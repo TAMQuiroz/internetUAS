@@ -299,6 +299,7 @@
                     @if(in_array(64,Session::get('actions')))
                       <li><a href="{{ route('index.academicCycle')}}">Ciclo Académico</a></li>
                     @endif
+                    <li><a href="{{route('status.indexType')}}">Administracion de status</a></li>
 
                   </ul>
                 </li>
@@ -315,6 +316,7 @@
                   <li><a href="{{route('grupo.index')}}"> Administrar Grupo de Investigación</a></li>
                   <li><a href="{{route('area.index')}}"> Administrar Areas</a></li>
                   <li><a href="{{route('evento.index')}}"> Administrar Eventos</a></li>
+                  <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li>
                   @endif
                 </ul>
               </li>

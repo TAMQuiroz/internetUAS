@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\Http\Controllers\Investigation\Affiliation;
+namespace Intranet\Http\Controllers\Investigation\Group\Affiliation;
 
 use Illuminate\Http\Request;
 
@@ -40,7 +40,6 @@ class AffiliationController extends Controller
      */
     public function destroy($id)
     {
-
         try {
             $investigatorXgroup = Investigatorxgroup::find($id);
 
@@ -55,6 +54,5 @@ class AffiliationController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
-        
     }
 }

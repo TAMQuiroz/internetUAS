@@ -30,7 +30,7 @@ $factory->defineAs(Intranet\Models\User::class, 'coordinador_especialidad',funct
 $factory->define(Intranet\Models\Teacher::class, function (Faker\Generator $faker) {
     return [
     	'IdEspecialidad'    =>  1,
-    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8),
+    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8,$strict = true),
         'Nombre'            =>  $faker->firstNameMale,
         'ApellidoPaterno'   =>	$faker->lastName,
         'ApellidoMaterno'   =>	$faker->lastName,

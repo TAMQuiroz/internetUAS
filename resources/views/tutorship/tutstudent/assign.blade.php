@@ -13,9 +13,14 @@
             <div class="x_title">
                 <div class="clearfix"></div>
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                         <h4>Se encontraron {{count($students)}} alumnos sin tutor</h4>
+                        
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+
                         <a href="{{ route('alumno.asignardo') }}" class="btn btn-success pull-right"><i class="fa fa-arrows-alt"></i> Asignar tutores</a>
+                        <a href="{{ route('alumno.index') }}" class="btn btn-default pull-right"><i class=""></i> Regresar</a>
                     </div>
                 </div>
 

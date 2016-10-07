@@ -24,7 +24,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <div class="row">
                     <div class="col-md-6">
-                        <a href="alumno.asignar" class="btn btn-primary "><i class="fa fa-arrows-alt"></i> Asignar tutores</a>
+                        <a href="{{route('alumno.asignar')}}" class="btn btn-primary "><i class="fa fa-arrows-alt"></i> Asignar tutores</a>
                     </div>
                     <div class="col-md-6">
                         <div class="dropdown">

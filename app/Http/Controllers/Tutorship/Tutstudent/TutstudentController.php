@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\User;
+use Intranet\Models\Teacher;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
 use Intranet\Http\Services\User\PasswordService;
 
@@ -57,6 +58,12 @@ class TutstudentController extends Controller
     {
        
         try {
+            //se busca un alumno con el mismo codigo
+            $u = User::get()->where('Usuario',$request['codigo'])->first();
+            if($u!=null){
+                return redirect()->route('alumno.create')->with('warning', 'El código de alumno que se intenta registrar ya existe.');
+            }            
+
             // se crea un usuario primero
             $usuario = new User;
             $usuario->Usuario       = $request['codigo'];            
@@ -203,5 +210,28 @@ class TutstudentController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
+    }
+    public function assignTutor(){
+        $idEspecialidad = Session::get('faculty-code');
+        $students = Tutstudent::get()->where('id_especialidad', $idEspecialidad)->where('id_tutoria',null); 
+        $tutors = Teacher::get()->where('IdEspecialidad',$idEspecialidad)->where('rolTutoria',1);       
+        $data = [
+            'students'    =>  $students,
+            'tutors'  => $tutors,            
+        ];
+
+        return view('tutorship.tutstudent.assign',$data);
+    }
+
+    public function assignTutorDo(){
+        // $idEspecialidad = Session::get('faculty-code');
+        // $students = Tutstudent::get()->where('id_especialidad', $idEspecialidad)->where('id_tutoria',null); 
+        // $tutors = Teacher::get()->where('IdEspecialidad',$idEspecialidad)->where('rolTutoria',1);       
+        // $data = [
+        //     'students'    =>  $students,
+        //     'tutors'  => $tutors,            
+        // ];
+        
+        return view('tutorship.tutstudent.index');
     }
 }

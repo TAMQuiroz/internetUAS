@@ -41,7 +41,7 @@ class Teacher extends Model {
             $query = $query->where("Nombre", "like", $filters["name"]);
         }
 
-        if (array_key_exists("lastName", $filters) && $filters["lastName"] != "") {
+        if (array_key_exists("lastame", $filters) && $filters["lastName"] != "") {
             $query = $query->where("ApellidoPaterno", "like", "%" . $filters["lastName"] . "%");
         }
 

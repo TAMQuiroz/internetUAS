@@ -19,7 +19,7 @@ class CreateStudensTable extends Migration
             $table->string('nombre');
             $table->string('ape_paterno');
             $table->string('ape_materno');
-            $table->string('correo')->unique();            
+            $table->string('correo');            
             $table->integer('id_especialidad')->nullable(); //del uas
             $table->integer('id_tutoria')->unsigned()->nullable(); 
             $table->softDeletes();

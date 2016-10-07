@@ -55,7 +55,7 @@
                             <td class=" ">{{ $tutor->Codigo }}</td>
                             <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
                             <td class=" ">{{ $tutor->Correo }}</td>
-                            <td class=" ">4</td>                            
+                            <td class=" ">-</td>                            
                             <td class=" ">
                                 <a href="{{route('tutor.show',$tutor->IdDocente)}}" class="btn btn-primary btn-xs view-group"">
                                 <i class="fa fa-search"></i>

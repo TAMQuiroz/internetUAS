@@ -68,6 +68,12 @@ class TimeTableService {
         return $arrayTT;
     }
 
+    public function retrieveTimeTableByCoursesxCycle($coursexcicle){
+        $timetables = TimeTable::whereIn('IdCursoxCiclo', $coursexcicle)->get();        
+        return $timetables;
+    }
+
+
     // obtener la entidad de resultado estudiantil
     public function find($request) {
         $timeTable = TimeTable::where('IdHorario', $request['id'])->first();

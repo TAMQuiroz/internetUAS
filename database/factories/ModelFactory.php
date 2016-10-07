@@ -71,7 +71,8 @@ $factory->define(Intranet\Models\Tutstudent::class, function (Faker\Generator $f
         'ape_paterno'       =>  $faker->lastName,
         'ape_materno'       =>  $faker->lastName,
         'correo'            =>  $faker->email,        
-
+    ];
+});
 
 $factory->define(Intranet\Models\Group::class, function (Faker\Generator $faker) {
 

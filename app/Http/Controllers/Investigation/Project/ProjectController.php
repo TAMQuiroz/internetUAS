@@ -71,7 +71,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProjectRequest $request)
-    {
+    {   
         try {
             $status = Status::where('nombre','En progreso')->first();
 
@@ -150,7 +150,7 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProjectRequest $request, $id)
     {
         try {
             $status = Status::where('nombre','En progreso')->first();

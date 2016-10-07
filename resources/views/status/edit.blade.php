@@ -37,7 +37,7 @@
 		    		<div class="row">
 						<div class="col-md-8 col-sm-12 col-xs-12">
 							{{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-							<a class="btn btn-default pull-right" href="{{ route('status.index') }}">Cancelar</a>
+							<a class="btn btn-default pull-right" href="{{ route('status.indexType') }}">Cancelar</a>
 						</div>
 					</div>
 		    	{{Form::close()}}

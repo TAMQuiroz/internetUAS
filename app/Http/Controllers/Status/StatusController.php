@@ -22,12 +22,12 @@ class StatusController extends Controller
         $data = [
             'tipos'    =>  
             [
-                0 => 'Proyectos',
+                0   =>  'Investigacion: Proyectos',
                 1   =>  'Documentos de PSP',
                 2   =>  'Estudiante de PSP',
                 3   =>  'Reuniones de PSP',
                 4   =>  'Templates',
-                5   =>  'Archivo de inscripcion',
+                5   =>  'Usuario',
             ],
         ];
 
@@ -61,12 +61,12 @@ class StatusController extends Controller
         $data = [
             'tipos'    =>  
             [
-                0 => 'Proyectos',
+                0 => 'Investigacion: Proyectos',
                 1   =>  'Documentos de PSP',
                 2   =>  'Estudiante de PSP',
                 3   =>  'Reuniones de PSP',
                 4   =>  'Templates',
-                5   =>  'Archivo de inscripcion',
+                5   =>  'Usuario',
             ],
         ];
 

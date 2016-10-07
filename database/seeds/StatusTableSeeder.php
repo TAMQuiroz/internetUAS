@@ -44,6 +44,9 @@ class StatusTableSeeder extends Seeder
         //Templates de PSP
         DB::table('statuses')->insert(['nombre' => 'Obligatorio', 'tipo_estado' => 4]);
         DB::table('statuses')->insert(['nombre' => 'Opcional', 'tipo_estado' => 4]);
+
+        //Usuario
+        DB::table('statuses')->insert(['nombre' => 'Suspendido', 'tipo_estado' => 5]);
     }
 }
 

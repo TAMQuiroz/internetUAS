@@ -30,7 +30,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Número de entregables *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-6">
-		    				{{Form::number('num_entregables',null,['class'=>'form-control', 'required'])}}
+		    				{{Form::text('num_entregables',null,['class'=>'form-control', 'required', 'min'=>1])}}
 		    			</div>
 		    		</div>
 
@@ -42,7 +42,7 @@
 		    		</div>
 
 		    		<div class="form-group">
-		    			{{Form::label('Fecha de Fecha fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Fecha de fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-6">
 		    				{{Form::date('fecha_fin',null,['id'=>'fecha_fin','class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString()])}}
 		    			</div>

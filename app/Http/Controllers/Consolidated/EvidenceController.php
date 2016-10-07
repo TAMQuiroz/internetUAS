@@ -38,7 +38,7 @@ class EvidenceController extends Controller
         try {
             $data['courses'] = $this->coursesService->retrieveByFaculty($faculty_id);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         try {
@@ -63,7 +63,7 @@ class EvidenceController extends Controller
             $data['entries'] = $filteredEntries;
             
         } catch (\Exception $e){
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('consolidated.evidences.index', $data);

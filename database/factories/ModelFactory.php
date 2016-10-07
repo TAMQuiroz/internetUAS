@@ -74,3 +74,10 @@ $factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $f
         'idUser'            => 3,
     ];
 });
+
+$factory->define(Intranet\Models\PspGroup::class, function (Faker\Generator $faker) {
+    return [
+        'numero'          => 1,
+        'descripcion'     => $faker->text,
+    ];
+});

@@ -14,7 +14,7 @@ class PspGroupTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_psp_gro_01(){
+    public function test_psp_cr_gro_01(){
     	$user = factory(Intranet\Models\User::class)->make();
         
     	$this->actingAs($user)
@@ -23,14 +23,13 @@ class PspGroupTest extends TestCase
 	    		'user' => $user
     		])->visit('/psp/pspGroup/create')
     		->type('1','numero')
-    		->type('Es un grupo','observacion')
+    		->type('Es un grupo','descripcion')
     		->press('Guardar')
     		->seePageIs('/psp/pspGroup/')
-    		->see('Lista de Grupos')
     		->see('El grupo se ha registrado exitosamente');
     }
 
-    public function test_psp_gro_02(){
+    public function test_psp_cr_gro_02(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -38,17 +37,29 @@ class PspGroupTest extends TestCase
                 'actions' => [],
                 'user' => $user
             ])->visit('/psp/pspGroup/create')
-    		->type('11','numero')
-    		->type('Es un grupo','observacion')    		
-    		->select(1, 'especialidad')
-            ->select($area->id, 'area')
-    		->press('Guardar')
-    		->seePageIs('/psp/pspGroup/create')
-    		->see('Creacion de Grupos')
-    		->see('El numero de grupo debe tener 1 sola cifra');
+    		->type('11111','numero')
+    		->type('Es un grupo','descripcion')    		
+    		->press('Guardar')    		
+            ->seePageIs('/psp/pspGroup/create')		
+            ->see('numero no debe ser mayor a 9');
     }
 
-    public function test_psp_gro_03(){
+    public function test_psp_cr_gro_03(){
+        $user = factory(Intranet\Models\User::class)->make();
+        
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/pspGroup/create')
+            ->type('-11111','numero')
+            ->type('Es un grupo','descripcion')         
+            ->press('Guardar')          
+            ->seePageIs('/psp/pspGroup/create')     
+            ->see('El tama&ntilde;o de numero debe ser de al menos 1');
+    }
+
+    public function test_psp_cr_gro_04(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -57,16 +68,13 @@ class PspGroupTest extends TestCase
                 'user' => $user
             ])->visit('/psp/pspGroup/create')
     		->type('','numero')
-    		->type('Es un grupo','observacion')    		
-    		->select(1, 'especialidad')
-            ->select($area->id, 'area')
+    		->type('Es un grupo','descripcion') 
     		->press('Guardar')
-    		->seePageIs('/psp/pspGroup/create')
-    		->see('Nuevo Grupo')
+    		->seePageIs('/psp/pspGroup/create')    		
     		->see('El campo numero es obligatorio');
     }
 
-    public function test_psp_gro_04(){
+    public function test_psp_cr_gro_05(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -75,16 +83,13 @@ class PspGroupTest extends TestCase
                 'user' => $user
             ])->visit('/psp/pspGroup/create')
     		->type('LUL','numero')
-    		->type('Es un grupo','observacion')    		
-    		->select(1, 'especialidad')
-            ->select($area->id, 'area')
+    		->type('Es un grupo','descripcion') 
     		->press('Guardar')
-    		->seePageIs('/psp/pspGroup/create')
-    		->see('Nuevo Grupo')
-    		->see('Debe ingresar solo numeros');    
+    		->seePageIs('/psp/pspGroup/create')    		
+    		->see('numero debe ser num&eacute;rico');    
     }
 
-    public function test_psp_gro_05(){
+    public function test_psp_cr_gro_06(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -93,16 +98,13 @@ class PspGroupTest extends TestCase
                 'user' => $user
             ])->visit('/psp/pspGroup/create')
     		->type('1','numero')
-    		->type('O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA','observacion')
-    		->select(1, 'especialidad')
-            ->select($area->id, 'area')
+    		->type('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','descripcion')
     		->press('Guardar')
     		->seePageIs('/psp/pspGroup/create')
-    		->see('Grupos')
-    		->see('Observacion no debe ser mayor que 50 caracteres');
+    		->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
-    public function test_psp_gro_06(){
+    public function test_psp_cr_gro_07(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -111,16 +113,13 @@ class PspGroupTest extends TestCase
                 'user' => $user
             ])->visit('/psp/pspGroup/create')
     		->type('1','numero')
-    		->type('','observacion')    		
-    		->select(1, 'especialidad')
-            ->select($area->id, 'area')
+    		->type('','descripcion')  
     		->press('Guardar')
     		->seePageIs('/psp/pspGroup/create')
-    		->see('Grupos')
-    		->see('El campo observacion es obligatorio');
+    		->see('El campo descripcion es obligatorio');
     }
 
-    public function test_psp_gro_07(){
+    public function test_psp_cr_gro_08(){
     	$user = factory(Intranet\Models\User::class)->make();
         
         $this->actingAs($user)
@@ -129,30 +128,70 @@ class PspGroupTest extends TestCase
                 'user' => $user
             ])->visit('/psp/pspGroup/create')
     		->type('1','numero')
-    		->type('$$$$$$','observacion')    		
-    		->select(1, 'especialidad')
-            ->select($area->id, 'area')
+    		->type('$$$$$$','descripcion')  
     		->press('Guardar')
-    		->seePageIs('/psp/pspGroup/create')
-    		->see('Grupos')
-    		->see('El grupo se ha registrado exitosamente');
+    		->seePageIs('/psp/pspGroup/create')    		
+    		->see('El formato de descripcion es inv&aacute;lido');
     }
-
-    public function test_psp_gro_08(){
-    	$user = factory(Intranet\Models\User::class)->make();
+    
+    public function test_psp_ed_gro_01(){
+        $user = factory(Intranet\Models\User::class)->make();
+        $pspGroup = factory(Intranet\Models\PspGroup::class)->create();
         
         $this->actingAs($user)
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/psp/pspGroup/create')
-    		->type('1','numero')
-    		->type('420','observacion')    		
-    		->select(1, 'especialidad')
-            ->select($area->id, 'area')
-    		->press('Guardar')
-    		->seePageIs('/psp/pspGroup/create')
-    		->see('Grupos')
-    		->see('El formato de observacion es inválido');
+            ])->visit('/psp/pspGroup/edit/'.$pspGroup->id)            
+            ->type('Es un grupo','descripcion')
+            ->press('Guardar')
+            ->seePageIs('/psp/pspGroup/show/'.$pspGroup->id)
+            ->see('El grupo se ha actualizado exitosamente');
     }
+
+    public function test_psp_ed_gro_02(){
+        $user = factory(Intranet\Models\User::class)->make();
+        $pspGroup = factory(Intranet\Models\PspGroup::class)->create();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/pspGroup/edit/'.$pspGroup->id)            
+            ->type('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','descripcion')
+            ->press('Guardar')
+            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id)            
+            ->see('descripcion no debe ser mayor que 100 caracteres');
+    }
+
+    public function test_psp_ed_gro_03(){
+        $user = factory(Intranet\Models\User::class)->make();
+        $pspGroup = factory(Intranet\Models\PspGroup::class)->create();
+        
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/pspGroup/edit/'.$pspGroup->id)            
+            ->type('','descripcion')  
+            ->press('Guardar')
+            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id)
+            ->see('El campo descripcion es obligatorio');
+    }
+
+    public function test_psp_ed_gro_04(){
+        $user = factory(Intranet\Models\User::class)->make();
+        $pspGroup = factory(Intranet\Models\PspGroup::class)->create();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/pspGroup/edit/'.$pspGroup->id)
+            ->type('$$$$$$','descripcion')  
+            ->press('Guardar')
+            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id)         
+            ->see('El formato de descripcion es inv&aacute;lido');
+    }
+    
 }

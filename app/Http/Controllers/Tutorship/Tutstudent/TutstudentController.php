@@ -22,6 +22,9 @@ class TutstudentController extends Controller
         $this->passwordService = new PasswordService;
     }
 
+    public function downLoadExample() {
+        return response()->download(public_path() . "/uploads/example.csv");
+    }
     public function index()
     {        
         $idEspecialidad = Session::get('faculty-code');

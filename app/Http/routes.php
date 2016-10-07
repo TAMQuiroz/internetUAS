@@ -688,7 +688,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
             Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
             Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
-
+            Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
         });
 
     });

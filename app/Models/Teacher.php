@@ -52,7 +52,7 @@ class Teacher extends Model {
         $is_tutor_value = $is_tutor ? 1 : null;
 
         $query = Teacher::where('rolTutoria', $is_tutor_value);
-        
+     
         if ($specialty) {
             $query = $query->where('IdEspecialidad', $specialty);
         }
@@ -61,7 +61,7 @@ class Teacher extends Model {
             $query = $query->where("Nombre", "like", "%" . $filters["name"] . "%");
         }
 
-        if (array_key_exists("lastame", $filters) && $filters["lastName"] != "") {
+        if (array_key_exists("lastName", $filters) && $filters["lastName"] != "") {
             $query = $query->where("ApellidoPaterno", "like", "%" . $filters["lastName"] . "%");
         }
 

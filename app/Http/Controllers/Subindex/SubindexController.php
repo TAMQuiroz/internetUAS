@@ -51,6 +51,9 @@ class SubindexController extends BaseController {
                         $data['isEmpty'] = false;
                     }
                 }
+            } else if ($user->user->IdPerfil==5){ //Investigadores
+                $data['faculties'] = $allFaculties;
+                $data['isEmpty'] = false;
             } else { // Logic of ACREDITORS
                 $data['isEmpty'] = false;
 

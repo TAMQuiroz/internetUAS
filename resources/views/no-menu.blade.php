@@ -69,13 +69,13 @@
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
 
-          <a href="/home">
-            <div class="navbar nav_title text-center" style="border: 0; margin-top:20px; height:auto;">
-              <img src="{{ URL::asset('images/uas.png')}}" class="img-circle img-responsive center-block" width="80px" style="display: inline-block;">
-              <br>
-              <h5 style="color: #FFF;" class="hidden-xs hidden-sm">University Accreditation System</h5>
-            </div>
-          </a>
+
+          <div class="navbar nav_title text-center" style="border: 0; margin-top:20px; height:auto;">
+            <img src="{{ URL::asset('images/uas.png')}}" class="img-circle img-responsive center-block" width="80px" style="display: inline-block;">
+            <br>
+            <h5 style="color: #FFF;" class="hidden-xs hidden-sm">University Accreditation System</h5>
+          </div>
+
           <div class="clearfix"></div>
           <div class="separator"></div>
           <!-- sidebar menu -->
@@ -95,7 +95,13 @@
               <li class="user-profile pull-left" >
                 <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
                 
-                <span class="label label-default hidden-xs hidden-sm">{{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}</span>
+                <span class="label label-default hidden-xs hidden-sm">
+                  @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+                      {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+                  @else
+                      {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
+                  @endif
+                </span>
               </li>
               <li>
                 <form method="GET" action="{{ url('logout') }}">

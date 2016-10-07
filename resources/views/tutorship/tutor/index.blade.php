@@ -73,5 +73,5 @@
             </div>
         </div>
     </div>
-@include('tutorship.modals.filter', ['title' => 'Filtrar'])
+@include('tutorship.modals.filter', ['title' => 'Filtrar', 'route' => route('tutor.index')])
 @endsection

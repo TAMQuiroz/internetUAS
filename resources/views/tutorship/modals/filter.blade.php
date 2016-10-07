@@ -4,7 +4,7 @@
     <p style="font-size: 18px"><strong>Filtros de búsqueda</strong></p>
     <p style="font-size: 16px">Selecciones uno o más filtros:</p>
   </div>
-  <form method="GET" action="{{route('tutor.index')}}">
+  <form method="GET" action="{{$route}}">
   	<div class="flex-container is-wrap has-space-between">
 			<div class="flex-element input-container">
 				<label class="label-input">Nombre</label>

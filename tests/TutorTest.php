@@ -15,6 +15,7 @@ class TutorTest extends TestCase
 
 	public function test_tutoria_asignar_tutor_ok()
 	{
+        
         $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
         $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
         
@@ -33,18 +34,17 @@ class TutorTest extends TestCase
 
 
     	// $this->assertEquals($att,'_token');
-
     	$this->actingAs($user)//entro al sistema con ese usuario
     	->withSession([
     		'actions' => [],
-    		'user' => factory(Intranet\Models\Teacher::class)->make()
+    		'user' => factory(Intranet\Models\Teacher::class)->make(),
+            'faculty-code' => $teacher->IdEspecialidad
     		])->visit('/tutoria/tutores/create')
-      ->see('Flores');
-      // ->check('check[1]')		
-      // ->press('Guardar')
-      // ->seePageIs('tutoria/tutores/')
-      // ->see('Tutores')
-      // ->see('Se guardaron los tutores exitosamente');
+       ->check('check[1]')        
+       ->press('Guardar')
+       ->seePageIs('tutoria/tutores/')
+       ->see('Tutores')
+       ->see('Se guardaron los tutores exitosamente');
 
 
 		// $crawler->filter('checkbox')->first();
@@ -74,5 +74,24 @@ class TutorTest extends TestCase
       ->seePageIs('tutoria/tutores/')
       ->see('Tutores')
       ->dontSee('Se guardaron los tutores exitosamente');
+    }
+
+    public function test_filter_tutor()
+    {
+      $teacher = Teacher::get()->first();
+
+      $user = User::find($teacher->IdUsuario);
+
+      $tutors_test = Teacher::getTutorsFiltered($is_tutor = true, $filters = ['lastName' => 'agu'], $teacher->IdEspecialidad);
+
+      $this->actingAs($user)
+            ->withSession([
+              'actions' => [],
+              'user' => factory(Intranet\Models\Teacher::class)->make(),
+              'faculty-code' => $teacher->IdEspecialidad
+            ])
+            ->visit('/tutoria/tutores?name=&secondLastName=&lastName=agui')
+            ->see('Aguilera')
+            ->dontSee('Flores');
     }
 }

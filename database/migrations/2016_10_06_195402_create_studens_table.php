@@ -30,7 +30,7 @@ class CreateStudensTable extends Migration
         Schema::table('tutstudents', function (Blueprint $table) {
              $table->foreign('id_especialidad')->references('IdEspecialidad')->on('Especialidad');
              $table->foreign('id_usuario')->references('IdUsuario')->on('Usuario');
-             $table->foreign('id_tutoria')->references('id')->on('Tutorship');
+             $table->foreign('id_tutoria')->references('id')->on('tutorships');
         });
     }
 

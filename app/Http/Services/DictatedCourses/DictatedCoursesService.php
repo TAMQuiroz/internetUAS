@@ -76,6 +76,11 @@ class DictatedCoursesService {
 		return $coleccion;
 	}
 
+	public function retrieveCoursesxCycleByCourse($courses){
+    	$coursesxcicle = DictatedCourses::whereIn('IdCurso', $courses)->get();
+		return $coursesxcicle;    	 
+    }
+
 	public function findCoursexCicle($request) {
 		$coursesxcicle = DictatedCourses::where('IdCurso', $request['courseId'])
 										->where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();

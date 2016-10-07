@@ -45,7 +45,7 @@ class CoordTutorshipController extends Controller
             foreach($request['check'] as $idTeacher => $value){
                 try {
                 //se cambia el rol del profesor a COORDINADOR DE TUTORIA
-                    DB::table('docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 2]);
+                    DB::table('Docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 2]);
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }

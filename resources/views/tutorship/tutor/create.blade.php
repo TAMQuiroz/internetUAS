@@ -20,7 +20,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href=" " class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                        <a href="#filter-tutors" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
                     </div>
                 </div>
 
@@ -62,4 +62,5 @@
             {{Form::close()}}
         </div>
     </div>
+@include('tutorship.modals.filter', ['title' => 'Filtrar', 'route' => route('tutor.create')])
 @endsection

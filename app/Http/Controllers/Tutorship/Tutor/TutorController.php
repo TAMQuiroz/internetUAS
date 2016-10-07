@@ -24,7 +24,7 @@ class TutorController extends Controller
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
         
-        $tutors = Teacher::getTutors($filters, $specialty);
+        $tutors = Teacher::getTutorsFiltered($is_tutor = true, $filters, $specialty);
         
         $data = [
             'tutors'    =>  $tutors->appends($filters),
@@ -39,15 +39,17 @@ class TutorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $idEspecialidad = Session::get('faculty-code');
-        $teachers = Teacher::get()->where('rolTutoria', null)->where('IdEspecialidad', $idEspecialidad); //falta acotar por la especialidad      
-        $checks = array($teachers->count());
+        $filters = $request->all();
+        $specialty = Session::get('faculty-code');
 
+        $teachers = Teacher::getTutorsFiltered($is_tutor = false, $filters, $specialty);
+        
         $data = [
             'teachers'    =>  $teachers,            
-        ];        
+        ];
+
         return view('tutorship.tutor.create', $data);
     }
 

@@ -11,7 +11,21 @@ class Teacher extends Model {
 
     protected $table = 'Docente';
     protected $primaryKey = 'IdDocente';
-    protected $fillable = ['IdEspecialidad', 'IdUsuario','Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno', 'Correo', 'Vigente', 'rolTutoria','rolEvaluaciones','oficina','telefono','anexo','Descripcion', 'Cargo'];
+    protected $fillable = ['IdEspecialidad', 
+                            'IdUsuario',
+                            'Codigo',
+                            'Nombre', 
+                            'ApellidoPaterno', 
+                            'ApellidoMaterno', 
+                            'Correo', 
+                            'Vigente', 
+                            'rolTutoria',
+                            'rolEvaluaciones',
+                            'oficina',
+                            'telefono',
+                            'anexo',
+                            'Descripcion', 
+                            'Cargo'];
 
     public function faculty(){
         return $this->belongsTo('Intranet\Models\Faculty', 'IdEspecialidad');
@@ -33,9 +47,15 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\Tutorship','IdDocente');
     }
 
-    static public function getTutors($filters, $specialty) {
+    static public function getTutorsFiltered($is_tutor, $filters, $specialty = null) {
 
-        $query = Teacher::where('rolTutoria', 1)->where('IdEspecialidad', $specialty);
+        $is_tutor_value = $is_tutor ? 1 : null;
+
+        $query = Teacher::where('rolTutoria', $is_tutor_value);
+        
+        if ($specialty) {
+            $query = $query->where('IdEspecialidad', $specialty);
+        }
 
         if (array_key_exists("name", $filters) && $filters["name"] != "") {
             $query = $query->where("Nombre", "like", $filters["name"]);
@@ -47,8 +67,11 @@ class Teacher extends Model {
 
         if (array_key_exists("secondLastName", $filters) && $filters["secondLastName"] != "") {
             $query = $query->where("ApellidoMaterno", "like", $filters["secondLastName"]);
-        }    
+        }
 
-        return $query->paginate(10);               
+        return $query->paginate(10);
+
     }
+
+
 }

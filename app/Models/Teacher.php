@@ -1,4 +1,5 @@
-<?php namespace Intranet\Models;
+<?php 
+namespace Intranet\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Intranet\Models\Traits\LastUpdatedTrait;
@@ -28,4 +29,22 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\TimeTablexTeacher','IdDocente');
     }
 
+    static public function getTutors($filters, $specialty) {
+
+        $query = Teacher::where('rolTutoria', 1)->where('IdEspecialidad', $specialty);
+
+        if (array_key_exists("name", $filters) && $filters["name"] != "") {
+            $query = $query->where("Nombre", "like", $filters["name"]);
+        }
+
+        if (array_key_exists("lastName", $filters) && $filters["lastName"] != "") {
+            $query = $query->where("ApellidoPaterno", "like", "%" . $filters["lastName"] . "%");
+        }
+
+        if (array_key_exists("secondLastName", $filters) && $filters["secondLastName"] != "") {
+            $query = $query->where("ApellidoMaterno", "like", $filters["secondLastName"]);
+        }    
+
+        return $query->paginate(10);               
+    }
 }

@@ -19,7 +19,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href=" " class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                        <a href="#filter-tutors" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
                         <a href="{{ route('tutor.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo tutor</a>
                     </div>
                 </div>
@@ -69,7 +69,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $tutors->links() }}
             </div>
         </div>
     </div>
+@include('tutorship.modals.filter', ['title' => 'Filtrar'])
 @endsection

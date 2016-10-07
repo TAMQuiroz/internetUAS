@@ -58,6 +58,11 @@
   <script src="{{ URL::asset('js/validate/jquery.validate.min.js')}}"></script>
   <script src="{{ URL::asset('js/validate/additional-methods.min.js')}}"></script>
 
+
+  <script src="{{ URL::asset('js/remodal.js')}}"></script>
+  <link href="{{ URL::asset('css/remodal.css')}}" rel="stylesheet">
+  <link href="{{ URL::asset('css/remodal-default-theme.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('css/remodal/remodal-modify.css')}}" rel="stylesheet">
   <script type="text/javascript">
     var baseUrl = "{{ url('') }}";
   </script>

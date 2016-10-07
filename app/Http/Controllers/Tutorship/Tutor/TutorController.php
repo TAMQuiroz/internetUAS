@@ -16,19 +16,20 @@ class TutorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {     
         // dd(Session::get('faculty-code'));
         // dd(Session::all());
         // dd(Session::get('user'));
+        $filters = $request->all();
+        $specialty = Session::get('faculty-code');
         
-
-
-        $idEspecialidad = Session::get('faculty-code');
-        $tutors = Teacher::get()->where('rolTutoria', 1)->where('IdEspecialidad', $idEspecialidad);
+        $tutors = Teacher::getTutors($filters, $specialty);
+        
         $data = [
-            'tutors'    =>  $tutors,
+            'tutors'    =>  $tutors->appends($filters),
         ];
+
         return view('tutorship.tutor.index', $data);
      
     }

@@ -15,7 +15,7 @@ class CoordTutorshipController extends Controller
     public function index()
     {
         $idEspecialidad = Session::get('faculty-code');
-        $tutors = Teacher::get()->where('rolTutoria', 2)->where('IdEspecialidad', $idEspecialidad);
+        $tutors = Teacher::where('rolTutoria', 2)->where('IdEspecialidad', $idEspecialidad)->get();
         $data = [
             'tutors'    =>  $tutors,
         ];
@@ -30,9 +30,7 @@ class CoordTutorshipController extends Controller
     public function create()
     {
         $idEspecialidad = Session::get('faculty-code');
-        $teachers = Teacher::get()->where('rolTutoria', null)->where('IdEspecialidad', $idEspecialidad);      
-        $checks = array($teachers->count());
-
+        $teachers = Teacher::where('rolTutoria', null)->where('IdEspecialidad', $idEspecialidad)->get();      
         $data = [
             'teachers'    =>  $teachers,            
         ];        

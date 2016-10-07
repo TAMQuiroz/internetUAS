@@ -43,8 +43,7 @@ class TutorController extends Controller
     {
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
-
-        $teachers = Teacher::getTutorsFiltered($is_tutor = false, $filters, $specialty);
+        $teachers = Teacher::getTutorsFiltered($is_tutor = false, $filters, $specialty);        
         
         $data = [
             'teachers'    =>  $teachers,            
@@ -92,6 +91,7 @@ class TutorController extends Controller
         $data = [
             'tutor'    =>  $tutor,
         ];
+        
         return view('tutorship.tutor.show', $data);
     }
 

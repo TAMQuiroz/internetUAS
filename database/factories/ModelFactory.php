@@ -54,3 +54,28 @@ $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator 
     ];
 });
 
+$factory->define(Intranet\Models\Group::class, function (Faker\Generator $faker) {
+
+    return [
+        'nombre'            => 'Grupo de prueba',
+        'id_especialidad'   => 1,
+        'descripcion'       => $faker->text,
+        'id_lider'          => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\Project::class, function (Faker\Generator $faker) {
+
+    $grupo  =   factory(Intranet\Models\Group::class)->create();
+
+    return [
+        'nombre'            =>  'Proyecto de prueba',
+        'descripcion'       =>  $faker->text,
+        'num_entregables'   =>  5,
+        'fecha_ini'         =>  '2017-10-06',
+        'fecha_fin'         =>  '2018-10-06',
+        'id_grupo'          =>  $grupo->id,
+        'id_area'           =>  1,
+        'id_status'         =>  1,
+    ];
+});

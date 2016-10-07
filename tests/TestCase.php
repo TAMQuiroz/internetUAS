@@ -2,13 +2,25 @@
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
-    // alias phpunit="vendor/bin/phpunit" in cmd
+    // 
+    // ./vendor/bin/phpunit
     /**
      * The base URL to use while testing the application.
      *
      * @var string
      */
-    protected $baseUrl = 'http://internetuas';
+    protected $baseUrl = 'http://localhost:8000';
+
+    /**
+     * Default preparation for each test
+     *
+     */
+    public function setUp()
+    {
+        parent::setUp(); // Don't forget this!
+     
+        $this->prepareForTests();
+    }   
 
     /**
      * Creates the application.
@@ -26,4 +38,16 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $app;
     }
 
+    /**
+     * Migrates the database and set the mailer to 'pretend'.
+     * This will cause the tests to run quickly.
+     *
+     */
+    private function prepareForTests()
+    {
+        Artisan::call('migrate');
+        Artisan::call('db:seed');
+    }
+
 }
+

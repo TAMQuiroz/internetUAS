@@ -5,7 +5,7 @@
 	<div class="col-md-12">
 		<div class="page-title">
 	        <div class="title_left">
-	            <h3>Edicion de Areas</h3>
+	            <h3>Creación de Status</h3>
 	        </div>
 	    </div>
     </div>
@@ -19,25 +19,25 @@
 			</div>
 		  	<div class="panel-body">
 
-		    	{{Form::open(['route' => ['area.update', $area->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+		    	{{Form::open(['route' => 'status.store', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 		    		<div class="form-group">
 		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('nombre',$area->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+		    				{{Form::text('nombre',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
-		    			{{Form::label('Descripcion *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Tipo estado *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('descripcion',$area->descripcion,['class'=>'form-control', 'required', 'maxlength' => 100])}}
+		    				{{Form::select('tipo_estado',$tipos,null,['class'=>'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="row">
 						<div class="col-md-8 col-sm-12 col-xs-12">
 							{{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-							<a class="btn btn-default pull-right" href="{{ route('area.index') }}">Cancelar</a>
+							<a class="btn btn-default pull-right" href="{{ route('status.indexType') }}">Cancelar</a>
 						</div>
 					</div>
 		    	{{Form::close()}}

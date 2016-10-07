@@ -39,6 +39,10 @@ class EventController extends Controller
     {
         $groups     = Group::lists('nombre', 'id');
 
+        if($groups->isEmpty()){
+            return redirect()->back()->with('warning','Primero debe crear grupos');
+        }
+
         $data = [
             'groups'    =>  $groups,
         ];
@@ -78,13 +82,11 @@ class EventController extends Controller
                 $evento->imagen = $destinationPath.$filename;
                 $evento->save();
             }
-
             
             return redirect()->route('evento.index')->with('success', 'El evento se ha registrado exitosamente');
         }catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
-
     }
 
     /**
@@ -178,6 +180,14 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
+        try {
+            $event = Event::find($id);
+            $event->delete();
 
+            return redirect()->route('event.index')->with('success', 'El evento se ha eliminado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+        
     }
 }

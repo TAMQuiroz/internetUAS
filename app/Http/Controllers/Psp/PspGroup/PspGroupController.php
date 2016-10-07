@@ -126,5 +126,13 @@ class PspGroupController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            $pspGroup = PspGroup::find($id);
+            $pspGroup->delete();
+
+            return redirect()->route('pspGroup.index')->with('success','El grupo se ha eliminado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 }

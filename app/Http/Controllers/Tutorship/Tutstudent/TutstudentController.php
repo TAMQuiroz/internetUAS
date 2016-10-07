@@ -25,7 +25,7 @@ class TutstudentController extends Controller
     public function index()
     {        
         $idEspecialidad = Session::get('faculty-code');
-        $students = Tutstudent::get()->where('id_especialidad', $idEspecialidad);
+        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->get();
         
         $data = [
             'students'    =>  $students,
@@ -59,7 +59,7 @@ class TutstudentController extends Controller
        
         try {
             //se busca un alumno con el mismo codigo
-            $u = User::get()->where('Usuario',$request['codigo'])->first();
+            $u = User::where('Usuario',$request['codigo'])->first();
             if($u!=null){
                 return redirect()->route('alumno.create')->with('warning', 'El código de alumno que se intenta registrar ya existe.');
             }            
@@ -77,7 +77,7 @@ class TutstudentController extends Controller
             }
             
             //ahora se busca ese usuario
-            $usuarioCreado = User::get()->where('Usuario',$request['codigo'])->first();
+            $usuarioCreado = User::where('Usuario',$request['codigo'])->first();
 
             //ahora se crea el alumno
             $student = new Tutstudent;
@@ -213,13 +213,12 @@ class TutstudentController extends Controller
     }
     public function assignTutor(){
         $idEspecialidad = Session::get('faculty-code');
-        $students = Tutstudent::get()->where('id_especialidad', $idEspecialidad)->where('id_tutoria',null); 
-        $tutors = Teacher::get()->where('IdEspecialidad',$idEspecialidad)->where('rolTutoria',1);       
+        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria',null)->get(); 
+        $tutors = Teacher::where('IdEspecialidad',$idEspecialidad)->where('rolTutoria',1)->get();
         $data = [
             'students'    =>  $students,
-            'tutors'  => $tutors,            
+            'tutors'      => $tutors,            
         ];
-
         return view('tutorship.tutstudent.assign',$data);
     }
 

@@ -17,7 +17,7 @@ class GroupTest extends TestCase
     {
         $this->assertTrue(true);
     }
-    /*
+
     public function test_inv_cr_gru_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
@@ -774,5 +774,5 @@ class GroupTest extends TestCase
     		->see('Edicion de grupos de investigación')
     		->see('El formato de descripcion es inválido');
     }
-	*/
+
 }

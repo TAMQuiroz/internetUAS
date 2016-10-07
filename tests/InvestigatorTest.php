@@ -19,7 +19,6 @@ class InvestigatorTest extends TestCase
         $this->assertTrue(true);
     }
 
-/*
     public function test_inv_cr_inv_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
@@ -961,5 +960,5 @@ class InvestigatorTest extends TestCase
             ->see('Investigador')
             ->see('celular debe tener 9 dígitos');
     }
-*/
+
 }

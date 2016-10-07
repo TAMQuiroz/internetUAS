@@ -30,7 +30,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Número de entregables *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-6">
-		    				{{Form::text('num_entregables',null,['class'=>'form-control', 'required', 'min'=>1])}}
+		    				{{Form::number('num_entregables',null,['class'=>'form-control', 'required', 'min'=>1])}}
 		    			</div>
 		    		</div>
 

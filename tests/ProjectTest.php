@@ -17,7 +17,7 @@ class ProjectTest extends TestCase
     {
         $this->assertTrue(true);
     }
-/*
+
     public function test_inv_cr_pro_01()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
@@ -606,5 +606,5 @@ class ProjectTest extends TestCase
             ->see('Editar proyecto')
             ->see('El campo descripcion es obligatorio');
     }
-*/
+
 }

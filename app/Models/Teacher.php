@@ -29,6 +29,10 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\TimeTablexTeacher','IdDocente');
     }
 
+    public function tutorship(){
+        return $this->hasMany('Intranet\Models\Tutorship','IdDocente');
+    }
+
     static public function getTutors($filters, $specialty) {
 
         $query = Teacher::where('rolTutoria', 1)->where('IdEspecialidad', $specialty);

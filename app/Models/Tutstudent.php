@@ -19,4 +19,8 @@ class Tutstudent extends Model
     public function user(){
   	  return $this->belongsTo('Intranet\Models\User', 'id_usuario');
     }
+
+    public function tutorship(){
+  	  return $this->hasOne('Intranet\Models\Tutorship');
+    }
 }

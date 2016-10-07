@@ -62,3 +62,14 @@ $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator 
     ];
 });
 
+$factory->define(Intranet\Models\Tutstudent::class, function (Faker\Generator $faker) {
+    return [
+        'id_especialidad'    =>  1,
+        'codigo'            =>  $faker->randomNumber($nbDigits = 8),
+        'nombre'            =>  $faker->firstNameMale,
+        'ape_paterno'       =>  $faker->lastName,
+        'ape_materno'       =>  $faker->lastName,
+        'correo'            =>  $faker->email,        
+
+    ];
+});

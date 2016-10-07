@@ -14,13 +14,14 @@ class CreateStudensTable extends Migration
     {
         Schema::create('tutstudents', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_usuario');//del uas
-            $table->string('codigo');
+            $table->integer('id_usuario')->nullable();//del uas
+            $table->string('codigo')->unique();
             $table->string('nombre');
             $table->string('ape_paterno');
             $table->string('ape_materno');
-            $table->string('correo');            
-            $table->integer('id_especialidad'); //del uas
+            $table->string('correo')->unique();            
+            $table->integer('id_especialidad')->nullable(); //del uas
+            $table->integer('id_tutoria')->unsigned()->nullable(); 
             $table->softDeletes();
             $table->timestamps();
         });
@@ -29,6 +30,7 @@ class CreateStudensTable extends Migration
         Schema::table('tutstudents', function (Blueprint $table) {
              $table->foreign('id_especialidad')->references('IdEspecialidad')->on('Especialidad');
              $table->foreign('id_usuario')->references('IdUsuario')->on('Usuario');
+             $table->foreign('id_tutoria')->references('id')->on('Tutorship');
         });
     }
 

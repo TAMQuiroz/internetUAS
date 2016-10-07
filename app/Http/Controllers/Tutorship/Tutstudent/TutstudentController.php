@@ -42,6 +42,11 @@ class TutstudentController extends Controller
         return view('tutorship.tutstudent.create');
     }
 
+    public function createAll()
+    {
+        return view('tutorship.tutstudent.createAll');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -87,6 +92,45 @@ class TutstudentController extends Controller
         }
     }
 
+    public function storeAll(Request $request)
+    {
+       
+        // try {
+        //     // se crea un usuario primero
+        //     $usuario = new User;
+        //     $usuario->Usuario       = $request['codigo'];            
+        //     $usuario->Contrasena    = bcrypt(123);//se le pone 123 por defecto pero encriptado
+        //     $usuario->IdPerfil      = 0; //perfil 0 para el alumno
+        //     $usuario->save();
+
+        //     //se envia el correo para resetear el password
+        //     if ($usuario) {
+        //         $this->passwordService->sendSetPasswordLink($usuario, $request['correo']);
+        //     }
+            
+        //     //ahora se busca ese usuario
+        //     $usuarioCreado = User::get()->where('Usuario',$request['codigo'])->first();
+
+        //     //ahora se crea el alumno
+        //     $student = new Tutstudent;
+        //     $student->codigo           = $request['codigo'];
+        //     $student->nombre           = $request['nombre'];
+        //     $student->ape_paterno      = $request['app'];
+        //     $student->ape_materno      = $request['apm'];
+        //     $student->correo           = $request['correo'];
+        //     $student->id_especialidad  = Session::get('faculty-code');
+        //     $student->id_usuario       = $usuarioCreado->IdUsuario;
+
+        //     //se guarda en la tabla Alumnos
+        //     $student->save();
+
+        //     //se regresa al indice de alumnos
+        //     return redirect()->route('alumno.index')->with('success', 'El alumno se ha registrado exitosamente');
+        // } catch (Exception $e) {
+        //     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        // }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -95,7 +139,11 @@ class TutstudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $student       = Tutstudent::find($id);
+        $data = [
+            'student'      =>  $student,
+        ];
+        return view('tutorship.tutstudent.show', $data);
     }
 
     /**
@@ -106,11 +154,11 @@ class TutstudentController extends Controller
      */
     public function edit($id)
     {
-        $topic       = Topic::find($id);
+        $student       = Tutstudent::find($id);
         $data = [
-            'topic'      =>  $topic,
+            'student'      =>  $student,
         ];
-        return view('tutorship.topic.edit', $data);
+        return view('tutorship.tutstudent.edit', $data);
     }
 
     /**
@@ -123,10 +171,14 @@ class TutstudentController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $topic = Topic::find($id);
-            $topic->nombre       = $request['nombre'];            
-            $topic->save();
-            return redirect()->route('tema.index', $id)->with('success', 'El tema se ha actualizado exitosamente');
+            $student = Tutstudent::find($id);
+            $student->codigo       = $request['codigo'];            
+            $student->nombre       = $request['nombre'];            
+            $student->ape_paterno  = $request['app'];            
+            $student->ape_materno  = $request['apm'];            
+            $student->correo       = $request['correo'];
+            $student->save();
+            return redirect()->route('alumno.index', $id)->with('success', 'El alumno se ha actualizado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -141,13 +193,13 @@ class TutstudentController extends Controller
     public function destroy($id)
     {
         try {
-            $topic   = Topic::find($id);
+            $student   = Tutstudent::find($id);
             $message = "";
             // if(count($area->investigators)){
             //     return redirect()->back()->with('warning', 'Esta area esta asignada a investigadores');
             // }
-            $topic->delete();
-            return redirect()->route('tema.index')->with('success', 'El tema se ha eliminado exitosamente');
+            $student->delete();
+            return redirect()->route('alumno.index')->with('success', 'El alumno se ha desactivado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

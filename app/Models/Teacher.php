@@ -58,7 +58,7 @@ class Teacher extends Model {
         }
 
         if (array_key_exists("name", $filters) && $filters["name"] != "") {
-            $query = $query->where("Nombre", "like", $filters["name"]);
+            $query = $query->where("Nombre", "like", "%" . $filters["name"] . "%");
         }
 
         if (array_key_exists("lastName", $filters) && $filters["lastName"] != "") {
@@ -66,7 +66,7 @@ class Teacher extends Model {
         }
 
         if (array_key_exists("secondLastName", $filters) && $filters["secondLastName"] != "") {
-            $query = $query->where("ApellidoMaterno", "like", $filters["secondLastName"]);
+            $query = $query->where("ApellidoMaterno", "like", "%" . $filters["secondLastName"] . "%");
         }
 
         return $query->paginate(10);

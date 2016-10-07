@@ -19,10 +19,18 @@ $factory->define(Intranet\Models\User::class, function (Faker\Generator $faker) 
     ];
 });
 
+$factory->defineAs(Intranet\Models\User::class, 'coordinador_especialidad',function (Faker\Generator $faker) {
+    return [
+        'IdPerfil'          => 1,//coordinador de especialidad
+        'Usuario'           => $faker->userName,
+        'Contrasena'        => bcrypt(str_random(10)),
+    ];
+});
+
 $factory->define(Intranet\Models\Teacher::class, function (Faker\Generator $faker) {
     return [
     	'IdEspecialidad'    =>  1,
-    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8),
+    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8,$strict = true),
         'Nombre'            =>  $faker->firstNameMale,
         'ApellidoPaterno'   =>	$faker->lastName,
         'ApellidoMaterno'   =>	$faker->lastName,
@@ -54,6 +62,17 @@ $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator 
     ];
 });
 
+
+$factory->define(Intranet\Models\Tutstudent::class, function (Faker\Generator $faker) {
+    return [
+        'id_especialidad'    =>  1,
+        'codigo'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
+        'nombre'            =>  $faker->firstNameMale,
+        'ape_paterno'       =>  $faker->lastName,
+        'ape_materno'       =>  $faker->lastName,
+        'correo'            =>  $faker->email,        
+
+
 $factory->define(Intranet\Models\Group::class, function (Faker\Generator $faker) {
 
     return [
@@ -77,5 +96,6 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
         'id_grupo'          =>  $grupo->id,
         'id_area'           =>  1,
         'id_status'         =>  1,
+
     ];
 });

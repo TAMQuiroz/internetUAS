@@ -19,5 +19,13 @@ class TopicsTableSeeder extends Seeder
             'nombre' => 'Rendimiento académico',   
         ]);
 
+        DB::table('topics')->insert([
+            'nombre' => 'Económico',   
+        ]);
+
+        DB::table('topics')->insert([
+            'nombre' => 'Familiar',   
+        ]);
+
     }
 }

@@ -61,13 +61,13 @@ class TutorController extends Controller
             foreach($request['check'] as $idTeacher => $value){
                 try {
                 //se cambia el rol del profesor a TUTOR
-                    DB::table('docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 1]);
+                    DB::table('Docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 1]);
 
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
             }
-            return redirect()->route('tutor.index')->with('success', 'Se guardaron los tutores exitosamentee');
+            return redirect()->route('tutor.index')->with('success', 'Se guardaron los tutores exitosamente');
         }
         else{
             return redirect()->route('tutor.index');

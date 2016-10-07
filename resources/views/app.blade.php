@@ -308,15 +308,45 @@
               @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
               <li>
                 <a>
-                   <i class="fa fa-flask"></i> Investigacion <span class="fa fa-chevron-down"></span>
+                   <i class="fa fa-flask"></i> Investigación <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
                   @if(Auth::user()->IdPerfil == 2)
                   <li><a href="{{route('investigador.index')}}"> Administrar Investigadores</a></li>
-                  <li><a href="{{route('grupo.index')}}"> Administrar Grupo de Investigación</a></li>
-                  <li><a href="{{route('area.index')}}"> Administrar Areas</a></li>
+                  <li><a href="{{route('grupo.index')}}"> Administrar Grupos de Investigación</a></li>
+                  <li><a href="{{route('area.index')}}"> Administrar Áreas</a></li>
                   <li><a href="{{route('evento.index')}}"> Administrar Eventos</a></li>
                   <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li>
+                  @endif
+                </ul>
+              </li>
+              @endif
+
+              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              <li>
+                <a>
+                   <i class="fa fa-users"></i> Tutoría <span class="fa fa-chevron-down"></span>
+                </a>
+                <ul class="nav child_menu" style="display: none">
+                  @if(Auth::user()->IdPerfil == 3)
+                  <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                  <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
+                  <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
+                  <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
+                  <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
+                  @endif
+                </ul>
+              </li>
+              @endif
+
+              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              <li>
+                <a>
+                   <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>
+                </a>
+                <ul class="nav child_menu" style="display: none">
+                  @if(Auth::user()->IdPerfil == 2)                  
+                  <!-- <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li> -->
                   @endif
                 </ul>
               </li>

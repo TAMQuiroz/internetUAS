@@ -28,4 +28,8 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\TimeTablexTeacher','IdDocente');
     }
 
+    public function tutorship(){
+        return $this->hasMany('Intranet\Models\Tutorship','IdDocente');
+    }
+
 }

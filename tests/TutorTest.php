@@ -14,14 +14,9 @@ class TutorTest extends TestCase
 	use WithoutMiddleware;
 
 	public function test_tutoria_asignar_tutor_ok()
-	{
-        
+	{        
         $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
         $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
-        
-
-		
-        
 
     	// $this->actingAs($user)//entro al sistema con ese usuario
     	// ->withSession([
@@ -31,9 +26,7 @@ class TutorTest extends TestCase
     	// $form = $this->get('formulario');
     	// $crawler = new Crawler($form);
     	// $att = $crawler->attr('name');
-
-
-    	// $this->assertEquals($att,'_token');
+    	
     	$this->actingAs($user)//entro al sistema con ese usuario
     	->withSession([
     		'actions' => [],

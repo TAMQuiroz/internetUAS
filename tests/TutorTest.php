@@ -82,7 +82,7 @@ class TutorTest extends TestCase
 
       $user = User::find($teacher->IdUsuario);
 
-      $tutors_test = Teacher::getTutors(['lastName' => 'agu'], $teacher->IdEspecialidad);
+      $tutors_test = Teacher::getTutorsFiltered($is_tutor = true, $filters = ['lastName' => 'agu'], $teacher->IdEspecialidad);
 
       $this->actingAs($user)
             ->withSession([

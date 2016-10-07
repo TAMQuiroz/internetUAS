@@ -1,0 +1,30 @@
+.remodal-close {
+	right: 0;
+	left: inherit;
+}
+
+.flex-container {
+	border: 0;
+	display: flex;
+}
+
+.flex-container.has-space-between {
+	justify-content: space-between;
+}
+
+.flex-container.has-flex-end {
+	justify-content: flex-end;
+}
+
+.flex-container.is-wrap {
+	flex-wrap: wrap;
+}
+
+.input-container {
+	margin: 10px 0;
+}
+
+.label-input {
+	min-width: 120px;
+	text-align: left;
+}

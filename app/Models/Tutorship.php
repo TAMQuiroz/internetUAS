@@ -12,9 +12,9 @@ class Tutorship extends Model
 
     // protected $fillable = ['id_suplente','id_profesor'];
 
-    public function student(){
-  	  return $this->belongsTo('Intranet\Models\Tutstudent');
-    }
+    // public function student(){
+  	 //  return $this->belongsTo('Intranet\Models\Tutstudent','id_tutoria');
+    // }
 
     public function tutor(){
   	  return $this->belongsTo('Intranet\Models\Teacher', 'id_tutor');

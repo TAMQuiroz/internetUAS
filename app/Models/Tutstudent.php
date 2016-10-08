@@ -22,7 +22,7 @@ class Tutstudent extends Model
     }
 
     public function tutorship(){
-  	  return $this->hasOne('Intranet\Models\Tutorship');
+  	  return $this->hasOne('Intranet\Models\Tutorship','id_alumno');//bien
     }
 
     static public function loadStudents($csv_path, $mayor) {

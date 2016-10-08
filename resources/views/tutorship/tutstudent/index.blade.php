@@ -77,7 +77,7 @@
                     @if($student->id_tutoria == null)
                     <td class=" ">-</td>
                     @else
-                    <td class=" ">Rios</td>
+                    <td class=" ">{{explode(' ',trim($student->tutorship->tutor->Nombre))[0]    .' '.$student->tutorship->tutor->ApellidoPaterno}}</td>
                     @endif                          
                     
                     <td class=" ">

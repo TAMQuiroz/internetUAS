@@ -151,10 +151,12 @@ class TemplateController extends Controller
             $template   = Template::find($id);
             
             //Restricciones
-
-            $template->delete();
-
-            return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+            if(!empty($template)){
+                $template->delete();
+                return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+            }else{
+                return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+            }
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         } 

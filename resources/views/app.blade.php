@@ -350,8 +350,9 @@
                    <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 2)                  
-                  <!-- <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li> -->
+                  @if(Auth::user()->IdPerfil == 3)                  
+                  <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
+                  <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
                   @endif
                 </ul>
               </li>

@@ -694,5 +694,28 @@ Route::group(['middleware' => 'auth'], function(){
     });
 
     
-    
+    //MODULO DE EVALUACIONES
+    Route::group(['prefix' => 'evaluaciones'], function(){
+        //Competencias
+        Route::group(['prefix' => 'competencias'], function(){    
+            Route::get('/', ['as' => 'competencia.index', 'uses' => 'Evaluations\Competence\CompetenceController@index']);
+            Route::get('create', ['as' => 'competencia.create', 'uses' => 'Evaluations\Competence\CompetenceController@create']);
+            Route::post('create', ['as' => 'competencia.store', 'uses' => 'Evaluations\Competence\CompetenceController@store']);
+            Route::get('show/{id}', ['as' => 'competencia.show', 'uses' => 'Evaluations\Competence\CompetenceController@show']);
+            Route::get('edit/{id}', ['as' => 'competencia.edit', 'uses' => 'Evaluations\Competence\CompetenceController@edit']);
+            Route::post('edit/{id}', ['as' => 'competencia.update', 'uses' => 'Evaluations\Competence\CompetenceController@update']);
+            Route::get('delete/{id}', ['as' => 'competencia.delete', 'uses' => 'Evaluations\Competence\CompetenceController@destroy']);
+        });
+
+        //Preguntas maestras
+        Route::group(['prefix' => 'preguntas'], function(){    
+            Route::get('/', ['as' => 'pregunta.index', 'uses' => 'Evaluations\Question\QuestionController@index']);
+            Route::get('create', ['as' => 'pregunta.create', 'uses' => 'Evaluations\Question\QuestionController@create']);
+            Route::post('create', ['as' => 'pregunta.store', 'uses' => 'Evaluations\Question\QuestionController@store']);
+            Route::get('show/{id}', ['as' => 'pregunta.show', 'uses' => 'Evaluations\Question\QuestionController@show']);
+            Route::get('edit/{id}', ['as' => 'pregunta.edit', 'uses' => 'Evaluations\Question\QuestionController@edit']);
+            Route::post('edit/{id}', ['as' => 'pregunta.update', 'uses' => 'Evaluations\Question\QuestionController@update']);
+            Route::get('delete/{id}', ['as' => 'pregunta.delete', 'uses' => 'Evaluations\Question\QuestionController@destroy']);
+        });
+    });
 });

@@ -7,6 +7,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests;
 use Intranet\Models\Question;
 use Intranet\Models\Competence;
+use Intranet\Models\Alternative;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
 
 class QuestionController extends Controller
@@ -44,7 +45,44 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        try {
+            $pregunta = new Question;            
+            $pregunta->descripcion  = $request['descripcion'];
+            $pregunta->id_especialidad= Session::get('faculty-code');
+            $pregunta->tipo  = $request['tipo'];
+            $pregunta->tiempo  = $request['tiempo'];
+            $pregunta->puntaje  = $request['puntaje'];
+            $pregunta->dificultad  = $request['dificultad'];
+            $pregunta->requisito  = $request['requisitos'];
+            $pregunta->id_docente  = Session::get('user')->IdDocente;
+            $pregunta->competence_id  = $request['competencia'];
+
+            if($request['tipo'] == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
+                $pregunta->rpta  = $request['rpta'];
+            }
+            else if ($request['tipo'] == 3){
+                $pregunta->tamano_arch  = $request['tamanomax'];
+                $pregunta->extension_arch  = $request['extension'];                
+            }
+
+            $pregunta->save();            
+
+            if($request['tipo'] == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
+                //crear las claves
+                foreach ($request['clave'] as $letra => $descripcion) {
+                    $alternativa = new Alternative; 
+                    $alternativa->letra = $letra;
+                    $alternativa->descripcion = $descripcion;
+                    $alternativa->question_id = $pregunta->id;
+                    $alternativa->save();
+                }                
+            }
+            
+            return redirect()->route('pregunta.index')->with('success', 'La pregunta se ha registrado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
     }
 
     /**
@@ -66,7 +104,14 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question       = Question::find($id);
+        $specialty = Session::get('faculty-code');
+        $competences = Competence::where('id_especialidad',$specialty)->get();
+        $data = [
+            'question'      =>  $question,
+            'competences'   =>  $competences,
+        ];
+        return view('evaluations.question.edit', $data);
     }
 
     /**
@@ -89,6 +134,12 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $question   = Question::find($id);            
+            $question->delete();
+            return redirect()->route('pregunta.index')->with('success', 'La pregunta se ha eliminado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
     }
 }

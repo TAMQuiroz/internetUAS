@@ -19,7 +19,7 @@ class Question extends Model
     }
 
     public function competencia(){
-  	  return $this->belongsTo('Intranet\Models\Competence');
+  	  return $this->belongsTo('Intranet\Models\Competence','competence_id');
     }
 
     public function especialidad(){

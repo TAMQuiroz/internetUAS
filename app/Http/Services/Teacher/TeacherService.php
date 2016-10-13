@@ -183,4 +183,13 @@ class TeacherService {
 
 		return $teachers_query->get();
 	}
+
+	function searchByNameLastname($request)
+	{
+		$teachers_query = Teacher::where('Vigente', 1)->where('rolEvaluaciones',null);
+		if(trim($request['nombre']) != "") {
+			$teachers_query->where(DB::raw('CONCAT(Nombre, " ", ApellidoPaterno," ", ApellidoMaterno)'), 'like', "%{$request['nombre']}%");
+		}		
+		return $teachers_query->get();
+	}
 }

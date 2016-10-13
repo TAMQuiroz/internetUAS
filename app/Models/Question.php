@@ -15,7 +15,7 @@ class Question extends Model
     }
 
     public function alternativas(){
-  	  return $this->hasMany('Intranet\Models\Alternative');
+  	  return $this->hasMany('Intranet\Models\Alternative','question_id');
     }
 
     public function competencia(){

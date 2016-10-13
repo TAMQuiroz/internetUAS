@@ -294,6 +294,7 @@ Route::group(['middleware' => 'auth'], function(){
 
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
+        Route::post('/searchEvaluacion', ['uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
 
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);
@@ -716,6 +717,18 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', ['as' => 'pregunta.edit', 'uses' => 'Evaluations\Question\QuestionController@edit']);
             Route::post('edit/{id}', ['as' => 'pregunta.update', 'uses' => 'Evaluations\Question\QuestionController@update']);
             Route::get('delete/{id}', ['as' => 'pregunta.delete', 'uses' => 'Evaluations\Question\QuestionController@destroy']);
+        });
+
+
+        //Evaluadores
+        Route::group(['prefix' => 'evaluadores'], function(){    
+            Route::get('/', ['as' => 'evaluador.index', 'uses' => 'Evaluations\Evaluator\EvaluatorController@index']);
+            Route::get('create', ['as' => 'evaluador.create', 'uses' => 'Evaluations\Evaluator\EvaluatorController@create']);
+            Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);
+            Route::get('show/{id}', ['as' => 'evaluador.show', 'uses' => 'Evaluations\Evaluator\EvaluatorController@show']);
+            Route::get('edit/{id}', ['as' => 'evaluador.edit', 'uses' => 'Evaluations\Evaluator\EvaluatorController@edit']);
+            Route::post('edit/{id}', ['as' => 'evaluador.update', 'uses' => 'Evaluations\Evaluator\EvaluatorController@update']);
+            Route::get('delete/{id}', ['as' => 'evaluador.delete', 'uses' => 'Evaluations\Evaluator\EvaluatorController@destroy']);
         });
     });
 });

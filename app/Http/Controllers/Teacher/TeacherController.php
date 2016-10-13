@@ -148,7 +148,7 @@ class TeacherController extends BaseController {
     public function searchModal(Request $request)
     {
         $teachers = collect();
-
+        
         try {
             $teachers = $this->teacherService
                              ->searchByNameCodeFaculty(
@@ -162,6 +162,21 @@ class TeacherController extends BaseController {
         }
 
         return response()->view('courses.teachers_table', compact('teachers'));
+    }
+
+    public function searchModalEv(Request $request)
+    {
+        $teachers = collect(); //creo una coleccion vacia       
+        try {
+            $teachers = $this->teacherService
+                             ->searchByNameLastname(
+                                $request->only('nombre'));//busco los profesores por el filtro
+        } catch (Exception $e) {
+            //
+        }
+
+        //le paso todo a la vista donde esta la tabla
+        return response()->view('evaluations.evaluator.search-teachers-table', compact('teachers'));
     }
 
 }

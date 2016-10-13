@@ -14,7 +14,7 @@ class CreateAlternativesTable extends Migration
     {
         Schema::create('alternatives', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('letra',1);
+            $table->string('letra',1);
             $table->string('descripcion');
             $table->integer('question_id')->unsigned();
             $table->softDeletes();

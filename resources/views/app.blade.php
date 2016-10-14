@@ -354,6 +354,7 @@
                   <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
                   <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
                   <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
+                  <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
                   @endif
                 </ul>
               </li>

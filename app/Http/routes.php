@@ -730,5 +730,16 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('edit/{id}', ['as' => 'evaluador.update', 'uses' => 'Evaluations\Evaluator\EvaluatorController@update']);
             Route::get('delete/{id}', ['as' => 'evaluador.delete', 'uses' => 'Evaluations\Evaluator\EvaluatorController@destroy']);
         });
+
+        //Evaluaciones
+        Route::group(['prefix' => 'evaluaciones'], function(){    
+            Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
+            Route::get('create', ['as' => 'evaluacion.create', 'uses' => 'Evaluations\Evaluation\EvaluationController@create']);
+            Route::post('create', ['as' => 'evaluacion.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@store']);
+            Route::get('show/{id}', ['as' => 'evaluacion.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@show']);
+            Route::get('edit/{id}', ['as' => 'evaluacion.edit', 'uses' => 'Evaluations\Evaluation\EvaluationController@edit']);
+            Route::post('edit/{id}', ['as' => 'evaluacion.update', 'uses' => 'Evaluations\Evaluation\EvaluationController@update']);
+            Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
+        });
     });
 });

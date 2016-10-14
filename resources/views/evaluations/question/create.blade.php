@@ -30,29 +30,28 @@
 							@foreach($competences as $competence)
 							<option value="{{$competence->id}}" >{{$competence->nombre}}</option>
 							@endforeach	
-						</select>
-						
+						</select>						
 					</div>
 				</div>
 
 				<div class="form-group">
 					{{Form::label('Tiempo estimado:*',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
-					<div class="col-md-2 col-sm-2 col-xs-6">
+					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="tiempo" required="required" type="number" min="1" class="form-control" aria-describedby="basic-addon1">
+							<input name="tiempo" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
 							<span class="input-group-addon" id="basic-addon1">minutos</span>
 						</div>
 					</div>
 
-					{{Form::label('Puntaje: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
-					<div class="col-md-2 col-sm-2 col-xs-6">
+					{{Form::label('Puntaje: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
+					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="puntaje" required="required" type="number" min="1" class="form-control" aria-describedby="basic-addon1">
+							<input name="puntaje" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
 							<span class="input-group-addon" id="basic-addon1">puntos</span>
 						</div>						
 					</div>
 
-					{{Form::label('Dificultad: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
+					{{Form::label('Dificultad: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
 					<div class="col-md-2 col-sm-2 col-xs-6">
 						<select name="dificultad" class="form-control" required="required">
 							<option value="">Seleccione</option>
@@ -87,6 +86,7 @@
 							</div>
 						</div>
 					</div>
+
 					<div id="form-archivo" hidden="true" class="col-md-8 col-sm-8 col-xs-12">
 						<div class="form-group">							
 							{{Form::label('Extensión: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
@@ -104,6 +104,7 @@
 							</div>							
 						</div>
 					</div>
+
 					<div id="form-cerrada" hidden="true" class="col-md-8 col-sm-8 col-xs-12">
 						<div class="row">
 							<div class="form-group">
@@ -117,8 +118,8 @@
 
 						<div id="opciones" class="row">									
 							<div class="form-group">
-								{{Form::label('a.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
-								<div class="col-md-8 col-sm-8 col-xs-4">
+								{{Form::label('a.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-5'])}}
+								<div class="col-md-8 col-sm-8 col-xs-6">
 									<div class="input-group">										
 										{{Form::text('clave[a]',null,['class'=>'form-control tCerrada','readonly', 'maxlength' => 500])}}
 										<span class="input-group-addon">
@@ -129,8 +130,8 @@
 
 							</div>
 							<div class="form-group">
-								{{Form::label('b.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
-								<div class="col-md-8 col-sm-10 col-xs-6">
+								{{Form::label('b.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-5'])}}
+								<div class="col-md-8 col-sm-8 col-xs-6">
 									<div class="input-group">										
 										{{Form::text('clave[b]',null,['class'=>'form-control tCerrada','readonly', 'maxlength' => 500])}}
 										<span class="input-group-addon">
@@ -170,7 +171,7 @@
 		n++;    
 		var chrm = String.fromCharCode(97 + n);
 		var chrM = String.fromCharCode(65 + n);
-		$("#opciones").append('<div class="form-group preg"><label class="control-label col-md-2 col-sm-2 col-xs-2">'+ chrM+'.</label><div class="col-md-8 col-sm-10 col-xs-6"><div class="input-group"><input type="text" name="clave['+chrm+']" class="form-control tCerrada" required maxlength="500">										<span class="input-group-addon"><input type="radio" required class="tCerr" value="'+chrm+'" name="rpta" > Rpta.</span></div></div>	</div>');
+		$("#opciones").append('<div class="form-group preg"><label class="control-label col-md-2 col-sm-2 col-xs-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-5">'+ chrM+'.</label><div class="col-md-8 col-sm-8 col-xs-6"><div class="input-group"><input type="text" name="clave['+chrm+']" class="form-control tCerrada" required maxlength="500">										<span class="input-group-addon"><input type="radio" required class="tCerr" value="'+chrm+'" name="rpta" > Rpta.</span></div></div>	</div>');
 
 	});
 	$("#remove").click(function() {

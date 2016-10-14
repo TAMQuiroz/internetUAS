@@ -18,19 +18,18 @@
 		    	<h3 class="panel-title">Información</h3>
 			</div>
 		  	<div class="panel-body">
-
-		    	{{Form::open(['route' => ['competencia.update', $competence->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+		    	{{Form::open(['route' => ['competencia.update', $competence->id], 'class'=>'form-horizontal'])}}
 		    		<div class="form-group">
-		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			{{Form::label('Nombre: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-4'])}}
+		    			<div class="col-md-4 col-sm-4 col-xs-8">
 		    				{{Form::text('nombre',$competence->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>	
 
 		    		<div class="form-group">
-		    			{{Form::label('Descripción *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
-		    				{{Form::textarea('descripcion',$competence->descripcion,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+		    			{{Form::label('Descripción: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-4'])}}
+		    			<div class="col-md-4 col-sm-4 col-xs-8">
+		    				{{Form::textarea('descripcion',$competence->descripcion,['class'=>'form-control', 'required', 'maxlength' => 500])}}
 		    			</div>
 		    		</div>		    		
 

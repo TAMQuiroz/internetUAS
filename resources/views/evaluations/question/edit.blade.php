@@ -28,11 +28,11 @@
 						<select name="competencia" required="required" class="form-control">
 							<option value="">Seleccione</option>
 							@foreach($competences as $competence)
-								@if($competence->id == $question->competence_id)
-									<option selected value="{{$competence->id}}" >{{$competence->nombre}}</option>
-								@else
-									<option value="{{$competence->id}}" >{{$competence->nombre}}</option>
-								@endif
+							@if($competence->id == $question->competence_id)
+							<option selected value="{{$competence->id}}" >{{$competence->nombre}}</option>
+							@else
+							<option value="{{$competence->id}}" >{{$competence->nombre}}</option>
+							@endif
 							@endforeach	
 						</select>
 						
@@ -41,28 +41,28 @@
 
 				<div class="form-group">
 					{{Form::label('Tiempo estimado:*',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
-					<div class="col-md-2 col-sm-2 col-xs-6">
+					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="tiempo" required="required" type="number" min="1" class="form-control" aria-describedby="basic-addon1" value="{{$question->tiempo}}">
+							<input name="tiempo" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1" value="{{$question->tiempo}}">
 							<span class="input-group-addon" id="basic-addon1">minutos</span>
 						</div>
 					</div>
 
-					{{Form::label('Puntaje: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
-					<div class="col-md-2 col-sm-2 col-xs-6">
+					{{Form::label('Puntaje: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
+					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="puntaje" required="required" type="number" min="1" class="form-control" aria-describedby="basic-addon1" value="{{$question->puntaje}}">
+							<input name="puntaje" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1" value="{{$question->puntaje}}">
 							<span class="input-group-addon" id="basic-addon1">puntos</span>
 						</div>						
 					</div>
 
-					{{Form::label('Dificultad: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
+					{{Form::label('Dificultad: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
 					<div class="col-md-2 col-sm-2 col-xs-6">
 						<select name="dificultad" class="form-control" required="required">
 							<option value="" >Seleccione</option>
 							<option value="1" @if($question->dificultad==1) selected @endif>Baja</option>
 							<option value="2"@if($question->dificultad==2) selected @endif>Media</option>
-							<option value="3"@if($question->dificultad==3) selected @endif>Alta</option>							
+							<option value="3"@if($question->dificultad==3) selected @endif>Alta</option>			
 						</select>						
 					</div>
 				</div>
@@ -120,10 +120,35 @@
 						</div>
 
 						<div id="opciones" class="row">	
-						@foreach($question->alternativas as $alternativa)	
+							@if($question->alternativas->isEmpty())
 							<div class="form-group">
-								{{Form::label($alternativa->letra.'.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
-								<div class="col-md-8 col-sm-8 col-xs-4">
+								{{Form::label('a.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-5'])}}
+								<div class="col-md-8 col-sm-8 col-xs-6">
+									<div class="input-group">										
+										{{Form::text('clave[a]',null,['class'=>'form-control tCerrada','readonly', 'maxlength' => 500])}}
+										<span class="input-group-addon">
+											<input class="tCerr" type="radio" disabled value="a" name="rpta" > Rpta.
+										</span>
+									</div>
+								</div>
+
+							</div>
+							<div class="form-group">
+								{{Form::label('b.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-5'])}}
+								<div class="col-md-8 col-sm-8 col-xs-6">
+									<div class="input-group">										
+										{{Form::text('clave[b]',null,['class'=>'form-control tCerrada','readonly', 'maxlength' => 500])}}
+										<span class="input-group-addon">
+											<input class="tCerr" type="radio" disabled value="b" name="rpta" > Rpta.
+										</span>
+									</div>
+								</div>
+							</div>
+							@else
+							@foreach($question->alternativas as $alternativa)	
+							<div class="form-group">
+								{{Form::label($alternativa->letra.'.',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-5'])}}
+								<div class="col-md-8 col-sm-8 col-xs-6">
 									<div class="input-group">										
 										{{Form::text('clave['.$alternativa->id.']',$alternativa->descripcion,['class'=>'form-control tCerrada', 'maxlength' => 500])}}
 										<span class="input-group-addon">
@@ -133,8 +158,8 @@
 								</div>
 
 							</div>
-						@endforeach	
-
+							@endforeach	
+							@endif
 						</div>
 
 						
@@ -166,7 +191,7 @@
 		n++;    
 		var chrm = String.fromCharCode(97 + n + lastLetter -1);
 		var chrM = String.fromCharCode(65 + n + lastLetter -1 );
-		$("#opciones").append('<div class="form-group preg"><label class="control-label col-md-2 col-sm-2 col-xs-2">'+ chrM+'.</label><div class="col-md-8 col-sm-10 col-xs-6"><div class="input-group"><input type="text" name="clave['+chrm+']" class="form-control tCerrada" required maxlength="500">										<span class="input-group-addon"><input type="radio" required class="tCerr" value="'+chrm+'" name="rpta" > Rpta.</span></div></div>	</div>');
+		$("#opciones").append('<div class="form-group preg"><label class="control-label col-md-2 col-sm-2 col-xs-1 col-md-offset-0 col-sm-offset-0 col-xs-offset-5">'+ chrM+'.</label><div class="col-md-8 col-sm-8 col-xs-6"><div class="input-group"><input type="text" name="clave['+chrm+']" class="form-control tCerrada" required maxlength="500">										<span class="input-group-addon"><input type="radio" required class="tCerr" value="'+chrm+'" name="rpta" > Rpta.</span></div></div>	</div>');
 
 	});
 	$("#remove").click(function() {

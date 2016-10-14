@@ -17,7 +17,7 @@ class QuestionController extends Controller
         $specialty = Session::get('faculty-code');
         $questions = Question::where('id_especialidad',$specialty)->get();
         $data = [
-            'questions'    =>  $questions,
+        'questions'    =>  $questions,
         ];
         return view('evaluations.question.index', $data);
     }
@@ -32,7 +32,7 @@ class QuestionController extends Controller
         $specialty = Session::get('faculty-code');
         $competences = Competence::where('id_especialidad',$specialty)->get();
         $data = [
-            'competences'    =>  $competences,
+        'competences'    =>  $competences,
         ];
         return view('evaluations.question.create',$data);
     }
@@ -108,8 +108,8 @@ class QuestionController extends Controller
         $specialty = Session::get('faculty-code');
         $competences = Competence::where('id_especialidad',$specialty)->get();
         $data = [
-            'question'      =>  $question,
-            'competences'   =>  $competences,
+        'question'      =>  $question,
+        'competences'   =>  $competences,
         ];
         return view('evaluations.question.edit', $data);
     }
@@ -123,18 +123,18 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-         // dd($request);
+       // dd($request);
 
-        try {
-            $pregunta = Question::find($id);                        
-            $pregunta->descripcion  = $request['descripcion'];            
-            $pregunta->tipo  = $request['tipo'];
-            $pregunta->tiempo  = $request['tiempo'];
-            $pregunta->puntaje  = $request['puntaje'];
-            $pregunta->dificultad  = $request['dificultad'];
-            $pregunta->requisito  = $request['requisitos'];
+       try {
+        $pregunta = Question::find($id);                        
+        $pregunta->descripcion  = $request['descripcion'];            
+        $pregunta->tipo  = $request['tipo'];
+        $pregunta->tiempo  = $request['tiempo'];
+        $pregunta->puntaje  = $request['puntaje'];
+        $pregunta->dificultad  = $request['dificultad'];
+        $pregunta->requisito  = $request['requisitos'];
             // $pregunta->id_docente  = Session::get('user')->IdDocente; nadie cambiara la pregunta deotro
-            $pregunta->competence_id  = $request['competencia'];
+        $pregunta->competence_id  = $request['competencia'];
 
             if($request['tipo'] == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
                 $pregunta->rpta  = $request['rpta'];
@@ -147,29 +147,41 @@ class QuestionController extends Controller
             $pregunta->save();            
 
             if($request['tipo'] == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
-                
-                $ultimaClave = $pregunta->alternativas->last()->letra;
-                foreach ($request['clave'] as $letra => $descripcion) {
-                    if(strcmp($letra, $ultimaClave) <= 0 ){ //si es menor o igual
-                        $alterAntigua = Alternative::find($letra);
-                        $alterAntigua->descripcion = $descripcion;//actualico el contenido de la clave
-                        $alterAntigua->save();
-                    }
-                    else{
+                if($pregunta->alternativas->isEmpty()){//si la pregunta no tenia alternativas
+                    foreach ($request['clave'] as $letra => $descripcion) {
+
                         $alternativa = new Alternative; 
                         $alternativa->letra = $letra;
                         $alternativa->descripcion = $descripcion;
                         $alternativa->question_id = $pregunta->id;
                         $alternativa->save();
-                    }                    
-                }                
-            }
-            
-            return redirect()->route('pregunta.index')->with('success', 'La pregunta se ha actualizado exitosamente');
-        } catch (Exception $e) {
-            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+
+                    } 
+                }else{//si habian alternativas, se actualizan las que habian y se agregan las nuevas
+                    $ultimaClave = $pregunta->alternativas->last()->letra;
+                    foreach ($request['clave'] as $letra => $descripcion) {
+                            if(strcmp($letra, $ultimaClave) <= 0 ){ //si es menor o igual
+                                $alterAntigua = Alternative::find($letra);
+                                $alterAntigua->descripcion = $descripcion;//actualico el contenido de la clave
+                                $alterAntigua->save();
+                            }
+                            else{
+                                $alternativa = new Alternative; 
+                                $alternativa->letra = $letra;
+                                $alternativa->descripcion = $descripcion;
+                                $alternativa->question_id = $pregunta->id;
+                                $alternativa->save();
+                            }                    
+                    }   
+                }
+
         }
+
+        return redirect()->route('pregunta.index')->with('success', 'La pregunta se ha actualizado exitosamente');
+    } catch (Exception $e) {
+        return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
     }
+}
 
     /**
      * Remove the specified resource from storage.

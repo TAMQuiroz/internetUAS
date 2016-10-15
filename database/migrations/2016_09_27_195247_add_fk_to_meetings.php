@@ -15,6 +15,7 @@ class AddFkToMeetings extends Migration
         Schema::table('meetings', function (Blueprint $table) {
              $table->foreign('idStudent')->references('id')->on('pspstudents');
              $table->foreign('idSupervisor')->references('id')->on('supervisors');
+             $table->foreign('idTipoEstado')->references('id')->on('statuses');
         });
     }
 
@@ -28,6 +29,7 @@ class AddFkToMeetings extends Migration
         Schema::table('meetings', function (Blueprint $table) {
             $table->dropForeign('meetings_idStudent_foreign');
             $table->dropForeign('meetings_idSupervisor_foreign');
+            $table->dropForeign('meetings_idTipoEstado_foreign');
         });     
     }
 }

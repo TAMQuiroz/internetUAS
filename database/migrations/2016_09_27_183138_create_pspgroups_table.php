@@ -14,7 +14,7 @@ class CreatePspgroupsTable extends Migration
     {
         Schema::create('pspgroups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idTipoEstado')->unsigned();
+            //$table->integer('idTipoEstado')->unsigned();
             $table->char('numero');
             $table->string('descripcion');
             $table->timestamps();

@@ -23,7 +23,7 @@ class CreateInscriptionfilesTable extends Migration
             $table->string('actividadEconomica');
             $table->string('direccionEmpresa');
             $table->string('distritoEmpresa');
-            $table->string('area');
+            $table->string('nombreArea');
             $table->string('ubicacionArea');
             $table->string('equipamientoArea');
             $table->string('equipamientoDelPracticante');
@@ -33,6 +33,8 @@ class CreateInscriptionfilesTable extends Migration
             $table->string('telefonoJefeDirecto');
             $table->string('nombreApellidoJefeDirectoAuxiliar');
             $table->string('puesto');
+            $table->string('recomendaciones');
+            $table->integer('debe_modificarse');
             $table->timestamps();
         });
     }

@@ -14,11 +14,12 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('idTipoEstado');
             $table->time('hora_ini');
             $table->time('hora_fin');
             $table->date('fecha');
-            $table->integer('idStudent')->unsigned();
-            $table->integer('idSupervisor')->unsigned();
+            $table->integer('idStudent');
+            $table->integer('idSupervisor');
             $table->char('asistencia');
             $table->string('lugar');
             $table->string('observaciones');

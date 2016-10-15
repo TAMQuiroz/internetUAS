@@ -24,7 +24,7 @@ class ProjectRequest extends Request
     public function rules()
     {
         return [
-            'nombre'            =>  'required|max:100',
+            'nombre'            =>  'regex:/^[\pL\s\-]+$/u|required|max:50',
             'num_entregables'   =>  'required|numeric|min:1',
             'fecha_ini'         =>  'required|date|after:today',
             'fecha_fin'         =>  'required|date|after:fecha_ini',

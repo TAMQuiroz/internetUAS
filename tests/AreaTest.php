@@ -18,7 +18,7 @@ class AreaTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_cr_are_01()
+    public function test_inv_cr_are_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -34,8 +34,8 @@ class AreaTest extends TestCase
     		->see('Lista de Areas')
     		->see('El area se ha registrado exitosamente');
     }
-/*
-    public function test_cr_are_02()
+
+    public function test_inv_cr_are_02()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -52,7 +52,7 @@ class AreaTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_cr_are_03()
+    public function test_inv_cr_are_03()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -69,7 +69,7 @@ class AreaTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_cr_are_04()
+    public function test_inv_cr_are_04()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -86,7 +86,7 @@ class AreaTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_cr_are_05()
+    public function test_inv_cr_are_05()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -103,7 +103,7 @@ class AreaTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_cr_are_06()
+    public function test_inv_cr_are_06()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -120,7 +120,7 @@ class AreaTest extends TestCase
     		->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
-    public function test_cr_are_07()
+    public function test_inv_cr_are_07()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -137,7 +137,7 @@ class AreaTest extends TestCase
     		->see('El campo descripcion es obligatorio');
     }
 
-    public function test_cr_are_08()
+    public function test_inv_cr_are_08()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -154,7 +154,7 @@ class AreaTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-    public function test_cr_are_09()
+    public function test_inv_cr_are_09()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 
@@ -171,7 +171,7 @@ class AreaTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-    public function test_ed_are_01()
+    public function test_inv_ed_are_01()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -189,7 +189,7 @@ class AreaTest extends TestCase
     		->see('El area se ha actualizado exitosamente');
     }
 
-    public function test_ed_are_02()
+    public function test_inv_ed_are_02()
     {
     	$user = factory(Intranet\Models\User::class)->make();
     	$area   = factory(Intranet\Models\Area::class)->create();
@@ -207,7 +207,7 @@ class AreaTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_ed_are_03()
+    public function test_inv_ed_are_03()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 		$area   = factory(Intranet\Models\Area::class)->create();
@@ -225,7 +225,7 @@ class AreaTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_ed_are_04()
+    public function test_inv_ed_are_04()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 		$area   = factory(Intranet\Models\Area::class)->create();
@@ -243,7 +243,7 @@ class AreaTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_ed_are_05()
+    public function test_inv_ed_are_05()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 		$area   = factory(Intranet\Models\Area::class)->create();
@@ -261,7 +261,7 @@ class AreaTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_ed_are_06()
+    public function test_inv_ed_are_06()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 		$area   = factory(Intranet\Models\Area::class)->create();
@@ -279,7 +279,7 @@ class AreaTest extends TestCase
     		->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
-    public function test_ed_are_07()
+    public function test_inv_ed_are_07()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 		$area   = factory(Intranet\Models\Area::class)->create();
@@ -297,7 +297,7 @@ class AreaTest extends TestCase
     		->see('El campo descripcion es obligatorio');
     }
 
-    public function test_ed_are_08()
+    public function test_inv_ed_are_08()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 		$area   = factory(Intranet\Models\Area::class)->create();
@@ -315,7 +315,7 @@ class AreaTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-    public function test_ed_are_09()
+    public function test_inv_ed_are_09()
     {
     	$user = factory(Intranet\Models\User::class)->make();
 		$area   = factory(Intranet\Models\Area::class)->create();
@@ -332,5 +332,6 @@ class AreaTest extends TestCase
     		->see('Edicion de Areas')
     		->see('El formato de descripcion es inválido');
     }
-*/
+
 }
+ 

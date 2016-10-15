@@ -744,15 +744,22 @@ CREATE TABLE `Docente` (
   `Correo` varchar(100) DEFAULT NULL,
   `Cargo` varchar(100) DEFAULT NULL,
   `Vigente` int(11) NOT NULL,
+  `rolTutoria` int(11) NULL,
+  `rolEvaluaciones` int(11) NULL, 
+  `oficina` varchar(20) NULL,
+  `telefono` varchar(20) NULL,
+  `anexo` varchar(20) NULL,
   `Descripcion` varchar(100) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+
   PRIMARY KEY (`IdDocente`,`Vigente`),
   KEY `IdEspecialidad` (`IdEspecialidad`),
   KEY `IdUsuario` (`IdUsuario`),
   CONSTRAINT `Docente_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
   CONSTRAINT `Docente_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`)
+
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -762,7 +769,10 @@ CREATE TABLE `Docente` (
 
 LOCK TABLES `Docente` WRITE;
 /*!40000 ALTER TABLE `Docente` DISABLE KEYS */;
-INSERT INTO `Docente` VALUES (1,1,2,'19960275','Luis Alberto','Flores','García',' luis.flores@pucp.edu.pe','Profesor Contratado',1,'Ingeniería de Software, Gestión de Proyectos, Gestión de Procesos\r\nIngeniería de Software  ',NULL,'2016-06-18 17:24:00','2016-06-18 17:24:00'),(2,2,3,'19911254','Cesar Augusto','Stoll','Quevedo','  cstoll@pucp.pe ','Profesor Contratado',1,'',NULL,'2016-06-18 17:52:40','2016-06-18 17:52:40'),(3,3,4,'19941253','Ramzy Francis','Kahhat','Abedrabbo','ramzy.kahhat@pucp.edu.pe  ','Profesor Contratado',1,'INGENIERÍA SOSTENIBLE, INGENIERÍA AMBIENTAL',NULL,'2016-06-18 17:55:02','2016-06-18 17:55:02'),(4,1,5,'00009299','César Augusto','Aguilera','Serpa','cesar.aguilera@pucp.edu.pe','Profesor Contratado',1,'',NULL,'2016-06-19 06:07:14','2016-06-19 06:07:14');
+INSERT INTO `Docente` VALUES (1,1,2,'19960275','Luis Alberto','Flores','García',' luis.flores@pucp.edu.pe','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'Ingeniería de Software, Gestión de Proyectos, Gestión de Procesos\r\nIngeniería de Software  ',NULL,'2016-06-18 17:24:00','2016-06-18 17:24:00'),
+(2,2,3,'19911254','Cesar Augusto','Stoll','Quevedo','  cstoll@pucp.pe ','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'',NULL,'2016-06-18 17:52:40','2016-06-18 17:52:40'),
+(3,3,4,'19941253','Ramzy Francis','Kahhat','Abedrabbo','ramzy.kahhat@pucp.edu.pe  ','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'INGENIERÍA SOSTENIBLE, INGENIERÍA AMBIENTAL',NULL,'2016-06-18 17:55:02','2016-06-18 17:55:02'),
+(4,1,5,'00009299','César Augusto','Aguilera','Serpa','cesar.aguilera@pucp.edu.pe','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'',NULL,'2016-06-19 06:07:14','2016-06-19 06:07:14');
 /*!40000 ALTER TABLE `Docente` ENABLE KEYS */;
 UNLOCK TABLES;
 

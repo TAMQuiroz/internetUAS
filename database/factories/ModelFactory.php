@@ -19,10 +19,18 @@ $factory->define(Intranet\Models\User::class, function (Faker\Generator $faker) 
     ];
 });
 
+$factory->defineAs(Intranet\Models\User::class, 'coordinador_especialidad',function (Faker\Generator $faker) {
+    return [
+        'IdPerfil'          => 1,//coordinador de especialidad
+        'Usuario'           => $faker->userName,
+        'Contrasena'        => bcrypt(str_random(10)),
+    ];
+});
+
 $factory->define(Intranet\Models\Teacher::class, function (Faker\Generator $faker) {
     return [
     	'IdEspecialidad'    =>  1,
-    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8),
+    	'Codigo'	        =>	$faker->randomNumber($nbDigits = 8,$strict = true),
         'Nombre'            =>  $faker->firstNameMale,
         'ApellidoPaterno'   =>	$faker->lastName,
         'ApellidoMaterno'   =>	$faker->lastName,
@@ -54,6 +62,7 @@ $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator 
     ];
 });
 
+
 $factory->define(Intranet\Models\Template::class, function (Faker\Generator $faker) {
     return [
         'idPhase'          => 1,
@@ -79,5 +88,43 @@ $factory->define(Intranet\Models\PspGroup::class, function (Faker\Generator $fak
     return [
         'numero'          => 1,
         'descripcion'     => $faker->text,
+    ];
+});
+
+$factory->define(Intranet\Models\Tutstudent::class, function (Faker\Generator $faker) {
+    return [
+        'id_especialidad'    =>  1,
+        'codigo'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
+        'nombre'            =>  $faker->firstNameMale,
+        'ape_paterno'       =>  $faker->lastName,
+        'ape_materno'       =>  $faker->lastName,
+        'correo'            =>  $faker->email,        
+    ];
+});
+
+$factory->define(Intranet\Models\Group::class, function (Faker\Generator $faker) {
+
+    return [
+        'nombre'            => 'Grupo de prueba',
+        'id_especialidad'   => 1,
+        'descripcion'       => $faker->text,
+        'id_lider'          => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\Project::class, function (Faker\Generator $faker) {
+
+    $grupo  =   factory(Intranet\Models\Group::class)->create();
+
+    return [
+        'nombre'            =>  'Proyecto de prueba',
+        'descripcion'       =>  $faker->text,
+        'num_entregables'   =>  5,
+        'fecha_ini'         =>  '2017-10-06',
+        'fecha_fin'         =>  '2018-10-06',
+        'id_grupo'          =>  $grupo->id,
+        'id_area'           =>  1,
+        'id_status'         =>  1,
+
     ];
 });

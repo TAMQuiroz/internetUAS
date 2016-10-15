@@ -24,10 +24,10 @@ class GroupRequest extends Request
     public function rules()
     {
         return [
-            'nombre'         => 'required|max:50',
-            'descripcion'  => 'required|max:200',
-            'lider'        => 'required|numeric',
-            'imagen'            => 'image',
+            'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'descripcion'   => 'regex:/^[\pL\s\-]+$/u|required|max:200',
+            'lider'         => 'required|numeric',
+            'imagen'        => 'image',
         ];
     }
 }

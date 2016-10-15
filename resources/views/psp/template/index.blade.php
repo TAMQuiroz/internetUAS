@@ -45,6 +45,7 @@
                             <td>
                                 <a href="{{route('template.edit', $template->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                 <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$template->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
+                                <a class="btn btn-primary btn-xs" href="{{route('getentry.template', $template->id)}}" title="Descargar Plantilla"><i class="fa fa-download"></i></a>
                             </td>
                         </tr> 
                         @include('modals.delete', ['id'=> $template->id, 'message' => '¿Esta seguro que desea eliminar esta plantilla?', 'route' => route('delete.template', $template->id)])

@@ -139,6 +139,19 @@ class TemplateController extends Controller
         }
     }
 
+    public function get($filename){
+
+        $template = Template::find($filename);
+        $file=public_path()."/";
+        $file .=$template->ruta;
+        if(file_exists($file)) {
+            return response()->download($file);
+        }
+        else{
+            return redirect()->back()->with('warning', 'No existe el archivo a descargar');
+        }    
+    }
+
     /**
      * Remove the specified resource from storage.
      *

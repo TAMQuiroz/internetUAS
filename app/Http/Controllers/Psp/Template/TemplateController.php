@@ -9,6 +9,9 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Template;
 use Intranet\Http\Requests\TemplateRequest;
 use Intranet\Http\Requests\TemplateEditRequest;
+use Intranet\Models\Teacher;
+use Intranet\Models\User;
+use Intranet\Models\Supervisor;
 
 class TemplateController extends Controller
 {
@@ -51,15 +54,31 @@ class TemplateController extends Controller
         try {
             $template = new Template;
             $template->idPhase       = $request['fase'];            
-            $template->idTipoEstado  = 1;
+            //$template->idTipoEstado  = 1;
+            if(Auth::User()->IdPerfil==6){
+                $supervisors = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get();  
+                $supervisor  =$supervisors->first();             
+                $template->idSupervisor  = $supervisor->id;
+
+            }
+            if(Auth::User()->IdPerfil==2){
+                $teacherss = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->get();  
+                $teacher =$teacherss->first();
+                $template->idProfesor  = $teacher->IdDocente;
+            }
+            if(Auth::User()->IdPerfil==3){
+                $template->idAdmin   = Auth::User()->IdUsuario;
+            }
+            /*
             $template->idProfesor  = Auth::User()->IdUsuario;
             $template->idSupervisor  = null;
             $template->idAdmin  = null;
+            */
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->obligatorio  = 1;
+                $template->idTipoEstado  = 1;
             else
-                $template->obligatorio  = 2;
+                $template->idTipoEstado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 $destinationPath = 'uploads/templates/'; // upload path
@@ -118,9 +137,9 @@ class TemplateController extends Controller
             $template->idPhase       = $request['fase'];
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->obligatorio  = 1;
+                $template->idTipoEstado  = 1;
             else
-                $template->obligatorio  = 2;
+                $template->idTipoEstado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 if(file_exists($template->ruta)){

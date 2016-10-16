@@ -36,7 +36,7 @@
                         <tr> 
                             <td>{{$template->titulo}}</td> 
                             <td>{{$template->ruta}}</td> 
-                            @if($template->obligatorio==1)
+                            @if($template->idTipoEstado==1)
                             <td>obligatorio</td> 
                             @else
                             <td>no obligatorio</td> 

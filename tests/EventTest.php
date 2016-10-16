@@ -19,7 +19,7 @@ class EventTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_inv_cr_evnt_01()
+    public function test_inv_evnt_cr_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -44,7 +44,7 @@ class EventTest extends TestCase
     }
 
 
-    public function test_inv_cr_evnt_02()
+    public function test_inv_evnt_cr_02()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$grupo  = factory(Intranet\Models\Group::class)->create();
@@ -68,7 +68,7 @@ class EventTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_cr_evnt_03()
+    public function test_inv_evnt_cr_03()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$grupo  = factory(Intranet\Models\Group::class)->create();
@@ -92,7 +92,7 @@ class EventTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_cr_evnt_04()
+    public function test_inv_evnt_cr_04()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$grupo  = factory(Intranet\Models\Group::class)->create();
@@ -116,7 +116,7 @@ class EventTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_cr_evnt_05()
+   	public function test_inv_evnt_cr_05()
     {
     	$user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -140,7 +140,7 @@ class EventTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_cr_evnt_06()
+   	public function test_inv_evnt_cr_06()
     {
     	$user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -164,7 +164,7 @@ class EventTest extends TestCase
     		->see('ubicacion no debe ser mayor que 50 caracteres');
     }
 
-   	public function test_inv_cr_evnt_07()
+   	public function test_inv_evnt_cr_07()
     {
     	$user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -188,7 +188,7 @@ class EventTest extends TestCase
     		->see('El campo ubicacion es obligatorio');
     }
 
-    public function test_inv_cr_evnt_08()
+    public function test_inv_evnt_cr_08()
     {
     	$user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -212,7 +212,7 @@ class EventTest extends TestCase
     		->see('El formato de ubicacion es inválido');
     }
 
-    public function test_inv_cr_evnt_09()
+    public function test_inv_evnt_cr_09()
     {
     	$user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -236,7 +236,7 @@ class EventTest extends TestCase
     		->see('El formato de ubicacion es inválido');
     }
 
-    public function test_inv_cr_evnt_10()
+    public function test_inv_evnt_cr_10()
     {
     	$user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -260,7 +260,7 @@ class EventTest extends TestCase
     		->see('fecha debe ser una fecha posterior a Hoy');
     }
 
-    public function test_inv_cr_evnt_11()
+    public function test_inv_evnt_cr_11()
     {
     	$user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -284,7 +284,7 @@ class EventTest extends TestCase
     		->see('El campo fecha es obligatorio');
     }
 
-    public function test_inv_cr_evnt_12()
+    public function test_inv_evnt_cr_12()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -309,7 +309,7 @@ class EventTest extends TestCase
             ->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
-    public function test_inv_cr_evnt_13()
+    public function test_inv_evnt_cr_13()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -334,7 +334,7 @@ class EventTest extends TestCase
             ->see('El campo descripcion es obligatorio');
     }
 
-    public function test_inv_ed_evnt_01()
+    public function test_inv_evnt_ed_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -359,7 +359,7 @@ class EventTest extends TestCase
             ->see('El evento se ha actualizado exitosamente');
     }
 
-    public function test_inv_ed_evnt_02()
+    public function test_inv_evnt_ed_02()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -384,7 +384,7 @@ class EventTest extends TestCase
             ->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_evnt_03()
+    public function test_inv_evnt_ed_03()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -409,7 +409,7 @@ class EventTest extends TestCase
             ->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_ed_evnt_04()
+    public function test_inv_evnt_ed_04()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -434,7 +434,7 @@ class EventTest extends TestCase
             ->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_evnt_05()
+    public function test_inv_evnt_ed_05()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -459,7 +459,7 @@ class EventTest extends TestCase
             ->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_evnt_06()
+    public function test_inv_evnt_ed_06()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -484,7 +484,7 @@ class EventTest extends TestCase
             ->see('ubicacion no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_evnt_07()
+    public function test_inv_evnt_ed_07()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -509,7 +509,7 @@ class EventTest extends TestCase
             ->see('El campo ubicacion es obligatorio');
     }
 
-    public function test_inv_ed_evnt_08()
+    public function test_inv_evnt_ed_08()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -534,7 +534,7 @@ class EventTest extends TestCase
             ->see('El formato de ubicacion es inválido');
     }
 
-    public function test_inv_ed_evnt_09()
+    public function test_inv_evnt_ed_09()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -559,7 +559,7 @@ class EventTest extends TestCase
             ->see('El formato de ubicacion es inválido');
     }
 
-    public function test_inv_ed_evnt_10()
+    public function test_inv_evnt_ed_10()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -584,7 +584,7 @@ class EventTest extends TestCase
             ->see('fecha debe ser una fecha posterior a Hoy');
     }
 
-    public function test_inv_ed_evnt_11()
+    public function test_inv_evnt_ed_11()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -609,7 +609,7 @@ class EventTest extends TestCase
             ->see('El campo fecha es obligatorio');
     }
 
-    public function test_inv_ed_evnt_12()
+    public function test_inv_evnt_ed_12()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();
@@ -635,7 +635,7 @@ class EventTest extends TestCase
             ->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
-    public function test_inv_ed_evnt_13()
+    public function test_inv_evnt_ed_13()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $grupo  = factory(Intranet\Models\Group::class)->create();

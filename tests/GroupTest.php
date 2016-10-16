@@ -18,7 +18,7 @@ class GroupTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_inv_cr_gru_01()
+    public function test_inv_gru_cr_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -39,7 +39,7 @@ class GroupTest extends TestCase
     		->see('El grupo se ha registrado exitosamente');
     }
 
-    public function test_inv_cr_gru_02()
+    public function test_inv_gru_cr_02()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -60,7 +60,7 @@ class GroupTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_cr_gru_03()
+    public function test_inv_gru_cr_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -81,7 +81,7 @@ class GroupTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_cr_gru_04()
+    public function test_inv_gru_cr_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -102,7 +102,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_cr_gru_05()
+    public function test_inv_gru_cr_05()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -123,7 +123,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_cr_gru_06()
+   	public function test_inv_gru_cr_06()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -144,7 +144,7 @@ class GroupTest extends TestCase
     		->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
-   	public function test_inv_cr_gru_07()
+   	public function test_inv_gru_cr_07()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -165,7 +165,7 @@ class GroupTest extends TestCase
     		->see('El campo descripcion es obligatorio');
     }
 
-   	public function test_inv_cr_gru_08()
+   	public function test_inv_gru_cr_08()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -186,7 +186,7 @@ class GroupTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-   	public function test_inv_cr_gru_09()
+   	public function test_inv_gru_cr_09()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -207,7 +207,7 @@ class GroupTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-    public function test_inv_cr_gru_10()
+    public function test_inv_gru_cr_10()
     {	
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -227,7 +227,7 @@ class GroupTest extends TestCase
     		->see('El grupo se ha registrado exitosamente');
     }
 
-    public function test_inv_cr_gru_11()
+    public function test_inv_gru_cr_11()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -247,7 +247,7 @@ class GroupTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_cr_gru_12()
+    public function test_inv_gru_cr_12()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -267,7 +267,7 @@ class GroupTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_cr_gru_13()
+    public function test_inv_gru_cr_13()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -287,7 +287,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_cr_gru_14()
+    public function test_inv_gru_cr_14()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -307,7 +307,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_cr_gru_15()
+   	public function test_inv_gru_cr_15()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -327,7 +327,7 @@ class GroupTest extends TestCase
     		->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
-   	public function test_inv_cr_gru_16()
+   	public function test_inv_gru_cr_16()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -347,7 +347,7 @@ class GroupTest extends TestCase
     		->see('El campo descripcion es obligatorio');
     }
 
-   	public function test_inv_cr_gru_17()
+   	public function test_inv_gru_cr_17()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -367,7 +367,7 @@ class GroupTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-   	public function test_inv_cr_gru_18()
+   	public function test_inv_gru_cr_18()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -387,7 +387,7 @@ class GroupTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-    public function test_inv_ed_gru_01()
+    public function test_inv_gru_ed_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -409,7 +409,7 @@ class GroupTest extends TestCase
     		->see('Las modificaciones se han guardado exitosamente');
     }
 
-    public function test_inv_ed_gru_02()
+    public function test_inv_gru_ed_02()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -431,7 +431,7 @@ class GroupTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_gru_03()
+    public function test_inv_gru_ed_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -453,7 +453,7 @@ class GroupTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_ed_gru_04()
+    public function test_inv_gru_ed_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -475,7 +475,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_gru_05()
+    public function test_inv_gru_ed_05()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -497,7 +497,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_ed_gru_06()
+   	public function test_inv_gru_ed_06()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -519,7 +519,7 @@ class GroupTest extends TestCase
     		->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
-   	public function test_inv_ed_gru_07()
+   	public function test_inv_gru_ed_07()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -541,7 +541,7 @@ class GroupTest extends TestCase
     		->see('El campo descripcion es obligatorio');
     }
 
-   	public function test_inv_ed_gru_08()
+   	public function test_inv_gru_ed_08()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -563,7 +563,7 @@ class GroupTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-   	public function test_inv_ed_gru_09()
+   	public function test_inv_gru_ed_09()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -585,7 +585,7 @@ class GroupTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-    public function test_inv_ed_gru_10()
+    public function test_inv_gru_ed_10()
     {	
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -607,7 +607,7 @@ class GroupTest extends TestCase
     }
 
 
-    public function test_inv_ed_gru_11()
+    public function test_inv_gru_ed_11()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -628,7 +628,7 @@ class GroupTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_gru_12()
+    public function test_inv_gru_ed_12()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -649,7 +649,7 @@ class GroupTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_ed_gru_13()
+    public function test_inv_gru_ed_13()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -670,7 +670,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_gru_14()
+    public function test_inv_gru_ed_14()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -691,7 +691,7 @@ class GroupTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_ed_gru_15()
+   	public function test_inv_gru_ed_15()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -712,7 +712,7 @@ class GroupTest extends TestCase
     		->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
-   	public function test_inv_ed_gru_16()
+   	public function test_inv_gru_ed_16()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -733,7 +733,7 @@ class GroupTest extends TestCase
     		->see('El campo descripcion es obligatorio');
     }
 
-   	public function test_inv_ed_gru_17()
+   	public function test_inv_gru_ed_17()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;
@@ -754,7 +754,7 @@ class GroupTest extends TestCase
     		->see('El formato de descripcion es inválido');
     }
 
-   	public function test_inv_ed_gru_18()
+   	public function test_inv_gru_ed_18()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $user->IdEspecialidad = 1;

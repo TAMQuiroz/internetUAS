@@ -18,7 +18,7 @@ class ProjectTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_inv_cr_pro_01()
+    public function test_inv_pro_cr_01()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -42,7 +42,7 @@ class ProjectTest extends TestCase
     		->see('El proyecto se ha registrado exitosamente');
     }
 
-    public function test_inv_cr_pro_02()
+    public function test_inv_pro_cr_02()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -66,7 +66,7 @@ class ProjectTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_cr_pro_03()
+    public function test_inv_pro_cr_03()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -90,7 +90,7 @@ class ProjectTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_cr_pro_04()
+    public function test_inv_pro_cr_04()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -114,7 +114,7 @@ class ProjectTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_cr_pro_05()
+    public function test_inv_pro_cr_05()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -138,7 +138,7 @@ class ProjectTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_cr_pro_06()
+    public function test_inv_pro_cr_06()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -162,7 +162,7 @@ class ProjectTest extends TestCase
     		->see('El tamaño de num entregables debe ser de al menos 1');
     }
 
-    public function test_inv_cr_pro_07()
+    public function test_inv_pro_cr_07()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -186,7 +186,7 @@ class ProjectTest extends TestCase
     		->see('El campo num entregables es obligatorio');
     }
 
-    public function test_inv_cr_pro_08()
+    public function test_inv_pro_cr_08()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -210,7 +210,7 @@ class ProjectTest extends TestCase
     		->see('fecha ini debe ser una fecha posterior a today');
     }
 
-    public function test_inv_cr_pro_09()
+    public function test_inv_pro_cr_09()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -234,7 +234,7 @@ class ProjectTest extends TestCase
     		->see('El campo fecha ini es obligatorio');
     }
 
-    public function test_inv_cr_pro_10()
+    public function test_inv_pro_cr_10()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -258,7 +258,7 @@ class ProjectTest extends TestCase
     		->see('El campo fecha fin es obligatorio');
     }
 
-    public function test_inv_cr_pro_11()
+    public function test_inv_pro_cr_11()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -282,7 +282,7 @@ class ProjectTest extends TestCase
     		->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
-    public function test_inv_cr_pro_12()
+    public function test_inv_pro_cr_12()
     {
         $user 	= factory(Intranet\Models\User::class)->make();
         $area 	= factory(Intranet\Models\Area::class)->create();
@@ -307,7 +307,7 @@ class ProjectTest extends TestCase
     }
  
 
-    public function test_inv_ed_pro_01()
+    public function test_inv_pro_ed_01()
     {
         $user       = factory(Intranet\Models\User::class)->make();
         $area       = factory(Intranet\Models\Area::class)->create();
@@ -332,7 +332,7 @@ class ProjectTest extends TestCase
             ->see('El proyecto se ha editado exitosamente');
     }
 
-    public function test_inv_ed_pro_02()
+    public function test_inv_pro_ed_02()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -357,7 +357,7 @@ class ProjectTest extends TestCase
             ->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_pro_03()
+    public function test_inv_pro_ed_03()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -382,7 +382,7 @@ class ProjectTest extends TestCase
             ->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_ed_pro_04()
+    public function test_inv_pro_ed_04()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -407,7 +407,7 @@ class ProjectTest extends TestCase
             ->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_pro_05()
+    public function test_inv_pro_ed_05()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -432,7 +432,7 @@ class ProjectTest extends TestCase
             ->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_pro_06()
+    public function test_inv_pro_ed_06()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -457,7 +457,7 @@ class ProjectTest extends TestCase
             ->see('El tamaño de num entregables debe ser de al menos 1');
     }
 
-    public function test_inv_ed_pro_07()
+    public function test_inv_pro_ed_07()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -482,7 +482,7 @@ class ProjectTest extends TestCase
             ->see('El campo num entregables es obligatorio');
     }
 
-    public function test_inv_ed_pro_08()
+    public function test_inv_pro_ed_08()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -507,7 +507,7 @@ class ProjectTest extends TestCase
             ->see('fecha ini debe ser una fecha posterior a today');
     }
 
-    public function test_inv_ed_pro_09()
+    public function test_inv_pro_ed_09()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -532,7 +532,7 @@ class ProjectTest extends TestCase
             ->see('El campo fecha ini es obligatorio');
     }
 
-    public function test_inv_ed_pro_10()
+    public function test_inv_pro_ed_10()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -557,7 +557,7 @@ class ProjectTest extends TestCase
             ->see('El campo fecha fin es obligatorio');
     }
 
-    public function test_inv_ed_pro_11()
+    public function test_inv_pro_ed_11()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();
@@ -582,7 +582,7 @@ class ProjectTest extends TestCase
             ->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
-    public function test_inv_ed_pro_12()
+    public function test_inv_pro_ed_12()
     {
         $user   = factory(Intranet\Models\User::class)->make();
         $area   = factory(Intranet\Models\Area::class)->create();

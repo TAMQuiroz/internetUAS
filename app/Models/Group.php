@@ -1,5 +1,5 @@
-<?php namespace Intranet\Models;
-
+<?php 
+namespace Intranet\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +23,10 @@ class Group extends Model
     }
 
     public function investigators(){
-    	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxgroups','id_grupo','id_investigador')->withPivot('id');	
+    	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxgroups','id_grupo','id_investigador')->orderBy('nombre', 'asc')->withPivot('id');	
+    }
+
+    public function teachers(){
+        return $this->belongsToMany('Intranet\Models\Teacher','teacherxgroups','id_grupo','id_profesor')->orderBy('Nombre', 'asc')->withPivot('id');    
     }
 }

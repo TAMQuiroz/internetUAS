@@ -18,7 +18,7 @@ class GroupService {
 
 	public function retrieveAll()
     {
-        return Group::get();
+        return Group::orderBy('nombre', 'asc')->get();
     }
 
 	public function createGroup($request) {
@@ -112,9 +112,22 @@ class GroupService {
             array_push($ids,$investigator->id);
         }
 
-        $investigators = Investigator::whereNotIn('id',$ids)->get();
+        $investigators = Investigator::whereNotIn('id',$ids)->orderBy('nombre', 'asc')->get();
 
         return $investigators;
+    }
+
+    public function getNotSelectedTeachers($id)
+    {
+        $group = Group::find($id);
+        $ids = [];
+        
+        foreach ($group->teachers as $teacher) {
+            array_push($ids,$teacher->IdDocente);
+        }
+
+        $teachers = Teacher::whereNotIn('IdDocente',$ids)->orderBy('Nombre', 'asc')->get();
+        return $teachers;
     }
 
     public function checkLeader($idGroup)

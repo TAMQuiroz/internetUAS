@@ -31,7 +31,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::get();
+        $events = Event::orderBy('nombre', 'asc')->get();
 
         $data = [
             'events'    =>  $events,
@@ -47,7 +47,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        $groups     = Group::lists('nombre', 'id');
+        $groups     = Group::orderBy('nombre', 'asc')->lists('nombre', 'id');
 
         if($groups->isEmpty()){
             return redirect()->back()->with('warning','Primero debe crear grupos');
@@ -128,7 +128,7 @@ class EventController extends Controller
 
         if($this->groupService->checkLeader($evento->id_grupo)){
 
-            $groups     = Group::lists('nombre', 'id');
+            $groups     = Group::orderBy('nombre', 'asc')->lists('nombre', 'id');
 
             $data = [
                 'evento'    =>  $evento,

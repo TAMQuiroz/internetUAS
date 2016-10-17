@@ -98,8 +98,32 @@ class GroupController extends Controller
     public function show($id)
     {
         try {
-            $data['group'] = Group::find($id);
+            $grupo = Group::find($id);
+            
+            $profesores = $grupo->teachers;
+            $investigadores = $grupo->investigators;
+
+            $integrantes = null;
+            $sorted = [];
+            
+            foreach ($investigadores as $investigador) {
+                $integrantes = $profesores->push($investigador);    
+            }
+            
+            if($integrantes){
+                $sorted = $integrantes->sortBy(function ($product, $key) {
+                    if(isset($product['IdDocente'])){
+                        return $product['Nombre'];
+                    }else{
+                        return $product['nombre'];
+                    }
+                });
+            }
+
+            $data['integrantes'] = $sorted;
+            $data['group'] = $grupo;
         } catch(\Exception $e) {
+            dd($e);
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
         return view('investigation.group.show', $data);
@@ -124,11 +148,13 @@ class GroupController extends Controller
                 $data['faculty'] = $this->facultyService->find($faculty_id);
                 $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
                 $data['investigators'] = $this->groupService->getNotSelectedInvestigators($id);
+                $data['elegible_teachers'] = $this->groupService->getNotSelectedTeachers($id);
             }else{
                 return redirect()->back()->with('warning', 'El grupo no se puede editar debido a que no es el lider');
             }
             
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 

@@ -10,6 +10,7 @@ use Intranet\Models\Group;
 use Intranet\Http\Services\User\UserService;
 use Intranet\Http\Services\User\PasswordService;
 use DB;
+use Auth;
 use Session;
 
 class GroupService {
@@ -114,5 +115,16 @@ class GroupService {
         $investigators = Investigator::whereNotIn('id',$ids)->get();
 
         return $investigators;
+    }
+
+    public function checkLeader($idGroup)
+    {
+        $user = Auth::user();
+        $teacher = Teacher::where('IdUsuario',$user->IdUsuario)->first();
+        
+        $group = Group::find($idGroup);
+        $leader = $group->leader;
+
+        return $teacher == $leader;
     }
 }

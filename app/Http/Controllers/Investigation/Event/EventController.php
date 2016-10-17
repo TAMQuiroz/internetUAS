@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 
+use Intranet\Http\Services\Investigation\Group\GroupService;
+
 use Intranet\Models\Event;
 use Intranet\Models\Group;
 
@@ -14,6 +16,14 @@ use Intranet\Http\Requests\EventRequest;
 
 class EventController extends Controller
 {
+
+    protected $groupService;
+
+    public function __construct()
+    {
+        $this->groupService = new GroupService();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -115,13 +125,20 @@ class EventController extends Controller
     public function edit($id)
     {
         $evento     = Event::find($id);
-        $groups     = Group::lists('nombre', 'id');
 
-        $data = [
-            'evento'    =>  $evento,
-            'groups'    =>  $groups,
-        ];
+        if($this->groupService->checkLeader($evento->id_grupo)){
 
+            $groups     = Group::lists('nombre', 'id');
+
+            $data = [
+                'evento'    =>  $evento,
+                'groups'    =>  $groups,
+            ];    
+
+        }else{
+            return redirect()->back()->with('warning', 'El evento no se puede editar debido a que no es el lider');
+        }
+        
         return view('investigation.event.edit', $data);
     }
 
@@ -182,9 +199,15 @@ class EventController extends Controller
     {
         try {
             $event = Event::find($id);
-            $event->delete();
+            if($this->groupService->checkLeader($event->id_grupo)){
 
-            return redirect()->route('event.index')->with('success', 'El evento se ha eliminado exitosamente');
+                $event->delete();
+
+                return redirect()->route('event.index')->with('success', 'El evento se ha eliminado exitosamente');
+
+            }else{
+                return redirect()->back()->with('warning', 'El evento no se puede eliminar debido a que no es el lider');
+            } 
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

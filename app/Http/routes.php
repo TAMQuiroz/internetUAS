@@ -294,7 +294,7 @@ Route::group(['middleware' => 'auth'], function(){
 
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
-
+        
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);
         Route::get('/getCodigo/{codigo}', ['uses' => 'Teacher\TeacherController@getCodigo']);
@@ -504,8 +504,6 @@ $api->version('v1', function ($api) {
     });
 });
 
-
-
 //NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO
 
 Route::group(['middleware' => 'auth'], function(){  
@@ -537,6 +535,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'investigador.edit', 'uses' => 'Investigation\Investigator\InvestigatorController@edit']);
                 Route::post('edit/{id}', ['as' => 'investigador.update', 'uses' => 'Investigation\Investigator\InvestigatorController@update']);
                 Route::get('delete/{id}', ['as' => 'investigador.delete', 'uses' => 'Investigation\Investigator\InvestigatorController@destroy']);
+
+
             });
 
             //Administrar Grupo de Investigacion
@@ -611,6 +611,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('download/{id}', ['as' => 'entregable.download', 'uses' => 'Investigation\Deliverable\DeliverableController@destroy']);
             });
 
+            
         });      
 
     });  

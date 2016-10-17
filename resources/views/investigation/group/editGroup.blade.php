@@ -138,7 +138,7 @@
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Elegibles</h3>
+                            <h3 class="panel-title">Investigadores Elegibles</h3>
                         </div>
                         <div class="panel-body">
                             <table class="table table-striped responsive-utilities jambo_table bulk_action"> 

@@ -16,14 +16,8 @@ class CreateTeacherxcompetencesTable extends Migration
             $table->increments('id');
             $table->integer('id_docente');
             $table->integer('id_especialidad');
-            $table->integer('id_competencia')->unsigned();
+            $table->integer('id_competence')->unsigned();
             $table->timestamps();
-        });
-
-        Schema::table('teacherxcompetences', function (Blueprint $table) {
-            $table->foreign('id_docente')->references('IdDocente')->on('Docente');
-            $table->foreign('id_especialidad')->references('IdEspecialidad')->on('Especialidad');
-            $table->foreign('id_competencia')->references('id')->on('competence');
         });
     }
 
@@ -35,10 +29,5 @@ class CreateTeacherxcompetencesTable extends Migration
     public function down()
     {
         Schema::drop('teacherxcompetences');
-        Schema::table('teacherxcompetences', function (Blueprint $table) {
-            $table->dropForeign('teacherxcompetences_id_docente_foreign');
-            $table->dropForeign('teacherxcompetences_id_especialidad_foreign');
-            $table->dropForeign('teacherxcompetences_id_competencia_foreign');
-        });
     }
 }

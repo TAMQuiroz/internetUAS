@@ -15,11 +15,11 @@ class Question extends Model
     }
 
     public function alternativas(){
-  	  return $this->hasMany('Intranet\Models\Alternative','question_id');
+  	  return $this->hasMany('Intranet\Models\Alternative','id_question');
     }
 
     public function competencia(){
-  	  return $this->belongsTo('Intranet\Models\Competence','competence_id');
+  	  return $this->belongsTo('Intranet\Models\Competence','id_competence');
     }
 
     public function especialidad(){

@@ -58,7 +58,7 @@ class QuestionController extends Controller
             $pregunta->dificultad  = $request['dificultad'];
             $pregunta->requisito  = $request['requisitos'];
             $pregunta->id_docente  = Session::get('user')->IdDocente;
-            $pregunta->competence_id  = $request['competencia'];
+            $pregunta->id_competence  = $request['competencia'];
 
             if($request['tipo'] == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
                 $pregunta->rpta  = $request['rpta'];
@@ -76,7 +76,7 @@ class QuestionController extends Controller
                     $alternativa = new Alternative; 
                     $alternativa->letra = $letra;
                     $alternativa->descripcion = $descripcion;
-                    $alternativa->question_id = $pregunta->id;
+                    $alternativa->id_question = $pregunta->id;
                     $alternativa->save();
                 }                
             }
@@ -136,7 +136,7 @@ class QuestionController extends Controller
         $pregunta->dificultad  = $request['dificultad'];
         $pregunta->requisito  = $request['requisitos'];
             // $pregunta->id_docente  = Session::get('user')->IdDocente; nadie cambiara la pregunta deotro
-        $pregunta->competence_id  = $request['competencia'];
+        $pregunta->id_competence  = $request['competencia'];
 
             if($request['tipo'] == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
                 $pregunta->rpta  = $request['rpta'];
@@ -155,7 +155,7 @@ class QuestionController extends Controller
                         $alternativa = new Alternative; 
                         $alternativa->letra = $letra;
                         $alternativa->descripcion = $descripcion;
-                        $alternativa->question_id = $pregunta->id;
+                        $alternativa->id_question = $pregunta->id;
                         $alternativa->save();
 
                     } 
@@ -171,7 +171,7 @@ class QuestionController extends Controller
                                 $alternativa = new Alternative; 
                                 $alternativa->letra = $letra;
                                 $alternativa->descripcion = $descripcion;
-                                $alternativa->question_id = $pregunta->id;
+                                $alternativa->id_question = $pregunta->id;
                                 $alternativa->save();
                             }                    
                     }   
@@ -211,7 +211,7 @@ class QuestionController extends Controller
         try {
             $questions_query = Question::where('id_especialidad',$specialty);
             if($request['competencia'] != "") {
-                $questions_query = $questions_query->where('competence_id',$request['competencia']);            
+                $questions_query = $questions_query->where('id_competence',$request['competencia']);            
             }
             if($request['tipo'] != "") {
                 $questions_query = $questions_query->where('tipo',$request['tipo']);

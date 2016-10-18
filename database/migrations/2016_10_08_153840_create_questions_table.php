@@ -20,17 +20,11 @@ class CreateQuestionsTable extends Migration
             $table->string('extension_arch')->nullable();            
             $table->integer('id_especialidad'); //del uas
             $table->integer('id_docente'); //del uas
-            $table->integer('competence_id')->unsigned();
+            $table->integer('id_competence')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
-
-        //las llaves foraneas
-        Schema::table('questions', function (Blueprint $table) {
-             $table->foreign('id_especialidad')->references('IdEspecialidad')->on('Especialidad');
-             $table->foreign('id_docente')->references('IdDocente')->on('Docente');
-             $table->foreign('competence_id')->references('id')->on('competences');             
-        });
+        
     }
 
     public function down()

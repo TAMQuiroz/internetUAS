@@ -11,6 +11,8 @@ use Intranet\Http\Requests\TemplateRequest;
 use Intranet\Http\Requests\TemplateEditRequest;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
+use Intranet\Models\PspDocument;
+use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
 
 class TemplateController extends Controller
@@ -88,6 +90,20 @@ class TemplateController extends Controller
 
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
+
+                $pspstudents=pspStudent::get();
+                foreach($pspstudents as $psp) {
+                    $PspDocument = new PspDocument;
+                    $PspDocument->idStudent= $psp->id;
+                    $PspDocument->idTemplate=$template->id;
+                    $PspDocument->idTipoEstado=3;
+                    if($template->idTipoEstado  == 1)
+                       $PspDocument->esObligatorio='s';
+                   else
+                       $PspDocument->esObligatorio='n';
+                    $PspDocument->save();
+                }
+
             }
             return redirect()->route('index.templates')->with('success', 'La plantilla se ha registrado exitosamente');
         } catch (Exception $e) {

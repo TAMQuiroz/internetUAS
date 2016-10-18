@@ -589,18 +589,18 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('/', ['as' => 'search.students', 'uses' => 'Student\StudentController@search']);        
         });
 
-//PspDocument Lesly Elguera
+//PspDocument 
 
 
         Route::group(['prefix' => 'pspDocuments'], function() {
-            Route::get('/', ['as' => 'index.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@index']);
-            Route::get('/new', ['as' => 'new.pspDocument', 'uses' => 'PspDocument\PspDocumentController@create']);
-            Route::post('/save', ['as' => 'savePspDocument.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@save']);
-            Route::get('/edit', ['as' => 'edit.pspDocument', 'uses' => 'PspDocument\PspDocumentController@edit']);
-            Route::get('/delete', ['as' => 'delete.pspDocument', 'uses' => 'PspDocument\PspDocumentController@delete']);
-            Route::post('/update', ['as' => 'updatePspDocument.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@update']);
-            Route::get('/view', ['as' => 'view.pspDocument', 'uses' => 'PspDocument\PspDocumentController@view']);
-            Route::post('/', ['as' => 'search.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@search']);        
+            Route::get('/', ['as' => 'index.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@index']);
+            Route::get('/create', ['as' => 'create.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
+            Route::post('/create', ['as' => 'store.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@save']);
+            Route::get('/edit/{id}', ['as' => 'pspDocument.edit', 'uses' => 'Psp\PspDocument\PspDocumentController@edit']);
+            Route::post('/edit/{id}', ['as' => 'pspDocuments.update', 'uses' => 'Psp\PspDocument\PspDocumentController@update']);
+            Route::get('/delete/{id}', ['as' => 'delete.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@delete']);            
+            Route::get('/view', ['as' => 'view.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@view']);
+            Route::post('/', ['as' => 'search.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@search']);        
         });
 
 //Skills

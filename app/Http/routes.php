@@ -717,6 +717,10 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', ['as' => 'pregunta.edit', 'uses' => 'Evaluations\Question\QuestionController@edit']);
             Route::post('edit/{id}', ['as' => 'pregunta.update', 'uses' => 'Evaluations\Question\QuestionController@update']);
             Route::get('delete/{id}', ['as' => 'pregunta.delete', 'uses' => 'Evaluations\Question\QuestionController@destroy']);
+
+            //AJAX
+            Route::post('search', ['as' => 'pregunta.buscar','uses' => 'Evaluations\Question\QuestionController@searchModalEv']);//NO TOCAR!
+            Route::post('editEv', ['as' => 'pregunta.editar','uses' => 'Evaluations\Question\QuestionController@editModalEv']);//NO TOCAR!
         });
 
 
@@ -740,6 +744,8 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', ['as' => 'evaluacion.edit', 'uses' => 'Evaluations\Evaluation\EvaluationController@edit']);
             Route::post('edit/{id}', ['as' => 'evaluacion.update', 'uses' => 'Evaluations\Evaluation\EvaluationController@update']);
             Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
+
+            
         });
     });
 });

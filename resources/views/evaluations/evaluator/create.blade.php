@@ -51,6 +51,29 @@
 		</div>
 	</div>
 </div>
-<script src="{{ URL::asset('js/myvalidations/regularprofessors.js')}}"></script> <!--Este script sirve para el buscar en modal-->
 @include('evaluations.evaluator.modal-buscar-profesor')
+<!--Este script sirve para el buscar en modal-->
+<script type="text/javascript">
+	$(document).ready(function($) {
+		//////////////////////////// BUSCAR PROFESORES PARA EVALUACIONES ////////////////
+
+		var form = $('#form-search-teacher');
+
+		$('#search-teacher').on('click', function() {
+			var data = form.serialize();
+			$.post(form.attr('action'), data, function(table) {
+				$('#table-teacher').html(table);
+			});
+		});
+
+	});
+
+	function select(id,app,apm,nombre){  
+	    $('#modal-buscar-profesor').modal('hide');//oculto todo el modal
+	    $('#idDocente').val(id);//copio el id en un input oculto
+	    $('#nombre').val(app+' '+ apm+', '+nombre); // copio el nombre completo
+	}
+</script>
+
+
 @endsection

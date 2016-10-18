@@ -207,7 +207,7 @@ class TutstudentController extends Controller
     }
 
     public function assignTutorDo(Request $request){
-               dd($request['cant']);
+               // dd($request['cant']);
         $sum=0;
         if($request['cant']!=null && $request['total']!=0){
             foreach($request['cant'] as $idTeacher => $value){                
@@ -249,7 +249,7 @@ class TutstudentController extends Controller
                 }
 
             }               
-            return redirect()->route('alumno.index')->with('success', 'Se asignaron tutores a '.$request['total'].' alumnos.');;
+            return redirect()->route('alumno.index')->with('success', 'Se asignaron tutores a: ('.$request['total'].') alumnos.');;
             
         }
         else{

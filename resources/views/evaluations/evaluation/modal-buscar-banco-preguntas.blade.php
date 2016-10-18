@@ -1,5 +1,5 @@
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"  id="modal-buscar-banco-preguntas">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -7,26 +7,53 @@
                 <h4 class="modal-title" id="myModalLabel">Buscar preguntas</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="POST" id="form-search-teacher" action="{{ url('teachers/searchEvaluacion') }}">
-                    {{ csrf_field() }}
+                <form class="form-horizontal" method="POST" id="form-search-question" action="{{ route('pregunta.buscar') }}">
+                    {{ csrf_field() }}                    
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-4">Nombre/Ap. paterno/Ap. materno:</label>
-                        <div class="col-md-6 col-sm-6 col-xs-8">
-                            <input class="form-control" type="text" name="nombre">
-                        </div>                                                           
-                    </div>                        
+                        {{Form::label('Tipo:',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <select name="tipo" class="form-control" required="required">
+                                <option value="">Seleccione</option>
+                                <option value="1">Cerrada</option>
+                                <option value="2">Abierta</option>
+                                <option value="3">Archivo</option>                         
+                            </select>                       
+                        </div> 
+                        {{Form::label('Dificultad:',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <select name="dificultad" class="form-control" required="required">
+                                <option value="">Seleccione</option>
+                                <option value="1">Baja</option>
+                                <option value="2">Media</option>
+                                <option value="3">Alta</option>                         
+                            </select>                       
+                        </div>                                                         
+                    </div>                                         
                     <div class="form-group">
-                        <center>
-                            <a class="btn btn-success" id="search-teacher"><i class="fa fa-search"></i> Buscar</a>
-                        </center> 
-                    </div>
+                        {{Form::label('Competencia:',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <select name="competencia" required="required" class="form-control">
+                                <option value="">Seleccione</option>
+                                @foreach($competences as $competence)
+                                <option value="{{$competence->id}}" >{{$competence->nombre}}</option>
+                                @endforeach 
+                            </select>                       
+                        </div>   
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <center>
+                                <a class="btn btn-success" id="search-question"><i class="fa fa-search"></i> Buscar</a>
+                            </center>
+                            
+                        </div>                                                       
+                    </div> 
                 </form>
                 
                 <div class="row" ">  
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="table-responsive" id="table-teacher">
-                        <!-- aca se metera la tabla -->
-                        </div>                
+                        <h4>Resultados</h4>                        
+                        <div class="table-responsive" id="table-question">
+                            <!-- aca se metera la tabla -->
+                        </div>               
                     </div>              
                     
                 </div>

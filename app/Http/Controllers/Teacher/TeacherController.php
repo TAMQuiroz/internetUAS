@@ -166,7 +166,8 @@ class TeacherController extends BaseController {
 
     public function searchModalEv(Request $request)
     {
-        $teachers = collect(); //creo una coleccion vacia       
+        $teachers = collect(); //creo una coleccion vacia  
+        dd($teachers)     ;
         try {
             $teachers = $this->teacherService
                              ->searchByNameLastname(

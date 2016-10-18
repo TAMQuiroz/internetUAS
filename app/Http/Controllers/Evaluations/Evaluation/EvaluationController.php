@@ -35,9 +35,11 @@ class EvaluationController extends Controller
      */
     public function create()
     {
-        $specialty = Session::get('faculty-code');        
+        $specialty = Session::get('faculty-code');  
+        $competences = Competence::where('id_especialidad',$specialty)->get();      
         $data = [
         'specialty'    =>  $specialty,
+        'competences'    =>  $competences,
         ];
         return view('evaluations.evaluation.create',$data);
     }
@@ -50,7 +52,7 @@ class EvaluationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

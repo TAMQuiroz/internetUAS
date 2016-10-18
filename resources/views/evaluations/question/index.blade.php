@@ -28,7 +28,7 @@
                     <thead>
                         <tr class="headings">                            
                             <th class="column-title">Código </th>                        
-                            <th class="column-title">Fecha Registro </th>    
+                            <th class="column-title">Últ. modif. </th>    
                             <th class="column-title">Responsable </th>    
                             <th class="column-title">Pregunta </th>    
                             <th class="column-title">Tipo </th>  

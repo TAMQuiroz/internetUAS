@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+jQuery(document).ready(function($) {
   var form = $('#form-search-professor');
 
   $('#search-professor').on('click', function() {
@@ -17,23 +17,20 @@ $(document).ready(function($) {
   $('#prof_table').on('click', '.delete-prof', function() {
     $(this).parent().parent().remove();
   });
-
-  //////////////////////////// BUSCAR PROFESORES PARA EVALUACIONES ////////////////
-
-  var form = $('#form-search-teacher');
-
-  $('#search-teacher').on('click', function() {
-    var data = form.serialize();
-    $.post(form.attr('action'), data, function(table) {
-      $('#table-teacher').html(table);
-    });
-  });
+  
 });
 
+function fillTable(professors) {
+  professors.each(function(index, input) {
+    var tr = $(input).parent().parent();
+    tr.find('td:first').remove();
+    tr.append('<td><div title="Quitar" class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></div></td>');
 
-function select(id,app,apm,nombre){  
-    $('#modal-buscar-profesor').modal('hide');//oculto todo el modal
-    $('#idDocente').val(id);//copio el id en un input oculto
-    $('#nombre').val(app+' '+ apm+', '+nombre); // copio el nombre completo
+    $('#prof_table').find('tbody').append(tr);
+  });
 }
+
+
+
+
   

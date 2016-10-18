@@ -9,12 +9,14 @@ use Intranet\Models\Question;
 use Intranet\Models\Competence;
 use Intranet\Models\Alternative;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
+// use Illuminate\Routing\Controller as BaseController;
 
 class QuestionController extends Controller
 {
     public function index()
     {
-        $specialty = Session::get('faculty-code');
+        
+        $specialty = Session::get('faculty-code');        
         $questions = Question::where('id_especialidad',$specialty)->get();
         $data = [
         'questions'    =>  $questions,
@@ -198,5 +200,47 @@ class QuestionController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
+    }
+
+
+    public function searchModalEv(Request $request)
+    {
+        $specialty = Session::get('faculty-code');
+        $questions = collect(); //creo una coleccion vacia    
+        
+        try {
+            $questions_query = Question::where('id_especialidad',$specialty);
+            if($request['competencia'] != "") {
+                $questions_query = $questions_query->where('competence_id',$request['competencia']);            
+            }
+            if($request['tipo'] != "") {
+                $questions_query = $questions_query->where('tipo',$request['tipo']);
+            }
+            if($request['dificultad'] != "") {
+                $questions_query = $questions_query->where('dificultad',$request['dificultad']);
+            }  
+            // dd($questions_query->get()); 
+            $questions = $questions_query->get();  
+            //le paso todo a la vista donde esta la tabla
+            return response()->view('evaluations.evaluation.search-questions-table', compact('questions'));        
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+        
+    }
+
+    public function editModalEv(Request $request)
+    {    
+        
+     try {
+         $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competencia', $request['competencia'])->get();
+       // dd($evaluators);
+
+         return response()->view('evaluations.evaluation.modal-editar-pregunta', compact('evaluators'));
+     } catch (Exception $e) {
+         return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+     }
+
+        
     }
 }

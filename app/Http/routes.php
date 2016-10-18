@@ -627,6 +627,7 @@ Route::group(['middleware' => 'auth'], function(){
 Route::get('/myCourses/evidences/download/{filename}', ['as' => 'getDownload.evidences' , 'uses' => 'Evidence\EvidenceController@getDownload']);
 Route::get('/enhacementPlan/get/{filename}', ['as' => 'getentry', 'uses' => 'EnhacementPlan\EnhacementController@get']);
 Route::get('/templates/get/{filename}', ['as' => 'getentry.template', 'uses' => 'Psp\Template\TemplateController@get']);
+Route::get('/pspDocuments/get/{filename}', ['as' => 'getentry.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@get']);
 
 // API endpoints
 $api = app(Dingo\Api\Routing\Router::class);

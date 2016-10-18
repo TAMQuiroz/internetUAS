@@ -76,12 +76,24 @@ class PspDocumentController extends Controller
         $pspDocument    = pspDocument::find($id);
         $students = PspStudent::where('idUser',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
-        
+
         $data = [
             'pspDocument'    =>  $pspDocument,
         ];
         $data['student'] = $students->first();
         return view('psp.pspDocument.edit', $data);
+    }
+
+    public function get($filename){
+        $pspDocument = PspDocument::find($filename);
+        $file=public_path()."/";
+        $file .=$pspDocument->ruta;
+        if(file_exists($file)) {
+            return response()->download($file);
+        }
+        else{
+            return redirect()->back()->with('warning', 'No existe el archivo a descargar');
+        }    
     }
 
     /**
@@ -93,7 +105,26 @@ class PspDocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $pspDocument = PspDocument::find($id);
+            $pspDocument->idTipoEstado  = 4;
+            $pspDocument->save();
+            if(isset($request['ruta']) && $request['ruta'] != ""){
+                if(file_exists($pspDocument->ruta)){
+                    unlink($pspDocument->ruta);
+                }
+                $destinationPath = 'uploads/pspDocuments/'; // upload path
+                $extension = $request['ruta']->getClientOriginalExtension();
+                $filename = $pspDocument->id.'.'.$extension; 
+                $request['ruta']->move($destinationPath, $filename);
+                $pspDocument->ruta = $destinationPath.$filename;
+                $pspDocument->save();
+            }
+            return redirect()->route('index.pspDocuments')->with('success', 'Se ha subido el documento exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+
     }
 
     /**

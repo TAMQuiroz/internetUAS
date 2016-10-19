@@ -8,16 +8,21 @@ use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 
 use Intranet\Http\Services\User\PasswordService;
+use Intranet\Http\Services\User\UserService;
 
 use Intranet\Models\Faculty;
+use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\Supervisor;
 
 use Intranet\Http\Requests\SupervisorRequest;
 
+use Auth;
+
 class SupervisorController extends Controller
 {
     public function __construct() {
+        $this->userService = new UserService;
         $this->passwordService = new PasswordService;
     }
     /**
@@ -27,6 +32,7 @@ class SupervisorController extends Controller
      */
     public function index()
     {
+
         $supervisores = Supervisor::get();
 
         $data = [
@@ -42,6 +48,7 @@ class SupervisorController extends Controller
      */
     public function create()
     {
+
         return view('psp.supervisor.create');
     }
 
@@ -56,9 +63,9 @@ class SupervisorController extends Controller
         try {
             //Crear usuario
             $usuario = new User;
-            $usuario->Usuario       = $request['correo'];
+            $usuario->Usuario       = $request['codigo'];
             $usuario->Contrasena    = bcrypt(123);
-            $usuario->IdPerfil      = 2;
+            $usuario->IdPerfil      = 6;
             
             $usuario->save();
 
@@ -66,15 +73,32 @@ class SupervisorController extends Controller
             $supervisor                   = new Supervisor;
             $supervisor->codigoTrabajador          = $request['codigo'];
             $supervisor->nombres           = $request['nombres'];
-            $supervisor->apellidoPaterno      = $request['apPaterno'];
-            $supervisor->apellidoMaterno      = $request['apMaterno'];
+            $supervisor->apellidoPaterno      = $request['apellido_paterno'];
+            $supervisor->apellidoMaterno      = $request['apellido_materno'];
             $supervisor->correo           = $request['correo'];
-            $supervisor->telefono          = $request['telefono'];
+            $supervisor->telefono          = $request['celular'];
             $supervisor->direccion          = $request['direccion'];
-            $supervisor->estado          = 1;
-            $supervisor->IdFaculty       = 1;
             $supervisor->IdUser       = $usuario->IdUsuario;
 
+            $userId = Auth::User()->IdUsuario;
+            $profileId = Auth::User()->IdPerfil;
+            $teacher=null;
+            //si idperfil 1 o 2
+            switch ($profileId) {
+                case 1:
+                    $teacher       = Teacher::find($userId);
+                    break;
+                case 2:
+                    $teacher       = Teacher::find($userId);
+                    break;
+                default: $supervisor->IdFaculty       = 1;
+            }
+
+            if($teacher==null){
+                $supervisor->IdFaculty       = 1;    
+            }else{
+                $supervisor->IdFaculty       = $teacher->IdEspecialidad;
+            }
             $supervisor->save();
 
             //Enviar correo
@@ -134,15 +158,15 @@ class SupervisorController extends Controller
             $supervisor                   = Supervisor::find($id);
             $supervisor->codigoTrabajador           = $request['codigo'];
             $supervisor->nombres           = $request['nombres'];
-            $supervisor->apellidoPaterno      = $request['apPaterno'];
-            $supervisor->apellidoMaterno      = $request['apMaterno'];
+            $supervisor->apellidoPaterno      = $request['apellido_paterno'];
+            $supervisor->apellidoMaterno      = $request['apellido_materno'];
             $supervisor->correo           = $request['correo'];
             $supervisor->direccion           = $request['direccion'];
-            $supervisor->telefono          = $request['telefono'];
+            $supervisor->telefono          = $request['celular'];
             
             $supervisor->save();
 
-            return redirect()->route('supervisor.index',$id)->with('success', 'El supervisor se ha actualizado exitosamente');
+            return redirect()->route('supervisor.index')->with('success', 'El supervisor se ha actualizado exitosamente');
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -158,7 +182,7 @@ class SupervisorController extends Controller
     {
      try {
             $supervisor   = Supervisor::find($id);
-            $user         = User::find($supervisor->id);
+            $user         = User::find($supervisor->idUser);
             
             //Restricciones
 

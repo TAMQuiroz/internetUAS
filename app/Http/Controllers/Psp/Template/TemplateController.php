@@ -9,6 +9,11 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Template;
 use Intranet\Http\Requests\TemplateRequest;
 use Intranet\Http\Requests\TemplateEditRequest;
+use Intranet\Models\Teacher;
+use Intranet\Models\User;
+use Intranet\Models\PspDocument;
+use Intranet\Models\PspStudent;
+use Intranet\Models\Supervisor;
 
 class TemplateController extends Controller
 {
@@ -51,15 +56,31 @@ class TemplateController extends Controller
         try {
             $template = new Template;
             $template->idPhase       = $request['fase'];            
-            $template->idTipoEstado  = 1;
+            //$template->idTipoEstado  = 1;
+            if(Auth::User()->IdPerfil==6){
+                $supervisors = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get();  
+                $supervisor  =$supervisors->first();             
+                $template->idSupervisor  = $supervisor->id;
+
+            }
+            if(Auth::User()->IdPerfil==2){
+                $teacherss = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->get();  
+                $teacher =$teacherss->first();
+                $template->idProfesor  = $teacher->IdDocente;
+            }
+            if(Auth::User()->IdPerfil==3){
+                $template->idAdmin   = Auth::User()->IdUsuario;
+            }
+            /*
             $template->idProfesor  = Auth::User()->IdUsuario;
             $template->idSupervisor  = null;
             $template->idAdmin  = null;
+            */
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->obligatorio  = 1;
+                $template->idTipoEstado  = 1;
             else
-                $template->obligatorio  = 2;
+                $template->idTipoEstado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 $destinationPath = 'uploads/templates/'; // upload path
@@ -69,6 +90,20 @@ class TemplateController extends Controller
 
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
+
+                $pspstudents=pspStudent::get();
+                foreach($pspstudents as $psp) {
+                    $PspDocument = new PspDocument;
+                    $PspDocument->idStudent= $psp->id;
+                    $PspDocument->idTemplate=$template->id;
+                    $PspDocument->idTipoEstado=3;
+                    if($template->idTipoEstado  == 1)
+                       $PspDocument->esObligatorio='s';
+                   else
+                       $PspDocument->esObligatorio='n';
+                    $PspDocument->save();
+                }
+
             }
             return redirect()->route('index.templates')->with('success', 'La plantilla se ha registrado exitosamente');
         } catch (Exception $e) {
@@ -118,9 +153,9 @@ class TemplateController extends Controller
             $template->idPhase       = $request['fase'];
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->obligatorio  = 1;
+                $template->idTipoEstado  = 1;
             else
-                $template->obligatorio  = 2;
+                $template->idTipoEstado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 if(file_exists($template->ruta)){
@@ -139,6 +174,19 @@ class TemplateController extends Controller
         }
     }
 
+    public function get($filename){
+
+        $template = Template::find($filename);
+        $file=public_path()."/";
+        $file .=$template->ruta;
+        if(file_exists($file)) {
+            return response()->download($file);
+        }
+        else{
+            return redirect()->back()->with('warning', 'No existe el archivo a descargar');
+        }    
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -151,10 +199,12 @@ class TemplateController extends Controller
             $template   = Template::find($id);
             
             //Restricciones
-
-            $template->delete();
-
-            return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+            if(!empty($template)){
+                $template->delete();
+                return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+            }else{
+                return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+            }
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         } 

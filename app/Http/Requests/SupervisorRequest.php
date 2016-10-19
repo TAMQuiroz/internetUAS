@@ -26,11 +26,11 @@ class SupervisorRequest extends Request
         return [
             'codigo' => 'required|digits:8',
             'nombres' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-            'apPaterno' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-            'apMaterno' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-            'direccion' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'apellido_paterno' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'apellido_materno' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'direccion' => 'regex:/^\d*[a-zA-Z][a-zA-Z\d\s]*$/u|required|max:50',
             'correo' => 'required|email',
-            'telefono' => 'required|digits:9',
+            'celular' => 'required|digits:9',
         ];
     }
 

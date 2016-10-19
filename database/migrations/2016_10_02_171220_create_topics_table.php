@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMeetingxstatustypesTable extends Migration
+class CreateTopicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,9 @@ class CreateMeetingxstatustypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('meetingxstatustypes', function (Blueprint $table) {
-            $table->integer('idMeeting')->unsigned();
-            $table->foreign('idMeeting')->references('id')->on('meetings');
-            $table->integer('idTipoEstado')->unsigned();
+        Schema::create('topics', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre');            
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ class CreateMeetingxstatustypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('meetingxstatustypes');
+        Schema::drop('topics');
     }
 }

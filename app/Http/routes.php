@@ -439,6 +439,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/results/download', ['as' => 'downloadAsPdf.results', 'uses' => 'Consolidated\ResultsController@downloadAsPdf']);
 
         Route::get('/pending/', ['as' => 'pending.index', 'uses' => 'Consolidated\PendingController@index']);
+
+        Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
     });
 
     //Profile Routes
@@ -587,18 +589,18 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('/', ['as' => 'search.students', 'uses' => 'Student\StudentController@search']);        
         });
 
-//PspDocument Lesly Elguera
+//PspDocument 
 
 
         Route::group(['prefix' => 'pspDocuments'], function() {
-            Route::get('/', ['as' => 'index.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@index']);
-            Route::get('/new', ['as' => 'new.pspDocument', 'uses' => 'PspDocument\PspDocumentController@create']);
-            Route::post('/save', ['as' => 'savePspDocument.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@save']);
-            Route::get('/edit', ['as' => 'edit.pspDocument', 'uses' => 'PspDocument\PspDocumentController@edit']);
-            Route::get('/delete', ['as' => 'delete.pspDocument', 'uses' => 'PspDocument\PspDocumentController@delete']);
-            Route::post('/update', ['as' => 'updatePspDocument.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@update']);
-            Route::get('/view', ['as' => 'view.pspDocument', 'uses' => 'PspDocument\PspDocumentController@view']);
-            Route::post('/', ['as' => 'search.pspDocuments', 'uses' => 'PspDocument\PspDocumentController@search']);        
+            Route::get('/', ['as' => 'index.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@index']);
+            Route::get('/create', ['as' => 'create.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
+            Route::post('/create', ['as' => 'store.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@save']);
+            Route::get('/edit/{id}', ['as' => 'pspDocument.edit', 'uses' => 'Psp\PspDocument\PspDocumentController@edit']);
+            Route::post('/edit/{id}', ['as' => 'pspDocuments.update', 'uses' => 'Psp\PspDocument\PspDocumentController@update']);
+            Route::get('/delete/{id}', ['as' => 'delete.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@delete']);            
+            Route::get('/view', ['as' => 'view.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@view']);
+            Route::post('/', ['as' => 'search.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@search']);        
         });
 
 //Skills
@@ -624,6 +626,8 @@ Route::group(['middleware' => 'auth'], function(){
 //FILES DOWNLOAD
 Route::get('/myCourses/evidences/download/{filename}', ['as' => 'getDownload.evidences' , 'uses' => 'Evidence\EvidenceController@getDownload']);
 Route::get('/enhacementPlan/get/{filename}', ['as' => 'getentry', 'uses' => 'EnhacementPlan\EnhacementController@get']);
+Route::get('/templates/get/{filename}', ['as' => 'getentry.template', 'uses' => 'Psp\Template\TemplateController@get']);
+Route::get('/pspDocuments/get/{filename}', ['as' => 'getentry.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@get']);
 
 // API endpoints
 $api = app(Dingo\Api\Routing\Router::class);
@@ -659,7 +663,8 @@ $api->version('v1', function ($api) {
 
 //NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function(){  
+
 
     Route::group(['prefix' => 'status'], function(){    
         Route::get('/', ['as' => 'status.indexType', 'uses' => 'Status\StatusController@indexType']);
@@ -766,4 +771,85 @@ Route::group(['middleware' => 'auth'], function(){
     });  
 
 
+
+    //MODULO UAS PARA TUTORIA
+    Route::group(['prefix' => 'uas'], function(){
+        //Coordinadores de tutoria
+        Route::group(['prefix' => 'coordinadoresTutoria'], function(){    
+            Route::get('/', ['as' => 'coordinadorTutoria.index', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@index']);
+            Route::get('create', ['as' => 'coordinadorTutoria.create', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@create']);
+            Route::post('create', ['as' => 'coordinadorTutoria.store', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@store']);
+            Route::get('show/{id}', ['as' => 'coordinadorTutoria.show', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@show']);
+            Route::get('edit/{id}', ['as' => 'coordinadorTutoria.edit', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@edit']);
+            Route::post('edit/{id}', ['as' => 'coordinadorTutoria.update', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@update']);
+            Route::get('delete/{id}', ['as' => 'coordinadorTutoria.delete', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@destroy']);
+        });
+
+
+    });
+
+
+    //MODULO DE TUTORIA
+    Route::group(['prefix' => 'tutoria'], function(){
+    //Temas de citas
+        Route::group(['prefix' => 'temas'], function(){    
+            Route::get('/', ['as' => 'tema.index', 'uses' => 'Tutorship\Topic\TopicController@index']);
+            Route::get('create', ['as' => 'tema.create', 'uses' => 'Tutorship\Topic\TopicController@create']);
+            Route::post('create', ['as' => 'tema.store', 'uses' => 'Tutorship\Topic\TopicController@store']);
+            Route::get('show/{id}', ['as' => 'tema.show', 'uses' => 'Tutorship\Topic\TopicController@show']);
+            Route::get('edit/{id}', ['as' => 'tema.edit', 'uses' => 'Tutorship\Topic\TopicController@edit']);
+            Route::post('edit/{id}', ['as' => 'tema.update', 'uses' => 'Tutorship\Topic\TopicController@update']);
+            Route::get('delete/{id}', ['as' => 'tema.delete', 'uses' => 'Tutorship\Topic\TopicController@destroy']);
+        });
+
+    //Motivos (Tipo 1: Por cancelación de cita, Tipo 2: Por desactivación de tutor)
+        Route::group(['prefix' => 'motivos'], function(){    
+            Route::get('/', ['as' => 'motivo.index', 'uses' => 'Tutorship\Reason\ReasonController@index']);
+            Route::get('create', ['as' => 'motivo.create', 'uses' => 'Tutorship\Reason\ReasonController@create']);
+            Route::post('create', ['as' => 'motivo.store', 'uses' => 'Tutorship\Reason\ReasonController@store']);
+            Route::get('show/{id}', ['as' => 'motivo.show', 'uses' => 'Tutorship\Reason\ReasonController@show']);
+            Route::get('edit/{id}', ['as' => 'motivo.edit', 'uses' => 'Tutorship\Reason\ReasonController@edit']);
+            Route::post('edit/{id}', ['as' => 'motivo.update', 'uses' => 'Tutorship\Reason\ReasonController@update']);
+            Route::get('delete/{id}', ['as' => 'motivo.delete', 'uses' => 'Tutorship\Reason\ReasonController@destroy']);
+        });
+
+    //Parametros (El unico hasta ahora es DuracionCita)
+        Route::group(['prefix' => 'parametros'], function(){    
+            Route::get('/', ['as' => 'parametro.index', 'uses' => 'Tutorship\Parameter\ParameterController@index']);        
+            Route::get('edit/{id}', ['as' => 'parametro.edit', 'uses' => 'Tutorship\Parameter\ParameterController@edit']);
+            Route::post('edit/{id}', ['as' => 'parametro.update', 'uses' => 'Tutorship\Parameter\ParameterController@update']);
+        });
+
+
+    //Tutores
+        Route::group(['prefix' => 'tutores'], function(){    
+            Route::get('/', ['as' => 'tutor.index', 'uses' => 'Tutorship\Tutor\TutorController@index']);
+            Route::get('create', ['as' => 'tutor.create', 'uses' => 'Tutorship\Tutor\TutorController@create']);
+            Route::post('create', ['as' => 'tutor.store', 'uses' => 'Tutorship\Tutor\TutorController@store']);
+            Route::get('show/{id}', ['as' => 'tutor.show', 'uses' => 'Tutorship\Tutor\TutorController@show']);
+            Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
+            Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
+            Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
+        });
+
+        //Alumnos de la especialidad
+        Route::group(['prefix' => 'alumnos'], function(){    
+            Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
+            Route::get('create', ['as' => 'alumno.create', 'uses' => 'Tutorship\Tutstudent\TutstudentController@create']);
+            Route::get('createAll', ['as' => 'alumno.createAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@createAll']);
+            Route::post('create', ['as' => 'alumno.store', 'uses' => 'Tutorship\Tutstudent\TutstudentController@store']);
+            Route::post('createAll', ['as' => 'alumno.storeAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@storeAll']);
+            Route::get('show/{id}', ['as' => 'alumno.show', 'uses' => 'Tutorship\Tutstudent\TutstudentController@show']);
+            Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
+            Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
+            Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
+            Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
+            Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
+            Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
+        });
+
+    });
+
+    
+    
 });

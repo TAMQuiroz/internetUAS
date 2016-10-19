@@ -1,11 +1,11 @@
 <?php namespace Intranet\Http\Controllers\Psp\PspGroup;
 
 use Illuminate\Http\Request;
-
+use Auth;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
-
 use Intranet\Models\PspGroup;
+use Intranet\Http\Requests\PspGroupRequest;
 
 class PspGroupController extends Controller
 {
@@ -42,7 +42,7 @@ class PspGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PspGroupRequest $request)
     {
         //
         try {
@@ -100,7 +100,7 @@ class PspGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PspGroupRequest $request, $id)
     {
         //
         try {
@@ -121,8 +121,18 @@ class PspGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Falta implementarlo
     public function destroy($id)
     {
         //
+        try {
+            $pspGroup = PspGroup::find($id);
+            $pspGroup->delete();
+
+            return redirect()->route('pspGroup.index')->with('success','El grupo se ha eliminado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 }

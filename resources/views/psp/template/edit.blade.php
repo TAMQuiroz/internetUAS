@@ -43,9 +43,9 @@
                             {{Form::label('Obligatorio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-1 col-sm-1 col-xs-12">
                             <?php if($template->obligatorio==2) : ?>
-                            {{Form::checkbox('obligatorio',$template->obligatorio,false, ['class' => 'form-control'])}}
+                            {{Form::checkbox('obligatorio',$template->idTipoEstado,false, ['class' => 'form-control'])}}
                             <?php else : ?>
-                            {{Form::checkbox('obligatorio',$template->obligatorio,true, ['class' => 'form-control'])}}
+                            {{Form::checkbox('obligatorio',$template->idTipoEstado,true, ['class' => 'form-control'])}}
                             <?php endif; ?>
                             </div>                            
                         </div>     

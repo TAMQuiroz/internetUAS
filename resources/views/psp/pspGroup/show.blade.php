@@ -23,7 +23,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Numero',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::text('numero',$pspGroup->numero,['class'=>'form-control', 'required', 'readonly'])}}
+		    				{{Form::number('numero',$pspGroup->numero,['class'=>'form-control', 'required', 'readonly'])}}
 		    			</div>
 		    		</div>
 

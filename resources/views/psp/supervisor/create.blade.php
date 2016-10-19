@@ -36,14 +36,14 @@
                 <div class="form-group">
                     {{Form::label('Apellido Paterno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('apPaterno',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+                        {{Form::text('apellido_paterno',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
                     </div>
                 </div>  
 
                 <div class="form-group">
                     {{Form::label('Apellido Materno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('apMaterno',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+                        {{Form::text('apellido_materno',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
                     </div>
                 </div>      
 
@@ -55,9 +55,9 @@
                 </div> 
 
                 <div class="form-group">
-                    {{Form::label('Teléfono *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    {{Form::label('Celular *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('telefono',null,['class'=>'form-control', 'required'])}}
+                        {{Form::text('celular',null,['class'=>'form-control', 'required'])}}
                     </div>
                 </div> 
 

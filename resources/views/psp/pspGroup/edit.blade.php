@@ -22,14 +22,14 @@
             <div class="form-group">
               {{Form::label('Numero *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-md-4">
-                {{Form::text('numero',$pspGroup->numero,['class'=>'form-control', 'required', 'maxlength' => 1])}}
+                {{Form::number('numero',$pspGroup->numero,['class'=>'form-control', 'required', 'readonly'])}}
               </div>
             </div>
 
             <div class="form-group">
               {{Form::label('Descripcion *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-md-4">
-                {{Form::text('descripcion',$pspGroup->descripcion,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+                {{Form::text('descripcion',$pspGroup->descripcion,['class'=>'form-control', 'required', 'maxlength' => 100])}}
               </div>
             </div>
 
@@ -46,5 +46,5 @@
     </div>
 </div>
 
-<script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script>
+<script src="{{ URL::asset('js/myvalidations/pspGroup.js')}}"></script>
 @endsection

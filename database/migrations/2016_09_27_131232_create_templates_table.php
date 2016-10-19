@@ -21,7 +21,7 @@ class CreateTemplatesTable extends Migration
             $table->integer('idAdmin')->nullable();
             $table->string('titulo');
             $table->string('ruta');
-            $table->integer('obligatorio');
+            //$table->integer('obligatorio');
             $table->timestamps();
         });
     }

@@ -38,7 +38,13 @@ class AuthController extends BaseController
             ], 500);
         }
 
-        $user->load('accreditor');
+        if ($user->IdPerfil == 2 || $user->IdPerfil == 1){
+            $user->load('teacher');    
+        }else if ($user->IdPerfil == 4){
+            $user->load('accreditor');
+        }else if ($user->IdPerfil == 5){
+            $user->load('investigator');
+        }
 
         return Response::json(compact('token', 'user'));
     }

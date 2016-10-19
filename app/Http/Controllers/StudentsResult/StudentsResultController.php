@@ -27,7 +27,7 @@ class StudentsResultController extends BaseController {
     public function index() {
         $data['title'] = "Resultados Estudiantiles";
         try {
-            $data['studentsResults'] = $this->studentsResultService->findByFaculty();
+            $data['studentsResults'] = $this->studentsResultService->retrieveAllByFaculty();
         } catch(\Exception $e) {
             dd($e);
         }

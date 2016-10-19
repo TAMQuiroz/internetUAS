@@ -142,7 +142,7 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{route('entregable.index')}}" class="btn btn-success pull-right">Mis entregables</a>
+                        <a href="{{route('entregable.index',$proyecto->id)}}" class="btn btn-success pull-right">Mis entregables</a>
                     </div>
                 </div>
 
@@ -159,7 +159,17 @@
                         @foreach($proyecto->deliverables as $deliverable)
                         <tr> 
                             <td>{{$deliverable->nombre}}</td> 
-                            <td>Responsables</td> 
+                            <td>
+                                <ul>
+                                    @if(count($deliverable->investigators))
+                                        @foreach($deliverable->investigators as $investigator)
+                                            <li> {{$investigator->nombre}} {{$investigator->ape_paterno}} </li>
+                                        @endforeach
+                                    @else
+                                        <li> No hay asignados </li>
+                                    @endif
+                                </ul>
+                            </td> 
                             <td>{{$deliverable->fecha_limite}}</td> 
                             <td>
                                 <a href="{{route('entregable.show', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>

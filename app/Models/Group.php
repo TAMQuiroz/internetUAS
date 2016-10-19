@@ -19,7 +19,7 @@ class Group extends Model
     }
 
     public function leader(){
-  	  return $this->belongsTo('Intranet\Models\Teacher', 'id_lider');
+  	  return $this->belongsTo('Intranet\Models\Teacher', 'id_lider', 'IdDocente');
     }
 
     public function investigators(){

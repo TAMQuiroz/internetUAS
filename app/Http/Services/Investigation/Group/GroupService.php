@@ -134,10 +134,9 @@ class GroupService {
     {
         $user = Auth::user();
         $teacher = Teacher::where('IdUsuario',$user->IdUsuario)->first();
-        
         $group = Group::find($idGroup);
         $leader = $group->leader;
 
-        return $teacher == $leader;
+        return $teacher->IdDocente == $leader->IdDocente;
     }
 }

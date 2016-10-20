@@ -16,7 +16,7 @@ class CreateSchedulesxcyclesTable extends Migration
             $table->integer('idschedules');
             $table->foreign('idschedules')->references('IdHorario')->on('horario');
             $table->integer('idcycles')->unsigned();
-            $table->foreign('idcycles')->references('id')->on('cycles');
+            $table->foreign('idcycles')->references('IdCicloAcademico')->on('cicloacademico');
             $table->timestamps();
         });
     }

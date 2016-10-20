@@ -3,7 +3,7 @@
 namespace Intranet\Http\Controllers\Investigation\Deliverable;
 
 use Illuminate\Http\Request;
-
+use Log;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 
@@ -294,6 +294,45 @@ class DeliverableController extends Controller
             }
             
         } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
+
+    public function viewVersion(Request $request){
+        try {
+            $data['version'] = $this->deliverableService->findVersion($request->all());
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return $data;
+    }
+    
+
+    public function saveObservation(Request $request){
+        try{
+            $id = $request['versionId'];
+            $version = Invdocument::find($id);
+            $idEntregable = $version->deliverable; 
+            $groupId = $version->deliverable->project->group->id;
+            if($this->groupService->checkLeader($groupId)){
+                //Log::info('Id: ' + $id);
+                $observacion = $request['versionObservation'];
+                $version->observacion = $observacion;
+                $version->save();
+               
+                if($version != null && $observacion != null){
+                    $this->deliverableService->sendNotificationsObs($id);
+                    return redirect()->back()->with('success', 'Se ha registrado una observación');
+                }
+                else
+                {
+                    return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');    
+                }    
+            }else{
+                return redirect()->back()->with('warning', 'No se puede registar una observación debido a que no es el lider');
+            }
+        } catch(\Exception $e) {
             dd($e);
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

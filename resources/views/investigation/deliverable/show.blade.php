@@ -127,6 +127,8 @@
                     <tbody> 
                         @foreach($entregable->versions as $version)
                             <tr> 
+                                <td hidden class="version-id">{{ $version->id }}</td>
+                                <td hidden class="entregable-id">{{ $entregable->id }}</td>
                                 <td>{{$version->version}}</td> 
                                 <td>
                                     @if($version->user->IdPerfil == 2)
@@ -135,9 +137,14 @@
                                         {{$version->user->investigator->nombre}} {{$version->user->investigator->ape_paterno}}
                                     @endif
                                 </td> 
-                                <td>{{$version->observacion}}</td> 
+                                @if($version->observacion != null)
+                                    <td><a class="btn btn-primary btn-xs view-observation" onclick="show('{{$version->id}}')" title="Visualizar"><i class="fa fa-search"></i></a></td>
+                                @else
+                                    <td>Sin observación</td>
+                                @endif
                                 <td>
                                     <a href="{{route('entregable.download', $version->id)}}" class="btn btn-primary btn-xs" title="Descargar"><i class="fa fa-download"></i></a>
+                                    <a class="btn btn-primary btn-xs write-observation" onclick="show('{{$version->id}}')" title="Observación"><i class="fa fa-pencil"></i></a>
                                     <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$version->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
                                 </td>
                             </tr> 
@@ -152,5 +159,9 @@
 </div>
 
 <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script>
+<script src="{{ URL::asset('js/intranetjs/investigation/deliverable/versionModal.js')}}"></script>
+
+@include('investigation.deliverable.write-observation-modal', ['title' => 'Version #'])
+@include('investigation.deliverable.view-observation-modal', ['title' => 'Version #'])
 
 @endsection

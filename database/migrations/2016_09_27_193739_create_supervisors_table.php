@@ -23,6 +23,7 @@ class CreateSupervisorsTable extends Migration
             $table->string('codigo_trabajador');
             $table->integer('idFaculty');
             $table->integer('idUser');
+            $table->integer('Vigente');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -396,7 +396,7 @@
     </div>
 
     <!-- top navigation -->
-    <div class="top_nav">
+   <div class="top_nav">
 
       <div class="nav_menu" style="padding-top: 5px;">
         <nav class="" role="navigation">
@@ -407,12 +407,13 @@
             <li class="user-profile pull-left" >
               <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
               <span class="label label-default hidden-xs hidden-sm">
-              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5 )
                   {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+              @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
+                  {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
               @else
                   {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
-              @endif
-
+              @endif  
               </span>
               <span>&nbsp</span>
               <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
@@ -422,6 +423,7 @@
                   Días restantes para el fin de ciclo: {{ $diffForHumans }}
                 </span>
               @endif
+
             </li>
             <li>
               <form method="GET" action="{{ url('logout') }}">

@@ -79,6 +79,7 @@ class SupervisorController extends Controller
             $supervisor->telefono          = $request['celular'];
             $supervisor->direccion          = $request['direccion'];
             $supervisor->IdUser       = $usuario->IdUsuario;
+            $supervisor->Vigente    = 1;
 
             $userId = Auth::User()->IdUsuario;
             $profileId = Auth::User()->IdPerfil;

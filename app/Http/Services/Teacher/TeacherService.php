@@ -154,7 +154,7 @@ class TeacherService {
 			$resultado = (strcasecmp ($cadena2, $word)=== 0) ? 0 : $word ;
 		}
 		*/
-		//$teachers = DB::select('select * from docente where Nombre like ?', array('%[$word]%'));
+		//$teachers = DB::select('select * from Docente where Nombre like ?', array('%[$word]%'));
 		//$teachers = Teacher::where('Nombre', $word);
 		//				  ->orWhere('Nombre', 'LIKE','%'.$request['word'].'%')->get();
 						  //->orWhere('ApellidoPaterno', $word)

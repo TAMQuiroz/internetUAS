@@ -17,7 +17,13 @@ class StudentsResultService {
         return StudentsResult::get();
     }
 
-    // obtener todos los resultados estudiantiles de la especialidad
+    // obtener todos los resultados estudiantiles (historicos) de la especialidad
+    public function retrieveAllByFaculty($faculty_id = null) {
+        $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code', $faculty_id))->get();
+
+        return $studentResults;
+    }
+
     public function findByFaculty($faculty_id = null) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code', $faculty_id))

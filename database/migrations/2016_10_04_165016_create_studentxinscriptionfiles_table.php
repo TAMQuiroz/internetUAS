@@ -15,7 +15,7 @@ class CreateStudentxinscriptionfilesTable extends Migration
         Schema::create('studentxinscriptionfiles', function (Blueprint $table) {
             $table->integer('idInscriptionFile')->unsigned();
             $table->foreign('idInscriptionFile')->references('id')->on('inscriptionfiles');
-            $table->integer('idStudent')->unsigned();
+            $table->integer('idStudent');
             $table->foreign('idStudent')->references('IdAlumno')->on('alumno');
             //$table->integer('aceptaTerminos')->unsigned();
             //$table->foreign('aceptaTerminos')->references('id')->on('statuses');

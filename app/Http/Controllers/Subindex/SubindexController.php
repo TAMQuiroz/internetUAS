@@ -54,7 +54,11 @@ class SubindexController extends BaseController {
             } else if ($user->user->IdPerfil==5){ //Investigadores
                 $data['faculties'] = $allFaculties;
                 $data['isEmpty'] = false;
-            } else { // Logic of ACREDITORS
+            } else if ($user->user->IdPerfil==6){ //Superisores
+                $data['faculties'] = $allFaculties;
+                $data['isEmpty'] = false;
+            }
+             else { // Logic of ACREDITORS
                 $data['isEmpty'] = false;
 
                 if($user->user->IdPerfil== 4 || $user->user->IdPerfil> 5){ // check if user is admin or general accreditor

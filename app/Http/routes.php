@@ -473,28 +473,44 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['prefix' => 'psp'], function() {
 
-        Route::group(['prefix' => 'supervisor'], function() {
+        Route::group(['middleware' => 'teacherPsp'], function(){
+            
+            Route::group(['prefix' => 'supervisor'], function() {
 
-            Route::get('/', ['as' => 'supervisor.index', 'uses' => 'Psp\Supervisor\SupervisorController@index']);
-            Route::get('/show/{id}', ['as' => 'supervisor.show', 'uses' => 'Psp\Supervisor\SupervisorController@show']);
-            Route::get('/create', ['as' => 'supervisor.create', 'uses' => 'Psp\Supervisor\SupervisorController@create']);
-            Route::post('/create', ['as' => 'supervisor.store', 'uses' => 'Psp\Supervisor\SupervisorController@store']);
-            Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
-            Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
-            Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
-        });
+                Route::get('/', ['as' => 'supervisor.index', 'uses' => 'Psp\Supervisor\SupervisorController@index']);
+                Route::get('/show/{id}', ['as' => 'supervisor.show', 'uses' => 'Psp\Supervisor\SupervisorController@show']);
+                Route::get('/create', ['as' => 'supervisor.create', 'uses' => 'Psp\Supervisor\SupervisorController@create']);
+                Route::post('/create', ['as' => 'supervisor.store', 'uses' => 'Psp\Supervisor\SupervisorController@store']);
+                Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
+                Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
+                Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
+            });
 
-        //PspGroups Luis Llanos
+            //PspGroups Luis Llanos
 
-        Route::group(['prefix' => 'pspGroup'], function() {
-            Route::get('/', ['as' => 'pspGroup.index', 'uses' => 'Psp\PspGroup\PspGroupController@index']);
-            Route::get('create', ['as' => 'pspGroup.create', 'uses' => 'Psp\PspGroup\PspGroupController@create']);
-            Route::post('create', ['as' => 'pspGroup.store', 'uses' => 'Psp\PspGroup\PspGroupController@store']);
-            Route::get('show/{id}', ['as' => 'pspGroup.show', 'uses' => 'Psp\PspGroup\PspGroupController@show']);
-            Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
-            Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
-            Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
-        });
+            Route::group(['prefix' => 'pspGroup'], function() {
+                Route::get('/', ['as' => 'pspGroup.index', 'uses' => 'Psp\PspGroup\PspGroupController@index']);
+                Route::get('create', ['as' => 'pspGroup.create', 'uses' => 'Psp\PspGroup\PspGroupController@create']);
+                Route::post('create', ['as' => 'pspGroup.store', 'uses' => 'Psp\PspGroup\PspGroupController@store']);
+                Route::get('show/{id}', ['as' => 'pspGroup.show', 'uses' => 'Psp\PspGroup\PspGroupController@show']);
+                Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
+                Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
+                Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
+            });
+
+            //Template
+            Route::group(['prefix' => 'templates'], function() {
+                Route::get('/', ['as' => 'index.templates', 'uses' => 'Psp\Template\TemplateController@index']);
+                Route::get('/create', ['as' => 'create.template', 'uses' => 'Psp\Template\TemplateController@create']);
+                Route::post('/create', ['as' => 'store.template', 'uses' => 'Psp\Template\TemplateController@store']);
+                Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
+                Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
+                Route::get('/delete/{id}', ['as' => 'delete.template', 'uses' => 'Psp\Template\TemplateController@destroy']);            
+                Route::get('/view', ['as' => 'view.template', 'uses' => 'Psp\Template\TemplateController@view']);
+                Route::post('/', ['as' => 'search.templates', 'uses' => 'Psp\Template\TemplateController@search']);        
+            });
+        });  
+        
         
 
    //PspProcess
@@ -549,19 +565,6 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('/', ['as' => 'search.phases', 'uses' => 'Phase\PhaseController@search']);        
         });
 
-//Template
-
-
-        Route::group(['prefix' => 'templates'], function() {
-            Route::get('/', ['as' => 'index.templates', 'uses' => 'Psp\Template\TemplateController@index']);
-            Route::get('/create', ['as' => 'create.template', 'uses' => 'Psp\Template\TemplateController@create']);
-            Route::post('/create', ['as' => 'store.template', 'uses' => 'Psp\Template\TemplateController@store']);
-            Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
-            Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
-            Route::get('/delete/{id}', ['as' => 'delete.template', 'uses' => 'Psp\Template\TemplateController@destroy']);            
-            Route::get('/view', ['as' => 'view.template', 'uses' => 'Psp\Template\TemplateController@view']);
-            Route::post('/', ['as' => 'search.templates', 'uses' => 'Psp\Template\TemplateController@search']);        
-        });
 
 //State
 

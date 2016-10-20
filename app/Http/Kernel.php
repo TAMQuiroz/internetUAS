@@ -50,5 +50,6 @@ class Kernel extends HttpKernel
         'guest' => \Intranet\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'investigation' => \Intranet\Http\Middleware\InvestigationMiddleware::class,
+        'teacherPsp' => \Intranet\Http\Middleware\TeacherPspMiddleware::class,
     ];
 }

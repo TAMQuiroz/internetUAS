@@ -1257,7 +1257,7 @@ CREATE TABLE `Perfil` (
 
 LOCK TABLES `Perfil` WRITE;
 /*!40000 ALTER TABLE `Perfil` DISABLE KEYS */;
-INSERT INTO `Perfil` VALUES (1,'Coordinador','Coordinador de la Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 18:05:44'),(2,'Profesor','Profesor de una Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 20:15:18'),(3,'Administrador','Administrador de la Facultad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(4,'Acreditador','Acreditador de una Especialidad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(5,'Investigador','Investigador de la facultad',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17');
+INSERT INTO `Perfil` VALUES (1,'Coordinador','Coordinador de la Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 18:05:44'),(2,'Profesor','Profesor de una Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 20:15:18'),(3,'Administrador','Administrador de la Facultad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(4,'Acreditador','Acreditador de una Especialidad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(5,'Investigador','Investigador de la facultad',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17'),(6,'Supervisor','Supervisor del curso de PSP',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17'),(7,'Alumno','Alumno',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17');
 /*!40000 ALTER TABLE `Perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 

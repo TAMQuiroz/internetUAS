@@ -18,7 +18,7 @@ class CreatePspmeetingsTable extends Migration
             $table->time('hora_inicio');
             $table->time('hora_fin');
             $table->date('fecha');
-            $table->integer('idStudent')->unsigned();
+            $table->integer('idStudent');
             $table->integer('idSupervisor')->unsigned();
             $table->char('asistencia');
             $table->string('lugar');

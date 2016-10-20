@@ -702,6 +702,22 @@ Route::group(['middleware' => 'auth'], function(){
 
     });
 
+    //Acreditacion - flujo administrador:
+    Route::group(['prefix' => 'flujoAdministrador'], function() {
+        Route::get('/', ['as' => 'index.flujoAdministrador', 'uses' => 'FlujoAdministradorController@index']);
+        Route::get('/create', ['as' => 'create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@create']);
+        Route::post('/save', ['as' => 'save.flujoAdministrador', 'uses' => 'FlujoAdministradorController@save']);
+        Route::get('/edit/{id}', ['as' => 'edit.flujoAdministrador', 'uses' => 'FlujoAdministradorController@edit']);
+        Route::post('/update', ['as' => 'update.flujoAdministrador', 'uses' => 'FlujoAdministradorController@update']);
+        Route::get('/delete', ['as' => 'delete.flujoAdministrador', 'uses' => 'FlujoAdministradorController@delete']);
+
+        Route::post('/facultad', ['as' => 'facultad_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_store']);
+        Route::get('/facultad', ['as' => 'facultad_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_create']);
+
+        Route::get('/facultad/{id}/profesor', ['as' => 'profesor_index.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_index']);
+        Route::get('/facultad/{id}/profesor/create', ['as' => 'profesor_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_create']);        
+        Route::post('/profesor', ['as' => 'profesor_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_store']);
+    });
     
     
 });

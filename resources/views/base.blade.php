@@ -15,7 +15,7 @@
 
         
         <!--La barra superior principal-->
-        <nav class="" style="background-color: #C24847;">
+        <nav class="red">
           <div class="nav-wrapper container ">
 
             <!--Menu de barra de haburguesa-->

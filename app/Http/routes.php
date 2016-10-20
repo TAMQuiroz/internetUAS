@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/newlook', function (){
+    return view('base');
+});
+
 Route::get('/', function (){
     if (Auth::check())
         Auth::logout();
@@ -441,6 +445,11 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/pending/', ['as' => 'pending.index', 'uses' => 'Consolidated\PendingController@index']);
 
         Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
+        /*
+        Route::group(['middleware' => 'action_permission'], function() {
+            Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
+        });
+        */
     });
 
     //Profile Routes

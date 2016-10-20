@@ -3,6 +3,10 @@ namespace Intranet\Http\Services\Investigation\Deliverable;
 
 use Intranet\Models\Investigator;
 use Intranet\Models\Deliverable;
+use Mail;
+use DB;
+use DateTime;
+
 
 class DeliverableService {
 
@@ -48,5 +52,39 @@ class DeliverableService {
         $teachers->forget($indexOfIds);
 
         return $teachers;
+    }
+
+    public function sendNotifications($id)
+    {
+        
+        $entregable = Deliverable::find($id);
+
+        try
+        { 
+            $nombreEntregable = $entregable->nombre;
+            $fechaLimite = new DateTime($entregable->fecha_limite);
+            $hoy = new DateTime();
+
+            $diasRestantes = $fechaLimite->diff($hoy)->format('%d');
+            foreach($entregable->investigators as $investigator){
+                $mail = $investigator->correo;
+                Mail::send('emails.notifyDeadline', compact('nombreEntregable', 'diasRestantes'), function($m) use($mail){
+                    $m->subject('Notificacion de fecha limite');
+                    $m->to($mail);
+                });
+            }
+
+            foreach($entregable->teachers as $teacher){
+                $mail = $teacher->Correo;
+                Mail::send('emails.notifyDeadline', compact('nombreEntregable', 'diasRestantes'), function($m) use($mail){
+                    $m->subject('Notificacion de fecha limite');
+                    $m->to($mail);
+                });
+            }
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
     }
 }

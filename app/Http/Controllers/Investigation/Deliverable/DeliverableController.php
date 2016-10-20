@@ -279,4 +279,23 @@ class DeliverableController extends Controller
 
         return response()->download($file);
     }
+
+    public function notify($id)
+    {
+        //$faculty_id = Session::get('faculty-code');
+        $entregable = Deliverable::find($id);
+        $groupId = $entregable->project->group->id;
+        try {
+            if($this->groupService->checkLeader($groupId)){
+                $this->deliverableService->sendNotifications($id);
+                return redirect()->back()->with('success', 'Se ha notificado a todos los responsables del entregable');
+            }else{
+                return redirect()->back()->with('warning', 'El grupo no se puede editar debido a que no es el lider');
+            }
+            
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
 }

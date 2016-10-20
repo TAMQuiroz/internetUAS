@@ -617,6 +617,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'entregable.delete', 'uses' => 'Investigation\Deliverable\DeliverableController@destroy']);
                 Route::get('delete/version/{id}', ['as' => 'entregable.deleteVersion', 'uses' => 'Investigation\Deliverable\DeliverableController@destroyVersion']);
                 Route::get('download/{id}', ['as' => 'entregable.download', 'uses' => 'Investigation\Deliverable\DeliverableController@download']);
+                Route::get('notification/{id}', ['as' => 'entregable.notify', 'uses' => 'Investigation\Deliverable\DeliverableController@notify']);
 
                 //Seleccion de integrantes de proyecto
                 Route::group(['prefix' => 'afiliacion'], function(){

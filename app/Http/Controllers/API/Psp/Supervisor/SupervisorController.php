@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Supervisor;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
-//Sin testear
+//Tested
 class SupervisorController extends BaseController
 {
     use Helpers;

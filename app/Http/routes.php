@@ -494,6 +494,8 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
             Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
             Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
+            //Esta ruta es para probar los API, no borrar
+            //Route::get('supervisor',['uses' => 'API\Psp\Supervisor\SupervisorController@getAll']);
         });
         
 

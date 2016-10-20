@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Intranet\Models\Group;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
-//Sin testear
+
 class GroupController extends BaseController
 {
     use Helpers;
 
-    //No testeado aun
+    //Tested
     public function getAll()
     {
         $groups = Group::with('faculty')->with('leader')->get();

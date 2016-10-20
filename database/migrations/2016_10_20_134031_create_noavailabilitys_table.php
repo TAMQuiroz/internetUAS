@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoAvailabilitysTable extends Migration
+class CreateNoavailabilitysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,19 +12,17 @@ class CreateNoAvailabilitysTable extends Migration
      */
     public function up()
     {
-        Schema::create('noAvailabilitys', function (Blueprint $table) {
+        Schema::create('noavailabilitys', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
-            $table->integer('id_profesor');
+            $table->integer('id_docente');
             $table->softdeletes();
             $table->timestamps();
         });
 
         //las llaves foraneas
-        Schema::table('noAvailabilitys', function (Blueprint $table) {
-             $table->foreign('id_profesor')->references('IdDocente')->on('Docente');             
-        });
+        
     }
 
     /**
@@ -34,6 +32,6 @@ class CreateNoAvailabilitysTable extends Migration
      */
     public function down()
     {
-        Schema::drop('noAvailabilitys');
+        Schema::drop('noavailabilitys');
     }
 }

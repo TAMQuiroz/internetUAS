@@ -7,7 +7,7 @@ use Intranet\Models\Invdocument;
 use Mail;
 use DB;
 use DateTime;
-
+use Carbon\Carbon;
 
 class DeliverableService {
 
@@ -62,11 +62,10 @@ class DeliverableService {
 
         try
         { 
-            $nombreEntregable = $entregable->nombre;
-            $fechaLimite = new DateTime($entregable->fecha_limite);
-            $hoy = new DateTime();
-
-            $diasRestantes = $fechaLimite->diff($hoy)->format('%d');
+            $nombreEntregable   = $entregable->nombre;
+            $hoy                = Carbon::now();
+            $fechaLimite        = Carbon::parse($entregable->fecha_limite);
+            $diasRestantes      = $hoy->diffInDays($fechaLimite);
             $porcAvance = $entregable->porcen_avance;
             foreach($entregable->investigators as $investigator){
                 $mail = $investigator->correo;

@@ -290,7 +290,7 @@ class DeliverableController extends Controller
                 $this->deliverableService->sendNotifications($id);
                 return redirect()->back()->with('success', 'Se ha notificado a todos los responsables del entregable');
             }else{
-                return redirect()->back()->with('warning', 'El grupo no se puede editar debido a que no es el lider');
+                return redirect()->back()->with('warning', 'No se pueden enviar notificaciones debido a que no es el lider');
             }
             
         } catch (\Exception $e) {

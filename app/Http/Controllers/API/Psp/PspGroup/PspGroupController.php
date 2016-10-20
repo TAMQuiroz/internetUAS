@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\Http\Controllers\API\PspGroup;
+namespace Intranet\Http\Controllers\API\Psp\PspGroup;
 
 use Illuminate\Http\Request;
 use Intranet\Models\PspGroup;

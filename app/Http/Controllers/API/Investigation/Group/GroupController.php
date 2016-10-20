@@ -1,12 +1,12 @@
 <?php
 
-namespace Intranet\Http\Controllers\API\Group;
+namespace Intranet\Http\Controllers\API\Investigation\Group;
 
 use Illuminate\Http\Request;
 use Intranet\Models\Group;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
-
+//Sin testear
 class GroupController extends BaseController
 {
     use Helpers;

@@ -496,6 +496,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
                 Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
+                Route::get('selectGroup',['as' => 'pspGroup.selectGroupCreate', 'uses' => 'Psp\PspGroup\PspGroupController@selectGroupCreate']);
+                Route::post('selectGroup',['as' => 'pspGroup.selectGroupStore', 'uses' => 'Psp\PspGroup\PspGroupController@selectGroupStore']);
             });
 
             //Template

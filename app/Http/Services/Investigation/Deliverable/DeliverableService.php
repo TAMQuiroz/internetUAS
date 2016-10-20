@@ -6,7 +6,7 @@ use Intranet\Models\Deliverable;
 use Mail;
 use DB;
 use DateTime;
-
+use Carbon\Carbon;
 
 class DeliverableService {
 
@@ -61,11 +61,11 @@ class DeliverableService {
 
         try
         { 
-            $nombreEntregable = $entregable->nombre;
-            $fechaLimite = new DateTime($entregable->fecha_limite);
-            $hoy = new DateTime();
+            $nombreEntregable   = $entregable->nombre;
+            $hoy                = Carbon::now();
+            $fechaLimite        = Carbon::parse($entregable->fecha_limite);
+            $diasRestantes      = $hoy->diffInDays($fechaLimite);
 
-            $diasRestantes = $fechaLimite->diff($hoy)->format('%d');
             foreach($entregable->investigators as $investigator){
                 $mail = $investigator->correo;
                 Mail::send('emails.notifyDeadline', compact('nombreEntregable', 'diasRestantes'), function($m) use($mail){

@@ -61,6 +61,7 @@
 								@if(count($entregable->lastversion) != 0)
 								<a href="{{route('entregable.download', $entregable->lastversion->first()->id)}}" class="btn btn-primary btn-xs" title="Descargar ultima version"><i class="fa fa-download"></i></a>
 								@endif
+								<a href="{{route('entregable.notify', $entregable->id)}}" class="btn btn-primary btn-xs" title="Notificar"><i class="fa fa-envelope"></i></a>
 								<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$entregable->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
 							</td>
 						</tr> 

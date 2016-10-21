@@ -90,6 +90,6 @@
           </div>
         </div>
 <script src="{{ URL::asset('js/myvalidations/faculty.js')}}"></script>
-@include('modals.delete', ['message' => '¿Esta seguro que desea eliminar esta especialidad?', 'route' => route('delete.faculty', $fac->IdEspecialidad)])
+@include('modals.delete', ['id'=>'modalDelete','message' => '¿Esta seguro que desea eliminar esta especialidad?', 'route' => route('delete.faculty', $fac->IdEspecialidad)])
 @include('modals.edit-modal', ['message' => '¿Desea guardar los cambios para esta especialidad?', 'action' => route('index.faculty'), 'button' => 'Save' ])
 @endsection

@@ -58,6 +58,11 @@
   <script src="{{ URL::asset('js/validate/jquery.validate.min.js')}}"></script>
   <script src="{{ URL::asset('js/validate/additional-methods.min.js')}}"></script>
 
+
+  <script src="{{ URL::asset('js/remodal.js')}}"></script>
+  <link href="{{ URL::asset('css/remodal.css')}}" rel="stylesheet">
+  <link href="{{ URL::asset('css/remodal-default-theme.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('css/remodal/remodal-modify.css')}}" rel="stylesheet">
   <script type="text/javascript">
     var baseUrl = "{{ url('') }}";
   </script>
@@ -107,11 +112,13 @@
               </li>
 
               @if(in_array(70,Session::get('actions')))
+                @if(Auth::user() && Auth::user()->IdPerfil != 5)
                 <li>
                 <!--<a href="{{ route('indexAcademicCycle.faculty') }}">-->
                   <a href="{{ route('index.faculty') }}">
                     <i class="fa fa-institution"></i> Especialidades</a>
                 </li>
+                @endif
               @endif
               @if(in_array(11,Session::get('actions')) || in_array(6,Session::get('actions')) || in_array(1,Session::get('actions')) || in_array(2,Session::get('actions')))
                 <li>
@@ -250,37 +257,37 @@
                   </ul>
                 </li>
               @endif
-              @if(in_array(53,Session::get('actions')) || in_array(54,Session::get('actions'))
-              || in_array(55,Session::get('actions')) || in_array(56,Session::get('actions')) )
-                <li>
-                  <a>
-                    <i class="fa fa-line-chart"></i> Consolidados<span class="fa fa-chevron-down"></span>
-                  </a>
-                  <ul class="nav child_menu" style="display: none">
-                    @if(in_array(79,Session::get('actions')))
-                      <li><a href="{{ route('view-status.evaluation') }}">Avance de Medición</a></li>
-                    @endif
-                    @if(in_array(53,Session::get('actions')))
-                      <li><a href="{{ route('index.studyPlan') }}">De Cursos Dictados</a></li>
-                    @endif
-                    @if(in_array(54,Session::get('actions')))
-                      <li><a href="{{ route('index.measuring') }}">De Medición</a></li>
-                    @endif
-                    @if(in_array(55,Session::get('actions')))
-                      <li><a href="{{ route('index.evaluation') }}">De Evaluación</a></li>
-                    @endif
-                    @if(in_array(56,Session::get('actions')))
-                      <li><a href="{{ route('index.results') }}">De Resultados de Medición</a></li>
-                    @endif
-                    @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
-                      <li><a href="{{ route('pending.index')}}">De Evaluacion Pendiente</a></li>
-                    @endif
-                    @if(Auth::user() && (Auth::user()->IdPerfil == 1))
-                      <li><a href="{{ route('evidences.index')}}">De evidencias</a></li>
-                    @endif
-                    <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
-                  </ul>
-                </li>
+              
+              @if(Auth::user() && Auth::user()->IdPerfil != 5)
+                @if(in_array(53,Session::get('actions')) || in_array(54,Session::get('actions'))
+                || in_array(55,Session::get('actions')) || in_array(56,Session::get('actions')) )
+                  <li>
+                    <a>
+                      <i class="fa fa-line-chart"></i> Consolidados<span class="fa fa-chevron-down"></span>
+                    </a>
+                    <ul class="nav child_menu" style="display: none">
+                      @if(in_array(79,Session::get('actions')))
+                        <li><a href="{{ route('view-status.evaluation') }}">Avance de Medición</a></li>
+                      @endif
+                      @if(in_array(53,Session::get('actions')))
+                        <li><a href="{{ route('index.studyPlan') }}">De Cursos Dictados</a></li>
+                      @endif
+                      @if(in_array(54,Session::get('actions')))
+                        <li><a href="{{ route('index.measuring') }}">De Medición</a></li>
+                      @endif
+                      @if(in_array(55,Session::get('actions')))
+                        <li><a href="{{ route('index.evaluation') }}">De Evaluación</a></li>
+                      @endif
+                      @if(in_array(56,Session::get('actions')))
+                        <li><a href="{{ route('index.results') }}">De Resultados de Medición</a></li>
+                      @endif
+                      @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
+                        <li><a href="{{ route('pending.index')}}">De Evaluacion Pendiente</a></li>
+                      @endif
+                      <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
+                    </ul>
+                  </li>
+                @endif
               @endif
 
               @if(in_array(58,Session::get('actions')) || in_array(63,Session::get('actions')) || in_array(64,Session::get('actions'))  )
@@ -299,11 +306,59 @@
                     @if(in_array(64,Session::get('actions')))
                       <li><a href="{{ route('index.academicCycle')}}">Ciclo Académico</a></li>
                     @endif
+                    <li><a href="{{route('status.indexType')}}">Administracion de status</a></li>
 
                   </ul>
                 </li>
               @endif
 
+              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
+              <li>
+                <a>
+                   <i class="fa fa-flask"></i> Investigación <span class="fa fa-chevron-down"></span>
+                </a>
+                <ul class="nav child_menu" style="display: none">
+                  @if(Auth::user()->IdPerfil == 2)
+                  <li><a href="{{route('investigador.index')}}"> Administrar Investigadores</a></li>
+                  <li><a href="{{route('grupo.index')}}"> Administrar Grupos de Investigación</a></li>
+                  <li><a href="{{route('area.index')}}"> Administrar Áreas</a></li>
+                  <li><a href="{{route('evento.index')}}"> Administrar Eventos</a></li>
+                  <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li>
+                  @endif
+                </ul>
+              </li>
+              @endif
+
+              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              <li>
+                <a>
+                   <i class="fa fa-users"></i> Tutoría <span class="fa fa-chevron-down"></span>
+                </a>
+                <ul class="nav child_menu" style="display: none">
+                  @if(Auth::user()->IdPerfil == 3)
+                  <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                  <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
+                  <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
+                  <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
+                  <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
+                  @endif
+                </ul>
+              </li>
+              @endif
+
+              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              <li>
+                <a>
+                   <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>
+                </a>
+                <ul class="nav child_menu" style="display: none">
+                  @if(Auth::user()->IdPerfil == 2)                  
+                  <!-- <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li> -->
+                  @endif
+                </ul>
+              </li>
+              @endif
+              
             </ul>
           </div>
         </div>
@@ -322,13 +377,12 @@
             <li class="user-profile pull-left" >
               <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
               <span class="label label-default hidden-xs hidden-sm">
-              @if ( Session::get('user')->IdUsuario != 1)
-                <a href="{{route('edit.myUser', ['userCode' => Session::get('user')->IdUsuario])}}" style="color:#fff" onMouseOver="this.style.color='#26B99A'" onMouseOut="this.style.color='#fff'">
-              @endif
+              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+                  {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+              @else
                   {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
-              @if (Session::get('user')->IdPerfil != 1)
-                </a>
               @endif
+
               </span>
               <span>&nbsp</span>
               <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
@@ -669,6 +723,15 @@
   //Code for show success  messages
   @if( @Session::has('warning') )
     toastr.error('{{ @Session::get('warning') }}');
+  @endif
+</script>
+
+<script type="text/javascript">
+  //Code for show back error messages
+  @if (@Session::has('errors'))
+    @foreach ($errors->all() as $error)
+        toastr.error('{{ @$error }}');
+    @endforeach
   @endif
 </script>
 <!-- /datepicker -->

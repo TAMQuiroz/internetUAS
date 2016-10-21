@@ -1,62 +1,76 @@
-@extends('app')
-@section('content')
-    <div class="page-title">
-        <div class="title_left">
-            <h3>Especialidades</h3>
+@extends('base')
+@section('contenido')
+
+<!-- Estos linea es para las migajas-->
+<nav class="red lighten-2">
+  <div class="nav-wrapper container">
+    <div class="col s12">
+        <a href="#" class="breadcrumb">Especialidad</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+    <div class= "row ">
+        <h3 class="red-text text-lighten-2">Lista de especialidades</h3>
+    </div>
+    <br>
+    <br>
+
+    <div class= "row">
+        <div class="col s12 right-align">
+            <a href="{{url('faculty/new')}}" class="waves-effect waves-light btn">+ Nueva especialidad</a>
         </div>
+        
     </div>
 
-    <div class="clearfix"></div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_content">
-                <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        @if(in_array(69, Session::get('actions')))
-                            <a href="{{ route('new.faculty') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nueva Especialidad</a>
+    <div class= "row">
+        <table class= "bordered highlight responsive-table">
+            <thead>
+                <tr>
+                    <th data-field="codigo">Código</th>
+                    <th data-field="nombre">Nombre</th>
+                    <th data-field="acciones">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach($faculties as $fac)
+                <tr>
+                    <td class="facultyId" hidden="true">@if($fac!=null) {{$fac->IdEspecialidad}} @endif</td>
+                    <td class=" ">@if($fac!=null) {{$fac->Codigo}} @endif</td>
+                    <td class=" ">@if($fac!=null) {{$fac->Nombre}} @endif</td>
+
+                    <td class=" ">
+                        @if(in_array(72, Session::get('actions')))
+                            <a  onclick="show('{{$fac->IdEspecialidad}}')" title="Buscar"><i class="material-icons">visibility</i></a>
                         @endif
-                    </div>
-                </div>
-                <div class="clearfix"></div>
 
-                <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                    <thead>
-                    <tr class="headings">
+                        @if(in_array(71, Session::get('actions')))
+                            <a  title="Editar" href="{{route('edit.faculty', ['facultyId' => $fac->IdEspecialidad])}}"><i class="material-icons">edit</i></a>
+                        @endif
+                        
+                        @if(in_array(78, Session::get('actions')))
+                            <a  data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="material-icons">delete</i></a>
+                        @endif
 
-                        <th class="column-title">Código</th>
-                        <th class="column-title">Nombre</th>
-                        <th class="column-title last">Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                    </td>
 
-                    @foreach($faculties as $fac)
-                        <tr class="odd pointer">
-                            <td class="facultyId" hidden="true">@if($fac!=null) {{$fac->IdEspecialidad}} @endif</td>
-                            <td class=" ">@if($fac!=null) {{$fac->Codigo}} @endif</td>
-                            <td class=" ">@if($fac!=null) {{$fac->Nombre}} @endif</td>
-                            <td class=" ">
-                                @if(in_array(72, Session::get('actions')))
-                                    <a class="btn btn-primary btn-xs" onclick="show('{{$fac->IdEspecialidad}}')" title="Buscar"><i class="fa fa-search"></i></a>
-                                @endif
+                </tr>   
 
-                                @if(in_array(71, Session::get('actions')))
-                                    <a class="btn btn-primary btn-xs" title="Editar" href="{{route('edit.faculty', ['facultyId' => $fac->IdEspecialidad])}}"><i class="fa fa-pencil"></i></a>
-                                @endif
-                                
-                                @if(in_array(78, Session::get('actions')))
-                                    <a class="btn btn-danger btn-xs delete-faculty" data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="fa fa-remove"></i></a>
-                                @endif
+                @endforeach
 
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            </tbody>
+        </table>        
+        
+
     </div>
+
+ </div>
+
+
     <script type="text/javascript">
         function show(id){
             $.get(baseUrl+'/faculty/view/' + id , function(data){

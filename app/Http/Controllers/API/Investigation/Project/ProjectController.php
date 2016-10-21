@@ -1,12 +1,12 @@
 <?php
 
-namespace Intranet\Http\Controllers\API\Psp\Project;
+namespace Intranet\Http\Controllers\API\Investigation\Project;
 
 use Illuminate\Http\Request;
 use Intranet\Models\Project;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
-//Sin testear
+//Working
 class ProjectController extends BaseController
 {
     use Helpers;

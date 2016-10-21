@@ -115,16 +115,22 @@
 							<th>Fecha Fin</th> 
 							<th>Grupo</th> 
 							<th>Especialidad</th> 
+							<th>Acciones</th>
 						</tr> 
 					</thead> 
 					<tbody> 
+						@foreach($investigador->projects as $proyecto)
 						<tr> 
-							<td>Ejemplo Nombre</td> 
-							<td>Ejemplo Fecha inicio</td> 
-							<td>Ejemplo Fecha fin</td> 
-							<td>Ejemplo Grupo</td> 
-							<td>Ejemplo Especialidad</td> 
+							<td>{{$proyecto->nombre}}</td> 
+							<td>{{$proyecto->fecha_ini}}</td>
+							<td>{{$proyecto->fecha_fin}}</td>
+							<td>{{$proyecto->group->nombre}}</td>
+							<td>{{$proyecto->group->faculty->Nombre}}</td> 
+                            <td>
+                                <a href="{{route('proyecto.show', $proyecto->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                            </td>
 						</tr> 
+						@endforeach
 					</tbody> 
 				</table>		  	
 		  	</div>

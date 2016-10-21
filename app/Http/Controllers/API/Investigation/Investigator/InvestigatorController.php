@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Investigator;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
-//Sin testear
+//
 class InvestigatorController extends BaseController
 {
     use Helpers;

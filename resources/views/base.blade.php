@@ -33,7 +33,7 @@
               <li class="no-padding">
                 <ul class="collapsible collapsible-accordion">
                   <li class="">                    
-                    <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">store</i>Inicio</a>  
+                    <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.ourFaculty', ['faculty-code' => Session::get('faculty-code')] ) }}"><i class="material-icons">store</i>Inicio</a>  
                   </li>
 
                   <li class="bold">

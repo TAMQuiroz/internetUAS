@@ -26,7 +26,7 @@ class Tutorship extends Model
     }
 
     static function getAssignedStudents($filters, $mayor, $tutor = null) {
-        $query = Tutorship::model();
+        $query = Tutorship::query();
 
         if($tutor) {
             $query = $query->("id_tutor", $tutor);
@@ -53,7 +53,7 @@ class Tutorship extends Model
                     $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
                 }
             ]);
-
+        
         return $query->paginate(10);
     }
 }

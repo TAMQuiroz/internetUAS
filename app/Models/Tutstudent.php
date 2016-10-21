@@ -51,4 +51,36 @@ class Tutstudent extends Model
             throw new InvalidTutStudentException;
         }
     }
+
+    static public function getFilteredStudents($filters, $tutor = null, $mayor = null) {
+        $query = Tutstudent::query();
+
+        if($mayor) {
+            $query = $query->where("id_especialidad", $mayor);
+        }
+
+        if($filters["code"] != "") {
+            $query  = $query->where("codigo", $filters["code"]);
+        }
+
+        if($filters["name"] != "") {
+            $query = $query->where("nombre", "like", "%" . $filters["name"] . "%");
+        } 
+
+        if($filters["lastName"] != "") {
+            $query = $query->where("ape_paterno", "like", "%" . $filters["lastName"] . "%");
+        }
+
+        if($filters["secondLastName"] != "") {
+            $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
+        }
+
+        if($tutor) {
+            $query = $query->whereHas('tutorship', function($q) use($tutor) {
+                $q = $q->where('id_tutor', $tutor);
+            });
+        }
+
+        return $query->paginate(10);
+    }
 }

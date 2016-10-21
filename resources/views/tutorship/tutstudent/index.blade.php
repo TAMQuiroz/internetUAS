@@ -94,7 +94,7 @@
     <p style="font-size: 18px"><strong>Filtros de búsqueda</strong></p>
     <p style="font-size: 16px">Selecciones uno o más filtros:</p>
   </div>
-  <form method="GET" action="">
+  <form method="GET" action="{{route('alumno.index')}}">
     <div class="flex-container is-wrap has-space-between">
             <div class="flex-element input-container">
                 <label class="label-input">Nombre</label>
@@ -110,8 +110,10 @@
             </div>
             <div class="flex-element input-container has-select">
                 <label class="label-input">Tutor</label>
-                <select class="form-control" style="width: 172px; margin-left: 4px;">
-                    <option value="val1">Value 1</option>
+                <select class="form-control" style="width: 172px; margin-left: 4px;" name="tutorId">
+                    @foreach ($tutors as $tutor)
+                        <option value="{{$tutor->IdDocente}}">{{$tutor->ApellidoPaterno . " " . $tutor->ApellidoMaterno . ", " . $tutor->Nombre}}</option>
+                    @endforeach
                 </select>
             </div>
     </div>

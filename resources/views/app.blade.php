@@ -320,7 +320,7 @@
                   <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                   <li><a href=""> Administrar Fases</a></li>
                   <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
-                  <li><a href="{{route('index.templates')}}"> Administrar Documentos</a></li>
+                  <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                   <li><a href=""> Administrar Semanas de reunión</a></li>
                   <li><a href=""> Administrar Notas</a></li>
                   @endif

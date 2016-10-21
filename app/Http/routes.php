@@ -483,13 +483,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['prefix' => 'psp'], function() {
 
         Route::group(['middleware' => 'teacherPsp'], function(){
-            
+
             Route::group(['prefix' => 'supervisor'], function() {
 
-                Route::get('/', ['as' => 'supervisor.index', 'uses' => 'Psp\Supervisor\SupervisorController@index']);
-                Route::get('/show/{id}', ['as' => 'supervisor.show', 'uses' => 'Psp\Supervisor\SupervisorController@show']);
+                Route::get('/', ['as' => 'supervisor.index', 'uses' => 'Psp\Supervisor\SupervisorController@index']);                
                 Route::get('/create', ['as' => 'supervisor.create', 'uses' => 'Psp\Supervisor\SupervisorController@create']);
                 Route::post('/create', ['as' => 'supervisor.store', 'uses' => 'Psp\Supervisor\SupervisorController@store']);
+                Route::get('/show/{id}', ['as' => 'supervisor.show', 'uses' => 'Psp\Supervisor\SupervisorController@show']);
                 Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
                 Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
                 Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
@@ -510,129 +510,107 @@ Route::group(['middleware' => 'auth'], function(){
             });
 
             //Template
-            Route::group(['prefix' => 'templates'], function() {
-                Route::get('/', ['as' => 'index.templates', 'uses' => 'Psp\Template\TemplateController@index']);
-                Route::get('/create', ['as' => 'create.template', 'uses' => 'Psp\Template\TemplateController@create']);
-                Route::post('/create', ['as' => 'store.template', 'uses' => 'Psp\Template\TemplateController@store']);
-                Route::get('/edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
-                Route::post('/edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
-                Route::get('/delete/{id}', ['as' => 'delete.template', 'uses' => 'Psp\Template\TemplateController@destroy']);            
-                Route::get('/view', ['as' => 'view.template', 'uses' => 'Psp\Template\TemplateController@view']);
-                Route::post('/', ['as' => 'search.templates', 'uses' => 'Psp\Template\TemplateController@search']);        
+            Route::group(['prefix' => 'template'], function() {
+                Route::get('/', ['as' => 'template.index', 'uses' => 'Psp\Template\TemplateController@index']);
+                Route::get('create', ['as' => 'template.create', 'uses' => 'Psp\Template\TemplateController@create']);
+                Route::post('create', ['as' => 'template.store', 'uses' => 'Psp\Template\TemplateController@store']);
+                Route::get('show/{id}', ['as' => 'template.show', 'uses' => 'Psp\Template\TemplateController@show']);
+                Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
+                Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
+                Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
             });
+
+            //PspProcess
+            Route::group(['prefix' => 'pspProcess'], function() {
+                Route::get('/', ['as' => 'pspProcess.index', 'uses' => 'Psp\PspProcess\PspProcessController@index']);
+                Route::get('create', ['as' => 'pspProcess.create', 'uses' => 'Psp\PspProcess\PspProcessController@create']);
+                Route::post('create', ['as' => 'pspProcess.store', 'uses' => 'Psp\PspProcess\PspProcessController@store']);
+                Route::get('show/{id}', ['as' => 'pspProcess.show', 'uses' => 'Psp\PspProcess\PspProcessController@show']);
+                Route::get('edit/{id}', ['as' => 'pspProcess.edit', 'uses' => 'Psp\PspProcess\PspProcessController@edit']);
+                Route::post('edit/{id}', ['as' => 'pspProcess.update', 'uses' => 'Psp\PspProcess\PspProcessController@update']);
+                Route::get('delete/{id}', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
+            });
+
+            //FreeHour            
+            Route::group(['prefix' => 'freeHour'], function() {
+                Route::get('/', ['as' => 'freeHour.index', 'uses' => 'Psp\FreeHour\FreeHourController@index']);
+                Route::get('create', ['as' => 'freeHour.create', 'uses' => 'Psp\FreeHour\FreeHourController@create']);
+                Route::post('create', ['as' => 'freeHour.store', 'uses' => 'Psp\FreeHour\FreeHourController@store']);
+                Route::get('show/{id}', ['as' => 'freeHour.show', 'uses' => 'Psp\FreeHour\FreeHourController@show']);
+                Route::get('edit/{id}', ['as' => 'freeHour.edit', 'uses' => 'Psp\FreeHour\FreeHourController@edit']);
+                Route::post('edit/{id}', ['as' => 'freeHour.update', 'uses' => 'Psp\FreeHour\FreeHourController@update']);
+                Route::get('delete/{id}', ['as' => 'freeHour.delete', 'uses' => 'Psp\FreeHour\FreeHourController@destroy']);    
+            });
+
+            //Meeting
+            Route::group(['prefix' => 'meeting'], function() {
+                Route::get('/', ['as' => 'meeting.index', 'uses' => 'Psp\meeting\MeetingController@index']);
+                Route::get('create', ['as' => 'meeting.create', 'uses' => 'Psp\meeting\MeetingController@create']);
+                Route::post('create', ['as' => 'meeting.store', 'uses' => 'Psp\meeting\MeetingController@store']);
+                Route::get('show/{id}', ['as' => 'meeting.show', 'uses' => 'Psp\meeting\MeetingController@show']);
+                Route::get('edit/{id}', ['as' => 'meeting.edit', 'uses' => 'Psp\meeting\MeetingController@edit']);
+                Route::post('edit/{id}', ['as' => 'meeting.update', 'uses' => 'Psp\meeting\MeetingController@update']);
+                Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
+            });
+
+            //Phase
+            Route::group(['prefix' => 'phase'], function() {
+                Route::get('/', ['as' => 'phase.index', 'uses' => 'Psp\Phase\PhaseController@index']);
+                Route::get('create', ['as' => 'phase.create', 'uses' => 'Psp\Phase\PhaseController@create']);
+                Route::post('create', ['as' => 'phase.store', 'uses' => 'Psp\Phase\PhaseController@store']);
+                Route::get('show/{id}', ['as' => 'phase.show', 'uses' => 'Psp\Phase\PhaseController@show']);
+                Route::get('edit/{id}', ['as' => 'phase.edit', 'uses' => 'Psp\Phase\PhaseController@edit']);
+                Route::post('edit/{id}', ['as' => 'phase.update', 'uses' => 'Psp\Phase\PhaseController@update']);
+                Route::get('delete/{id}', ['as' => 'phase.delete', 'uses' => 'Psp\Phase\PhaseController@destroy']);    
+            });
+
+            //Status
+            Route::group(['prefix' => 'status'], function() {
+                Route::get('/', ['as' => 'status.index', 'uses' => 'Psp\Status\StatusController@index']);
+                Route::get('create', ['as' => 'status.create', 'uses' => 'Psp\Status\StatusController@create']);
+                Route::post('create', ['as' => 'status.store', 'uses' => 'Psp\Status\StatusController@store']);
+                Route::get('show/{id}', ['as' => 'status.show', 'uses' => 'Psp\Status\StatusController@show']);
+                Route::get('edit/{id}', ['as' => 'status.edit', 'uses' => 'Psp\Status\StatusController@edit']);
+                Route::post('edit/{id}', ['as' => 'status.update', 'uses' => 'Psp\Status\StatusController@update']);
+                Route::get('delete/{id}', ['as' => 'status.delete', 'uses' => 'Psp\Status\StatusController@destroy']);    
+            });
+
+            //PSP Student
+            Route::group(['prefix' => 'student'], function() {
+                Route::get('/', ['as' => 'student.index', 'uses' => 'Psp\Student\StudentController@index']);
+                Route::get('create', ['as' => 'student.create', 'uses' => 'Psp\Student\StudentController@create']);
+                Route::post('create', ['as' => 'student.store', 'uses' => 'Psp\Student\StudentController@store']);
+                Route::get('show/{id}', ['as' => 'student.show', 'uses' => 'Psp\Student\StudentController@show']);
+                Route::get('edit/{id}', ['as' => 'student.edit', 'uses' => 'Psp\Student\StudentController@edit']);
+                Route::post('edit/{id}', ['as' => 'student.update', 'uses' => 'Psp\Student\StudentController@update']);
+                Route::get('delete/{id}', ['as' => 'student.delete', 'uses' => 'Psp\Student\StudentController@destroy']);    
+            });
+
+
+            //PSP Document
+            Route::group(['prefix' => 'pspDocument'], function() {
+                Route::get('/', ['as' => 'pspDocument.index', 'uses' => 'Psp\PspDocument\PspDocumentController@index']);
+                Route::get('create', ['as' => 'pspDocument.create', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
+                Route::post('create', ['as' => 'pspDocument.store', 'uses' => 'Psp\PspDocument\PspDocumentController@store']);
+                Route::get('show/{id}', ['as' => 'pspDocument.show', 'uses' => 'Psp\PspDocument\PspDocumentController@show']);
+                Route::get('edit/{id}', ['as' => 'pspDocument.edit', 'uses' => 'Psp\PspDocument\PspDocumentController@edit']);
+                Route::post('edit/{id}', ['as' => 'pspDocument.update', 'uses' => 'Psp\PspDocument\PspDocumentController@update']);
+                Route::get('delete/{id}', ['as' => 'pspDocument.delete', 'uses' => 'Psp\PspDocument\PspDocumentController@destroy']);    
+            });
+
+            Route::group(['prefix' => 'skill'], function() {
+                Route::get('/', ['as' => 'skill.index', 'uses' => 'Psp\Skill\SkillController@index']);
+                Route::get('create', ['as' => 'skill.create', 'uses' => 'Psp\Skill\SkillController@create']);
+                Route::post('create', ['as' => 'skill.store', 'uses' => 'Psp\Skill\SkillController@store']);
+                Route::get('show/{id}', ['as' => 'skill.show', 'uses' => 'Psp\Skill\SkillController@show']);
+                Route::get('edit/{id}', ['as' => 'skill.edit', 'uses' => 'Psp\Skill\SkillController@edit']);
+                Route::post('edit/{id}', ['as' => 'skill.update', 'uses' => 'Psp\Skill\SkillController@update']);
+                Route::get('delete/{id}', ['as' => 'skill.delete', 'uses' => 'Psp\Skill\SkillController@destroy']);    
+            });
+
         });  
-        
-        
 
-   //PspProcess
-
-        Route::group(['prefix' => 'pspProcesses'], function() {
-            Route::get('/', ['as' => 'index.pspProcesses', 'uses' => 'PspProcess\PspProcessController@index']);
-            Route::get('/new', ['as' => 'new.pspProcess', 'uses' => 'PspProcess\PspProcessController@create']);
-            Route::post('/save', ['as' => 'savePspProcess.pspProcesses', 'uses' => 'PspProcess\PspProcessController@save']);
-            Route::get('/edit', ['as' => 'edit.pspProcess', 'uses' => 'PspProcess\PspProcessController@edit']);
-            Route::get('/delete', ['as' => 'delete.pspProcess', 'uses' => 'PspProcess\PspProcessController@delete']);
-            Route::post('/update', ['as' => 'updatePspProcess.pspProcesses', 'uses' => 'PspProcess\PspProcessController@update']);
-            Route::get('/view', ['as' => 'view.pspProcess', 'uses' => 'PspProcess\PspProcessController@view']);
-            Route::post('/', ['as' => 'search.pspProcesses', 'uses' => 'PspProcess\PspProcessController@search']);        
-        });
-
-//FreeHour
-
-        Route::group(['prefix' => 'freeHour'], function() {
-            Route::get('/', ['as' => 'index.freeHours', 'uses' => 'FreeHour\FreeHourController@index']);
-            Route::get('/new', ['as' => 'new.freehour', 'uses' => 'FreeHour\FreeHourController@create']);
-            Route::post('/save', ['as' => 'saveFreeHour.freeHours', 'uses' => 'FreeHour\FreeHourController@save']);
-            Route::get('/edit/{id}', ['as' => 'edit.freehour', 'uses' => 'FreeHour\FreeHourController@edit']);
-            Route::post('/edit/{id}', ['as' => 'update.freehour', 'uses' => 'FreeHour\FreeHourController@update']);
-            Route::get('/delete', ['as' => 'delete.freehour', 'uses' => 'FreeHour\FreeHourController@delete']);            
-            Route::get('/view', ['as' => 'view.freehour', 'uses' => 'FreeHour\FreeHourController@view']);
-            Route::post('/', ['as' => 'search.freeHours', 'uses' => 'FreeHour\FreeHourController@search']);        
-        });
-
-//Meeting
-
-        Route::group(['prefix' => 'meetings'], function() {
-            Route::get('/', ['as' => 'index.meetings', 'uses' => 'Meeting\MeetingController@index']);
-            Route::get('/new', ['as' => 'new.meeting', 'uses' => 'Meeting\MeetingController@create']);
-            Route::post('/save', ['as' => 'saveMeeting.meetings', 'uses' => 'Meeting\MeetingController@save']);
-            Route::get('/edit', ['as' => 'edit.meeting', 'uses' => 'Meeting\MeetingController@edit']);
-            Route::get('/delete', ['as' => 'delete.meeting', 'uses' => 'Meeting\MeetingController@delete']);
-            Route::post('/update', ['as' => 'updateMeeting.meetings', 'uses' => 'Meeting\MeetingController@update']);
-            Route::get('/view', ['as' => 'view.meeting', 'uses' => 'Meeting\MeetingController@view']);
-            Route::post('/', ['as' => 'search.meetings', 'uses' => 'Meeting\MeetingController@search']);        
-        });
-
-//Phase
-
-        Route::group(['prefix' => 'phases'], function() {
-            Route::get('/', ['as' => 'index.phases', 'uses' => 'Phase\PhaseController@index']);
-            Route::get('/new', ['as' => 'new.phase', 'uses' => 'Phase\PhaseController@create']);
-            Route::post('/save', ['as' => 'savePhase.phases', 'uses' => 'Phase\PhaseController@save']);
-            Route::get('/edit', ['as' => 'edit.phase', 'uses' => 'Phase\PhaseController@edit']);
-            Route::get('/delete', ['as' => 'delete.phase', 'uses' => 'Phase\PhaseController@delete']);
-            Route::post('/update', ['as' => 'updatePhase.phases', 'uses' => 'Phase\PhaseController@update']);
-            Route::get('/view', ['as' => 'view.phase', 'uses' => 'Phase\PhaseController@view']);
-            Route::post('/', ['as' => 'search.phases', 'uses' => 'Phase\PhaseController@search']);        
-        });
-
-
-//State
-
-        Route::group(['prefix' => 'states'], function() {
-            Route::get('/', ['as' => 'index.states', 'uses' => 'State\StateController@index']);
-            Route::get('/new', ['as' => 'new.state', 'uses' => 'State\StateController@create']);
-            Route::post('/save', ['as' => 'saveState.states', 'uses' => 'State\StateController@save']);
-            Route::get('/edit', ['as' => 'edit.state', 'uses' => 'State\StateController@edit']);
-            Route::get('/delete', ['as' => 'delete.state', 'uses' => 'State\StateController@delete']);
-            Route::post('/update', ['as' => 'updateState.states', 'uses' => 'State\StateController@update']);
-            Route::get('/view', ['as' => 'view.state', 'uses' => 'State\StateController@view']);
-            Route::post('/', ['as' => 'search.states', 'uses' => 'State\StateController@search']);        
-        });
-
-//Student
-
-        Route::group(['prefix' => 'students'], function() {
-            Route::get('/', ['as' => 'index.students', 'uses' => 'Student\StudentController@index']);
-            Route::get('/new', ['as' => 'new.student', 'uses' => 'Student\StudentController@create']);
-            Route::post('/save', ['as' => 'saveStudent.students', 'uses' => 'Student\StudentController@save']);
-            Route::get('/edit', ['as' => 'edit.student', 'uses' => 'Student\StudentController@edit']);
-            Route::get('/delete', ['as' => 'delete.student', 'uses' => 'Student\StudentController@delete']);
-            Route::post('/update', ['as' => 'updateStudent.students', 'uses' => 'Student\StudentController@update']);
-            Route::get('/view', ['as' => 'view.student', 'uses' => 'Student\StudentController@view']);
-            Route::post('/', ['as' => 'search.students', 'uses' => 'Student\StudentController@search']);        
-        });
-
-//PspDocument 
-
-
-        Route::group(['prefix' => 'pspDocuments'], function() {
-            Route::get('/', ['as' => 'index.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@index']);
-            Route::get('/create', ['as' => 'create.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
-            Route::post('/create', ['as' => 'store.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@save']);
-            Route::get('/edit/{id}', ['as' => 'pspDocument.edit', 'uses' => 'Psp\PspDocument\PspDocumentController@edit']);
-            Route::post('/edit/{id}', ['as' => 'pspDocuments.update', 'uses' => 'Psp\PspDocument\PspDocumentController@update']);
-            Route::get('/delete/{id}', ['as' => 'delete.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@delete']);            
-            Route::get('/view', ['as' => 'view.pspDocument', 'uses' => 'Psp\PspDocument\PspDocumentController@view']);
-            Route::post('/', ['as' => 'search.pspDocuments', 'uses' => 'Psp\PspDocument\PspDocumentController@search']);        
-        });
-
-//Skills
-
-        Route::group(['prefix' => 'skills'], function() {
-            Route::get('/', ['as' => 'index.skills', 'uses' => 'Skill\SkillController@index']);
-            Route::get('/new', ['as' => 'new.skill', 'uses' => 'Skill\SkillController@create']);
-            Route::post('/save', ['as' => 'saveSkill.skills', 'uses' => 'Skill\SkillController@save']);
-            Route::get('/edit', ['as' => 'edit.skill', 'uses' => 'Skill\SkillController@edit']);
-            Route::get('/delete', ['as' => 'delete.skill', 'uses' => 'Skill\SkillController@delete']);
-            Route::post('/update', ['as' => 'updateSkill.skills', 'uses' => 'Skill\SkillController@update']);
-            Route::get('/view', ['as' => 'view.skill', 'uses' => 'Skill\SkillController@view']);
-            Route::post('/', ['as' => 'search.skills', 'uses' => 'Skill\SkillController@search']);        
-        });
-
-
-
-    });   
+});   
 
 
 });
@@ -782,88 +760,88 @@ Route::group(['middleware' => 'auth'], function(){
 
         });      
 
-    });  
+});  
 
 
 
     //MODULO UAS PARA TUTORIA
-    Route::group(['prefix' => 'uas'], function(){
+Route::group(['prefix' => 'uas'], function(){
         //Coordinadores de tutoria
-        Route::group(['prefix' => 'coordinadoresTutoria'], function(){    
-            Route::get('/', ['as' => 'coordinadorTutoria.index', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@index']);
-            Route::get('create', ['as' => 'coordinadorTutoria.create', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@create']);
-            Route::post('create', ['as' => 'coordinadorTutoria.store', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@store']);
-            Route::get('show/{id}', ['as' => 'coordinadorTutoria.show', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@show']);
-            Route::get('edit/{id}', ['as' => 'coordinadorTutoria.edit', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@edit']);
-            Route::post('edit/{id}', ['as' => 'coordinadorTutoria.update', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@update']);
-            Route::get('delete/{id}', ['as' => 'coordinadorTutoria.delete', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@destroy']);
-        });
-
-
+    Route::group(['prefix' => 'coordinadoresTutoria'], function(){    
+        Route::get('/', ['as' => 'coordinadorTutoria.index', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@index']);
+        Route::get('create', ['as' => 'coordinadorTutoria.create', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@create']);
+        Route::post('create', ['as' => 'coordinadorTutoria.store', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@store']);
+        Route::get('show/{id}', ['as' => 'coordinadorTutoria.show', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@show']);
+        Route::get('edit/{id}', ['as' => 'coordinadorTutoria.edit', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@edit']);
+        Route::post('edit/{id}', ['as' => 'coordinadorTutoria.update', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@update']);
+        Route::get('delete/{id}', ['as' => 'coordinadorTutoria.delete', 'uses' => 'Tutorship\CoordTutorship\CoordTutorshipController@destroy']);
     });
+
+
+});
 
 
     //MODULO DE TUTORIA
-    Route::group(['prefix' => 'tutoria'], function(){
+Route::group(['prefix' => 'tutoria'], function(){
     //Temas de citas
-        Route::group(['prefix' => 'temas'], function(){    
-            Route::get('/', ['as' => 'tema.index', 'uses' => 'Tutorship\Topic\TopicController@index']);
-            Route::get('create', ['as' => 'tema.create', 'uses' => 'Tutorship\Topic\TopicController@create']);
-            Route::post('create', ['as' => 'tema.store', 'uses' => 'Tutorship\Topic\TopicController@store']);
-            Route::get('show/{id}', ['as' => 'tema.show', 'uses' => 'Tutorship\Topic\TopicController@show']);
-            Route::get('edit/{id}', ['as' => 'tema.edit', 'uses' => 'Tutorship\Topic\TopicController@edit']);
-            Route::post('edit/{id}', ['as' => 'tema.update', 'uses' => 'Tutorship\Topic\TopicController@update']);
-            Route::get('delete/{id}', ['as' => 'tema.delete', 'uses' => 'Tutorship\Topic\TopicController@destroy']);
-        });
+    Route::group(['prefix' => 'temas'], function(){    
+        Route::get('/', ['as' => 'tema.index', 'uses' => 'Tutorship\Topic\TopicController@index']);
+        Route::get('create', ['as' => 'tema.create', 'uses' => 'Tutorship\Topic\TopicController@create']);
+        Route::post('create', ['as' => 'tema.store', 'uses' => 'Tutorship\Topic\TopicController@store']);
+        Route::get('show/{id}', ['as' => 'tema.show', 'uses' => 'Tutorship\Topic\TopicController@show']);
+        Route::get('edit/{id}', ['as' => 'tema.edit', 'uses' => 'Tutorship\Topic\TopicController@edit']);
+        Route::post('edit/{id}', ['as' => 'tema.update', 'uses' => 'Tutorship\Topic\TopicController@update']);
+        Route::get('delete/{id}', ['as' => 'tema.delete', 'uses' => 'Tutorship\Topic\TopicController@destroy']);
+    });
 
     //Motivos (Tipo 1: Por cancelación de cita, Tipo 2: Por desactivación de tutor)
-        Route::group(['prefix' => 'motivos'], function(){    
-            Route::get('/', ['as' => 'motivo.index', 'uses' => 'Tutorship\Reason\ReasonController@index']);
-            Route::get('create', ['as' => 'motivo.create', 'uses' => 'Tutorship\Reason\ReasonController@create']);
-            Route::post('create', ['as' => 'motivo.store', 'uses' => 'Tutorship\Reason\ReasonController@store']);
-            Route::get('show/{id}', ['as' => 'motivo.show', 'uses' => 'Tutorship\Reason\ReasonController@show']);
-            Route::get('edit/{id}', ['as' => 'motivo.edit', 'uses' => 'Tutorship\Reason\ReasonController@edit']);
-            Route::post('edit/{id}', ['as' => 'motivo.update', 'uses' => 'Tutorship\Reason\ReasonController@update']);
-            Route::get('delete/{id}', ['as' => 'motivo.delete', 'uses' => 'Tutorship\Reason\ReasonController@destroy']);
-        });
+    Route::group(['prefix' => 'motivos'], function(){    
+        Route::get('/', ['as' => 'motivo.index', 'uses' => 'Tutorship\Reason\ReasonController@index']);
+        Route::get('create', ['as' => 'motivo.create', 'uses' => 'Tutorship\Reason\ReasonController@create']);
+        Route::post('create', ['as' => 'motivo.store', 'uses' => 'Tutorship\Reason\ReasonController@store']);
+        Route::get('show/{id}', ['as' => 'motivo.show', 'uses' => 'Tutorship\Reason\ReasonController@show']);
+        Route::get('edit/{id}', ['as' => 'motivo.edit', 'uses' => 'Tutorship\Reason\ReasonController@edit']);
+        Route::post('edit/{id}', ['as' => 'motivo.update', 'uses' => 'Tutorship\Reason\ReasonController@update']);
+        Route::get('delete/{id}', ['as' => 'motivo.delete', 'uses' => 'Tutorship\Reason\ReasonController@destroy']);
+    });
 
     //Parametros (El unico hasta ahora es DuracionCita)
-        Route::group(['prefix' => 'parametros'], function(){    
-            Route::get('/', ['as' => 'parametro.index', 'uses' => 'Tutorship\Parameter\ParameterController@index']);        
-            Route::get('edit/{id}', ['as' => 'parametro.edit', 'uses' => 'Tutorship\Parameter\ParameterController@edit']);
-            Route::post('edit/{id}', ['as' => 'parametro.update', 'uses' => 'Tutorship\Parameter\ParameterController@update']);
-        });
+    Route::group(['prefix' => 'parametros'], function(){    
+        Route::get('/', ['as' => 'parametro.index', 'uses' => 'Tutorship\Parameter\ParameterController@index']);        
+        Route::get('edit/{id}', ['as' => 'parametro.edit', 'uses' => 'Tutorship\Parameter\ParameterController@edit']);
+        Route::post('edit/{id}', ['as' => 'parametro.update', 'uses' => 'Tutorship\Parameter\ParameterController@update']);
+    });
 
 
     //Tutores
-        Route::group(['prefix' => 'tutores'], function(){    
-            Route::get('/', ['as' => 'tutor.index', 'uses' => 'Tutorship\Tutor\TutorController@index']);
-            Route::get('create', ['as' => 'tutor.create', 'uses' => 'Tutorship\Tutor\TutorController@create']);
-            Route::post('create', ['as' => 'tutor.store', 'uses' => 'Tutorship\Tutor\TutorController@store']);
-            Route::get('show/{id}', ['as' => 'tutor.show', 'uses' => 'Tutorship\Tutor\TutorController@show']);
-            Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
-            Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
-            Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
-        });
-
-        //Alumnos de la especialidad
-        Route::group(['prefix' => 'alumnos'], function(){    
-            Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
-            Route::get('create', ['as' => 'alumno.create', 'uses' => 'Tutorship\Tutstudent\TutstudentController@create']);
-            Route::get('createAll', ['as' => 'alumno.createAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@createAll']);
-            Route::post('create', ['as' => 'alumno.store', 'uses' => 'Tutorship\Tutstudent\TutstudentController@store']);
-            Route::post('createAll', ['as' => 'alumno.storeAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@storeAll']);
-            Route::get('show/{id}', ['as' => 'alumno.show', 'uses' => 'Tutorship\Tutstudent\TutstudentController@show']);
-            Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
-            Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
-            Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
-            Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
-            Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
-            Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
-        });
-
+    Route::group(['prefix' => 'tutores'], function(){    
+        Route::get('/', ['as' => 'tutor.index', 'uses' => 'Tutorship\Tutor\TutorController@index']);
+        Route::get('create', ['as' => 'tutor.create', 'uses' => 'Tutorship\Tutor\TutorController@create']);
+        Route::post('create', ['as' => 'tutor.store', 'uses' => 'Tutorship\Tutor\TutorController@store']);
+        Route::get('show/{id}', ['as' => 'tutor.show', 'uses' => 'Tutorship\Tutor\TutorController@show']);
+        Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
+        Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
+        Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
     });
 
-    
-    
+        //Alumnos de la especialidad
+    Route::group(['prefix' => 'alumnos'], function(){    
+        Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
+        Route::get('create', ['as' => 'alumno.create', 'uses' => 'Tutorship\Tutstudent\TutstudentController@create']);
+        Route::get('createAll', ['as' => 'alumno.createAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@createAll']);
+        Route::post('create', ['as' => 'alumno.store', 'uses' => 'Tutorship\Tutstudent\TutstudentController@store']);
+        Route::post('createAll', ['as' => 'alumno.storeAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@storeAll']);
+        Route::get('show/{id}', ['as' => 'alumno.show', 'uses' => 'Tutorship\Tutstudent\TutstudentController@show']);
+        Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
+        Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
+        Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
+        Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
+        Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
+        Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
+    });
+
+});
+
+
+
 });

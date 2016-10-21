@@ -105,7 +105,7 @@ class TemplateController extends Controller
                 }
 
             }
-            return redirect()->route('index.templates')->with('success', 'La plantilla se ha registrado exitosamente');
+            return redirect()->route('index.template')->with('success', 'La plantilla se ha registrado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -168,7 +168,7 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
             }
-            return redirect()->route('index.templates')->with('success', 'La plantilla se ha modificado exitosamente');
+            return redirect()->route('index.template')->with('success', 'La plantilla se ha modificado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -201,9 +201,9 @@ class TemplateController extends Controller
             //Restricciones
             if(!empty($template)){
                 $template->delete();
-                return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+                return redirect()->route('index.template')->with('success', 'La plantilla se ha eliminado exitosamente');
             }else{
-                return redirect()->route('index.templates')->with('success', 'La plantilla se ha eliminado exitosamente');
+                return redirect()->route('index.template')->with('success', 'La plantilla se ha eliminado exitosamente');
             }
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

@@ -67,15 +67,21 @@
                     @endif                          
 
                     <td class=" ">
-                        <a href="{{route('alumno.show',$student->id)}}" class="btn btn-primary btn-xs view-group"">
+                        @if(!$student->trashed())
+                        <a href="{{route('alumno.show',$student->id)}}" class="btn btn-primary btn-xs view-group">
                             <i class="fa fa-search"></i>
                         </a>
-                        <a href="{{route('alumno.edit',$student->id)}}" class="btn btn-primary btn-xs view-group"">
+                        <a href="{{route('alumno.edit',$student->id)}}" class="btn btn-primary btn-xs view-group">
                             <i class="fa fa-pencil"></i>
                         </a>
                         <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$student->id}}">
                             <i class="fa fa-remove"></i>
                         </a>
+                        @else
+                            <a href="{{route('alumno.restore', ['id' => $student->id])}}" class="btn btn-success btn-xs delete-group">
+                                <i class="fa fa-check"></i>
+                            </a>
+                        @endif
                     </td>
                 </tr>
                 @include('modals.delete', ['id'=> $student->id, 'message' => '¿Está seguro que desea desactivar este alumno?', 'route' => route('alumno.delete', $student->id)])
@@ -111,6 +117,7 @@
             <div class="flex-element input-container has-select">
                 <label class="label-input">Tutor</label>
                 <select class="form-control" style="width: 172px; margin-left: 4px;" name="tutorId">
+                    <option value>Todos</option>
                     @foreach ($tutors as $tutor)
                         <option value="{{$tutor->IdDocente}}">{{$tutor->ApellidoPaterno . " " . $tutor->ApellidoMaterno . ", " . $tutor->Nombre}}</option>
                     @endforeach

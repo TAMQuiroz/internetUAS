@@ -200,12 +200,29 @@ class TutstudentController extends Controller
             // if(count($area->investigators)){
             //     return redirect()->back()->with('warning', 'Esta area esta asignada a investigadores');
             // }
+            $student->id_tutoria = null;
+            $student->save();
+            
             $student->delete();
+            $student->tutorship->delete();
+
             return redirect()->route('alumno.index')->with('success', 'El alumno se ha desactivado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
     }
+
+    public function restore($id) {
+        $student = Tutstudent::withTrashed()->find($id);
+
+        if($student) {
+            $student->restore();
+            return redirect()->route('alumno.index')->with('success', 'El alumno se ha activado exitosamente');
+        }
+
+        return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+    } 
+
     public function assignTutor(){
         $idEspecialidad = Session::get('faculty-code');
         $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria',null)->get(); 

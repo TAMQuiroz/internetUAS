@@ -14,11 +14,11 @@
 
             <div class="x_content">
                 <a>Codigo</a>
-                <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->codigoAlumno); ?>"/>
+                <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->Codigo); ?>"/>
                 <br/>
                 <br/>
                 <a>Alumno</a>
-                <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->nombres); ?>"/>
+                <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->Nombre); ?>"/>
                 <br/>
                 <br/>
                 <div class="clearfix"></div>

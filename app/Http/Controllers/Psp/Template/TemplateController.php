@@ -12,7 +12,7 @@ use Intranet\Http\Requests\TemplateEditRequest;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\PspDocument;
-use Intranet\Models\PspStudent;
+use Intranet\Models\Student;
 use Intranet\Models\Supervisor;
 
 class TemplateController extends Controller
@@ -64,9 +64,11 @@ class TemplateController extends Controller
 
             }
             if(Auth::User()->IdPerfil==2){
-                $teacherss = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->get();  
-                $teacher =$teacherss->first();
+                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();  
+                //teacher =$teacherss->first();
+                if($teacher!=null){
                 $template->idProfesor  = $teacher->IdDocente;
+                }
             }
             if(Auth::User()->IdPerfil==3){
                 $template->idAdmin   = Auth::User()->IdUsuario;
@@ -91,10 +93,12 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
 
-                $pspstudents=pspStudent::get();
+
+                $pspstudents=Student::where('lleva_psp','t')->get();
                 foreach($pspstudents as $psp) {
+                    if($psp!=null){
                     $PspDocument = new PspDocument;
-                    $PspDocument->idStudent= $psp->id;
+                    $PspDocument->idStudent= $psp->IdAlumno;
                     $PspDocument->idTemplate=$template->id;
                     $PspDocument->idTipoEstado=3;
                     if($template->idTipoEstado  == 1)
@@ -102,10 +106,11 @@ class TemplateController extends Controller
                    else
                        $PspDocument->esObligatorio='n';
                     $PspDocument->save();
+                    }
                 }
 
             }
-            return redirect()->route('index.template')->with('success', 'La plantilla se ha registrado exitosamente');
+            return redirect()->route('template.index')->with('success', 'La plantilla se ha registrado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -168,7 +173,7 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
             }
-            return redirect()->route('index.template')->with('success', 'La plantilla se ha modificado exitosamente');
+            return redirect()->route('template.index')->with('success', 'La plantilla se ha modificado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -201,9 +206,9 @@ class TemplateController extends Controller
             //Restricciones
             if(!empty($template)){
                 $template->delete();
-                return redirect()->route('index.template')->with('success', 'La plantilla se ha eliminado exitosamente');
+                return redirect()->route('template.index')->with('success', 'La plantilla se ha eliminado exitosamente');
             }else{
-                return redirect()->route('index.template')->with('success', 'La plantilla se ha eliminado exitosamente');
+                return redirect()->route('template.index')->with('success', 'La plantilla se ha eliminado exitosamente');
             }
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

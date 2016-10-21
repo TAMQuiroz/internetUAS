@@ -7,7 +7,7 @@ use Intranet\Models\PspDocument;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests;
 use Intranet\Models\Template;
-use Intranet\Models\PspStudent;
+use Intranet\Models\Student;
 use Auth;
 
 class PspDocumentController extends Controller
@@ -20,9 +20,9 @@ class PspDocumentController extends Controller
     public function index()
     {
 
-        $students = PspStudent::where('idUser',Auth::User()->IdUsuario)->get();
+        $students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
-        $pspdocuments = PspDocument::where('idStudent',$student->id)->get(); ;
+        $pspdocuments = PspDocument::where('idStudent',$student->IdAlumno)->get();
 
         $data = [
             'pspdocuments'    =>  $pspdocuments,
@@ -74,7 +74,7 @@ class PspDocumentController extends Controller
     public function edit($id)
     {
         $pspDocument    = pspDocument::find($id);
-        $students = PspStudent::where('idUser',Auth::User()->IdUsuario)->get();
+        $students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
 
         $data = [
@@ -120,7 +120,7 @@ class PspDocumentController extends Controller
                 $pspDocument->ruta = $destinationPath.$filename;
                 $pspDocument->save();
             }
-            return redirect()->route('index.pspDocuments')->with('success', 'Se ha subido el documento exitosamente');
+            return redirect()->route('pspDocument.index')->with('success', 'Se ha subido el documento exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

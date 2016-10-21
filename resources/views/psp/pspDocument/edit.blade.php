@@ -11,18 +11,18 @@
             <div class="x_panel">
             
              <a>Codigo</a>
-                <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->codigoAlumno); ?>"/>
+                <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->Codigo); ?>"/>
                 <br/>
                 <br/>
                 <a>Alumno</a>
-                <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->nombres); ?>"/>
+                <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->Nombre); ?>"/>
                 <br/>
                 <br/>
                 <div class="separator"></div>
                 <h4>Detalle de Documento</h4>
                 <br/>
                 <div class="clearfix"></div>   
-                    {{Form::open(['route' => ['pspDocuments.update', $pspDocument->id], 'files'=>true, 'class'=>'form-horizontal col-md-8', 'id'=>'formSuggestion'])}}  
+                    {{Form::open(['route' => ['pspDocument.update', $pspDocument->id], 'files'=>true, 'class'=>'form-horizontal col-md-8', 'id'=>'formSuggestion'])}}  
                         
                         <div class="form-group">
                             <label for="fasel" class="control-label col-md-3 col-sm-3 col-xs-12">Fase</label>
@@ -102,7 +102,7 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                                <a href="{{ route('index.pspDocuments') }}" class="btn btn-default pull-right"> Cancelar</a>
+                                <a href="{{ route('pspDocument.index') }}" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>
                     {{Form::close()}}

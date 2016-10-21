@@ -55,7 +55,7 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                                <a href="{{ route('index.templates') }}" class="btn btn-default pull-right"> Cancelar</a>
+                                <a href="{{ route('template.index') }}" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>
                         {{Form::close()}}

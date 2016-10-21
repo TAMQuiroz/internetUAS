@@ -327,13 +327,13 @@
               </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
               <li>
                 <a>
                    <i class="fa fa-users"></i> Tutoría <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 3)
+                  @if(Auth::user()->IdPerfil > 0)
                   <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
                   <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
                   <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
@@ -344,14 +344,17 @@
               </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
               <li>
                 <a>
                    <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 2)                  
-                  <!-- <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li> -->
+                  @if(Auth::user()->IdPerfil >0)                  
+                  <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
+                  <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
+                  <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
+                  <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
                   @endif
                 </ul>
               </li>

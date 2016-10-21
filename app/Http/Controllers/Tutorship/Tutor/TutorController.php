@@ -44,7 +44,6 @@ class TutorController extends Controller
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
         $teachers = Teacher::getTutorsFiltered($is_tutor = false, $filters, $specialty);        
-        
         $data = [
             'teachers'    =>  $teachers,            
         ];

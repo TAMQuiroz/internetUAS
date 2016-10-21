@@ -8,6 +8,7 @@ use Intranet\Http\Requests\TutstudentRequest;
 use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Tutstudent;
+use Intranet\Models\Tutorship;
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
@@ -25,14 +26,28 @@ class TutstudentController extends Controller
     public function downLoadExample() {
         return response()->download(public_path() . "/uploads/example.csv");
     }
-    public function index()
+    public function index(Request $request)
     {        
-        $idEspecialidad = Session::get('faculty-code');
-        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->get();
-        
-        $data = [
-            'students'    =>  $students,
+        $mayorId = Session::get('faculty-code');
+
+        $filters = [
+            "code" => $request->input('code'),
+            "name" => $request->input('name'),
+            "lastName" => $request->input('lastName'),
+            "secondLastName" => $request->input('secondLastName'),
         ];
+
+        $tutorId = $request->input('tutorId', null);
+
+        $tutors = Teacher::getTutorsFiltered($isTutor = true, [], $mayorId);
+        
+        $students = Tutstudent::getFilteredStudents($filters, $tutorId, $mayorId);
+
+        $data = [
+            'students' =>  $students,
+            'tutors' => $tutors 
+        ];
+
         return view('tutorship.tutstudent.index', $data);
     }
 
@@ -195,6 +210,9 @@ class TutstudentController extends Controller
         $idEspecialidad = Session::get('faculty-code');
         $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria',null)->get(); 
         $tutors = Teacher::where('IdEspecialidad',$idEspecialidad)->where('rolTutoria',1)->get();
+
+        //dd(count($tutors->tutorships));
+
         $data = [
             'students'    =>  $students,
             'tutors'      => $tutors,            
@@ -202,15 +220,60 @@ class TutstudentController extends Controller
         return view('tutorship.tutstudent.assign',$data);
     }
 
-    public function assignTutorDo(){
-        // $idEspecialidad = Session::get('faculty-code');
-        // $students = Tutstudent::get()->where('id_especialidad', $idEspecialidad)->where('id_tutoria',null); 
-        // $tutors = Teacher::get()->where('IdEspecialidad',$idEspecialidad)->where('rolTutoria',1);       
-        // $data = [
-        //     'students'    =>  $students,
-        //     'tutors'  => $tutors,            
-        // ];
+    public function assignTutorDo(Request $request){
+               // dd($request['cant']);
+        $sum=0;
+        if($request['cant']!=null && $request['total']!=0){
+            foreach($request['cant'] as $idTeacher => $value){                
+                $sum = $sum + $value;                
+            }
+            if($sum!=$request['total']){
+                return redirect()->back()->with('warning', 'Los campos deben sumar el total de alumnos.');
+            }
+            else{//se procede a asignar a los alumnos
+                $idEspecialidad = Session::get('faculty-code');
+                $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria',null)->get()->take($request['total']); 
+
+                //por cada tutor
+                $n_al=0;
+                foreach($request['cant'] as $idTeacher => $value){                
+                    for($i=0;$i< $value;$i++){
+                        $tutorship = new Tutorship;
+                        $tutorship->id_tutor = $idTeacher;
+                        $tutorship->id_profesor = $idTeacher;
+                        $tutorship->id_alumno = $students[$n_al]->id;
+                        $tutorship->save();//se guarda la tutoria entre ambos
+
+                        //ahora busco esa tutoria
+                        $tutoriaIngresada = DB::table('tutorships')->where([
+                            ['id_tutor', '=', $idTeacher],
+                            ['id_alumno', '=', $students[$n_al]->id],
+                            ])->get()[0];
+
+                        
+
+                        //ahora el insert
+                        DB::table('tutstudents')
+                        ->where('id', $students[$n_al]->id)
+                        ->update(['id_tutoria' => $tutoriaIngresada->id]);
+
+
+                        $n_al++;
+                    }
+                }
+
+            }               
+            return redirect()->route('alumno.index')->with('success', 'Se asignaron tutores a: ('.$request['total'].') alumnos.');;
+            
+        }
+        else{
+            return redirect()->route('alumno.index')->with('warning', 'No se puede hacer la asignación.');;
+        }        
         
-        return view('tutorship.tutstudent.index');
+
+
+
+
+        
     }
 }

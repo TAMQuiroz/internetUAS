@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/newlook', function (){
+    return view('base');
+});
+
 Route::get('/', function (){
     if (Auth::check())
         Auth::logout();
@@ -294,7 +298,7 @@ Route::group(['middleware' => 'auth'], function(){
 
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
-
+        
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);
         Route::get('/getCodigo/{codigo}', ['uses' => 'Teacher\TeacherController@getCodigo']);
@@ -440,6 +444,11 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/pending/', ['as' => 'pending.index', 'uses' => 'Consolidated\PendingController@index']);
 
         Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
+        /*
+        Route::group(['middleware' => 'action_permission'], function() {
+            Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
+        });
+        */
     });
 
     //Profile Routes
@@ -504,8 +513,6 @@ $api->version('v1', function ($api) {
     });
 });
 
-
-
 //NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO
 
 Route::group(['middleware' => 'auth'], function(){  
@@ -537,6 +544,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'investigador.edit', 'uses' => 'Investigation\Investigator\InvestigatorController@edit']);
                 Route::post('edit/{id}', ['as' => 'investigador.update', 'uses' => 'Investigation\Investigator\InvestigatorController@update']);
                 Route::get('delete/{id}', ['as' => 'investigador.delete', 'uses' => 'Investigation\Investigator\InvestigatorController@destroy']);
+
+
             });
 
             //Administrar Grupo de Investigacion
@@ -551,8 +560,11 @@ Route::group(['middleware' => 'auth'], function(){
 
                 //Seleccion de integrantes de grupo de investigacion
                 Route::group(['prefix' => 'afiliacion'], function(){
-                    Route::post('create', ['as' => 'grupo.afiliacion.store', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@store']);
-                    Route::get('delete/{id}', ['as' => 'grupo.afiliacion.delete', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroy']);
+                    Route::post('createInvestigator', ['as' => 'grupo.afiliacion.store.investigador', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeInvestigator']);
+                    Route::get('deleteInvestigator/{id}', ['as' => 'grupo.afiliacion.delete.investigador', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyInvestigator']);
+
+                    Route::post('createTeacher', ['as' => 'grupo.afiliacion.store.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeTeacher']);
+                    Route::get('deleteTeacher/{id}', ['as' => 'grupo.afiliacion.delete.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyTeacher']);
                 });
             });    
 
@@ -593,24 +605,44 @@ Route::group(['middleware' => 'auth'], function(){
 
                 //Seleccion de integrantes de proyecto
                 Route::group(['prefix' => 'afiliacion'], function(){
-                    Route::post('create', ['as' => 'proyecto.afiliacion.store', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@store']);
-                    Route::get('delete/{id}', ['as' => 'proyecto.afiliacion.delete', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroy']);
+                    Route::post('createInvestigator', ['as' => 'proyecto.afiliacion.store.investigador', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeInvestigator']);
+                    Route::get('deleteInvestigator/{id}', ['as' => 'proyecto.afiliacion.delete.investigador', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyInvestigator']);
+
+                    Route::post('createTeacher', ['as' => 'proyecto.afiliacion.store.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeTeacher']);
+                    Route::get('deleteTeacher/{id}', ['as' => 'proyecto.afiliacion.delete.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyTeacher']);
                 });
             });
 
             //Administrar entregables
             
             Route::group(['prefix' => 'entregable'], function(){    
-                Route::get('/', ['as' => 'entregable.index', 'uses' => 'Investigation\Deliverable\DeliverableController@index']);
-                Route::get('create', ['as' => 'entregable.create', 'uses' => 'Investigation\Deliverable\DeliverableController@create']);
+                Route::get('/{id}', ['as' => 'entregable.index', 'uses' => 'Investigation\Deliverable\DeliverableController@index']);
+                Route::get('create/{id}', ['as' => 'entregable.create', 'uses' => 'Investigation\Deliverable\DeliverableController@create']);
                 Route::post('create', ['as' => 'entregable.store', 'uses' => 'Investigation\Deliverable\DeliverableController@store']);
                 Route::get('show/{id}', ['as' => 'entregable.show', 'uses' => 'Investigation\Deliverable\DeliverableController@show']);
                 Route::get('edit/{id}', ['as' => 'entregable.edit', 'uses' => 'Investigation\Deliverable\DeliverableController@edit']);
                 Route::post('edit/{id}', ['as' => 'entregable.update', 'uses' => 'Investigation\Deliverable\DeliverableController@update']);
+                Route::post('upload/{id}', ['as' => 'entregable.upload', 'uses' => 'Investigation\Deliverable\DeliverableController@upload']);
                 Route::get('delete/{id}', ['as' => 'entregable.delete', 'uses' => 'Investigation\Deliverable\DeliverableController@destroy']);
-                Route::get('download/{id}', ['as' => 'entregable.download', 'uses' => 'Investigation\Deliverable\DeliverableController@destroy']);
+                Route::get('delete/version/{id}', ['as' => 'entregable.deleteVersion', 'uses' => 'Investigation\Deliverable\DeliverableController@destroyVersion']);
+                Route::get('download/{id}', ['as' => 'entregable.download', 'uses' => 'Investigation\Deliverable\DeliverableController@download']);
+                Route::get('notification/{id}', ['as' => 'entregable.notify', 'uses' => 'Investigation\Deliverable\DeliverableController@notify']);
+                Route::get('/show/{id}/viewVersion', ['as' => 'entregable.viewVersion', 'uses' => 'Investigation\Deliverable\DeliverableController@viewVersion']);
+                Route::post('/saveObservation', ['as' => 'entregable.saveObservation', 'uses' => 'Investigation\Deliverable\DeliverableController@saveObservation']);
+                Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);    
+
+                //Seleccion de integrantes de proyecto
+                Route::group(['prefix' => 'afiliacion'], function(){
+                    Route::post('createInvestigator', ['as' => 'entregable.afiliacion.store.investigador', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeInvestigator']);
+                    Route::get('deleteInvestigator/{id}', ['as' => 'entregable.afiliacion.delete.investigador', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyInvestigator']);
+
+                    Route::post('createTeacher', ['as' => 'entregable.afiliacion.store.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeTeacher']);
+                    Route::get('deleteTeacher/{id}', ['as' => 'entregable.afiliacion.delete.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyTeacher']);
+                });
+                
             });
 
+            
         });      
 
     });  

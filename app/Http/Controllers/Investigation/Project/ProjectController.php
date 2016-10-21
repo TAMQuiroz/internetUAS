@@ -14,6 +14,7 @@ use Intranet\Models\Status;
 use Intranet\Models\Investigatorxproject;
 
 use Intranet\Http\Services\Investigation\Project\ProjectService;
+use Intranet\Http\Services\Investigation\Group\GroupService;
 
 use Intranet\Http\Requests\ProjectRequest;
 
@@ -21,10 +22,12 @@ class ProjectController extends Controller
 {
 
     protected $projectService;
+    protected $groupService;
 
     public function __construct()
     {
         $this->projectService = new ProjectService();
+        $this->groupService = new GroupService();
     }
 
     /**
@@ -109,10 +112,32 @@ class ProjectController extends Controller
         $grupos         = Group::lists('nombre','id');
         $areas          = Area::lists('nombre','id');
 
+        $profesores = $proyecto->teachers;
+        $investigadores = $proyecto->investigators;
+
+        $integrantes = null;
+        $sorted = [];
+        
+        foreach ($investigadores as $investigador) {
+            $integrantes = $profesores->push($investigador);    
+        }
+        
+        if($integrantes){
+            $sorted = $integrantes->sortBy(function ($product, $key) {
+                if(isset($product['IdDocente'])){
+                    return $product['Nombre'];
+                }else{
+                    return $product['nombre'];
+                }
+            });
+        }
+
+
         $data = [
-            'proyecto'    =>  $proyecto,
-            'grupos'      =>  $grupos,
-            'areas'       =>  $areas,
+            'proyecto'      =>  $proyecto,
+            'grupos'        =>  $grupos,
+            'areas'         =>  $areas,
+            'integrantes'   =>  $sorted,
         ];
 
         return view('investigation.project.show', $data);
@@ -126,19 +151,29 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $proyecto       = Project::find($id);
-        $grupos         = Group::lists('nombre', 'id');
-        $areas          = Area::lists('nombre', 'id');
-        $estados        = Status::where('tipo_estado',0)->lists('nombre','id');
-        $investigators  = $this->projectService->getNotSelectedInvestigators($id);
 
-        $data = [
-            'proyecto'      =>  $proyecto,
-            'grupos'        =>  $grupos,
-            'areas'         =>  $areas,
-            'estados'       =>  $estados,
-            'investigators' =>  $investigators,
-        ];
+        $proyecto       = Project::find($id);
+
+        if($this->groupService->checkLeader($proyecto->id_grupo)){
+
+            $grupos         = Group::lists('nombre', 'id');
+            $areas          = Area::lists('nombre', 'id');
+            $estados        = Status::where('tipo_estado',0)->lists('nombre','id');
+            $investigators  = $this->projectService->getNotSelectedInvestigators($id);
+            $elegible_teachers  = $this->projectService->getNotSelectedTeachers($id);
+
+            $data = [
+                'proyecto'          =>  $proyecto,
+                'grupos'            =>  $grupos,
+                'areas'             =>  $areas,
+                'estados'           =>  $estados,
+                'investigators'     =>  $investigators,
+                'elegible_teachers' => $elegible_teachers,
+            ];
+            
+        }else{
+            return redirect()->back()->with('warning', 'El proyecto no se puede editar debido a que no es el lider');
+        }
 
         return view('investigation.project.edit', $data);
     }

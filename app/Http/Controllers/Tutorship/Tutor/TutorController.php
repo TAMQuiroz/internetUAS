@@ -2,6 +2,7 @@
 
 namespace Intranet\Http\Controllers\Tutorship\Tutor;
 
+use Auth;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Illuminate\Support\Facades\DB;
@@ -132,5 +133,43 @@ class TutorController extends Controller
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }        
         
+    }
+
+    // muestra el perfil del tutor que accede a sus datos
+    public function myprofile()
+    {                       
+        $tutor = Auth::user()->professor;
+        // dd($tutor);
+        $data = [
+            'tutor'    =>  $tutor,
+        ];
+
+        return view('tutorship.tutor.myprofile', $data);
+     
+    }
+
+    // muestra el perfil del tutor que accede a sus datos
+    public function editmyprofile()
+    {                       
+        $tutor = Auth::user()->professor;
+        // dd($tutor);
+        $data = [
+            'tutor'    =>  $tutor,
+        ];
+
+        return view('tutorship.tutor.editmyprofile', $data);
+     
+    }
+
+    public function updatemyprofile(Request $request)
+    {                       
+        $tutor = Auth::user()->professor;
+        // dd($tutor);
+        $data = [
+            'tutor'    =>  $tutor,
+        ];
+
+        return view('tutorship.tutor.myprofile', $data);
+     
     }
 }

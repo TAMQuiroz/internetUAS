@@ -52,7 +52,7 @@ class User extends Authenticatable
     }
 
     public function professor(){
-        return $this->hasOne('Intranet\Models\Teacher', 'IdDocente');
+        return $this->hasOne('Intranet\Models\Teacher', 'IdUsuario');//estaba mal, decia IdDocente
     }
 
     public function accreditor(){

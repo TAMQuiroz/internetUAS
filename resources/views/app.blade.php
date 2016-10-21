@@ -327,35 +327,54 @@
               </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
+              @if(Auth::user() && ((Auth::user()->IdPerfil <= 1 ) || (Auth::user()->professor->rolTutoria != null) ))
               <li>
                 <a>
                    <i class="fa fa-users"></i> Tutoría <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil > 0)
+                  @if(Auth::user()->IdPerfil == 1) <!-- coordinador de especialidad-->
                   <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                  @endif
+                  @if(Auth::user()->professor->rolTutoria == 2 )  <!-- coordinador de tutoria-->
                   <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
                   <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
                   <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
                   <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
                   @endif
+                  @if(Auth::user()->IdPerfil == 0)  <!-- alumno  -->
+                  <li><a href="{{route('mitutor.index')}}"> Mi tutor</a></li>
+                  <li><a href="{{route('cita_alumno.index')}}"> Mis citas</a></li>
+                  @endif
+                  @if(Auth::user()->professor->rolTutoria == 1)<!-- tutor-->
+                  <li><a href="{{route('miperfil.index')}}"> Mi perfil</a></li>
+                  <li><a href="{{route('mitutor.index')}}"> Mis alumnos</a></li>                  
+                  <li><a href="{{route('cita_alumno.index')}}"> Citas</a></li>
+                  @endif
                 </ul>
               </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
+              @if(Auth::user() && ((Auth::user()->IdPerfil <= 1) || (Auth::user()->professor->rolEvaluaciones != null) ) )
               <li>
                 <a>
                    <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil >0)                  
+                  @if(Auth::user()->IdPerfil == 1)   <!-- coordinador de especialidad-->
+                  <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                  @endif
+                  @if(Auth::user()->professor->rolEvaluaciones == 1)  <!-- Aministrador de evaluaciones-->
                   <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
                   <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
                   <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
                   <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
                   @endif
+                  @if(Auth::user()->professor->rolEvaluaciones == 2) <!-- Evaluador de competencias -->
+                  <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>                  
+                  <li><a href="{{route('evaluacion.index')}}"> Mis Evaluaciones</a></li>
+                  @endif
+
                 </ul>
               </li>
               @endif

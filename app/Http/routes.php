@@ -701,6 +701,26 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
         });
 
+        //mitutor
+        Route::group(['prefix' => 'mitutor'], function(){    
+            Route::get('/', ['as' => 'mitutor.index', 'uses' => 'Tutorship\MyTutor\MyTutorController@index']);
+            
+        });
+
+        //miperfil
+        Route::group(['prefix' => 'miperfil'], function(){    
+            Route::get('/', ['as' => 'miperfil.index', 'uses' => 'Tutorship\Tutor\TutorController@myprofile']);
+            Route::get('edit', ['as' => 'miperfil.edit', 'uses' => 'Tutorship\Tutor\TutorController@editmyprofile']);
+            Route::post('edit', ['as' => 'miperfil.update', 'uses' => 'Tutorship\Tutor\TutorController@updatemyprofile']);
+            
+        });
+
+        //cita_alumno
+        Route::group(['prefix' => 'miscitas'], function(){    
+            Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@create']);
+            
+        });
+
     });
 
     

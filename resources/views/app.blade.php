@@ -275,6 +275,9 @@
                     @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
                       <li><a href="{{ route('pending.index')}}">De Evaluacion Pendiente</a></li>
                     @endif
+                    @if(Auth::user() && (Auth::user()->IdPerfil == 1))
+                      <li><a href="{{ route('evidences.index')}}">De evidencias</a></li>
+                    @endif
                     <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
                   </ul>
                 </li>

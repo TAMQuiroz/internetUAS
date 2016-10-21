@@ -35,7 +35,7 @@
                     <thead>
                     <tr class="headings">
                         <th class="column-title col-sm-1" style="vertical-align: middle">Estado</th>
-                        <th class="column-title col-sm-1" style="vertical-align: middle">Fecha Implementación</th>
+                        <th class="column-title col-sm-1" style="vertical-align: middle">Fecha de implementación</th>
                         <th class="column-title" style="vertical-align: middle">Responsable</th>
                         <th class="column-title col-sm-2" style="vertical-align: middle">Título</th>
                         <th class="column-title" style="vertical-align: middle">Tipo Plan Mejora</th>

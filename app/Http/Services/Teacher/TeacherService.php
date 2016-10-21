@@ -24,7 +24,7 @@ class TeacherService {
 	}
 
 	public function findTeacherByFaculty($id) {
-			return Teacher::where('IdEspecialidad',$id)->get();
+			return Teacher::where('IdEspecialidad',$id)->orderBy('nombre', 'asc')->get();
 	}
 
 	public function findTeacherById($id) {

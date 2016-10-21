@@ -101,23 +101,34 @@
                             <th>Nombre</th> 
                             <th>Apellido Paterno</th> 
                             <th>Apellido Materno</th> 
-                            <th>Correo</th> 
                             <th>Especialidad</th> 
+                            <th>Tipo de integrante</th>
                             <th colspan="2">Acciones</th>
                         </tr> 
                     </thead> 
                     <tbody> 
-                        @foreach($proyecto->investigators as $investigador)
-                        <tr> 
-                            <td>{{$investigador->nombre}}</td> 
-                            <td>{{$investigador->ape_paterno}}</td> 
-                            <td>{{$investigador->ape_materno}}</td> 
-                            <td>{{$investigador->correo}}</td> 
-                            <td>{{$investigador->faculty->Nombre}}</td>
-                            <td>
-                                <a href="{{route('investigador.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-                            </td>
-                        </tr> 
+                        @foreach($integrantes as $integrante)
+                            @if(isset($integrante->id))
+                                <tr> 
+                                    <td>{{$integrante->nombre}}</td> 
+                                    <td>{{$integrante->ape_paterno}}</td> 
+                                    <td>{{$integrante->ape_materno}}</td> 
+                                    <td>{{$integrante->faculty->Nombre}}</td>
+                                    <td>Investigador</td>
+                                    <td>
+                                        <a href="{{route('investigador.show', $integrante->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                    </td>
+                                </tr> 
+                            @elseif(isset($integrante->IdDocente))
+                                <tr> 
+                                    <td>{{$integrante->Nombre}}</td> 
+                                    <td>{{$integrante->ApellidoPaterno}}</td> 
+                                    <td>{{$integrante->ApellidoMaterno}}</td> 
+                                    <td>{{$integrante->faculty->Nombre}}</td>
+                                    <td>Profesor</td>
+                                    <td></td>
+                                </tr> 
+                            @endif
                         @endforeach
                         
                     </tbody> 
@@ -131,7 +142,7 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{route('entregable.index')}}" class="btn btn-success pull-right">Mis entregables</a>
+                        <a href="{{route('entregable.index',$proyecto->id)}}" class="btn btn-success pull-right">Mis entregables</a>
                     </div>
                 </div>
 
@@ -148,11 +159,24 @@
                         @foreach($proyecto->deliverables as $deliverable)
                         <tr> 
                             <td>{{$deliverable->nombre}}</td> 
-                            <td>Responsables</td> 
+                            <td>
+                                <ul>
+                                    @if(count($deliverable->investigators))
+                                        @foreach($deliverable->investigators as $investigator)
+                                            <li> {{$investigator->nombre}} {{$investigator->ape_paterno}} </li>
+                                        @endforeach
+                                    @else
+                                        <li> No hay asignados </li>
+                                    @endif
+                                </ul>
+                            </td> 
                             <td>{{$deliverable->fecha_limite}}</td> 
                             <td>
                                 <a href="{{route('entregable.show', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-                                <a href="{{route('entregable.download', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-download"></i></a>
+                                @if(count($deliverable->versions)!=0)
+                                <a href="{{route('entregable.download', $deliverable->lastversion->first()->id)}}" class="btn btn-primary btn-xs" title="Descargar"><i class="fa fa-download"></i></a>
+                                @endif
+                                <a href="{{route('entregable.notify', $deliverable->project->group->id)}}" class="btn btn-primary btn-xs" title="Notificar"><i class="fa fa-envelope"></i></a>
                             </td>
                         </tr> 
                         @endforeach

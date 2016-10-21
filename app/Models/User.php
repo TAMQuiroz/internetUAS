@@ -55,6 +55,7 @@ class User extends Authenticatable
         return $this->hasOne('Intranet\Models\Teacher', 'IdDocente');
     }
 
+
     /*Movil profesor*/
     public function teacher(){
         return $this->hasOne('Intranet\Models\Teacher', 'IdUsuario');
@@ -63,6 +64,7 @@ class User extends Authenticatable
     /*Movil investigador*/
     public function investigator(){
         return $this->hasOne('Intranet\Models\Investigator','id_usuario');
+
     }
 
     public function accreditor(){

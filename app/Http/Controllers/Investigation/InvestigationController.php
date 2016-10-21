@@ -4,11 +4,19 @@ namespace Intranet\Http\Controllers\Investigation;
 
 use Illuminate\Http\Request;
 
+use Intranet\Http\Services\Teacher\TeacherService;
+
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 
 class InvestigationController extends Controller
 {
+    protected $teacherService;
+
+    public function __construct() {
+        $this->teacherService = new TeacherService();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -84,4 +92,5 @@ class InvestigationController extends Controller
     {
         //
     }
+
 }

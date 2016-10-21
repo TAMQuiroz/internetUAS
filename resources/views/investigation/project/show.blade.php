@@ -173,7 +173,9 @@
                             <td>{{$deliverable->fecha_limite}}</td> 
                             <td>
                                 <a href="{{route('entregable.show', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-                                <a href="{{route('entregable.download', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-download"></i></a>
+                                @if(count($deliverable->versions)!=0)
+                                <a href="{{route('entregable.download', $deliverable->lastversion->first()->id)}}" class="btn btn-primary btn-xs" title="Descargar"><i class="fa fa-download"></i></a>
+                                @endif
                                 <a href="{{route('entregable.notify', $deliverable->project->group->id)}}" class="btn btn-primary btn-xs" title="Notificar"><i class="fa fa-envelope"></i></a>
                             </td>
                         </tr> 

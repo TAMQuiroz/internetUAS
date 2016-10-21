@@ -103,20 +103,24 @@
   <form method="GET" action="{{route('alumno.index')}}">
     <div class="flex-container is-wrap has-space-between">
             <div class="flex-element input-container">
-                <label class="label-input">Nombre</label>
-                <input type="text" name="name">
+                <label class="label-input">Código</label>
+                <input class="input-filter" type="text" name="code">
             </div>
             <div class="flex-element input-container">
-                <label class="label-input">Apellido Materno</label>
-                <input type="text" name="secondLastName">
+                <label class="label-input">Nombre</label>
+                <input class="input-filter" type="text" name="name">
             </div>
             <div class="flex-element input-container">
                 <label class="label-input">Apellido Paterno</label>
-                <input type="text" name="lastName">
+                <input class="input-filter" type="text" name="lastName">
+            </div>
+            <div class="flex-element input-container">
+                <label class="label-input">Apellido Materno</label>
+                <input class="input-filter" type="text" name="secondLastName">
             </div>
             <div class="flex-element input-container has-select">
                 <label class="label-input">Tutor</label>
-                <select class="form-control" style="width: 172px; margin-left: 4px;" name="tutorId">
+                <select class="form-control input-filter" name="tutorId">
                     <option value>Todos</option>
                     @foreach ($tutors as $tutor)
                         <option value="{{$tutor->IdDocente}}">{{$tutor->ApellidoPaterno . " " . $tutor->ApellidoMaterno . ", " . $tutor->Nombre}}</option>

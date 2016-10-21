@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
+use Intranet\Models\Tutstudent;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -62,5 +63,26 @@ class TutorTest extends TestCase
             ->visit('/tutoria/tutores?name=&secondLastName=&lastName=agui')
             ->see('Aguilera')
             ->dontSee('Flores');
+    }
+
+
+    public function test_tutoria_filter_tutstudent()
+    {
+      $teacher = Teacher::get()->first();
+
+      $user = User::find($teacher->IdUsuario);
+
+      $tutstudent_test = Tutstudent::getFilteredStudents($filters = ['code' => '', 'name' => 'franco', 'lastName' => 'tume', 'secondLastName' => '', 'tutorId' => ''],
+        null, $teacher->IdEspecialidad);
+
+      $this->actingAs($user)
+            ->withSession([
+              'actions' => [],
+              'user' => factory(Intranet\Models\Teacher::class)->make(),
+              'faculty-code' => $teacher->IdEspecialidad
+            ])
+            ->visit('/tutoria/alumnos?code=&name=franco&lastName=tume&secondLastName=&tutorId=')
+            ->see('Franco')
+            ->dontsee('Janet');
     }
 }

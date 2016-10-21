@@ -3,7 +3,6 @@
 namespace Intranet\Models;
 
 use DB;
-use Tutstudent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------necesario para softdeletes
 
@@ -29,10 +28,10 @@ class Tutorship extends Model
         $query = Tutorship::query();
 
         if($tutor) {
-            $query = $query->("id_tutor", $tutor);
+            $query = $query->where("id_tutor", $tutor);
         }
 
-        $students = $query->with(['student' => function($query) use($filters, $mayor)
+        $students = $query->with(['student' => function($query) use($filters, $mayor) {
                 if($mayor) {
                    $query = $query->where("id_especialidad", $mayor);
                 }
@@ -52,8 +51,8 @@ class Tutorship extends Model
                 if($filters["secondLastName"] != "") {
                     $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
                 }
-            ]);
-        
+            }]);
+
         return $query->paginate(10);
     }
 }

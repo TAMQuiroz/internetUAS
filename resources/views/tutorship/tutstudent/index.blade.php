@@ -11,7 +11,7 @@
         <div class="x_title">            
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6">
-                    <a href="" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                    <a href="#filter-students" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <div class="row">
@@ -67,15 +67,21 @@
                     @endif                          
 
                     <td class=" ">
-                        <a href="{{route('alumno.show',$student->id)}}" class="btn btn-primary btn-xs view-group"">
+                        @if(!$student->trashed())
+                        <a href="{{route('alumno.show',$student->id)}}" class="btn btn-primary btn-xs view-group">
                             <i class="fa fa-search"></i>
                         </a>
-                        <a href="{{route('alumno.edit',$student->id)}}" class="btn btn-primary btn-xs view-group"">
+                        <a href="{{route('alumno.edit',$student->id)}}" class="btn btn-primary btn-xs view-group">
                             <i class="fa fa-pencil"></i>
                         </a>
                         <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$student->id}}">
                             <i class="fa fa-remove"></i>
                         </a>
+                        @else
+                            <a href="{{route('alumno.restore', ['id' => $student->id])}}" class="btn btn-success btn-xs delete-group">
+                                <i class="fa fa-check"></i>
+                            </a>
+                        @endif
                     </td>
                 </tr>
                 @include('modals.delete', ['id'=> $student->id, 'message' => '¿Está seguro que desea desactivar este alumno?', 'route' => route('alumno.delete', $student->id)])
@@ -87,4 +93,46 @@
 </div>
 </div>
 </div>
+
+<div class="remodal" data-remodal-id="filter-students" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+  <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+  <div class="text-left">
+    <p style="font-size: 18px"><strong>Filtros de búsqueda</strong></p>
+    <p style="font-size: 16px">Selecciones uno o más filtros:</p>
+  </div>
+  <form method="GET" action="{{route('alumno.index')}}">
+    <div class="flex-container is-wrap has-space-between">
+            <div class="flex-element input-container">
+                <label class="label-input">Código</label>
+                <input class="input-filter" type="text" name="code">
+            </div>
+            <div class="flex-element input-container">
+                <label class="label-input">Nombre</label>
+                <input class="input-filter" type="text" name="name">
+            </div>
+            <div class="flex-element input-container">
+                <label class="label-input">Apellido Paterno</label>
+                <input class="input-filter" type="text" name="lastName">
+            </div>
+            <div class="flex-element input-container">
+                <label class="label-input">Apellido Materno</label>
+                <input class="input-filter" type="text" name="secondLastName">
+            </div>
+            <div class="flex-element input-container has-select">
+                <label class="label-input">Tutor</label>
+                <select class="form-control input-filter" name="tutorId">
+                    <option value>Todos</option>
+                    @foreach ($tutors as $tutor)
+                        <option value="{{$tutor->IdDocente}}">{{$tutor->ApellidoPaterno . " " . $tutor->ApellidoMaterno . ", " . $tutor->Nombre}}</option>
+                    @endforeach
+                </select>
+            </div>
+    </div>
+    <div class="flex-container has-flex-end" style="margin-top: 15px">
+          <button data-remodal-action="cancel" class="btn btn-danger">Cancel</button>
+          <button class="btn btn-submit" type="submit">OK</button>
+    </div>
+  </form>
+</div>
+
 @endsection

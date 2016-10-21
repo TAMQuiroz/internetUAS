@@ -684,7 +684,14 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
             Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
         });
-
+        
+        //Disponibilidad
+        Route::group(['prefix' => 'disponibilidades'], function(){    
+            Route::get('/', ['as' => 'disponibilidad.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
+            Route::get('edit/{id}', ['as' => 'disponibilidad.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
+            Route::post('edit/{id}', ['as' => 'disponibilidad.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
+        });
+        
         //Alumnos de la especialidad
         Route::group(['prefix' => 'alumnos'], function(){    
             Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
@@ -696,6 +703,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
             Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
             Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
+            Route::get('restore/{id}', ['as' => 'alumno.restore', 'uses' => 'Tutorship\Tutstudent\TutstudentController@restore']);
             Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
             Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
             Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);

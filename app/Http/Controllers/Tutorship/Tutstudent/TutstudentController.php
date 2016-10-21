@@ -26,14 +26,28 @@ class TutstudentController extends Controller
     public function downLoadExample() {
         return response()->download(public_path() . "/uploads/example.csv");
     }
-    public function index()
+    public function index(Request $request)
     {        
-        $idEspecialidad = Session::get('faculty-code');
-        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->get();
-        //$students->tutorship;        
-        $data = [
-            'students'    =>  $students,
+        $mayorId = Session::get('faculty-code');
+
+        $filters = [
+            "code" => $request->input('code'),
+            "name" => $request->input('name'),
+            "lastName" => $request->input('lastName'),
+            "secondLastName" => $request->input('secondLastName'),
         ];
+
+        $tutorId = $request->input('tutorId', null);
+
+        $tutors = Teacher::getTutorsFiltered($isTutor = true, [], $mayorId);
+        
+        $students = Tutstudent::getFilteredStudents($filters, $tutorId, $mayorId);
+
+        $data = [
+            'students' =>  $students,
+            'tutors' => $tutors 
+        ];
+
         return view('tutorship.tutstudent.index', $data);
     }
 
@@ -186,12 +200,29 @@ class TutstudentController extends Controller
             // if(count($area->investigators)){
             //     return redirect()->back()->with('warning', 'Esta area esta asignada a investigadores');
             // }
+            $student->id_tutoria = null;
+            $student->save();
+            
             $student->delete();
+            $student->tutorship->delete();
+
             return redirect()->route('alumno.index')->with('success', 'El alumno se ha desactivado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
     }
+
+    public function restore($id) {
+        $student = Tutstudent::withTrashed()->find($id);
+
+        if($student) {
+            $student->restore();
+            return redirect()->route('alumno.index')->with('success', 'El alumno se ha activado exitosamente');
+        }
+
+        return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+    } 
+
     public function assignTutor(){
         $idEspecialidad = Session::get('faculty-code');
         $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria',null)->get(); 

@@ -8,15 +8,15 @@
   	<div class="flex-container is-wrap has-space-between">
 			<div class="flex-element input-container">
 				<label class="label-input">Nombre</label>
-				<input type="text" name="name">
+				<input class="input-filter" type="text" name="name">
 			</div>
 			<div class="flex-element input-container">
 				<label class="label-input">Apellido Materno</label>
-				<input type="text" name="secondLastName">
+				<input class="input-filter" type="text" name="secondLastName">
 			</div>
 			<div class="flex-element input-container">
 				<label class="label-input">Apellido Paterno</label>
-				<input type="text" name="lastName">
+				<input class="input-filter" type="text" name="lastName">
 			</div>
   	</div>
   	<div class="flex-container has-flex-end" style="margin-top: 15px">
@@ -38,15 +38,15 @@
   	<div class="flex-container is-wrap has-space-between">
 			<div class="flex-element input-container">
 				<label class="label-input">Nombre</label>
-				<input type="text" name="name">
+				<input class="input-filter" type="text" name="name">
 			</div>
 			<div class="flex-element input-container">
 				<label class="label-input">Apellido Materno</label>
-				<input type="text" name="secondLastName">
+				<input class="input-filter" type="text" name="secondLastName">
 			</div>
 			<div class="flex-element input-container">
 				<label class="label-input">Apellido Paterno</label>
-				<input type="text" name="lastName">
+				<input class="input-filter" type="text" name="lastName">
 			</div>
   	</div>
   	<div class="flex-container has-flex-end" style="margin-top: 15px">

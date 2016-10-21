@@ -338,9 +338,11 @@
                   @endif
                   @if(Auth::user()->professor->rolTutoria == 2 )  <!-- coordinador de tutoria-->
                   <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
+                  <li><a href="{{route('disponibilidad.index')}}"> Administrar Disponibilidad</a></li>
                   <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
                   <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
                   <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
+                  
                   @endif
                   @if(Auth::user()->IdPerfil == 0)  <!-- alumno  -->
                   <li><a href="{{route('mitutor.index')}}"> Mi tutor</a></li>

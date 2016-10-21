@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Student extends Model {
     use SoftDeletes;
 
-    protected $table = 'Alumno';
+    protected $table = 'alumno';
     protected $primaryKey = 'IdAlumno';
-    protected $fillable = ['IdHorario', 'Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno'];
+    protected $fillable = ['IdHorario', 'Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno','IdPspGroup'];
 
+    public function pspGroup()
+    {
+    	return $this->belongsTo('Intranet\Models\PspGroup','IdPspGroup');
+    }
 
 }

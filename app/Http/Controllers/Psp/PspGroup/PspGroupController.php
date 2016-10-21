@@ -141,13 +141,12 @@ class PspGroupController extends Controller
         //Pendiente de modificar!!
         try {
             //idPerfil Alum 7
-            $students = Student::where('IdUser',Auth::User()->IdUsuario)->get();
-            $student = $students->first();
-            $student->idPspGroup = $request['id'];
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();
+            $student->idPspGroup = $request['id'];            
             $student->save();
-            //return to index  
+            //return redirect()->route('pspGroup.index')->with('success','Elegiste el grupo');
         } catch (Exception $e) {
-            //return to error
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }
     }
 

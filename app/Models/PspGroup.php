@@ -3,9 +3,10 @@
 use Illuminate\Database\Eloquent\Model;
 
 class PspGroup extends Model{
-	
-    protected $table = 'pspgroups';
+	    
+	protected $table = 'pspgroups';
     protected $primaryKey = 'id';
     protected $fillable = ['numero','descripcion'];
+    
     
 }

@@ -24,7 +24,7 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
                     <thead> 
                         <tr class="headings"> 
-                        	<th colspan="1">Seleccione</th>
+                        	<th colspan="1"></th>
                             <th>Numero</th> 
                             <th>Observacion</th>       
                         </tr> 
@@ -33,7 +33,7 @@
                         @foreach($pspGroups as $pspGroup)
                         <tr> 
 	                        <td>
-                                {{Form::radio('name', $pspGroup->numero)}}                             
+                                {{Form::radio('id', $pspGroup->id)}}                             
                             </td>
                             <td>{{$pspGroup->numero}}</td> 
                             <td>{{$pspGroup->descripcion}}</td> 

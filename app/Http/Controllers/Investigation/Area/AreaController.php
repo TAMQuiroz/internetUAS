@@ -20,7 +20,7 @@ class AreaController extends Controller
      */
     public function index()
     {
-        $areas = Area::get();
+        $areas = Area::orderBy('nombre', 'asc')->get();
 
         $data = [
             'areas'    =>  $areas,

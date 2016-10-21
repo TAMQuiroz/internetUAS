@@ -87,21 +87,35 @@
                             <th>Apellido Paterno</th> 
                             <th>Apellido Materno</th> 
                             <th>Especialidad</th> 
+                            <th>Tipo de integrante</th>
                             <th colspan="2">Acciones</th>
                         </tr> 
                     </thead> 
                     <tbody> 
-                        @foreach($group->investigators as $investigator)
-                        <tr> 
-                            <td>{{$investigator->nombre}}</td> 
-                            <td>{{$investigator->ape_paterno}}</td> 
-                            <td>{{$investigator->ape_materno}}</td> 
-                            <td>{{$investigator->faculty->Nombre}}</td>
-                            <td>
-                                <a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-                            </td>
-                        </tr> 
+                        @foreach($integrantes as $integrante)
+                            @if(isset($integrante->id))
+                                <tr> 
+                                    <td>{{$integrante->nombre}}</td> 
+                                    <td>{{$integrante->ape_paterno}}</td> 
+                                    <td>{{$integrante->ape_materno}}</td> 
+                                    <td>{{$integrante->faculty->Nombre}}</td>
+                                    <td>Investigador</td>
+                                    <td>
+                                        <a href="{{route('investigador.show', $integrante->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                    </td>
+                                </tr> 
+                            @elseif(isset($integrante->IdDocente))
+                                <tr> 
+                                    <td>{{$integrante->Nombre}}</td> 
+                                    <td>{{$integrante->ApellidoPaterno}}</td> 
+                                    <td>{{$integrante->ApellidoMaterno}}</td> 
+                                    <td>{{$integrante->faculty->Nombre}}</td>
+                                    <td>Profesor</td>
+                                    <td></td>
+                                </tr> 
+                            @endif
                         @endforeach
+
                     </tbody> 
                 </table>
             </div>

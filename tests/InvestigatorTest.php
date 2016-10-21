@@ -19,7 +19,7 @@ class InvestigatorTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_inv_cr_inv_01()
+    public function test_inv_inv_cr_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $area = factory(Intranet\Models\Area::class)->create();
@@ -43,7 +43,7 @@ class InvestigatorTest extends TestCase
     }
 
 
-    public function test_inv_cr_inv_02()
+    public function test_inv_inv_cr_02()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -66,7 +66,7 @@ class InvestigatorTest extends TestCase
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_cr_inv_03()
+    public function test_inv_inv_cr_03()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -89,7 +89,7 @@ class InvestigatorTest extends TestCase
     		->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_cr_inv_04()
+    public function test_inv_inv_cr_04()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -112,7 +112,7 @@ class InvestigatorTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_cr_inv_05()
+   	public function test_inv_inv_cr_05()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -135,7 +135,7 @@ class InvestigatorTest extends TestCase
     		->see('El formato de nombre es inválido');
     }
 
-   	public function test_inv_cr_inv_06()
+   	public function test_inv_inv_cr_06()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -158,7 +158,7 @@ class InvestigatorTest extends TestCase
     		->see('apellido paterno no debe ser mayor que 50 caracteres');
     }
 
-   	public function test_inv_cr_inv_07()
+   	public function test_inv_inv_cr_07()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -181,7 +181,7 @@ class InvestigatorTest extends TestCase
     		->see('El campo apellido paterno es obligatorio');
     }
 
-    public function test_inv_cr_inv_08()
+    public function test_inv_inv_cr_08()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -204,7 +204,7 @@ class InvestigatorTest extends TestCase
     		->see('El formato de apellido paterno es inválido');
     }
 
-    public function test_inv_cr_inv_09()
+    public function test_inv_inv_cr_09()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -227,7 +227,7 @@ class InvestigatorTest extends TestCase
     		->see('El formato de apellido paterno es inválido');
     }
 
-    public function test_inv_cr_inv_10()
+    public function test_inv_inv_cr_10()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -250,7 +250,7 @@ class InvestigatorTest extends TestCase
     		->see('apellido materno no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_cr_inv_11()
+    public function test_inv_inv_cr_11()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -273,7 +273,7 @@ class InvestigatorTest extends TestCase
     		->see('El campo apellido materno es obligatorio');
     }
 
-    public function test_inv_cr_inv_12()
+    public function test_inv_inv_cr_12()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -296,7 +296,7 @@ class InvestigatorTest extends TestCase
     		->see('El formato de apellido materno es inválido');
     }
 
-    public function test_inv_cr_inv_13()
+    public function test_inv_inv_cr_13()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -319,7 +319,7 @@ class InvestigatorTest extends TestCase
     		->see('El formato de apellido materno es inválido');
     }
 
-	public function test_inv_cr_inv_14()
+	public function test_inv_inv_cr_14()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -342,7 +342,7 @@ class InvestigatorTest extends TestCase
     		->see('correo no es un correo válido');
     }
 
-	public function test_inv_cr_inv_15()
+	public function test_inv_inv_cr_15()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -365,7 +365,7 @@ class InvestigatorTest extends TestCase
     		->see('El campo correo es obligatorio');
     }
 
-	public function test_inv_cr_inv_16()
+	public function test_inv_inv_cr_16()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -388,7 +388,7 @@ class InvestigatorTest extends TestCase
     		->see('correo no es un correo válido');
     }
     
-	public function test_inv_cr_inv_17()
+	public function test_inv_inv_cr_17()
     {
         $area = factory(Intranet\Models\Area::class)->create();
     	$user = factory(Intranet\Models\User::class)->make();
@@ -411,7 +411,7 @@ class InvestigatorTest extends TestCase
     		->see('correo no es un correo válido');
     }
 
-    public function test_inv_cr_inv_18()
+    public function test_inv_inv_cr_18()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -434,7 +434,7 @@ class InvestigatorTest extends TestCase
             ->see('celular debe tener 9 dígitos');
     }
     
-    public function test_inv_cr_inv_19()
+    public function test_inv_inv_cr_19()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -457,7 +457,7 @@ class InvestigatorTest extends TestCase
             ->see('El campo celular es obligatorio');
     }
     
-    public function test_inv_cr_inv_20()
+    public function test_inv_inv_cr_20()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -480,7 +480,7 @@ class InvestigatorTest extends TestCase
             ->see('celular debe tener 9 dígitos');
     }
 
-    public function test_inv_ed_inv_01()
+    public function test_inv_inv_ed_01()
     {
         $user           = factory(Intranet\Models\User::class)->make();
         $area           = factory(Intranet\Models\Area::class)->create();
@@ -505,7 +505,7 @@ class InvestigatorTest extends TestCase
     }
 
 
-    public function test_inv_ed_inv_02()
+    public function test_inv_inv_ed_02()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -529,7 +529,7 @@ class InvestigatorTest extends TestCase
             ->see('nombre no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_inv_03()
+    public function test_inv_inv_ed_03()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -553,7 +553,7 @@ class InvestigatorTest extends TestCase
             ->see('El campo nombre es obligatorio');
     }
 
-    public function test_inv_ed_inv_04()
+    public function test_inv_inv_ed_04()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -577,7 +577,7 @@ class InvestigatorTest extends TestCase
             ->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_inv_05()
+    public function test_inv_inv_ed_05()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -601,7 +601,7 @@ class InvestigatorTest extends TestCase
             ->see('El formato de nombre es inválido');
     }
 
-    public function test_inv_ed_inv_06()
+    public function test_inv_inv_ed_06()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -625,7 +625,7 @@ class InvestigatorTest extends TestCase
             ->see('apellido paterno no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_inv_07()
+    public function test_inv_inv_ed_07()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -649,7 +649,7 @@ class InvestigatorTest extends TestCase
             ->see('El campo apellido paterno es obligatorio');
     }
 
-    public function test_inv_ed_inv_08()
+    public function test_inv_inv_ed_08()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -673,7 +673,7 @@ class InvestigatorTest extends TestCase
             ->see('El formato de apellido paterno es inválido');
     }
 
-    public function test_inv_ed_inv_09()
+    public function test_inv_inv_ed_09()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -697,7 +697,7 @@ class InvestigatorTest extends TestCase
             ->see('El formato de apellido paterno es inválido');
     }
 
-    public function test_inv_ed_inv_10()
+    public function test_inv_inv_ed_10()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -721,7 +721,7 @@ class InvestigatorTest extends TestCase
             ->see('apellido materno no debe ser mayor que 50 caracteres');
     }
 
-    public function test_inv_ed_inv_11()
+    public function test_inv_inv_ed_11()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -745,7 +745,7 @@ class InvestigatorTest extends TestCase
             ->see('El campo apellido materno es obligatorio');
     }
 
-    public function test_inv_ed_inv_12()
+    public function test_inv_inv_ed_12()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -769,7 +769,7 @@ class InvestigatorTest extends TestCase
             ->see('El formato de apellido materno es inválido');
     }
 
-    public function test_inv_ed_inv_13()
+    public function test_inv_inv_ed_13()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -793,7 +793,7 @@ class InvestigatorTest extends TestCase
             ->see('El formato de apellido materno es inválido');
     }
 
-    public function test_inv_ed_inv_14()
+    public function test_inv_inv_ed_14()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -817,7 +817,7 @@ class InvestigatorTest extends TestCase
             ->see('correo no es un correo válido');
     }
 
-    public function test_inv_ed_inv_15()
+    public function test_inv_inv_ed_15()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -841,7 +841,7 @@ class InvestigatorTest extends TestCase
             ->see('El campo correo es obligatorio');
     }
 
-    public function test_inv_ed_inv_16()
+    public function test_inv_inv_ed_16()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -865,7 +865,7 @@ class InvestigatorTest extends TestCase
             ->see('correo no es un correo válido');
     }
     
-    public function test_inv_ed_inv_17()
+    public function test_inv_inv_ed_17()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -889,7 +889,7 @@ class InvestigatorTest extends TestCase
             ->see('correo no es un correo válido');
     }
 
-    public function test_inv_ed_inv_18()
+    public function test_inv_inv_ed_18()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -913,7 +913,7 @@ class InvestigatorTest extends TestCase
             ->see('celular debe tener 9 dígitos');
     }
     
-    public function test_inv_ed_inv_19()
+    public function test_inv_inv_ed_19()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();
@@ -937,7 +937,7 @@ class InvestigatorTest extends TestCase
             ->see('El campo celular es obligatorio');
     }
     
-    public function test_inv_ed_inv_20()
+    public function test_inv_inv_ed_20()
     {
         $area = factory(Intranet\Models\Area::class)->create();
         $user = factory(Intranet\Models\User::class)->make();

@@ -15,13 +15,13 @@
 
         
         <!--La barra superior principal-->
-        <nav class="" style="background-color: #C24847;">
+        <nav class="red lighten-2">
           <div class="nav-wrapper container ">
 
             <!--Menu de barra de haburguesa-->
             <ul id="slide-out" class="side-nav">
               <li><div class="userView">
-                <img class="background" width= "100%" src="{{ asset('img/md_noche.png')}}">
+                <img class="background" height= "100%" src="{{ asset('img/md_pink.png')}}">
                 <i class="material-icons center">account_circle</i>
                 <a href="#!"><span class="white-text name">Henry Espinoza</span></a>
                 <a href="#!"><span class="white-text email">henryEspinozat@gmail.com</span></a>
@@ -33,7 +33,7 @@
               <li class="no-padding">
                 <ul class="collapsible collapsible-accordion">
                   <li class="">                    
-                    <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">store</i>Inicio</a>  
+                    <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.ourFaculty', ['faculty-code' => Session::get('faculty-code')] ) }}"><i class="material-icons">store</i>Inicio</a>  
                   </li>
 
                   <li class="bold">
@@ -41,6 +41,7 @@
 
                     <div class="collapsible-body">
                       <ul>
+                        <li><a href="{{url('faculty')}}">Especialidades</a></li>
                         <li><a href="#!">Profesores</a></li>
                         <li><a href="#!">Cursos de la especialidad</a></li>
                         <li><a href="#!">Cursos del ciclo</a></li>
@@ -164,31 +165,12 @@
       <br>
       <br>
       <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+     
 
 
 
 
-      <footer class="page-footer" style="background-color: #1E3E57;">
+      <footer class="page-footer blue lighten-1">
         <div class="container">
           <div class="row">
 

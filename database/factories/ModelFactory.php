@@ -73,12 +73,12 @@ $factory->define(Intranet\Models\Template::class, function (Faker\Generator $fak
 $factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $faker) {
     return [
         'nombres'           => $faker->firstNameMale,
-        'apellidoPaterno'   => $faker->lastName,
-        'apellidoMaterno'   => $faker->lastName,
+        'apellido_paterno'   => $faker->lastName,
+        'apellido_materno'   => $faker->lastName,
         'correo'            => $faker->email,
         'telefono'          => 999999999,
         'direccion'         => $faker->lastName,
-        'codigoTrabajador'  => 20111010,
+        'codigo_trabajador'  => 20111010,
         'idFaculty'         => 1,
         'idUser'            => 3,
     ];

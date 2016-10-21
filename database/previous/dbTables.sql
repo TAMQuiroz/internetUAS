@@ -97,14 +97,14 @@ CREATE TABLE `Alumno` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
 -- campos agregados para psp
-  `id` int(11) DEFAULT NULL, /*id de la tabla statuses*/
+  `id` int(10) unsigned DEFAULT NULL, /*id de la tabla statuses*/
   `telefono` char(9) DEFAULT NULL,
   `correo` varchar(100) DEFAULT NULL,
   `direccion` varchar(200) DEFAULT NULL,
   `IdUsuario` int(11) DEFAULT NULL,
-  `idPspGroup` int(11) DEFAULT NULL,
+  `idPspGroup` int(10) unsigned DEFAULT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
-  `idSupervisor` int(11) DEFAULT NULL,
+  `idSupervisor` int(10) unsigned DEFAULT NULL,
   `lleva_psp` char(1) DEFAULT NULL,
 -- fin de campos agregados para psp
   PRIMARY KEY (`IdAlumno`),
@@ -117,9 +117,9 @@ CREATE TABLE `Alumno` (
   CONSTRAINT `Alumno_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
   CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`id`) REFERENCES `statuses` (`id`),
   CONSTRAINT `Alumno_ibfk_3` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`),
-  CONSTRAINT `Alumno_ibfk_4` FOREIGN KEY (`idPspGroup`) REFERENCES `pspgroups` (`idPspGroup`),
+  CONSTRAINT `Alumno_ibfk_4` FOREIGN KEY (`idPspGroup`) REFERENCES `pspgroups` (`id`),
   CONSTRAINT `Alumno_ibfk_5` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
-  CONSTRAINT `Alumno_ibfk_6` FOREIGN KEY (`idSupervisor`) REFERENCES `supervisors` (`idSupervisor`)
+  CONSTRAINT `Alumno_ibfk_6` FOREIGN KEY (`idSupervisor`) REFERENCES `supervisors` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -983,13 +983,13 @@ CREATE TABLE `Horario` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
 -- inicio de campo agregado para PSP
-  `idPspProcess` int(11) DEFAULT NULL,
+  `idPspProcess` int(10) unsigned DEFAULT NULL,
 -- fin de campo agregado para psp 
   PRIMARY KEY (`IdHorario`),
   KEY `IdCursoxCiclo` (`IdCursoxCiclo`),
   KEY `idPspProcess` (`idPspProcess`),
   CONSTRAINT `Horario_ibfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`),
-  CONSTRAINT `Horario_ibfk_2` FOREIGN KEY (`idPspProcess`) REFERENCES `pspprocesses` (`idPspProcess`)
+  CONSTRAINT `Horario_ibfk_2` FOREIGN KEY (`idPspProcess`) REFERENCES `pspprocesses` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

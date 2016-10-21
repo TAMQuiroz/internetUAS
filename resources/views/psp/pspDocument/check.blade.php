@@ -10,19 +10,12 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
             
-             <a>Codigo</a>
-                <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->Codigo); ?>"/>
-                <br/>
-                <br/>
-                <a>Alumno</a>
-                <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->Nombre); ?>"/>
-                <br/>
-                <br/>
+
                 <div class="separator"></div>
                 <h4>Detalle de Documento</h4>
                 <br/>
                 <div class="clearfix"></div>   
-                    {{Form::open(['route' => ['pspDocument.update', $pspDocument->id], 'files'=>true, 'class'=>'form-horizontal col-md-8', 'id'=>'formSuggestion'])}}  
+                    {{Form::open(['route' => ['pspDocument.updateC', $pspDocument->id], 'files'=>true, 'class'=>'form-horizontal col-md-8', 'id'=>'formSuggestion'])}}  
                         
                         <div class="form-group">
                             <label for="fasel" class="control-label col-md-3 col-sm-3 col-xs-12">Fase</label>
@@ -49,15 +42,14 @@
                         </div>
 
                         <div class="form-group">
-                            {{Form::label('Documento',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                            <label for="documetnol" class="control-label col-md-3 col-sm-3 col-xs-12">Documento</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            {{Form::file('ruta', ['class'=>'form-control'])}}                            
-                            Nombre del archivo existente:
-                            {{$pspDocument->ruta}}
+                            <input id=documento type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->ruta); ?>"/>
                             @if($pspDocument->ruta!=null)
+                            </div>
                             <a class="btn btn-primary btn-xs" href="{{route('getentry.pspDocument', $pspDocument->id)}}" title="Descargar Documento"><i class="fa fa-download"></i></a>
                             @endif
-                            </div>
+                            
                         </div>
 
                         <div class="form-group">
@@ -71,13 +63,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="tcomentariol" class="control-label col-md-3 col-sm-3 col-xs-12">Comentario</label>
+                         <div class="form-group">
+                            {{Form::label('Comentario *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea id=comentario type="text" class="form-control" disabled name="" value=""><?php echo htmlspecialchars($pspDocument->observaciones); ?></textarea>
-
-                            </div>
+                                {{Form::textArea('observaciones',$pspDocument->observaciones,['class'=>'form-control','maxlength' => 500])}}
+                            </div>                            
                         </div>
+
 
                         <div class="form-group">
                             <label for="estadol" class="control-label col-md-3 col-sm-3 col-xs-12">Estado</label>
@@ -90,7 +82,7 @@
                                 <select name="estado" disabled class="form-control">
                                 <option value="first">Subido</option>
                                 </select> 
-                            @else
+                            @elseif($pspDocument->idTipoEstado==5)
                                 <select name="estado" disabled class="form-control">
                                 <option value="first">Revisado</option>
                                 </select>  
@@ -102,7 +94,7 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                                <a href="{{ route('pspDocument.index') }}" class="btn btn-default pull-right"> Cancelar</a>
+                                <a href="" onclick="javascript:history.back()" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>
                     {{Form::close()}}

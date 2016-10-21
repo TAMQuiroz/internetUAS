@@ -595,7 +595,10 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('show/{id}', ['as' => 'pspDocument.show', 'uses' => 'Psp\PspDocument\PspDocumentController@show']);
                 Route::get('edit/{id}', ['as' => 'pspDocument.edit', 'uses' => 'Psp\PspDocument\PspDocumentController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspDocument.update', 'uses' => 'Psp\PspDocument\PspDocumentController@update']);
-                Route::get('delete/{id}', ['as' => 'pspDocument.delete', 'uses' => 'Psp\PspDocument\PspDocumentController@destroy']);    
+                Route::get('check/{id}', ['as' => 'pspDocument.check', 'uses' => 'Psp\PspDocument\PspDocumentController@check']);
+                Route::post('check/{id}', ['as' => 'pspDocument.updateC', 'uses' => 'Psp\PspDocument\PspDocumentController@updateC']);
+                Route::get('delete/{id}', ['as' => 'pspDocument.delete', 'uses' => 'Psp\PspDocument\PspDocumentController@destroy']);
+                Route::get('search/{id}', ['as' => 'pspDocument.search', 'uses' => 'Psp\PspDocument\PspDocumentController@search']);    
             });
 
             Route::group(['prefix' => 'skill'], function() {

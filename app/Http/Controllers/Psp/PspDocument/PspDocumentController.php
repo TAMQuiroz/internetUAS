@@ -137,4 +137,50 @@ class PspDocumentController extends Controller
     {
         //
     }
+
+    public function search($id)
+    {
+        //$students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
+        //$student  =$students->first();
+        $student = Student::find($id);
+        $pspdocuments = PspDocument::where('idStudent',$id)->get();
+
+        $data = [
+            'pspdocuments'    =>  $pspdocuments,
+        ];
+        $data['student'] = $student;
+
+        return view('psp.PspDocument.search', $data);       
+
+    }
+
+
+    public function check($id)
+    {
+        $pspDocument    = pspDocument::find($id);
+        /*$students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
+        $student  =$students->first();*/
+
+        $data = [
+            'pspDocument'    =>  $pspDocument,
+        ];
+        //$data['student'] = $students->first();
+        return view('psp.pspDocument.check', $data);
+    }
+
+    public function updateC(Request $request, $id)
+    {
+        try {
+            $pspDocument = PspDocument::find($id);
+            $pspDocument->observaciones  = $request['observaciones'];
+            $pspDocument->idTipoEstado  = 5;
+            $pspDocument->save();
+            return redirect()->route('pspDocument.search',$pspDocument->idStudent)->with('success', 'Se ha subido el documento exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+
+    }
+
+
 }

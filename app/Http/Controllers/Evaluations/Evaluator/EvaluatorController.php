@@ -64,7 +64,7 @@ class EvaluatorController extends Controller
                     'id_competencia' => $key,
                     'id_especialidad' => $faculty] );
             }
-            DB::table('docente')->where('IdDocente', $request['idDocente'])->update( ['rolEvaluaciones' => 2] ); 
+            DB::table('Docente')->where('IdDocente', $request['idDocente'])->update( ['rolEvaluaciones' => 2] ); 
             return redirect()->route('evaluador.index')->with('success', 'El evaluador se ha registrado exitosamente.');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
@@ -152,7 +152,7 @@ class EvaluatorController extends Controller
             //borrar las relaciones con las competencias
             $evaluators = DB::table('teacherxcompetences')->where('id_docente',$id)->where('id_especialidad', $faculty)->delete();
             //dd($evaluators);
-            DB::table('docente')->where('IdDocente',$id)->update( ['rolEvaluaciones' => null] );
+            DB::table('Docente')->where('IdDocente',$id)->update( ['rolEvaluaciones' => null] );
             
             return redirect()->route('evaluador.index')->with('success', 'El evaluador ha sido eliminado exitosamente'); 
         } catch (Exception $e) {

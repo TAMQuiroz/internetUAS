@@ -28,7 +28,7 @@
 						<select name="competencia" required="required" class="form-control">
 							<option value="">Seleccione</option>
 							@foreach($competences as $competence)
-							@if($competence->id == $question->competence_id)
+							@if($competence->id == $question->id_competence)
 							<option selected value="{{$competence->id}}" >{{$competence->nombre}}</option>
 							@else
 							<option value="{{$competence->id}}" >{{$competence->nombre}}</option>

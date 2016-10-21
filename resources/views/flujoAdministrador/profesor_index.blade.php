@@ -2,7 +2,7 @@
 @section ('contenido')
 
 <!-- Estos linea es para las migajas-->
-<nav class="red">
+<nav class="red lighten-2">
   <div class="nav-wrapper container">
     <div class="col s12">
     	<a href="#" class="breadcrumb">Facultad</a>
@@ -14,7 +14,7 @@
 
 <div class="container">
 	<div class= "row">
-		<h3>Lista de profesores</h3>
+		<h3 class="red-text">Lista de profesores</h3>
 	</div>
 
 	<div class= "row">
@@ -64,13 +64,14 @@
 	</div>
 
 	<!--Los botones-->
-    <div class="row">
-      <div class="input-field col s12 right-align">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Siguiente >
-          <i class="material-icons right">skip_next</i>
-        </button>                
-      </div>              
-    </div>
+   <div class= "row">
+		<div class="col s12 right-align">
+			<a href="#!" class="waves-effect waves-light btn">Siguiente
+				<i class="material-icons right">skip_next</i>
+			</a>
+
+		</div>		
+	</div>
 	
 
 

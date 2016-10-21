@@ -1,7 +1,7 @@
 @extends('base')
 @section('contenido')
 <!-- Estos linea es para las migajas-->
-<nav class="red">
+<nav class="red lighten-2">
   <div class="nav-wrapper container">
     <div class="col s12">
       <a href="{{ url('flujoAdministrador')}}" class="breadcrumb">Facultad</a>

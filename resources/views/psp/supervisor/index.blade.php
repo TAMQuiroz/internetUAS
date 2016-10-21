@@ -36,9 +36,9 @@
                     <tbody>
                     	@foreach($supervisores as $supervisor)      	
                     	<tr class="even pointer">
-                            <td >{{$supervisor->codigoTrabajador}}</td>
+                            <td >{{$supervisor->codigo_trabajador}}</td>
                             <td >{{$supervisor->nombres}}</td>
-                            <td >{{$supervisor->apellidoPaterno}}</td>
+                            <td >{{$supervisor->apellido_paterno}}</td>
                             <td >{{$supervisor->correo}}</td>
                             <td >
                         		<a href="{{ route('supervisor.show', $supervisor->id) }}"  class="btn btn-primary btn-xs" ><i class="fa fa-search"></i></a>

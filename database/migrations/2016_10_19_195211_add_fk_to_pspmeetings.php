@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToMeetings extends Migration
+class AddFkToPspmeetings extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddFkToMeetings extends Migration
      */
     public function up()
     {
-        Schema::table('meetings', function (Blueprint $table) {
-             $table->foreign('idStudent')->references('id')->on('pspstudents');
+        Schema::table('pspmeetings', function (Blueprint $table) {
+             $table->foreign('idStudent')->references('IdAlumno')->on('alumno');
              $table->foreign('idSupervisor')->references('id')->on('supervisors');
              $table->foreign('idTipoEstado')->references('id')->on('statuses');
         });
@@ -26,10 +26,10 @@ class AddFkToMeetings extends Migration
      */
     public function down()
     {
-        Schema::table('meetings', function (Blueprint $table) {
-            $table->dropForeign('meetings_idStudent_foreign');
-            $table->dropForeign('meetings_idSupervisor_foreign');
-            $table->dropForeign('meetings_idTipoEstado_foreign');
-        });     
+        Schema::table('pspmeetings', function (Blueprint $table) {
+            $table->dropForeign('pspmeetings_idStudent_foreign');
+            $table->dropForeign('pspmeetings_idSupervisor_foreign');
+            $table->dropForeign('pspmeetings_idTipoEstado_foreign');
+        }); 
     }
 }

@@ -310,7 +310,7 @@
                 </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 2)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
+              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 7 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
               <li>
                 <a>
                    <i class="fa fa-flask"></i> PSP <span class="fa fa-chevron-down"></span>
@@ -323,6 +323,20 @@
                   <li><a href="{{route('index.templates')}}"> Administrar Documentos</a></li>
                   <li><a href=""> Administrar Semanas de reunión</a></li>
                   <li><a href=""> Administrar Notas</a></li>
+                  @endif
+                  @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
+                  <li><a href=""> Horario de reuniones</a></li>
+                  <li><a href=""> Reuniones</a></li>
+                  <li><a href=""> Documentos</a></li>
+                  <li><a href=""> Administrar Alumnos</a></li>
+                  @endif
+                  @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
+                  <li><a href=""> Administrar Fases</a></li>
+                  @endif
+                  @if(Auth::user()->IdPerfil == 8) <!--si es alumno-->
+                  <li><a href=""> Horario de Reunión</a></li>
+                  <li><a href=""> Documentos</a></li>
+                  <li><a href=""> Reuniones</a></li>
                   @endif
                 </ul>
               </li>
@@ -382,7 +396,7 @@
     </div>
 
     <!-- top navigation -->
-    <div class="top_nav">
+   <div class="top_nav">
 
       <div class="nav_menu" style="padding-top: 5px;">
         <nav class="" role="navigation">
@@ -393,12 +407,13 @@
             <li class="user-profile pull-left" >
               <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
               <span class="label label-default hidden-xs hidden-sm">
-              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5 )
                   {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+              @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
+                  {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
               @else
                   {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
-              @endif
-
+              @endif  
               </span>
               <span>&nbsp</span>
               <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
@@ -408,6 +423,7 @@
                   Días restantes para el fin de ciclo: {{ $diffForHumans }}
                 </span>
               @endif
+
             </li>
             <li>
               <form method="GET" action="{{ url('logout') }}">

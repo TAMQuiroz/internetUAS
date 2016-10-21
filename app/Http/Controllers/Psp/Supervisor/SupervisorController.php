@@ -65,20 +65,21 @@ class SupervisorController extends Controller
             $usuario = new User;
             $usuario->Usuario       = $request['codigo'];
             $usuario->Contrasena    = bcrypt(123);
-            $usuario->IdPerfil      = 6;
+            $usuario->IdPerfil      = 6;    //Perfil segun la tabla PROFILE de la BD antigua
             
             $usuario->save();
 
             //Crear investigador
             $supervisor                   = new Supervisor;
-            $supervisor->codigoTrabajador          = $request['codigo'];
+            $supervisor->codigo_trabajador          = $request['codigo'];
             $supervisor->nombres           = $request['nombres'];
-            $supervisor->apellidoPaterno      = $request['apellido_paterno'];
-            $supervisor->apellidoMaterno      = $request['apellido_materno'];
+            $supervisor->apellido_paterno      = $request['apellido_paterno'];
+            $supervisor->apellido_materno      = $request['apellido_materno'];
             $supervisor->correo           = $request['correo'];
             $supervisor->telefono          = $request['celular'];
             $supervisor->direccion          = $request['direccion'];
             $supervisor->IdUser       = $usuario->IdUsuario;
+            $supervisor->Vigente    = 1;
 
             $userId = Auth::User()->IdUsuario;
             $profileId = Auth::User()->IdPerfil;
@@ -156,10 +157,10 @@ class SupervisorController extends Controller
         try {
             //Crear 
             $supervisor                   = Supervisor::find($id);
-            $supervisor->codigoTrabajador           = $request['codigo'];
+            $supervisor->codigo_trabajador           = $request['codigo'];
             $supervisor->nombres           = $request['nombres'];
-            $supervisor->apellidoPaterno      = $request['apellido_paterno'];
-            $supervisor->apellidoMaterno      = $request['apellido_materno'];
+            $supervisor->apellido_paterno      = $request['apellido_paterno'];
+            $supervisor->apellido_materno      = $request['apellido_materno'];
             $supervisor->correo           = $request['correo'];
             $supervisor->direccion           = $request['direccion'];
             $supervisor->telefono          = $request['celular'];

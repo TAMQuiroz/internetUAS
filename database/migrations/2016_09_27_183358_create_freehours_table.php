@@ -15,7 +15,7 @@ class CreateFreehoursTable extends Migration
         Schema::create('freehours', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
-            $table->integer('hora');
+            $table->integer('hora_ini');
             $table->integer('cantidad');
             $table->integer('idSupervisor')->unsigned();
             $table->timestamps();

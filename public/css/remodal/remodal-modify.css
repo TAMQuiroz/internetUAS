@@ -28,3 +28,9 @@
 	min-width: 120px;
 	text-align: left;
 }
+
+.flex-element.has-select {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

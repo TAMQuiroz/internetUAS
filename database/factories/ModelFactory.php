@@ -81,6 +81,7 @@ $factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $f
         'codigo_trabajador'  => 20111010,
         'idFaculty'         => 1,
         'idUser'            => 3,
+        'Vigente'            => 1,
     ];
 });
 

@@ -684,7 +684,14 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
             Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
         });
-
+        
+        //Disponibilidad
+        Route::group(['prefix' => 'disponibilidades'], function(){    
+            Route::get('/', ['as' => 'disponibilidad.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
+            Route::get('edit/{id}', ['as' => 'disponibilidad.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
+            Route::post('edit/{id}', ['as' => 'disponibilidad.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
+        });
+        
         //Alumnos de la especialidad
         Route::group(['prefix' => 'alumnos'], function(){    
             Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);

@@ -101,13 +101,20 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
     ];
 });
 
-$factory->define(Intranet\Models\Competence::class, function (Faker\Generator $faker) {
+
+$factory->define(Intranet\Models\Project::class, function (Faker\Generator $faker) {
+
+    $grupo  =   factory(Intranet\Models\Group::class)->create();
 
     return [
-        'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+        'nombre'            =>  'Proyecto de prueba',
         'descripcion'       =>  $faker->text,
-        'id_especialidad'   =>  1,
+        'num_entregables'   =>  5,
+        'fecha_ini'         =>  '2017-10-06',
+        'fecha_fin'         =>  '2018-10-06',
+        'id_grupo'          =>  $grupo->id,
+        'id_area'           =>  1,
+        'id_status'         =>  1,
 
     ];
 });
-

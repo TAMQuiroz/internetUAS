@@ -22,7 +22,11 @@ class Project extends Model
     }
 
     public function investigators(){
-    	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxprojects','id_proyecto','id_investigador')->withPivot('id');	
+    	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxprojects','id_proyecto','id_investigador')->orderBy('nombre', 'asc')->withPivot('id');	
+    }
+
+    public function teachers(){
+        return $this->belongsToMany('Intranet\Models\Teacher','teacherxprojects','id_proyecto','id_profesor')->orderBy('Nombre', 'asc')->withPivot('id');    
     }
 
     public function deliverables(){

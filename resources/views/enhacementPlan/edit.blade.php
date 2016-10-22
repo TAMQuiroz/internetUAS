@@ -105,7 +105,7 @@
                         <table class="table table-bordered" id="address-table" name="address-table">
                             <thead>
                             <tr>
-                                <th class="col-sm-2">Fecha</th>
+                                <th class="col-sm-2">Periodo</th>
                                 <th class="col-sm-5">Descripción</th>
                                 <th class="col-sm-3">Responsable</th>
                                 <th class="col-sm-1"></th>

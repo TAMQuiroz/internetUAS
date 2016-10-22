@@ -118,3 +118,11 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
 
     ];
 });
+
+$factory->define(Intranet\Models\Competence::class, function (Faker\Generator $faker) {
+    return [
+        'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+        'descripcion'       =>  $faker->text,
+        'id_especialidad'   =>  1,
+    ];
+});

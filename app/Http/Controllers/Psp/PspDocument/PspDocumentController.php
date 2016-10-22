@@ -5,9 +5,12 @@ namespace Intranet\Http\Controllers\Psp\PspDocument;
 use Illuminate\Http\Request;
 use Intranet\Models\PspDocument;
 use Intranet\Http\Controllers\Controller;
+use Intranet\Http\Requests\pspDocumentRevRequest;
+use Intranet\Http\Requests\pspDocumentEditRequest;
 use Intranet\Http\Requests;
 use Intranet\Models\Template;
 use Intranet\Models\Student;
+use Carbon\Carbon;
 use Auth;
 
 class PspDocumentController extends Controller
@@ -81,6 +84,7 @@ class PspDocumentController extends Controller
             'pspDocument'    =>  $pspDocument,
         ];
         $data['student'] = $students->first();
+        $data['date'] = Carbon::now();
         return view('psp.pspDocument.edit', $data);
     }
 
@@ -103,7 +107,7 @@ class PspDocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(pspDocumentEditRequest $request, $id)
     {
         try {
             $pspDocument = PspDocument::find($id);
@@ -168,7 +172,7 @@ class PspDocumentController extends Controller
         return view('psp.pspDocument.check', $data);
     }
 
-    public function updateC(Request $request, $id)
+    public function updateC(pspDocumentRevRequest $request, $id)
     {
         try {
             $pspDocument = PspDocument::find($id);

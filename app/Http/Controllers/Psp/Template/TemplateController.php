@@ -12,6 +12,7 @@ use Intranet\Http\Requests\TemplateEditRequest;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\PspDocument;
+use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Intranet\Models\Supervisor;
 
@@ -42,7 +43,8 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        return view('psp.template.create');
+        $data['phases'] = Phase::get();
+        return view('psp.template.create',$data);
     }
 
     /**
@@ -55,7 +57,8 @@ class TemplateController extends Controller
     {
         try {
             $template = new Template;
-            $template->idPhase       = $request['fase'];            
+            $template->idPhase       = $request['fase']; 
+
             //$template->idTipoEstado  = 1;
             if(Auth::User()->IdPerfil==6){
                 $supervisors = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get();  
@@ -105,6 +108,7 @@ class TemplateController extends Controller
                        $PspDocument->esObligatorio='s';
                    else
                        $PspDocument->esObligatorio='n';
+                    $PspDocument->fecha_limite=Phase::find($request['fase'])->fecha_fin;
                     $PspDocument->save();
                     }
                 }
@@ -141,6 +145,7 @@ class TemplateController extends Controller
         $data = [
             'template'    =>  $template,
         ];
+        $data['phases'] = Phase::get();
         return view('psp.template.edit', $data);
     }
 

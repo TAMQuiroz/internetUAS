@@ -129,3 +129,29 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
 
     ];
 });
+
+$factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker) {
+
+
+    return [
+        'numero'            =>  1,
+        'descripcion'       =>  $faker->text,
+        'fecha_inicio'         =>  '2017-10-06',
+        'fecha_fin'         =>  '2018-10-06',
+    ];
+});
+
+$factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
+
+    $template =   factory(Intranet\Models\Template::class)->create();
+
+    return [
+        'esObligatorio'       =>  'si',
+        'observaciones'       =>  $faker->text,
+        'ruta'               =>  $faker->text,
+        'idStudent'         =>  1,
+        'idTemplate'         =>  $template->id,
+        'idTipoEstado'         =>  1,
+        'fecha_limite'         =>  '2018-10-06',
+    ];
+});

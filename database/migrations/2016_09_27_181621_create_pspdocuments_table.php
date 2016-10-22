@@ -21,6 +21,7 @@ class CreatePspdocumentsTable extends Migration
             $table->integer('idTemplate')->unsigned();
             $table->integer('idTipoEstado')->unsigned();
             $table->date('fecha_limite');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -51,7 +51,7 @@
                         <div class="form-group">
                             {{Form::label('Documento',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            {{Form::file('ruta', ['class'=>'form-control'])}}                            
+                            {{Form::file('ruta', ['class'=>'form-control','required'])}}                            
                             Nombre del archivo existente:
                             {{$pspDocument->ruta}}
                             @if($pspDocument->ruta!=null)
@@ -98,10 +98,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="fechal" class="control-label col-md-3 col-sm-3 col-xs-12">Fecha Limite</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id=fecha type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->fecha_limite); ?>"/>
+
+                            </div>
+                        </div>
+
                     <div class="separator"></div>
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
+                                @if(($pspDocument->fecha_limite>=$date )&&($pspDocument->idTipoEstado!=5 ))
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
+                                @endif
                                 <a href="{{ route('pspDocument.index') }}" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>

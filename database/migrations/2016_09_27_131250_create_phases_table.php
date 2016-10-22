@@ -18,6 +18,7 @@ class CreatePhasesTable extends Migration
             $table->string('descripcion');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

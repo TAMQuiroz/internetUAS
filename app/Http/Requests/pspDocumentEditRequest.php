@@ -4,7 +4,7 @@ namespace Intranet\Http\Requests;
 
 use Intranet\Http\Requests\Request;
 
-class TemplateEditRequest extends Request
+class pspDocumentEditRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,7 @@ class TemplateEditRequest extends Request
     public function rules()
     {
         return [
-            'fase'        => 'required',
-            'titulo'   => 'required|max:64',
-            'obligatorio'    => '',
             'ruta'   => 'file',
-        ];
-    }
-    public function messages()
-    {
-        return [
         ];
     }
 }

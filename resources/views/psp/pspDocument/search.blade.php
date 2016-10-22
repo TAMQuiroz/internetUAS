@@ -31,7 +31,7 @@
                         <th class="column-title">Documento</th>
                         <th class="column-title">Obligatorio</th>
                         <th class="column-title">Estado</th> 
-                        <th class="column-title">Fase</th>   
+                        <th class="column-title">Fecha Limite</th>    
                         <th colspan="2">Acciones</th>                     
                     </tr>
                     </thead>
@@ -53,10 +53,26 @@
                             @else
                             <td>Revisado</td>
                             @endif
-                            <td>{{$pspdocument->template->idPhase}}</td> 
+                            <td>{{$pspdocument->fecha_limite}}</td> 
                             <td>
                                 <a href="{{route('pspDocument.check',$pspdocument->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
+                                @if($pspdocument->idTipoEstado==5)
+                                <a class="btn btn-primary btn-xs" href="" title="observaciones" data-toggle="modal" data-target="#obsModal{{$pspdocument->id}}"><i class="fa fa-info"></i></a>
+                                @endif
                             </td>
+                            <div class="modal fade"  id="obsModal{{$pspdocument->id}}">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Observaciones</h4>
+                                  </div>
+                                  <div class="modal-footer">
+                                     <h4 class="col-md-12 col-sm-12 col-xs-12" align="left">{{$pspdocument->observaciones}}</h4>
+                                  </div>
+                                </div><!-- /.modal-content -->
+                              </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                         </tr>
                         @endforeach 
                     </tbody>

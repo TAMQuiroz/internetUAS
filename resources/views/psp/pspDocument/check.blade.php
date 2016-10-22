@@ -66,7 +66,7 @@
                          <div class="form-group">
                             {{Form::label('Comentario *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                {{Form::textArea('observaciones',$pspDocument->observaciones,['class'=>'form-control','maxlength' => 500])}}
+                                {{Form::textArea('observaciones',$pspDocument->observaciones,['class'=>'form-control','required','maxlength' => 64])}}
                             </div>                            
                         </div>
 
@@ -89,6 +89,14 @@
                             @endif                            
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="fechal" class="control-label col-md-3 col-sm-3 col-xs-12">Fecha Limite</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id=fecha type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->fecha_limite); ?>"/>
+
+                            </div>
+                        </div>                        
 
                     <div class="separator"></div>
                         <div class="row">

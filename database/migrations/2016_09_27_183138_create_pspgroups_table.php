@@ -17,6 +17,7 @@ class CreatePspgroupsTable extends Migration
             //$table->integer('idTipoEstado')->unsigned();
             $table->char('numero');
             $table->string('descripcion');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

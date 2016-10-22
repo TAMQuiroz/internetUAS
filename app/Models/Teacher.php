@@ -73,31 +73,7 @@ class Teacher extends Model {
 
     }
 
-    static public function getCoordsFiltered($is_coord, $filters, $specialty = null) {
-
-        $is_coord_value = $is_coord ? 2 : null;
-
-        $query = Teacher::where('rolTutoria', $is_coord_value);
-     
-        if ($specialty) {
-            $query = $query->where('IdEspecialidad', $specialty);
-        }
-
-        if (array_key_exists("name", $filters) && $filters["name"] != "") {
-            $query = $query->where("Nombre", "like", "%" . $filters["name"] . "%");
-        }
-
-        if (array_key_exists("lastName", $filters) && $filters["lastName"] != "") {
-            $query = $query->where("ApellidoPaterno", "like", "%" . $filters["lastName"] . "%");
-        }
-
-        if (array_key_exists("secondLastName", $filters) && $filters["secondLastName"] != "") {
-            $query = $query->where("ApellidoMaterno", "like", "%" . $filters["secondLastName"] . "%");
-        }
-
-        return $query->paginate(10);
-
-    }
-
+    
+    
 
 }

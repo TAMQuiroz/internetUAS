@@ -336,7 +336,7 @@
                 </a>
                 <ul class="nav child_menu" style="display: none">
                   @if(Auth::user()->IdPerfil == 1) <!-- coordinador de especialidad-->
-                  <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                  <li><a href="{{route('coordinadorTutoria.index')}}"> Coordinadores</a></li>
                   @endif
 
                   @if(Auth::user()->professor != null)
@@ -372,7 +372,7 @@
                 </a>
                 <ul class="nav child_menu" style="display: none">
                   @if(Auth::user()->IdPerfil == 1)   <!-- coordinador de especialidad-->
-                  <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                  <li><a href="{{route('coordinadorEvaluaciones.index')}}"> Administradores</a></li>
                   @endif
 
                   @if(Auth::user()->professor != null)
@@ -390,14 +390,7 @@
                   <li><a href="{{route('evaluacion.index')}}"> Mis Evaluaciones</a></li>
                   @endif
                   @endif
-
                   
-                  <!-- prueba -->
-                  <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
-                  <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
-                  <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
-                  <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
-                  <!-- prueba -->
                 </ul>
               </li>
               

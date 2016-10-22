@@ -144,7 +144,7 @@ class PspGroupController extends Controller
             $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();
             $student->idPspGroup = $request['id'];            
             $student->save();
-            //return redirect()->route('pspGroup.index')->with('success','Elegiste el grupo');
+            return redirect()->route('pspGroup.index')->with('success','Elegiste el grupo');
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }

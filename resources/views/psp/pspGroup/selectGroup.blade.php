@@ -45,7 +45,7 @@
                 <div class="row">
 					<div class="col-md-8 col-sm-12 col-xs-12">
 						<!--AUN NO FUNCIONA ESTE SUBMIT-->
-						{{--Form::submit('Seleccionar', ['class'=>'btn btn-success pull-right'])--}}
+						{{Form::submit('Seleccionar', ['class'=>'btn btn-success pull-right'])}}
 						<a class="btn btn-default pull-right" href="{{ route('pspGroup.index') }}">Cancelar</a>
 					</div>
 				</div>

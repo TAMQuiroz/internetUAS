@@ -15,12 +15,12 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Perfil</h3>
+                <h3 class="panel-title">Información</h3>
             </div>
 
             <div class="panel-body">
 
-                {{Form::open(['route' => ['disponibilidad.update',$teacher->IdDocente], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                {{Form::open(['route' => ['miperfil.update',$teacher->IdDocente], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                 <div class="form-group">
                     {{Form::label('Teléfono *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                        <a class="btn btn-default pull-right" href="{{ route('disponibilidad.index') }}">Cancelar</a>
+                        <a class="btn btn-default pull-right" href="{{ route('miperfil.index') }}">Cancelar</a>
                     </div>
                 </div>
                 {{Form::close()}}

@@ -5,6 +5,7 @@ namespace Intranet\Http\Services\Auth;
 use Hash;
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\Accreditor;
 use Intranet\Models\Investigator;
 use Intranet\Exceptions\InvalidCredentialsException;
@@ -36,6 +37,11 @@ class AuthService
     public function findInvestigator($id) {
         $investigator = Investigator::where('id_usuario',$id)->first();
         return $investigator;
+    }
+
+    public function findStudent($id) {
+        $student = Tutstudent::where('id_usuario',$id)->first();
+        return $student;
     }
 
 }

@@ -102,6 +102,8 @@ class AuthController extends Controller
                 $user = $this->authService->findAccreditor($userSession->IdUsuario);
             }else if($userSession->IdPerfil == 5){
                 $user = $this->authService->findInvestigator($userSession->IdUsuario);
+            }else if($userSession->IdPerfil == 0){
+                $user = $this->authService->findStudent($userSession->IdUsuario);
             }else{
                 $user = null;
             }

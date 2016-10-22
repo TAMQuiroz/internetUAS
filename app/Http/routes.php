@@ -684,13 +684,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
             Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
         });
-        
-        //Disponibilidad
-        Route::group(['prefix' => 'disponibilidades'], function(){    
-            Route::get('/', ['as' => 'disponibilidad.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
-            Route::get('edit/{id}', ['as' => 'disponibilidad.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
-            Route::post('edit/{id}', ['as' => 'disponibilidad.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
-        });
+                
         
         //Alumnos de la especialidad
         Route::group(['prefix' => 'alumnos'], function(){    
@@ -717,9 +711,9 @@ Route::group(['middleware' => 'auth'], function(){
 
         //miperfil
         Route::group(['prefix' => 'miperfil'], function(){    
-            Route::get('/', ['as' => 'miperfil.index', 'uses' => 'Tutorship\Tutor\TutorController@myprofile']);
-            Route::get('edit', ['as' => 'miperfil.edit', 'uses' => 'Tutorship\Tutor\TutorController@editmyprofile']);
-            Route::post('edit', ['as' => 'miperfil.update', 'uses' => 'Tutorship\Tutor\TutorController@updatemyprofile']);
+            Route::get('/', ['as' => 'miperfil.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
+            Route::get('edit/{id}', ['as' => 'miperfil.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
+            Route::post('edit/{id}', ['as' => 'miperfil.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
             
         });
 

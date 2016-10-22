@@ -147,29 +147,5 @@ class TutorController extends Controller
         return view('tutorship.tutor.myprofile', $data);
      
     }
-
-    // muestra el perfil del tutor que accede a sus datos
-    public function editmyprofile()
-    {                       
-        $tutor = Auth::user()->professor;
-        // dd($tutor);
-        $data = [
-            'tutor'    =>  $tutor,
-        ];
-
-        return view('tutorship.tutor.editmyprofile', $data);
-     
-    }
-
-    public function updatemyprofile(Request $request)
-    {                       
-        $tutor = Auth::user()->professor;
-        // dd($tutor);
-        $data = [
-            'tutor'    =>  $tutor,
-        ];
-
-        return view('tutorship.tutor.myprofile', $data);
-     
-    }
+    
 }

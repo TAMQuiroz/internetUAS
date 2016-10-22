@@ -4,11 +4,23 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6b19832bae937c688dfc6d087096d780",
+    "hash": "05c268d3a559145cdb6cea5d385a5097",
     "content-hash": "2bcee4c7d54156ac643822c14d2c8034",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
+<<<<<<< HEAD
+            "version": "3.19.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "d9004dac4bd7f5405952f963da3bcf986295a4de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d9004dac4bd7f5405952f963da3bcf986295a4de",
+                "reference": "d9004dac4bd7f5405952f963da3bcf986295a4de",
+=======
             "version": "3.19.17",
             "source": {
                 "type": "git",
@@ -19,6 +31,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/089ce29c428ce330b8e9eba8bbe8f2bdbb8b8af5",
                 "reference": "089ce29c428ce330b8e9eba8bbe8f2bdbb8b8af5",
+>>>>>>> dev
                 "shasum": ""
             },
             "require": {
@@ -85,7 +98,11 @@
                 "s3",
                 "sdk"
             ],
+<<<<<<< HEAD
+            "time": "2016-10-20 20:21:56"
+=======
             "time": "2016-10-18 20:29:12"
+>>>>>>> dev
         },
         {
             "name": "barryvdh/laravel-snappy",

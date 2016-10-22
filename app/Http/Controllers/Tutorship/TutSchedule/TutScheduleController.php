@@ -3,8 +3,11 @@
 namespace Intranet\Http\Controllers\Tutorship\TutSchedule;
 
 use Illuminate\Http\Request;
-
 use Intranet\Http\Requests;
+use Illuminate\Support\Facades\DB;
+use Intranet\Http\Controllers\Controller;
+use Intranet\Models\Teacher;
+use Illuminate\Support\Facades\Session;
 
 class TutScheduleController extends Controller
 {
@@ -15,7 +18,13 @@ class TutScheduleController extends Controller
      */
     public function index()
     {
-        //
+        $user = Session::get('user');        
+        
+        $data = [
+            'user'    =>  $user,
+        ];
+        
+        return view('tutorship.tutschedule.index', $data);
     }
 
     /**
@@ -58,7 +67,13 @@ class TutScheduleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $teacher       = Teacher::find($id);
+        
+        $data = [
+            'teacher'    =>  $teacher,
+        ];
+        
+        return view('tutorship.tutschedule.edit', $data);
     }
 
     /**

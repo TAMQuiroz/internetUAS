@@ -101,6 +101,7 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
     ];
 });
 
+
 $factory->define(Intranet\Models\Project::class, function (Faker\Generator $faker) {
 
     $grupo  =   factory(Intranet\Models\Group::class)->create();

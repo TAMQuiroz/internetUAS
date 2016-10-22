@@ -233,7 +233,7 @@ class QuestionController extends Controller
     {    
         
      try {
-         $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competencia', $request['competencia'])->get();
+         $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competence', $request['competencia'])->get();
        // dd($evaluators);
 
          return response()->view('evaluations.evaluation.modal-editar-pregunta', compact('evaluators'));

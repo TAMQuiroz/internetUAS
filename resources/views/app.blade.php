@@ -316,26 +316,28 @@
                    <i class="fa fa-flask"></i> PSP <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 2)
+                  @if(Auth::user()->IdPerfil == 2) <!--si es profesor-->
                   <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                  <li><a href=""> Administrar Fases</a></li>
+                  <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                   <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
                   <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
-                  <li><a href=""> Administrar Semanas de reunión</a></li>
-                  <li><a href=""> Administrar Notas</a></li>
+                  <li><a href=""> Cronograma de reunión</a></li>
+                  <li><a href=""> Ver alumnos</a></li>
                   @endif
                   @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
                   <li><a href=""> Horario de reuniones</a></li>
                   <li><a href=""> Reuniones</a></li>
                   <li><a href=""> Documentos</a></li>
-                  <li><a href=""> Administrar Alumnos</a></li>
+                  <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                   @endif
                   @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
                   <li><a href=""> Administrar Fases</a></li>
-                  @endif
-                  @if(Auth::user()->IdPerfil == 8) <!--si es alumno-->
-                  <li><a href=""> Horario de Reunión</a></li>
+                  <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                   <li><a href=""> Documentos</a></li>
+                  @endif
+                  @if(Auth::user()->IdPerfil == 7) <!--si es alumno-->
+                  <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
+                  <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
                   <li><a href=""> Reuniones</a></li>
                   @endif
                 </ul>

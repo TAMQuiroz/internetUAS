@@ -59,7 +59,6 @@
                     <div class="row">
                       <div class="col-md-9 col-sm-12 col-xs-12">
                         <button class="btn btn-success submit pull-right" type="submit">Siguiente</button>
-                        <a class="btn btn-default submit pull-right" href="{{ route('index.faculty') }}">Cancelar</a>
                       </div>
                     </div>
                 

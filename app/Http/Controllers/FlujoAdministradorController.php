@@ -82,9 +82,9 @@ class FlujoAdministradorController extends Controller
     public function facultad_store (Request $request){
     	/*Aqui hacer la funcion que guarde en la BD*/
     	$facultad= new faculty();
-    	$facultad->nombre=$request->get('nombre');
-    	$facultad->codigo=$request->get('codigo');
-    	$facultad->descripcion=$request->get('descripcion');
+    	$facultad->nombre=$request->get('name');
+    	$facultad->codigo=$request->get('code');
+    	$facultad->descripcion=$request->get('description');
     	
 
     	$facultad->save();

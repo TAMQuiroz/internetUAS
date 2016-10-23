@@ -9,6 +9,7 @@ use Intranet\Http\Requests;
 use Intranet\Http\Services\Teacher\TeacherService;
 use Intranet\Http\Services\User\UserService;
 use Intranet\Http\Services\User\PasswordService;
+use Intranet\Http\Services\Faculty\FacultyService;
 
 
 use Session;
@@ -20,11 +21,13 @@ class FlujoAdministradorController extends Controller
     protected $teacherService;
     protected $userService;
     protected $passwordService;
+    protected $facultyService;
 
     public function __construct() {
         $this->teacherService = new TeacherService();
         $this->userService = new UserService;
         $this->passwordService = new PasswordService;
+        $this->facultyService = new FacultyService;
     }
 
     public function index()
@@ -43,14 +46,25 @@ class FlujoAdministradorController extends Controller
       
     }
 
-    public function edit(Request $request)
+    public function facultad_edit($id)
     {
-       
+       $data['title'] = 'Edit Faculty';
+        try {
+            $data['fac'] =Faculty::where('IdEspecialidad', $id)->first();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        return view('flujoAdministrador.facultad_edit',$data);
     }
 
-    public function update(Request $request)
+    public function facultad_update(Request $request)
     {
-       
+       try {
+            $this->facultyService->update_without_coordinator($request);
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return redirect()->route('profesor_index.flujoAdministrador', ['id' => $request->get('facultyId')]);
     }
 
     public function delete(Request $request)

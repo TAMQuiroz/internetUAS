@@ -88,15 +88,31 @@ class FlujoAdministradorController extends Controller
 
 
     public function profesor_create ($id){
-    	return 'crear profesor de la especialidad '.$id;
-    	//return view('flujoAdministrador.profesor_create');
+    	//return 'crear profesor de la especialidad '.$id;
+    	return view('flujoAdministrador.profesor_create', ['idEspecialidad'=>$id]);
     }
     
-    public function profesor_store (){
-    	/*Aqui hacer la funcion que guarde en la BD*/
-    	//$this->facultyService->create($request->all());
+    public function profesor_store (Request $request, $id){
+    	$password = bcrypt(123);
 
-    	/*Continua el flujo con ciclo academico*/
-    	return redirect('flujoAdministrador/cicloAcademico');
+        $user = User::create([
+            'Usuario' => $request['teachercode'],
+            'Contrasena' => $password,
+            'IdPerfil' => 2
+        ]);
+
+        $teacher = Teacher::create([
+            'Correo' => $request['teacheremail'],
+            'Nombre' => $request['teachername'],
+            'Codigo' => $request['teachercode'],
+            'ApellidoPaterno' => $request['teacherlastname'],
+            'ApellidoMaterno' => $request['teachersecondlastname'],
+            'IdEspecialidad' => $id, //$data['specialty']= Session::get('faculty-code'),
+            'IdUsuario' => $user->IdUsuario,
+            'Vigente' => intval($request['teacherstatus']),
+            'Descripcion' => $request['teacherdescription'],
+            'Cargo' => $request['teacherposition']
+        ]);
+    	//return redirect()->route('profesor_index.flujoAdministrador', ['id' => $id]);
     }
 }

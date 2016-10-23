@@ -12,7 +12,7 @@ use Intranet\Http\Services\User\PasswordService;
 
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
-
+use Intranet\Http\Services\Faculty\FacultyService;
 
 use Session;
 use Intranet\Models\Faculty;

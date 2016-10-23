@@ -97,29 +97,29 @@ CREATE TABLE `Alumno` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
 -- campos agregados para psp
-  `id` int(10) unsigned DEFAULT NULL, /*id de la tabla statuses*/
+  `id` int(10) DEFAULT NULL, /*id de statuses*/
   `telefono` char(9) DEFAULT NULL,
   `correo` varchar(100) DEFAULT NULL,
   `direccion` varchar(200) DEFAULT NULL,
-  `IdUsuario` int(11) DEFAULT NULL,
-  `idPspGroup` int(10) unsigned DEFAULT NULL,
-  `IdEspecialidad` int(11) DEFAULT NULL,
-  `idSupervisor` int(10) unsigned DEFAULT NULL,
+  `IdUsuario` int(10) DEFAULT NULL,
+  `idPspGroup` int(10) DEFAULT NULL,
+  `IdEspecialidad` int(10) DEFAULT NULL,
+  `idSupervisor` int(10) DEFAULT NULL,
   `lleva_psp` char(1) DEFAULT NULL,
 -- fin de campos agregados para psp
   PRIMARY KEY (`IdAlumno`),
   KEY `IdHorario` (`IdHorario`),
-  KEY `id` (`id`),
-  KEY `IdUsuario` (`IdUsuario`),  
-  KEY `idPspGroup` (`idPspGroup`),
   KEY `IdEspecialidad` (`IdEspecialidad`),
-  KEY `idSupervisor` (`idSupervisor`), 
+  KEY `IdUsuario` (`IdUsuario`),  
+--  KEY `id` (`id`),
+--  KEY `idPspGroup` (`idPspGroup`),
+--  KEY `idSupervisor` (`idSupervisor`), 
   CONSTRAINT `Alumno_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
-  CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`id`) REFERENCES `statuses` (`id`),
-  CONSTRAINT `Alumno_ibfk_3` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`),
-  CONSTRAINT `Alumno_ibfk_4` FOREIGN KEY (`idPspGroup`) REFERENCES `pspgroups` (`id`),
-  CONSTRAINT `Alumno_ibfk_5` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
-  CONSTRAINT `Alumno_ibfk_6` FOREIGN KEY (`idSupervisor`) REFERENCES `supervisors` (`id`)
+  CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`),
+  CONSTRAINT `Alumno_ibfk_3` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`)
+--  CONSTRAINT `Alumno_ibfk_4` FOREIGN KEY (`id`) REFERENCES `statuses` (`id`),
+--  CONSTRAINT `Alumno_ibfk_5` FOREIGN KEY (`idPspGroup`) REFERENCES `pspgroups` (`idPspGroup`),
+--  CONSTRAINT `Alumno_ibfk_6` FOREIGN KEY (`idSupervisor`) REFERENCES `supervisors` (`idSupervisor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -983,13 +983,13 @@ CREATE TABLE `Horario` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
 -- inicio de campo agregado para PSP
-  `idPspProcess` int(10) unsigned DEFAULT NULL,
+  `idPspProcess` int(10) DEFAULT NULL,
 -- fin de campo agregado para psp 
   PRIMARY KEY (`IdHorario`),
   KEY `IdCursoxCiclo` (`IdCursoxCiclo`),
-  KEY `idPspProcess` (`idPspProcess`),
-  CONSTRAINT `Horario_ibfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`),
-  CONSTRAINT `Horario_ibfk_2` FOREIGN KEY (`idPspProcess`) REFERENCES `pspprocesses` (`id`)
+--  KEY `idPspProcess` (`idPspProcess`),
+--  CONSTRAINT `Horario_ibfk_2` FOREIGN KEY (`idPspProcess`) REFERENCES `pspprocesses` (`idPspProcess`),
+  CONSTRAINT `Horario_ibfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1290,7 +1290,7 @@ CREATE TABLE `Perfil` (
 
 LOCK TABLES `Perfil` WRITE;
 /*!40000 ALTER TABLE `Perfil` DISABLE KEYS */;
-INSERT INTO `Perfil` VALUES (1,'Coordinador','Coordinador de la Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 18:05:44'),(2,'Profesor','Profesor de una Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 20:15:18'),(3,'Administrador','Administrador de la Facultad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(4,'Acreditador','Acreditador de una Especialidad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(5,'Investigador','Investigador de la facultad',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17'),(6,'Supervisor','Supervisor de Psp',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17'),(7,'Alumno','Alumno de la facultad',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17');
+INSERT INTO `Perfil` VALUES (1,'Coordinador','Coordinador de la Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 18:05:44'),(2,'Profesor','Profesor de una Especialidad',NULL,'2016-05-28 02:56:00','2016-06-24 20:15:18'),(3,'Administrador','Administrador de la Facultad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(4,'Acreditador','Acreditador de una Especialidad',NULL,'2016-05-28 02:56:00','2016-05-28 02:56:00'),(5,'Investigador','Investigador de la facultad',NULL,'2016-05-28 02:56:00','2016-06-24 12:01:17');
 /*!40000 ALTER TABLE `Perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 

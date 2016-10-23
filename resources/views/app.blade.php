@@ -331,6 +331,7 @@
                   <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                   @endif
                   @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
+                  <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
                   <li><a href=""> Administrar Fases</a></li>
                   <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                   <li><a href=""> Documentos</a></li>

@@ -506,6 +506,9 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
             });
         });
+
+            
+
             //PspGroups Luis Llanos
 
             Route::group(['prefix' => 'pspGroup'], function() {

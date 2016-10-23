@@ -17,6 +17,7 @@ class CreatePspprocessesTable extends Migration
             $table->integer('numero_Fases');
             $table->integer('numero_Plantillas');
             $table->integer('max_tam_plantilla');
+            $table->integer('Vigente');
             $table->timestamps();
         });
     }

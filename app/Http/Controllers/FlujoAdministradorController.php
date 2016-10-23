@@ -10,6 +10,8 @@ use Intranet\Http\Services\Teacher\TeacherService;
 use Intranet\Http\Services\User\UserService;
 use Intranet\Http\Services\User\PasswordService;
 
+
+use Session;
 use Intranet\Models\Faculty;
 use Intranet\Models\teacher;
 

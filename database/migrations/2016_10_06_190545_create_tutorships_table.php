@@ -17,7 +17,7 @@ class CreateTutorshipsTable extends Migration
             $table->integer('id_tutor');
             $table->integer('id_profesor');
             $table->integer('id_suplente');
-            $table->integer('id_alumno');
+            $table->integer('id_alumno')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

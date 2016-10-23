@@ -18,19 +18,18 @@
 				<h3 class="panel-title">Información</h3>
 			</div>
 			<div class="panel-body">
-
 				{{Form::open(['route' => ['motivo.update', $reason->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 
 				<div class="form-group">
-					{{Form::label('Tipo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
-						{{Form::select('tipo', [1=>'De cancelación/rechazo de cita',2=>'De desactivación de tutor'], $reason->tipo, ['class' => 'form-control', 'required'])}}
+					{{Form::label('Tipo: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
+					<div class="col-md-4 col-sm-4 col-xs-6">
+						{{Form::select('tipo', [null=>'Seleccione',1=>'De cancelación/rechazo de cita',2=>'De desactivación de tutor'], $reason->tipo, ['class' => 'form-control', 'required'])}}
 					</div>
 				</div>
 
 				<div class="form-group">
-					{{Form::label('Nombre *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Nombre: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
+					<div class="col-md-4 col-sm-4 col-xs-6">
 						{{Form::text('nombre',$reason->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 					</div>
 				</div>		    		

@@ -1,6 +1,12 @@
 @extends('app')
 @section('content')
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Lista de profesores</h3>
+        </div>
+    </div>
     
+
 
     <div class="clearfix"></div>
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -25,7 +31,6 @@
                         <th class="column-title">Nombre</th>
                         <th class="column-title">Correo</th>
                         <th class="column-title">Categoría</th>
-                        <th class="column-title last">Acciones</th>
                         <th class="bulk-actions" colspan="7">
                             <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
                         </th>
@@ -48,27 +53,47 @@
                             <td class="teacherspecialtyId" hidden="true">{{$teach->IdEspecialidad}}</td>
                             <td class="teacherEmail">{{$teach->Correo}}</td>
                             <td class="teacherCategory">{{$teach->Cargo}} </td>
-                            <td class=" ">
-                                @if(in_array(14, Session::get('actions')))
-                                    <a class="btn btn-primary btn-xs view-teacher" data-toggle="modal" data-target=".bs-example-modal-lg" title="Visualizar"><i class="fa fa-search"></i></a>
-                                @endif
-
-                                @if(in_array(12, Session::get('actions')))
-                                    <a href="{{ route('edit.teacher', ['teacherid' => $teach->IdDocente]) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
-                                @endif
-
-                                @if ($teach->Vigente == 1)
-                                    @if(in_array(13, Session::get('actions')))
-                                        <a class="btn btn-danger btn-xs delete-teacher" data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="fa fa-remove"></i></a>
-                                    @endif
-                                @endif
-                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+
+
+
+
             </div>
-            <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}"></script>
+        </div>
+        <form action="{{ route('coordinador_store.flujoAdministrador', $idEspecialidad)}}" method="POST" id="formTeacher" name="formTeacher" novalidate="true" class="">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        
+            <div class="form-group">
+                <div class="row">
+                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Coordinador<span class="error">*</span></label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select  required>
+                            <option value="">--Seleccione--</option>
+                            @foreach($teachers as $teach)
+                                <option value= "{{$teach->idDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                
+                 <br>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                         <button class="btn btn-success pull-right" type="submit">Siguiente ></button>
+                         <a href="{{ route('facultad_edit.flujoAdministrador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
+                    </div>
+                </div>
+            </div>
+           
+            
+            
+        </form>
+        <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}"></script>
     @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar al profesor?', 'action' => '#', 'button' => 'Delete'])
     @include('teachers.view-modal', ['title' => 'Información del Profesor'])
 @endsection

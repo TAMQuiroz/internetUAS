@@ -9,11 +9,12 @@ use Intranet\Http\Requests;
 use Intranet\Http\Services\Teacher\TeacherService;
 use Intranet\Http\Services\User\UserService;
 use Intranet\Http\Services\User\PasswordService;
+use Intranet\Models\User;
+use Intranet\Models\Teacher;
 
 
 use Session;
 use Intranet\Models\Faculty;
-use Intranet\Models\teacher;
 
 class FlujoAdministradorController extends Controller
 {
@@ -43,9 +44,9 @@ class FlujoAdministradorController extends Controller
       
     }
 
-    public function edit(Request $request)
+    public function facultad_edit($idt)
     {
-       
+       return "llego al edit";
     }
 
     public function update(Request $request)
@@ -84,7 +85,7 @@ class FlujoAdministradorController extends Controller
 		$especialidad = Faculty::findOrFail($id);
 		$profesores = $especialidad->teachers;
 		return view('flujoAdministrador.profesor_index', ['teachers'=>$profesores, 'idEspecialidad' =>$id]);
-    	
+    	//return "profesor creado";
     }
 
 
@@ -127,4 +128,32 @@ class FlujoAdministradorController extends Controller
         return redirect()->route('profesor_index.flujoAdministrador', ['id' => $id])
                             ->with('success', 'El profesor se ha registrado exitosamente');
     }
+
+    public function coordinador_store (Request $request, $id){
+        /*
+        $specialty = Faculty::where('IdEspecialidad',$id)->first();
+
+        //Perfil Profesor
+        if($specialty->teacher!=null){
+            $coordinatorA = $specialty->teacher;
+            $userA = User::where('IdUsuario', $coordinatorA->IdUsuario)
+                    ->update(array('IdPerfil' => 2
+            ));
+        }
+
+        $coordinatorN = Teacher::where('IdDocente',$request->input('coordinator'))->first();
+
+        $faculty = Faculty::where('IdEspecialidad', $id)
+                    ->update(array( 'IdDocente' =>$request->input('coordinator')
+        ));
+
+        //Perfil Coordinador
+        $userA = User::where('IdUsuario', $coordinatorN->IdUsuario)
+                     ->update(array('IdPerfil' => 1
+        ));
+        */
+
+        Return "actualizado cordinador ";
+    }
+        
 }

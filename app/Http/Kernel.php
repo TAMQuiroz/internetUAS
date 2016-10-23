@@ -50,5 +50,6 @@ class Kernel extends HttpKernel
         'guest' => \Intranet\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'investigation' => \Intranet\Http\Middleware\InvestigationMiddleware::class,
+        'action_permission' => \Intranet\Http\Middleware\VerifyPermission::class,   
     ];
 }

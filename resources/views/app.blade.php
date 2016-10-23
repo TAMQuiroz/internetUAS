@@ -257,6 +257,7 @@
                   </ul>
                 </li>
               @endif
+
               @if(Auth::user() && Auth::user()->IdPerfil != 5)
                 @if(in_array(53,Session::get('actions')) || in_array(54,Session::get('actions'))
                 || in_array(55,Session::get('actions')) || in_array(56,Session::get('actions')) )
@@ -283,11 +284,15 @@
                       @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
                         <li><a href="{{ route('pending.index')}}">De Evaluacion Pendiente</a></li>
                       @endif
+                      @if(Auth::user() && (Auth::user()->IdPerfil == 1))
+                      <li><a href="{{ route('evidences.index')}}">De evidencias</a></li>
+                      @endif
                       <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
                     </ul>
                   </li>
                 @endif
               @endif
+
               @if(in_array(58,Session::get('actions')) || in_array(63,Session::get('actions')) || in_array(64,Session::get('actions'))  )
                 <li>
                   <a>

@@ -109,17 +109,17 @@ CREATE TABLE `Alumno` (
 -- fin de campos agregados para psp
   PRIMARY KEY (`IdAlumno`),
   KEY `IdHorario` (`IdHorario`),
-  KEY `id` (`id`),
-  KEY `IdUsuario` (`IdUsuario`),  
-  KEY `idPspGroup` (`idPspGroup`),
   KEY `IdEspecialidad` (`IdEspecialidad`),
-  KEY `idSupervisor` (`idSupervisor`), 
+  KEY `IdUsuario` (`IdUsuario`),  
+--  KEY `id` (`id`),
+--  KEY `idPspGroup` (`idPspGroup`),
+--  KEY `idSupervisor` (`idSupervisor`), 
   CONSTRAINT `Alumno_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
-  CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`id`) REFERENCES `statuses` (`id`),
-  CONSTRAINT `Alumno_ibfk_3` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`),
-  CONSTRAINT `Alumno_ibfk_4` FOREIGN KEY (`idPspGroup`) REFERENCES `pspgroups` (`id`),
-  CONSTRAINT `Alumno_ibfk_5` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
-  CONSTRAINT `Alumno_ibfk_6` FOREIGN KEY (`idSupervisor`) REFERENCES `supervisors` (`id`)
+  CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`),
+  CONSTRAINT `Alumno_ibfk_3` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`)
+--  CONSTRAINT `Alumno_ibfk_4` FOREIGN KEY (`id`) REFERENCES `statuses` (`id`),
+--  CONSTRAINT `Alumno_ibfk_5` FOREIGN KEY (`idPspGroup`) REFERENCES `pspgroups` (`id`),
+--  CONSTRAINT `Alumno_ibfk_6` FOREIGN KEY (`idSupervisor`) REFERENCES `supervisors` (`id`)  
 ) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -776,8 +776,9 @@ CREATE TABLE `Docente` (
   `updated_at` timestamp NULL DEFAULT NULL,
 -- campos agregados para psp
   `direccion` varchar(200) DEFAULT NULL,
+  `es_adminpsp` char(1) DEFAULT NULL,
+  `es_supervisorpsp` char(1) DEFAULT NULL,
 -- fin campos agregados para psp
-
   PRIMARY KEY (`IdDocente`,`Vigente`),
   KEY `IdEspecialidad` (`IdEspecialidad`),
   KEY `IdUsuario` (`IdUsuario`),
@@ -793,10 +794,10 @@ CREATE TABLE `Docente` (
 
 LOCK TABLES `Docente` WRITE;
 /*!40000 ALTER TABLE `Docente` DISABLE KEYS */;
-INSERT INTO `Docente` VALUES(1,1,2,'19960275','Luis Alberto','Flores','García',' luis.flores@pucp.edu.pe','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'Ingeniería de Software, Gestión de Proyectos, Gestión de Procesos\r\nIngeniería de Software  ',NULL,'2016-06-18 17:24:00','2016-06-18 17:24:00',NULL),
-(2,2,3,'19911254','Cesar Augusto','Stoll','Quevedo','  cstoll@pucp.pe ','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'',NULL,'2016-06-18 17:52:40','2016-06-18 17:52:40', NULL),
-(3,3,4,'19941253','Ramzy Francis','Kahhat','Abedrabbo','ramzy.kahhat@pucp.edu.pe  ','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'INGENIERÍA SOSTENIBLE, INGENIERÍA AMBIENTAL',NULL,'2016-06-18 17:55:02','2016-06-18 17:55:02',NULL),
-(4,1,5,'00009299','César Augusto','Aguilera','Serpa','cesar.aguilera@pucp.edu.pe','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'',NULL,'2016-06-19 06:07:14','2016-06-19 06:07:14',NULL);
+INSERT INTO `Docente` VALUES(1,1,2,'19960275','Luis Alberto','Flores','García',' luis.flores@pucp.edu.pe','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'Ingeniería de Software, Gestión de Proyectos, Gestión de Procesos\r\nIngeniería de Software  ',NULL,'2016-06-18 17:24:00','2016-06-18 17:24:00',NULL,NULL,NULL),
+(2,2,3,'19911254','Cesar Augusto','Stoll','Quevedo','  cstoll@pucp.pe ','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'',NULL,'2016-06-18 17:52:40','2016-06-18 17:52:40', NULL,NULL,NULL),
+(3,3,4,'19941253','Ramzy Francis','Kahhat','Abedrabbo','ramzy.kahhat@pucp.edu.pe  ','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'INGENIERÍA SOSTENIBLE, INGENIERÍA AMBIENTAL',NULL,'2016-06-18 17:55:02','2016-06-18 17:55:02',NULL,NULL,NULL),
+(4,1,5,'00009299','César Augusto','Aguilera','Serpa','cesar.aguilera@pucp.edu.pe','Profesor Contratado',1,NULL,NULL,NULL,NULL,NULL,'',NULL,'2016-06-19 06:07:14','2016-06-19 06:07:14',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `Docente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -987,9 +988,9 @@ CREATE TABLE `Horario` (
 -- fin de campo agregado para psp 
   PRIMARY KEY (`IdHorario`),
   KEY `IdCursoxCiclo` (`IdCursoxCiclo`),
-  KEY `idPspProcess` (`idPspProcess`),
-  CONSTRAINT `Horario_ibfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`),
-  CONSTRAINT `Horario_ibfk_2` FOREIGN KEY (`idPspProcess`) REFERENCES `pspprocesses` (`id`)
+--  KEY `idPspProcess` (`idPspProcess`),
+  CONSTRAINT `Horario_ibfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`)
+--  CONSTRAINT `Horario_ibfk_2` FOREIGN KEY (`idPspProcess`) REFERENCES `pspprocesses` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

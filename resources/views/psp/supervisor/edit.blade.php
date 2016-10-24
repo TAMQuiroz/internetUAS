@@ -22,7 +22,7 @@
             	<div class="form-group">
                     {{Form::label('Código *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('codigo',$supervisor->codigoTrabajador,['class'=>'form-control', 'required'])}}
+                        {{Form::text('codigo',$supervisor->codigo_trabajador,['class'=>'form-control', 'required'])}}
                     </div>
 				</div>
 
@@ -36,14 +36,14 @@
                 <div class="form-group">
                     {{Form::label('Apellido Paterno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('apellido_paterno',$supervisor->apellidoPaterno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+                        {{Form::text('apellido_paterno',$supervisor->apellido_paterno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
                     </div>
                 </div>  
 
                 <div class="form-group">
                     {{Form::label('Apellido Materno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('apellido_materno',$supervisor->apellidoMaterno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+                        {{Form::text('apellido_materno',$supervisor->apellido_materno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
                     </div>
                 </div>      
 

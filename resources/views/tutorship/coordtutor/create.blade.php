@@ -20,18 +20,21 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href=" " class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                        <a href="#filter-coords" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
                     </div>
                 </div>
 
                 <div class="x_content">
                     <div class="clearfix"></div>
                 </div>
+                <div class="row">
+                    <h6>Elija uno o más profesores</h6>
+                </div>
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">                            
                             <th class="column-title">Código </th>
-                            <th class="column-title">Apellidos y Nombres </th>                            
+                            <th class="column-title">Profesor</th>                            
                             <th class="column-title">Especialidad</th> 
                             <th class="column-title last">Seleccionar</th>
                             <th class="bulk-actions" colspan="7">
@@ -66,4 +69,5 @@
             {{Form::close()}}
         </div>
     </div>
+    @include('tutorship.modals.filter', ['title' => 'Filtrar', 'route' => route('coordinadorTutoria.index')])
 @endsection

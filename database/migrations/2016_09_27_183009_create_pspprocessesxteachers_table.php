@@ -16,7 +16,7 @@ class CreatePspprocessesxteachersTable extends Migration
             $table->integer('idPspProcesses')->unsigned();
             $table->foreign('idPspProcesses')->references('id')->on('pspprocesses');
             $table->integer('idProfesor');
-            $table->foreign('idProfesor')->references('IdDocente')->on('docente');
+            $table->foreign('idProfesor')->references('IdDocente')->on('Docente');
             $table->timestamps();
         });
     }

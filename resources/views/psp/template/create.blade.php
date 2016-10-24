@@ -14,11 +14,15 @@
                 </div>
 
                     <div class="x_content">
-                    {{Form::open(['route' => 'store.template', 'files'=>true, 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                    {{Form::open(['route' => 'template.store', 'files'=>true, 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                     	<div class="form-group">
                             {{Form::label('Fase *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								{{Form::select('fase', [1=>'1',2=>'2'], null, ['class' => 'form-control', 'required'])}}                              
+								<select name="fase" id="fase" class="form-control" required="required">
+                                    @foreach( $phases as $phase)
+                                        <option value="{{$phase->id}}">{{$phase->numero}}</option>
+                                    @endforeach
+                                </select>                             
 							</div>
 						</div>
                         <div class="form-group">
@@ -47,7 +51,7 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                                <a href="{{ route('index.templates') }}" class="btn btn-default pull-right"> Cancelar</a>
+                                <a href="{{ route('template.index') }}" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>
                         {{Form::close()}}

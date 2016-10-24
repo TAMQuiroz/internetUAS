@@ -43,8 +43,8 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\TimeTablexTeacher','IdDocente');
     }
 
-    public function tutorship(){
-        return $this->hasMany('Intranet\Models\Tutorship','IdDocente');
+    public function tutorships(){
+        return $this->hasMany('Intranet\Models\Tutorship','id_tutor');
     }
 
     static public function getTutorsFiltered($is_tutor, $filters, $specialty = null) {
@@ -52,6 +52,32 @@ class Teacher extends Model {
         $is_tutor_value = $is_tutor ? 1 : null;
 
         $query = Teacher::where('rolTutoria', $is_tutor_value);
+     
+        if ($specialty) {
+            $query = $query->where('IdEspecialidad', $specialty);
+        }
+
+        if (array_key_exists("name", $filters) && $filters["name"] != "") {
+            $query = $query->where("Nombre", "like", "%" . $filters["name"] . "%");
+        }
+
+        if (array_key_exists("lastName", $filters) && $filters["lastName"] != "") {
+            $query = $query->where("ApellidoPaterno", "like", "%" . $filters["lastName"] . "%");
+        }
+
+        if (array_key_exists("secondLastName", $filters) && $filters["secondLastName"] != "") {
+            $query = $query->where("ApellidoMaterno", "like", "%" . $filters["secondLastName"] . "%");
+        }
+
+        return $query->paginate(10);
+
+    }
+
+    static public function getCoordsFiltered($is_coord, $filters, $specialty = null) {
+
+        $is_coord_value = $is_coord ? 2 : null;
+
+        $query = Teacher::where('rolTutoria', $is_coord_value);
      
         if ($specialty) {
             $query = $query->where('IdEspecialidad', $specialty);

@@ -26,6 +26,7 @@ class CreatePspstudentsTable extends Migration
             $table->integer('idFaculty');
             $table->integer('idPspGroup')->unsigned();
             $table->integer('idSupervisor')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
 
         });

@@ -15,8 +15,8 @@ class CreatePspgroupsxpspprocessesTable extends Migration
         Schema::create('pspgroupsxpspprocesses', function (Blueprint $table) {
             $table->integer('idPSPGroup')->unsigned();
             $table->foreign('idPSPGroup')->references('id')->on('pspgroups');
-            $table->integer('idPspProcesses')->unsigned();
-            $table->foreign('idPspProcesses')->references('id')->on('pspprocesses');
+            $table->integer('idPspProcess')->unsigned();
+            $table->foreign('idPspProcess')->references('id')->on('pspprocesses');
             $table->timestamps();
         });
     }

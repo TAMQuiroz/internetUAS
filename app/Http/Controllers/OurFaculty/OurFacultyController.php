@@ -49,7 +49,6 @@ class OurFacultyController extends BaseController {
         } catch (\Exception $e) {
             dd($e);
         }
-
         return view('ourFaculty.index', $data);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\Http\Controllers\API\Tutorial\Topic;
+namespace Intranet\Http\Controllers\API\Tutoria;
 
 use Illuminate\Http\Request;
 use Intranet\Models\Topic;

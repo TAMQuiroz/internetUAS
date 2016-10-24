@@ -17,11 +17,11 @@ class CreateTemplatesTable extends Migration
             $table->integer('idPhase')->unsigned();
             $table->integer('idTipoEstado')->unsigned();
             $table->integer('idProfesor')->nullable();
-            $table->integer('idSupervisor')->nullable();
+            $table->integer('idSupervisor')->unsigned()->nullable();
             $table->integer('idAdmin')->nullable();
             $table->string('titulo');
             $table->string('ruta');
-            //$table->integer('obligatorio');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

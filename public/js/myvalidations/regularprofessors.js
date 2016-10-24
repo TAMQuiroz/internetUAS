@@ -17,15 +17,20 @@ jQuery(document).ready(function($) {
   $('#prof_table').on('click', '.delete-prof', function() {
     $(this).parent().parent().remove();
   });
-
+  
 });
 
 function fillTable(professors) {
   professors.each(function(index, input) {
     var tr = $(input).parent().parent();
     tr.find('td:first').remove();
-    tr.append('<td><div class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></div></td>');
+    tr.append('<td><div title="Quitar" class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></div></td>');
 
     $('#prof_table').find('tbody').append(tr);
-  })
+  });
 }
+
+
+
+
+  

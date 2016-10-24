@@ -310,6 +310,41 @@
                 </li>
               @endif
 
+              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 7 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
+              <li>
+                <a>
+                   <i class="fa fa-flask"></i> PSP <span class="fa fa-chevron-down"></span>
+                </a>
+                <ul class="nav child_menu" style="display: none">
+                  @if(Auth::user()->IdPerfil == 2) <!--si es profesor-->
+                  <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
+                  <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
+                  <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
+                  <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
+                  <li><a href=""> Cronograma de reunión</a></li>
+                  <li><a href=""> Ver alumnos</a></li>
+                  @endif
+                  @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
+                  <li><a href=""> Horario de reuniones</a></li>
+                  <li><a href=""> Reuniones</a></li>
+                  <li><a href=""> Documentos</a></li>
+                  <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
+                  @endif
+                  @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
+                  <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
+                  <li><a href=""> Administrar Fases</a></li>
+                  <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
+                  <li><a href=""> Documentos</a></li>
+                  @endif
+                  @if(Auth::user()->IdPerfil == 7) <!--si es alumno-->
+                  <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
+                  <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
+                  <li><a href=""> Reuniones</a></li>
+                  @endif
+                </ul>
+              </li>
+              @endif
+
               @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
               <li>
                 <a>
@@ -327,31 +362,36 @@
               </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
               <li>
                 <a>
                    <i class="fa fa-users"></i> Tutoría <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 3)
+                  @if(Auth::user()->IdPerfil > 0)
                   <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
                   <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
+                  <li><a href="{{route('disponibilidad.index')}}"> Administrar Disponibilidad</a></li>
                   <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
                   <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
                   <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
+                  
                   @endif
                 </ul>
               </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
               <li>
                 <a>
                    <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 2)                  
-                  <!-- <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li> -->
+                  @if(Auth::user()->IdPerfil >0)                  
+                  <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
+                  <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
+                  <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
+                  <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
                   @endif
                 </ul>
               </li>
@@ -364,7 +404,7 @@
     </div>
 
     <!-- top navigation -->
-    <div class="top_nav">
+   <div class="top_nav">
 
       <div class="nav_menu" style="padding-top: 5px;">
         <nav class="" role="navigation">
@@ -375,12 +415,13 @@
             <li class="user-profile pull-left" >
               <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
               <span class="label label-default hidden-xs hidden-sm">
-              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5 )
                   {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+              @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
+                  {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
               @else
                   {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
-              @endif
-
+              @endif  
               </span>
               <span>&nbsp</span>
               <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
@@ -390,6 +431,7 @@
                   Días restantes para el fin de ciclo: {{ $diffForHumans }}
                 </span>
               @endif
+
             </li>
             <li>
               <form method="GET" action="{{ url('logout') }}">

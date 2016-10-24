@@ -28,7 +28,7 @@ class PspDocumentTest extends TestCase
                 'actions' => [],
                 'user' => $user
             ])->visit('/psp/pspDocument/edit/'.$pspDocument->id)
-            ->attach(asset('images/1.png'),'ruta')
+            ->attach(asset('/uploads/templates/0.pdf'),'ruta')
             ->press('Guardar')
             ->seePageIs('/psp/pspDocument');
             //->see('Subir Documentos');
@@ -45,6 +45,7 @@ class PspDocumentTest extends TestCase
                 'actions' => [],
                 'user' => $user
             ])->visit('/psp/pspDocument/edit/'.$pspDocument->id)
+            //->attach(,'ruta')
             ->press('Guardar')
             ->seePageIs('/psp/pspDocument/edit/'.$pspDocument->id);
             //->see('Documentos');
@@ -56,8 +57,9 @@ class PspDocumentTest extends TestCase
 
         public function test_psp_ed_pdo_03()
     {
-        $user = factory(Intranet\Models\User::class)->make();        
+        $user = factory(Intranet\Models\User::class)->make();
         $pspDocument = factory(Intranet\Models\PspDocument::class)->create();
+
         //$pspDocument->idStudent=$student->IdAlumno;
 
         $this->actingAs($user)
@@ -68,27 +70,27 @@ class PspDocumentTest extends TestCase
             ->type('Esta bien','observaciones')
             ->press('Guardar')
             ->seePageIs('/psp/pspDocument/search/1');
-            //->see('Documentos');
+            //->see('Detalle de Documento');
             //->see('Debe ingresar un titulo');            
     }
-/*
+
+
             public function test_psp_ed_pdo_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
         $pspDocument   = factory(Intranet\Models\PspDocument::class)->create();
-        $student =   factory(Intranet\Models\Student::class)->create();
-        $pspDocument->idStudent=$student->IdAlumno;
 
         $this->actingAs($user)
             ->withSession([
                 'actions' => [],
                 'user' => $user
             ])->visit('/psp/pspDocument/check/'.$pspDocument->id)
+            ->type('','observaciones')
             ->press('Guardar')
             ->seePageIs('/psp/pspDocument/check/'.$pspDocument->id);
             //->see('Documentos');
             //->see('Debe ingresar un titulo');            
     }
-*/
+
 
 }

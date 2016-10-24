@@ -9,13 +9,14 @@
 <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-            
+             @if($student!=null)
              <a>Codigo</a>
                 <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->Codigo); ?>"/>
                 <br/>
                 <br/>
                 <a>Alumno</a>
                 <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->Nombre); ?>"/>
+            @endif
                 <br/>
                 <br/>
                 <div class="separator"></div>

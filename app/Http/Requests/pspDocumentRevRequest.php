@@ -24,7 +24,7 @@ class pspDocumentRevRequest extends Request
     public function rules()
     {
         return [
-            'observaciones'   => 'max:500',
+            'observaciones'   => 'required|max:500',
         ];
     }
 }

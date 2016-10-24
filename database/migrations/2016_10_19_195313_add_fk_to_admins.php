@@ -13,7 +13,7 @@ class AddFkToAdmins extends Migration
     public function up()
     {
         Schema::table('admins', function (Blueprint $table) {
-             $table->foreign('idUser')->references('IdUsuario')->on('usuario');
+             $table->foreign('idUser')->references('IdUsuario')->on('Usuario');
              $table->foreign('idEspecialidad')->references('IdEspecialidad')->on('especialidad');
         });
     }

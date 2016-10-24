@@ -1,10 +1,10 @@
-<?php
-
-namespace Intranet\Http\Controllers\Psp\freeHour;
+<?php namespace Intranet\Http\Controllers\Psp\FreeHour;
 
 use Illuminate\Http\Request;
-
+use Auth;
 use Intranet\Http\Requests;
+use Intranet\Models\FreeHour;
+use Intranet\Models\Supervisor;
 use Intranet\Http\Controllers\Controller;
 
 class FreeHourController extends Controller
@@ -16,13 +16,14 @@ class FreeHourController extends Controller
      */
     public function index()
     {
-        //$freehours = freeHour::get();
+        $supervisor = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get()->first();
+        $freeHours = FreeHour::where('idSupervisor',$supervisor->id)->get();
 
-        /*$data = [
-            'freehours'    =>  $freehours,
-        ];*/
-        return view('psp.freeHour.index');
-        //return view('freeHour.index', $data);
+        $data = [
+            'freeHours'    =>  $freeHours,
+        ];
+
+        return view('psp.freeHour.index', $data);
     }
 
     /**
@@ -44,6 +45,19 @@ class FreeHourController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            $freeHour = new FreeHour;
+            $freeHour->fecha = $request['fecha'];
+            $freeHour->hora_ini = $request['hora_ini'];
+            $freeHour->cantidad = 1;
+            $supervisor = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get()->first();            
+            $freeHour->idSupervisor = $supervisor->id;
+            $freeHour->save();
+            return redirect()->route('freeHour.index')->with('success','La disponibilidad se ha registrado exitosamente');
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 
     /**

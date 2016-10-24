@@ -482,7 +482,7 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['prefix' => 'psp'], function() {
 
-        Route::group(['middleware' => 'teacherPsp'], function(){
+        Route::group(['middleware' => 'teacherPsp'], function(){ //restringe el acceso solo a profesores de psp
 
             Route::group(['prefix' => 'supervisor'], function() {
 
@@ -495,6 +495,20 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
             });
 
+            //Template
+            Route::group(['prefix' => 'template'], function() {
+                Route::get('/', ['as' => 'template.index', 'uses' => 'Psp\Template\TemplateController@index']);
+                Route::get('create', ['as' => 'template.create', 'uses' => 'Psp\Template\TemplateController@create']);
+                Route::post('create', ['as' => 'template.store', 'uses' => 'Psp\Template\TemplateController@store']);
+                Route::get('show/{id}', ['as' => 'template.show', 'uses' => 'Psp\Template\TemplateController@show']);
+                Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
+                Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
+                Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
+            });
+        });
+
+            
+
             //PspGroups Luis Llanos
 
             Route::group(['prefix' => 'pspGroup'], function() {
@@ -505,19 +519,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
                 Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
-                Route::get('selectGroup',['as' => 'pspGroup.selectGroupCreate', 'uses' => 'Psp\PspGroup\PspGroupController@selectGroupCreate']);
+                Route::get('selectGroup',['as' => 'pspGroup.selectGroupCreate', 'uses' => 'Psp\PspGroup\PspGroupController@selectGroupCreate']); //esto es para el alumno, el resto para el admin
                 Route::post('selectGroup',['as' => 'pspGroup.selectGroupStore', 'uses' => 'Psp\PspGroup\PspGroupController@selectGroupStore']);
-            });
-
-            //Template
-            Route::group(['prefix' => 'template'], function() {
-                Route::get('/', ['as' => 'template.index', 'uses' => 'Psp\Template\TemplateController@index']);
-                Route::get('create', ['as' => 'template.create', 'uses' => 'Psp\Template\TemplateController@create']);
-                Route::post('create', ['as' => 'template.store', 'uses' => 'Psp\Template\TemplateController@store']);
-                Route::get('show/{id}', ['as' => 'template.show', 'uses' => 'Psp\Template\TemplateController@show']);
-                Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
-                Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
-                Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
             });
 
             //PspProcess
@@ -611,7 +614,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'skill.delete', 'uses' => 'Psp\Skill\SkillController@destroy']);    
             });
 
-        });  
+          
 
 });   
 

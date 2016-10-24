@@ -117,7 +117,7 @@ h3.faculty-name{
   background-color: #3F5367;
 }
 
-.page-content-sumajg .form-group label {
+.page-content-sumajg label, .form-group label {
   color: #73879C !important;
   /*#ECF0F1; #FCFCFC*/
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif !important;
@@ -126,16 +126,37 @@ h3.faculty-name{
   line-height: 1.471 !important;
 }
 
-.page-content-sumajg textarea {
+textarea {
   resize: none;
 }
 
-.page-content-sumajg input[type="checkbox"] {
+.page-content-sumajg input[type="checkbox"], .modal-body input[type="checkbox"] {
   position: relative;
   left: 0px;
   opacity: 1;
 }
-
-.page-content-sumajg .form-group input[type="text"]  {
+.page-content-sumajg input[type="text"], .modal-body input[type="text"] {
   font-size: 10pt !important;
+}
+
+.userView {
+  background-color: #69C1A5;
+}
+
+.modal {
+  /*display: table !important; */
+  max-width : 100% !important;
+}
+
+.modal-content {
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+.modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: #ffffff;
 }

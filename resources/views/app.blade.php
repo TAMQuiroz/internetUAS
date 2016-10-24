@@ -105,7 +105,9 @@
         <ul id="slide-out" class="side-nav">
           <li>
             <div class="userView">
-              <img class="background" height= "100%" src="{{ asset('img/md_noche.png')}}">
+              <!--
+                <img class="background" height= "100%" src="{{ asset('img/md_noche.png')}}">
+              -->
               <i class="material-icons center">account_circle</i>        
               <div id="info-user" class="bar-info">
                 <span class="white-text email">
@@ -119,11 +121,11 @@
 
               <div id="info-faculty" class="bar-info">
                 <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
-                <span class="label label-info hidden-xs hidden-sm">
-                  @if(Session::get('academic-cycle')!=null)
-                    {{Session::get('academic-cycle')->academicCycle->Descripcion}}
-                  @endif
-                </span>
+                @if(Session::get('academic-cycle')!=null)
+                  <span class="label label-info hidden-xs hidden-sm">                  
+                    {{Session::get('academic-cycle')->academicCycle->Descripcion}}                  
+                  </span>
+                @endif
               </div>
                 
               <div id="info-endcycle" class="bar-info">

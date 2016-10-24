@@ -29,7 +29,7 @@ class InvestigatorController extends Controller
      */
     public function index()
     {
-        $investigadores = Investigator::get();
+        $investigadores = Investigator::orderBy('nombre', 'asc')->get();
 
         $data = [
             'investigadores'    =>  $investigadores,
@@ -46,8 +46,8 @@ class InvestigatorController extends Controller
      */
     public function create()
     {
-        $especialidades     = Faculty::lists('nombre', 'IdEspecialidad');
-        $areas              = Area::lists('nombre','id');
+        $especialidades     = Faculty::orderBy('nombre', 'asc')->lists('nombre', 'IdEspecialidad');
+        $areas              = Area::orderBy('nombre', 'asc')->lists('nombre','id');
 
         if($areas->isEmpty()){
             return redirect()->back()->with('warning','Primero debe crear areas');
@@ -130,8 +130,8 @@ class InvestigatorController extends Controller
     public function edit($id)
     {
         $investigador       = Investigator::find($id);
-        $especialidades     = Faculty::lists('nombre', 'IdEspecialidad');
-        $areas              = Area::lists('nombre','id');
+        $especialidades     = Faculty::orderBy('nombre', 'asc')->lists('nombre', 'IdEspecialidad');
+        $areas              = Area::orderBy('nombre', 'asc')->lists('nombre','id');
 
         $data = [
             'especialidades'    =>  $especialidades,

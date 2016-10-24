@@ -5,6 +5,7 @@ namespace Intranet\Http\Controllers\Investigation\Group;
 use Illuminate\Http\Request;
 use View;
 use Session;
+use Auth;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Services\Faculty\FacultyService;
@@ -13,6 +14,7 @@ use Intranet\Http\Services\Investigation\Group\GroupService;
 
 use Intranet\Models\Investigator;
 use Intranet\Models\Group;
+use Intranet\Models\Teacher;
 
 use Intranet\Http\Requests\GroupRequest;
 
@@ -45,7 +47,7 @@ class GroupController extends Controller
             $data['faculty'] = $this->facultyService->find($faculty_id);
             $data['groups'] = $this->groupService->retrieveAll();
         } catch (Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 
         return view('investigation.group.index', $data);
@@ -64,7 +66,7 @@ class GroupController extends Controller
             $data['faculty'] = $this->facultyService->find($faculty_id);
             $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
         } catch (Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 
         return view('investigation.group.createGroup',$data);
@@ -81,7 +83,7 @@ class GroupController extends Controller
         try {
             $this->groupService->createGroup($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 
         return redirect()->route('grupo.index')->with('success', 'El grupo se ha registrado exitosamente');
@@ -96,9 +98,33 @@ class GroupController extends Controller
     public function show($id)
     {
         try {
-            $data['group'] = Group::find($id);
+            $grupo = Group::find($id);
+            
+            $profesores = $grupo->teachers;
+            $investigadores = $grupo->investigators;
+
+            $integrantes = null;
+            $sorted = [];
+            
+            foreach ($investigadores as $investigador) {
+                $integrantes = $profesores->push($investigador);    
+            }
+            
+            if($integrantes){
+                $sorted = $integrantes->sortBy(function ($product, $key) {
+                    if(isset($product['IdDocente'])){
+                        return $product['Nombre'];
+                    }else{
+                        return $product['nombre'];
+                    }
+                });
+            }
+
+            $data['integrantes'] = $sorted;
+            $data['group'] = $grupo;
         } catch(\Exception $e) {
             dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
         return view('investigation.group.show', $data);
     }
@@ -116,14 +142,20 @@ class GroupController extends Controller
         //$data['title'] = 'Edit Course';
         $faculty_id = Session::get('faculty-code');
         try {
-            $data['group'] = $this->groupService->findGroupById($id);
-            $data['faculties'] = $this->facultyService->retrieveAll();
-            $data['faculty'] = $this->facultyService->find($faculty_id);
-            $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
-            $data['investigators'] = $this->groupService->getNotSelectedInvestigators($id);
+            if($this->groupService->checkLeader($id)){
+                $data['group'] = $this->groupService->findGroupById($id);
+                $data['faculties'] = $this->facultyService->retrieveAll();
+                $data['faculty'] = $this->facultyService->find($faculty_id);
+                $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
+                $data['investigators'] = $this->groupService->getNotSelectedInvestigators($id);
+                $data['elegible_teachers'] = $this->groupService->getNotSelectedTeachers($id);
+            }else{
+                return redirect()->back()->with('warning', 'El grupo no se puede editar debido a que no es el lider');
+            }
             
         } catch (\Exception $e) {
             dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 
         return view('investigation.group.editGroup', $data);
@@ -141,7 +173,7 @@ class GroupController extends Controller
         try {
             $this->groupService->updateGroup($request->all(), $id);
         } catch (\Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
         return redirect()->route('grupo.show',$id)->with('success', 'Las modificaciones se han guardado exitosamente');
     }
@@ -155,12 +187,17 @@ class GroupController extends Controller
     public function destroy($id)
     {
         try{
-            $group = $this->groupService->deleteGroup($id);
-            if($group){
-                return redirect()->back()->with('warning', 'El grupo no se puede eliminar debido a que tiene investigadores asignados');
-            }
+            if($this->groupService->checkLeader($id)){
+                $group = $this->groupService->deleteGroup($id);
+                if($group){
+                    return redirect()->back()->with('warning', 'El grupo no se puede eliminar debido a que tiene investigadores asignados');
+                }
+            }else{
+                return redirect()->back()->with('warning', 'El grupo no se puede eliminar debido a que no es el lider');
+            }         
+
         } catch (\Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
         return redirect()->route('grupo.index')->with('success', 'El registro ha sido eliminado exitosamente');
     }

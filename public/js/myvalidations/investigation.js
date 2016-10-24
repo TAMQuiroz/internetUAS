@@ -113,6 +113,13 @@ jQuery(function(){
             num_entregables: {
                 required: "Debe ingresar una cantidad de entregables",
                 min: "Debe poner un numero mayor a 0",
+            },
+            porcen_avance: {
+                min: "Debe poner un numero mayor o igual a 0",
+                max: "Debe poner un numero menor o igual a 100",
+            },
+            archivo: {
+                required: "Debe ingresar un entregable",
             }
         }
     });

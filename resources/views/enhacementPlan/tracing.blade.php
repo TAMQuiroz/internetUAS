@@ -29,7 +29,7 @@
 					<table class="table table-bordered" id="address-table" name="address-table">
                     	<thead>
                         	<tr>
-                            	<th class="col-sm-1 text-center" style="vertical-align: middle">Fecha Planificada</th>
+                            	<th class="col-sm-1 text-center" style="vertical-align: middle">Periodo</th>
 								<th class="col-sm-3 text-center" style="vertical-align: middle">Descripción</th>
 								<th class="col-sm-2 text-center" style="vertical-align: middle">Responsable</th>
 								<th class="col-sm-3 text-center" style="vertical-align: middle">Comentario</th>

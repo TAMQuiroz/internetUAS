@@ -141,14 +141,22 @@ $factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker)
     ];
 });
 
+$factory->define(Intranet\Models\Student::class, function (Faker\Generator $faker) {
+
+    return [
+        'IdAlumno'            =>  $faker->randomNumber($nbDigits = 2,$strict = true),
+    ];
+});
+
 $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
 
     $template =   factory(Intranet\Models\Template::class)->create();
+    $student =   factory(Intranet\Models\Student::class)->create();
 
     return [
-        'esObligatorio'       =>  'si',
-        'observaciones'       =>  $faker->text,
-        'ruta'               =>  $faker->text,
+        'esObligatorio'       =>  't',
+        'observaciones'       =>  'bien',
+        'ruta'               =>  'uploads/pspdocuments/0.pdf',
         'idStudent'         =>  1,
         'idTemplate'         =>  $template->id,
         'idTipoEstado'         =>  1,

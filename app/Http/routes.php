@@ -899,6 +899,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/facultad/{id}/profesor/create', ['as' => 'profesor_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_create']);        
         Route::post('/facultad/{id}/profesor/store', ['as' => 'profesor_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_store']);
         Route::post('/facultad/{id}/coordinador/store', ['as' => 'coordinador_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@coordinador_store']);
+    
+        Route::get('/academicCycle', ['as' => 'academicCycle_index.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_index']);
+        Route::get('/academicCycle/create', ['as' => 'academicCycle_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_create']);        
+        Route::post('/academicCycle/store', ['as' => 'academicCycle_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_store']);
     });
     
     //MODULO DE EVALUACIONES

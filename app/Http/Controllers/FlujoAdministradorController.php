@@ -10,6 +10,7 @@ use Intranet\Http\Requests\FlujoAdministradorCoordinadorRequest;
 use Intranet\Http\Services\Teacher\TeacherService;
 use Intranet\Http\Services\User\UserService;
 use Intranet\Http\Services\User\PasswordService;
+use Intranet\Http\Services\AcademicCycle\AcademicCycleService;
 
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
@@ -24,12 +25,14 @@ class FlujoAdministradorController extends Controller
     protected $userService;
     protected $passwordService;
     protected $facultyService;
+    protected $academicCycleService;
 
     public function __construct() {
         $this->teacherService = new TeacherService();
         $this->userService = new UserService;
         $this->passwordService = new PasswordService;
         $this->facultyService = new FacultyService;
+        $this->academicCycleService = new AcademicCycleService();
     }
 
     public function index()
@@ -145,8 +148,9 @@ class FlujoAdministradorController extends Controller
                             ->with('success', 'El profesor se ha registrado exitosamente');
     }
 
-    public function coordinador_store (FlujoAdministradorCoordinadorRequest $request, $id){
-        
+    public function coordinador_store (FlujoAdministradorCoordinadorRequest $request, $id){        
+        Session::set('new-faculty',$id);
+
         $specialty = Faculty::where('IdEspecialidad',$id)->first();
 
         //Perfil Profesor
@@ -169,8 +173,33 @@ class FlujoAdministradorController extends Controller
         $userA = User::where('IdUsuario', $coordinatorN->IdUsuario)->update(array('IdPerfil' => 1
         ));
         
-        
-        Return "actualizado cordinador ";
+        return redirect()->route('academicCycle_index.flujoAdministrador');
+    }
+
+    public function academicCycle_index(){        
+
+        $data['title'] = "Ciclo Académico";
+        $data['id'] = Session::get('new-faculty');
+        try {
+            $data['academicCycle'] = $this->academicCycleService->retrieveAll();
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return view('flujoAdministrador.academicCycle_index', $data);
+    }
+
+    public function academicCycle_create(){
+        $data['title'] = 'Nuevo Ciclo Académico';
+        return view('flujoAdministrador.academicCycle_create', $data);   
+    }
+
+    public function academicCycle_store(Request $request){
+        try {
+            $academicCycle = $this->academicCycleService->save($request->all());
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return redirect()->route('academicCycle_index.flujoAdministrador')->with('success', 'El ciclo académico se ha registrado exitosamente');
     }
         
 }

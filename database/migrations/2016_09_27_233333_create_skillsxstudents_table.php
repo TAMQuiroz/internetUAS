@@ -14,7 +14,7 @@ class CreateSkillsxstudentsTable extends Migration
     {
         Schema::create('skillsxstudents', function (Blueprint $table) {
             $table->integer('idStudent');
-            $table->foreign('idStudent')->references('IdAlumno')->on('alumno');
+            $table->foreign('idStudent')->references('IdAlumno')->on('Alumno');
             $table->integer('idCriterio')->unsigned();
             $table->foreign('idCriterio')->references('id')->on('skills');
             $table->integer('nota');

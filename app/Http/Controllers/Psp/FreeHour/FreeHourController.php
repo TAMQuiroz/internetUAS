@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\Http\Controllers\freeHour;
+namespace Intranet\Http\Controllers\Psp\freeHour;
 
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class FreeHourController extends Controller
         /*$data = [
             'freehours'    =>  $freehours,
         ];*/
-        return view('freeHour.index');
+        return view('psp.freeHour.index');
         //return view('freeHour.index', $data);
     }
 
@@ -32,7 +32,7 @@ class FreeHourController extends Controller
      */
     public function create()
     {
-        return view('freeHour.create');
+        return view('psp.freeHour.create');
     }
 
     /**
@@ -65,7 +65,7 @@ class FreeHourController extends Controller
      */
     public function edit($id)
     {
-        return view('freeHour.edit');
+        return view('psp.freeHour.edit');
     }
 
     /**

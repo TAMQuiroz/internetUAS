@@ -16,7 +16,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{ route('new.freehour') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nueva Disponibilidad</a>
+                        <a href="{{ route('freeHour.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nueva Disponibilidad</a>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -54,7 +54,7 @@
                     	<tr class="even pointer">
                             <td width="930" class="">10:00-11:00</td>
                             <td class=" ">
-                                    <a href="{{ route('edit.freehour',1) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('freeHour.edit',1) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                     <a class="btn btn-danger btn-xs delete-teacher" data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="fa fa-remove"></i></a>
                             </td>
                         </tr>

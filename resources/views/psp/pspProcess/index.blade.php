@@ -26,7 +26,7 @@
                     <thead>
                     <tr class="headings">
                         <th class="column-title">Estado </th>
-                        <th class="column-title">Nombre de curso </th>
+                        <th class="column-title">Nombre de curso PSP </th>
                         <th class="column-title">Ciclo </th>
                         <th class="column-title last">Acciones</th>
                         <th class="bulk-actions" colspan="7">
@@ -44,8 +44,8 @@
                                         <span class="label label-danger">Cerrado</span>
                                     @endif
                                 </td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$p->nomCurso}}</td>
+                                <td>{{$p->ciclo}}</td>
                                 <td>
                                     @if($p->Vigente)
                                         <a href="" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>

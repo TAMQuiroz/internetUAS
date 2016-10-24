@@ -13,9 +13,9 @@ class AddFkToPspstudents extends Migration
     public function up()
     {
         Schema::table('pspstudents', function (Blueprint $table) {
-             $table->foreign('idUser')->references('IdUsuario')->on('usuario');
+             $table->foreign('idUser')->references('IdUsuario')->on('Usuario');
              $table->foreign('idPspGroup')->references('id')->on('pspgroups');
-             $table->foreign('idFaculty')->references('IdEspecialidad')->on('especialidad');
+             $table->foreign('idFaculty')->references('IdEspecialidad')->on('Especialidad');
              $table->foreign('idSupervisor')->references('id')->on('supervisors');
              $table->foreign('idTipoEstado')->references('id')->on('statuses');
         });

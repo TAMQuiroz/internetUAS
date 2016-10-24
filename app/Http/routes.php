@@ -679,6 +679,10 @@ $api->version('v1', function ($api) {
 
             $api->get('aspects/{id}/criterions', 'Aspect\AspectController@getCriterions');
             $api->get('/faculties/{id}/teachers', 'Faculty\FacultyController@getTeachers');
+
+            //TUTORIA
+
+            $api->get('getTopics', 'Tutoria\TopicController@getAll');
         });
     });
 

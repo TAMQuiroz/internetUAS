@@ -484,6 +484,31 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['prefix' => 'psp'], function() {
 
+        Route::group(['prefix' => 'supervisor'], function() {
+
+            Route::get('/', ['as' => 'supervisor.index', 'uses' => 'Psp\Supervisor\SupervisorController@index']);
+            Route::get('/show/{id}', ['as' => 'supervisor.show', 'uses' => 'Psp\Supervisor\SupervisorController@show']);
+            Route::get('/create', ['as' => 'supervisor.create', 'uses' => 'Psp\Supervisor\SupervisorController@create']);
+            Route::post('/create', ['as' => 'supervisor.store', 'uses' => 'Psp\Supervisor\SupervisorController@store']);
+            Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
+            Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
+            Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
+        });
+
+        //PspGroups Luis Llanos
+
+        Route::group(['prefix' => 'pspGroup'], function() {
+            Route::get('/', ['as' => 'pspGroup.index', 'uses' => 'Psp\PspGroup\PspGroupController@index']);
+            Route::get('create', ['as' => 'pspGroup.create', 'uses' => 'Psp\PspGroup\PspGroupController@create']);
+            Route::post('create', ['as' => 'pspGroup.store', 'uses' => 'Psp\PspGroup\PspGroupController@store']);
+            Route::get('show/{id}', ['as' => 'pspGroup.show', 'uses' => 'Psp\PspGroup\PspGroupController@show']);
+            Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
+            Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
+            Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
+            //Esta ruta es para probar los API, no borrar
+            //Route::get('supervisor',['uses' => 'API\Psp\Supervisor\SupervisorController@getAll']);
+        });
+
         Route::group(['middleware' => 'teacherPsp'], function(){ //restringe el acceso solo a profesores de psp
 
             Route::group(['prefix' => 'supervisor'], function() {
@@ -640,20 +665,26 @@ $api->version('v1', function ($api) {
             $api->get('users/me', 'User\UserController@getUserInfo');
 
             $api->group(['namespace' => 'Faculty', 'prefix' => 'faculties'], function($api) {
+                $api->get('/getFaculty/{faculty_id}','FacultyController@getSpecialty');
                 $api->get('/', 'FacultyController@get');
                 $api->get('/{faculty_id}/educational-objectives', 'FacultyController@getEducationalObjectives');
                 $api->get('/{faculty_id}/students-results', 'FacultyController@getStudentsResult');
                 $api->get('/{faculty_id}/aspects', 'FacultyController@getAspects');
                 $api->get('/{faculty_id}/evaluated_courses', 'FacultyController@getEvaluatedCourses');
                 $api->get('/{faculty_id}/evaluated_courses/{course_id}/semesters/{semester_id}', 'FacultyController@getCourseReport');
-                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureReport');
+                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureRepor        t');
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
             });
             $api->get('faculties/{f_id}/periods/actual/semesters', 'Period\PeriodController@getSemesters');
+            $api->get('faculties/{f_id}/periods', 'Period\PeriodController@getPeriodList');
 
             $api->get('aspects/{id}/criterions', 'Aspect\AspectController@getCriterions');
             $api->get('/faculties/{id}/teachers', 'Faculty\FacultyController@getTeachers');
+
+            //TUTORIA
+
+            $api->get('getTopics', 'Tutoria\TopicController@getAll');
         });
     });
 

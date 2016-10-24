@@ -92,5 +92,21 @@ class PspDocumentTest extends TestCase
             //->see('Debe ingresar un titulo');            
     }
 
+            public function test_psp_ed_pdo_05()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+        $pspDocument   = factory(Intranet\Models\PspDocument::class)->create();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/psp/pspDocument/check/'.$pspDocument->id)
+            ->type('-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------','observaciones')
+            ->press('Guardar')
+            ->seePageIs('/psp/pspDocument/check/'.$pspDocument->id);
+            //->see('Documentos');
+            //->see('Debe ingresar un titulo');            
+    }
 
 }

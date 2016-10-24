@@ -121,5 +121,5 @@
             </div>
         </div>
     </div>
-
+<script src="{{ URL::asset('js/myvalidations/pspDocuments.js')}}"></script>
 @endsection

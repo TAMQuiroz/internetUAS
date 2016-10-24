@@ -63,6 +63,35 @@ $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator 
 });
 
 
+$factory->define(Intranet\Models\Template::class, function (Faker\Generator $faker) {
+    return [
+        'idPhase'          => 1,
+        'titulo'          => $faker->text,
+    ];
+});
+
+$factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $faker) {
+    return [
+        'nombres'           => $faker->firstNameMale,
+        'apellido_paterno'   => $faker->lastName,
+        'apellido_materno'   => $faker->lastName,
+        'correo'            => $faker->email,
+        'telefono'          => 999999999,
+        'direccion'         => $faker->lastName,
+        'codigo_trabajador'  => 20111010,
+        'idFaculty'         => 1,
+        'idUser'            => 3,
+        'Vigente'            => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\PspGroup::class, function (Faker\Generator $faker) {
+    return [
+        'numero'          => 1,
+        'descripcion'     => $faker->text,
+    ];
+});
+
 $factory->define(Intranet\Models\Tutstudent::class, function (Faker\Generator $faker) {
     return [
         'id_especialidad'    =>  1,
@@ -98,5 +127,31 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
         'id_area'           =>  1,
         'id_status'         =>  1,
 
+    ];
+});
+
+$factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker) {
+
+
+    return [
+        'numero'            =>  1,
+        'descripcion'       =>  $faker->text,
+        'fecha_inicio'         =>  '2017-10-06',
+        'fecha_fin'         =>  '2018-10-06',
+    ];
+});
+
+$factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
+
+    $template =   factory(Intranet\Models\Template::class)->create();
+
+    return [
+        'esObligatorio'       =>  'si',
+        'observaciones'       =>  $faker->text,
+        'ruta'               =>  $faker->text,
+        'idStudent'         =>  1,
+        'idTemplate'         =>  $template->id,
+        'idTipoEstado'         =>  1,
+        'fecha_limite'         =>  '2018-10-06',
     ];
 });

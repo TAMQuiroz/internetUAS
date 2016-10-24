@@ -8,7 +8,11 @@ class Student extends Model {
 
     protected $table = 'Alumno';
     protected $primaryKey = 'IdAlumno';
-    protected $fillable = ['IdHorario', 'Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno'];
+    protected $fillable = ['IdHorario', 'Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno','IdPspGroup'];
 
+    public function pspGroup()
+    {
+    	return $this->belongsTo('Intranet\Models\PspGroup','IdPspGroup');
+    }
 
 }

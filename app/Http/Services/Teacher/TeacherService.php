@@ -154,7 +154,7 @@ class TeacherService {
 			$resultado = (strcasecmp ($cadena2, $word)=== 0) ? 0 : $word ;
 		}
 		*/
-		//$teachers = DB::select('select * from docente where Nombre like ?', array('%[$word]%'));
+		//$teachers = DB::select('select * from Docente where Nombre like ?', array('%[$word]%'));
 		//$teachers = Teacher::where('Nombre', $word);
 		//				  ->orWhere('Nombre', 'LIKE','%'.$request['word'].'%')->get();
 						  //->orWhere('ApellidoPaterno', $word)
@@ -181,6 +181,15 @@ class TeacherService {
 
 		$teachers_query->whereNotIn('IdDocente', $except);
 
+		return $teachers_query->get();
+	}
+
+	function searchByNameLastname($request)
+	{
+		$teachers_query = Teacher::where('Vigente', 1)->where('rolEvaluaciones',null);
+		if(trim($request['nombre']) != "") {
+			$teachers_query->where(DB::raw('CONCAT(Nombre, " ", ApellidoPaterno," ", ApellidoMaterno)'), 'like', "%{$request['nombre']}%");
+		}		
 		return $teachers_query->get();
 	}
 }

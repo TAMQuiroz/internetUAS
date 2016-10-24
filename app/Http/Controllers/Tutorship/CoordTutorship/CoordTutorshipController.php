@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Session;//<---------------------------------neces
 class CoordTutorshipController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
-        $idEspecialidad = Session::get('faculty-code');
-        $tutors = Teacher::where('rolTutoria', 2)->where('IdEspecialidad', $idEspecialidad)->get();
-        $data = [
-            'tutors'    =>  $tutors,
+        $filters = $request->all();
+        $specialty = Session::get('faculty-code');
+        $coords = Teacher::getCoordsFiltered($is_coord = true, $filters, $specialty);
+
+        $data = [            
+            'tutors'    =>  $coords->appends($filters),
         ];
         return view('tutorship.coordtutor.index', $data);
     }
@@ -27,10 +29,11 @@ class CoordTutorshipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $idEspecialidad = Session::get('faculty-code');
-        $teachers = Teacher::where('rolTutoria', null)->where('IdEspecialidad', $idEspecialidad)->get();      
+        $filters = $request->all();
+        $specialty = Session::get('faculty-code');
+        $teachers = Teacher::getCoordsFiltered($is_coord = false, $filters, $specialty);        
         $data = [
             'teachers'    =>  $teachers,            
         ];        
@@ -79,11 +82,11 @@ class CoordTutorshipController extends Controller
     public function destroy($id)
     {
         try {
-            DB::table('docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
+            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
             return redirect()->route('coordinadorTutoria.index')->with('success', 'Se desactivó al coordinador exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
-        }        
+        }
         
     }
 }

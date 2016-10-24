@@ -657,11 +657,12 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/aspects', 'FacultyController@getAspects');
                 $api->get('/{faculty_id}/evaluated_courses', 'FacultyController@getEvaluatedCourses');
                 $api->get('/{faculty_id}/evaluated_courses/{course_id}/semesters/{semester_id}', 'FacultyController@getCourseReport');
-                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureReport');
+                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureRepor        t');
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
             });
             $api->get('faculties/{f_id}/periods/actual/semesters', 'Period\PeriodController@getSemesters');
+            $api->get('faculties/{f_id}/periods', 'Period\PeriodController@getPeriodList');
 
             $api->get('aspects/{id}/criterions', 'Aspect\AspectController@getCriterions');
             $api->get('/faculties/{id}/teachers', 'Faculty\FacultyController@getTeachers');

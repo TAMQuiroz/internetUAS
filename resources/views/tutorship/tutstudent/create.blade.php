@@ -21,36 +21,36 @@
 
 				{{Form::open(['route' => 'alumno.store', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 				<div class="form-group">
-					{{Form::label('Código *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Código: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-4 col-sm-4 col-xs-12">
 						{{Form::text('codigo',null,['class'=>'form-control', 'required', 'maxlength' => 8])}}
 					</div>
 				</div>
 
 				<div class="form-group">
-					{{Form::label('Nombres *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Nombres: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-4 col-sm-4 col-xs-12">
 						{{Form::text('nombre',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 					</div>
 				</div>
 
 				<div class="form-group">
-					{{Form::label('Apellido paterno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Apellido paterno: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-4 col-sm-4 col-xs-12">
 						{{Form::text('app',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 					</div>
 				</div>
 
 				<div class="form-group">
-					{{Form::label('Apellido materno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Apellido materno: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-4 col-sm-4 col-xs-12">
 						{{Form::text('apm',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 					</div>
 				</div>
 
 				<div class="form-group">
-					{{Form::label('Correo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Correo: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-4 col-sm-4 col-xs-12">
 						{{Form::text('correo',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 					</div>
 				</div>

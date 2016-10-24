@@ -36,4 +36,8 @@ class Faculty extends Model {
     public function teachers(){
         return $this->hasMany('Intranet\Models\Teacher', 'IdEspecialidad');
     }
+
+    public function specialty(){
+        return Faculty::where('IdEspecialidad',$this->IdEspecialidad)->first();
+    }    
 }

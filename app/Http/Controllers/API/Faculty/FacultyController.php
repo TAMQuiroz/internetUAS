@@ -3,6 +3,7 @@
 namespace Intranet\Http\Controllers\API\Faculty;
 
 use JWTAuth;
+use Response;
 use Intranet\Models\Course;
 use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
@@ -38,6 +39,9 @@ class FacultyController extends BaseController
         $this->timeTableService = new TimeTableService();
     }
 
+    
+   
+
     public function get(Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
@@ -54,6 +58,21 @@ class FacultyController extends BaseController
         $faculties->load('coordinator');
         return $this->response->array($faculties->toArray());
     }
+
+
+    
+    public function getSpecialty(Request $request){
+      $user = JWTAuth::parseToken()->authenticate();
+      $specialty = Faculty::where('IdEspecialidad',$user->accreditor->IdEspecialidad)->first();
+      $specialty->load('coordinator');
+      return Response::json($specialty); 
+    }
+
+
+
+
+
+
 
     public function getEducationalObjectives($faculty_id, Request $request)
     {

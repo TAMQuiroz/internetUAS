@@ -13,7 +13,7 @@ class AddFkToPspmeetings extends Migration
     public function up()
     {
         Schema::table('pspmeetings', function (Blueprint $table) {
-             $table->foreign('idStudent')->references('IdAlumno')->on('alumno');
+             $table->foreign('idStudent')->references('IdAlumno')->on('Alumno');
              $table->foreign('idSupervisor')->references('id')->on('supervisors');
              $table->foreign('idTipoEstado')->references('id')->on('statuses');
         });

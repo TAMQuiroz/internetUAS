@@ -33,10 +33,10 @@ class PhaseController extends Controller
     public function index()
     {
 
-        $Phasees = Phase::get();
+        $Phaseses = Phase::get();
 
         $data = [
-            'Phasees'    =>  $Phasees,
+            'Phaseses'    =>  $Phaseses,
         ];
         return view('psp.Phase.index', $data);
     }
@@ -64,12 +64,12 @@ class PhaseController extends Controller
 
             $Phase                   = new Phase;
             $Phase->numero          = $request['numero'];
-            $Phase->descripcion           = $request['nombres'];
+            $Phase->descripcion      = $request['descripcion'];
             $Phase->fecha_inicio      = $request['fecha_inicio'];
             $Phase->fecha_fin      = $request['fecha_fin'];
             $Phase->save();
 
-            return redirect()->route('Phase.index')->with('success', 'La fase se ha registrado exitosamente');
+            return redirect()->route('phase.index')->with('success', 'La fase se ha registrado exitosamente');
         }catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -99,10 +99,10 @@ class PhaseController extends Controller
      */
     public function edit($id)
     {
-        $Phase       = Phase::find($id);
+        $phase       = Phase::find($id);
 
         $data = [
-            'Phase'      =>  $Phase,
+            'phase'      =>  $phase,
         ];
         return view('psp.Phase.edit',$data);
     }
@@ -125,7 +125,7 @@ class PhaseController extends Controller
             $Phase->fecha_fin      = $request['fecha_fin'];            
             $Phase->save();
 
-            return redirect()->route('Phase.index')->with('success', 'La fase se ha actualizado exitosamente');
+            return redirect()->route('phase.index')->with('success', 'La fase se ha actualizado exitosamente');
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -141,14 +141,14 @@ class PhaseController extends Controller
     {
      try {
             $Phase   = Phase::find($id);
-            $user         = User::find($Phase->idUser);
+            //$user         = User::find($Phase->idUser);
             
             //Restricciones
 
             $Phase->delete();
-            $user->delete();
+            //$user->delete();
 
-            return redirect()->route('Phase.index')->with('success', 'La fase se ha eliminado exitosamente');
+            return redirect()->route('phase.index')->with('success', 'La fase se ha eliminado exitosamente');
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }  

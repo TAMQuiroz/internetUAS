@@ -155,8 +155,8 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
 
     return [
         'esObligatorio'       =>  't',
-        'observaciones'       =>  'bien',
-        'ruta'               =>  'uploads/pspdocuments/0.pdf',
+        //'observaciones'       =>  'bien',
+        //'ruta'               =>  'uploads/pspdocuments/0.pdf',
         'idStudent'         =>  1,
         'idTemplate'         =>  $template->id,
         'idTipoEstado'         =>  1,

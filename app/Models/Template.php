@@ -3,12 +3,12 @@
 namespace Intranet\Models;
 
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Template extends Model
 {
     //
-    //use SoftDeletes;
+    use SoftDeletes;
 	
     public function teacher(){
         return $this->belongsTo('Intranet\Models\Teacher', 'idProfesor');
@@ -22,6 +22,8 @@ class Template extends Model
     public function user(){
         return $this->belongsTo('Intranet\Models\User', 'idAdmin');
     }
-
+    public function phase(){
+        return $this->belongsTo('Intranet\Models\Phase', 'id');
+    }
 
 }

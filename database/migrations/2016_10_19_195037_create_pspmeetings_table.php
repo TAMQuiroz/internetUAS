@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMeetingsTable extends Migration
+class CreatePspmeetingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,21 @@ class CreateMeetingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('meetings', function (Blueprint $table) {
+        Schema::create('pspmeetings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idTipoEstado');
-            $table->time('hora_ini');
+            $table->integer('idTipoEstado')->unsigned();
+            $table->time('hora_inicio');
             $table->time('hora_fin');
             $table->date('fecha');
             $table->integer('idStudent');
-            $table->integer('idSupervisor');
+            $table->integer('idSupervisor')->unsigned();
             $table->char('asistencia');
             $table->string('lugar');
             $table->string('observaciones');
             $table->string('retroalimentacion');    
             $table->integer('tipoReunion');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,6 +37,6 @@ class CreateMeetingsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('meetings');
+        Schema::drop('pspmeetings');
     }
 }

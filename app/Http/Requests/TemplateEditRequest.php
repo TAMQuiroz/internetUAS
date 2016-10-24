@@ -25,7 +25,7 @@ class TemplateEditRequest extends Request
     {
         return [
             'fase'        => 'required',
-            'titulo'   => 'required|max:100',
+            'titulo'   => 'required|max:64',
             'obligatorio'    => '',
             'ruta'   => 'file',
         ];

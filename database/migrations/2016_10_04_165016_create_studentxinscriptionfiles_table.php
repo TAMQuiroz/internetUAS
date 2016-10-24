@@ -16,7 +16,7 @@ class CreateStudentxinscriptionfilesTable extends Migration
             $table->integer('idInscriptionFile')->unsigned();
             $table->foreign('idInscriptionFile')->references('id')->on('inscriptionfiles');
             $table->integer('idStudent');
-            $table->foreign('idStudent')->references('IdAlumno')->on('alumno');
+            $table->foreign('idStudent')->references('IdAlumno')->on('Alumno');
             //$table->integer('aceptaTerminos')->unsigned();
             //$table->foreign('aceptaTerminos')->references('id')->on('statuses');
             $table->integer('acepta_terminos');

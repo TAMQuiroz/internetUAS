@@ -285,23 +285,22 @@
               @endif
               @endif
 
-<<<<<<< HEAD
               @if(in_array(58,Session::get('actions')) || in_array(63,Session::get('actions')) || in_array(64,Session::get('actions'))  )
-              <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Configuación sistema</a>
+                <li class="bold">
+                  <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Configuación sistema</a>
 
-                <div class="collapsible-body">
-                  <ul>
-                    <li><a href="{{ route('index.users') }}">Visitantes</a></li>
-                    <li><a href="{{ route('index.profile')}}">Perfiles</a></li>
-                    <li><a href="{{ route('index.academicCycle')}}">Ciclo académico</a></li>
-                    <li><a href="{{route('status.indexType')}}">Administración de status</a></li>
-                  </ul>
-                </div>
+                  <div class="collapsible-body">
+                    <ul>
+                      <li><a href="{{ route('index.users') }}">Visitantes</a></li>
+                      <li><a href="{{ route('index.profile')}}">Perfiles</a></li>
+                      <li><a href="{{ route('index.academicCycle')}}">Ciclo académico</a></li>
+                      <li><a href="{{route('status.indexType')}}">Administración de status</a></li>
+                    </ul>
+                  </div>
 
-              </li>  
-              @endif   
-=======
+                </li>  
+              @endif
+
               @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 7 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
               <li>
                 <a>
@@ -336,7 +335,6 @@
                 </ul>
               </li>
               @endif
->>>>>>> fe2e2019e4f4b382f0c9a451f455ba1b59e086da
 
               @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
               <li class="bold">
@@ -389,7 +387,6 @@
                   </ul>
                 </div>
 
-<<<<<<< HEAD
               </li>  
               @endif   
 
@@ -399,59 +396,6 @@
         
         <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
         <!--Fin barra de hamburgauesa-->            
-=======
-    <!-- top navigation -->
-   <div class="top_nav">
-
-      <div class="nav_menu" style="padding-top: 5px;">
-        <nav class="" role="navigation">
-          <ul class="nav navbar-nav navbar-right" style="padding-left:5px;">
-            <li class="nav toggle visible-xs visible-sm pull-left" style="padding-top:0;">
-              <button id="menu_toggle" class="btn btn-dark"><i class="fa fa-lg fa-bars"></i></button>
-            </li>
-            <li class="user-profile pull-left" >
-              <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
-              <span class="label label-default hidden-xs hidden-sm">
-              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5 )
-                  {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
-              @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
-                  {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
-              @else
-                  {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
-              @endif  
-              </span>
-              <span>&nbsp</span>
-              <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
-              <span class="label label-info hidden-xs hidden-sm">@if(Session::get('academic-cycle')!=null){{Session::get('academic-cycle')->academicCycle->Descripcion}}@endif</span>
-              @if(Session::has('academic-cycle'))
-                <span class="label label-danger col-10">
-                  Días restantes para el fin de ciclo: {{ $diffForHumans }}
-                </span>
-              @endif
-
-            </li>
-            <li>
-              <form method="GET" action="{{ url('logout') }}">
-                <button class="btn btn-dark btn-sm hidden-xs hidden-sm">Cerrar Sesión
-                  <i class="fa fa-sign-out fa-lg"></i>
-                </button>
-                <button class="btn btn-dark visible-xs visible-sm">
-                  <i class="fa fa-sign-out fa-lg"></i>
-                </button>
-              </form>
-            </li>
-            <li>
-                <span class="info-number"><a href="{{ route('index.subindex')}}" class="btn btn-sm btn-dark hidden-xs hidden-sm">Mis Especialidades
-                  <i class="fa fa-institution fa-lg"></i></a><span class="badge bg-blue">{{Session::get('numFaculties')}}</span>
-                </span>
-                <span><a href="{{ route('index.subindex')}}" class="btn btn-md btn-dark visible-xs visible-sm">
-                  <i class="fa fa-institution fa-lg"></i></a>
-                </span>
-            </li>
-          </ul>
-        </nav>
-      </div>
->>>>>>> fe2e2019e4f4b382f0c9a451f455ba1b59e086da
 
         <a href="#" class="brand-logo center">UAS</a>
 

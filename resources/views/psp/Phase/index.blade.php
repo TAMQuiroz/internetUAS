@@ -18,7 +18,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{ route('Phases.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nueva Fase</a>
+                        <a href="{{ route('phase.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nueva Fase</a>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -30,6 +30,7 @@
                         <th class="column-title">Descripción</th>
                         <th class="column-title">Fecha de Inicio</th>
                         <th class="column-title">Fecha de Fin</th>
+                        <th colspan="2">Acciones</th>    
                     </tr>
                     </thead>
                     <tbody>
@@ -40,13 +41,13 @@
                             <td >{{$Phases->fecha_inicio}}</td>
                             <td >{{$Phases->fecha_fin}}</td>
                             <td >
-                        		<a href="{{ route('Phases.show', $Phases->id) }}"  class="btn btn-primary btn-xs" ><i class="fa fa-search"></i></a>
-                                <a href="{{ route('Phases.edit', $Phases->id) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
+                        		<a href="{{ route('phase.show', $Phases->id) }}"  class="btn btn-primary btn-xs" ><i class="fa fa-search"></i></a>
+                                <a href="{{ route('phase.edit', $Phases->id) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                 
                                 <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$Phases->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
                             </td>
                         </tr>
-                        @include('modals.delete', ['id'=> $Phases->id, 'message' => '¿Esta seguro que desea eliminar esta fase?', 'route' => route('Phases.delete', $Phases->id)])
+                        @include('modals.delete', ['id'=> $Phases->id, 'message' => '¿Esta seguro que desea eliminar esta fase?', 'route' => route('phase.delete', $Phases->id)])
                         @endforeach
                     </tbody>
                 </table>

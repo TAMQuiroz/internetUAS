@@ -74,6 +74,7 @@ class TemplateController extends Controller
                 }
             }
             if(Auth::User()->IdPerfil==3){
+                //$admin = Admin::where('idUser',Auth::User()->IdUsuario)->first(); 
                 $template->idAdmin   = Auth::User()->IdUsuario;
             }
             /*

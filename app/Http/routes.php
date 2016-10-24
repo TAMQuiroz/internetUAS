@@ -746,10 +746,13 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::post('/facultad', ['as' => 'facultad_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_store']);
         Route::get('/facultad', ['as' => 'facultad_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_create']);
+        Route::get('/facultad/edit/{id}', ['as' => 'facultad_edit.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_edit']);
+        Route::post('/facultad/update', ['as' => 'facultad_update.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_update']);
 
         Route::get('/facultad/{id}/profesor', ['as' => 'profesor_index.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_index']);
         Route::get('/facultad/{id}/profesor/create', ['as' => 'profesor_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_create']);        
-        Route::post('/profesor', ['as' => 'profesor_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_store']);
+        Route::post('/facultad/{id}/profesor/store', ['as' => 'profesor_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_store']);
+        Route::post('/facultad/{id}/coordinador/store', ['as' => 'coordinador_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@coordinador_store']);
     });
     
     //MODULO DE EVALUACIONES

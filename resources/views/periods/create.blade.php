@@ -20,23 +20,29 @@
             <div class="x_content">
                 <div class="form-horizontal">
                     <div class="row" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Inicio<span class="error">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control cycleClass" name="cycleStart" id="cycleStart">
+                                        <option value="0">-- Seleccione --</option>
+                                        @foreach($semesters as $s)
+                                            <option numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Inicio<span class="error">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="cycleStart" id="cycleStart" class="form-control" required="true">
-                                    <option value="0">-- Seleccione --</option>
-                                    @foreach($semesters as $s)
-                                        <option numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"><span class="error"></span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <p style= "color:#a94442; font-weight: 700; margin-bottom: 5px; max-width: 100%;" id="validation" name="validation"> </p>
+                        </div>
                     </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
                     <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Fin<span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="cycleEnd" id="cycleEnd" class="form-control" required="true">
+                                <select class="form-control cycleClass" name="cycleEnd" id="cycleEnd" required="true">
                                     <option value="0">-- Seleccione --</option>
                                     @foreach($semesters as $s)
                                         <option numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>

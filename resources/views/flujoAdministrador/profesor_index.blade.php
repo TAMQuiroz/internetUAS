@@ -70,10 +70,10 @@
                 <div class="row">
                     <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Coordinador<span class="error">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select  required>
+                        <select  required="true" name="coordinador" class="form-control">
                             <option value="">--Seleccione--</option>
                             @foreach($teachers as $teach)
-                                <option value= "{{$teach->idDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
+                                <option value= "{{$teach->IdDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -94,6 +94,4 @@
             
         </form>
         <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}"></script>
-    @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar al profesor?', 'action' => '#', 'button' => 'Delete'])
-    @include('teachers.view-modal', ['title' => 'Información del Profesor'])
 @endsection

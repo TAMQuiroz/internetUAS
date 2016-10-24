@@ -5,6 +5,7 @@ namespace Intranet\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
+use Intranet\Http\Requests\FlujoAdministradorCoordinadorRequest;
 
 use Intranet\Http\Services\Teacher\TeacherService;
 use Intranet\Http\Services\User\UserService;
@@ -144,8 +145,8 @@ class FlujoAdministradorController extends Controller
                             ->with('success', 'El profesor se ha registrado exitosamente');
     }
 
-    public function coordinador_store (Request $request, $id){
-        /*
+    public function coordinador_store (FlujoAdministradorCoordinadorRequest $request, $id){
+        
         $specialty = Faculty::where('IdEspecialidad',$id)->first();
 
         //Perfil Profesor
@@ -156,18 +157,19 @@ class FlujoAdministradorController extends Controller
             ));
         }
 
-        $coordinatorN = Teacher::where('IdDocente',$request->input('coordinator'))->first();
+        //Return "actualizado cordinaccdor ". $request->get('coordinador');
+        
+        $coordinatorN = Teacher::where('IdDocente',$request->input('coordinador'))->first();
 
         $faculty = Faculty::where('IdEspecialidad', $id)
-                    ->update(array( 'IdDocente' =>$request->input('coordinator')
+                    ->update(array( 'IdDocente' =>$request->input('coordinador')
         ));
 
         //Perfil Coordinador
-        $userA = User::where('IdUsuario', $coordinatorN->IdUsuario)
-                     ->update(array('IdPerfil' => 1
+        $userA = User::where('IdUsuario', $coordinatorN->IdUsuario)->update(array('IdPerfil' => 1
         ));
-        */
-
+        
+        
         Return "actualizado cordinador ";
     }
         

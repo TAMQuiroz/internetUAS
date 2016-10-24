@@ -58,10 +58,10 @@
                             <td class=" ">{{ $tutor->Correo }}</td>
                             <td class=" ">-</td>                            
                             <td class=" ">
-                                <a href="{{route('tutor.show',$tutor->IdDocente)}}" class="btn btn-primary btn-xs view-group"">
+                                <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
                                 <i class="fa fa-search"></i>
                                 </a>
-                                <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
+                                <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
                                     <i class="fa fa-remove"></i>
                                 </a>
                             </td>

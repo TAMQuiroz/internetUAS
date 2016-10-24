@@ -298,7 +298,9 @@ Route::group(['middleware' => 'auth'], function(){
 
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
-        
+
+        Route::post('/searchEvaluacion', ['uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
+
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);
         Route::get('/getCodigo/{codigo}', ['uses' => 'Teacher\TeacherController@getCodigo']);
@@ -706,7 +708,14 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
             Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
         });
-
+        
+        //Disponibilidad
+        Route::group(['prefix' => 'disponibilidades'], function(){    
+            Route::get('/', ['as' => 'disponibilidad.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
+            Route::get('edit/{id}', ['as' => 'disponibilidad.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
+            Route::post('edit/{id}', ['as' => 'disponibilidad.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
+        });
+        
         //Alumnos de la especialidad
         Route::group(['prefix' => 'alumnos'], function(){    
             Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
@@ -718,6 +727,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
             Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
             Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
+            Route::get('restore/{id}', ['as' => 'alumno.restore', 'uses' => 'Tutorship\Tutstudent\TutstudentController@restore']);
             Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
             Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
             Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
@@ -745,5 +755,57 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/facultad/{id}/coordinador/store', ['as' => 'coordinador_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@coordinador_store']);
     });
     
-    
+    //MODULO DE EVALUACIONES
+    Route::group(['prefix' => 'evaluaciones'], function(){
+        //Competencias
+        Route::group(['prefix' => 'competencias'], function(){    
+            Route::get('/', ['as' => 'competencia.index', 'uses' => 'Evaluations\Competence\CompetenceController@index']);
+            Route::get('create', ['as' => 'competencia.create', 'uses' => 'Evaluations\Competence\CompetenceController@create']);
+            Route::post('create', ['as' => 'competencia.store', 'uses' => 'Evaluations\Competence\CompetenceController@store']);
+            Route::get('show/{id}', ['as' => 'competencia.show', 'uses' => 'Evaluations\Competence\CompetenceController@show']);
+            Route::get('edit/{id}', ['as' => 'competencia.edit', 'uses' => 'Evaluations\Competence\CompetenceController@edit']);
+            Route::post('edit/{id}', ['as' => 'competencia.update', 'uses' => 'Evaluations\Competence\CompetenceController@update']);
+            Route::get('delete/{id}', ['as' => 'competencia.delete', 'uses' => 'Evaluations\Competence\CompetenceController@destroy']);
+        });
+
+        //Preguntas maestras
+        Route::group(['prefix' => 'preguntas'], function(){    
+            Route::get('/', ['as' => 'pregunta.index', 'uses' => 'Evaluations\Question\QuestionController@index']);
+            Route::get('create', ['as' => 'pregunta.create', 'uses' => 'Evaluations\Question\QuestionController@create']);
+            Route::post('create', ['as' => 'pregunta.store', 'uses' => 'Evaluations\Question\QuestionController@store']);
+            Route::get('show/{id}', ['as' => 'pregunta.show', 'uses' => 'Evaluations\Question\QuestionController@show']);
+            Route::get('edit/{id}', ['as' => 'pregunta.edit', 'uses' => 'Evaluations\Question\QuestionController@edit']);
+            Route::post('edit/{id}', ['as' => 'pregunta.update', 'uses' => 'Evaluations\Question\QuestionController@update']);
+            Route::get('delete/{id}', ['as' => 'pregunta.delete', 'uses' => 'Evaluations\Question\QuestionController@destroy']);
+
+            //AJAX
+            Route::post('search', ['as' => 'pregunta.buscar','uses' => 'Evaluations\Question\QuestionController@searchModalEv']);//NO TOCAR!
+            Route::post('editEv', ['as' => 'pregunta.editar','uses' => 'Evaluations\Question\QuestionController@editModalEv']);//NO TOCAR!
+        });
+
+
+        //Evaluadores
+        Route::group(['prefix' => 'evaluadores'], function(){    
+            Route::get('/', ['as' => 'evaluador.index', 'uses' => 'Evaluations\Evaluator\EvaluatorController@index']);
+            Route::get('create', ['as' => 'evaluador.create', 'uses' => 'Evaluations\Evaluator\EvaluatorController@create']);
+            Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);
+            Route::get('show/{id}', ['as' => 'evaluador.show', 'uses' => 'Evaluations\Evaluator\EvaluatorController@show']);
+            Route::get('edit/{id}', ['as' => 'evaluador.edit', 'uses' => 'Evaluations\Evaluator\EvaluatorController@edit']);
+            Route::post('edit/{id}', ['as' => 'evaluador.update', 'uses' => 'Evaluations\Evaluator\EvaluatorController@update']);
+            Route::get('delete/{id}', ['as' => 'evaluador.delete', 'uses' => 'Evaluations\Evaluator\EvaluatorController@destroy']);
+        });
+
+        //Evaluaciones
+        Route::group(['prefix' => 'evaluaciones'], function(){    
+            Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
+            Route::get('create', ['as' => 'evaluacion.create', 'uses' => 'Evaluations\Evaluation\EvaluationController@create']);
+            Route::post('create', ['as' => 'evaluacion.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@store']);
+            Route::get('show/{id}', ['as' => 'evaluacion.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@show']);
+            Route::get('edit/{id}', ['as' => 'evaluacion.edit', 'uses' => 'Evaluations\Evaluation\EvaluationController@edit']);
+            Route::post('edit/{id}', ['as' => 'evaluacion.update', 'uses' => 'Evaluations\Evaluation\EvaluationController@update']);
+            Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
+
+            
+        });
+    });
 });

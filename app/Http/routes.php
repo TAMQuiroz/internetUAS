@@ -684,8 +684,11 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/criterions', 'Aspect\AspectController@getCriterions');
             });
 
-            
-            
+            //INVESTIGACION
+
+            $api->get('getAllInvestigators', 'Investigation\Investigator\InvestigatorController@getAll');
+            $api->get('getAllGroups', 'Investigation\Group\GroupController@getAll');
+            $api->get('getAllProjects', 'Investigation\Project\ProjectController@getAll');
 
             //TUTORIA
 

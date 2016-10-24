@@ -39,9 +39,8 @@
         <div class="separator"></div>
 
         <div class="row">
-          <div class="col-md-9 col-sm-12 col-xs-12">
+          <div class="col-md-12 col-sm-12 col-xs-12">
             <button class="btn btn-success pull-right" type="submit">Siguiente</button>
-            <a class="btn btn-default pull-right" href="{{ route('index.faculty') }}">Cancelar</a>
           </div>
         </div>  
       </div>

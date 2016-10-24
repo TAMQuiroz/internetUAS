@@ -69,7 +69,7 @@ class SupervisorController extends Controller
             
             $usuario->save();
 
-            //Crear investigador
+            //Crear supervisor
             $supervisor                   = new Supervisor;
             $supervisor->codigo_trabajador          = $request['codigo'];
             $supervisor->nombres           = $request['nombres'];

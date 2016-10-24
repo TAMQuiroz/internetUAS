@@ -5,6 +5,7 @@ namespace Intranet\Models;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------necesario para softdeletes
+use Intranet\Http\Services\User\PasswordService;
 use Intranet\Exceptions\InvalidTutStudentException;
 
 class Tutstudent extends Model
@@ -22,7 +23,7 @@ class Tutstudent extends Model
     }
 
     public function tutorship(){
-  	  return $this->hasOne('Intranet\Models\Tutorship');
+  	  return $this->hasOne('Intranet\Models\Tutorship','id_alumno');//bien
     }
 
     static public function loadStudents($csv_path, $mayor) {
@@ -36,6 +37,8 @@ class Tutstudent extends Model
                 if($student) {
                     $student->restore();
                 } else {
+                    Tutstudent::createStudentUser($studentCode = $row[0], $email = $row[4]);
+
                     Tutstudent::create([
                         "codigo" => $row[0],
                         "nombre" => $row[1],
@@ -50,5 +53,54 @@ class Tutstudent extends Model
         }else {
             throw new InvalidTutStudentException;
         }
+    }
+
+    static public function getFilteredStudents($filters, $tutor = null, $mayor = null) {
+        $query = Tutstudent::query();
+
+        if($mayor) {
+            $query = $query->where("id_especialidad", $mayor);
+        }
+
+        if($filters["code"] != "") {
+            $query  = $query->where("codigo", $filters["code"]);
+        }
+
+        if($filters["name"] != "") {
+            $query = $query->where("nombre", "like", "%" . $filters["name"] . "%");
+        } 
+
+        if($filters["lastName"] != "") {
+            $query = $query->where("ape_paterno", "like", "%" . $filters["lastName"] . "%");
+        }
+
+        if($filters["secondLastName"] != "") {
+            $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
+        }
+
+        if($tutor) {
+            $query = $query->whereHas('tutorship', function($q) use($tutor) {
+                $q = $q->where('id_tutor', $tutor);
+            });
+        }
+
+        return $query->withTrashed()->paginate(10);
+    }
+
+    static function createStudentUser($studentCode, $email) {
+
+        $passwordService = new PasswordService;
+
+        $user = User::create([
+                "Usuario" => $studentCode,
+                "Contrasena" => bcrypt(123),
+                "IdPerfil" => 0
+            ]);
+
+        if ($user) {
+            $passwordService->sendSetPasswordLink($user, $email);
+        }
+
+        return $user->IdUsuario;
     }
 }

@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 <button class="btn btn-success pull-right" name="btnSave" type="submit">Guardar</button>
-                                <a href="{{ route('index.freeHours') }}" class="btn btn-default pull-right"> Cancelar</a>
+                                <a href="{{ route('freeHour.index') }}" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>
                     </div>

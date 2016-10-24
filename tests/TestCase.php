@@ -3,7 +3,7 @@
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     // 
-    // ./vendor/bin/phpunit
+    // ./vendor/bin/phpunit --filter=test_inv_
     /**
      * The base URL to use while testing the application.
      *

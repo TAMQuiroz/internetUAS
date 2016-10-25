@@ -39,7 +39,7 @@ class TutstudentController extends Controller
 
         $tutorId = $request->input('tutorId', null);
 
-        $tutors = Teacher::getTutorsFiltered($isTutor = true, [], $mayorId);
+        $tutors = Teacher::getTutorsFiltered( [], $mayorId);
         
         $students = Tutstudent::getFilteredStudents($filters, $tutorId, $mayorId);
 

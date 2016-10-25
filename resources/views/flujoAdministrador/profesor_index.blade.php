@@ -59,11 +59,11 @@
                 </table>
 
 
-
+                <br>
+                <br>
 
             </div>
-            <br>
-            <br>
+            
             <form action="{{ route('coordinador_store.flujoAdministrador', $idEspecialidad)}}" method="POST" id="formTeacher" name="formTeacher" novalidate="true" class="">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 

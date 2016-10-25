@@ -334,9 +334,10 @@
                   <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
                   <li><a href=""> Administrar Fases</a></li>
                   <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                  <li><a href=""> Documentos</a></li>
+                  <li><a href=""> Administrar Documentos</a></li>
                   @endif
                   @if(Auth::user()->IdPerfil == 7) <!--si es alumno-->
+                  <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>
                   <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
                   <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
                   <li><a href=""> Reuniones</a></li>

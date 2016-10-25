@@ -8,24 +8,47 @@ use Session;
 
 use Intranet\Models\PspProcess;
 use Intranet\Models\AcademicCycle;
+use Intranet\Models\CoursexTeacher;
 
 use Intranet\Http\Services\Cicle\CicleService;
 use Intranet\Http\Services\Course\CourseService;
+use Intranet\Http\Services\Teacher\TeacherService;
 
 class PspProcessService{
 
 	public function find(){
-		$proceso = PspProcess::get();
+		//$proc = PspProcess::where('Vigente',1)->first()
+		//					->where('idEspecialidad',Session::get('faculty-code'))->first();
+		$proc = PspProcess::where('idEspecialidad',Session::get('faculty-code'))->first();
 		$this->courseService = new CourseService;
 		$this->cicleService = new CicleService;
 
-		foreach ($proceso as $proc) {
+		if($proc!=null){
+			//foreach ($proceso as $proc) {
 			$proc->nomCurso = $this->courseService->findCourseById($proc->idCurso)->Nombre;
 			$request['cicle_code'] = $proc->idCiclo;
 			$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
 			$proc->ciclo=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
+			//}
 		}
-		return $proceso;
+		return $proc;
+	}
+
+	public function retrieveTeachers($request){
+		$teachers = CoursexTeacher::where('IdCurso',$request)->get()->toArray();
+		$this->teacherService = new TeacherService;
+		$cont=0;
+		foreach($teachers as $t){
+			$t['nombre']=$this->teacherService->findTeacherById($t['IdDocente'])->Nombre;
+			$t['apellidoPat']=$this->teacherService->findTeacherById($t['IdDocente'])->ApellidoPaterno;
+			$t['apellidoMat']=$this->teacherService->findTeacherById($t['IdDocente'])->ApellidoMaterno;
+			$t['codigo']=$this->teacherService->findTeacherById($t['IdDocente'])->Codigo;
+			$t['IdUsuario']=$this->teacherService->findTeacherById($t['IdDocente'])->IdUsuario;
+			array_push($teachers, $t);
+			$cont++;
+		}
+		array_splice($teachers, 0,$cont);
+		return $teachers;
 	}
 
 

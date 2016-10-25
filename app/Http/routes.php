@@ -533,7 +533,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('show/{id}', ['as' => 'pspProcess.show', 'uses' => 'Psp\PspProcess\PspProcessController@show']);
                 Route::get('edit/{id}', ['as' => 'pspProcess.edit', 'uses' => 'Psp\PspProcess\PspProcessController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspProcess.update', 'uses' => 'Psp\PspProcess\PspProcessController@update']);
-                Route::get('delete/{id}', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
+                Route::get('delete', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
             });
 
             //FreeHour            

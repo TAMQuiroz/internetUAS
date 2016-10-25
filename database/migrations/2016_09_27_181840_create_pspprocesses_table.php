@@ -20,8 +20,8 @@ class CreatePspprocessesTable extends Migration
             $table->integer('idEspecialidad');
             $table->integer('idCurso');
             $table->integer('idCiclo');
-            $table->integer('Vigente');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

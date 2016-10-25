@@ -558,6 +558,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
             });
 
+            //Inscription File
+            Route::group(['prefix' => 'inscription'], function() {
+                Route::get('/', ['as' => 'inscription.index', 'uses' => 'Psp\Inscription\InscriptionController@index']);
+                Route::get('create', ['as' => 'inscription.create', 'uses' => 'Psp\Inscription\InscriptionController@create']);
+                Route::post('create', ['as' => 'inscription.store', 'uses' => 'Psp\Inscription\InscriptionController@store']);
+                Route::get('show/{id}', ['as' => 'inscription.show', 'uses' => 'Psp\Inscription\InscriptionController@show']);
+                Route::get('edit/{id}', ['as' => 'inscription.edit', 'uses' => 'Psp\Inscription\InscriptionController@edit']);
+                Route::post('edit/{id}', ['as' => 'inscription.update', 'uses' => 'Psp\Inscription\InscriptionController@update']);
+                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);    
+            });
+
             //Phase
             Route::group(['prefix' => 'phase'], function() {
                 Route::get('/', ['as' => 'phase.index', 'uses' => 'Psp\Phase\PhaseController@index']);

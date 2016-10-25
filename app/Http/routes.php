@@ -903,6 +903,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/academicCycle', ['as' => 'academicCycle_index.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_index']);
         Route::get('/academicCycle/create', ['as' => 'academicCycle_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_create']);        
         Route::post('/academicCycle/store', ['as' => 'academicCycle_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_store']);
+        Route::get('/end', ['as' => 'end.flujoAdministrador', 'uses' => 'FlujoAdministradorController@end']);
     });
     
     //MODULO DE EVALUACIONES

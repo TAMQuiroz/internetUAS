@@ -44,7 +44,7 @@
 				<div class="separator"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                         <a  href="#" class="btn btn-success pull-right">Siguiente ></button>
+                         <a  href="{{ route('end.flujoAdministrador') }}" class="btn btn-success pull-right">Siguiente ></button>
                          <a href="{{ route('profesor_index.flujoAdministrador', $id) }}" class="btn btn-default">< Atras</a>
                     </div>
                 </div>

@@ -37,7 +37,7 @@ class FlujoAdministradorController extends Controller
 
     public function index()
     {
-      return view('flujoAdministrador.facultad_create');
+      return view('flujoAdministrador.index');
     }
 
 
@@ -140,9 +140,9 @@ class FlujoAdministradorController extends Controller
         ]);
 
         //enviar el corrreo al profesor:
-        if ($user) {
+        /*if ($user) {
             $this->passwordService->sendSetPasswordLink($user, $request->input('teacheremail'));
-        }
+        }*/
 
         return redirect()->route('profesor_index.flujoAdministrador', ['id' => $id])
                             ->with('success', 'El profesor se ha registrado exitosamente');
@@ -200,6 +200,10 @@ class FlujoAdministradorController extends Controller
             dd($e);
         }
         return redirect()->route('academicCycle_index.flujoAdministrador')->with('success', 'El ciclo académico se ha registrado exitosamente');
+    }
+
+    public function end (){
+        return view ('flujoAdministrador.end');
     }
         
 }

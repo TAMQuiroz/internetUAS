@@ -28,10 +28,12 @@
 						<select name="competencia" required="required" class="form-control">
 							<option value="">Seleccione</option>
 							@foreach($competences as $competence)
+							@if(in_array($competence->id, $arrcompetences))
 							@if($competence->id == $question->id_competence)
 							<option selected value="{{$competence->id}}" >{{$competence->nombre}}</option>
 							@else
 							<option value="{{$competence->id}}" >{{$competence->nombre}}</option>
+							@endif
 							@endif
 							@endforeach	
 						</select>

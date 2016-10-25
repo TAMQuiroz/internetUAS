@@ -18,14 +18,11 @@ class TutorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {     
-        // dd(Session::get('faculty-code'));
-        // dd(Session::all());
-        // dd(Session::get('user'));
+    {   
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
         
-        $tutors = Teacher::getTutorsFiltered($is_tutor = true, $filters, $specialty);
+        $tutors = Teacher::getTutorsFiltered($filters, $specialty);
         
         $data = [
             'tutors'    =>  $tutors->appends($filters),
@@ -43,10 +40,11 @@ class TutorController extends Controller
     public function create(Request $request)
     {
         $filters = $request->all();
+
         $specialty = Session::get('faculty-code');
-        $teachers = Teacher::getTutorsFiltered($is_tutor = false, $filters, $specialty);        
+        $teachers = Teacher::getCoordsFiltered($filters, $specialty);        
         $data = [
-            'teachers'    =>  $teachers,            
+            'teachers'    =>  $teachers->appends($filters),            
         ];
 
         return view('tutorship.tutor.create', $data);

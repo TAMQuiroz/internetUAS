@@ -30,11 +30,11 @@ class CoordTutorshipController extends Controller
      */
     public function create(Request $request)
     {
-        
+        $filters = $request->all();
         $specialty = Session::get('faculty-code');
-        $teachers = Teacher::where('rolTutoria',null)->where('IdEspecialidad',$specialty)->get();
+        $teachers = Teacher::getCoordsFiltered($filters, $specialty);        
         $data = [
-            'teachers'    =>  $teachers,            
+            'teachers'    =>  $teachers->appends($filters),            
         ];        
         return view('tutorship.coordtutor.create', $data);
     }

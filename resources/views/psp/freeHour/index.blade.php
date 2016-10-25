@@ -40,10 +40,10 @@
                             <td>{{$freeHour->fecha}}</td>
                             <td>{{$freeHour->hora_ini}}:00 horas</td>                             
                             <td>
-                            {{--
+                            
                                 <a href="{{route('freeHour.edit', $freeHour->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-pencil"></i></a>
                                 <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$freeHour->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
-                            --}}                                
+                                                            
                             </td>
                         </tr> 
 

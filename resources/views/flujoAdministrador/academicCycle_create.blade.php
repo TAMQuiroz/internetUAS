@@ -23,7 +23,7 @@
 							       	<select class="form-control col-md-7 col-xs-12 anio"  name="anio" id="anio" required="true">
 							       		<option value="0">--Seleccione--</option>
 										<?php
-											for($anio=(date("Y")-2); $anio<=(date("Y")+10); $anio++) 
+											for($anio=(date("Y")); $anio<=(date("Y")+10); $anio++) 
 											{
 												echo "<option value=".$anio.">".$anio."</option>";
 											}

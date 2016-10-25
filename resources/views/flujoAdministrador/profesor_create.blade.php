@@ -1,4 +1,4 @@
-@extends('app')
+@extends('appWithoutHamburger')
 @section('content')
 <div class="page-title">
 	<div class="title_left">

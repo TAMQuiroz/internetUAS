@@ -680,9 +680,9 @@ $api->version('v1', function ($api) {
             
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
                 $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
-                $api->get('/{f_id}/', 'PeriodController@getPeriodList');
+                $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
             });
-            
+
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
                 $api->get('/{id}/criterions', 'Aspect\AspectController@getCriterions');
             });

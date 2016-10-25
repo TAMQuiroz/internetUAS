@@ -62,37 +62,41 @@
 
 
             </div>
-        </div>
-        <form action="{{ route('coordinador_store.flujoAdministrador', $idEspecialidad)}}" method="POST" id="formTeacher" name="formTeacher" novalidate="true" class="">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        
-            <div class="form-group">
-                <div class="row">
-                    <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Coordinador<span class="error">*</span></label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select  required="true" name="coordinador" class="form-control">
-                            <option value="">--Seleccione--</option>
-                            @foreach($teachers as $teach)
-                                <option value= "{{$teach->IdDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+
+            <form action="{{ route('coordinador_store.flujoAdministrador', $idEspecialidad)}}" method="POST" id="formTeacher" name="formTeacher" novalidate="true" class="">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
-                <br>
-                <br>
-                <br>
-                <div class="separator"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                         <button class="btn btn-success pull-right" type="submit">Siguiente ></button>
-                         <a href="{{ route('facultad_edit.flujoAdministrador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
+                    <div class="form-group">
+                        <div class="row">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Coordinador<span class="error">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select  required="true" name="coordinador" class="form-control">
+                                    <option value="">--Seleccione--</option>
+                                    @foreach($teachers as $teach)
+                                        <option value= "{{$teach->IdDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        <br>
+                        <br>
+                        <div class="separator"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                 <button class="btn btn-success pull-right" type="submit">Siguiente ></button>
+                                 <a href="{{ route('facultad_edit.flujoAdministrador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-           
-            
-            
-        </form>
+                   
+                    
+                    
+            </form>
+
+
+        </div>
+        
         <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}"></script>
 @endsection

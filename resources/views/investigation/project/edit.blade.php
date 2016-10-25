@@ -91,43 +91,6 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-6">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Investigadores Asignados</h3>
-                        </div>
-                        <div class="panel-body table-scroll">
-                            <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
-                                <thead> 
-                                    <tr class="headings"> 
-                                        <th>Nombre</th> 
-                                        <th>Apellido Paterno</th> 
-                                        <th>Apellido Materno</th> 
-                                        <th>Especialidad</th> 
-                                        <th colspan="2">Acciones</th>
-                                    </tr> 
-                                </thead> 
-                                <tbody> 
-                                    @foreach($proyecto->investigators as $investigator)
-                                    <tr> 
-                                        <td>{{$investigator->nombre}}</td> 
-                                        <td>{{$investigator->ape_paterno}}</td> 
-                                        <td>{{$investigator->ape_materno}}</td> 
-                                        <td>{{$investigator->faculty->Nombre}}</td>
-                                        <td>
-                                            <a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-                                            <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#af{{$investigator->pivot->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
-                                        </td>
-                                    </tr> 
-
-                                    @include('modals.delete', ['id'=> 'af'.$investigator->pivot->id, 'message' => '¿Esta seguro que desea quitar este investigador del proyecto?', 'route' => route('proyecto.afiliacion.delete.investigador', $investigator->pivot->id)])
-                                    @endforeach
-                                    
-                                </tbody> 
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
                     <div class="panel panel-warning">
                         <div class="panel-heading">
                             <h3 class="panel-title">Investigadores Elegibles</h3>
@@ -168,15 +131,10 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-12">
-                    <hr>
-                </div>
-
                 <div class="col-md-6">
                     <div class="panel panel-success">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Profesores Asignados</h3>
+                            <h3 class="panel-title">Investigadores Asignados</h3>
                         </div>
                         <div class="panel-body table-scroll">
                             <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
@@ -190,19 +148,19 @@
                                     </tr> 
                                 </thead> 
                                 <tbody> 
-                                    @foreach($proyecto->teachers as $teacher)
+                                    @foreach($proyecto->investigators as $investigator)
                                     <tr> 
-                                        <td>{{$teacher->Nombre}}</td> 
-                                        <td>{{$teacher->ApellidoPaterno}}</td> 
-                                        <td>{{$teacher->ApellidoMaterno}}</td> 
-                                        <td>{{$teacher->faculty->Nombre}}</td>
+                                        <td>{{$investigator->nombre}}</td> 
+                                        <td>{{$investigator->ape_paterno}}</td> 
+                                        <td>{{$investigator->ape_materno}}</td> 
+                                        <td>{{$investigator->faculty->Nombre}}</td>
                                         <td>
-                                            {{--<a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>--}}
-                                            <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#prf{{$teacher->pivot->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
+                                            <a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                            <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#af{{$investigator->pivot->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
                                         </td>
                                     </tr> 
 
-                                    @include('modals.delete', ['id'=> 'prf'.$teacher->pivot->id, 'message' => '¿Esta seguro que desea quitar este profesor del proyecto?', 'route' => route('proyecto.afiliacion.delete.docente', $teacher->pivot->id)])
+                                    @include('modals.delete', ['id'=> 'af'.$investigator->pivot->id, 'message' => '¿Esta seguro que desea quitar este investigador del proyecto?', 'route' => route('proyecto.afiliacion.delete.investigador', $investigator->pivot->id)])
                                     @endforeach
                                     
                                 </tbody> 
@@ -210,6 +168,11 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-12">
+                    <hr>
+                </div>
+
                 <div class="col-md-6">
                     <div class="panel panel-warning">
                         <div class="panel-heading">
@@ -244,6 +207,43 @@
                                         </td>
                                     </tr> 
 
+                                    @endforeach
+                                    
+                                </tbody> 
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Profesores Asignados</h3>
+                        </div>
+                        <div class="panel-body table-scroll">
+                            <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
+                                <thead> 
+                                    <tr class="headings"> 
+                                        <th>Nombre</th> 
+                                        <th>Apellido Paterno</th> 
+                                        <th>Apellido Materno</th> 
+                                        <th>Especialidad</th> 
+                                        <th colspan="2">Acciones</th>
+                                    </tr> 
+                                </thead> 
+                                <tbody> 
+                                    @foreach($proyecto->teachers as $teacher)
+                                    <tr> 
+                                        <td>{{$teacher->Nombre}}</td> 
+                                        <td>{{$teacher->ApellidoPaterno}}</td> 
+                                        <td>{{$teacher->ApellidoMaterno}}</td> 
+                                        <td>{{$teacher->faculty->Nombre}}</td>
+                                        <td>
+                                            {{--<a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>--}}
+                                            <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#prf{{$teacher->pivot->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
+                                        </td>
+                                    </tr> 
+
+                                    @include('modals.delete', ['id'=> 'prf'.$teacher->pivot->id, 'message' => '¿Esta seguro que desea quitar este profesor del proyecto?', 'route' => route('proyecto.afiliacion.delete.docente', $teacher->pivot->id)])
                                     @endforeach
                                     
                                 </tbody> 

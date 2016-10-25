@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-title">
         <div class="title_left">
-            <h3> Nuevo Grupo de Investigación</h3>
+            <h3> Crear Grupo</h3>
         </div>
     </div>
     <div class="row">

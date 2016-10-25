@@ -110,7 +110,7 @@
                     {{Form::hidden('id_entregable', $entregable->id)}}
                     {{Form::submit('Subir', ['class'=>'btn btn-success pull-right'])}}
                     <div class="col-md-4 pull-right">
-                        {{Form::file('archivo', ['class'=>'form-control', 'required'])}}    
+                        {{Form::file('archivo', ['class'=>'form-control', 'required', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Solo ingresar archivos con formato .doc, .docx, .xls, .xlsx, .pdf, .jpg', 'accept'=>'.doc,.docx,.xls,.xlsx,.jpg,.pdf'])}}  
                     </div>
                     {{Form::label('Subir nueva version',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12 pull-right'])}}
                 {{Form::close()}}
@@ -118,6 +118,7 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
                     <thead> 
                         <tr class="headings"> 
+                            <th>Nombre</th>
                             <th>Version</th> 
                             <th>Responsable</th> 
                             <th>Observacion</th> 
@@ -129,6 +130,7 @@
                             <tr> 
                                 <td hidden class="version-id">{{ $version->id }}</td>
                                 <td hidden class="entregable-id">{{ $entregable->id }}</td>
+                                <td>{{$entregable->nombre.'V'.$version->version}}</td> 
                                 <td>{{$version->version}}</td> 
                                 <td>
                                     @if($version->user->IdPerfil == 2)
@@ -136,9 +138,18 @@
                                     @else
                                         {{$version->user->investigator->nombre}} {{$version->user->investigator->ape_paterno}}
                                     @endif
-                                </td> 
+                                </td>
                                 @if($version->observacion != null)
-                                    <td><a class="btn btn-primary btn-xs view-observation" onclick="show('{{$version->id}}')" title="Visualizar"><i class="fa fa-search"></i></a></td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="truncate">{{$version->observacion}}</div> 
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a class="btn btn-primary btn-xs view-observation" onclick="show('{{$version->id}}')" title="Visualizar"><i class="fa fa-search"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
                                 @else
                                     <td>Sin observación</td>
                                 @endif

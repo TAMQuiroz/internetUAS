@@ -188,25 +188,33 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, $id)
     {
         try {
-            $status = Status::where('nombre','En progreso')->first();
+            $proyecto = Project::find($id);
 
-            if($status){
-                $proyecto = Project::find($id);
-                $proyecto->nombre           = $request->nombre;
-                $proyecto->descripcion      = $request->descripcion;
-                $proyecto->num_entregables  = $request->num_entregables;
-                $proyecto->fecha_ini        = $request->fecha_ini;
-                $proyecto->fecha_fin        = $request->fecha_fin;
-                $proyecto->id_grupo         = $request->grupo;
-                $proyecto->id_area          = $request->area;
-                $proyecto->id_status        = $status->id;
+            if($request->num_entregables >= count($proyecto->deliverables)){
 
-                $proyecto->save();
-                
-                return redirect()->route('proyecto.show',$id)->with('success', 'El proyecto se ha editado exitosamente');        
+                $status = Status::where('nombre','En progreso')->first();
+
+                if($status){
+                    
+                    $proyecto->nombre           = $request->nombre;
+                    $proyecto->descripcion      = $request->descripcion;
+                    $proyecto->num_entregables  = $request->num_entregables;
+                    $proyecto->fecha_ini        = $request->fecha_ini;
+                    $proyecto->fecha_fin        = $request->fecha_fin;
+                    $proyecto->id_grupo         = $request->grupo;
+                    $proyecto->id_area          = $request->area;
+                    $proyecto->id_status        = $status->id;
+
+                    $proyecto->save();
+                    
+                    return redirect()->route('proyecto.show',$id)->with('success', 'El proyecto se ha editado exitosamente');        
+                }else{
+                    return redirect()->back()->with('warning', 'No existe el estado En Progreso, agregelo en el mantenimiento');       
+                }
             }else{
-                return redirect()->back()->with('warning', 'No existe el estado En Progreso, agregelo en el mantenimiento');       
+                return redirect()->back()->with('warning', 'No puede reducir la cantidad de entregables ya que existe una cantidad mayor creada');       
             }
+
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');       
         }

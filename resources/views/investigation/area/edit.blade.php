@@ -5,7 +5,7 @@
 	<div class="col-md-12">
 		<div class="page-title">
 	        <div class="title_left">
-	            <h3>Edicion de Areas</h3>
+	            <h3>Editar Area</h3>
 	        </div>
 	    </div>
     </div>

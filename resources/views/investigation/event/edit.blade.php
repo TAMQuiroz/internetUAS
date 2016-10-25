@@ -80,7 +80,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Imagen',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-md-8">
-                            {{Form::file('imagen', ['class'=>'form-control'])}}    
+                            {{Form::file('imagen', ['class'=>'form-control', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Solo ingresar imagenes con formato .jpg', 'accept'=>'image/*'])}}
                         </div>
                         
                     </div>

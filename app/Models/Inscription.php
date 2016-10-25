@@ -3,11 +3,12 @@
 namespace Intranet\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+//use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inscription extends Model
 {
-	use SoftDeletes;
+	//use SoftDeletes;
+	protected $table = 'inscriptionfiles';
 	
     public function faculty(){
         return $this->belongsTo('Intranet\Models\Faculty', 'idFaculty');

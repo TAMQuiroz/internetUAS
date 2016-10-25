@@ -57,6 +57,14 @@
                 -->
 
                 <div class="form-group">
+                    {{Form::label('Distrito de la empresa *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-4">
+                        {{Form::text('distrito_empresa',null,['class'=>'form-control', 'required','maxlength' => 500])}}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
                     {{Form::label('Direccion empresa *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
                         {{Form::text('direccion_empresa',null,['class'=>'form-control', 'required','maxlength' => 500])}}

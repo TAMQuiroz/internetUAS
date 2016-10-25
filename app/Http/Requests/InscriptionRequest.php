@@ -44,7 +44,7 @@ class InscriptionRequest extends Request
             'recomendaciones'           =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
             'telef_jefe_directo'        =>'required|digits:9', 
             'ubicacion_area'            =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
-
+            ];
     }
 
     /**
@@ -54,6 +54,7 @@ class InscriptionRequest extends Request
      */
     public function messages()
     {
-        return 
+        return [
+        ];
     }
 }

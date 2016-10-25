@@ -27,7 +27,7 @@ class CreateInscriptionfilesTable extends Migration
             $table->string('ubicacion_area');
             $table->string('equipamiento_area');
             $table->string('equi_del_practicante');
-            $table->string('personal_rea');
+            $table->string('personal_area');
             $table->string('cond_seguridad_area');
             $table->string('Correo_jefe_directo');
             $table->string('telef_jefe_directo');
@@ -35,6 +35,7 @@ class CreateInscriptionfilesTable extends Migration
             $table->string('puesto');
             $table->string('recomendaciones');
             $table->integer('debe_modificarse');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

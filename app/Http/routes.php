@@ -690,8 +690,15 @@ $api->version('v1', function ($api) {
 
             //INVESTIGACION
 
+            $api->group(['namespace' => 'Investigation','prefix' => 'investigation'], function($api){
+                $api->get('/{id}/groups', 'Group\GroupController@getById');
+                $api->get('/{id}/investigators', 'Investigator\InvestigatorController@getById');
+                $api->get('/{id}/projects', 'Project\ProjectController@getById');
+            });
+
+
             $api->get('getAllInvestigators', 'Investigation\Investigator\InvestigatorController@getAll');
-            $api->get('getAllGroups', 'Investigation\Group\GroupController@getAll');
+            $api->get('getAllInvGroups', 'Investigation\Group\GroupController@getAll');
             $api->get('getAllProjects', 'Investigation\Project\ProjectController@getAll');
 
 

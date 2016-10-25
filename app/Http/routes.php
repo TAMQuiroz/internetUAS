@@ -675,14 +675,18 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureRepor|t');
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
-                $api->get('/{f_id}/periods/actual/semesters', 'Period\PeriodController@getSemesters');
-                $api->get('/{f_id}/periods', 'Period\PeriodController@getPeriodList');
-                $api->get('/{id}/teachers', 'Faculty\FacultyController@getTeachers');
+                $api->get('/{id}/teachers', 'FacultyController@getTeachers');
             });
             
+            $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
+                $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
+                $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
+            });
+
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
                 $api->get('/{id}/criterions', 'Aspect\AspectController@getCriterions');
             });
+
 
             //INVESTIGACION
 
@@ -690,8 +694,8 @@ $api->version('v1', function ($api) {
             $api->get('getAllGroups', 'Investigation\Group\GroupController@getAll');
             $api->get('getAllProjects', 'Investigation\Project\ProjectController@getAll');
 
-            //TUTORIA
 
+            //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
         });
     });

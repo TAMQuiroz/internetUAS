@@ -158,7 +158,17 @@
                                 <th colspan="3" scope="colgroup" class="text-center"> Resultados Estudiantiles </th>
                             </tr>
                             </thead>
+                            
                             <tbody>
+                            
+
+                            @if ($studentsResults->isEmpty())
+                            <tr>
+                                <td></td>
+                                <td><p style = "color: red;">Debe agregar almenos un resultado estudiantil. No podrá iniciar periodo</p></td>
+                            </tr>   
+                            @endif
+
                             @foreach($studentsResults as $stRst)
                                 <?php $objs = ""; ?>
                                 @foreach($stRst->educationalObjectives as $objective)
@@ -190,7 +200,13 @@
                                     @endforeach
                                 @endforeach
                             @endforeach
+
+
+
                             </tbody>
+                            
+
+
                         </table>
                     </div>
 
@@ -199,7 +215,12 @@
                             <div class="col-md-3 col-sm-3 col-xs-3">
                             <a class="btn btn-default submit" href="{{ url('faculty/periods') }}">Cancelar</a>
 
-                            <button class="btn btn-success pull-right submit" type="submit">Iniciar</button>
+                            @if ($studentsResults->isEmpty())
+                                <button class="btn btn-success pull-right submit" type="submit" disabled>Iniciar</button>
+                            @else
+                                <button class="btn btn-success pull-right submit" type="submit" >Iniciar</button>
+                            @endif
+                            
                         </div>
                     </div>
 

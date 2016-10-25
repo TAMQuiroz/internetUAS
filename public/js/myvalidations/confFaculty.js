@@ -1,5 +1,7 @@
 jQuery(function(){
 
+ 
+
   $('.cycleClass').click(function() {
     var valCycleStart=$("#cycleStart").val();
     var valCycleEnd=$("#cycleEnd").val();
@@ -67,6 +69,7 @@ jQuery(function(){
 		    max:100,
         number:true,
       },
+    'stRstCheck[]': { required: true }
     },
     messages: {
       facultyCoordinator: {
@@ -91,6 +94,9 @@ jQuery(function(){
         min: "El porcentaje de aceptación debe ser mayor o igual a 1",
         max: "El porcentaje de aceptación debe ser menor a 100",
         number: "El nivel de criterio debe ser un número",
+      },
+    'stRstCheck[]': {
+        required: "Debe seleccionar almenos un resultado estudiantil",
       }
     }
   });

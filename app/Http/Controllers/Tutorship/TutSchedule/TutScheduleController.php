@@ -18,10 +18,11 @@ class TutScheduleController extends Controller
      */
     public function index()
     {
-        $user = Session::get('user');        
+        $user = Session::get('user');     
+        $teacher = Teacher::find($user->IdDocente);
         
         $data = [
-            'user'    =>  $user,
+            'teacher'    =>  $teacher,
         ];
         
         return view('tutorship.tutschedule.index', $data);
@@ -84,8 +85,20 @@ class TutScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {        
+        $teacher = Teacher::find($id);
+        $teacher->telefono = $request['telefono'];
+        $teacher->oficina = $request['oficina'];
+        $teacher->anexo = $request['anexo'];
+        $teacher->save();
+
+        if($request['check']!=null){
+            foreach($request['check'] as $diaHora => $value){
+                echo $diaHora . " "." <br>";
+            } 
+        }
+                
+        return redirect()->route('miperfil.index')->with('success', 'Se guardaron los cambios exitosamente');
     }
 
     /**

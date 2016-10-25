@@ -69,6 +69,13 @@ class FreeHourController extends Controller
     public function show($id)
     {
         //
+        $freeHour = FreeHour::find($id);
+
+        $data = [
+            'freeHour' => $freeHour,
+        ];
+
+        return view('psp.freeHour.show',$data);
     }
 
     /**
@@ -79,7 +86,13 @@ class FreeHourController extends Controller
      */
     public function edit($id)
     {
-        return view('psp.freeHour.edit');
+        $freeHour = FreeHour::find($id);
+
+        $data = [
+            'freeHour' => $freeHour,
+        ];
+
+        return view('psp.freeHour.edit',$data);
     }
 
     /**
@@ -92,6 +105,16 @@ class FreeHourController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            $freeHour = FreeHour::find($id);
+            $freeHour->fecha = $request['fecha'];
+            $freeHour->hora_ini = $request['hora_ini'];
+            $freeHour->save();
+
+            return redirect()->route('freeHour.show',$id)->with('success','La disponibilidad se ha actualizado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 
     /**
@@ -103,5 +126,13 @@ class FreeHourController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            $freeHour = FreeHour::find($id);
+            $freeHour->delete();
+            return redirect()->route('freeHour.index')->with('success','La disponibilidad se ha eliminado exitosamente');
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 }

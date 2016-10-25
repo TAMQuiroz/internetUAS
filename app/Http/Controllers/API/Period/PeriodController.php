@@ -7,6 +7,7 @@ use Response;
 use Intranet\Models\Period;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\AcademicCycle;
+use Intranet\Models\PeriodxMeasurement;
 use Illuminate\Routing\Controller as BaseController;
 
 class PeriodController extends BaseController
@@ -49,5 +50,26 @@ class PeriodController extends BaseController
   
 
         return $this->response()->array($period->toArray());
+    }
+
+    public function getMeasurementInstOfPeriod($period_id){
+      //$date = date('Y-m-d H:i:s', $request->get('since', 0));
+
+      $insts = PeriodxMeasurement::where('IdPeriodo',$period_id)->with('measurement')->get();//where('IdPeriodo',$period_id);//->with('measurement');
+
+      //get();//
+      $finalinst = collect();
+
+      foreach($insts as $inst){
+        $finalinst->push($inst->measurement);
+
+      }
+
+      if(is_null($insts)) return response()->json($insts);
+
+      //return response()->json($insts);
+      return response()->json($finalinst);
+
+      //return $this->response()->array($insts->toArray());
     }
 }

@@ -681,11 +681,14 @@ $api->version('v1', function ($api) {
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
                 $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
                 $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
+                $api->get('/{p_id}/instruments', 'PeriodController@getMeasurementInstOfPeriod');
             });
 
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
                 $api->get('/{id}/criterions', 'AspectController@getCriterions');
             });
+
+
 
 
             //INVESTIGACION

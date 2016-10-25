@@ -62,7 +62,8 @@
 
 
             </div>
-
+            <br>
+            <br>
             <form action="{{ route('coordinador_store.flujoAdministrador', $idEspecialidad)}}" method="POST" id="formTeacher" name="formTeacher" novalidate="true" class="">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
@@ -79,8 +80,7 @@
                             </div>
                         </div>
                         
-                        <br>
-                        <br>
+                        
                         <br>
                         <div class="separator"></div>
                         <div class="row">

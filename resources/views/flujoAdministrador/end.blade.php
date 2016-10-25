@@ -38,10 +38,11 @@
           </p>
         </div>
       </div>        
-
+      <div class="separator"></div>
       
     </div>
-
+    <br>
+    
     <a class="btn btn-default" href="{{ route('academicCycle_index.flujoAdministrador') }}">Atras</a>
     <a class="btn btn-success pull-right " href="{{ route('index.subindex') }}">Finalizar</a>
 

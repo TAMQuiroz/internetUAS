@@ -35,10 +35,11 @@
           </p>
         </div>
       </div>        
-
+      <div class="separator"></div>
       
     </div>
-
+    <br>
+    
     <a class="btn btn-default" href="{{ route('index.subindex') }}">Cancelar</a>
     <a class="btn btn-success pull-right " href="{{ route('facultad_create.flujoAdministrador') }}">Aceptar</a>
 

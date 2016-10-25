@@ -321,8 +321,8 @@
                   <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                   <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
                   <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
-                  <li><a href=""> Cronograma de reunión</a></li>
-                  <li><a href=""> Ver alumnos</a></li>
+                  {{--<li><a href=""> Cronograma de reunión</a></li>
+                  <li><a href=""> Ver alumnos</a></li>--}}
                   @endif
                   @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
                   <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>

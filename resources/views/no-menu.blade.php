@@ -80,6 +80,26 @@
           <div class="separator"></div>
           <!-- sidebar menu -->
           <div id="sidebar-menu" class="main_menu_side hidden-print main_menu" style="height:500px">
+            <div class="menu_section">
+                <ul class="nav side-menu">
+                  @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
+                  <li>
+                    <a>
+                       <i class="fa fa-flask"></i> Investigación <span class="fa fa-chevron-down"></span>
+                    </a>
+                    <ul class="nav child_menu" style="display: none">
+                      @if(Auth::user()->IdPerfil == 2)
+                      <li><a href="{{route('investigador.index')}}"> Administrar Investigadores</a></li>
+                      <li><a href="{{route('grupo.index')}}"> Administrar Grupos de Investigación</a></li>
+                      <li><a href="{{route('area.index')}}"> Administrar Áreas</a></li>
+                      <li><a href="{{route('evento.index')}}"> Administrar Eventos</a></li>
+                      <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li>
+                      @endif
+                    </ul>
+                  </li>
+                  @endif
+                </ul>
+            </div>
           </div>
         </div>
       </div>

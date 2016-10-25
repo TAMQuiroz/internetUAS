@@ -104,6 +104,8 @@ class AuthController extends Controller
                 $user = $this->authService->findInvestigator($userSession->IdUsuario);
             }else if($userSession->IdPerfil == 0){
                 $user = $this->authService->findStudent($userSession->IdUsuario);
+            }else if($userSession->IdPerfil == 6){
+                $user = $this->authService->findSupervisor($userSession->IdUsuario);
             }else{
                 $user = null;
             }
@@ -111,6 +113,7 @@ class AuthController extends Controller
             if($user == null) { //es admin
                 $default=(Object)['IdDocente'=> '0','Nombre'=>'Administrador','IdEspecialidad' =>'0','ApellidoPaterno'=>'del','ApellidoMaterno'=>'Sistema','Vigente'=>1,'IdPerfil'=>'3', 'IdUsuario'=>'1'];
                 $user=$default;
+
             }
 
             if($user->Vigente!=1) {

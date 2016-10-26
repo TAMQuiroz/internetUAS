@@ -36,18 +36,24 @@ class PeriodController extends BaseController
 
         if(is_null($period)) return response()->json($period);
 
-        
-        foreach($period as $periodi){
+        $semesterlist = collect();
+
+        foreach($period as &$periodi){
             $init_semester = $periodi->configuration->cycleAcademicStart->Numero;
             $end_semester = $periodi->configuration->cycleAcademicEnd->Numero;
-            $period->semesters = AcademicCycle::where('Numero', '>=', $init_semester)
+
+
+            $semesterlist = AcademicCycle::where('Numero', '>=', $init_semester)
                                           ->where('Numero', '<=', $end_semester)
                                           ->orderBy('Numero', 'asc')
                                           ->get();
+            $periodi->semesters = $semesterlist;
 
 
         }
-  
+
+        //$period->semesters = $semesterlist;
+
 
         return $this->response()->array($period->toArray());
     }
@@ -72,4 +78,30 @@ class PeriodController extends BaseController
 
       //return $this->response()->array($insts->toArray());
     }
+
+
+
+    public function getCyclesofPeriod($period_id){
+      $period = Period::where('IdPeriodo', $period_id)->with('configuration')->orderBy('Vigente', 'desc')->first();
+
+      if(is_null($period)) return response()->json($period);
+
+      $init_semester = $period->configuration->cycleAcademicStart->Numero;
+        $end_semester = $period->configuration->cycleAcademicEnd->Numero;
+        $semesters = AcademicCycle::where('Numero', '>=', $init_semester)
+                                          ->where('Numero', '<=', $end_semester)
+                                          ->orderBy('Numero', 'asc')
+                                          ->get();
+
+
+
+      //$cycles = Cicle::where('IdPeriodo',$period_id)->where('IdEspecialidad',$spec_id)->get();
+
+      return response()->json($semesters);
+    }
+
+  
+
+
+
 }

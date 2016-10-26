@@ -682,6 +682,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
                 $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
                 $api->get('/{p_id}/instruments', 'PeriodController@getMeasurementInstOfPeriod');
+                $api->get('/{p_id}/cycles', 'PeriodController@getCyclesofPeriod');
             });
 
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){

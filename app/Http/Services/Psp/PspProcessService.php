@@ -95,4 +95,20 @@ class PspProcessService{
 			$alumnos = null;	
 		return $alumnos;
 	}
+
+	public function desactivateStudents($id){
+		$proceso = PspProcess::where('id',$id)->first();
+		
+		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idCurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
+		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
+
+		if($horarios!=null){
+			foreach ($horarios as $horario) {
+				$alumnos=Student::where('IdHorario',$horarioAct->IdHorario)->get();
+			}	
+		}else
+			$alumnos = null;
+		
+		return $alumnos;
+	}
 }

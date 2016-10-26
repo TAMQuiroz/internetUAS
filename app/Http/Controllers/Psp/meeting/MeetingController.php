@@ -5,9 +5,12 @@ namespace Intranet\Http\Controllers\Psp\meeting;
 use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\meeting;
+use Intranet\Models\student;
 use Intranet\Http\Requests;
-
+use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\freeHour;
+use Auth;
+
 class MeetingController extends Controller
 {
     /**
@@ -35,12 +38,13 @@ class MeetingController extends Controller
     {
         $arr = [];
         $horas = freeHour::get();
-        foreach ($horas as $hora) {
+        /*foreach ($horas as $hora) {
             $cadena = $hora->fecha.' - '.$hora->hora_ini.' - '.$hora->supervisor->nombres.' '.$hora->supervisor->apellido_paterno;
             array_push($arr, $cadena);
-        }
+        }*/
 
-        $data['freeHours'] = $arr;
+        //$data['freeHours'] = $arr;
+        $data['freeHours'] = $horas;
         $data['meeting'] = meeting::get();
      
         return view('psp.meeting.create',$data);
@@ -52,9 +56,36 @@ class MeetingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MeetingRequest $request)
     {
-        //
+        
+        try {
+            $meeting = new meeting;
+            $freeHour = FreeHour::find($request['disponibilidad']);
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first();  
+
+            $meeting->idTipoEstado = 1;
+            $meeting->fecha=$freeHour->fecha;
+            $meeting->idSupervisor=$freeHour->idSupervisor;
+            $meeting->idStudent=$student->IdAlumno;
+
+            $timestamp = mktime($freeHour->hora_ini,0,0, 0,0,0);
+            $time = date('H:i:s', $timestamp);
+            $meeting->hora_inicio=$time;
+            $meeting->asistencia='o';
+            $meeting->idFreeHour=$freeHour->id;
+            $meeting->tipoReunion=1;
+
+            $meeting->save();
+
+            $student->idSupervisor=$freeHour->idSupervisor;
+            $student->save();            
+
+            return redirect()->route('meeting.index')->with('success','La cita se ha registrado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
+
     }
 
     /**

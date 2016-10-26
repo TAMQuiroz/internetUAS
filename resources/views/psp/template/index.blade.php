@@ -39,7 +39,7 @@
                             @if($template->idTipoEstado==1)
                             <td>obligatorio</td> 
                             @else
-                            <td>no obligatorio</td> 
+                            <td>nopcional</td> 
                             @endif
                             <td>{{$template->Phase->numero}}</td> 
                             <td>

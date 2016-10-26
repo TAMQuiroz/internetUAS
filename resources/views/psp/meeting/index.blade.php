@@ -27,20 +27,26 @@
                         <th class="column-title">Reunión</th>
                         <th class="column-title">Fecha</th>
                         <th class="column-title">Hora</th>  
-                        <th colspan="2">Estado</th>                     
+                        <th class="column-title">Estado</th>  
+                        <th colspan="2">Acciones</th>                        
                     </tr>
                     </thead>
                     <tbody>
                         @foreach($meeting as $meeting)
                         <tr> 
-                            <td>{{$meeting->Reunión}}</td> 
-                            <td>{{$meeting->Fecha}}</td> 
-                            <td>{{$meeting->Hora}}</td> 
+                            <td>{{$meeting->id}}</td> 
+                            <td>{{$meeting->fecha}}</td> 
+                            <td>{{$meeting->hora_inicio}}</td> 
+                            @if($meeting->idTipoEstado==1)
+                            <td>Pendiente</td> 
+                            @else
+                            <td>Realizada</td> 
+                            @endif
                             <td>
                                 <a href="{{route('meeting.edit', $meeting->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                             </td>
                         </tr> 
-                        @include('modals.delete', ['id'=> $meeting->id, 'message' => '¿Esta seguro que desea eliminar esta plantilla?', 'route' => route('meeting.delete', $meeting->id)])
+                        @include('modals.delete', ['id'=> $meeting->id, 'message' => '¿Esta seguro que desea eliminar esta cita?', 'route' => route('meeting.delete', $meeting->id)])
                         @endforeach
                     </tbody>
                 </table>

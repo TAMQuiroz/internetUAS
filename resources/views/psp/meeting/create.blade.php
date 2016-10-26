@@ -19,9 +19,13 @@
                     
                 <div class="form-group">
                     {{Form::label('Cita',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                       {{Form::select('disponibilidad',$freeHours, null, ['class'=>'form-control'])}}
-                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                <select name="disponibilidad" id="disponibilidad" class="form-control" required="required">
+                                    @foreach( $freeHours as $hora)
+                                        <option value="{{$hora->id}}">{{$hora->fecha.' - '.$hora->hora_ini.' - '.$hora->supervisor->nombres.' '.$hora->supervisor->apellido_paterno}}</option>
+                                    @endforeach
+                                </select>                             
+                     </div>
                 </div>
 
                 <div class="row">

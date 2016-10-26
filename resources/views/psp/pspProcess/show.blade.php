@@ -56,7 +56,17 @@
                                 <td class="a-center ">{{$profesor['codigo']}}</td>
                                 <td>{{$profesor['nombre']}} {{$profesor['apellidoPat']}}</td>
                                 <td>
-                                    <a href=""  class="btn btn-success btn-xs" title="Activar Alumnos"><i class="fa fa-plus"></i></a>
+                                    @if($profesor['activo']==0)
+                                        {{Form::open(['route' => ['pspProcess.activateTeacher'], 'id'=>'formSuggestion'])}}
+                                        {{Form::button('<i class="fa fa-plus"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit', 'title'=>'Dar Acceso'])}}
+                                        {{Form::hidden('idProceso',$proceso->id)}}
+                                        {{Form::hidden('idProfesor',$profesor['IdDocente'])}}
+                                        {{Form::hidden('proceso',$proceso->id)}}
+                                        {{Form::close()}}
+                                    @endif
+                                    {{Form::open(['route' => ['pspProcess.activateStudents'], 'id'=>'formSuggestion'])}}
+                                    {{Form::button('<i class="fa fa-group"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit', 'title'=>'Dar Acceso Alumnos'])}}
+                                    {{Form::close()}}
                                 </td>
                             </tr>
                             @endforeach

@@ -109,27 +109,10 @@ class PspProcessController extends Controller
     		$proceso->idCurso = $request['IdCurso'];
     		$proceso->idCiclo = $request['idCiclo']; //el mismo idcicloacademico que se encuentra en tabla cicloxespecialida
     		$teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
-    		if($teachers!=null){
-    			$proceso->save();
-    			$this->passwordService = new PasswordService;
-				$this->usersservice = new UserService;
-    			foreach ($teachers as $teacher) { //crear accesos para profesores
-    				$acceso = new PspProcessxTeacher;
-    				$acceso->idPspProcess = $proceso->id;
-    				$acceso->IdDocente = 	$teacher['IdDocente'];
-    				$acceso->save();
-    				//encontrar usuario de profesor
-                    /*
-    				$usuario = $this->usersservice->getUser($teacher['IdUsuario']);
-                    dd($usuario);
-    				if ($usuario) {
-		                $this->passwordService->sendSetPasswordLink($usuario, $teacher['Correo']);
-		            }*/
-    			}
-    			return redirect()->route('pspProcess.index')->with('success', 'El modulo se ha activado exitosamente');
-    		}
-    		else
-    			return redirect()->back()->with('warning', 'El curso debe tener al menos un profesor a cargo');
+			$proceso->save();
+			
+			return redirect()->route('pspProcess.index')->with('success', 'El modulo se ha activado exitosamente');
+    		
     	}catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -140,11 +123,23 @@ class PspProcessController extends Controller
         $this->pspprocessservice = new PspProcessService;
         $proceso = $this->pspprocessservice->findById($id);
         $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
+        
+        $cont=0;
+        foreach ($teachers as $teacher) {
+            $existe=PspProcessxTeacher::where('idPspProcess',$id)->where('IdDocente',$teacher['IdDocente'])->first();
+            if($existe!=null){
+                $teacher['activo'] = 1;
+            }else
+                $teacher['activo'] = 0;
+            array_push($teachers, $teacher);
+            $cont++;
+        }
+        array_splice($teachers, 0,$cont);
+
         $data = [
             'proceso'      =>  $proceso,
             'profesores' =>$teachers,
         ];
-
         return view('psp.pspProcess.show',$data);
     }
 
@@ -158,5 +153,40 @@ class PspProcessController extends Controller
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }  
+    }
+
+    public function activateTeacher(Request $request)
+    {
+            $acceso = new PspProcessxTeacher;
+            $acceso->idPspProcess = $request['idProceso'];
+            $acceso->IdDocente =    $request['idProfesor'];
+            $acceso->save();
+
+            $this->pspprocessservice = new PspProcessService;
+            $proceso = $this->pspprocessservice->findById($request['proceso']);
+            $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
+            
+            $cont=0;
+            foreach ($teachers as $teacher) {
+                $existe=PspProcessxTeacher::where('idPspProcess',$request['idProceso'])->where('IdDocente',$teacher['IdDocente']);
+                if($existe!=null){
+                    $teacher['activo'] = 1;
+                }else
+                    $teacher['activo'] = 0;
+                array_push($teachers, $teacher);
+                $cont++;
+            }
+            array_splice($teachers, 0,$cont);
+
+            $data = [
+                'proceso'      =>  $proceso,
+                'profesores' =>$teachers,
+            ];
+        return redirect()->route('pspProcess.show', $data)->with('success', 'El profesor se activo correctamente');
+    }
+
+    public function activateStudents(Request $request)
+    {
+
     }
 }

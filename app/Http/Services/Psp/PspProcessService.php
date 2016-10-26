@@ -19,17 +19,36 @@ class PspProcessService{
 	public function find(){
 		//$proc = PspProcess::where('Vigente',1)->first()
 		//					->where('idEspecialidad',Session::get('faculty-code'))->first();
-		$proc = PspProcess::where('idEspecialidad',Session::get('faculty-code'))->first();
+		$proceso = PspProcess::where('idEspecialidad',Session::get('faculty-code'))->get()->toArray();
+		$this->courseService = new CourseService;
+		$this->cicleService = new CicleService;
+		$cont=0;
+		if($proceso!=null){
+			foreach ($proceso as $proc) {
+				$proc['nomCurso'] = $this->courseService->findCourseById($proc['idCurso'])->Nombre;
+				$proc['codCurso'] = $this->courseService->findCourseById($proc['idCurso'])->Codigo;
+				$request['cicle_code'] = $proc['idCiclo'];
+				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
+				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
+				array_push($proceso, $proc);
+				$cont++;
+			}
+			array_splice($proceso, 0,$cont);
+		}
+		return $proceso;
+	}
+
+	public function findById($id){
+		$proc = PspProcess::where('id',$id)->first();
 		$this->courseService = new CourseService;
 		$this->cicleService = new CicleService;
 
 		if($proc!=null){
-			//foreach ($proceso as $proc) {
-			$proc->nomCurso = $this->courseService->findCourseById($proc->idCurso)->Nombre;
-			$request['cicle_code'] = $proc->idCiclo;
-			$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
-			$proc->ciclo=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
-			//}
+				$proc->nomCurso = $this->courseService->findCourseById($proc->idCurso)->Nombre;
+				$proc['codCurso'] = $this->courseService->findCourseById($proc['idCurso'])->Codigo;
+				$request['cicle_code'] = $proc['idCiclo'];
+				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
+				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
 		}
 		return $proc;
 	}

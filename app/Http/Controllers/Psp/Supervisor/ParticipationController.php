@@ -1,18 +1,21 @@
 <?php
 
-namespace Intranet\Http\Controllers\Investigation\Group\Affiliation;
+namespace Intranet\Http\Controllers\Psp\Supervisor;
 
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 
-use Intranet\Models\Investigator;
-use Intranet\Models\Group;
-use Intranet\Models\Investigatorxgroup;
+use Intranet\Models\Supervisor;
+use Intranet\Models\PspProcess;
+use Intranet\Models\PspProcessxSupervisor;
+use Intranet\Models\Teacher;
 use Intranet\Models\Teacherxgroup;
 
-class AffiliationController extends Controller
+use Session;
+
+class ParticipationController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -20,13 +23,19 @@ class AffiliationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeInvestigator(Request $request)
+    public function storeSupervisor(Request $request)
     {
         try {
-            $group = Group::find($request['id_group']);
-            $group->investigators()->attach($request['id_investigator']);
+            $faculty_id = Session::get('faculty-code'); 
+            $process = PspProcess::where('idEspecialidad',$faculty_id)->first();
 
-            return redirect()->route('grupo.edit',$group->id)->with('success', 'El investigador se ha agregado exitosamente');
+            $relation = new PspProcessxSupervisor;
+            $relation->idPspProcess = $process->id;
+            $relation->idSupervisor = $request['idSupervisor'];
+            $relation->save();
+
+
+            return redirect()->route('supervisor.index')->with('success', 'El supervisor se ha agregado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -38,7 +47,7 @@ class AffiliationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyInvestigator($id)
+    public function destroySupervisor($id)
     {
         try {
             $investigatorXgroup = Investigatorxgroup::find($id);

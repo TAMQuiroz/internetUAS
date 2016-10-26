@@ -34,72 +34,55 @@ class PspProcessController extends Controller
     {
     	$academicCycle = Session::get('academic-cycle');
     	if($academicCycle!=null){
-            $proc = PspProcess::where('idEspecialidad',Session::get('faculty-code'))->first();
+            $proc = PspProcess::where('idEspecialidad',Session::get('faculty-code'))->first(); //si existe al menos uno
 
 			if($proc != null){					
 				//$proc = PspProcess::where('Vigente',1)->first()->where('idEspecialidad',Session::get('faculty-code'))->first();
 		    	$this->pspprocessservice = new PspProcessService;
 		    	$proceso = $this->pspprocessservice->find();
-		    	$teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
 		        $data = [
-		            'proceso'    =>  $proceso,
-		            'profesores' =>  $teachers,
+		            'procesos'    =>  $proceso,
 		        ];
 	    	}else{
 	    		$data = [
-		            'proceso'    =>  null,
-		            'profesores'    =>  null,
+		            'procesos'    =>  null,
 		        ];
 	    		
 	    	}
     	}else{
     		$data = [
-		            'proceso'    =>  null,
-		            'profesores'    =>  null,
+		            'procesos'    =>  null,
 		        ];
     	}
-    	
     	return view('psp.pspProcess.index',$data);
     }
 
     public function create()
     {
-        $proc = PspProcess::where('idEspecialidad',Session::get('faculty-code'))->first();
     	$academicCycle = Session::get('academic-cycle');
 
     	if($academicCycle!=null){
-    		if($proc != null){					
-				//$proc = PspProcess::where('Vigente',1)->first()->where('idEspecialidad',Session::get('faculty-code'))->first();
-		    	$this->pspprocessservice = new PspProcessService;
-		    	$proceso = $this->pspprocessservice->find();
-		    	$teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
-		    	$faculty_id = Session::get('faculty-code');
-		    	$cycle_id = $this->facultyService->findCycle($faculty_id)->IdCicloAcademico; 
-		    	$courses=null;
-		        $data = [
-		            'proceso'    =>  $proceso,
-		            'profesores' =>  $teachers,
-		            'courses' => $courses,
-		            'cycle' => $cycle_id
-		        ];
-	    	}else{
-	    		$faculty_id = Session::get('faculty-code');
-		    	$cycle_id = $this->facultyService->findCycle($faculty_id)->IdCicloAcademico; 
-		    	$order='asc';
-		    	try {
-		 		   	$courses =   	$this->courseService->findCoursesBySemester($faculty_id,$cycle_id,$order)->lists('Nombre','IdCurso');
-		 		   	$var=count($courses);
-                    if($var==0){
-                        $courses=null;
-                    }
-                    $data = [ 'proceso'    =>  null,
-		            		'profesores'    =>  null,
-		            		'courses' => $courses, 'cycle' => $cycle_id];
-		 		   	
-		        } catch(\Exception $e) {
-		            redirect()->back()->with('warning','Ha ocurrido un error'); 
-		        }
-	    	}
+            $faculty_id = Session::get('faculty-code');
+            $cycle_id = $this->facultyService->findCycle($faculty_id)->IdCicloAcademico; 
+            $order='asc';
+            $courses =  $this->courseService->findCoursesBySemester($faculty_id,$cycle_id,$order)->lists('Nombre','IdCurso');
+            $var=count($courses);
+            if($var==0){
+                $array=null;
+            }else{
+                $this->pspprocessservice = new PspProcessService;
+                $procesos = $this->pspprocessservice->find();
+                $array = $courses->toArray();
+                foreach ($procesos as $proceso) {
+                    unset($array[$proceso['idCurso']]);
+                }
+            }
+
+            $data = [
+                'courses' => $array,
+                'cycle' => $cycle_id
+            ];
+
 	    	return view('psp.pspProcess.create',$data);
     	}
     	else{
@@ -152,11 +135,23 @@ class PspProcessController extends Controller
         }
     }
 
-    public function destroy()
+    public function show($id)
+    {
+        $this->pspprocessservice = new PspProcessService;
+        $proceso = $this->pspprocessservice->findById($id);
+        $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
+        $data = [
+            'proceso'      =>  $proceso,
+            'profesores' =>$teachers,
+        ];
+
+        return view('psp.pspProcess.show',$data);
+    }
+
+    public function destroy($id)
     {
      try {
-            $proceso   = PspProcess::where('idEspecialidad',Session::get('faculty-code'))->first();
-
+            $proceso   = PspProcess::where('id',$id)->first();
             $proceso->delete();
 
             return redirect()->route('pspProcess.index')->with('success', 'El modulo Psp se ha cerrado exitosamente');

@@ -313,7 +313,7 @@
               @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 7 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
               <li>
                 <a>
-                   <i class="fa fa-flask"></i> PSP <span class="fa fa-chevron-down"></span>
+                   <i class="fa fa-clipboard "></i> PSP <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
                   @if(Auth::user()->IdPerfil == 2) <!--si es profesor-->
@@ -332,9 +332,9 @@
                   @endif
                   @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
                   <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
-                  <li><a href=""> Administrar Fases</a></li>
+                  <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                   <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                  <li><a href=""> Administrar Documentos</a></li>
+                  <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                   @endif
                   @if(Auth::user()->IdPerfil == 7) <!--si es alumno-->
                   <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>

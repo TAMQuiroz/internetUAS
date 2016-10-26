@@ -62,11 +62,23 @@ class PhaseController extends Controller
     {
         try {
 
+            
+
             $Phase                   = new Phase;
             $Phase->numero          = $request['numero'];
             $Phase->descripcion      = $request['descripcion'];
             $Phase->fecha_inicio      = $request['fecha_inicio'];
             $Phase->fecha_fin      = $request['fecha_fin'];
+            $Phaseses = Phase::get();
+            if($Phaseses!=null){
+                foreach($Phaseses as $Phases){
+                    if((($Phases->fecha_inicio<$Phase->fecha_inicio)
+                        &&($Phase->fecha_inicio<$Phases->fecha_fin))||(($Phases->fecha_inicio<$Phase->fecha_fin)
+                        &&($Phase->fecha_fin<$Phases->fecha_fin))){
+                        return redirect()->back()->with('warning', 'Ya existe una fase que incluye parte de este rango de fechas');
+                    }
+                }       
+            }     
             $Phase->save();
 
             return redirect()->route('phase.index')->with('success', 'La fase se ha registrado exitosamente');
@@ -122,7 +134,18 @@ class PhaseController extends Controller
             $Phase->numero           = $request['numero'];
             $Phase->descripcion           = $request['descripcion'];
             $Phase->fecha_inicio      = $request['fecha_inicio'];
-            $Phase->fecha_fin      = $request['fecha_fin'];            
+            $Phase->fecha_fin      = $request['fecha_fin']; 
+            $Phaseses = Phase::get();
+            if($Phaseses!=null){
+                foreach($Phaseses as $Phases){
+                    if($Phase->id!=$Phases->id){
+                        if((($Phases->fecha_inicio<$Phase->fecha_inicio)&&($Phase->fecha_inicio<$Phases->fecha_fin))||(($Phases->fecha_inicio<$Phase->fecha_fin)
+                            &&($Phase->fecha_fin<$Phases->fecha_fin))){
+                            return redirect()->back()->with('warning', 'Ya existe una fase que incluye parte de este rango de fechas');
+                        }
+                    }
+                }       
+            }           
             $Phase->save();
 
             return redirect()->route('phase.index')->with('success', 'La fase se ha actualizado exitosamente');

@@ -41,6 +41,7 @@
                     <div class="separator"></div>
 
                     <h2>Profesores del curso en el ciclo</h2>
+                    @if($profesores!=null)
                     <table class="table table-striped responsive-utilities jambo_table bulk_action">
                         <thead>
                         <tr class="headings">
@@ -50,7 +51,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if($profesores!=null)
+                        
                             @foreach($profesores as $profesor)                            
                             <tr class="even pointer">
                                 <td class="a-center ">{{$profesor['codigo']}}</td>
@@ -61,18 +62,30 @@
                                         {{Form::button('<i class="fa fa-plus"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit', 'title'=>'Dar Acceso'])}}
                                         {{Form::hidden('idProceso',$proceso->id)}}
                                         {{Form::hidden('idProfesor',$profesor['IdDocente'])}}
-                                        {{Form::hidden('proceso',$proceso->id)}}
                                         {{Form::close()}}
                                     @endif
-                                    {{Form::open(['route' => ['pspProcess.activateStudents'], 'id'=>'formSuggestion'])}}
-                                    {{Form::button('<i class="fa fa-group"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit', 'title'=>'Dar Acceso Alumnos'])}}
-                                    {{Form::close()}}
+                                    @if($profesor['psp']==0 && $profesor['alumnos']==1)
+                                        {{Form::open(['route' => ['pspProcess.activateStudents'], 'id'=>'formSuggestion'])}}
+                                        {{Form::button('<i class="fa fa-group"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit', 'title'=>'Dar Acceso Alumnos'])}}
+                                        {{Form::hidden('idProfesor',$profesor['IdDocente'])}}
+                                        {{Form::hidden('idProceso',$proceso->id)}}
+                                        {{Form::close()}}
+                                    @endif    
                                 </td>
                             </tr>
-                            @endforeach
-                        @endif                            
+                            @endforeach 
+
                         </tbody>
                     </table>
+                    @else
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-warning">
+                                <strong>Advertencia: </strong> No hay profesores relacionados al curso.
+                            </div>
+                        </div>
+                    </div>    
+                    @endif 
                     <div class="row">
                         <div class="col-md-8 col-sm-12 col-xs-12">
                             <a class="btn btn-default pull-right" href="{{ route('pspProcess.index') }}">Regresar</a>

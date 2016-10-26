@@ -39,7 +39,6 @@
                                 <td>{{$proceso['ciclo']}} </td>
                                 <td >
                                     <a href="{{ route('pspProcess.show', $proceso['id']) }}"  class="btn btn-primary btn-xs" ><i class="fa fa-search"></i></a>
-                                    <a href="" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                     <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$proceso['id']}}" title="Eliminar"><i class="fa fa-remove"></i></a>
                                 </td>
                             </tr>

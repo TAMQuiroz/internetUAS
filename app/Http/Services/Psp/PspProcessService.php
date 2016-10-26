@@ -9,6 +9,10 @@ use Session;
 use Intranet\Models\PspProcess;
 use Intranet\Models\AcademicCycle;
 use Intranet\Models\CoursexTeacher;
+use Intranet\Models\CoursexCycle;
+use Intranet\Models\Schedule;
+use Intranet\Models\SchedulexTeacher;
+use Intranet\Models\Student;
 
 use Intranet\Http\Services\Cicle\CicleService;
 use Intranet\Http\Services\Course\CourseService;
@@ -70,9 +74,25 @@ class PspProcessService{
 		return $teachers;
 	}
 
-	public function retrieveStudents($request){
 
+	public function haveStudents($request){
+		$IdDocente =    $request['idProfesor'];
+		$proceso = PspProcess::where('id',$request['idProceso'])->first();
+		
+		
+		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idCurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
+		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
+		$horarioAct = null;
+
+		foreach ($horarios as $horario) {
+			$temp = SchedulexTeacher::where('IdDocente',$IdDocente)->where('IdHorario',$horario->IdHorario)->first();
+			if($temp!=null)
+				$horarioAct = $horario;
+		}
+		if($horarioAct!=null)
+				$alumnos = Student::where('IdHorario',$horarioAct->IdHorario)->get();
+		else 
+			$alumnos = null;	
+		return $alumnos;
 	}
-
-
 }

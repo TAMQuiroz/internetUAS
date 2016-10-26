@@ -13,6 +13,7 @@ use Intranet\Http\Services\User\PasswordService;
 use Intranet\Http\Services\User\UserService;
 
 use Intranet\Models\PspProcess;
+use Intranet\Models\Student;
 use Intranet\Models\PspProcessxTeacher;
 
 use Carbon\Carbon;
@@ -123,10 +124,28 @@ class PspProcessController extends Controller
         $this->pspprocessservice = new PspProcessService;
         $proceso = $this->pspprocessservice->findById($id);
         $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
-        
         $cont=0;
         foreach ($teachers as $teacher) {
             $existe=PspProcessxTeacher::where('idPspProcess',$id)->where('IdDocente',$teacher['IdDocente'])->first();
+            $alt= [
+                'idProfesor' => $teacher['IdDocente'],
+                'idProceso' => $id,
+            ];
+
+            $students = $this->pspprocessservice->haveStudents($alt);
+
+            if($students == null || (count($students)==0)){
+                $teacher['psp']=0;
+                $teacher['alumnos']=0;
+            }
+            else{
+                if( $students[0]->lleva_psp != 1)
+                    $teacher['psp']=0;
+                else
+                    $teacher['psp']=1;
+                $teacher['alumnos']=1;
+            }
+
             if($existe!=null){
                 $teacher['activo'] = 1;
             }else
@@ -135,7 +154,6 @@ class PspProcessController extends Controller
             $cont++;
         }
         array_splice($teachers, 0,$cont);
-
         $data = [
             'proceso'      =>  $proceso,
             'profesores' =>$teachers,
@@ -163,7 +181,7 @@ class PspProcessController extends Controller
             $acceso->save();
 
             $this->pspprocessservice = new PspProcessService;
-            $proceso = $this->pspprocessservice->findById($request['proceso']);
+            $proceso = $this->pspprocessservice->findById($request['idProceso']);
             $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
             
             $cont=0;
@@ -187,6 +205,22 @@ class PspProcessController extends Controller
 
     public function activateStudents(Request $request)
     {
+            $this->pspprocessservice = new PspProcessService;
+            $students = $this->pspprocessservice->haveStudents($request);
+            $proceso = $this->pspprocessservice->findById($request['idProceso']);
+            $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
 
+            foreach ($students as $student) {
+                $upd = Student::find($student->IdAlumno);
+                $upd->lleva_psp = 1;
+                $upd->save();
+            }
+
+            $data = [
+                'proceso'      =>  $proceso,
+                'profesores' =>$teachers,
+
+            ];
+        return redirect()->route('pspProcess.show', $data)->with('success', 'Se dieron accesos a los alumnos del horario correctamente');
     }
 }

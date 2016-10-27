@@ -8,6 +8,7 @@ use Intranet\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
+use Intranet\Models\TutSchedule;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
 
 class TutorController extends Controller
@@ -23,9 +24,16 @@ class TutorController extends Controller
         $specialty = Session::get('faculty-code');
         
         $tutors = Teacher::getTutorsFiltered($filters, $specialty);
-        
+        $tutors = $tutors->appends($filters);
+        $horas = [];
+        foreach($tutors as $t) {            
+            $tutSchedule = TutSchedule::where('id_docente',$t->IdDocente)->get();            
+            $horas[$t->IdDocente]=$tutSchedule->count();
+        }
+                        
         $data = [
-            'tutors'    =>  $tutors->appends($filters),
+            'tutors'    =>  $tutors,
+            'horas' => $horas,
         ];
 
         return view('tutorship.tutor.index', $data);

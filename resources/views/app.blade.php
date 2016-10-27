@@ -310,7 +310,7 @@
                 </li>
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 7 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
+              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 0 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
               <li>
                 <a>
                    <i class="fa fa-clipboard "></i> PSP <span class="fa fa-chevron-down"></span>
@@ -336,11 +336,11 @@
                   <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                   <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                   @endif
-                  @if(Auth::user()->IdPerfil == 7) <!--si es alumno-->
+                  @if(Auth::user()->IdPerfil == 0) <!--si es alumno-->
                   <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>
                   <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
                   <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
-                  <li><a href=""> Reuniones</a></li>
+                  <li><a href="{{route('meeting.index')}}"> Reservar Cita</a></li>
                   @endif
                 </ul>
               </li>

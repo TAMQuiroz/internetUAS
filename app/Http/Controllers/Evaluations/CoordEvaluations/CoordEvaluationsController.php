@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\Http\Controllers\Tutorship\CoordTutorship;
+namespace Intranet\Http\Controllers\Evaluations\CoordEvaluations;
 
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
@@ -9,18 +9,19 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
 
-class CoordTutorshipController extends Controller
+class CoordEvaluationsController extends Controller
 {
     
     public function index(Request $request)
-    {        
+    {
+        
         $specialty = Session::get('faculty-code');
-        $coords = Teacher::where('rolTutoria',2)->where('IdEspecialidad',$specialty)->get();
+        $teachers = Teacher::where('rolEvaluaciones',1)->where('IdEspecialidad',$specialty)->get();
 
         $data = [            
-            'tutors'    =>  $coords,
+            'teachers'    =>  $teachers,
         ];
-        return view('tutorship.coordtutor.index', $data);
+        return view('evaluations.coordevaluations.index', $data);
     }
 
     /**
@@ -30,13 +31,13 @@ class CoordTutorshipController extends Controller
      */
     public function create(Request $request)
     {
-        $filters = $request->all();
+        
         $specialty = Session::get('faculty-code');
-        $teachers = Teacher::getCoordsFiltered($filters, $specialty);        
+        $teachers = Teacher::where('rolEvaluaciones',null)->where('IdEspecialidad',$specialty)->get();
         $data = [
-            'teachers'    =>  $teachers->appends($filters),            
+            'teachers'    =>  $teachers,            
         ];        
-        return view('tutorship.coordtutor.create', $data);
+        return view('evaluations.coordevaluations.create', $data);
     }
 
     
@@ -46,17 +47,17 @@ class CoordTutorshipController extends Controller
         if($request['check']!=null){
             foreach($request['check'] as $idTeacher => $value){
                 try {
-                //se cambia el rol del profesor a COORDINADOR DE TUTORIA
-                    DB::table('Docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 2]);
+                //se cambia el rol del profesor a ADMINISTRADOR DE EVALUACIONES
+                    DB::table('Docente')->where('IdDocente', $idTeacher)->update(['rolEvaluaciones' => 1]);
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
             }
         //VUELVE A la lista de coordinadores
-            return redirect()->route('coordinadorTutoria.index')->with('success', 'Se guardaron los coordinadores exitosamente');
+            return redirect()->route('coordinadorEvaluaciones.index')->with('success', 'Se guardaron los administradores exitosamente');
         }
         else{
-            return redirect()->route('coordinadorTutoria.index');
+            return redirect()->route('coordinadorEvaluaciones.index');
         }
 
     }
@@ -81,8 +82,8 @@ class CoordTutorshipController extends Controller
     public function destroy($id)
     {
         try {
-            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
-            return redirect()->route('coordinadorTutoria.index')->with('success', 'Se desactivó al coordinador exitosamente');
+            DB::table('Docente')->where('IdDocente', $id)->update(['rolEvaluaciones' => null]);
+            return redirect()->route('coordinadorEvaluaciones.index')->with('success', 'Se desactivó al administrador exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

@@ -155,3 +155,11 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
         'fecha_limite'         =>  '2018-10-06',
     ];
 });
+
+$factory->define(Intranet\Models\Competence::class, function (Faker\Generator $faker) {
+    return [
+        'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+        'descripcion'       =>  $faker->text,
+        'id_especialidad'   =>  1,
+    ];
+});

@@ -25,4 +25,24 @@ class Question extends Model
     public function especialidad(){
   	  return $this->belongsTo('Intranet\Models\Teacher','id_especialidad');
     }
+
+    static public function getQuestionsFiltered($filters, $specialty) {        
+        
+        $query = Question::where('id_especialidad',$specialty);
+
+        if (array_key_exists("tipo", $filters) && $filters["tipo"] != "") {
+            $query = $query->where("tipo", $filters["tipo"]);
+        }
+
+        if (array_key_exists("dificultad", $filters) && $filters["dificultad"] != "") {
+            $query = $query->where("dificultad", $filters["dificultad"]);
+        }
+
+        if (array_key_exists("competencia", $filters) && $filters["competencia"] != "") {
+            $query = $query->where("id_competence",$filters["competencia"]);
+        }
+
+        return $query->paginate(10);
+
+    }
 }

@@ -36,10 +36,7 @@
                             <th class="column-title">Apellidos y Nombres </th>                        
                             <th class="column-title">Correo </th>
                             <th class="column-title">Horas a la semana </th>
-                            <th class="column-title last">Acciones</th>
-                            <th class="bulk-actions" colspan="7">
-                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>
+                            <th class="column-title last">Acciones</th>                            
                         </tr>
                     </thead>
                     <tbody>

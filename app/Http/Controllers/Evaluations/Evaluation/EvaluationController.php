@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\Evaluations\Evaluation;
 
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
+use Intranet\Http\Requests\EvaluationRequest;
 use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
@@ -58,16 +59,17 @@ class EvaluationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EvaluationRequest $request)
     {
         // dd($request);
         $specialty = Session::get('faculty-code');  
 
         try {
 
-            if($request['check'] != null){//si existen alumnos
+            if($request['arrStudents'] != null){//si existen alumnos
                 if($request['arrIds']!=null){
                     //creo los datos para la evaluacion
+
                     $evaluacion = new Evaluation;
                     $evaluacion->fecha_inicio         = $request['fecha_inicio'];            
                     $evaluacion->fecha_fin            = $request['fecha_fin'];            
@@ -149,9 +151,7 @@ class EvaluationController extends Controller
                 }
                 else{
                     return redirect()->route('evaluacion.create')->with('warning', 'Tiene que tener preguntas.');
-                }//fin del ifarrayid
-
-                
+                }                
             }
             else{
                 return redirect()->route('evaluacion.create')->with('warning', 'No existen alumnos.');

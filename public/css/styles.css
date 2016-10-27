@@ -85,17 +85,25 @@ h3.faculty-name{
 /* NEW LOOK */
 
 .userView .bar-info {
-  width: 170px;
+  width: 220px;
   margin-left: auto;
   margin-right: auto;  
+  text-align: center !important;
 }
 
-#info-user, #info-faculty {
-  width:157px;
+#info-user span{
+  font-size: 12pt !important;
+  font-weight: bold !important;
 }
 
-#info-endcycle {
-  width:172px;
+#info-faculty span, #info-endcycle span{
+  font-size: 9pt !important;
+}
+
+.bar-info span {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;  
 }
 
 .main-container-sumajg{
@@ -108,7 +116,7 @@ h3.faculty-name{
   font-size: 20pt !important;
 }
 
-.btn-primary, .btn-danger {
+td .btn-primary, td .btn-danger {
   height: 25px !important;
   width: 25px !important;
 }
@@ -148,15 +156,52 @@ textarea {
   max-width : 100% !important;
 }
 
-.modal-content {
-  border: none;
-  border-radius: 0px;
-  box-shadow: none;
-}
-
 .modal-dialog {
   width: 100%;
   height: 100%;
   margin: auto;
   background-color: #ffffff;
 }
+
+.modal-content {
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+
+.modal-body {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal .modal-footer{
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  background-color: #ffffff;
+}
+
+.btn-success, .btn-default {
+  margin-right: 10px !important;
+}
+
+.bar-top .button-collapse:hover {
+  color: #ffffff;
+  /*text-decoration: underline;*/
+}
+
+/*
+#info-user span {
+  font-size: 12pt;
+  font-weight: bold;
+}
+*/
+
+/*
+.bar-info span{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+*/

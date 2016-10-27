@@ -5,7 +5,7 @@
 	<div class="col-md-12">
 		<div class="page-title">
 			<div class="title_left">
-				<h3>Phaseses</h3>
+				<h3>Fases</h3>
 			</div>
 		</div>
     </div>

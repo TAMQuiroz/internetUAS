@@ -683,6 +683,8 @@ $api->version('v1', function ($api) {
             //TUTORIA
 
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
+            $api->get('getTutorInfo/{id_tutor}','Tutoria\TutstudentController@getTutorById');
+            $api->post('registerStudentAppointment', 'Tutoria\TutstudentController@postAppointment');
         });
     });
 

@@ -115,7 +115,7 @@ class SuggestionService {
         }else{
             $data['name'] = "Administrador";
             $data['lastname'] = "del";
-            $data['secondlastname'] = "Sistema";
+            $data['secondlastname'] = "Sistemaa";
         }
 
         if($suggestion->IdPlanMejora != null){

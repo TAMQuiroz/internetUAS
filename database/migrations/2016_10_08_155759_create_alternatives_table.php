@@ -30,6 +30,11 @@ class CreateAlternativesTable extends Migration
     
     public function down()
     {
+        Schema::table('alternatives', function (Blueprint $table) {
+             $table->dropForeign('alternatives_id_question_foreign');                  
+             
+        });
+
         Schema::drop('alternatives');
     }
 }

@@ -279,18 +279,14 @@ class QuestionController extends Controller
         
     }
 
-    public function editModalEv(Request $request)
+    public function editQuestionModalEv(Request $request)
     {    
-        
      try {
-         $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competence', $request['competencia'])->get();
-       // dd($evaluators);
-
-         return response()->view('evaluations.evaluation.modal-editar-pregunta', compact('evaluators'));
+         $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competence', $request['id_competence'])->get();
+         return response()->view('evaluations.evaluation.datos-pregunta', compact('evaluators'));        
      } catch (Exception $e) {
          return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
      }
-
         
     }
 }

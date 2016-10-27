@@ -838,9 +838,8 @@ Route::group(['prefix' => 'tutoria'], function(){
 
     //Parametros (El unico hasta ahora es DuracionCita)
     Route::group(['prefix' => 'parametros'], function(){    
-        Route::get('/', ['as' => 'parametro.index', 'uses' => 'Tutorship\Parameter\ParameterController@index']);        
-        Route::get('edit/{id}', ['as' => 'parametro.edit', 'uses' => 'Tutorship\Parameter\ParameterController@edit']);
-        Route::post('edit/{id}', ['as' => 'parametro.update', 'uses' => 'Tutorship\Parameter\ParameterController@update']);
+        Route::get('duracion/', ['as' => 'parametro.index.duration', 'uses' => 'Tutorship\Parameter\ParameterController@indexDuration']);
+        Route::post('duracion/edit', ['as' => 'parametro.update.duration', 'uses' => 'Tutorship\Parameter\ParameterController@updateDuration']);
     });
 
 

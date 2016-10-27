@@ -362,45 +362,54 @@
               </li>
               @endif
 
-
-              @if(Auth::user() && ((Auth::user()->IdPerfil <= 2 )  ))
-              
+              <!--Menu Tutotia-->
+              <!--Si son alumnos de tutoria idPerfil == 0 -->
+              @if(Auth::user() && ((Auth::user()->professor != null && 
+                  (Auth::user()->IdPerfil == 2 && Auth::user()->professor->rolTutoria != null || Auth::user()->IdPerfil == 1)) || 
+                  (Auth::user()->student !=null && Auth::user()->IdPerfil == 0)))     
               <li>
                 <a>
                    <i class="fa fa-users"></i> Tutoría <span class="fa fa-chevron-down"></span>
                 </a>
                 <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 1) <!-- coordinador de especialidad-->
-                  <li><a href="{{route('coordinadorTutoria.index')}}"> Coordinadores</a></li>
+                  <!-- docentes -->
+                  @if(Auth::user()->IdPerfil != 0)
+                  
+                  <!-- coordinador de especialidad-->
+                  @if(Auth::user()->IdPerfil == 1) 
+                  <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
                   @endif
 
-                  @if(Auth::user()->professor != null)
-                  @if(Auth::user()->professor->rolTutoria == 2 )  <!-- coordinador de tutoria-->
-                  <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>                  
+                  <!-- coordinador de tutoria -->
+                  @if(Auth::user()->professor->rolTutoria == 2)
+                  <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
                   <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
+                  <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
                   <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
-                  <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>                  
-                  @endif
+                  <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
                   @endif
 
-                  @if(Auth::user()->IdPerfil == 0)  <!-- alumno  -->
-                  <li><a href="{{route('mitutor.index')}}"> Mi tutor</a></li>
-                  <li><a href="{{route('cita_alumno.index')}}"> Mis citas</a></li>
-                  @endif
-                  @if(Auth::user()->professor != null)
-                  @if(Auth::user()->professor->rolTutoria == 1)<!-- tutor-->
+                  <!-- tutor-->
+                  @if(Auth::user()->professor->rolTutoria == 1)
                   <li><a href="{{route('miperfil.index')}}"> Mi perfil</a></li>
                   <li><a href="{{route('cita_alumno.index')}}"> Mis alumnos</a></li>                  
                   <li><a href="{{route('cita_alumno.index')}}"> Citas</a></li>
+                  @endif   
+                  
                   @endif
+
+                  <!-- alumno  -->
+                  @if(Auth::user()->IdPerfil == 0)
+                  <li><a href="{{route('mitutor.index')}}"> Mi tutor</a></li>
+                  <li><a href="{{route('cita_alumno.index')}}"> Mis citas</a></li>
                   @endif
                 </ul>
               </li>
               
               @endif
 
+              <!--Menu Evaluaciones-->
               @if(Auth::user() && ((Auth::user()->IdPerfil <= 2)  ) )
-              
               <li>
                 <a>
                    <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>

@@ -1,4 +1,4 @@
-@extends('app')
+@extends('appWithoutHamburger')
 @section('content')
 
 <div class="page-title">
@@ -14,7 +14,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_content">
-				<form class="form-horizontal" novalidate="true" action="{{ route('save.academicCycle')}}" method="POST" id="formAcademic" name="formAcademic">
+				<form class="form-horizontal" novalidate="true" action="{{ route('academicCycle_store.flujoAdministrador')}}" method="POST" id="formAcademic" name="formAcademic">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="text" id="validarCycle" name="validarCycle" hidden>
 					<div class="form-group">
@@ -53,7 +53,7 @@
 					<div class="row">
 						<div class="col-md-9 col-sm-12 col-xs-12">
 							<button class="btn btn-success pull-right" type="submit">Guardar</button>
-							<a class="btn btn-default pull-right" href="{{ route('index.academicCycle') }}">Cancelar</a>
+							<a class="btn btn-default pull-right" href="{{ route('academicCycle_index.flujoAdministrador') }}">Cancelar</a>
 						</div>
 					</div>
 				</form>

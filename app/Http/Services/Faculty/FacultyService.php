@@ -214,6 +214,16 @@ class FacultyService {
 		}
 	}
 
+	public function update_without_coordinator($request) {
+		
+		$faculty = Faculty::where('IdEspecialidad', $request['facultyId'])
+		->update(array(	'Codigo' => $request['code'],
+						'Nombre' => $request['name'],
+						'Descripcion' => $request['description']
+		));
+		
+	}
+
 	public function delete($id) {
 
 		$faculty = Faculty::find($id);

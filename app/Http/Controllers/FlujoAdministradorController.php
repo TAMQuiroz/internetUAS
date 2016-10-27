@@ -58,7 +58,7 @@ class FlujoAdministradorController extends Controller
         try {
             $data['fac'] =Faculty::where('IdEspecialidad', $id)->first();
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('flujoAdministrador.facultad_edit',$data);
     }
@@ -68,7 +68,7 @@ class FlujoAdministradorController extends Controller
        try {
             $this->facultyService->update_without_coordinator($request);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('profesor_index.flujoAdministrador', ['id' => $request->get('facultyId')]);
     }
@@ -183,7 +183,7 @@ class FlujoAdministradorController extends Controller
         try {
             $data['academicCycle'] = $this->academicCycleService->retrieveAll();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('flujoAdministrador.academicCycle_index', $data);
     }
@@ -197,7 +197,7 @@ class FlujoAdministradorController extends Controller
         try {
             $academicCycle = $this->academicCycleService->save($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('academicCycle_index.flujoAdministrador')->with('success', 'El ciclo académico se ha registrado exitosamente');
     }

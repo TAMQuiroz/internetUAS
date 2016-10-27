@@ -134,7 +134,7 @@ $factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker)
 
 
     return [
-        'numero'            =>  1,
+        'numero'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
         'descripcion'       =>  $faker->text,
         'fecha_inicio'         =>  '2017-10-06',
         'fecha_fin'         =>  '2018-10-06',
@@ -144,7 +144,7 @@ $factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker)
 $factory->define(Intranet\Models\Student::class, function (Faker\Generator $faker) {
 
     return [
-        'IdAlumno'            =>  $faker->randomNumber($nbDigits = 2,$strict = true),
+        'IdAlumno'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
     ];
 });
 

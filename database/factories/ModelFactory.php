@@ -78,7 +78,7 @@ $factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $f
         'correo'            => $faker->email,
         'telefono'          => 999999999,
         'direccion'         => $faker->lastName,
-        'codigo_trabajador'  => 20111010,
+        'codigo_trabajador'  => $faker->randomNumber($nbDigits = 8,$strict = true),
         'idFaculty'         => 1,
         'idUser'            => 3,
         'Vigente'            => 1,

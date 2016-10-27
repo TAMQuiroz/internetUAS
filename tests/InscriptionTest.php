@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class SupervisorTest extends TestCase
+class InscriptionTest extends TestCase
 {
     use DatabaseMigrations;
     /**
@@ -16,7 +16,7 @@ class SupervisorTest extends TestCase
     {
         $this->assertTrue(true);
     }
-
+/*
     public function test_psp_cr_sup_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
@@ -1239,6 +1239,6 @@ class SupervisorTest extends TestCase
     		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
     		->see('Editar Supervisor')
     		->see('El formato de direccion es inválido');
-    }
+    }*/
 }
 

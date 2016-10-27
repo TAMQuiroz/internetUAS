@@ -26,7 +26,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => factory(Intranet\Models\Teacher::class)->make()
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -117,7 +117,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -139,7 +139,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -161,7 +161,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('$','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -183,7 +183,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('8','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -205,7 +205,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -227,7 +227,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -249,7 +249,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('$','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -271,7 +271,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('8','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -293,7 +293,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_materno')
@@ -315,7 +315,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('','apellido_materno')
@@ -337,7 +337,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('$','apellido_materno')
@@ -359,7 +359,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('8','apellido_materno')
@@ -381,7 +381,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -403,7 +403,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -425,7 +425,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -447,7 +447,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -469,7 +469,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -491,7 +491,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -513,7 +513,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -535,7 +535,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -557,7 +557,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -579,7 +579,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -601,7 +601,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -627,7 +627,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -722,7 +722,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -745,7 +745,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -768,7 +768,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('$','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -791,7 +791,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('8','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -814,7 +814,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -837,7 +837,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -860,7 +860,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('$','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -883,7 +883,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('8','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -906,7 +906,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_materno')
@@ -929,7 +929,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('','apellido_materno')
@@ -952,7 +952,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('$','apellido_materno')
@@ -975,7 +975,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('8','apellido_materno')
@@ -998,7 +998,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1021,7 +1021,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1044,7 +1044,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1067,7 +1067,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1090,7 +1090,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1113,7 +1113,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1136,7 +1136,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1159,7 +1159,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1182,7 +1182,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1205,7 +1205,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')
@@ -1228,7 +1228,7 @@ class SupervisorTest extends TestCase
 	    		'actions' => [],
 	    		'user' => $user
     		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
+    		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
     		->type('Nazario','apellido_paterno')
     		->type('Ortiz','apellido_materno')

@@ -506,6 +506,7 @@ Route::group(['middleware' => 'auth'], function(){
                 });
             });
 
+        });
             //Template
             Route::group(['prefix' => 'template'], function() {
                 Route::get('/', ['as' => 'template.index', 'uses' => 'Psp\Template\TemplateController@index']);
@@ -515,10 +516,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
                 Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
                 Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
-            });
-        });
-
-            
+            });                    
 
             //PspGroups Luis Llanos
 

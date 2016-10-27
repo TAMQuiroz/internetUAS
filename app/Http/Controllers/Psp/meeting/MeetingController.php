@@ -1,6 +1,4 @@
-<?php
-
-namespace Intranet\Http\Controllers\Psp\meeting;
+<?php namespace Intranet\Http\Controllers\Psp\meeting;
 
 use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
@@ -96,7 +94,13 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        //
+        $meeting = meeting::find($id);
+
+        $data = [
+            'meeting' => $meeting,
+        ];
+
+        return view('psp.meeting.show',$data);
     }
 
     /**

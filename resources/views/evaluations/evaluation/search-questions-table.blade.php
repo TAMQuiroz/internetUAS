@@ -13,9 +13,9 @@
     </thead>
     <tbody>
         @foreach($questions as $question)
-        <tr>
+        <tr id="question_{{$question->id}}">
             <td hidden><input type="number" value="{{$question->id}}" name="arrIds[{{$question->id}}]"></td>
-            <td class="id" name="arrIds[{{$question->id}}]">{{ $question->id }}</td>
+            <td class="id">{{ $question->id }}</td>
 
             @if($question->tipo == 1)
             <td>Cerrada</td>
@@ -25,7 +25,7 @@
             <td>Archivo</td>
             @endif
 
-            <td hidden ><input type="number" value="{{$question->competencia->id}}" name="competencia"></td>
+            <td hidden ><input class="id_competence" type="number" value="{{$question->competencia->id}}"></td>
             <td >{{ $question->competencia->nombre }}</td>
 
             <td>{{ $question->descripcion }}</td>
@@ -40,11 +40,11 @@
             <td>Alta</td>
             @endif
 
-            <td hidden><input type="number" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
-            <td class="oculto puntaje" name="arrPuntajes[{{$question->puntaje}}]" hidden>{{ $question->puntaje }}</td>
+            <td hidden><input class="row_puntaje" type="number" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
+            <td class="oculto puntaje" hidden>{{ $question->puntaje }}</td>
 
-            <td hidden><input type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
-            <td class="oculto responsable" name="arrEvaluadores[{{$question->responsable->IdDocente}}]" value="1" hidden>{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
+            <td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
+            <td class="oculto responsable" hidden>{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
             
             <td>
                 <input type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected btn btn-success">

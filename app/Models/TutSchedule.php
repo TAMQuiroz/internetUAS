@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------n
 class TutSchedule extends Model
 {
     use SoftDeletes;//delete logico
-    protected $table = 'Tutschedules';
+    protected $table = 'tutschedules';
     protected $primaryKey = 'id';
     protected $fillable = ['dia',
                             'hora_inicio',

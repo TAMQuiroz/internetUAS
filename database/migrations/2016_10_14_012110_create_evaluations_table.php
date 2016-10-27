@@ -20,8 +20,13 @@ class CreateEvaluationsTable extends Migration
             $table->string('descripcion',1000);
             $table->integer('tiempo')->unsigned();
             $table->integer('id_especialidad');
-            $table->integer('estado')->unsigned();//0->cancelado, 1->vigente, 2->expirado
+            $table->integer('estado')->unsigned();//0->cancelado,1->creado, 2->vigente, 3->expirado
             $table->timestamps();
+        });
+
+        //las llaves foraneas
+        Schema::table('evaluations', function (Blueprint $table) {
+             $table->foreign('id_especialidad')->references('IdEspecialidad')->on('Especialidad');            
         });
     }
 

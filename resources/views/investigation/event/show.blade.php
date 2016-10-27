@@ -22,42 +22,42 @@
 		    	<div class="form-horizontal col-md-8">
 		    		<div class="form-group">
 		    			{{Form::label('Nombre',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::text('nombre',$evento->nombre,['class'=>'form-control', 'readonly', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Ubicacion',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::text('ubicacion',$evento->ubicacion,['class'=>'form-control', 'readonly', 'maxlength' => 100])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Fecha',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::text('fecha',$evento->fecha,['class'=>'form-control', 'readonly'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Hora',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::time('hora',date("H:i", strtotime( $evento->hora )),['class'=>'form-control', 'readonly'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Duracion',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::number('duracion',$evento->duracion,['class'=>'form-control', 'readonly', 'max' => 24, 'min' => 1])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Tipo',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				@if($evento->tipo == 0)
 		    				{{Form::text('grupo', 'Publico', ['class' => 'form-control', 'readonly'])}}
 		    				@else
@@ -68,14 +68,14 @@
 
 		    		<div class="form-group">
 		    			{{Form::label('Grupo',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::text('grupo', $evento->group->nombre, ['class' => 'form-control', 'readonly'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Descripcion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::textarea('descripcion', $evento->descripcion, ['class' => 'form-control', 'rows'=>'5', 'readonly', 'maxlength'=>200])}}
 		    			</div>
 		    		</div>

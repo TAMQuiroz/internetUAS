@@ -4,9 +4,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-	        <div class="title_left">
-	            <h3>Editar Area</h3>
-	        </div>
+            <h3>Editar Area</h3>
 	    </div>
     </div>
 </div>
@@ -22,14 +20,14 @@
 		    	{{Form::open(['route' => ['area.update', $area->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 		    		<div class="form-group">
 		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-xs-12 col-md-4">
 		    				{{Form::text('nombre',$area->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Descripcion *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-xs-12 col-md-4">
 		    				{{Form::text('descripcion',$area->descripcion,['class'=>'form-control', 'required', 'maxlength' => 100])}}
 		    			</div>
 		    		</div>

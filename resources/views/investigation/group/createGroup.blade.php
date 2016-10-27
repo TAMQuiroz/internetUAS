@@ -54,7 +54,7 @@
                         </div> 
 
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Imagen <span class="error">*</span></label>
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Imagen</label>
                             <div class="col-md-6">
                                 {{Form::file('imagen', ['class'=>'form-control'])}}    
                             </div>

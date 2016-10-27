@@ -20,7 +20,7 @@ class ParameterController extends Controller
     {
         $mayorId    = Session::get('faculty-code');
         $parameters = Parameter::where('id_especialidad', $mayorId)->first();
-
+        // dd($parameters);
         $data = [
             'duration' => 0
         ];

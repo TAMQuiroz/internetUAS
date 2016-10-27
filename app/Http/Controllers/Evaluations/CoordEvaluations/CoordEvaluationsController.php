@@ -31,11 +31,11 @@ class CoordEvaluationsController extends Controller
      */
     public function create(Request $request)
     {
-        
-        $specialty = Session::get('faculty-code');
-        $teachers = Teacher::where('rolEvaluaciones',null)->where('IdEspecialidad',$specialty)->get();
+        $filters = $request->all();
+        $specialty = Session::get('faculty-code');        
+        $teachers = Teacher::getCoordsEvFiltered($filters, $specialty);        
         $data = [
-            'teachers'    =>  $teachers,            
+            'teachers'    =>  $teachers->appends($filters),            
         ];        
         return view('evaluations.coordevaluations.create', $data);
     }

@@ -3,33 +3,19 @@
     <div class="page-title">
         <div class="title_left">
             <h3>Nuevo administrador de evaluaciones</h3>
-        </div>
-        <div class="title_right">
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-
-                </div>
-            </div>
-        </div>
+        </div>        
     </div>
-    <div class="clearfix"></div>
+    
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
         {{Form::open(['route' => ['coordinadorEvaluaciones.store'], 'class'=>'', 'id'=>''])}}
-            <div class="x_title">
-                <div class="clearfix"></div>
+            <div class="x_title">                
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="#filter-teachers" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                        <a href="#filter-coords" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                        <h5 class="pull-right"><strong> Elija uno o más profesores.</strong></h5>
                     </div>
-                </div>
-
-                <div class="x_content">
-                    <div class="clearfix"></div>
-                </div>
-                <div class="row">
-                    <h6>Elija uno o más profesores para que ejercer el cargo de administrador de evaluaciones</h6>
-                </div>
+                </div>                
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">                            
@@ -54,7 +40,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                
+                {{ $teachers->links() }}
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -65,5 +51,6 @@
             {{Form::close()}}
         </div>
     </div>
-    @include('tutorship.modals.filter', ['title' => 'Filtrar', 'route' => route('coordinadorEvaluaciones.index')])
+    
+    @include('tutorship.modals.filtercoord', ['title' => 'Filtrar', 'route' => route('coordinadorEvaluaciones.create')])
 @endsection

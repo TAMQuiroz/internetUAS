@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <a href="#filter-coords" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
-                        <h5 class="pull-right"><strong> Elija uno o más profesores</strong></h5>
+                        <h5 class="pull-right"><strong> Elija uno o más profesores.</strong></h5>
                     </div>
                 </div>               
                 

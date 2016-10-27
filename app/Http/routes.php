@@ -807,8 +807,11 @@ Route::group(['middleware' => 'auth'], function(){
 
             //AJAX
             Route::post('search', ['as' => 'pregunta.buscar','uses' => 'Evaluations\Question\QuestionController@searchModalEv']);//NO TOCAR!
-            Route::post('editEv', ['as' => 'pregunta.editar','uses' => 'Evaluations\Question\QuestionController@editModalEv']);//NO TOCAR!
+            Route::get('editQuestion', ['as' => 'pregunta.editar','uses' => 'Evaluations\Question\QuestionController@editQuestionModalEv']);//NO TOCAR!
+            
         });
+
+
 
 
         //Evaluadores

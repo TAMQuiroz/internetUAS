@@ -12,4 +12,8 @@ class Evaluation extends Model
   	  return $this->belongsTo('Intranet\Models\Teacher','id_especialidad');
     }
 
+    public function preguntas(){
+  	  return $this->hasMany('Intranet\Models\Evquestion','id_evaluation');
+    }
+
 }

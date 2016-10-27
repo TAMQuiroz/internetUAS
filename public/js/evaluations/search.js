@@ -14,6 +14,11 @@ $(document).ready(function($) {
 			$(this).parent().parent().remove();
 			cantidadPreguntas--;
 
+			//se deshabilita el boton de guardar
+			if(cantidadPreguntas == 0 ){
+				$('#submit').attr("disabled","disabled");
+			}
+
 			//reorganizar los numeros
 			var init = 0;
 			$('#actual-questions').find('.order').each(function(){
@@ -50,10 +55,28 @@ $(document).ready(function($) {
 			}
 		});
 
+		//evento para validar las fechas
+		// $('#fecha_fin').bind('input', function() {
+		// 	if($('#fecha_inicio').val()!=""){
+		// 		if($('#fecha_inicio').val() >  $('#fecha_fin').val() ){
+		// 			$('#submit').attr("disabled","disabled");
+		// 		}
+		// 	}
+		// });
+		// //evento para validar las fechas
+		// $('#fecha_inicio').bind('input', function() {
+		// 	if($('#fecha_fin').val()!=""){
+		// 		if($('#fecha_inicio').val() >  $('#fecha_fin').val() ){
+		// 			$('#submit').attr("disabled","disabled");	
+		// 		}
+		// 	}
+		// });
+
+
 
 });
 
-
+		
 	function selectQuestions(){  
 	    $('#modal-buscar-banco-preguntas').modal('hide');//oculto todo el modal
 	    var questions = $('.questions_selected:checked');//saco las filas con check    
@@ -82,6 +105,11 @@ $(document).ready(function($) {
 				tr.append('<td><a class="editbtn btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></a></td>');
 
 				$('#actual-questions').find('tbody').append(tr);
+
+				//se habilita el boton de guardar
+				if(cantidadPreguntas > 0 ){
+					$('#submit').removeAttr("disabled");
+				}
 			}
 
 		});

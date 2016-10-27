@@ -277,6 +277,7 @@ class TutstudentController extends Controller
                         $tutoriaIngresada = DB::table('tutorships')->where([
                             ['id_tutor', '=', $idTeacher],
                             ['id_alumno', '=', $students[$n_al]->id],
+                            ['deleted_at', '=', null],//para que no asigne a una tutorship eliminada
                             ])->get()[0];
 
                         

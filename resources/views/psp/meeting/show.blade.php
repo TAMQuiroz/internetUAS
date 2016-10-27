@@ -36,7 +36,7 @@
                 <div class="form-group">
                     {{Form::label('Supervisor',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::number('supervisor',$meeting->idSupervisor,['class'=>'form-control', 'required', 'min' => 8, 'max' => 22,'readonly'])}}    
+                        {{Form::text('supervisor',$supervisor->nombres.' '.$supervisor->apellido_paterno.' '.$supervisor->apellido_materno,['class'=>'form-control', 'required', 'min' => 8, 'max' => 22,'readonly'])}}    
                     </div>                    
                 </div>
 

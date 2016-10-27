@@ -7,6 +7,7 @@ use Intranet\Models\student;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\freeHour;
+use Intranet\Models\Supervisor;
 use Auth;
 
 class MeetingController extends Controller
@@ -100,6 +101,7 @@ class MeetingController extends Controller
             'meeting' => $meeting,
         ];
 
+        $data['supervisor'] = supervisor::find($meeting->idSupervisor);
         return view('psp.meeting.show',$data);
     }
 

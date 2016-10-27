@@ -62,7 +62,11 @@
                                 <tr class="even pointer">                                                                     
                                     <td class=" ">{{$h}}:00 hs</td>       
                                     @for ($d=1; $d<7; $d++)
-                                        <td class=" "> {{Form::checkbox('check['.$d.$h.']',1 , false, array('class' => 'check'))}} </td>
+                                        <?php if (encuentraHorario($tutSchedule, $d, $h)) { ?>
+                                            <td class=" "> {{Form::checkbox('check['.$d.$h.']',1 , true, array('class' => 'check'))}} </td>
+                                        <?php } else {?>
+                                            <td class=" "> {{Form::checkbox('check['.$d.$h.']',1 , false, array('class' => 'check'))}} </td>                                        
+                                        <?php } ?>
                                     @endfor                                                                       
                                 </tr>
                                 @endfor
@@ -96,3 +100,14 @@
 <!-- <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script> -->
 
 @endsection
+
+<?php 
+function encuentraHorario($tutSchedule, $d, $h) {
+    foreach($tutSchedule as $schedule) {
+        if ( $schedule->dia==$d && intval($schedule->hora_inicio)==$h) {
+            return true;
+        }
+    }    
+    return false;
+}
+?>

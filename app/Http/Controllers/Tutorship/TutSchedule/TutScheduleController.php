@@ -7,6 +7,7 @@ use Intranet\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
+use Intranet\Models\TutSchedule;
 use Illuminate\Support\Facades\Session;
 
 class TutScheduleController extends Controller
@@ -68,10 +69,12 @@ class TutScheduleController extends Controller
      */
     public function edit($id)
     {
-        $teacher       = Teacher::find($id);
+        $teacher = Teacher::find($id);
+        $tutSchedule = TutSchedule::where('id_docente',$id)->get();
         
         $data = [
             'teacher'    =>  $teacher,
+            'tutSchedule' => $tutSchedule,
         ];
         
         return view('tutorship.tutschedule.edit', $data);
@@ -92,10 +95,24 @@ class TutScheduleController extends Controller
         $teacher->anexo = $request['anexo'];
         $teacher->save();
 
-        if($request['check']!=null){
+        if($request['check']!=null){            
+            $tutSchedule = TutSchedule::where('id_docente',$id)->get();
+            
+            if ($tutSchedule->count()!=0) { //si encuentra horarios del profe
+                foreach($tutSchedule as $t) {
+                    $scheduleTrash = TutSchedule::find($t->id);
+                    $scheduleTrash->delete();
+                }                
+            }                           
+                
             foreach($request['check'] as $diaHora => $value){
-                echo $diaHora . " "." <br>";
-            } 
+                $schedule = new TutSchedule;
+                $schedule->dia = substr($diaHora,0,1);
+                $schedule->hora_inicio = substr($diaHora,1,2).":00:00";
+                $schedule->hora_fin = (intval(substr($diaHora,1,2))+1).":00:00";
+                $schedule->id_docente = $id;
+                $schedule->save();                    
+            }
         }
                 
         return redirect()->route('miperfil.index')->with('success', 'Se guardaron los cambios exitosamente');

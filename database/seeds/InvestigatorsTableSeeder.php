@@ -11,6 +11,6 @@ class InvestigatorsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Intranet\Models\Investigator::class, 5)->create();
+        factory(Intranet\Models\Investigator::class, 1)->create();
     }
 }

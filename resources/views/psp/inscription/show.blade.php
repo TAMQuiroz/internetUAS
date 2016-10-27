@@ -66,7 +66,7 @@
                 <div class="form-group">
                     {{Form::label('Equipo del practicante *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('equi_del_practicante',$inscription->equi_del_practicante->,['class'=>'form-control', 'readonly'])}}
+                        {{Form::text('equi_del_practicante',$inscription->equi_del_practicante,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 

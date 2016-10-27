@@ -20,23 +20,29 @@
             <div class="x_content">
                 <div class="form-horizontal">
                     <div class="row" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Inicio<span class="error">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control cycleClass" name="cycleStart" id="cycleStart">
+                                        <option value="0">-- Seleccione --</option>
+                                        @foreach($semesters as $s)
+                                            <option numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Inicio<span class="error">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="cycleStart" id="cycleStart" class="form-control" required="true">
-                                    <option value="0">-- Seleccione --</option>
-                                    @foreach($semesters as $s)
-                                        <option numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"><span class="error"></span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <p style= "color:#a94442; font-weight: 700; margin-bottom: 5px; max-width: 100%;" id="validation" name="validation"> </p>
+                        </div>
                     </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
                     <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Fin<span class="error">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="cycleEnd" id="cycleEnd" class="form-control" required="true">
+                                <select class="form-control cycleClass" name="cycleEnd" id="cycleEnd" required="true">
                                     <option value="0">-- Seleccione --</option>
                                     @foreach($semesters as $s)
                                         <option numero="{{ $s->Numero }}" value="{{ $s->IdCicloAcademico }}">{{ $s->Descripcion }}</option>
@@ -152,7 +158,17 @@
                                 <th colspan="3" scope="colgroup" class="text-center"> Resultados Estudiantiles </th>
                             </tr>
                             </thead>
+                            
                             <tbody>
+                            
+
+                            @if ($studentsResults->isEmpty())
+                            <tr>
+                                <td></td>
+                                <td><p style = "color: red;">Debe agregar almenos un resultado estudiantil. No podrá iniciar periodo</p></td>
+                            </tr>   
+                            @endif
+
                             @foreach($studentsResults as $stRst)
                                 <?php $objs = ""; ?>
                                 @foreach($stRst->educationalObjectives as $objective)
@@ -184,7 +200,13 @@
                                     @endforeach
                                 @endforeach
                             @endforeach
+
+
+
                             </tbody>
+                            
+
+
                         </table>
                     </div>
 
@@ -193,7 +215,12 @@
                             <div class="col-md-3 col-sm-3 col-xs-3">
                             <a class="btn btn-default submit" href="{{ url('faculty/periods') }}">Cancelar</a>
 
-                            <button class="btn btn-success pull-right submit" type="submit">Iniciar</button>
+                            @if ($studentsResults->isEmpty())
+                                <button class="btn btn-success pull-right submit" type="submit" disabled>Iniciar</button>
+                            @else
+                                <button class="btn btn-success pull-right submit" type="submit" >Iniciar</button>
+                            @endif
+                            
                         </div>
                     </div>
 

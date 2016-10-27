@@ -665,23 +665,41 @@ $api->version('v1', function ($api) {
             $api->get('users/me', 'User\UserController@getUserInfo');
 
             $api->group(['namespace' => 'Faculty', 'prefix' => 'faculties'], function($api) {
+                $api->get('/getFaculty/{faculty_id}','FacultyController@getSpecialty');
                 $api->get('/', 'FacultyController@get');
                 $api->get('/{faculty_id}/educational-objectives', 'FacultyController@getEducationalObjectives');
                 $api->get('/{faculty_id}/students-results', 'FacultyController@getStudentsResult');
                 $api->get('/{faculty_id}/aspects', 'FacultyController@getAspects');
                 $api->get('/{faculty_id}/evaluated_courses', 'FacultyController@getEvaluatedCourses');
                 $api->get('/{faculty_id}/evaluated_courses/{course_id}/semesters/{semester_id}', 'FacultyController@getCourseReport');
-                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureReport');
+                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureRepor|t');
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
+                $api->get('/{id}/teachers', 'FacultyController@getTeachers');
             });
-            $api->get('faculties/{f_id}/periods/actual/semesters', 'Period\PeriodController@getSemesters');
+            
+            $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
+                $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
+                $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
+                $api->get('/{p_id}/instruments', 'PeriodController@getMeasurementInstOfPeriod');
+                $api->get('/{p_id}/cycles', 'PeriodController@getCyclesofPeriod');
+            });
 
-            $api->get('aspects/{id}/criterions', 'Aspect\AspectController@getCriterions');
-            $api->get('/faculties/{id}/teachers', 'Faculty\FacultyController@getTeachers');
+            $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
+                $api->get('/{id}/criterions', 'AspectController@getCriterions');
+            });
+
+
+
+
+            //INVESTIGACION
+            $api->group(['namespace' => 'Investigation','prefix' => 'investigation'], function($api){
+                $api->get('/{id}/groups', 'Group\GroupController@getById');
+                $api->get('/{id}/investigators', 'Investigator\InvestigatorController@getById');
+                $api->get('/{id}/projects', 'Project\ProjectController@getById');
+            });
 
             //TUTORIA
-
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
             $api->get('getTutorInfo/{id_tutor}','Tutoria\TutstudentController@getTutorById');
             $api->post('registerStudentAppointment', 'Tutoria\TutstudentController@postAppointment');

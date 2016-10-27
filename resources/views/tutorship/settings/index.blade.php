@@ -4,12 +4,12 @@
 	<div class="tab-page-wrapper active">
   		<li class="tab-page">Citas</li>
 	</div>
-	<a href="#">
+	<a href="{{route('tema.index')}}">
 		<div class="tab-page-wrapper">
 	  		<li class="tab-page">Temas</li>
 		</div>
 	</a>
-	<a href="#">
+	<a href="{{route('motivo.index')}}">
 		<div class="tab-page-wrapper">
 	  		<li class="tab-page">Motivos</li>
 		</div>

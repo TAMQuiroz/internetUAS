@@ -385,8 +385,6 @@
                   <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
                   <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
                   <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
-                  <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
-                  <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
                   @endif
 
                   <!-- tutor-->

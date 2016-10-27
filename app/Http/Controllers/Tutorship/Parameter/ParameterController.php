@@ -34,31 +34,6 @@ class ParameterController extends Controller
         return view('tutorship.settings.index', $data);
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        $parameter = Parameter::find($id);        
-        $data = [
-            'parameter'    =>  $parameter,
-        ];
-        return view('tutorship.parameter.edit',$data);
-    }
-
-
     public function updateDuration(Request $request)
     {
         try {
@@ -78,11 +53,5 @@ class ParameterController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
-    }
-
-
-    public function destroy($id)
-    {
-        //
     }
 }

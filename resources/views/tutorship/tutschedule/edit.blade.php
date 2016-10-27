@@ -15,12 +15,12 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Perfil</h3>
+                <h3 class="panel-title">Información</h3>
             </div>
 
             <div class="panel-body">
 
-                {{Form::open(['route' => ['disponibilidad.update',$teacher->IdDocente], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                {{Form::open(['route' => ['miperfil.update',$teacher->IdDocente], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                 <div class="form-group">
                     {{Form::label('Teléfono *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
@@ -58,132 +58,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @for ($h=8; $h<22; $h++)
                                 <tr class="even pointer">                                                                     
-                                    <td class=" ">8:00 am</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                             
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">9:00 am</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                             
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">10:00 am</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                             
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">11:00 am</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                             
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">12:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                              
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">1:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                             
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">2:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                              
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">3:00 pm</td>                                    
-                                    <<td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                              
-                                </tr>   
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">4:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                             
-                                </tr>  
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">5:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                             
-                                </tr>  
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">6:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                              
-                                </tr> 
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">7:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                              
-                                </tr>  
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">8:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                              
-                                </tr>  
-                                <tr class="even pointer">                                                                     
-                                    <td class=" ">9:00 pm</td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                    
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                     
-                                    <td class=" "> {{Form::checkbox('name', 'value')}} </td>                                                                                                              
-                                </tr>  
+                                    <td class=" ">{{$h}}:00 hs</td>       
+                                    @for ($d=1; $d<7; $d++)
+                                        <?php if (encuentraHorario($tutSchedule, $d, $h)) { ?>
+                                            <td class=" "> {{Form::checkbox('check['.$d.$h.']',1 , true, array('class' => 'check'))}} </td>
+                                        <?php } else {?>
+                                            <td class=" "> {{Form::checkbox('check['.$d.$h.']',1 , false, array('class' => 'check'))}} </td>                                        
+                                        <?php } ?>
+                                    @endfor                                                                       
+                                </tr>
+                                @endfor
                             </tbody>
                         </table>
                     </div>
@@ -199,7 +85,7 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                        <a class="btn btn-default pull-right" href="{{ route('disponibilidad.index') }}">Cancelar</a>
+                        <a class="btn btn-default pull-right" href="{{ route('miperfil.index') }}">Cancelar</a>
                     </div>
                 </div>
                 {{Form::close()}}
@@ -214,3 +100,14 @@
 <!-- <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script> -->
 
 @endsection
+
+<?php 
+function encuentraHorario($tutSchedule, $d, $h) {
+    foreach($tutSchedule as $schedule) {
+        if ( $schedule->dia==$d && intval($schedule->hora_inicio)==$h) {
+            return true;
+        }
+    }    
+    return false;
+}
+?>

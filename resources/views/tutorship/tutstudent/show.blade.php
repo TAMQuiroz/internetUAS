@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('Nombres y Apellidos *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                        {{Form::label('Apellidos, nombres *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
                             {{Form::text('nombre',$student->ape_paterno.' '.$student->ape_materno.', '.$student->nombre,['class'=>'form-control', 'readonly', 'maxlength' => 50])}}
                         </div>

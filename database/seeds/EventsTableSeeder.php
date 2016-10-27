@@ -16,7 +16,7 @@ class EventsTableSeeder extends Seeder
 	        'nombre'            => 'Evento de prueba',
 	        'ubicacion'         => 'Auditorio CIA',
 	        'descripcion'      	=> 'Evento de prueba en auditorio CIA',
-	        'fecha'         	=> '07/10/2017',
+	        'fecha'         	=> '2017-10-07',
 	        'hora'         		=> 0,
 	        'duracion'         	=> 1,
 	        'tipo'         		=> 'Evento de prueba',

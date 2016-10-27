@@ -9,3 +9,4 @@ composer
 .idea/
 /public/uploads/*
 /nbproject
+_ide_helper.php

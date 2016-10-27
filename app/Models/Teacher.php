@@ -47,15 +47,16 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\Tutorship','id_tutor');
     }
 
-    static public function getTutorsFiltered($is_tutor, $filters, $specialty = null) {
+    static public function getTutorsFiltered($filters, $specialty) {
 
-        $is_tutor_value = $is_tutor ? 1 : null;
+        $query = Teacher::where('IdEspecialidad', $specialty);
 
-        $query = Teacher::where('rolTutoria', $is_tutor_value);
-     
-        if ($specialty) {
-            $query = $query->where('IdEspecialidad', $specialty);
+        if(!array_key_exists("estado", $filters)){
+            $query = $query->where('rolTutoria', 1);
         }
+        elseif ( $filters["estado"] != "") {
+            $query = $query->where('rolTutoria', $filters["estado"]);
+        }        
 
         if (array_key_exists("name", $filters) && $filters["name"] != "") {
             $query = $query->where("Nombre", "like", "%" . $filters["name"] . "%");
@@ -73,16 +74,11 @@ class Teacher extends Model {
 
     }
 
-    static public function getCoordsFiltered($is_coord, $filters, $specialty = null) {
+    static public function getCoordsFiltered($filters, $specialty) {
 
-        $is_coord_value = $is_coord ? 2 : null;
-
-        $query = Teacher::where('rolTutoria', $is_coord_value);
+        $query = Teacher::where('rolTutoria',null)->where('IdEspecialidad',$specialty);
      
-        if ($specialty) {
-            $query = $query->where('IdEspecialidad', $specialty);
-        }
-
+        
         if (array_key_exists("name", $filters) && $filters["name"] != "") {
             $query = $query->where("Nombre", "like", "%" . $filters["name"] . "%");
         }
@@ -99,5 +95,7 @@ class Teacher extends Model {
 
     }
 
+    
+    
 
 }

@@ -5,6 +5,7 @@ namespace Intranet\Http\Services\Auth;
 use Hash;
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\Accreditor;
 use Intranet\Models\Investigator;
 use Intranet\Models\Supervisor;
@@ -39,9 +40,13 @@ class AuthService
         return $investigator;
     }
 
+    public function findStudent($id) {
+        $student = Tutstudent::where('id_usuario',$id)->first();
+        return $student;
+    }
+
     public function findSupervisor($id) {
         $supervisor = Supervisor::where('idUser',$id)->first();
         return $supervisor;
     }
-
 }

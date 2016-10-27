@@ -4,7 +4,7 @@
 
 <div class="page-title">
     <div class="title_left">
-        <h3>Coordinadores de Tutoría</h3>
+        <h3>Administradores de Evaluaciones</h3>
     </div>
     <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -19,8 +19,9 @@
     <div class="x_panel">
         <div class="x_title">                
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">                    
-                    <a href="{{ route('coordinadorTutoria.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo coordinador</a>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    
+                    <a href="{{ route('coordinadorEvaluaciones.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo administrador</a>
                 </div>
             </div>
 
@@ -33,14 +34,11 @@
                             <th class="column-title">Código </th>
                             <th class="column-title">Apellidos y Nombres </th> 
                             <th class="column-title">Especialidad </th>
-                            <th class="column-title last">Acciones</th>
-                            <th class="bulk-actions" colspan="7">
-                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>
+                            <th class="column-title last">Acciones</th>                            
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($tutors as $tutor)
+                        @foreach($teachers as $tutor)
                         <tr class="even pointer">                            
                             
                             <td class=" ">{{ $tutor->Codigo }}</td>
@@ -52,7 +50,7 @@
                                 </a>
                             </td>
                         </tr>
-                        @include('modals.delete', ['id'=> $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este coordinador?', 'route' => route('coordinadorTutoria.delete', $tutor->IdDocente)])
+                        @include('modals.delete', ['id'=> $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este administrador?', 'route' => route('coordinadorEvaluaciones.delete', $tutor->IdDocente)])
                         @endforeach
                     </tbody>
                 </table>

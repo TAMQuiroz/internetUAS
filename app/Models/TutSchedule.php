@@ -9,7 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------n
 class TutSchedule extends Model
 {
     use SoftDeletes;//delete logico
-    protected $fillable = ['dia','hora_inicio','hora_fin'];
-
+    protected $table = 'tutschedules';
+    protected $primaryKey = 'id';
+    protected $fillable = ['dia',
+                            'hora_inicio',
+                            'hora_fin',
+                            'id_docente'];
+    
+    public function teacher(){
+        return $this->belongsTo('Intranet\Models\Teacher', 'IdDocente');
+    }
     
 }

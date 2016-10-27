@@ -11,4 +11,8 @@ class meeting extends Model
     use LastUpdatedTrait;
     protected $table = 'pspmeetings';
 
+    public function supervisor(){
+        return $this->belongsTo('Intranet\Models\Supervisor', 'idSupervisor');
+    }
+    
 }

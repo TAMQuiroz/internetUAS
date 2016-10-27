@@ -14,7 +14,7 @@
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
-		{{Form::open(['route' => 'evaluacion.store', 'class'=>'form-horizontal'])}}
+			{{Form::open(['route' => 'evaluacion.store', 'class'=>'form-horizontal'])}}
 			<div class="panel-heading">
 				<h4 class="">Información</h4>
 			</div>
@@ -23,19 +23,19 @@
 				<div class="form-group">
 					{{Form::label('Nombre: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-8 col-sm-8 col-xs-8">
-						{{Form::text('nombre',null,['class'=>'form-control', 'required', 'maxlength' => 200])}}
+						{{Form::text('nombre',null,['class'=>'form-control','id'=>'nombre', 'required', 'maxlength' => 200])}}
 					</div>
 				</div>
 
 				<div class="form-group">
 					{{Form::label('Fecha inicio: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_inicio',null,['class'=>'form-control', 'required'])}}
+						{{Form::date('fecha_inicio',null,['class'=>'form-control', 'id'=>'fecha_inicio' ,'required'])}}
 					</div>
 
 					{{Form::label('Fecha fin: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_fin',null,['class'=>'form-control', 'required'])}}
+						{{Form::date('fecha_fin',null,['class'=>'form-control','id'=>'fecha_fin' ,'required'])}}
 					</div>
 				</div>
 
@@ -68,6 +68,9 @@
 						</center>
 						
 					</div>
+					<div id="aca">
+						
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">						
@@ -88,17 +91,67 @@
 									</tr>
 								</thead>
 								<tbody>
-								<!-- aca se metera la tabla de preguntas elegidas -->
+									<!-- aca se metera la tabla de preguntas elegidas -->
 									
 								</tbody>
 							</table>
 						</div>
-                    </div>
-                </div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-heading">
+				<h4 class="">Alumnos</h4>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						
+							<div class="form-group">
+								{{Form::label('Dirigido: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
+								<div class="col-md-8 col-sm-8 col-xs-8">
+									<div class="radio">
+										<label><input type="radio" value="todos" checked name="alumnos">A todos los alumnos de la especialidad</label>
+									</div>
+									<div class="radio">
+										<label><input type="radio" value="algunos" name="alumnos">Elegir...</label>
+									</div>
+								</div>
+							</div>							
+						
+					</div>
+				</div>
+				<div class="row" id="alumnosEspecialidad" hidden>
+					<div class="col-md-6 col-md-offset-3">
+						<div class="table-responsive">
+							<table class="table table-striped responsive-utilities jambo_table bulk_action">
+								<thead>
+									<tr class="headings">										
+										<th class="column-title">Código </th>
+										<th class="column-title">Apellidos y Nombres </th>
+										<th class="column-title last">Seleccionar</th>           
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($students as $student)
+									<tr class="even pointer">
+										<td class=" ">{{ $student->codigo }}</td>
+										<td class=" ">{{ $student->ape_paterno.' '.$student->ape_materno.', '.$student->nombre }}</td>
+										<td class=" ">
+											<div class="checkbox">
+												<label><input type="checkbox" checked name="arrStudents[{{$student->id}}]" value="1"></label>
+											</div>
+										</td>
+									</tr>
+									@endforeach										
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-sm-10 col-xs-12">
-					{{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
+					{{Form::submit('Guardar', ['class'=>'btn btn-success pull-right','id'=>'submit','disabled'])}}
 					<a class="btn btn-default pull-right" href="{{ route('evaluacion.index') }}">Cancelar</a>
 				</div>
 			</div><br>

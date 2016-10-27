@@ -23,7 +23,7 @@ class SubindexController extends BaseController {
         $user = $data['userSession'] = Session::get('user');
 
         try {
-            $allFaculties = $this->facultyService->retrieveAll();
+            $allFaculties = $this->facultyService->retrieveAll();               
             if (($user->IdDocente!=null)  && ($user->IdDocente == 0)){//detect admin
                 $data['faculties'] = $allFaculties;
                 $data['isEmpty'] = false;

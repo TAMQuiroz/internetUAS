@@ -163,3 +163,20 @@ $factory->define(Intranet\Models\Competence::class, function (Faker\Generator $f
         'id_especialidad'   =>  1,
     ];
 });
+
+
+$factory->define(Intranet\Models\Question::class, function (Faker\Generator $faker) {
+    return [        
+        'tipo'               =>  2,
+        'tiempo'             =>  1,
+        'puntaje'            =>  1,
+        'dificultad'         =>  1,
+        'descripcion'        =>  $faker->text,
+        'requisito'          =>  $faker->text,
+        'id_especialidad'    =>  1,
+        'id_docente'         =>  4,
+        'id_competence'      =>  1,
+    ];
+});
+
+

@@ -63,7 +63,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
@@ -87,7 +87,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El campo nombre es obligatorio');
     }
 
@@ -111,7 +111,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El formato de nombre es inválido');
     }
 
@@ -135,7 +135,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El formato de nombre es inválido');
     }
 
@@ -159,7 +159,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El tamaño de num entregables debe ser de al menos 1');
     }
 
@@ -183,7 +183,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El campo num entregables es obligatorio');
     }
 
@@ -207,7 +207,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('fecha ini debe ser una fecha posterior a today');
     }
 
@@ -231,7 +231,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El campo fecha ini es obligatorio');
     }
 
@@ -255,7 +255,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El campo fecha fin es obligatorio');
     }
 
@@ -279,7 +279,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
@@ -303,7 +303,7 @@ class ProjectTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/proyecto/create')
-    		->see('Creación de Proyecto')
+    		->see('Crear proyecto')
     		->see('El campo descripcion es obligatorio');
     }
  

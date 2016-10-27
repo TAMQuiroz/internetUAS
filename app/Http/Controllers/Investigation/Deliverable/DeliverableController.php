@@ -12,6 +12,7 @@ use Intranet\Models\Deliverable;
 use Intranet\Models\Invdocument;
 
 use Intranet\Http\Requests\DeliverableRequest;
+use Intranet\Http\Requests\DeliverableEditRequest;
 
 use Intranet\Http\Services\Investigation\Deliverable\DeliverableService;
 use Intranet\Http\Services\Investigation\Group\GroupService;
@@ -160,7 +161,7 @@ class DeliverableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DeliverableEditRequest $request, $id)
     {
         try {
             $entregable = Deliverable::find($id);
@@ -260,7 +261,7 @@ class DeliverableController extends Controller
 
             $destinationPath = 'uploads/entregables/'; // upload path
             $extension = $request['archivo']->getClientOriginalExtension();
-            $filename = $invdocument->id.'.'.$extension; 
+            $filename = $entregable->nombre.'V'.$invdocument->id.'.'.$extension; 
             $request['archivo']->move($destinationPath, $filename);
 
             $invdocument->ruta = $destinationPath.$filename;

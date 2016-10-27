@@ -125,6 +125,7 @@ class GroupService {
         foreach ($group->teachers as $teacher) {
             array_push($ids,$teacher->IdDocente);
         }
+        array_push($ids, $group->leader->IdDocente);
 
         $teachers = Teacher::whereNotIn('IdDocente',$ids)->orderBy('Nombre', 'asc')->get();
         return $teachers;

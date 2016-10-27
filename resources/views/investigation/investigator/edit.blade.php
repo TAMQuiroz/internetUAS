@@ -4,9 +4,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-	        <div class="title_left">
-	            <h3>Edicion de Investigadores</h3>
-	        </div>
+            <h3>Editar investigador</h3>
 	    </div>
     </div>
 </div>
@@ -22,49 +20,49 @@
 		    	{{Form::open(['route' => ['investigador.update',$investigador->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 		    		<div class="form-group">
 		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-md-4 col-xs-12">
 		    				{{Form::text('nombre',$investigador->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Apellido Paterno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-md-4 col-xs-12">
 		    				{{Form::text('apellido_paterno',$investigador->ape_paterno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Apellido Materno *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-md-4 col-xs-12">
 		    				{{Form::text('apellido_materno',$investigador->ape_materno,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Correo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-md-4 col-xs-12">
 		    				{{Form::email('correo',$investigador->correo,['class'=>'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Celular *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-md-4 col-xs-12">
 		    				{{Form::number('celular',$investigador->celular,['class'=>'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Especialidad *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-md-4 col-xs-12">
 		    				{{Form::select('especialidad', $especialidades, $investigador->id_especialidad, ['class' => 'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Área *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4">
+		    			<div class="col-md-4 col-xs-12">
 		    				{{Form::select('area', $areas, $investigador->id_area, ['class' => 'form-control', 'required'])}}
 		    			</div>
 		    		</div>

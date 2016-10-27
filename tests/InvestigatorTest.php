@@ -62,7 +62,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
@@ -85,7 +85,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El campo nombre es obligatorio');
     }
 
@@ -108,7 +108,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El formato de nombre es inválido');
     }
 
@@ -131,7 +131,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El formato de nombre es inválido');
     }
 
@@ -154,7 +154,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('apellido paterno no debe ser mayor que 50 caracteres');
     }
 
@@ -177,7 +177,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El campo apellido paterno es obligatorio');
     }
 
@@ -200,7 +200,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El formato de apellido paterno es inválido');
     }
 
@@ -223,7 +223,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El formato de apellido paterno es inválido');
     }
 
@@ -246,7 +246,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('apellido materno no debe ser mayor que 50 caracteres');
     }
 
@@ -269,7 +269,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El campo apellido materno es obligatorio');
     }
 
@@ -292,7 +292,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El formato de apellido materno es inválido');
     }
 
@@ -315,7 +315,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El formato de apellido materno es inválido');
     }
 
@@ -338,7 +338,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('correo no es un correo válido');
     }
 
@@ -361,7 +361,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('El campo correo es obligatorio');
     }
 
@@ -384,7 +384,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('correo no es un correo válido');
     }
     
@@ -407,7 +407,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
     		->press('Guardar')
     		->seePageIs('/investigacion/investigador/create')
-    		->see('Creación de Investigadores')
+    		->see('Crear investigador')
     		->see('correo no es un correo válido');
     }
 
@@ -430,7 +430,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
             ->press('Guardar')
             ->seePageIs('/investigacion/investigador/create')
-            ->see('Creación de Investigadores')
+            ->see('Crear investigador')
             ->see('celular debe tener 9 dígitos');
     }
     
@@ -453,7 +453,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
             ->press('Guardar')
             ->seePageIs('/investigacion/investigador/create')
-            ->see('Creación de Investigadores')
+            ->see('Crear investigador')
             ->see('El campo celular es obligatorio');
     }
     
@@ -476,7 +476,7 @@ class InvestigatorTest extends TestCase
             ->select($area->id, 'area')
             ->press('Guardar')
             ->seePageIs('/investigacion/investigador/create')
-            ->see('Creación de Investigadores')
+            ->see('Crear investigador')
             ->see('celular debe tener 9 dígitos');
     }
 

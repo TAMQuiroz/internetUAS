@@ -408,14 +408,14 @@
 
         <!-- Logout-->
         <a href="" class="brand-logo right logout">
-            <form method="GET" action="http://52.89.227.55/logout">
+            {{Form::open(['url' => '/logout', 'method'=>'GET'])}}
               <button class="btn btn-dark btn-sm hidden-xs hidden-sm"><span>Cerrar Sesión</span>
                 <i class="fa fa-sign-out fa-lg"></i>
               </button>
                 <button class="btn btn-dark visible-xs visible-sm">
                 <i class="fa fa-sign-out fa-lg"></i>
               </button>
-            </form>              
+            {{Form::close()}}
         </a>
 
       </div>

@@ -82,6 +82,13 @@ h3.faculty-name{
   overflow-y: scroll;
 }
 
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* NEW LOOK */
 
 .userView .bar-info {

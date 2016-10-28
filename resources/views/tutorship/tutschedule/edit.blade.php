@@ -78,7 +78,10 @@
                 <div class="form-group">
                     {{Form::label('No Disponibilidad *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-
+                        Desde {{ Form::date('name', \Carbon\Carbon::now()) }}
+                    </div>
+                    <div class="col-md-4">
+                        Hasta {{ Form::date('name', \Carbon\Carbon::now()) }}
                     </div>
                 </div>
 

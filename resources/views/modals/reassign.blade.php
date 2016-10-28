@@ -11,7 +11,7 @@
             <div class="modal-footer">
                 {{ Form::button('Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal'])}}
                 <a href="{{ $route }}">
-                    {{ Form::button('Eliminar', ['class' => 'btn btn-danger'])}}
+                    {{ Form::button('Reasignar', ['class' => 'btn btn-danger'])}}
                 </a>
             </div>
         </div>

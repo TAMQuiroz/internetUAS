@@ -34,7 +34,7 @@ class EnhacementController extends BaseController {
         try {
             $data['improvementPlans'] = $this->improvementPlanService->findByFaculty();
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.index', $data);
@@ -49,7 +49,7 @@ class EnhacementController extends BaseController {
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.form', $data);
@@ -67,7 +67,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->create($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.enhacementPlan')->with('success', 'El plan de mejora se ha registrado exitosamente');
     }
@@ -87,7 +87,7 @@ class EnhacementController extends BaseController {
             ]);
             
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('new.enhacementPlan')->with('success', 'El ciclo académico se ha registrado exitosamente');
     }  
@@ -105,7 +105,7 @@ class EnhacementController extends BaseController {
             ]);
             
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('edit.enhacementPlan')->with('success', 'El ciclo académico se ha registrado exitosamente');
     }      
@@ -123,7 +123,7 @@ class EnhacementController extends BaseController {
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
 
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.edit', $data);
@@ -133,7 +133,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->update($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.enhacementPlan')->with('success', 'Las modificaciones se han guardado exitosamente');
     }
@@ -142,7 +142,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->comment($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('tracing.enhacementPlan', ['improvementPlanId' => $request['improvementPlanId']])->with('success', 'Las modificaciones se han guardado exitosamente');
     }
@@ -160,7 +160,7 @@ class EnhacementController extends BaseController {
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
 
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.tracing', $data);
@@ -196,7 +196,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->add($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('uploadAction.enhacementPlan', ['actionPlanId' => $request['actionPlanId'], 'improvementPlanId' => $request['improvementPlanId']])->with('success', 'Se ha añadido el archivo exitosamente');
 
@@ -207,7 +207,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->addPlan($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('downloadAction.enhacementPlan', ['improvementPlanId' => $request['improvementPlanId']])->with('success', 'Se ha añadido el archivo exitosamente');
 
@@ -230,7 +230,7 @@ class EnhacementController extends BaseController {
         try{
             $data['improvementPlan'] = $this->improvementPlanService->getEnhacementPlan($improvementPlanId);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return json_encode($data);
     }
@@ -240,7 +240,7 @@ class EnhacementController extends BaseController {
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['info'] = $this->improvementPlanService->retrieveAllCicles();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return json_encode($data);
     }
@@ -251,7 +251,7 @@ class EnhacementController extends BaseController {
         try{
             $this->improvementPlanService->deleteImprovementPlan($request->all());
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.enhacementPlan')->with('success', 'El registro ha sido eliminado exitosamente');
     }
@@ -260,7 +260,7 @@ class EnhacementController extends BaseController {
         try {
             $data['improvementPlans'] = $this->improvementPlanService->search($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('enhacementPlan.index', $data);
     }

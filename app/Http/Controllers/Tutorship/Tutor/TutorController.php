@@ -10,6 +10,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
 use Intranet\Models\TutSchedule;
 use Intranet\Models\Tutorship;
+use Intranet\Models\Reason;
 use Illuminate\Support\Facades\Session; //<---------------------------------necesario para usar session
 
 class TutorController extends Controller {
@@ -124,6 +125,19 @@ class TutorController extends Controller {
         //
     }
 
+    public function reassign($id) {
+        
+        $tutor = Teacher::find($id);
+        $razones = Reason::where('tipo',2)->get();
+        
+        $data = [
+            'tutor' => $tutor,   
+            'razones' => $razones,
+        ];
+        
+        return view('tutorship.tutor.reassign', $data);
+    }
+    
     /**
      * Remove the specified resource from storage.
      *

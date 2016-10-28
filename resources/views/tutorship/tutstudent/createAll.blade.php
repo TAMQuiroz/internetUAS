@@ -29,9 +29,9 @@
 
 				<div class="form-group">
 					{{Form::label('Archivo Excel *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">111
+					<div class="col-md-4">
 						{{Form::file('csv_file',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
-						<a href="{{route('alumno.example')}}">Archivo Ejemplo</a>
+						<a style="text-decoration: underline" href="{{route('alumno.example')}}">Click para descargar Archivo Ejemplo</a>
 					</div>
 				</div>
 

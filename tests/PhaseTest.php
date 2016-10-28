@@ -7,11 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class PhaseTest extends TestCase
 {
     use DatabaseMigrations;
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
+    
     public function testExample()
     {
         $this->assertTrue(true);
@@ -26,7 +22,7 @@ class PhaseTest extends TestCase
 	    		'actions' => [],
 	    		'user' => factory(Intranet\Models\Teacher::class)->make()
     		])->visit('/psp/Phase/create')
-    		->type(1,'numero')
+    		->type(100,'numero')
     		->type('sdsdsfsdfs','descripcion')
     		->type('1992-08-20','fecha_inicio')
     		->type('1992-09-20','fecha_fin')

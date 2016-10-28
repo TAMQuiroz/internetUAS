@@ -12,6 +12,7 @@ class TopicTest extends TestCase
 
     public function test_tut_topic_cr_01()
     {
+
         $user = factory(Intranet\Models\User::class)->make();
         $teacher = factory(Intranet\Models\Teacher::class)->create();
     	  	
@@ -31,6 +32,7 @@ class TopicTest extends TestCase
 
     public function test_tut_topic_cr_02()
     {
+
         $user = factory(Intranet\Models\User::class)->make();
         $teacher = factory(Intranet\Models\Teacher::class)->create();
           

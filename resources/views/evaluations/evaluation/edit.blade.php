@@ -92,9 +92,9 @@
 								</thead>
 								<tbody>
 									<!-- aca se metera la tabla de preguntas elegidas -->
-									@foreach($questions as $question)
+									@foreach($questions as $key=>$question)
 									<tr id="question_{{$question->id}}">
-										<td class="order">9</td>
+										<td class="order">{{$key+1}}</td>
 										<td hidden><input type="number" value="{{$question->id}}" name="arrIds[{{$question->id}}]"></td>
 										<td class="id">{{ $question->id }}</td>
 
@@ -111,7 +111,7 @@
 
 										<td>{{ $question->descripcion }}</td>
 
-										<td>{{ $question->tiempo }}</td>            
+										<td class="tiempo">{{ $question->tiempo }}</td>            
 
 										@if($question->dificultad == 1)
 										<td>Baja</td>
@@ -135,6 +135,15 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="form-group">
+							<h5><strong>Cantidad de preguntas: <i id="total_preg">{{count($questions)}}</i></strong></h5>
+							<h5><strong>Puntaje total: <i id="total_puntaje">{{$sum_puntaje}}</i></strong></h5>
+							<h5><strong>Tiempo acumulado: <i id="total_tiempo">{{$sum_tiempo}}</i> minutos</strong></h5>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="panel-heading">
 				<h4 class="">Alumnos</h4>
@@ -147,17 +156,17 @@
 							{{Form::label('Dirigido: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 							<div class="col-md-8 col-sm-8 col-xs-8">
 								<div class="radio">
-									<label><input type="radio" value="todos" checked name="alumnos">A todos los alumnos de la especialidad</label>
+									<label><input type="radio" value="todos" name="alumnos">A todos los alumnos de la especialidad</label>
 								</div>
 								<div class="radio">
-									<label><input type="radio" value="algunos" name="alumnos">Elegir...</label>
+									<label><input type="radio" value="algunos" checked name="alumnos">Elegir...</label>
 								</div>
 							</div>
 						</div>							
 						
 					</div>
 				</div>
-				<div class="row" id="alumnosEspecialidad" hidden>
+				<div class="row" id="alumnosEspecialidad" >
 					<div class="col-md-6 col-md-offset-3">
 						<div class="table-responsive">
 							<table class="table table-striped responsive-utilities jambo_table bulk_action">
@@ -175,7 +184,11 @@
 										<td class=" ">{{ $student->ape_paterno.' '.$student->ape_materno.', '.$student->nombre }}</td>
 										<td class=" ">
 											<div class="checkbox">
+												@if(in_array($student->id,$arrStudents))
 												<label><input type="checkbox" checked name="arrStudents[{{$student->id}}]" value="1"></label>
+												@else 
+												<label><input type="checkbox" name="arrStudents[{{$student->id}}]" value="1"></label>
+												@endif
 											</div>
 										</td>
 									</tr>

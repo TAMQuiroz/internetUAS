@@ -10,8 +10,8 @@ use Intranet\Models\Fileentry;
 use Intranet\Models\TimeTable;
 use Intranet\Models\CourseEvidence;
 use Intranet\Http\Services\Course\CourseService;
-use Intranet\Http\Services\TimeTable\TimeTableService;
-use Intranet\Http\Services\DictatedCourses\DictatedCoursesService;
+use Intranet\Http\Services\AcademicCycle\AcademicCycleService;
+use Illuminate\Support\Collection;
 
 class EvidenceController extends Controller
 {
@@ -22,11 +22,11 @@ class EvidenceController extends Controller
      */
 
     protected $coursesService;
+    protected $academicCycleService;
 
     public function __construct() {
         $this->coursesService = new CourseService();
-        $this->dictatedCoursesService = new DictatedCoursesService();
-        $this->timeTableService = new TimeTableService();
+        $this->academicCycleService = new AcademicCycleService();
         $this->middleware('auth', ['except' => 'getDownload']);
     }
 
@@ -37,31 +37,45 @@ class EvidenceController extends Controller
 
         try {
             $data['courses'] = $this->coursesService->retrieveByFaculty($faculty_id);
+            $data['ciclos'] = $this->academicCycleService->retrieveAll();
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
-        try {
+        try {            
             $entries = Fileentry::all(); //archivos
-            $coursesIds = $data['courses']->pluck('IdCurso')->toArray();
+            //Horarios del curso
+            $archivos = array();
+            foreach ($data['courses'] as $course) {
+                $coursesxCycle = $course->coursexcycle;
+                foreach ($coursesxCycle as $cxc) {
+                    $cicloAcademico = $cxc->cicle->academicCycle;
+                    $horarios = $cxc->timeTables;                    
+                    $horariosIds = $horarios->pluck('IdHorario')->toArray();
+                    $courseEvidences = CourseEvidence::whereIn('IdHorario', $horariosIds)->where('deleted_at', null)->get();
+                    
+                    // verficar si Fileentry y TimeTable (horario) es realmente many-to-many para eliminar este doble for
+                    foreach ($courseEvidences as $evidencia) {
+                        foreach ($entries as $file) {
+                            if($evidencia->IdArchivoEntrada == $file->IdArchivoEntrada){
 
-            $coursexcicleIds = $this->dictatedCoursesService->retrieveCoursesxCycleByCourse($coursesIds)->pluck('IdCursoxCiclo')->toArray();
-            $data['timeTable'] = $this->timeTableService->retrieveTimeTableByCoursesxCycle($coursexcicleIds);
+                                $datos['IdArchivoEntrada'] = $file->IdArchivoEntrada;
+                                $datos['original_filename'] = $file->original_filename;
+                                $datos['filename'] = $file->filename;
+                                $datos['CodigoCurso'] = $course->Codigo; 
+                                $datos['NombreCurso'] = $course->Nombre; 
+                                $datos['CicloAcademico'] = $cicloAcademico->Descripcion;  
 
-            $horariosIds = $data['timeTable']->pluck('IdHorario')->toArray();
-            $courseEvidences = CourseEvidence::whereIn('IdHorario', $horariosIds)->where('deleted_at', null)->get();
-          
-            $filteredEntries = array();
-            foreach ($courseEvidences as $courEv){
-                foreach ($entries as $ent){
-                    if ($courEv->IdArchivoEntrada == $ent->IdArchivoEntrada){
-                        array_push($filteredEntries, $ent);
-                        break;
+                                $collection = Collection::make($datos);                                
+                                array_push($archivos, $collection); 
+                            }
+                        }
                     }
+
                 }
+
             }
-            $data['entries'] = $filteredEntries;
-            
+            $data['entries'] = $archivos;
         } catch (\Exception $e){
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }

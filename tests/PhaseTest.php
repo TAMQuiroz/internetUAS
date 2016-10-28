@@ -47,9 +47,9 @@ class PhaseTest extends TestCase
             ->type('1992-08-20','fecha_inicio')
             ->type('1992-09-20','fecha_fin')
     		->press('Guardar')
-    		->seePageIs('/psp/phase/create');
-    		//->see('Creación de Phase');
-    		//->see('El número debe tener como máximo un digito');
+    		->seePageIs('/psp/phase/create')
+    		->see('Creación de Fase')
+    		->see('numero debe tener 1 dígitos');
     }
 
     public function test_psp_cr_pha_03()
@@ -66,9 +66,9 @@ class PhaseTest extends TestCase
             ->type('1992-08-20','fecha_inicio')
             ->type('1992-09-20','fecha_fin')
     		->press('Guardar')
-    		->seePageIs('/psp/phase/create');
-    		//->see('Creación de Phase')
-    		//->see('El campo número debe ser ingresado obligatoriamente');
+    		->seePageIs('/psp/phase/create')
+    		->see('Creación de Fase')
+    		->see('El campo numero es obligatorio');
     		
     }
 
@@ -86,9 +86,9 @@ class PhaseTest extends TestCase
             ->type('1992-08-20','fecha_inicio')
             ->type('1992-09-20','fecha_fin')
             ->press('Guardar')
-            ->seePageIs('/psp/phase/create');
-            //->see('Creación de Phase')
-            //->see('El número debe ser mayor de cero');
+            ->seePageIs('/psp/phase/create')
+            ->see('Creación de Fase')
+            ->see('numero debe tener 1 dígitos');
             
     }
 
@@ -106,13 +106,13 @@ class PhaseTest extends TestCase
             ->type('1992-08-20','fecha_inicio')
             ->type('1992-09-20','fecha_fin')
     		->press('Guardar')
-    		->seePageIs('/psp/phase/create');
-    		//->see('Creación de Phase')
-    		//->see('La descripcion debe ser ingresada obligatoriamente');
+    		->seePageIs('/psp/phase/create')
+    		->see('Creación de Fase')
+    		->see('El campo descripcion es obligatorio');
     		
     }
     
-
+    /*
     public function test_psp_cr_pha_06()
     {
         $user = factory(Intranet\Models\User::class)->make();
@@ -127,10 +127,10 @@ class PhaseTest extends TestCase
             ->type('1992-08-20','fecha_inicio')
             ->type('1992-09-20','fecha_fin')
     		->press('Guardar')
-    		->seePageIs('/psp/phase/create');
-    		//->see('Creación de Phase')
-    		//->see('La descripción debe tener como máximo 100 caracteres');
-    }
+    		->seePageIs('/psp/phase/create')
+    		->see('Creación de Fase')
+    		->see('descripción no debe ser mayor que 100 caracteres');
+    }*/
 
     public function test_psp_cr_pha_07()
     {
@@ -146,9 +146,9 @@ class PhaseTest extends TestCase
             ->type(NULL,'fecha_inicio')
             ->type('1992-09-20','fecha_fin')
             ->press('Guardar')
-            ->seePageIs('/psp/phase/create');
-            //->see('Creación de Phase')
-            //->see('La fecha de inicio de la fase es un campo obligatorio');
+            ->seePageIs('/psp/phase/create')
+            ->see('Creación de Fase')
+            ->see('El campo fecha inicio es obligatorio');
     }
 
     public function test_psp_cr_pha_08()
@@ -165,9 +165,9 @@ class PhaseTest extends TestCase
             ->type('1992-09-20','fecha_inicio')
             ->type(NULL,'fecha_fin')
             ->press('Guardar')
-            ->seePageIs('/psp/phase/create');
-            //->see('Creación de Phase')
-            //->see('La fecha de fin de la fase es un campo obligatorio');
+            ->seePageIs('/psp/phase/create')
+            ->see('Creación de Fase')
+            ->see('El campo fecha fin es obligatorio');
     }
 
     

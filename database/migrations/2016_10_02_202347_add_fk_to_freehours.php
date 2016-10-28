@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToFreehour extends Migration
+class AddFkToFreehours extends Migration
 {
     /**
      * Run the migrations.

@@ -21,14 +21,14 @@ class PhaseTest extends TestCase
             ->withSession([
 	    		'actions' => [],
 	    		'user' => factory(Intranet\Models\Teacher::class)->make()
-    		])->visit('/psp/Phase/create')
-    		->type(100,'numero')
+    		])->visit('/psp/phase/create')
+    		->type(1,'numero')
     		->type('sdsdsfsdfs','descripcion')
     		->type('1992-08-20','fecha_inicio')
     		->type('1992-09-20','fecha_fin')
     		->press('Guardar')
-    		->seePageIs('/psp/Phase')
-    		->see('Phasees')
+    		->seePageIs('/psp/phase')
+    		->see('Fase')
     		->see('La fase se ha registrado exitosamente');
     		
     }

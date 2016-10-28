@@ -21,10 +21,12 @@
                     <div class="form-group">
                         {{Form::label('Motivo',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
-                            {{$tutor->IdDocente}}
+                            @foreach($razones as $razon)
+                                {{Form::radio('check[hol]',1 , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
+                            @endforeach                            
                         </div>
-                    </div>
-
+                    </div>                                        
+                    
                     <div class="form-group">
                         {{Form::label('Tutores',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">

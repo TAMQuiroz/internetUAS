@@ -2,36 +2,47 @@
 
 namespace Intranet\Http\Controllers\Tutorship\Tutor;
 
+use Auth;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
-use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
+use Intranet\Models\TutSchedule;
+use Intranet\Models\Tutorship;
+use Intranet\Models\Reason;
+use Illuminate\Support\Facades\Session; //<---------------------------------necesario para usar session
 
-class TutorController extends Controller
-{
+class TutorController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {     
-        // dd(Session::get('faculty-code'));
-        // dd(Session::all());
-        // dd(Session::get('user'));
+    public function index(Request $request) {
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
-        
-        $tutors = Teacher::getTutorsFiltered($is_tutor = true, $filters, $specialty);
-        
+
+        $tutors = Teacher::getTutorsFiltered($filters, $specialty);
+        $tutors = $tutors->appends($filters);
+        $horas = [];
+        $alumnos = [];
+        foreach ($tutors as $t) {
+            $tutSchedule = TutSchedule::where('id_docente', $t->IdDocente)->get();            
+            $horas[$t->IdDocente] = $tutSchedule->count();
+            
+            $tutorship = Tutorship::where('id_tutor',$t->IdDocente)->get();
+            $alumnos[$t->IdDocente] = $tutorship->count();
+        }
+
         $data = [
-            'tutors'    =>  $tutors->appends($filters),
+            'tutors' => $tutors,
+            'horas' => $horas,
+            'alumnos' => $alumnos,
         ];
 
         return view('tutorship.tutor.index', $data);
-     
     }
 
     /**
@@ -39,13 +50,13 @@ class TutorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
+    public function create(Request $request) {
         $filters = $request->all();
+
         $specialty = Session::get('faculty-code');
-        $teachers = Teacher::getTutorsFiltered($is_tutor = false, $filters, $specialty);        
+        $teachers = Teacher::getCoordsFiltered($filters, $specialty);
         $data = [
-            'teachers'    =>  $teachers,            
+            'teachers' => $teachers->appends($filters),
         ];
 
         return view('tutorship.tutor.create', $data);
@@ -57,25 +68,21 @@ class TutorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-        if($request['check']!=null){
-            foreach($request['check'] as $idTeacher => $value){
+    public function store(Request $request) {
+        if ($request['check'] != null) {
+            foreach ($request['check'] as $idTeacher => $value) {
                 try {
-                //se cambia el rol del profesor a TUTOR
+                    //se cambia el rol del profesor a TUTOR
                     DB::table('Docente')->where('IdDocente', $idTeacher)->update(['rolTutoria' => 1]);
-
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
             }
             return redirect()->route('tutor.index')->with('success', 'Se guardaron los tutores exitosamente');
-        }
-        else{
+        } else {
             return redirect()->route('tutor.index');
-        }        
+        }
         //VUELVE A la lista de tutores
-        
-
     }
 
     /**
@@ -84,13 +91,16 @@ class TutorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         $tutor = Teacher::find($id);
-        $data = [
-            'tutor'    =>  $tutor,
-        ];
+        $tutSchedule = TutSchedule::where('id_docente', $tutor->IdDocente)->get();
+        $horas = $tutSchedule->count();
         
+        $data = [
+            'tutor' => $tutor,
+            'horas' => $horas,
+        ];
+
         return view('tutorship.tutor.show', $data);
     }
 
@@ -100,8 +110,7 @@ class TutorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -112,25 +121,50 @@ class TutorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
+    public function reassign($id) {
+        
+        $tutor = Teacher::find($id);
+        $razones = Reason::where('tipo',2)->get();
+        
+        $data = [
+            'tutor' => $tutor,   
+            'razones' => $razones,
+        ];
+        
+        return view('tutorship.tutor.reassign', $data);
+    }
+    
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) { //PENDIENTE PARA REASIGNAR
         try {
+
+            //DB::table('')
+
             DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
             return redirect()->route('tutor.index')->with('success', 'Se desactivó al tutor exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
-        }        
-        
+        }
     }
+
+    // muestra el perfil del tutor que accede a sus datos
+    public function myprofile() {
+        $tutor = Auth::user()->professor;
+        // dd($tutor);
+        $data = [
+            'tutor' => $tutor,
+        ];
+
+        return view('tutorship.tutor.myprofile', $data);
+    }
+
 }

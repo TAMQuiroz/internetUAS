@@ -360,42 +360,87 @@
               </li> 
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
+              <!--Menu Tutotia-->
+              <!--Si son alumnos de tutoria idPerfil == 0 -->
+              @if(Auth::user() && ((Auth::user()->professor != null && 
+                  (Auth::user()->IdPerfil == 2 && Auth::user()->professor->rolTutoria != null || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 1)) || 
+                  (Auth::user()->student !=null && Auth::user()->IdPerfil == 0)))     
+
+
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Tutoría</a>
-
                 <div class="collapsible-body">
                   <ul>
-                    @if(Auth::user()->IdPerfil > 0)
-                      <li><a href="{{route('coordinadorTutoria.index')}}">Administrar coordinadores</a></li>
-                      <li><a href="{{route('tutor.index')}}">Administrar tutores</a></li>
-                      <li><a href="{{route('disponibilidad.index')}}">Administrar disponibilidad</a></li>
-                      <li><a href="{{route('alumno.index')}}">Administrar alumnos</a></li>
-                      <li><a href="{{route('tema.index')}}">Administrar temas</a></li>
-                      <li><a href="{{route('motivo.index')}}">Administrar motivos</a></li>
+
+                    <!-- docentes -->
+                    @if(Auth::user()->IdPerfil != 0)
+                    
+                    <!-- coordinador de especialidad-->
+                      @if(Auth::user()->IdPerfil == 1) 
+                      <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                      @endif
+
+                      <!-- coordinador de tutoria -->
+                      @if(Auth::user()->professor->rolTutoria == 2)
+                      <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
+                      <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
+                      <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
+                      @endif
+
+                      <!-- tutor-->
+                      @if(Auth::user()->professor->rolTutoria == 1)
+                      <li><a href="{{route('miperfil.index')}}"> Mi perfil</a></li>
+                      <li><a href="{{route('cita_alumno.index')}}"> Mis alumnos</a></li>                  
+                      <li><a href="{{route('cita_alumno.index')}}"> Citas</a></li>
+                      @endif   
+                    
+                    @endif
+
+                    <!-- alumno  -->
+                    @if(Auth::user()->IdPerfil == 0)
+                    <li><a href="{{route('mitutor.index')}}"> Mi tutor</a></li>
+                    <li><a href="{{route('cita_alumno.index')}}"> Mis citas</a></li>
                     @endif
                   </ul>
                 </div>
               </li> 
-              @endif  
+              @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
+               
+
+              <!--Menu Evaluaciones-->
+              @if(Auth::user() && ((Auth::user()->IdPerfil <= 2)  ) )
+
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Evaluaciones</a>
-
                 <div class="collapsible-body">
                   <ul>
-                    @if(Auth::user()->IdPerfil >0)
-                      <li><a href="{{route('competencia.index')}}">Administrar competencia</a></li>
-                      <li><a href="{{route('pregunta.index')}}">Administrar preguntas</a></li>
-                      <li><a href="{{route('evaluador.index')}}">Administrar evaluadores</a></li>
-                      <li><a href="{{route('evaluacion.index')}}">Administrar evaluaciones</a></li>
+                    @if(Auth::user()->IdPerfil == 1)   <!-- coordinador de especialidad-->
+                    <li><a href="{{route('coordinadorEvaluaciones.index')}}"> Administradores</a></li>
+                    @endif
+
+                    @if(Auth::user()->professor != null)
+                      @if(Auth::user()->professor->rolEvaluaciones == 1)  <!-- Aministrador de evaluaciones-->
+                      <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
+                      <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
+                      <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
+                      <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
+                      @endif
+                    @endif
+
+                    @if(Auth::user()->professor != null)
+                      @if(Auth::user()->professor->rolEvaluaciones == 2) <!-- Evaluador de competencias -->
+                      <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>                
+                      <li><a href="{{route('evaluacion.index')}}"> Mis Evaluaciones</a></li>
+                      @endif
                     @endif
                   </ul>
                 </div>
+              </li> 
+             
+              @endif
+              
 
-              </li>  
-              @endif   
 
             </ul>   
           </li>
@@ -486,7 +531,6 @@
       [gd(2012, 1, 6), 85],
       [gd(2012, 1, 7), 7]
     ];
-
     var data2 = [
       [gd(2012, 1, 1), 82],
       [gd(2012, 1, 2), 23],
@@ -543,7 +587,6 @@
       },
       tooltip: false
     });
-
     function gd(year, month, day) {
       return new Date(year, month - 1, day).getTime();
     }
@@ -592,10 +635,8 @@
             "fog"
           ],
           i;
-
   for (i = list.length; i--;)
     icons.set(list[i], list[i]);
-
   icons.play();
 </script>
 
@@ -604,7 +645,6 @@
   Chart.defaults.global.legend = {
     enabled: false
   };
-
   var data = {
     labels: [
       "Symbian",
@@ -629,10 +669,8 @@
         "#36CAAB",
         "#49A9EA"
       ]
-
     }]
   };
-
   var canvasDoughnut = new Chart(document.getElementById("canvas1"), {
     type: 'doughnut',
     tooltipFillColor: "rgba(51, 51, 51, 0.55)",
@@ -643,13 +681,11 @@
 <!-- datepicker -->
 <script type="text/javascript">
   $(document).ready(function() {
-
     var cb = function(start, end, label) {
       console.log(start.toISOString(), end.toISOString(), label);
       $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
       //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
     }
-
     var optionSet1 = {
       startDate: moment().subtract(29, 'days'),
       endDate: moment(),

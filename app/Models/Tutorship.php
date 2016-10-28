@@ -4,20 +4,25 @@ namespace Intranet\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------necesario para softdeletes
+use Illuminate\Database\Eloquent\SoftDeletes; //<-------------------------------necesario para softdeletes
 
-class Tutorship extends Model
-{
-    use SoftDeletes;//delete logico
+class Tutorship extends Model {
 
-    // protected $fillable = ['id_suplente','id_profesor'];
+    use SoftDeletes; //delete logico
 
-    // public function student(){
-  	 //  return $this->belongsTo('Intranet\Models\Tutstudent','id_tutoria');
-    // }
+    protected $table = 'tutorships';
+    protected $primaryKey = 'id';
+    protected $fillable = ['id_tutor',
+                            'id_profesor',
+                            'id_suplente',
+                            'id_alumno'];
 
-    public function tutor(){
-  	  return $this->belongsTo('Intranet\Models\Teacher', 'id_tutor');
+//    public function student() {
+//        return $this->belongsTo('Intranet\Models\Tutstudent', 'id_tutoria');
+//    }
+
+    public function tutor() {
+        return $this->belongsTo('Intranet\Models\Teacher', 'id_tutor');
     }
 
     public function student() {
@@ -27,32 +32,33 @@ class Tutorship extends Model
     static function getAssignedStudents($filters, $mayor, $tutor = null) {
         $query = Tutorship::query();
 
-        if($tutor) {
+        if ($tutor) {
             $query = $query->where("id_tutor", $tutor);
         }
 
         $students = $query->with(['student' => function($query) use($filters, $mayor) {
-                if($mayor) {
-                   $query = $query->where("id_especialidad", $mayor);
-                }
+        if ($mayor) {
+            $query = $query->where("id_especialidad", $mayor);
+        }
 
-                if($filters["code"] != "") {
-                    $query  = $query->where("codigo", $filters["code"]);
-                }
+        if ($filters["code"] != "") {
+            $query = $query->where("codigo", $filters["code"]);
+        }
 
-                if($filters["name"] != "") {
-                    $query = $query->where("nombre", "like", "%" . $filters["name"] . "%");
-                } 
+        if ($filters["name"] != "") {
+            $query = $query->where("nombre", "like", "%" . $filters["name"] . "%");
+        }
 
-                if($filters["lastName"] != "") {
-                    $query = $query->where("ape_paterno", "like", "%" . $filters["lastName"] . "%");
-                }
+        if ($filters["lastName"] != "") {
+            $query = $query->where("ape_paterno", "like", "%" . $filters["lastName"] . "%");
+        }
 
-                if($filters["secondLastName"] != "") {
-                    $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
-                }
-            }]);
+        if ($filters["secondLastName"] != "") {
+            $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
+        }
+    }]);
 
         return $query->paginate(10);
     }
+
 }

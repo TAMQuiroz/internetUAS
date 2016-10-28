@@ -39,6 +39,39 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+.tabs-page {
+	display: flex;
+	padding: 5px;
+	padding-bottom: 0;
+	border-bottom: 1px solid rgba(52, 73, 94, 0.88);
+}
+
+.tabs-page>a{
+	text-decoration: none;
+}
+
+.tab-page-wrapper {
+	font-size: 16px;
+	margin-bottom: -1px;
+}
+
+.tab-page-wrapper.active {
+	border-radius: 5px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	background: rgba(52, 73, 94, 0.88);
+	color: #ddd;
+}
+
+.tab-page {
+	list-style: none;
+	margin: 10px 20px;
+}
+
+.tab-content-container {
+	padding: 20px;
+	padding-top: 0;
+}
 
 @media only screen and (min-width:480px){
 	.label-input {

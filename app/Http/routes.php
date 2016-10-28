@@ -981,6 +981,8 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('edit/{id}', ['as' => 'evaluacion.edit', 'uses' => 'Evaluations\Evaluation\EvaluationController@edit']);
             Route::post('edit/{id}', ['as' => 'evaluacion.update', 'uses' => 'Evaluations\Evaluation\EvaluationController@update']);
             Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
+            Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
+            Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
 
             
         });

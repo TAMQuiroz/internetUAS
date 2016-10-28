@@ -21,6 +21,7 @@ class CreateEvaluationsTable extends Migration
             $table->integer('tiempo')->unsigned();
             $table->integer('id_especialidad');
             $table->integer('estado')->unsigned();//0->cancelado,1->creado, 2->vigente, 3->expirado
+            $table->softDeletes();
             $table->timestamps();
         });
 

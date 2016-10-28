@@ -3,9 +3,11 @@
 namespace Intranet\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Evaluation extends Model
 {
+	use softDeletes;
     protected $fillable = ['fecha_inicio','fecha_fin','nombre','descripcion','tiempo'];
 
     public function especialidad(){

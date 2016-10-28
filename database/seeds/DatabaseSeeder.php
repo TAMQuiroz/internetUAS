@@ -23,13 +23,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TopicsTableSeeder::class);
         $this->call(ReasonsTableSeeder::class);
+        
+        // $this->call(TutstudentsTableSeeder::class);
+        $this->call(TeachersTableSeeder::class);
+        $this->call(CompetenceTableSeeder::class);    
+        $this->call(QuestionsTableSeeder::class);    
 
         
-        $this->call(TutstudentsTableSeeder::class);
-
-        $this->call(TeachersTableSeeder::class);
-     
-        //$this->call(CompetenceTableSeeder::class);    
+ 
 
     }
 }

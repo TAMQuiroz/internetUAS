@@ -14,75 +14,61 @@ class TutorTest extends TestCase
 	use DatabaseMigrations;
 	use WithoutMiddleware;
 
-	public function test_tutoria_asignar_tutor_ok()
+	public function test_tut_tutor_asigna_01()
 	{        
-        $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
-        $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
+        $user     = factory(Intranet\Models\User::class)->make();
+        $teacher  = factory(Intranet\Models\Teacher::class)->create();
+        $teachers = factory(Intranet\Models\Teacher::class, 5)->create();
     	  	
-    	$this->actingAs($user)//entro al sistema con ese usuario
-    	->withSession([
-    		'actions' => [],
-    		'user' => factory(Intranet\Models\Teacher::class)->make(),
+    	$this->actingAs($user)
+    	    ->withSession([
+    		    'actions' => [],
+    		    'user' => $user,
             'faculty-code' => $teacher->IdEspecialidad
-    		])->visit('/tutoria/tutores/create')
-       ->check('check[1]')
-       ->press('Guardar')
-       ->seePageIs('tutoria/tutores/')
-       ->see('Tutores');       
+    		    ])
+          ->visit('/tutoria/tutores/create')
+          ->check('check[1]')
+          ->press('Guardar')
+          ->seePageIs('tutoria/tutores/')
+          ->see('Tutores')
+          ->see('Se guardaron los tutores exitosamente');       
     }
 
-    public function test_tutoria_no_asignar_tutor()
+    public function test_tut_tutor_asigna_02()
     {
-        $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
-        $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
-        $this->actingAs($user)//entro al sistema con ese usuario
-      ->withSession([
-        'actions' => [],
-        'user' => factory(Intranet\Models\Teacher::class)->make()
-        ])->visit('/tutoria/tutores/create')         
-      ->press('Guardar')
-      ->seePageIs('tutoria/tutores/')
-      ->see('Tutores')
-      ->dontSee('Se guardaron los tutores exitosamente');
-    }
-
-    public function test_tutoria_filter_tutor()
-    {
-      $teacher = Teacher::get()->first();
-
-      $user = User::find($teacher->IdUsuario);
-
-      $tutors_test = Teacher::getTutorsFiltered($is_tutor = true, $filters = ['lastName' => 'agu'], $teacher->IdEspecialidad);
-
+        $user     = factory(Intranet\Models\User::class)->make();
+        $teacher  = factory(Intranet\Models\Teacher::class)->create();
+        $teachers = factory(Intranet\Models\Teacher::class, 5)->create();
+          
       $this->actingAs($user)
+          ->withSession([
+            'actions' => [],
+            'user' => $user,
+            'faculty-code' => $teacher->IdEspecialidad
+            ])
+          ->visit('/tutoria/tutores/create')
+          ->press('Guardar')
+          ->seePageIs('tutoria/tutores/')
+          ->see('Tutores');
+    }
+
+    public function test_tut_tutor_filtra_03()
+    {
+        $user     = factory(Intranet\Models\User::class)->make();
+        $teacher  = factory(Intranet\Models\Teacher::class)->create();
+        $teachers = factory(Intranet\Models\Teacher::class, 5)->create();
+
+        $parameters = 'name='.$teacher->Nombre.'&'.
+                      'lastName='.$teacher->ApellidoPaterno.'&'.
+                      'secondLastName='.'';
+
+        $this->actingAs($user)
             ->withSession([
               'actions' => [],
               'user' => factory(Intranet\Models\Teacher::class)->make(),
               'faculty-code' => $teacher->IdEspecialidad
             ])
-            ->visit('/tutoria/tutores?name=&secondLastName=&lastName=agui')
-            ->see('Aguilera')
-            ->dontSee('Flores');
-    }
-
-
-    public function test_tutoria_filter_tutstudent()
-    {
-      $teacher = Teacher::get()->first();
-
-      $user = User::find($teacher->IdUsuario);
-
-      $tutstudent_test = Tutstudent::getFilteredStudents($filters = ['code' => '', 'name' => 'franco', 'lastName' => 'tume', 'secondLastName' => '', 'tutorId' => ''],
-        null, $teacher->IdEspecialidad);
-
-      $this->actingAs($user)
-            ->withSession([
-              'actions' => [],
-              'user' => factory(Intranet\Models\Teacher::class)->make(),
-              'faculty-code' => $teacher->IdEspecialidad
-            ])
-            ->visit('/tutoria/alumnos?code=&name=franco&lastName=tume&secondLastName=&tutorId=')
-            ->see('Franco')
-            ->dontsee('Janet');
+            ->visit('/tutoria/tutores?'.$parameters)
+            ->see('Tutores');
     }
 }

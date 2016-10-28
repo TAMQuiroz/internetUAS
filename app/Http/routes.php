@@ -838,33 +838,34 @@ Route::group(['prefix' => 'uas'], function(){
 
     //MODULO DE TUTORIA
 Route::group(['prefix' => 'tutoria'], function(){
-    //Temas de citas
-    Route::group(['prefix' => 'temas'], function(){    
-        Route::get('/', ['as' => 'tema.index', 'uses' => 'Tutorship\Topic\TopicController@index']);
-        Route::get('create', ['as' => 'tema.create', 'uses' => 'Tutorship\Topic\TopicController@create']);
-        Route::post('create', ['as' => 'tema.store', 'uses' => 'Tutorship\Topic\TopicController@store']);
-        Route::get('show/{id}', ['as' => 'tema.show', 'uses' => 'Tutorship\Topic\TopicController@show']);
-        Route::get('edit/{id}', ['as' => 'tema.edit', 'uses' => 'Tutorship\Topic\TopicController@edit']);
-        Route::post('edit/{id}', ['as' => 'tema.update', 'uses' => 'Tutorship\Topic\TopicController@update']);
-        Route::get('delete/{id}', ['as' => 'tema.delete', 'uses' => 'Tutorship\Topic\TopicController@destroy']);
-    });
 
-    //Motivos (Tipo 1: Por cancelación de cita, Tipo 2: Por desactivación de tutor)
-    Route::group(['prefix' => 'motivos'], function(){    
-        Route::get('/', ['as' => 'motivo.index', 'uses' => 'Tutorship\Reason\ReasonController@index']);
-        Route::get('create', ['as' => 'motivo.create', 'uses' => 'Tutorship\Reason\ReasonController@create']);
-        Route::post('create', ['as' => 'motivo.store', 'uses' => 'Tutorship\Reason\ReasonController@store']);
-        Route::get('show/{id}', ['as' => 'motivo.show', 'uses' => 'Tutorship\Reason\ReasonController@show']);
-        Route::get('edit/{id}', ['as' => 'motivo.edit', 'uses' => 'Tutorship\Reason\ReasonController@edit']);
-        Route::post('edit/{id}', ['as' => 'motivo.update', 'uses' => 'Tutorship\Reason\ReasonController@update']);
-        Route::get('delete/{id}', ['as' => 'motivo.delete', 'uses' => 'Tutorship\Reason\ReasonController@destroy']);
-    });
+    //Configuraciones
+    Route::group(['prefix' => 'parametros'], function(){   
+        //Configuracions de duracion de cita
+        Route::get('duracion/', ['as' => 'parametro.index.duration', 'uses' => 'Tutorship\Parameter\ParameterController@indexDuration']);
+        Route::post('duracion/edit', ['as' => 'parametro.update.duration', 'uses' => 'Tutorship\Parameter\ParameterController@updateDuration']);
 
-    //Parametros (El unico hasta ahora es DuracionCita)
-    Route::group(['prefix' => 'parametros'], function(){    
-        Route::get('/', ['as' => 'parametro.index', 'uses' => 'Tutorship\Parameter\ParameterController@index']);        
-        Route::get('edit/{id}', ['as' => 'parametro.edit', 'uses' => 'Tutorship\Parameter\ParameterController@edit']);
-        Route::post('edit/{id}', ['as' => 'parametro.update', 'uses' => 'Tutorship\Parameter\ParameterController@update']);
+        //Configuracion de temas de cita
+        Route::group(['prefix' => 'temas'], function(){    
+            Route::get('/', ['as' => 'tema.index', 'uses' => 'Tutorship\Topic\TopicController@index']);
+            Route::get('create', ['as' => 'tema.create', 'uses' => 'Tutorship\Topic\TopicController@create']);
+            Route::post('create', ['as' => 'tema.store', 'uses' => 'Tutorship\Topic\TopicController@store']);
+            Route::get('show/{id}', ['as' => 'tema.show', 'uses' => 'Tutorship\Topic\TopicController@show']);
+            Route::get('edit/{id}', ['as' => 'tema.edit', 'uses' => 'Tutorship\Topic\TopicController@edit']);
+            Route::post('edit/{id}', ['as' => 'tema.update', 'uses' => 'Tutorship\Topic\TopicController@update']);
+            Route::get('delete/{id}', ['as' => 'tema.delete', 'uses' => 'Tutorship\Topic\TopicController@destroy']);
+        });
+
+        //Configuracion de motivos de cita
+        Route::group(['prefix' => 'motivos'], function(){    
+            Route::get('/', ['as' => 'motivo.index', 'uses' => 'Tutorship\Reason\ReasonController@index']);
+            Route::get('create', ['as' => 'motivo.create', 'uses' => 'Tutorship\Reason\ReasonController@create']);
+            Route::post('create', ['as' => 'motivo.store', 'uses' => 'Tutorship\Reason\ReasonController@store']);
+            Route::get('show/{id}', ['as' => 'motivo.show', 'uses' => 'Tutorship\Reason\ReasonController@show']);
+            Route::get('edit/{id}', ['as' => 'motivo.edit', 'uses' => 'Tutorship\Reason\ReasonController@edit']);
+            Route::post('edit/{id}', ['as' => 'motivo.update', 'uses' => 'Tutorship\Reason\ReasonController@update']);
+            Route::get('delete/{id}', ['as' => 'motivo.delete', 'uses' => 'Tutorship\Reason\ReasonController@destroy']);
+        });
     });
 
 
@@ -877,14 +878,10 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
             Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
             Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
+            Route::get('reassign/{id}', ['as' => 'tutor.reassign', 'uses' => 'Tutorship\Tutor\TutorController@reassign']);
+            Route::post('reassign/{id}', ['as' => 'tutor.deactivate', 'uses' => 'Tutorship\Tutor\TutorController@deactivate']);
         });
-        
-        //Disponibilidad
-        Route::group(['prefix' => 'disponibilidades'], function(){    
-            Route::get('/', ['as' => 'disponibilidad.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
-            Route::get('edit/{id}', ['as' => 'disponibilidad.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
-            Route::post('edit/{id}', ['as' => 'disponibilidad.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
-        });
+                
         
         //Alumnos de la especialidad
         Route::group(['prefix' => 'alumnos'], function(){    
@@ -902,7 +899,27 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
             Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
         });
-        
+
+        //mitutor
+        Route::group(['prefix' => 'mitutor'], function(){    
+            Route::get('/', ['as' => 'mitutor.index', 'uses' => 'Tutorship\MyTutor\MyTutorController@index']);
+            
+        });
+
+        //miperfil
+        Route::group(['prefix' => 'miperfil'], function(){    
+            Route::get('/', ['as' => 'miperfil.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
+            Route::get('edit/{id}', ['as' => 'miperfil.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
+            Route::post('edit/{id}', ['as' => 'miperfil.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
+            
+        });
+
+        //cita_alumno
+        Route::group(['prefix' => 'miscitas'], function(){    
+            Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@create']);
+            
+        });
+
     });
 
     //Acreditacion - flujo administrador:
@@ -930,6 +947,22 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/end', ['as' => 'end.flujoAdministrador', 'uses' => 'FlujoAdministradorController@end']);
     });
     
+    //MODULO UAS PARA EVALUACIONES
+    Route::group(['prefix' => 'uas'], function(){
+        //Administrador de evaluaciones
+        Route::group(['prefix' => 'coordinadoresEvaluaciones'], function(){    
+            Route::get('/', ['as' => 'coordinadorEvaluaciones.index', 'uses' => 'Evaluations\CoordEvaluations\CoordEvaluationsController@index']);
+            Route::get('create', ['as' => 'coordinadorEvaluaciones.create', 'uses' => 'Evaluations\CoordEvaluations\CoordEvaluationsController@create']);
+            Route::post('create', ['as' => 'coordinadorEvaluaciones.store', 'uses' => 'Evaluations\CoordEvaluations\CoordEvaluationsController@store']);
+            Route::get('show/{id}', ['as' => 'coordinadorEvaluaciones.show', 'uses' => 'Evaluations\CoordEvaluations\CoordEvaluationsController@show']);
+            Route::get('edit/{id}', ['as' => 'coordinadorEvaluaciones.edit', 'uses' => 'Evaluations\CoordEvaluations\CoordEvaluationsController@edit']);
+            Route::post('edit/{id}', ['as' => 'coordinadorEvaluaciones.update', 'uses' => 'Evaluations\CoordEvaluations\CoordEvaluationsController@update']);
+            Route::get('delete/{id}', ['as' => 'coordinadorEvaluaciones.delete', 'uses' => 'Evaluations\CoordEvaluations\CoordEvaluationsController@destroy']);
+        });
+
+
+    });
+
     //MODULO DE EVALUACIONES
     Route::group(['prefix' => 'evaluaciones'], function(){
         //Competencias
@@ -955,8 +988,11 @@ Route::group(['prefix' => 'tutoria'], function(){
 
             //AJAX
             Route::post('search', ['as' => 'pregunta.buscar','uses' => 'Evaluations\Question\QuestionController@searchModalEv']);//NO TOCAR!
-            Route::post('editEv', ['as' => 'pregunta.editar','uses' => 'Evaluations\Question\QuestionController@editModalEv']);//NO TOCAR!
+            Route::get('editQuestion', ['as' => 'pregunta.editar','uses' => 'Evaluations\Question\QuestionController@editQuestionModalEv']);//NO TOCAR!
+            
         });
+
+
 
 
         //Evaluadores
@@ -979,6 +1015,8 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('edit/{id}', ['as' => 'evaluacion.edit', 'uses' => 'Evaluations\Evaluation\EvaluationController@edit']);
             Route::post('edit/{id}', ['as' => 'evaluacion.update', 'uses' => 'Evaluations\Evaluation\EvaluationController@update']);
             Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
+            Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
+            Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
 
             
         });

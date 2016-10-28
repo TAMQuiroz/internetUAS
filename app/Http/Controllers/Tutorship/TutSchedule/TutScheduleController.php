@@ -95,24 +95,24 @@ class TutScheduleController extends Controller
         $teacher->anexo = $request['anexo'];
         $teacher->save();
 
-        if($request['check']!=null){            
-            $tutSchedule = TutSchedule::where('id_docente',$id)->get();
+        $checkedSchedules = $request->input("check", []);
+
+        $tutSchedule = TutSchedule::where('id_docente',$id)->get();
+        
+        if ($tutSchedule->count()!=0) { //si encuentra horarios del profe
+            foreach($tutSchedule as $t) {
+                $scheduleTrash = TutSchedule::find($t->id);
+                $scheduleTrash->forceDelete();
+            }                
+        }                           
             
-            if ($tutSchedule->count()!=0) { //si encuentra horarios del profe
-                foreach($tutSchedule as $t) {
-                    $scheduleTrash = TutSchedule::find($t->id);
-                    $scheduleTrash->delete();
-                }                
-            }                           
-                
-            foreach($request['check'] as $diaHora => $value){
-                $schedule = new TutSchedule;
-                $schedule->dia = substr($diaHora,0,1);
-                $schedule->hora_inicio = substr($diaHora,1,2).":00:00";
-                $schedule->hora_fin = (intval(substr($diaHora,1,2))+1).":00:00";
-                $schedule->id_docente = $id;
-                $schedule->save();                    
-            }
+        foreach($checkedSchedules as $diaHora => $value){
+            $schedule = new TutSchedule;
+            $schedule->dia = substr($diaHora,0,1);
+            $schedule->hora_inicio = substr($diaHora,1,2).":00:00";
+            $schedule->hora_fin = (intval(substr($diaHora,1,2))+1).":00:00";
+            $schedule->id_docente = $id;
+            $schedule->save();                    
         }
                 
         return redirect()->route('miperfil.index')->with('success', 'Se guardaron los cambios exitosamente');

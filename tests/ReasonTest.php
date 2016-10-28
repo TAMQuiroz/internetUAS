@@ -41,10 +41,29 @@ class ReasonTest extends TestCase
     			])
             ->visit('/tutoria/parametros/motivos/create')
             ->select('2','tipo')
-            ->type('Doctorado', 'nombre')
+            ->type('$', 'nombre')
             ->press('Guardar')
-            ->seePageIs('/tutoria/parametros/motivos/')
-            ->see('Motivos')
-            ->see('El motivo se ha registrado exitosamente');
+            ->seePageIs('/tutoria/parametros/motivos/create')
+            ->see('Nuevo motivo')
+            ->see('El formato de nombre es inválido');
+    }
+
+        public function test_tut_reason_cr_03()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+        $teacher = factory(Intranet\Models\Teacher::class)->create();
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user,
+                'faculty-code' => $teacher->IdEspecialidad
+                ])
+            ->visit('/tutoria/parametros/motivos/create')
+            ->select('2','tipo')
+            ->type('5', 'nombre')
+            ->press('Guardar')
+            ->seePageIs('/tutoria/parametros/motivos/create')
+            ->see('Nuevo motivo')
+            ->see('El formato de nombre es inválido');
     }
 }

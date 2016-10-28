@@ -12,7 +12,7 @@ class QuestionsTableSeeder extends Seeder
     public function run()
     {
 
-    	DB::table('teacherxcompetences')->insert(['id_docente' => '4','id_especialidad' => '1','id_competence' => '1']);
+    	// DB::table('teacherxcompetences')->insert(['id_docente' => '4','id_especialidad' => '1','id_competence' => '1']);
         factory(Intranet\Models\Question::class, 25)->create();
     }
 }

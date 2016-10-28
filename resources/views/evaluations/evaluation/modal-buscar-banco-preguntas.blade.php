@@ -13,7 +13,7 @@
                         {{Form::label('Tipo:',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
                         <div class="col-md-4 col-sm-4 col-xs-6">
                             <select name="tipo" class="form-control" required="required">
-                                <option value="">Todas</option>
+                                <option value="">Todos</option>
                                 <option value="1">Cerrada</option>
                                 <option value="2">Abierta</option>
                                 <option value="3">Archivo</option>                         

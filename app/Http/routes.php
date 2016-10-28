@@ -676,13 +676,15 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');
+                $api->get('/{f_id}/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
+
             });
             
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
                 $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
                 $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
                 $api->get('/{p_id}/instruments', 'PeriodController@getMeasurementInstOfPeriod');
-                $api->get('/{p_id}/cycles', 'PeriodController@getCyclesofPeriod');
+                $api->get('/{p_id}/cycles', 'PeriodController@getCyclesofPeriod');                
             });
 
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
@@ -697,6 +699,8 @@ $api->version('v1', function ($api) {
                 $api->get('students/all','Students\PspStudentsController@getAll');
                 $api->get('students/documents','Students\PspStudentsController@getDocumentsById');
             });
+
+
 
 
 

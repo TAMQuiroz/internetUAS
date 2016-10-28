@@ -22,14 +22,37 @@
                         {{Form::label('Motivo',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
                             @foreach($razones as $razon)
-                                {{Form::radio('check[hol]',1 , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
+                            {{Form::radio('check['.$razon->id.']',1 , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
                             @endforeach                            
                         </div>
                     </div>                                        
-                    
+
                     <div class="form-group">
                         {{Form::label('Tutores',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
+
+                            <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">                                        
+                                        <th class="column-title">Código </th>
+                                        <th class="column-title">Tutor</th>                                                                
+                                        <th class="column-title">Horas semanales</th>
+                                        <th class="column-title">Alumnos</th>
+                                        <th class="column-title">Asignación </th>                                        
+                                        <th class="column-title last">Seleccionar</th>                            
+                                    </tr>
+                                </thead>
+                                <tbody>                                    
+                                    <tr class="even pointer">                                        
+                                        <td class=""></td>
+                                        <td class=" "></td>
+                                        <td class=" "></td>
+                                        <td class=" "></td>
+                                        <td class=" "></td>                            
+                                        <td class=" "></td>                                         
+                                    </tr>                                    
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>                                        

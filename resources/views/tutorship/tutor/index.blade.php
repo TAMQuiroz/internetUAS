@@ -35,7 +35,7 @@
                         <th class="column-title">Código </th>
                         <th class="column-title">Apellidos y Nombres </th>                        
                         <th class="column-title">Correo </th>
-                        <th class="column-title">Horas a la semana </th>
+                        <th class="column-title">Horas semanales </th>
                         <th class="column-title">Alumnos </th>
                         <th class="column-title last">Acciones</th>                            
                     </tr>

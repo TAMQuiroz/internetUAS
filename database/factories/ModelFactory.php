@@ -163,3 +163,12 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
         'fecha_limite'         =>  '2018-10-06',
     ];
 });
+
+$factory->define(Intranet\Models\FreeHour::class, function (Faker\Generator $faker) {
+    return [
+        'hora_ini'          => 8,
+        'fecha'     => \Carbon\Carbon::yesterday(),
+        'cantidad' => 1,
+    ];
+});
+

@@ -45,5 +45,5 @@
             </div>
         </div>
     </div>
-
+<script src="{{ URL::asset('js/myvalidations/freeHour.js')}}"></script>
 @endsection

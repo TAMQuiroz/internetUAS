@@ -6,6 +6,7 @@ use Intranet\Http\Requests;
 use Intranet\Models\FreeHour;
 use Intranet\Models\Supervisor;
 use Intranet\Http\Controllers\Controller;
+use Intranet\Http\Requests\FreeHourRequest;
 
 class FreeHourController extends Controller
 {
@@ -42,7 +43,7 @@ class FreeHourController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FreeHourRequest $request)
     {
         //
         try {
@@ -102,7 +103,7 @@ class FreeHourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FreeHourRequest $request, $id)
     {
         //
         try {

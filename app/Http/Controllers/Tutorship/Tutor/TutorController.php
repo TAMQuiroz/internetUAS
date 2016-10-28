@@ -124,6 +124,17 @@ class TutorController extends Controller {
         //
     }
 
+    public function reassign($id) {
+        
+        $tutor = Teacher::find($id);
+        
+        $data = [
+            'tutor' => $tutor,            
+        ];
+        
+        return view('tutorship.tutor.reassign', $data);
+    }
+    
     /**
      * Remove the specified resource from storage.
      *

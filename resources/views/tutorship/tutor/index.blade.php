@@ -42,36 +42,35 @@
                 </thead>
                 <tbody>
                     @foreach($tutors as $tutor)
-                    <tr class="even pointer">
-                        <td hidden class="group-id">{{ $tutor->IdDocente }}</td>
+                        <tr class="even pointer">
+                            <td hidden class="group-id">{{ $tutor->IdDocente }}</td>
 
-                        @if ($tutor->rolTutoria == 1) 
-                        <td class=""><span class="label label-success"> Activo </span></td>
-                        @elseif ($tutor->rolTutoria == 0) 
-                        <td class=""><span class="label label-danger"> Inactivo </span></td>
+                            @if ($tutor->rolTutoria == 1) 
+                            <td class=""><span class="label label-success"> Activo </span></td>
+                            @elseif ($tutor->rolTutoria == 0) 
+                            <td class=""><span class="label label-danger"> Inactivo </span></td>
+                            @endif
+
+                            <td class=" ">{{ $tutor->Codigo }}</td>
+                            <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
+                            <td class=" ">{{ $tutor->Correo }}</td>
+                            <td class=" ">{{ $horas[$tutor->IdDocente] }}</td>                            
+                            <td class=" ">{{ $alumnos[$tutor->IdDocente] }}</td> 
+                            <td class=" ">
+                                <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                                <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        @if ($alumnos[$tutor->IdDocente]==0)                        
+                            @include('modals.delete', ['id' => $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este tutor?', 'route' => route('tutor.delete', $tutor->IdDocente)])
+                        @else
+                            @include('modals.reassign', ['id' => $tutor->IdDocente, 'message' => 'Este tutor tiene asignado '.$alumnos[$tutor->IdDocente].' alumnos. Es necesario hacer una reasignación.', 'route' => route('tutor.reassign', $tutor->IdDocente)])
                         @endif
-
-                        <td class=" ">{{ $tutor->Codigo }}</td>
-                        <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
-                        <td class=" ">{{ $tutor->Correo }}</td>
-                        <td class=" ">{{ $horas[$tutor->IdDocente] }}</td>                            
-                        <td class=" ">{{ $alumnos[$tutor->IdDocente] }}</td> 
-                        <td class=" ">
-                            <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
-                                <i class="fa fa-search"></i>
-                            </a>
-                            <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
-                                <i class="fa fa-remove"></i>
-                            </a>
-                        </td>
-                    </tr>
-
-                    @if ($alumnos[$tutor->IdDocente]==0)                        
-                    @include('modals.delete', ['id' => $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este tutor?', 'route' => route('tutor.delete', $tutor->IdDocente)])
-                    @else
-                    @include('modals.reassign', ['id' => $tutor->IdDocente, 'message' => 'Este tutor tiene asignado '.$alumnos[$tutor->IdDocente].' alumnos. Es necesario hacer una reasignación.', 'route' => route('tutor.delete', $tutor->IdDocente)])
-                    @endif
-
                     @endforeach
                 </tbody>
             </table>

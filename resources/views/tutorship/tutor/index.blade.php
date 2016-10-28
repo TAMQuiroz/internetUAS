@@ -36,6 +36,7 @@
                             <th class="column-title">Apellidos y Nombres </th>                        
                             <th class="column-title">Correo </th>
                             <th class="column-title">Horas a la semana </th>
+                            <th class="column-title">Alumnos </th>
                             <th class="column-title last">Acciones</th>                            
                         </tr>
                     </thead>
@@ -54,6 +55,7 @@
                             <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
                             <td class=" ">{{ $tutor->Correo }}</td>
                             <td class=" ">{{ $horas[$tutor->IdDocente] }}</td>                            
+                            <td class=" ">{{ $alumnos[$tutor->IdDocente] }}</td> 
                             <td class=" ">
                                 <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
                                 <i class="fa fa-search"></i>
@@ -63,7 +65,13 @@
                                 </a>
                             </td>
                         </tr>
-                        @include('modals.delete', ['id'=> $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este tutor?', 'route' => route('tutor.delete', $tutor->IdDocente)])
+                        
+                        @if ($alumnos[$tutor->IdDocente]==0)                        
+                            @include('modals.delete', ['id' => $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este tutor?', 'route' => route('tutor.delete', $tutor->IdDocente)])
+                        @else
+                            @include('modals.reassign', ['id' => $tutor->IdDocente, 'message' => 'Este tutor tiene asignado '.$alumnos[$tutor->IdDocente].' alumnos. Es necesario hacer una reasignación.', 'route' => route('tutor.delete', $tutor->IdDocente)])
+                        @endif
+                        
                         @endforeach
                     </tbody>
                 </table>

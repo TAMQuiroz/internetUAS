@@ -106,6 +106,10 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('/getEnhacementPlan/{improvementPlanId}', ['uses' => 'EnhacementPlan\EnhacementController@getEnhacementPlan']);
         Route::get('/CiclesAndTeachers', ['uses' => 'EnhacementPlan\EnhacementController@CiclesAndTeachers']);
+
+        Route::post('/saveModal', ['as' => 'saveModalNew.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNew']);
+        Route::post('/saveModalEdit', ['as' => 'saveModalNewEdit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNewEdit']);
+
     });
 
     //DictatedCourses Plan Routes
@@ -471,7 +475,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/new', ['as' => 'form.academicCycle', 'uses' => 'AcademicCycle\AcademicCycleController@create']);
         Route::post('/save', ['as' => 'save.academicCycle', 'uses' => 'AcademicCycle\AcademicCycleController@save']);
         Route::get('/delete', ['as' => 'delete.academicCycle', 'uses' => 'AcademicCycle\AcademicCycleController@delete']);
-
+ 
         //AYAX routes
 
         Route::get('/getCycle/{cycle}', ['uses' => 'AcademicCycle\AcademicCycleController@getCycle']);

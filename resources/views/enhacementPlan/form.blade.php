@@ -81,11 +81,16 @@
                         <div class="clearfix"></div>
                         <h2>Actividades Planteadas</h2>
                         <div class="separator"></div>
-
+                        <div class="row title_right">
+                            @if(Auth::user() && ((Auth::user()->IdPerfil == 3) || (Auth::user()->IdPerfil == 1)))
+                                <button class="btn btn-success pull-right cicleModal" type="submit" data-toggle="modal" 
+                                data-target="#cicleModal" > Nuevo ciclo</button>
+                            @endif
+                       </div>
                         <table class="table table-bordered" id="address-table" name="address-table">
                             <thead>
                             <tr>
-                                <th class="col-sm-2">Periodo</th>
+                                <th class="col-sm-2">Ciclo</th>
                                 <th class="col-sm-5">Descripción</th>
                                 <th class="col-sm-3">Responsable</th>
                                 <th class="col-sm-1"></th>
@@ -198,4 +203,6 @@
     </script>
     <script src="{{ URL::asset('js/intranetjs/improvementPlans/form-improvementPlans-script.js')}}"></script>
     <script src="{{ URL::asset('js/myvalidations/improvementPlan.js')}}"></script>
+
+    @include('enhacementPlan.save-modal', ['title' => 'Ver Plan de Mejora'])
 @endsection

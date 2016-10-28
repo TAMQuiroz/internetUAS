@@ -499,8 +499,18 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
                 Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
                 Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
+
+                //Seleccion de integrantes de para un proceso de psp
+                Route::group(['prefix' => 'participant'], function(){
+                    Route::post('createSupervisor', ['as' => 'supervisor.participant.store.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@storeSupervisor']);
+                    Route::get('deleteSupervisor/{id}', ['as' => 'supervisor.participant.delete.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@destroySupervisor']);
+
+                    Route::post('createTeacher', ['as' => 'supervisor.participant.store.docente', 'uses' => 'Psp\Supervisor\ParticipationController@storeTeacher']);
+                    Route::get('deleteTeacher/{id}', ['as' => 'supervisor.participant.delete.docente', 'uses' => 'Psp\Supervisor\ParticipationController@destroyTeacher']);
+                });
             });
 
+        });
             //Template
             Route::group(['prefix' => 'template'], function() {
                 Route::get('/', ['as' => 'template.index', 'uses' => 'Psp\Template\TemplateController@index']);
@@ -510,10 +520,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
                 Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
                 Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
-            });
-        });
-
-            
+            });                    
 
             //PspGroups Luis Llanos
 
@@ -538,6 +545,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'pspProcess.edit', 'uses' => 'Psp\PspProcess\PspProcessController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspProcess.update', 'uses' => 'Psp\PspProcess\PspProcessController@update']);
                 Route::get('delete/{id}', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
+                Route::post('activarProfesor', ['as' => 'pspProcess.activateTeacher', 'uses' => 'Psp\PspProcess\PspProcessController@activateTeacher']);
+                Route::post('activarAlumnos', ['as' => 'pspProcess.activateStudents', 'uses' => 'Psp\PspProcess\PspProcessController@activateStudents']);
             });
 
             //FreeHour            
@@ -560,6 +569,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'meeting.edit', 'uses' => 'Psp\meeting\MeetingController@edit']);
                 Route::post('edit/{id}', ['as' => 'meeting.update', 'uses' => 'Psp\meeting\MeetingController@update']);
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
+            });
+
+            //Inscription File
+            Route::group(['prefix' => 'inscription'], function() {
+                Route::get('/', ['as' => 'inscription.index', 'uses' => 'Psp\Inscription\InscriptionController@index']);
+                Route::get('create', ['as' => 'inscription.create', 'uses' => 'Psp\Inscription\InscriptionController@create']);
+                Route::post('create', ['as' => 'inscription.store', 'uses' => 'Psp\Inscription\InscriptionController@store']);
+                Route::get('show/{id}', ['as' => 'inscription.show', 'uses' => 'Psp\Inscription\InscriptionController@show']);
+                Route::get('edit/{id}', ['as' => 'inscription.edit', 'uses' => 'Psp\Inscription\InscriptionController@edit']);
+                Route::post('edit/{id}', ['as' => 'inscription.update', 'uses' => 'Psp\Inscription\InscriptionController@update']);
+                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);    
             });
 
             //Phase

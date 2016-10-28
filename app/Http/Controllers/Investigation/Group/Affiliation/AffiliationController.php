@@ -24,7 +24,6 @@ class AffiliationController extends Controller
     {
         try {
             $group = Group::find($request['id_group']);
-
             $group->investigators()->attach($request['id_investigator']);
 
             return redirect()->route('grupo.edit',$group->id)->with('success', 'El investigador se ha agregado exitosamente');

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToFreehour extends Migration
+class AddFkToFreehours extends Migration
 {
     /**
      * Run the migrations.
@@ -25,7 +25,7 @@ class AddFkToFreehour extends Migration
     public function down()
     {
         Schema::table('freehours', function (Blueprint $table) {
-            $table->dropForeign('freehour_idSupervisor_foreign');
+            $table->dropForeign('freehours_idSupervisor_foreign');
         });  
     }
 }

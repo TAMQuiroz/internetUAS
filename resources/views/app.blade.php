@@ -285,10 +285,9 @@
                     @endif
                   </ul>
                 </div>
-
-              </li>   
+                @endif
               @endif
-              @endif
+         
 
               @if(in_array(58,Session::get('actions')) || in_array(63,Session::get('actions')) || in_array(64,Session::get('actions'))  )
                 <li class="bold">
@@ -314,29 +313,30 @@
                   <div class="collapsible-body">
                     <ul>
                         @if(Auth::user()->IdPerfil == 2) <!--si es profesor-->
-                          <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                          <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
-                          <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
-                          <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
-                          {{--<li><a href=""> Cronograma de reunión</a></li>
-                          <li><a href=""> Ver alumnos</a></li>--}}
+                        <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
+                        <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
+                        <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
+                        <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
+                        {{--<li><a href=""> Cronograma de reunión</a></li>
+                        <li><a href=""> Ver alumnos</a></li>--}}
                         @endif
                         @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
-                          <li><a href=""> Horario de reuniones</a></li>
-                          <li><a href=""> Reuniones</a></li>
-                          <li><a href=""> Documentos</a></li>
-                          <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
+                        <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
+                        <li><a href=""> Reuniones</a></li>
+                        <li><a href=""> Documentos</a></li>
+                        <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                         @endif
                         @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
-                          <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
-                          <li><a href=""> Administrar Fases</a></li>
-                          <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                          <li><a href=""> Documentos</a></li>
+                        <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
+                        <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
+                        <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
+                        <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         @endif
-                        @if(Auth::user()->IdPerfil == 7) <!--si es alumno-->
-                          <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
-                          <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
-                          <li><a href=""> Reuniones</a></li>
+                        @if(Auth::user()->IdPerfil == 0) <!--si es alumno-->
+                        <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>
+                        <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
+                        <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
+                        <li><a href="{{route('meeting.index')}}"> Reservar Cita</a></li>
                         @endif
                     </ul>
                   </div>

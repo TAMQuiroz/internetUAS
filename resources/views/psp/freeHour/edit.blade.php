@@ -29,7 +29,7 @@
                 <div class="form-group">
                     {{Form::label('Hora',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::number('hora_ini',$freeHour->hora_ini,['class'=>'form-control', 'required', 'min' => 8, 'max' => 22])}}    
+                        {{Form::number('hora_ini',$freeHour->hora_ini,['class'=>'form-control', 'required', 'min' => 8, 'max' => 21])}}    
                     </div>                    
                 </div>
 

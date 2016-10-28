@@ -14,7 +14,7 @@ class GroupController extends BaseController
     //Tested
     public function getAll()
     {
-        $groups = Group::with('faculty')->with('leader')->get();
+        $groups = Group::with('faculty')->with('leadader')->get();
         return $this->response->array($groups->toArray());
     }
     

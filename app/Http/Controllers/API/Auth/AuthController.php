@@ -5,6 +5,7 @@ namespace Intranet\Http\Controllers\API\Auth;
 use JWTAuth;
 use Response;
 use Illuminate\Http\Request;
+use Intranet\Models\Faculty;
 use Intranet\Http\Services\Auth\AuthService;
 use Intranet\Exceptions\InvalidCredentialsException;
 use Illuminate\Routing\Controller as BaseController;
@@ -38,9 +39,20 @@ class AuthController extends BaseController
             ], 500);
         }
 
-        $user->load('accreditor');
+        if ($user->IdPerfil == 2 || $user->IdPerfil == 1){
+            $user->load('professor');    
+        }else if ($user->IdPerfil == 4){
+            $user->load('accreditor');
+        }else if ($user->IdPerfil == 5){
+            $user->load('investigator');
+        }else if($user->IdPerfil == 3){
+            $faculties = Faculty::all();
+            foreach ($faculties as $key => $value) {
+                $value->load('coordinator');
+            }
+        }
 
-        return Response::json(compact('token', 'user'));
+        return Response::json(compact('token', 'user','faculties'));
     }
 
 }

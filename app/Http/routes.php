@@ -488,6 +488,31 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['prefix' => 'psp'], function() {
 
+        Route::group(['prefix' => 'supervisor'], function() {
+
+            Route::get('/', ['as' => 'supervisor.index', 'uses' => 'Psp\Supervisor\SupervisorController@index']);
+            Route::get('/show/{id}', ['as' => 'supervisor.show', 'uses' => 'Psp\Supervisor\SupervisorController@show']);
+            Route::get('/create', ['as' => 'supervisor.create', 'uses' => 'Psp\Supervisor\SupervisorController@create']);
+            Route::post('/create', ['as' => 'supervisor.store', 'uses' => 'Psp\Supervisor\SupervisorController@store']);
+            Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
+            Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
+            Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
+        });
+
+        //PspGroups Luis Llanos
+
+        Route::group(['prefix' => 'pspGroup'], function() {
+            Route::get('/', ['as' => 'pspGroup.index', 'uses' => 'Psp\PspGroup\PspGroupController@index']);
+            Route::get('create', ['as' => 'pspGroup.create', 'uses' => 'Psp\PspGroup\PspGroupController@create']);
+            Route::post('create', ['as' => 'pspGroup.store', 'uses' => 'Psp\PspGroup\PspGroupController@store']);
+            Route::get('show/{id}', ['as' => 'pspGroup.show', 'uses' => 'Psp\PspGroup\PspGroupController@show']);
+            Route::get('edit/{id}', ['as' => 'pspGroup.edit', 'uses' => 'Psp\PspGroup\PspGroupController@edit']);
+            Route::post('edit/{id}', ['as' => 'pspGroup.update', 'uses' => 'Psp\PspGroup\PspGroupController@update']);
+            Route::get('delete/{id}', ['as' => 'pspGroup.delete', 'uses' => 'Psp\PspGroup\PspGroupController@destroy']);
+            //Esta ruta es para probar los API, no borrar
+            //Route::get('supervisor',['uses' => 'API\Psp\Supervisor\SupervisorController@getAll']);
+        });
+
         Route::group(['middleware' => 'teacherPsp'], function(){ //restringe el acceso solo a profesores de psp
 
             Route::group(['prefix' => 'supervisor'], function() {
@@ -664,20 +689,64 @@ $api->version('v1', function ($api) {
             $api->get('users/me', 'User\UserController@getUserInfo');
 
             $api->group(['namespace' => 'Faculty', 'prefix' => 'faculties'], function($api) {
+                $api->get('/getFaculty/{faculty_id}','FacultyController@getSpecialty');
                 $api->get('/', 'FacultyController@get');
                 $api->get('/{faculty_id}/educational-objectives', 'FacultyController@getEducationalObjectives');
                 $api->get('/{faculty_id}/students-results', 'FacultyController@getStudentsResult');
                 $api->get('/{faculty_id}/aspects', 'FacultyController@getAspects');
                 $api->get('/{faculty_id}/evaluated_courses', 'FacultyController@getEvaluatedCourses');
                 $api->get('/{faculty_id}/evaluated_courses/{course_id}/semesters/{semester_id}', 'FacultyController@getCourseReport');
-                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureReport');
+                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureRepor|t');
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
-            });
-            $api->get('faculties/{f_id}/periods/actual/semesters', 'Period\PeriodController@getSemesters');
+                $api->get('/{id}/teachers', 'FacultyController@getTeachers');
+                $api->get('/{f_id}/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
 
-            $api->get('aspects/{id}/criterions', 'Aspect\AspectController@getCriterions');
-            $api->get('/faculties/{id}/teachers', 'Faculty\FacultyController@getTeachers');
+            });
+           
+            $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
+                $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
+                $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
+                $api->get('/{p_id}/instruments', 'PeriodController@getMeasurementInstOfPeriod');
+                $api->get('/{p_id}/cycles', 'PeriodController@getCyclesofPeriod');                
+            });
+
+            $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
+                $api->get('/{id}/criterions', 'AspectController@getCriterions');
+            });
+
+            //PSP
+            $api->group(['namespace' => 'Psp','prefix' => 'psp'],function($api){
+                $api->get('groups/all','PspGroup\PspGroupController@getAll');
+                $api->get('groups/{id}','PspGroup\PspGroupController@getById');
+                $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
+                $api->get('students/all','Students\PspStudentsController@getAll');
+                $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
+                $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+                $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
+                $api->get('phases/all','Phases\PspPhasesController@getAll');
+            });
+
+            //INVESTIGACION
+
+            $api->group(['namespace' => 'Investigation','prefix' => 'investigation'], function($api){
+                $api->get('/{id}/groups', 'Group\GroupController@getById');
+                $api->post('/{id}/groups', 'Group\GroupController@edit');
+                $api->get('/{id}/investigators', 'Investigator\InvestigatorController@getById');
+                $api->get('/{id}/projects', 'Project\ProjectController@getById');
+
+            });
+
+
+            $api->get('getAllInvestigators', 'Investigation\Investigator\InvestigatorController@getAll');
+            $api->get('getAllInvGroups', 'Investigation\Group\GroupController@getAll');
+            $api->get('getAllProjects', 'Investigation\Project\ProjectController@getAll');
+
+
+            //TUTORIA
+            $api->get('getTopics', 'Tutoria\TopicController@getAll');
+            $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
+            $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
         });
     });
 

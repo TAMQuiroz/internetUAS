@@ -12,7 +12,7 @@ class TopicTest extends TestCase
 
     public function test_tutoria_crear_tema_ok()
     {
-        $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
+        $teacher = Teacher::get()->first();//cojo un coordinador de especialidad
         $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
     	  	
     	$this->actingAs($user)//entro al sistema con ese usuario
@@ -29,7 +29,7 @@ class TopicTest extends TestCase
 
     public function test_tutoria_crear_tema_vacio()
     {
-        $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
+        $teacher = Teacher::get()->first();//cojo un coordinador de especialidad
         $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
     	  	
     	$this->actingAs($user)//entro al sistema con ese usuario

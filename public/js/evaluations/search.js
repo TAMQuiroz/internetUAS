@@ -1,20 +1,33 @@
-var cantidadPreguntas = 0;
+var cantidadPreguntas = parseInt($('#total_preg').html());
+var puntaje_acumulado = parseFloat($('#total_puntaje').html());
+var tiempo_acumulado = parseInt($('#total_tiempo').html());
 var row_id = 0;
+var tempPuntaje = 0;
+
 $(document).ready(function($) {
-		var form = $('#form-search-question');
 
-		$('#search-question').on('click', function() {			
-			var data = form.serialize();
-			$.post(form.attr('action'), data, function(table) {
-				$('#table-question').html(table);
-			});
+	var form = $('#form-search-question');
+
+	$('#search-question').on('click', function() {			
+		var data = form.serialize();
+		$.post(form.attr('action'), data, function(table) {
+			$('#table-question').html(table);
 		});
+	});
 
-		$('#actual-questions').on('click', '.delete-prof', function() {
+		//cada vez que se elimine una pregunta
+		$('#actual-questions').on('click', '.delete-prof', function() {			
+			//actualizo el puntaje acumulado
+			puntaje_acumulado -=  parseFloat($(this).parent().parent().find('.puntaje').text());
+
+			//actualizo el tiempo acumulado
+			tiempo_acumulado -=  parseInt($(this).parent().parent().find('.tiempo').text());
+
+			//quito la fila
 			$(this).parent().parent().remove();
 			cantidadPreguntas--;
 
-			//se deshabilita el boton de guardar
+			//se deshabilita el boton de guardar si ya no hay preguntas
 			if(cantidadPreguntas == 0 ){
 				$('#submit').attr("disabled","disabled");
 			}
@@ -25,21 +38,27 @@ $(document).ready(function($) {
 				init++;				
 				$(this).html(init);				
 			});	
+
+			//actualizo la cantidad de preguntas
+			$('#total_preg').html(cantidadPreguntas);
+			$('#total_puntaje').html(puntaje_acumulado);
+			$('#total_tiempo').html(tiempo_acumulado);
 		});
 
 
 		//delegador para obtener el codigo de competencia y el puntaje de la pregunta
-		$("#actual-questions").on('click',".editbtn", function(){
+		$("#actual-questions").on('click',".editbtn", function(){			
 			var tr = $(this).parent().parent();//chapo el tr
 			var puntaje = tr.find('.puntaje').text();
+			tempPuntaje = parseFloat(puntaje);//variable auxiliar para calcular el puntaje acumulado luego
 			var idCompetence = tr.find('td .id_competence').val();		
 			row_id = tr.attr("id");			
 			$.get('/evaluaciones/preguntas/editQuestion',{id_competence:idCompetence},function(data){
 		    	$('#datosPregunta').empty();//vacio los datos
 		    	$('#datosPregunta').append(data);	 //mete un select con los evaluadores
-		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" type="number" name="puntaje" value="1">   </div>    </div>');
+		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" min="1" max="1000" type="number" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');
 		    	$('#modal-editar-pregunta').modal('show');//muestro el modal
-	    	});
+		    });
 
 		});
 
@@ -74,10 +93,10 @@ $(document).ready(function($) {
 
 
 
-});
+	});
 
-		
-	function selectQuestions(){  
+
+function selectQuestions(){  
 	    $('#modal-buscar-banco-preguntas').modal('hide');//oculto todo el modal
 	    var questions = $('.questions_selected:checked');//saco las filas con check    
 	    fillTable(questions);
@@ -97,8 +116,15 @@ $(document).ready(function($) {
 				}				
 			});	
 
-			if(!esrepetido){
+			if(!esrepetido){//si no esta repetida
 				cantidadPreguntas++;
+
+				//actualizo el puntaje acumulado
+				puntaje_acumulado +=  parseFloat(tr.find('.puntaje').text());
+
+				//actualizo el tiempo acumulado
+				tiempo_acumulado +=  parseInt(tr.find('.tiempo').text());
+
 				tr.prepend('<td class="order">'+cantidadPreguntas+'</td>');
 				tr.find('td:last').remove();//quito el checkbox
 				tr.find('.oculto').removeAttr( "hidden" );
@@ -113,17 +139,40 @@ $(document).ready(function($) {
 			}
 
 		});
+
+		//actualizo la cantidad de preguntas
+		$('#total_preg').html(cantidadPreguntas);
+		$('#total_puntaje').html(puntaje_acumulado);
+		$('#total_tiempo').html(tiempo_acumulado);
 	}
 
 	function guardarCambios(){  
-		$('#modal-editar-pregunta').modal('hide');//oculto el modal
-		var id_evaluador = $("#select_evaluador").val();
-		var evaluador = $("#select_evaluador option:selected").html();
-		var puntaje = $("#input_puntaje").val();
+		if(cambiosvalidos()){
+			$('#modal-editar-pregunta').modal('hide');//oculto el modal
+			var id_evaluador = $("#select_evaluador").val();
+			var evaluador = $("#select_evaluador option:selected").html();
+			var puntaje = parseFloat($("#input_puntaje").val());
 
-		$('#'+row_id+' .puntaje').html(puntaje);//cambio el puntaje en la fila
-		$('#'+row_id+' td .row_puntaje').val(puntaje);//cambio el puntaje en el input en la fila
 
-		$('#'+row_id+' .responsable').html(evaluador);//cambio el nombre del evaluador en la fila
-		$('#'+row_id+' td .row_evaluador').val(id_evaluador);//cambio el codigo del evaluador en el input en la fila		
+			$('#'+row_id+' .puntaje').html(puntaje);//cambio el puntaje en la fila
+			$('#'+row_id+' td .row_puntaje').val(puntaje);//cambio el puntaje en el input en la fila
+
+			$('#'+row_id+' .responsable').html(evaluador);//cambio el nombre del evaluador en la fila
+			$('#'+row_id+' td .row_evaluador').val(id_evaluador);//cambio el codigo del evaluador en el input en la fila		
+
+			//actualizo el puntaje acumulado
+			puntaje_acumulado -=  tempPuntaje;
+			puntaje_acumulado += puntaje; //agrego el nuevo puntaje
+
+			$('#total_puntaje').html(puntaje_acumulado);	
+		}
+		
+	}
+
+	function cambiosvalidos(){
+		var n = $("#input_puntaje").val();
+		if( (Number(n) == NaN) || (n=="") || (n <= 0) ||  (n > 100) || (!Number.isInteger(n*10))  )  {
+			return false;
+		}		
+		return true;
 	}

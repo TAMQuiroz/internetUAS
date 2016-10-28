@@ -21,7 +21,7 @@ class EvaluatorController extends Controller
     {
 
        $faculty = Session::get('faculty-code');
-       $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno','Codigo','Correo')->where('id_especialidad', $faculty)->distinct()->get();
+       $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->join('Especialidad', 'Docente.IdEspecialidad', '=', 'Especialidad.IdEspecialidad')->select('Docente.IdDocente as id','Docente.Nombre as nombre','Especialidad.Nombre as nombre_esp','Docente.ApellidoPaterno as app','Docente.ApellidoMaterno as apm','Docente.codigo as codigo','Docente.Correo as correo')->where('id_especialidad', $faculty)->distinct()->get();
        // dd($evaluators);
        $data = [            
             'evaluators'    =>  $evaluators,

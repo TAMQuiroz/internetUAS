@@ -9,7 +9,7 @@
 			{{Form::label('Tipo:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
 			<div class="col-md-6 col-sm-6 col-xs-6">
 				<select name="tipo" class="form-control">
-					<option value="">Seleccione</option>
+					<option value="">Todos</option>
 					<option value="1">Cerrada</option>
 					<option value="2">Abierta</option>
 					<option value="3">Archivo</option>                         
@@ -20,7 +20,7 @@
 			{{Form::label('Dificultad:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
 			<div class="col-md-6 col-sm-6 col-xs-6">
 				<select name="dificultad" class="form-control">
-					<option value="">Seleccione</option>
+					<option value="">Todas</option>
 					<option value="1">Baja</option>
 					<option value="2">Media</option>
 					<option value="3">Alta</option>                         
@@ -31,7 +31,7 @@
 			{{Form::label('Competencia:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
 			<div class="col-md-6 col-sm-6 col-xs-6">
 				<select name="competencia" class="form-control">
-					<option value="">Seleccione</option>
+					<option value="">Todas</option>
 					@foreach($competences as $competence)
 					<option value="{{$competence->id}}" >{{$competence->nombre}}</option>
 					@endforeach 

@@ -5,11 +5,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TemplateTest extends TestCase
-{
-    
+{    
     use DatabaseMigrations;
-
-
     /**
      * A basic test example.
      *

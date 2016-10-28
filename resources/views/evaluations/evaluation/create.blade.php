@@ -98,6 +98,15 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="form-group">
+							<h5><strong>Cantidad de preguntas: <i id="total_preg">0</i></strong></h5>
+							<h5><strong>Puntaje total: <i id="total_puntaje">0</i></strong></h5>
+							<h5><strong>Tiempo acumulado: <i id="total_tiempo">0</i> minutos</strong></h5>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="panel-heading">
 				<h4 class="">Alumnos</h4>

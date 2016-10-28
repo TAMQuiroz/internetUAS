@@ -65,7 +65,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
@@ -89,7 +89,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('El campo nombre es obligatorio');
     }
 
@@ -113,7 +113,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('El formato de nombre es inválido');
     }
 
@@ -137,7 +137,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('El formato de nombre es inválido');
     }
 
@@ -161,7 +161,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('ubicacion no debe ser mayor que 50 caracteres');
     }
 
@@ -185,7 +185,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('El campo ubicacion es obligatorio');
     }
 
@@ -209,7 +209,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('El formato de ubicacion es inválido');
     }
 
@@ -233,7 +233,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('El formato de ubicacion es inválido');
     }
 
@@ -257,7 +257,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('fecha debe ser una fecha posterior a today');
     }
 
@@ -281,7 +281,7 @@ class EventTest extends TestCase
             ->type('Evento de prueba en auditorio CIA','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/evento/create')
-    		->see('Creación de Eventos')
+    		->see('Crear evento')
     		->see('El campo fecha es obligatorio');
     }
 
@@ -306,7 +306,7 @@ class EventTest extends TestCase
                     ','descripcion')
             ->press('Guardar')
             ->seePageIs('/investigacion/evento/create')
-            ->see('Creación de Eventos')
+            ->see('Crear evento')
             ->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
@@ -331,7 +331,7 @@ class EventTest extends TestCase
             ->type('','descripcion')
             ->press('Guardar')
             ->seePageIs('/investigacion/evento/create')
-            ->see('Creación de Eventos')
+            ->see('Crear evento')
             ->see('El campo descripcion es obligatorio');
     }
 

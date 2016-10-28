@@ -95,7 +95,25 @@ class Teacher extends Model {
 
     }
 
-    
+    static public function getCoordsEvFiltered($filters, $specialty) {
+        
+        $query = Teacher::where('rolEvaluaciones',null)->where('IdEspecialidad',$specialty);
+        
+        if (array_key_exists("name", $filters) && $filters["name"] != "") {
+            $query = $query->where("Nombre", "like", "%" . $filters["name"] . "%");
+        }
+
+        if (array_key_exists("lastName", $filters) && $filters["lastName"] != "") {
+            $query = $query->where("ApellidoPaterno", "like", "%" . $filters["lastName"] . "%");
+        }
+
+        if (array_key_exists("secondLastName", $filters) && $filters["secondLastName"] != "") {
+            $query = $query->where("ApellidoMaterno", "like", "%" . $filters["secondLastName"] . "%");
+        }
+
+        return $query->paginate(10);
+
+    }
     
 
 }

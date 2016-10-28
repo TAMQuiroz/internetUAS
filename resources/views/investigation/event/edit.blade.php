@@ -4,9 +4,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-	        <div class="title_left">
-	            <h3>Edicion de Evento</h3>
-	        </div>
+            <h3>Edicion de Evento</h3>
 	    </div>
     </div>
 </div>
@@ -22,35 +20,35 @@
 		    	{{Form::open(['route' => ['evento.update', $evento->id], 'files'=>true, 'class'=>'form-horizontal col-md-8', 'id'=>'formSuggestion'])}}
 		    		<div class="form-group">
 		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::text('nombre',$evento->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Ubicacion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::text('ubicacion',$evento->ubicacion,['class'=>'form-control', 'required', 'maxlength' => 100])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Fecha *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::date('fecha',$evento->fecha,['class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString()])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Hora *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::time('hora',date("H:i", strtotime( $evento->hora )),['class'=>'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Duracion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::number('duracion',$evento->duracion,['class'=>'form-control', 'required', 'max' => 24, 'min' => 1])}}
 		    			</div>
 		    		</div>
@@ -58,29 +56,29 @@
 
 		    		<div class="form-group">
 		    			{{Form::label('Tipo *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::select('tipo', [0=>'Publico',1=>'Privado'], $evento->tipo, ['class' => 'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Grupo *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::select('grupo', $groups, $evento->grupo_id, ['class' => 'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Descripcion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-8">
+		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::textarea('descripcion', $evento->descripcion, ['class' => 'form-control', 'required', 'rows'=>'5', 'maxlength'=>200])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
 		    			{{Form::label('Imagen',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-                        <div class="col-md-8">
-                            {{Form::file('imagen', ['class'=>'form-control'])}}    
+                        <div class="col-xs-12 col-md-8">
+                            {{Form::file('imagen', ['class'=>'form-control', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Solo ingresar imagenes con formato .jpg', 'accept'=>'image/*'])}}
                         </div>
                         
                     </div>

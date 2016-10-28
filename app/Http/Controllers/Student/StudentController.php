@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 use Illuminate\Support\Facades\Input;
 use Intranet\Models\Student;
+use Intranet\Models\TimeTable;
 use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Score;
 use DB;
@@ -103,12 +104,28 @@ class StudentController extends BaseController {
 						$alumno->ApellidoPaterno = $student['ApellidoPaterno'];
 						$alumno->ApellidoMaterno = $student['ApellidoMaterno'];
 						$alumno->IdHorario = $student['IdHorario'];
+
+						//Campos nuevos para PSP
+
+						$alumno->id = null;
+						$alumno->telefono = null;
+						$alumno->correo = null;
+						$alumno->direccion = null;
+						$alumno->IdUsuario = null;
+						$alumno->idPspGroup = null;
+						$alumno->IdEspecialidad = null;
+						$alumno->idSupervisor = null;
+						$alumno->lleva_psp = null;
+						
 						$alumno->save();
 					}
 				}
 
 				//Agregar tamaño a tabla horario
-				$horario = TimeTable::find('IdHorario');
+				//dd($alumno->IdHorario);
+				//$horario = TimeTable::find('IdHorario');
+				$horario = TimeTable::find($alumno->IdHorario);
+				
 				$horario->TotalAlumnos = $data->count();
 				$horario->save();
 

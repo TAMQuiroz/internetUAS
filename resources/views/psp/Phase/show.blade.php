@@ -48,7 +48,7 @@
 
                     <div class="row">
                         <div class="col-md-8 col-sm-12 col-xs-12">
-                            <a class="btn btn-default pull-right" href="{{ route('Phase.index') }}">Regresar</a>
+                            <a class="btn btn-default pull-right" href="{{ route('phase.index') }}">Regresar</a>
                         </div>
                     </div>
                 </div>

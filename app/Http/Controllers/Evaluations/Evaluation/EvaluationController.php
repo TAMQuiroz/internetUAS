@@ -182,7 +182,45 @@ class EvaluationController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $evaluation   = Evaluation::find($id);//saco la evaluacion
+            $specialty = Session::get('faculty-code');  
+            $students = Tutstudent::where('id_especialidad',$specialty)->get();//envio los alumnos de la esp
+            $competences = Competence::where('id_especialidad',$specialty)->get();
+            $questions = EvQuestion::where('id_evaluation',$evaluation->id)->get();
+
+            //calculo los acumulados
+            $sum_puntaje=0;
+            $sum_tiempo=0;
+            foreach ($questions as $question) {
+                $sum_puntaje += $question->puntaje;
+                $sum_tiempo += $question->tiempo;
+            }
+
+            //saco los estudiantes a quienes iba dirigida la evaluacion 
+            $evstudents = Tutstudentxevaluation::where('id_evaluation',$evaluation->id)->get();
+            $arrStudents = array();
+            foreach ($evstudents as $evstudent) {
+                array_push($arrStudents,$evstudent->id_tutstudent);
+            }
+
+
+            $data = [
+            'evaluation'      =>  $evaluation,            
+            'specialty'      =>  $specialty,
+            'students'       =>  $students,
+            'arrStudents'       =>  $arrStudents,
+            'competences'    =>  $competences,
+            'questions'    =>  $questions,
+            'sum_puntaje'    =>  $sum_puntaje,
+            'sum_tiempo'    =>  $sum_tiempo,
+            ];
+            return view('evaluations.evaluation.edit', $data);
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+        
     }
 
     /**
@@ -205,6 +243,30 @@ class EvaluationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $evaluation   = Evaluation::find($id);            
+            $evaluation->delete();//softdelete
+            return redirect()->route('evaluacion.index')->with('success', 'La evaluacion  se ha eliminado exitosamente.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
+
+    public function cancel($id)
+    {
+        try {
+            //
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
+
+    public function activate($id)
+    {
+        try {
+            //
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
     }
 }

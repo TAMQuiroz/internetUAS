@@ -24,7 +24,7 @@ class ReasonRequest extends Request
     public function rules()
     {
         return [
-            'nombre' => 'required|max:50',            
+            'nombre' => 'regex:/^[\pL\s\-]+$/u|required|max:50',            
             'tipo' => 'required|numeric',            
         ];
     }

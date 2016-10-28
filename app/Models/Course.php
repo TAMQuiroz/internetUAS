@@ -18,6 +18,11 @@ class Course extends Model {
     public function courses(){
         return $this->hasMany(Course::class, 'IdCurso');
     }
+    
+    public function coursexcycle()
+    {
+        return $this->hasMany(DictatedCourses::class, 'IdCurso');
+    }
 
     public function semesters()
     {

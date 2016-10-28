@@ -32,6 +32,32 @@ class StudentsResultService {
         return $studentResults;
     }
 
+    public function findByFacultyAndCicle()
+    {
+        $studentResults = [];
+        $IdCicloAcademico=Session::get('academic-cycle')->IdCicloAcademico;
+        $resultsxCycles = CyclexResult::where('IdCicloAcademico', $IdCicloAcademico)
+            ->where('deleted_at', null)->get();
+    /*    $resultsDirties=StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
+            ->where('deleted_at', null)->get();
+
+        foreach ($resultsxCycles as $resultsxCycle){
+            foreach ($resultsDirties as $resultsDirty){
+                if($resultsxCycle->IdResultadoEstudiantil == $resultsDirty->IdResultadoEstudiantil){
+                    array_push($studentResults, $resultsDirty);
+                    break;
+                }
+            }
+        }*/
+        foreach ($resultsxCycles as $resultsxCycle){
+            if($resultsxCycle->studentsResult->IdEspecialidad == Session::get('faculty-code') &&
+                    $resultsxCycle->studentsResult->deleted_at == null){
+                array_push($studentResults, $resultsxCycle->studentsResult);
+            }
+        }
+        return $studentResults;
+    }
+
     public function findByFacultyAndCurrentPeriod()
     {
         $studentResults = [];

@@ -9,4 +9,8 @@ class Competence extends Model
 {
 	use SoftDeletes;
     protected $fillable = ['nombre','descripcion'];
+
+    public function questions(){
+        return $this->hasMany('Intranet\Models\Question', 'id_competence');
+    }
 }

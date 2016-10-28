@@ -2,21 +2,8 @@
 @section('content')
     <div class="page-title">
         <div class="title_left">
-            <h3>{{ $title }}</h3>
+            <h3>Lista de profesores</h3>
         </div>
-        <form action="{{ route('search.teachers')}}" method="POST" id="formSearch" name="formSearch">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Buscar" name="word" id="word">
-                  <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                  </span>
-                    </div>
-                </div>
-            </div>
-        </form>
     </div>
 
     <div class="clearfix"></div>

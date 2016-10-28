@@ -22,7 +22,7 @@
                         {{Form::label('Motivo',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
                             @foreach($razones as $razon)
-                            {{Form::radio('check['.$razon->id.']',1 , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
+                            {{Form::radio('motivo', $razon->id , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
                             @endforeach                            
                         </div>
                     </div>                                        

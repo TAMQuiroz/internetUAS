@@ -10,36 +10,60 @@ class TopicTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function test_tutoria_crear_tema_ok()
+    public function test_tut_topic_cr_01()
     {
-        $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
-        $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
+        $user = factory(Intranet\Models\User::class)->make();
+        $teacher = factory(Intranet\Models\Teacher::class)->create();
     	  	
-    	$this->actingAs($user)//entro al sistema con ese usuario
-    	->withSession([
-    		'actions' => [],
-    		'user' => factory(Intranet\Models\Teacher::class)->make(),
-            'faculty-code' => $teacher->IdEspecialidad
-    		])->visit('/tutoria/temas/create')
-       ->type('hola','nombre')
+    	  $this->actingAs($user)
+    	      ->withSession([
+    		      'actions' => [],
+    		      'user' => $user,
+              'faculty-code' => $teacher->IdEspecialidad
+    		      ])
+            ->visit('/tutoria/parametros/temas/create')
+       ->type('Académico','nombre')
        ->press('Guardar')
-       ->seePageIs('tutoria/temas/')
-       ->see('Temas de Citas');  
+       ->seePageIs('/tutoria/parametros/temas/')
+       ->see('Temas de Citas')
+       ->see('El tema se ha registrado exitosamente');  
     }
 
-    public function test_tutoria_crear_tema_vacio()
+    public function test_tut_topic_cr_02()
     {
-        $teacher = Teacher::get()->first();;//cojo un coordinador de especialidad
-        $user = User::find($teacher->IdUsuario);//tengo las credenciales de ese coordinador
-    	  	
-    	$this->actingAs($user)//entro al sistema con ese usuario
-    	->withSession([
-    		'actions' => [],
-    		'user' => factory(Intranet\Models\Teacher::class)->make(),
-            'faculty-code' => $teacher->IdEspecialidad
-    		])->visit('/tutoria/temas/create')       
+        $user = factory(Intranet\Models\User::class)->make();
+        $teacher = factory(Intranet\Models\Teacher::class)->create();
+          
+        $this->actingAs($user)
+            ->withSession([
+              'actions' => [],
+              'user' => $user,
+              'faculty-code' => $teacher->IdEspecialidad
+              ])
+            ->visit('/tutoria/parametros/temas/create')
+       ->type('$','nombre')
        ->press('Guardar')
-       ->seePageIs('tutoria/temas/create')
-       ->see('Nuevo tema');  
+       ->seePageIs('/tutoria/parametros/temas/create')
+       ->see('Nuevo tema')
+       ->see('El formato de nombre es inválido');  
+    }
+
+    public function test_tut_topic_cr_03()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+        $teacher = factory(Intranet\Models\Teacher::class)->create();
+          
+        $this->actingAs($user)
+            ->withSession([
+              'actions' => [],
+              'user' => $user,
+              'faculty-code' => $teacher->IdEspecialidad
+              ])
+            ->visit('/tutoria/parametros/temas/create')
+       ->type('5','nombre')
+       ->press('Guardar')
+       ->seePageIs('/tutoria/parametros/temas/create')
+       ->see('Nuevo tema')
+       ->see('El formato de nombre es inválido');  
     }
 }

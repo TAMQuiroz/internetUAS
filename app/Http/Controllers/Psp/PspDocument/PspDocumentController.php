@@ -33,7 +33,7 @@ class PspDocumentController extends Controller
         $data['student'] = $students->first();
 
         //$data['groups'] = $this->groupService->retrieveAll();
-        return view('psp.PspDocument.index', $data);
+        return view('psp.pspDocument.index', $data);
     }
 
     /**
@@ -154,7 +154,7 @@ class PspDocumentController extends Controller
         ];
         $data['student'] = $student;
 
-        return view('psp.PspDocument.search', $data);       
+        return view('psp.pspDocument.search', $data);       
 
     }
 

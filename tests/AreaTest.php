@@ -48,7 +48,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
@@ -65,7 +65,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('El campo nombre es obligatorio');
     }
 
@@ -82,7 +82,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('El formato de nombre es inválido');
     }
 
@@ -99,7 +99,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('El formato de nombre es inválido');
     }
 
@@ -116,7 +116,7 @@ class AreaTest extends TestCase
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
@@ -133,7 +133,7 @@ class AreaTest extends TestCase
     		->type('','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('El campo descripcion es obligatorio');
     }
 
@@ -150,7 +150,7 @@ class AreaTest extends TestCase
     		->type('$','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('El formato de descripcion es inválido');
     }
 
@@ -167,7 +167,7 @@ class AreaTest extends TestCase
     		->type('5','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/create')
-    		->see('Creación de Areas')
+    		->see('Crear Area')
     		->see('El formato de descripcion es inválido');
     }
 
@@ -203,7 +203,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
@@ -221,7 +221,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('El campo nombre es obligatorio');
     }
 
@@ -239,7 +239,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('El formato de nombre es inválido');
     }
 
@@ -257,7 +257,7 @@ class AreaTest extends TestCase
     		->type('Artes oscuras de alto impacto','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('El formato de nombre es inválido');
     }
 
@@ -275,7 +275,7 @@ class AreaTest extends TestCase
     		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('descripcion no debe ser mayor que 100 caracteres');
     }
 
@@ -293,7 +293,7 @@ class AreaTest extends TestCase
     		->type('','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('El campo descripcion es obligatorio');
     }
 
@@ -311,7 +311,7 @@ class AreaTest extends TestCase
     		->type('$','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('El formato de descripcion es inválido');
     }
 
@@ -329,7 +329,7 @@ class AreaTest extends TestCase
     		->type('5','descripcion')
     		->press('Guardar')
     		->seePageIs('/investigacion/area/edit/'.$area->id)
-    		->see('Edicion de Areas')
+    		->see('Editar Area')
     		->see('El formato de descripcion es inválido');
     }
 

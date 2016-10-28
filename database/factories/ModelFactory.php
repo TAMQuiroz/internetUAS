@@ -78,7 +78,7 @@ $factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $f
         'correo'            => $faker->email,
         'telefono'          => 999999999,
         'direccion'         => $faker->lastName,
-        'codigo_trabajador'  => 20111010,
+        'codigo_trabajador'  => $faker->randomNumber($nbDigits = 8,$strict = true),
         'idFaculty'         => 1,
         'idUser'            => 3,
         'Vigente'            => 1,
@@ -134,24 +134,41 @@ $factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker)
 
 
     return [
-        'numero'            =>  1,
+        'numero'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
         'descripcion'       =>  $faker->text,
         'fecha_inicio'         =>  '2017-10-06',
         'fecha_fin'         =>  '2018-10-06',
     ];
 });
 
+$factory->define(Intranet\Models\Student::class, function (Faker\Generator $faker) {
+
+    return [
+        'IdAlumno'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
+    ];
+});
+
 $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
 
     $template =   factory(Intranet\Models\Template::class)->create();
+    $student =   factory(Intranet\Models\Student::class)->create();
 
     return [
-        'esObligatorio'       =>  'si',
-        'observaciones'       =>  $faker->text,
-        'ruta'               =>  $faker->text,
+        'esObligatorio'       =>  't',
+        //'observaciones'       =>  'bien',
+        //'ruta'               =>  'uploads/pspdocuments/0.pdf',
         'idStudent'         =>  1,
         'idTemplate'         =>  $template->id,
         'idTipoEstado'         =>  1,
         'fecha_limite'         =>  '2018-10-06',
     ];
 });
+
+$factory->define(Intranet\Models\FreeHour::class, function (Faker\Generator $faker) {
+    return [
+        'hora_ini'          => 8,
+        'fecha'     => \Carbon\Carbon::yesterday(),
+        'cantidad' => 1,
+    ];
+});
+

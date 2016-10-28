@@ -20,7 +20,7 @@ class CreateSupervisorsTable extends Migration
             $table->string('correo');
             $table->string('direccion');
             $table->string('telefono');
-            $table->string('codigo_trabajador');
+            $table->string('codigo_trabajador')->unique();
             $table->integer('idFaculty');
             $table->integer('idUser');
             $table->integer('Vigente');

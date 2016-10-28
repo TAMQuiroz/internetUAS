@@ -16,6 +16,7 @@ class AddFkToPspmeetings extends Migration
              $table->foreign('idStudent')->references('IdAlumno')->on('Alumno');
              $table->foreign('idSupervisor')->references('id')->on('supervisors');
              $table->foreign('idTipoEstado')->references('id')->on('statuses');
+             $table->foreign('idFreeHour')->references('id')->on('freehours');
         });
     }
 

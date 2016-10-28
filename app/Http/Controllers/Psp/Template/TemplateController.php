@@ -74,6 +74,7 @@ class TemplateController extends Controller
                 }
             }
             if(Auth::User()->IdPerfil==3){
+                //$admin = Admin::where('idUser',Auth::User()->IdUsuario)->first(); 
                 $template->idAdmin   = Auth::User()->IdUsuario;
             }
             /*
@@ -96,8 +97,8 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
 
-
-                $pspstudents=Student::where('lleva_psp','t')->get();
+                $pspstudents=Student::get();
+                //$pspstudents=Student::where('lleva_psp','t')->get();
                 foreach($pspstudents as $psp) {
                     if($psp!=null){
                     $PspDocument = new PspDocument;

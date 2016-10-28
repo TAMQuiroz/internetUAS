@@ -32,6 +32,19 @@
   <meta name="msapplication-TileImage" content="{{ URL::asset('images/icon/mstile-144x144.png')}}">
   <meta name="theme-color" content="#ffffff">
 
+
+
+  <!-- NEW LOOK -->
+
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.min.css')}}"  media="screen,projection"/>
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
   <!-- Bootstrap core CSS -->
 
   <link href="{{ URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -77,55 +90,80 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  
+
 </head>
 
 
 <body class="nav-md">
-<div class="container body">
-  <div class="main_container">
 
-    <div class="col-md-3 left_col">
-      <div class="left_col scroll-view">
+<!--La barra superior principal-->
+    <nav class="bar-top">
+      <div class="nav-wrapper container" style="width: 85%;">
 
-        <div class="navbar nav_title text-center" style="border: 0; margin-top:20px; height:auto;">
-          <img src="{{ URL::asset('images/uas.png')}}" class="img-circle img-responsive center-block" width="80px" style="display: inline-block;">
-          <br>
-          <h5 style="color: #FFF;" class="hidden-xs hidden-sm">University Accreditation System</h5>
-        </div>
+        <!--Menu de barra de haburguesa-->
+        <ul id="slide-out" class="side-nav">
+          <li>
+            <div class="userView">
+              <!--
+                <img class="background" height= "100%" src="{{ asset('img/md_noche.png')}}">
+              -->
+              <i class="material-icons center">account_circle</i>        
+              <div id="info-user" class="bar-info">
+                <span class="white-text email">
+                @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+                    {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+                @else
+                    {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
+                @endif
+                </span>
+              </div>
 
-        <div class="clearfix"></div>
-        <div class="separator"></div>
-        <!-- sidebar menu -->
-        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-          <!--TEACHER MENU-->
+              <div id="info-faculty" class="bar-info">
+                <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
+                @if(Session::get('academic-cycle')!=null)
+                  <span class="label label-info hidden-xs hidden-sm">                  
+                    {{Session::get('academic-cycle')->academicCycle->Descripcion}}                  
+                  </span>
+                @endif
+              </div>
+                
+              <div id="info-endcycle" class="bar-info">
+                @if(Session::has('academic-cycle'))
+                <span class="label label-danger col-10">
+                  Días restantes para el fin de ciclo: {{ $diffForHumans }}
+                </span>
+                @endif
+              </div>
+            </div>
+          </li>             
+          
+          <li><a class="subheader">Menu</a></li>
+          <li><div class="divider"></div></li>
 
-          <div class="menu_section">
-            <ul class="nav side-menu">
-            <!--
-                <li>
-                  <a href="{{ route('layout.master') }}"><i class="fa fa-home"></i> Inicio </a>
-                </li>
-                -->
-              <li>
-                <a href="{{ route('index.ourFaculty', ['faculty-code' => Session::get('faculty-code')] ) }}">
-                  <i class="fa fa-home"></i> Inicio</a>
+          <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+              <li class="">                    
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.ourFaculty', ['faculty-code' => Session::get('faculty-code')] ) }}"><i class="material-icons">store</i>Inicio</a>  
               </li>
+              <li class="bold">
+                  <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.subindex') }}"><i class="material-icons">assessment</i>Mis Especialidades</a>
+                </li>
 
               @if(in_array(70,Session::get('actions')))
                 @if(Auth::user() && Auth::user()->IdPerfil != 5)
-                <li>
-                <!--<a href="{{ route('indexAcademicCycle.faculty') }}">-->
-                  <a href="{{ route('index.faculty') }}">
-                    <i class="fa fa-institution"></i> Especialidades</a>
+                <li class="bold">
+                  <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.faculty') }}"><i class="material-icons">assessment</i>Especialidad</a>                
                 </li>
                 @endif
               @endif
+
               @if(in_array(11,Session::get('actions')) || in_array(6,Session::get('actions')) || in_array(1,Session::get('actions')) || in_array(2,Session::get('actions')))
-                <li>
-                  <a>
-                    <i class="fa fa-certificate"></i> Mi Especialidad<span class="fa fa-chevron-down"></span>
-                  </a>
-                  <ul class="nav child_menu" style="display: none">
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Mi especialidad</a>
+
+                <div class="collapsible-body">
+                  <ul>
                     @if(in_array(11,Session::get('actions')))
                       <li><a href="{{ route('index.teachers') }}">Profesores</a></li>
                     @endif
@@ -138,332 +176,259 @@
                     @if(in_array(2,Session::get('actions')))
                       <li><a href="{{ route('viewCycle.faculty') }}">Ciclo</a></li>
                     @endif
-
-                  <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
                   </ul>
-                </li>
+                </div>
+              </li>
               @endif
+
               @if(in_array(16,Session::get('actions')))
-                <li>
-                  <a href="{{ route('index.educationalObjectives') }}">
-                    <i class="fa fa-mortar-board"></i> Objetivos Educacionales</a>
-                </li>
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.educationalObjectives') }}"><i class="material-icons">assessment</i>Objetivos educacionales</a>                
+              </li>
               @endif
+
               @if(in_array(21,Session::get('actions')))
-                <li>
-                  <a href="{{ route('index.studentsResult') }}">
-                    <i class="fa fa-file-text"></i> Resultados Estudiantiles</a>
-                </li>
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.studentsResult') }}"><i class="material-icons">assessment</i>Resultados estudiantiles</a>
+              </li>
               @endif
+
               @if(in_array(25,Session::get('actions')))
-                <li>
-                  <a href="{{ route('index.aspects') }}">
-                    <i class="fa fa-gavel"></i> Aspectos</a>
-                </li>
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Aspectos</a>
+              </li>
               @endif
+
               @if(in_array(31,Session::get('actions')))
-                <li>
-                  <a href="{{ route('index.measurementSource') }}">
-                    <i class="fa fa-area-chart"></i> Instrumentos de Medición</a>
-                </li>
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.measurementSource') }}"><i class="material-icons">assessment</i>Instrumentos de medición</a>
+              </li>
               @endif
-              @if(in_array(7,Session::get('actions')) || in_array(8,Session::get('actions')) || in_array(9,Session::get('actions')) )
-                <!--
-                <li>
-                  <a>
-                    <i class="fa fa-list"></i> Configurar Medición<span class="fa fa-chevron-down"></span>
-                  </a>
-                  <ul class="nav child_menu" style="display: none">
 
-                  @if(in_array(16,Session::get('actions')))
-                    <li><a href="{{ route('index.educationalObjectives') }}">Objetivos Educacionales</a></li>
-                  @endif
-
-                  @if(in_array(21,Session::get('actions')))
-                    <li><a href="{{ route('index.studentsResult') }}">Resultados Estudiantiles</a></li>
-                  @endif
-                  @if(in_array(25,Session::get('actions')))
-
-                      <li><a href="{{ route('index.rubrics') }}">Rúbricas</a></li>
-
-
-                  @endif
-                  @if(in_array(25,Session::get('actions')))
-                    <li><a href="{{ route('index.aspects') }}">Aspectos</a></li>
-                  @endif
-                  @if(in_array(31,Session::get('actions')))
-                    <li><a href="{{ route('index.measurementSource') }}">Instrumentos de Medición</a></li>
-                  @endif
-
-                  <li><a href="{{ route('index.timetable')}}">Horarios</a></li>
-                  </ul>
-
-                </li>
-                -->
-              @endif
               @if(in_array(28,Session::get('actions')) || in_array(29,Session::get('actions')) || in_array(67,Session::get('actions')) )
-                <li>
-                  <a>
-                    <i class="fa fa-check"></i> Evaluación <span class="fa fa-chevron-down"></span>
-                  </a>
-                  <ul class="nav child_menu" style="display: none">
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Evaluación</a>
+
+                <div class="collapsible-body">
+                  <ul>
                     @if(in_array(28,Session::get('actions')))
-                      <li><a href="{{ route('contributions.studentsResult') }}">Matriz de Aporte</a></li>
-                    @endif
-                    @if(in_array(29,Session::get('actions')))
-                      <!--<li><a href="{{ route('indexEvaluated.studentsResult') }}">Resultados Estudiantiles Evaluados</a></li>-->
+                     <li><a href="{{ route('contributions.studentsResult') }}">Matriz de aporte</a></li>
                     @endif
                     @if(in_array(67,Session::get('actions')))
-                      <li><a href="{{ route('index.dictatedCourses') }}">Cursos Dictados</a></li>
-                  @endif
-                  @if(in_array(13,Session::get('actions')))
-                    <!--<li><a href="#">Instrumentos de Medición</a></li>-->
-                  @endif
-
-                  <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
+                    <li><a href="{{ route('index.dictatedCourses') }}">Cursos dictados</a></li>
+                    @endif
                   </ul>
-                </li>
+                </div>
+              </li>
               @endif
 
               @if(in_array(67,Session::get('actions')))
-                <li>
-                  <a href="{{ route('index.myCourses') }}">
-                    <i class="fa fa-book"></i> Mis Cursos
-                  </a>
-                </li>
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.myCourses') }}"><i class="material-icons">settings</i>Mis cursos</a>
+              </li>   
               @endif
 
               @if(in_array(41,Session::get('actions')) || in_array(44,Session::get('actions')) ||
               in_array(68,Session::get('actions')) || in_array(50,Session::get('actions')))
-                <li>
-                  <a>
-                    <i class="fa fa-edit"></i> Mejora Continua <span class="fa fa-chevron-down"></span>
-                  </a>
-                  <ul class="nav child_menu" style="display: none">
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Mejora continua</a>
 
+                <div class="collapsible-body">
+                  <ul>
                     @if(in_array(41,Session::get('actions')))
-                      <li><a href="{{ route('index.suggestions') }}">Mis Sugerencias</a></li>
+                    <li><a href="{{ route('index.suggestions') }}">Mis sugerencias</a></li>
                     @endif
                     @if(in_array(44,Session::get('actions')))
-                      <li><a href="{{ route('indexAll.suggestions') }}">Sugerencias</a></li>
+                    <li><a href="{{ route('indexAll.suggestions') }}">Sugerencias</a></li>
                     @endif
                     @if(in_array(68,Session::get('actions')))
-                      <li><a href="{{ route('index.enhacementPlan') }}">Plan de Mejora</a></li>
+                    <li><a href="{{ route('index.enhacementPlan') }}">Plan de mejora</a></li>
                     @endif
                     @if(in_array(50,Session::get('actions')))
-                      <li><a href="{{ route('index.typeImprovement') }}">Tipos Planes de Mejora</a></li>
+                    <li><a href="{{ route('index.typeImprovement') }}">Tipos Planes de mejora</a></li>
                     @endif
-
                   </ul>
-                </li>
+                </div>
+              </li> 
               @endif
+
               @if(Auth::user() && Auth::user()->IdPerfil != 5)
                 @if(in_array(53,Session::get('actions')) || in_array(54,Session::get('actions'))
                 || in_array(55,Session::get('actions')) || in_array(56,Session::get('actions')) )
-                  <li>
-                    <a>
-                      <i class="fa fa-line-chart"></i> Consolidados<span class="fa fa-chevron-down"></span>
-                    </a>
-                    <ul class="nav child_menu" style="display: none">
-                      @if(in_array(79,Session::get('actions')))
-                        <li><a href="{{ route('view-status.evaluation') }}">Avance de Medición</a></li>
-                      @endif
-                      @if(in_array(53,Session::get('actions')))
-                        <li><a href="{{ route('index.studyPlan') }}">De Cursos Dictados</a></li>
-                      @endif
-                      @if(in_array(54,Session::get('actions')))
-                        <li><a href="{{ route('index.measuring') }}">De Medición</a></li>
-                      @endif
-                      @if(in_array(55,Session::get('actions')))
-                        <li><a href="{{ route('index.evaluation') }}">De Evaluación</a></li>
-                      @endif
-                      @if(in_array(56,Session::get('actions')))
-                        <li><a href="{{ route('index.results') }}">De Resultados de Medición</a></li>
-                      @endif
-                      @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
-                        <li><a href="{{ route('pending.index')}}">De Evaluacion Pendiente</a></li>
-                      @endif
-                      <!--<li><a href="{{ route('index.timetable')}}">Horarios</a></li>-->
-                    </ul>
-                  </li>
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Consolidados</a>
+
+                <div class="collapsible-body">
+                  <ul>
+                    @if(in_array(53,Session::get('actions')))
+                    <li><a href="{{ route('index.studyPlan') }}">De cursos dictados</a></li>
+                    @endif
+
+                    @if(in_array(54,Session::get('actions')))
+                    <li><a href="{{ route('index.measuring') }}">De medición</a></li>
+                    @endif
+
+                    @if(in_array(55,Session::get('actions')))
+                    <li><a href="{{ route('index.evaluation') }}">De evaluación</a></li>
+                    @endif
+
+                    @if(in_array(56,Session::get('actions')))
+                    <li><a href="{{ route('index.results') }}">De resultados de medición</a></li>
+                    @endif
+
+                    @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
+                    <li><a href="{{ route('pending.index')}}">De evaluación pendiente</a></li>
+                    @endif
+
+                    @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 4))
+                    <li><a href="{{ route('evidences.index')}}">Evidencias por especialidad</a></li>
+                    @endif
+                  </ul>
+                </div>
                 @endif
               @endif
+         
+
               @if(in_array(58,Session::get('actions')) || in_array(63,Session::get('actions')) || in_array(64,Session::get('actions'))  )
-                <li>
-                  <a>
-                    <i class="fa fa-cog"></i> Configuracion Sistema<span class="fa fa-chevron-down"></span>
-                  </a>
-                  <ul class="nav child_menu" style="display: none">
+                <li class="bold">
+                  <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Configuación sistema</a>
 
-                    @if(in_array(58,Session::get('actions')))
+                  <div class="collapsible-body">
+                    <ul>
                       <li><a href="{{ route('index.users') }}">Visitantes</a></li>
-                    @endif
-                    @if(in_array(63,Session::get('actions')))
                       <li><a href="{{ route('index.profile')}}">Perfiles</a></li>
-                    @endif
-                    @if(in_array(64,Session::get('actions')))
-                      <li><a href="{{ route('index.academicCycle')}}">Ciclo Académico</a></li>
-                    @endif
-                    <li><a href="{{route('status.indexType')}}">Administracion de status</a></li>
+                      <li><a href="{{ route('index.academicCycle')}}">Ciclo académico</a></li>
+                      <li><a href="{{route('status.indexType')}}">Administración de status</a></li>
+                    </ul>
+                  </div>
 
-                  </ul>
-                </li>
+                </li>  
               @endif
 
+              <!-- nueva barra PSP -->
+
               @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 7 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
-              <li>
-                <a>
-                   <i class="fa fa-flask"></i> PSP <span class="fa fa-chevron-down"></span>
-                </a>
-                <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 2) <!--si es profesor-->
-                  <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                  <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
-                  <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
-                  <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
-                  {{--<li><a href=""> Cronograma de reunión</a></li>
-                  <li><a href=""> Ver alumnos</a></li>--}}
-                  @endif
-                  @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
-                  <li><a href=""> Horario de reuniones</a></li>
-                  <li><a href=""> Reuniones</a></li>
-                  <li><a href=""> Documentos</a></li>
-                  <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
-                  @endif
-                  @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
-                  <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
-                  <li><a href=""> Administrar Fases</a></li>
-                  <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                  <li><a href=""> Documentos</a></li>
-                  @endif
-                  @if(Auth::user()->IdPerfil == 7) <!--si es alumno-->
-                  <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
-                  <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
-                  <li><a href=""> Reuniones</a></li>
-                  @endif
-                </ul>
-              </li>
+                <li class="bold">
+                  <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
+                  <div class="collapsible-body">
+                    <ul>
+                        @if(Auth::user()->IdPerfil == 2) <!--si es profesor-->
+                        <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
+                        <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
+                        <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
+                        <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
+                        {{--<li><a href=""> Cronograma de reunión</a></li>
+                        <li><a href=""> Ver alumnos</a></li>--}}
+                        @endif
+                        @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
+                        <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
+                        <li><a href=""> Reuniones</a></li>
+                        <li><a href=""> Documentos</a></li>
+                        <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
+                        @endif
+                        @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
+                        <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
+                        <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
+                        <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
+                        <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
+                        @endif
+                        @if(Auth::user()->IdPerfil == 0) <!--si es alumno-->
+                        <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>
+                        <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
+                        <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
+                        <li><a href="{{route('meeting.index')}}"> Reservar Cita</a></li>
+                        @endif
+                    </ul>
+                  </div>
+                </li>  
               @endif
 
               @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
-              <li>
-                <a>
-                   <i class="fa fa-flask"></i> Investigación <span class="fa fa-chevron-down"></span>
-                </a>
-                <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil == 2)
-                  <li><a href="{{route('investigador.index')}}"> Administrar Investigadores</a></li>
-                  <li><a href="{{route('grupo.index')}}"> Administrar Grupos de Investigación</a></li>
-                  <li><a href="{{route('area.index')}}"> Administrar Áreas</a></li>
-                  <li><a href="{{route('evento.index')}}"> Administrar Eventos</a></li>
-                  <li><a href="{{route('proyecto.index')}}"> Administrar Proyectos</a></li>
-                  @endif
-                </ul>
-              </li>
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Investigación</a>
+                <div class="collapsible-body">
+                  <ul>
+                    @if(Auth::user()->IdPerfil == 2)
+                      <li><a href="{{route('investigador.index')}}">Administrar Investigadores</a></li>
+                      <li><a href="{{route('grupo.index')}}">Administrar Grupos de Investigación</a></li>
+                      <li><a href="{{route('area.index')}}">Administrar Áreas</a></li>
+                      <li><a href="{{route('evento.index')}}">Administrar Eventos</a></li>
+                      <li><a href="{{route('proyecto.index')}}">Administrar Proyectos</a></li>
+                    @endif
+                  </ul>
+                </div>
+              </li> 
               @endif
 
               @if(Auth::user() && (Auth::user()->IdPerfil > 0))
-              <li>
-                <a>
-                   <i class="fa fa-users"></i> Tutoría <span class="fa fa-chevron-down"></span>
-                </a>
-                <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil > 0)
-                  <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
-                  <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
-                  <li><a href="{{route('disponibilidad.index')}}"> Administrar Disponibilidad</a></li>
-                  <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
-                  <li><a href="{{route('tema.index')}}"> Administrar Temas</a></li>
-                  <li><a href="{{route('motivo.index')}}"> Administrar Motivos</a></li>
-                  
-                  @endif
-                </ul>
-              </li>
-              @endif
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Tutoría</a>
 
-              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
-              <li>
-                <a>
-                   <i class="fa fa-align-left"></i> Evaluaciones <span class="fa fa-chevron-down"></span>
-                </a>
-                <ul class="nav child_menu" style="display: none">
-                  @if(Auth::user()->IdPerfil >0)                  
-                  <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
-                  <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
-                  <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
-                  <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
-                  @endif
-                </ul>
-              </li>
-              @endif
-              
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- top navigation -->
-   <div class="top_nav">
-
-      <div class="nav_menu" style="padding-top: 5px;">
-        <nav class="" role="navigation">
-          <ul class="nav navbar-nav navbar-right" style="padding-left:5px;">
-            <li class="nav toggle visible-xs visible-sm pull-left" style="padding-top:0;">
-              <button id="menu_toggle" class="btn btn-dark"><i class="fa fa-lg fa-bars"></i></button>
-            </li>
-            <li class="user-profile pull-left" >
-              <img src="{{ URL::asset('images/ic_circle_placeholder.png')}}" alt="">
-              <span class="label label-default hidden-xs hidden-sm">
-              @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5 )
-                  {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
-              @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
-                  {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
-              @else
-                  {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
+                <div class="collapsible-body">
+                  <ul>
+                    @if(Auth::user()->IdPerfil > 0)
+                      <li><a href="{{route('coordinadorTutoria.index')}}">Administrar coordinadores</a></li>
+                      <li><a href="{{route('tutor.index')}}">Administrar tutores</a></li>
+                      <li><a href="{{route('disponibilidad.index')}}">Administrar disponibilidad</a></li>
+                      <li><a href="{{route('alumno.index')}}">Administrar alumnos</a></li>
+                      <li><a href="{{route('tema.index')}}">Administrar temas</a></li>
+                      <li><a href="{{route('motivo.index')}}">Administrar motivos</a></li>
+                    @endif
+                  </ul>
+                </div>
+              </li> 
               @endif  
-              </span>
-              <span>&nbsp</span>
-              <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
-              <span class="label label-info hidden-xs hidden-sm">@if(Session::get('academic-cycle')!=null){{Session::get('academic-cycle')->academicCycle->Descripcion}}@endif</span>
-              @if(Session::has('academic-cycle'))
-                <span class="label label-danger col-10">
-                  Días restantes para el fin de ciclo: {{ $diffForHumans }}
-                </span>
-              @endif
 
-            </li>
-            <li>
-              <form method="GET" action="{{ url('logout') }}">
-                <button class="btn btn-dark btn-sm hidden-xs hidden-sm">Cerrar Sesión
-                  <i class="fa fa-sign-out fa-lg"></i>
-                </button>
+              @if(Auth::user() && (Auth::user()->IdPerfil > 0))
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Evaluaciones</a>
+
+                <div class="collapsible-body">
+                  <ul>
+                    @if(Auth::user()->IdPerfil >0)
+                      <li><a href="{{route('competencia.index')}}">Administrar competencia</a></li>
+                      <li><a href="{{route('pregunta.index')}}">Administrar preguntas</a></li>
+                      <li><a href="{{route('evaluador.index')}}">Administrar evaluadores</a></li>
+                      <li><a href="{{route('evaluacion.index')}}">Administrar evaluaciones</a></li>
+                    @endif
+                  </ul>
+                </div>
+
+              </li>  
+              @endif   
+
+            </ul>   
+          </li>
+        </ul> 
+        
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+        <!--Fin barra de hamburgauesa-->            
+
+        <a href="#" class="brand-logo center">UAS</a>
+
+        <!-- Logout-->
+        <a href="" class="brand-logo right logout">
+            {{Form::open(['url' => '/logout', 'method'=>'GET'])}}
+              <button class="btn btn-dark btn-sm hidden-xs hidden-sm"><span>Cerrar Sesión</span>
+                <i class="fa fa-sign-out fa-lg"></i>
+              </button>
                 <button class="btn btn-dark visible-xs visible-sm">
-                  <i class="fa fa-sign-out fa-lg"></i>
-                </button>
-              </form>
-            </li>
-            <li>
-                <span class="info-number"><a href="{{ route('index.subindex')}}" class="btn btn-sm btn-dark hidden-xs hidden-sm">Mis Especialidades
-                  <i class="fa fa-institution fa-lg"></i></a><span class="badge bg-blue">{{Session::get('numFaculties')}}</span>
-                </span>
-                <span><a href="{{ route('index.subindex')}}" class="btn btn-md btn-dark visible-xs visible-sm">
-                  <i class="fa fa-institution fa-lg"></i></a>
-                </span>
-            </li>
-          </ul>
-        </nav>
+                <i class="fa fa-sign-out fa-lg"></i>
+              </button>
+            {{Form::close()}}
+        </a>
+
       </div>
+    </nav>
+<div class="main-container-sumajg">
 
-    </div>
-    <!-- /top navigation -->
-
+  <div class="main_container">
 
     <!-- page content -->
-    <div class="right_col" role="main">
-      <div class="">
+    <div class="page-content-sumajg" role="main">
+      
         @yield('content')
-      </div>
+      
     </div>
     <!-- /page content -->
   </div>
@@ -774,6 +739,21 @@
     @endforeach
   @endif
 </script>
+
+
+ <script type="text/javascript" src="{{ asset('js/materialize.min.js')}}"></script>
+      
+      
+      
+  <script>
+    $(document).ready(function() {
+              
+      $(".dropdown-button").dropdown();
+      $(".button-collapse").sideNav();      /*es para que boton de hamburgesa funcione*/
+      
+    });
+  </script>
+
 <!-- /datepicker -->
 <!-- /footer content -->
 </body>

@@ -48,11 +48,11 @@
                             @if($pspDocument->ruta!=null)
                             </div>
                             <a class="btn btn-primary btn-xs" href="{{route('getentry.pspDocument', $pspDocument->id)}}" title="Descargar Documento"><i class="fa fa-download"></i></a>
-                            @endif
-                            
+                            @endif                            
                         </div>
 
                         <div class="form-group">
+                            <div  class="col-md-12 col-sm-12 col-xs-12">
                             <label for="obligatoriol" class="control-label col-md-3 col-sm-3 col-xs-12">Obligatorio</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                             @if($pspDocument->template->idTipoEstado==1)
@@ -60,6 +60,7 @@
                             @else
                                 <input id=obligatorio type="checkbox" class="form-control" disabled name="" />
                             @endif                            
+                            </div>
                             </div>
                         </div>
 
@@ -111,5 +112,5 @@
             </div>
         </div>
     </div>
-
+<script src="{{ URL::asset('js/myvalidations/pspDocumentsRev.js')}}"></script>
 @endsection

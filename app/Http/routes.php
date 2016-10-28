@@ -694,6 +694,8 @@ $api->version('v1', function ($api) {
                 $api->get('groups/all','PspGroup\PspGroupController@getAll');
                 $api->get('groups/{id}','PspGroup\PspGroupController@getById');
                 $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
+                $api->get('students/all','Students\PspStudentsController@getAll');
+                $api->get('students/documents','Students\PspStudentsController@getDocumentsById');
             });
 
 

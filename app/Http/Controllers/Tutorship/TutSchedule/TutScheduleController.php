@@ -105,7 +105,7 @@ class TutScheduleController extends Controller
                 $scheduleTrash->forceDelete();
             }                
         }                           
-            
+        
         foreach($checkedSchedules as $diaHora => $value){
             $schedule = new TutSchedule;
             $schedule->dia = substr($diaHora,0,1);

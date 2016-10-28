@@ -691,6 +691,12 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/criterions', 'AspectController@getCriterions');
             });
 
+            //PSP
+            $api->group(['namespace' => 'Psp','prefix' => 'psp'],function($api){
+                $api->get('groups/all','PspGroup\PspGroupController@getAll');
+                $api->get('groups/{id}','PspGroup\PspGroupController@getById');
+                $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
+            });
 
 
 

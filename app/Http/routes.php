@@ -679,7 +679,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{f_id}/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
 
             });
-            
+           
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
                 $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
                 $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
@@ -699,11 +699,11 @@ $api->version('v1', function ($api) {
                 $api->get('students/all','Students\PspStudentsController@getAll');
                 $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
                 $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+                $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
+                $api->get('phases/all','Phases\PspPhasesController@getAll');
+
+
             });
-
-
-
-
 
             //INVESTIGACION
 

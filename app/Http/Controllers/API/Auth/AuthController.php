@@ -40,7 +40,7 @@ class AuthController extends BaseController
         }
 
         if ($user->IdPerfil == 2 || $user->IdPerfil == 1){
-            $user->load('teacher');    
+            $user->load('professor');    
         }else if ($user->IdPerfil == 4){
             $user->load('accreditor');
         }else if ($user->IdPerfil == 5){

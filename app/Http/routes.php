@@ -677,7 +677,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');
             });
-            
+           
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
                 $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
                 $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
@@ -694,8 +694,9 @@ $api->version('v1', function ($api) {
                 $api->get('groups/all','PspGroup\PspGroupController@getAll');
                 $api->get('groups/{id}','PspGroup\PspGroupController@getById');
                 $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
+                $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
+                $api->get('phases/all','Phases\PspPhasesController@getAll');
             });
-
 
 
             //INVESTIGACION

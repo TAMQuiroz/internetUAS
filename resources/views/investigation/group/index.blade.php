@@ -42,7 +42,7 @@
                             <td>{{ $group->nombre }}</td>
                             <td>{{ $group->leader->Nombre}} {{ $group->leader->ApellidoPaterno}} {{ $group->leader->ApellidoMaterno}}</td>
                             <td>
-                                <a href="{{route('grupo.show',$group->id)}}" class="btn btn-primary btn-xs view-group""><i class="fa fa-search"></i></a>
+                                <a href="{{route('grupo.show',$group->id)}}" class="btn btn-primary btn-xs view-group""><i class="fa fa-eye"></i></a>
                                 <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$group->id}}"><i class="fa fa-remove"></i></a>
                             </td>
                         </tr>

@@ -25,6 +25,7 @@ class CreatePspmeetingsTable extends Migration
             $table->string('observaciones');
             $table->string('retroalimentacion');    
             $table->integer('tipoReunion');
+            $table->integer('idFreeHour')->unsigned()->nullable();         /* para reservar cita(lesly)*/            
             $table->timestamps();
             $table->softDeletes();
         });

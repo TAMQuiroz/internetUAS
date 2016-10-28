@@ -5,58 +5,66 @@
 	<div class="col-md-12">
 		<div class="page-title">
 			<div class="title_left">
-				<h3>Activar módulo</h3>
+				<h3>Información de módulos para PSP</h3>
 			</div>
 		</div>
     </div>
 </div>
 
-<div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
 
-            <div class="x_content">
-                <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{route('pspProcess.create')}}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Activar nuevo ciclo</a>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                    <thead>
-                    <tr class="headings">
-                        <th class="column-title">Estado </th>
-                        <th class="column-title">Nombre de curso </th>
-                        <th class="column-title">Ciclo </th>
-                        <th class="column-title last">Acciones</th>
-                        <th class="bulk-actions" colspan="7">
-                            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($proceso as $p)
+<div class="row">
+    <div class="col-md-12">
+        <a href="{{route('pspProcess.create')}}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Agregar curso</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+        <div class="panel-heading">
+                <h3 class="panel-title">Cursos PSP activos en la facultad</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">   
+                    <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                        <thead>
+                        <tr class="headings">
+                            <th class="column-title">Código </th>
+                            <th class="column-title">Nombre curso</th>
+                            <th class="column-title">Ciclo activo</th>
+                            <th class="column-title last">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($procesos!=null)
+                            @foreach($procesos as $proceso)                            
                             <tr class="even pointer">
-                                <td class="a-center ">
-                                    @if($p->Vigente)
-                                        <span class="label label-success">Activo</span>
-                                    @else
-                                        <span class="label label-danger">Cerrado</span>
-                                    @endif
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    @if($p->Vigente)
-                                        <a href="" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
-                                    @endif
+                                <td class="a-center ">{{$proceso['codCurso']}}</td>
+                                <td>{{$proceso['nomCurso']}} </td>
+                                <td>{{$proceso['ciclo']}} </td>
+                                <td >
+                                    <a href="{{ route('pspProcess.show', $proceso['id']) }}"  class="btn btn-primary btn-xs" ><i class="fa fa-search"></i></a>
+                                    <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$proceso['id']}}" title="Eliminar"><i class="fa fa-remove"></i></a>
                                 </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            @include('modals.delete', ['id'=> $proceso['id'], 'message' => '¿Esta seguro que desea eliminar este proceso?', 'route' => route('pspProcess.delete', $proceso['id'])])
+                            @endforeach
+                        @endif                            
+                        </tbody>
+                    </table>
+                </div>
+                @if($procesos == null)
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="alert alert-warning">
+                            <strong>Advertencia: </strong> No hay modulos activos.
+                        </div>
+                    </div>
+                </div>    
+                @endif
             </div>
         </div>
     </div>
+</div>                
 
 @endsection

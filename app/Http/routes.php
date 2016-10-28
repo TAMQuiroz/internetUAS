@@ -701,8 +701,6 @@ $api->version('v1', function ($api) {
                 $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
-
-
             });
 
             //INVESTIGACION

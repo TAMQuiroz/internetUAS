@@ -2,6 +2,8 @@
 
 
 use Intranet\Http\Services\TypeImprovementPlan\TypeImprovementPlanService;
+use Intranet\Http\Services\AcademicCycle\AcademicCycleService;
+use Intranet\Models\AcademicCycle;
 use View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,10 +21,12 @@ class EnhacementController extends BaseController {
 
     protected $improvementPlanService;
     protected $typeImprovementPlanService;
+    protected $academicCycleService;
 
     public function __construct() {
         $this->improvementPlanService = new ImprovementPlanService();
         $this->typeImprovementPlanService = new TypeImprovementPlanService();
+        $this->academicCycleService = new ImprovementPlanService();
     }
 
     public function index() {
@@ -40,7 +44,8 @@ class EnhacementController extends BaseController {
         $data['title'] = 'Nuevo Plan de Mejora';
 
         try {
-            $data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
         } catch (\Exception $e) {
@@ -67,13 +72,52 @@ class EnhacementController extends BaseController {
         return redirect()->route('index.enhacementPlan')->with('success', 'El plan de mejora se ha registrado exitosamente');
     }
 
+
+    public function saveModalNew(Request $request) {
+        try {
+            $anio = $request['anio'];
+            $numberC = $request['numberC'];
+ 
+            $numero = $anio. $numberC;
+            $descripcion = $anio."-".$numberC;
+
+            $academicCycle = AcademicCycle::create([
+                'Numero' => $numero,
+                'Descripcion' => $descripcion
+            ]);
+            
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return redirect()->route('new.enhacementPlan')->with('success', 'El ciclo académico se ha registrado exitosamente');
+    }  
+    public function saveModalNewEdit(Request $request) {
+        try {
+            $anio = $request['anio'];
+            $numberC = $request['numberC'];
+ 
+            $numero = $anio. $numberC;
+            $descripcion = $anio."-".$numberC;
+
+            $academicCycle = AcademicCycle::create([
+                'Numero' => $numero,
+                'Descripcion' => $descripcion
+            ]);
+            
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return redirect()->route('edit.enhacementPlan')->with('success', 'El ciclo académico se ha registrado exitosamente');
+    }      
+
     public function edit(Request $request) {
         $data['title'] = 'Editar Plan de Mejora';
 
         try {
 
             $data['actionplan'] = $this->improvementPlanService->retrieveAllActions($request->all());
-            $data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['improvementPlan'] = $this->improvementPlanService->findImprovementPlan(($request->all()));
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
@@ -109,7 +153,8 @@ class EnhacementController extends BaseController {
         try {
 
             $data['actionplan'] = $this->improvementPlanService->retrieveAllActions($request->all());
-            $data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['improvementPlan'] = $this->improvementPlanService->findImprovementPlan(($request->all()));
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();

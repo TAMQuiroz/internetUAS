@@ -39,6 +39,7 @@ class AcademicCycleController extends BaseController {
 		return redirect()->route('index.academicCycle')->with('success', 'El ciclo académico se ha registrado exitosamente');
 	}
 
+
 	public function delete(Request $request) {
 
 		try{

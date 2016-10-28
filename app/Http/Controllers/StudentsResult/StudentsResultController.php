@@ -151,8 +151,8 @@ class StudentsResultController extends BaseController {
     public function contributions() {
         $data = [];
         try {
-            $data['currentStudentsResults'] = $this->studentsResultService->findByFaculty();
-            $data['courses']= $this->coursesService->retrieveByFaculty(Session::get('faculty-code'));
+            $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle();
+            $data['courses']= $this->coursesService->retrieveByFacultyandCicle(Session::get('faculty-code'));
         } catch (\Exception $e) {
             dd($e);
         }

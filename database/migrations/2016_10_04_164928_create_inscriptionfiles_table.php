@@ -34,7 +34,7 @@ class CreateInscriptionfilesTable extends Migration
             $table->string('jefe_directo_aux');
             $table->string('puesto');
             $table->string('recomendaciones');
-            $table->integer('debe_modificarse');
+            //$table->integer('debe_modificarse');
             $table->softDeletes();
             $table->timestamps();
         });

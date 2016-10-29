@@ -38,7 +38,7 @@
                             <td>{{$student->telefono}}</td> 
                             <td>{{$student->correo}}</td> 
                             <td>
-                                <a href="{{route('pspDocument.search', $student->IdAlumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
+                                <a href="{{route('pspDocument.search', $student->IdAlumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
                             </td>
                         </tr> 
                         @endforeach

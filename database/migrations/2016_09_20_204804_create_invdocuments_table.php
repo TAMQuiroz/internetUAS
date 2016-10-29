@@ -15,7 +15,7 @@ class CreateInvdocumentsTable extends Migration
         Schema::create('invdocuments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('observacion');
-            $table->integer('id_investigador')->unsigned();
+            $table->integer('id_investigador');
             $table->string('ruta');
             $table->integer('version');
             $table->integer('id_entregable')->unsigned();

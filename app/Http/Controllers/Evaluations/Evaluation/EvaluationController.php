@@ -2,6 +2,7 @@
 
 namespace Intranet\Http\Controllers\Evaluations\Evaluation;
 
+use Mail;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\EvaluationRequest;
@@ -174,12 +175,44 @@ class EvaluationController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+     public function activate($id)
+    {
+        $evaluation   = Evaluation::find($id);//saco la evaluacion
+        $evaluation->estado = 2;//vigente
+
+        //avisar a todos los alumnos
+        $students = DB::table('tutstudentxevaluations')->join('tutstudents', 'tutstudents.id', '=', 'id_tutstudent')->select('nombre','correo')->where('id_evaluation',$id)->get();
+        // dd($students);
+
+        $evaluacion = $evaluation->nombre;
+        $fecha_inicio = $evaluation->fecha_inicio;
+        $fecha_fin = $evaluation->fecha_fin;
+        foreach ($students as $student) {
+            try{
+                $nombre = $student->nombre;
+                $mail = $student->correo;                
+                Mail::send('emails.newEvaluation',compact('nombre','mail','evaluacion','fecha_inicio','fecha_fin'),  function($m) use($mail) {
+                    $m->subject('UAS Evaluaciones - Nueva evaluación');
+                    $m->to($mail);
+                });
+            }
+            catch (Exception $e)          {
+                return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+            }  
+        }
+
+        $evaluation->save();
+
+        $specialty = Session::get('faculty-code');
+        $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
+        $data = [
+        'evaluations'    =>  $evaluations,
+        ];
+
+        return view('evaluations.evaluation.index', $data);
+    }
+
+    
     public function edit($id)
     {
         try {
@@ -255,18 +288,22 @@ class EvaluationController extends Controller
     public function cancel($id)
     {
         try {
-            //
+            $specialty = Session::get('faculty-code');
+            $evaluation   = Evaluation::find($id);//saco la evaluacion
+            $evaluation->estado = 0;//cancelada
+            $evaluation->save();
+            $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
+            $data = [
+            'evaluations'    =>  $evaluations,
+            ];
+
+            return view('evaluations.evaluation.index', $data);
+
+
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
     }
 
-    public function activate($id)
-    {
-        try {
-            //
-        } catch (Exception $e) {
-            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
-        }
-    }
+    
 }

@@ -18,7 +18,7 @@ use Intranet\Models\Tutstudentxevaluation;
 use Intranet\Models\Evalternative;
 use Intranet\Models\Alternative;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
-
+use DateTime;
 class EvaluationController extends Controller
 {
     /**
@@ -26,12 +26,23 @@ class EvaluationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->all();
         $specialty = Session::get('faculty-code');
         $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
+        //cambiar de estado a las expiradas
+        $date = date("Y-m-d", time()+86400);        
+        foreach ($evaluations as $evaluation) {            
+            if(($evaluation->fecha_fin <  $date) && ($evaluation->estado!=3) ){                
+                $evaluation->estado=3;
+                $evaluation->save();
+            }
+        }
+
+        $evals = Evaluation::getEvaluationsFiltered($filters, $specialty);
         $data = [
-        'evaluations'    =>  $evaluations,
+        'evaluations'    =>  $evals->appends($filters),
         ];
         return view('evaluations.evaluation.index', $data);
     }
@@ -155,7 +166,7 @@ class EvaluationController extends Controller
                 }                
             }
             else{
-                return redirect()->route('evaluacion.create')->with('warning', 'No existen alumnos.');
+                return redirect()->route('evaluacion.create')->with('warning', 'No existen alumnos para evaluar.');
             }
 
             return redirect()->route('evaluacion.index')->with('success', 'La evaluación se ha registrado exitosamente');
@@ -202,14 +213,8 @@ class EvaluationController extends Controller
         }
 
         $evaluation->save();
-
-        $specialty = Session::get('faculty-code');
-        $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
-        $data = [
-        'evaluations'    =>  $evaluations,
-        ];
-
-        return view('evaluations.evaluation.index', $data);
+        return redirect()->route('evaluacion.index')->with('success', 'La evaluación se ha activado exitosamente');
+        
     }
 
     
@@ -265,7 +270,141 @@ class EvaluationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+
+        $specialty = Session::get('faculty-code');  
+
+        try {
+
+            if($request['arrStudents'] != null){//si existen alumnos
+                if(($request['arrIds']!=null) || ($request['arrEvIds']!=null)){
+
+                    //busco los datos de la evaluacion
+                    $evaluacion = Evaluation::find($id);
+                    $evaluacion->fecha_inicio         = $request['fecha_inicio'];            
+                    $evaluacion->fecha_fin            = $request['fecha_fin'];            
+                    $evaluacion->nombre               = $request['nombre'];            
+                    $evaluacion->descripcion          = $request['descripcion'];            
+                    $evaluacion->tiempo               = $request['tiempo'];            
+                    $evaluacion->id_especialidad      = $specialty; 
+                    // $evaluacion->estado               = 1;  //creada
+                    $evaluacion->save();
+
+                    $evquestions = $evaluacion->preguntas;
+
+                    //actualizar las preguntas existentes >  tabla EvQuestion
+                    if($request['arrEvIds']!=null){//si al menos llega una pregunta antigua
+                        foreach ($evquestions as $evquestion) {
+                            if(in_array($evquestion->id, $request['arrEvIds'])){
+                                //actualizar esa pregunta
+                                //busco la pregunta antigua
+                                $preg = Evquestion::find($evquestion->id);
+
+                                //actualizo el puntaje
+                                $preg->puntaje  = $request['arrEvPuntajes'][$evquestion->id] ; //el puntaje de la preg
+
+                                //actualizo el evaluador
+                                $preg->id_docente  = $request['arrEvEvaluadores'][$evquestion->id] ; //el evaluador de la preg
+                                $preg->save();
+
+                            }
+                            else{//eliminar la pregunta antigua
+                                $evquestion->delete();
+                            }
+                        }
+                    }
+                    else{//se borraron todas preguntas antiguas que habian
+                        Evquestion::where('id_evaluation',$id)->delete();
+
+                    }
+
+
+                    //creo los datos de las nuevas preguntas      
+                    if($request['arrIds']!=null){//si se agregaron preguntas nuevas del banco
+                        foreach($request['arrIds'] as $idQuestion => $value){
+                        try {
+                            //busco la pregunta del banco
+                            $preg = Question::find($value);
+
+                            //creo un nuevo objeto pregunta para la evaluacion
+                            $pregunta = new EvQuestion;  
+                            $pregunta->descripcion  = $preg->descripcion;                        
+                            $pregunta->tipo  = $preg->tipo;
+                            $pregunta->tiempo  = $preg->tiempo;
+                            $pregunta->puntaje  = $request['arrPuntajes'][$value] ; //el puntaje de la preg
+                            $pregunta->dificultad  = $preg->dificultad;
+                            $pregunta->requisito  = $preg->requisito;
+                            $pregunta->id_docente  = $request['arrEvaluadores'][$value] ; //el evaluador de la preg
+                            $pregunta->id_competence  = $preg->id_competence;
+                            $pregunta->id_evaluation  = $id; //el codigo de la evaluacion recien creada en bd
+
+                            if($preg->tipo == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
+                                $pregunta->rpta  = $preg->rpta;
+                            }
+                            else if ($preg->tipo == 3){
+                                $pregunta->tamano_arch  = $preg->tamanomax;
+                                $pregunta->extension_arch  = $preg->extension; 
+                            }
+                            $pregunta->save();
+
+                            //ahora las alternativas
+                            if($preg->tipo == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
+                                $alternatives = $preg->alternativas;
+                                //crear las claves
+                                foreach ($alternatives as $alternative) {//para cada clave de la pregunta original
+                                    $evalternativa = new EvAlternative; 
+                                    $evalternativa->letra = $alternative->letra;
+                                    $evalternativa->descripcion = $alternative->descripcion;
+                                    $evalternativa->id_evquestion = $pregunta->id;
+                                    $evalternativa->save();
+                                }                
+                            }
+                        } catch (Exception $e) {
+                            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+                        }
+                        }
+                    }      
+                          
+
+                    //ahora los alumnos
+                    //borro todas las relaciones anteriores
+                    Tutstudentxevaluation::where('id_evaluation',$id)->delete();
+
+                    if($request['alumnos'] == "todos"){
+                    //va dirigido a todos los alumnos de la especialidad
+                        $students = Tutstudent::where('id_especialidad',$specialty)->get();
+                        foreach ($students as $student) {
+                            $tutstudentxevaluation = new Tutstudentxevaluation;
+                            $tutstudentxevaluation->id_tutstudent = $student->id;
+                            $tutstudentxevaluation->id_evaluation = $id;
+                            $tutstudentxevaluation->intentos = 0 ;
+                            $tutstudentxevaluation->save() ;
+                        }
+
+                    }
+                    else{
+                    //va dirigido a algunos alumnos de la especialidad
+                        foreach($request['arrStudents'] as $idStudent=> $value){
+                            $tutstudentxevaluation = new Tutstudentxevaluation;
+                            $tutstudentxevaluation->id_tutstudent = $idStudent;
+                            $tutstudentxevaluation->id_evaluation = $id;
+                            $tutstudentxevaluation->intentos = 0 ;
+                            $tutstudentxevaluation->save() ;
+                        }
+                    }          
+                }
+                else{
+                    return redirect()->back()->with('warning', 'Tiene que tener preguntas.');
+                }                
+            }
+            else{
+                return redirect()->back()->with('warning', 'No existen alumnos para evaluar.');
+            }
+
+            return redirect()->route('evaluacion.index')->with('success', 'La evaluación se ha actualizado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
     }
 
     /**
@@ -291,13 +430,9 @@ class EvaluationController extends Controller
             $specialty = Session::get('faculty-code');
             $evaluation   = Evaluation::find($id);//saco la evaluacion
             $evaluation->estado = 0;//cancelada
-            $evaluation->save();
-            $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
-            $data = [
-            'evaluations'    =>  $evaluations,
-            ];
+            $evaluation->save();            
 
-            return view('evaluations.evaluation.index', $data);
+            return redirect()->route('evaluacion.index')->with('success', 'La evaluación se ha cancelado exitosamente');
 
 
         } catch (Exception $e) {

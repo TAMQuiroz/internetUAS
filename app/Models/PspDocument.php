@@ -18,8 +18,8 @@ class PspDocument extends Model
         return $this->belongsTo('Intranet\Models\Template', 'idTemplate');
     }
 
-    public function pspstudent(){
-        return $this->belongsTo('Intranet\Models\pspStudent', 'idStudent');
+    public function student(){
+        return $this->belongsTo('Intranet\Models\Student', 'IdAlumno');
     }
 
 }

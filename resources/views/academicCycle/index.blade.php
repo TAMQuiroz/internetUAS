@@ -25,7 +25,6 @@
 	                    <thead>
 		                    <tr class="headings">
 		                        <th>Ciclo Académico</th>
-		                        <th>Acciones</th>
 		                    </tr>
 	                    </thead>
 	                    <tbody>
@@ -33,9 +32,7 @@
 	                    	<tr>
 	                          	<td class="cycleId" hidden="true">{{$ac->IdCicloAcademico}}</td>
 	                    		<td>{{$ac->Descripcion}}</td>
-	                    		<td >
-	                    			<a class="btn btn-danger btn-xs delete-cycle" data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="fa fa-remove"></i></a>
-	                    		</td>
+	                    		
 	                    	</tr>
 	                         @endforeach
 	                    </tbody>
@@ -45,6 +42,5 @@
 		</div>
 	</div>
 	<script src="{{ URL::asset('js/myvalidations/academicCycle.js')}}"></script>
-@include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar este ciclo académico?', 'action' => '#', 'button' => 'Delete'])
 
 @endsection

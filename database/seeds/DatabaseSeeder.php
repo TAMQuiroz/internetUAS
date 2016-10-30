@@ -19,18 +19,18 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupsTableSeeder::class);
         $this->call(EventsTableSeeder::class);
         $this->call(ProjectsTableSeeder::class);
+        $this->call(DeliverablesTableSeeder::class);
 
         $this->call(TopicsTableSeeder::class);
         $this->call(ReasonsTableSeeder::class);
+        
+        // $this->call(TutstudentsTableSeeder::class);
+        $this->call(TeachersTableSeeder::class);
+        $this->call(CompetenceTableSeeder::class);    
+        $this->call(QuestionsTableSeeder::class);    
 
         
-        $this->call(TutstudentsTableSeeder::class);
-
-        $this->call(TeachersTableSeeder::class);
-     
-
-        $this->call(TeachersTableSeeder::class);        
-        //$this->call(CompetenceTableSeeder::class);    
+ 
 
     }
 }

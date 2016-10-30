@@ -11,9 +11,14 @@
         <div class="x_title">                
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a href="#filter-questions" class="btn btn-warning pull-left">
+                        <i class="fa fa-filter"></i> Filtrar
+                    </a>
+                    @if(Auth::user()->professor->rolEvaluaciones == 2)
                     <a href="{{ route('pregunta.create') }}" class="btn btn-success pull-right">
                         <i class="fa fa-plus"></i> Nueva pregunta
                     </a>
+                    @endif
                 </div>
             </div>   
             <div class="table-responsive">
@@ -53,21 +58,27 @@
                             @endif    
                             <td class=" ">{{ $question->competencia->nombre }}</td>                         
                             <td class="">
-                                <a href="{{route('pregunta.edit',$question->id)}}" class="btn btn-primary btn-xs view-group"">
+                                <a href="{{route('pregunta.show',$question->id)}}" class="btn btn-primary btn-xs view-group" title="Ver">
+                                <i class="fa fa-search"></i>
+                                </a>
+                                @if(in_array($question->competencia->id, $arrcompetences))
+                                <a href="{{route('pregunta.edit',$question->id)}}" class="btn btn-primary btn-xs view-group" title="Editar">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$question->id}}">
+                                <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$question->id}}" title="Elimiar">
                                     <i class="fa fa-remove"></i>
                                 </a>
+                                @endif                                
                             </td>
                         </tr>
                         @include('modals.delete', ['id'=> $question->id, 'message' => '¿Está seguro que desea eliminar esta pregunta?', 'route' => route('pregunta.delete', $question->id)])
                         @endforeach
-                    </tbody>
+                    </tbody>                    
                 </table>
-            </div>             
-            
+                {{ $questions->links() }}
+            </div>
         </div>
     </div>
 </div>
+@include('evaluations.modals.filter', ['title' => 'Filtrar', 'route' => route('pregunta.index')])
 @endsection

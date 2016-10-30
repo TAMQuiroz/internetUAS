@@ -163,3 +163,39 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
         'fecha_limite'         =>  '2018-10-06',
     ];
 });
+
+
+$factory->define(Intranet\Models\Competence::class, function (Faker\Generator $faker) {
+    return [
+        'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+        'descripcion'       =>  $faker->text,
+        'id_especialidad'   =>  1,
+    ];
+});
+
+
+$factory->define(Intranet\Models\Question::class, function (Faker\Generator $faker) {
+    return [        
+        'tipo'               =>  2,
+        'tiempo'             =>  1,
+        'puntaje'            =>  1,
+        'dificultad'         =>  1,
+        'descripcion'        =>  $faker->text,
+        'requisito'          =>  $faker->text,
+        'id_especialidad'    =>  1,
+        'id_docente'         =>  4,
+        'id_competence'      =>  1,
+    ];
+});
+
+
+
+$factory->define(Intranet\Models\FreeHour::class, function (Faker\Generator $faker) {
+    return [
+        'hora_ini'          => 8,
+        'fecha'     => \Carbon\Carbon::yesterday(),
+        'cantidad' => 1,
+    ];
+});
+
+

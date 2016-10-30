@@ -1,5 +1,27 @@
 jQuery(function(){
 
+ 
+
+  $('.cycleClass').click(function() {
+    var valCycleStart=$("#cycleStart").val();
+    var valCycleEnd=$("#cycleEnd").val();
+    
+    if(valCycleStart>valCycleEnd) {
+      $('#validation').show();
+      $('#validation').text("El ciclo Inicio debe ser menor o igual que el ciclo Fin");
+    }
+    if (valCycleStart<=valCycleEnd){
+      $('#validation').hide();
+    }
+    if($("select")[0].selectedIndex==0){
+      $('#validation').show();
+      $('#validation').text("Debe seleccionar ambos ciclos");
+    }
+
+
+  });
+
+
   $.validator.addMethod("namesSpace", function(value, element) {
         return this.optional(element) || /^[a-zA-Zá-ź ]+$/i.test(value);
     }, "Solo puede ingresar letras"); //con espacios
@@ -20,27 +42,10 @@ jQuery(function(){
         return +$('#criteriaLevel').val()>= +$(element).val();
     }, "El nivel de aceptación debe ser menor al nivel de criterio");
 
-  $.validator.addMethod("maxCycle", function(value, element) {
-        return +$('#cycleEnd option:selected').attr('numero')>= +$('#cycleStart option:selected').attr('numero');
-    }, "El ciclo de fin debe de ser mayor o igual al ciclo de inicio");
-  $.validator.addMethod("minCycle", function(value, element) {
-        return +$('#cycleStart option:selected').attr('numero')<= +$('#cycleEnd option:selected').attr('numero');
-    }, "El ciclo de inicio debe de ser menor o igual al ciclo de fin");
-
   //Validación
 
 	$('#formEditPeriod').validate({
     rules: {
-      cycleEnd: {
-        required: true,
-        min:1,
-        minCycle:true,
-      },
-      cycleStart: {
-        required: true,
-        min:1,
-        maxCycle:true,
-      },
       facultyCoordinator: {
         required: true,
         min:1,
@@ -64,19 +69,9 @@ jQuery(function(){
 		    max:100,
         number:true,
       },
+    'stRstCheck[]': { required: true }
     },
     messages: {
-      cycleStart: {
-        required: "Debe seleccionar un ciclo de inicio",
-        min: "Debe seleccionar un ciclo de inicio",
-        minCycle: "El ciclo de inicio debe de ser menor o igual al ciclo de fin",
-
-      },
-      cycleEnd: {
-        required: "Debe seleccionar un ciclo de fin",
-        min: "Debe seleccionar un ciclo de fin",
-        maxCycle: "El ciclo de fin debe de ser mayor o igual al ciclo de inicio",
-      },
       facultyCoordinator: {
         required: "Debe seleccionar un coordinador",
         min: "Debe seleccionar un coordinador",
@@ -99,6 +94,9 @@ jQuery(function(){
         min: "El porcentaje de aceptación debe ser mayor o igual a 1",
         max: "El porcentaje de aceptación debe ser menor a 100",
         number: "El nivel de criterio debe ser un número",
+      },
+    'stRstCheck[]': {
+        required: "Debe seleccionar almenos un resultado estudiantil",
       }
     }
   });

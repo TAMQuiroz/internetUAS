@@ -59,6 +59,13 @@ class ImprovementPlanService {
         return $cicles;
     }
 
+    public function retrieveCicleAcademic(){
+        $vigente = "1";
+        $cicle = AcademicCycle::where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();
+        $cyclesAcademic=AcademicCycle::where('Numero','>=',$cicle->Numero)->get();
+        return $cyclesAcademic;
+    }
+
     public function create($request) {
 
         if($_FILES['filefield']['name']!=""){

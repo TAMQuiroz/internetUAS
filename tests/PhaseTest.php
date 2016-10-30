@@ -30,8 +30,9 @@ class PhaseTest extends TestCase
             ->seePageIs('/psp/phase')
             ->see('Fase')
             ->see('La fase se ha registrado exitosamente');
-            
+
     }
+
 
     public function test_psp_cr_pha_02()
     {
@@ -50,6 +51,10 @@ class PhaseTest extends TestCase
             ->seePageIs('/psp/phase/create')
             ->see('Creación de Fase')
             ->see('numero debe tener 1 dígitos');
+    		->press('Guardar')
+    		->seePageIs('/psp/phase/create')
+    		->see('Creación de Fase')
+    		->see('numero debe tener 1 dígitos');
     }
 
     public function test_psp_cr_pha_03()
@@ -119,6 +124,7 @@ class PhaseTest extends TestCase
 
         $this->actingAs($user)
             ->withSession([
+<<<<<<< HEAD
                 'actions' => [],
                 'user' => factory(Intranet\Models\Teacher::class)->make()
             ])->visit('/psp/phase/create')
@@ -130,6 +136,19 @@ class PhaseTest extends TestCase
             ->seePageIs('/psp/phase/create')
             ->see('Creación de Fase')
             ->see('descripción no debe ser mayor que 100 caracteres');
+=======
+	    		'actions' => [],
+	    		'user' => factory(Intranet\Models\Teacher::class)->make()
+    		])->visit('/psp/phase/create')
+    		->type(4,'numero')
+            ->type('slskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkkslskkk','descripcion')
+            ->type('1992-08-20','fecha_inicio')
+            ->type('1992-09-20','fecha_fin')
+    		->press('Guardar')
+    		->seePageIs('/psp/phase/create')
+    		->see('Creación de Fase')
+    		->see('descripción no debe ser mayor que 100 caracteres');
+>>>>>>> 43adb5831350cd36197cac583b753bb4b70cf449
     }*/
 
     public function test_psp_cr_pha_07()

@@ -21,7 +21,7 @@ class EvaluatorController extends Controller
     {
 
        $faculty = Session::get('faculty-code');
-       $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno','Codigo','Correo')->where('id_especialidad', $faculty)->distinct()->get();
+       $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->join('Especialidad', 'Docente.IdEspecialidad', '=', 'Especialidad.IdEspecialidad')->select('Docente.IdDocente as id','Docente.Nombre as nombre','Especialidad.Nombre as nombre_esp','Docente.ApellidoPaterno as app','Docente.ApellidoMaterno as apm','Docente.codigo as codigo','Docente.Correo as correo')->where('id_especialidad', $faculty)->distinct()->get();
        // dd($evaluators);
        $data = [            
             'evaluators'    =>  $evaluators,
@@ -61,7 +61,7 @@ class EvaluatorController extends Controller
             $faculty = Session::get('faculty-code');            
             foreach ($request['arr_competencias'] as $key => $value) {
                 DB::table('teacherxcompetences')->insert( ['id_docente' =>$request['idDocente'] , 
-                    'id_competencia' => $key,
+                    'id_competence' => $key,
                     'id_especialidad' => $faculty] );
             }
             DB::table('Docente')->where('IdDocente', $request['idDocente'])->update( ['rolEvaluaciones' => 2] ); 
@@ -96,7 +96,7 @@ class EvaluatorController extends Controller
         $relations = DB::table('teacherxcompetences')->where('id_docente',$id)->where('id_especialidad', $specialty)->get();
         $arrayRelations = array();
         foreach ($relations as $relation) {
-            array_push($arrayRelations, $relation->id_competencia);
+            array_push($arrayRelations, $relation->id_competence);
         }
 
         $teacher = Teacher::find($id) ;
@@ -129,7 +129,7 @@ class EvaluatorController extends Controller
             //crear las nuevas relaciones          
             foreach ($request['arr_competencias'] as $key => $value) {
                 DB::table('teacherxcompetences')->insert( ['id_docente' =>$id , 
-                    'id_competencia' => $key,
+                    'id_competence' => $key,
                     'id_especialidad' => $faculty] );
             }             
             return redirect()->route('evaluador.index')->with('success', 'El evaluador se ha actualizado exitosamente.');

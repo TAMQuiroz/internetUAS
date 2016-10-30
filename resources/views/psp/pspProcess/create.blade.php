@@ -22,7 +22,7 @@
                     <div class="form-group">
                         {{Form::label('Nombre de curso',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
-                            {{ Form::select('IdCurso', $courses, null, ['class'=>'control-label']) }}
+                            {{ Form::select('IdCurso', $courses, null, ['class'=>'form-control']) }}
 
                         </div>
                     </div>

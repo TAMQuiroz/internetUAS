@@ -3,6 +3,7 @@
 use DB;
 use Session;
 use Intranet\Models\Cicle;
+use Intranet\Models\CoursexCycle;
 use Intranet\Models\Score;
 use Intranet\Models\Course;
 use Intranet\Models\Schedule;
@@ -16,6 +17,24 @@ class CourseService
     public function retrieveAll()
     {
         return Course::get();
+    }
+
+    public function retrieveByFacultyandCicle($faculty_id)
+    {
+        $courses = [];
+        $IdCicloAcademico=Session::get('academic-cycle')->IdCicloAcademico;
+        $coursesxCycles = CoursexCycle::where('IdCicloAcademico', $IdCicloAcademico)
+            ->where('deleted_at', null)->get();
+
+        
+        foreach ($coursesxCycles as $coursesxCycle){
+            if($coursesxCycle->course->IdEspecialidad == $faculty_id &&
+                    $coursesxCycle->course->deleted_at == null){
+                array_push($courses, $coursesxCycle->course);
+            }
+        }
+        return $courses;
+
     }
 
     public function retrieveByFaculty($faculty_id)

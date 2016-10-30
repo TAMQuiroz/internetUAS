@@ -14,8 +14,8 @@ class AddFkToPspprocessesTable extends Migration
     {
         Schema::table('pspprocesses', function (Blueprint $table) {
             //
-            $table->foreign('idEspecialidad')->references('idEspecialidad')->on('Especialidad');
-            $table->foreign('IdCurso')->references('IdCurso')->on('Curso');
+            $table->foreign('idespecialidad')->references('idEspecialidad')->on('Especialidad');
+            $table->foreign('idcurso')->references('IdCurso')->on('Curso');
         });
     }
 
@@ -28,8 +28,8 @@ class AddFkToPspprocessesTable extends Migration
     {
         Schema::table('pspprocesses', function (Blueprint $table) {
             //
-            $table->dropForeign('pspprocesses_idEspecialidad_foreign');
-            $table->dropForeign('pspprocesses_IdCurso_foreign');
+            $table->dropForeign('pspprocesses_idespecialidad_foreign');
+            $table->dropForeign('pspprocesses_idcurso_foreign');
         });
     }
 }

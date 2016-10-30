@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Hallazgo <span class="error">* </span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea class="form-control col-md-7 col-xs-12" name="find" id="find" style="resize: vertical;">{{$improvementPlan->Hallazgo}}</textarea>
+                                <textarea class="form-control col-md-7 col-xs-12" name="find" id="find" style="resize: vertical;" value="{{old('find')}}">{{$improvementPlan->Hallazgo}}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -102,10 +102,17 @@
                         <h2>Actividades Planteadas</h2>
                         <div class="separator"></div>
 
+                        <div class="row title_right">
+                            @if(Auth::user() && ((Auth::user()->IdPerfil == 3) || (Auth::user()->IdPerfil == 1)))
+                                <a type="button" class="btn btn-success pull-right cicleModalEdit" data-toggle="modal" 
+                                data-target="#cicleModalEdit" > Nuevo ciclo</a>
+                            @endif
+                       </div>
+
                         <table class="table table-bordered" id="address-table" name="address-table">
                             <thead>
                             <tr>
-                                <th class="col-sm-2">Periodo</th>
+                                <th class="col-sm-2">Ciclo</th>
                                 <th class="col-sm-5">Descripción</th>
                                 <th class="col-sm-3">Responsable</th>
                                 <th class="col-sm-1"></th>

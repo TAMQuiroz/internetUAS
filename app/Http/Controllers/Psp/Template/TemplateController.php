@@ -57,25 +57,25 @@ class TemplateController extends Controller
     {
         try {
             $template = new Template;
-            $template->idPhase       = $request['fase']; 
+            $template->idphase       = $request['fase']; 
 
             //$template->idTipoEstado  = 1;
             if(Auth::User()->IdPerfil==6){
-                $supervisors = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get();  
+                $supervisors = Supervisor::where('iduser',Auth::User()->IdUsuario)->get();  
                 $supervisor  =$supervisors->first();             
-                $template->idSupervisor  = $supervisor->id;
+                $template->idsupervisor  = $supervisor->id;
 
             }
             if(Auth::User()->IdPerfil==2){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();  
                 //teacher =$teacherss->first();
                 if($teacher!=null){
-                $template->idProfesor  = $teacher->IdDocente;
+                $template->idprofesor  = $teacher->IdDocente;
                 }
             }
             if(Auth::User()->IdPerfil==3){
                 //$admin = Admin::where('idUser',Auth::User()->IdUsuario)->first(); 
-                $template->idAdmin   = Auth::User()->IdUsuario;
+                $template->idadmin   = Auth::User()->IdUsuario;
             }
             /*
             $template->idProfesor  = Auth::User()->IdUsuario;
@@ -84,9 +84,9 @@ class TemplateController extends Controller
             */
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->idTipoEstado  = 1;
+                $template->idtipoestado  = 1;
             else
-                $template->idTipoEstado  = 2;
+                $template->idtipoestado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 $destinationPath = 'uploads/templates/'; // upload path
@@ -102,10 +102,10 @@ class TemplateController extends Controller
                 foreach($pspstudents as $psp) {
                     if($psp!=null){
                     $PspDocument = new PspDocument;
-                    $PspDocument->idStudent= $psp->IdAlumno;
-                    $PspDocument->idTemplate=$template->id;
-                    $PspDocument->idTipoEstado=3;
-                    if($template->idTipoEstado  == 1)
+                    $PspDocument->idstudent= $psp->IdAlumno;
+                    $PspDocument->idtemplate=$template->id;
+                    $PspDocument->idtipoestado=3;
+                    if($template->idtipoestado  == 1)
                        $PspDocument->esObligatorio='s';
                    else
                        $PspDocument->esObligatorio='n';
@@ -161,12 +161,12 @@ class TemplateController extends Controller
     {
         try {
             $template = Template::find($id);
-            $template->idPhase       = $request['fase'];
+            $template->idphase       = $request['fase'];
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->idTipoEstado  = 1;
+                $template->idtipoestado  = 1;
             else
-                $template->idTipoEstado  = 2;
+                $template->idtipoestado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 if(file_exists($template->ruta)){

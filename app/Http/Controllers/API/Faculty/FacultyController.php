@@ -3,6 +3,7 @@
 namespace Intranet\Http\Controllers\API\Faculty;
 
 use JWTAuth;
+use Response;
 use Intranet\Models\Course;
 use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
@@ -16,6 +17,7 @@ use Intranet\Models\StudentsResult;
 use Intranet\Models\ImprovementPlan;
 use Intranet\Models\EvaluatedCourses;
 use Intranet\Models\EducationalObjetive;
+use Intranet\Models\AcademicCycle;
 use Intranet\Http\Services\Course\CourseService;
 use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Faculty\FacultyService;
@@ -55,6 +57,13 @@ class FacultyController extends BaseController
         return $this->response->array($faculties->toArray());
     }
 
+    public function getSpecialty(Request $request){
+      $user = JWTAuth::parseToken()->authenticate();
+      $specialty = Faculty::where('IdEspecialidad',$user->accreditor->IdEspecialidad)->first();
+      $specialty->load('coordinator');
+      return Response::json($specialty); 
+    }
+
     public function getEducationalObjectives($faculty_id, Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
@@ -85,20 +94,60 @@ class FacultyController extends BaseController
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
 
         $academic_semester = Cicle::where('Vigente', 1)->first();
-
-        $courses = Course::lastUpdated($date)
-                           ->where('IdEspecialidad', $faculty_id)
-                           ->orderBy('NivelAcademico', 'asc')
-                           ->orderBy('IdCurso', 'asc')
-                           ->with('semesters')
-                           ->whereHas('semesters', function($query) use ($academic_semester) {
-                              $query->where('CursoxCiclo.IdCicloAcademico', $academic_semester->IdCicloAcademico);
-                              $query->whereNull('CursoxCiclo.deleted_at');
-                           })
-                           ->get();
-
+        $user = JWTAuth::parseToken()->authenticate();
+        if($user->IdPerfil == 3){
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->get();
+        } else {
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->with('semesters')
+                             ->whereHas('semesters', function($query) use ($academic_semester) {
+                                $query->where('CursoxCiclo.IdCicloAcademico', $academic_semester->IdCicloAcademico);
+                                $query->whereNull('CursoxCiclo.deleted_at');
+                             })
+                             ->get();
+        }
         return $this->response->array($courses->toArray());
-    }
+      }
+
+
+      public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
+    {
+        $date = date('Y-m-d H:i:s', $request->get('since', 0));
+
+        $academic_semester = Cicle::where('IdCicloAcademico', $semester_id)
+                                            ->where('IdEspecialidad', $faculty_id)
+                                            ->first();
+
+
+        //$academic_semester = Cicle::where('Vigente', 1)->first();
+        $user = JWTAuth::parseToken()->authenticate();
+        if($user->IdPerfil == 3){
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->get();
+        } else {
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->with('semesters')
+                             ->whereHas('semesters', function($query) use ($academic_semester) {
+                                $query->where('CursoxCiclo.IdCicloAcademico', $academic_semester->IdCicloAcademico);
+                                $query->whereNull('CursoxCiclo.deleted_at');
+                             })
+                             ->get();
+        }
+        return $this->response->array($courses->toArray());
+      }
 
     public function getAspects($faculty_id, Request $request)
     {

@@ -4,9 +4,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-	        <div class="title_left">
-	            <h3>Lista de Investigadores</h3>
-	        </div>
+            <h3>Lista de Investigadores</h3>
 	    </div>
     </div>
 </div>
@@ -47,7 +45,7 @@
 								<td>{{$investigador->correo}}</td> 
 								<td>{{$investigador->faculty->Nombre}}</td>
 								<td>
-									<a href="{{route('investigador.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+									<a href="{{route('investigador.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-eye"></i></a>
 									<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$investigador->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
 								</td>
 							</tr> 

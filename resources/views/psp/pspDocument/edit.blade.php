@@ -29,7 +29,7 @@
                             <label for="fasel" class="control-label col-md-3 col-sm-3 col-xs-12">Fase</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                              <select name="fase" disabled class="form-control">
-                                <option value="first">{{$pspDocument->template->idPhase}}</option>
+                                <option value="first">{{$pspDocument->template->idphase}}</option>
                             </select>   
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label for="obligatoriol" class="control-label col-md-3 col-sm-3 col-xs-12">Obligatorio</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            @if($pspDocument->template->idTipoEstado==1)
+                            @if($pspDocument->template->idtipoestado==1)
                                 <input id=obligatorio type="checkbox" class="form-control" disabled name="" checked="true"/>
                             @else
                                 <input id=obligatorio type="checkbox" class="form-control" disabled name="" />
@@ -83,11 +83,11 @@
                         <div class="form-group">
                             <label for="estadol" class="control-label col-md-3 col-sm-3 col-xs-12">Estado</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            @if($pspDocument->idTipoEstado==3)
+                            @if($pspDocument->idtipoestado==3)
                                 <select name="estado" disabled class="form-control">
                                 <option value="first">No Subido</option>
                                 </select> 
-                            @elseif($pspDocument->idTipoEstado==4)
+                            @elseif($pspDocument->idtipoestado==4)
                                 <select name="estado" disabled class="form-control">
                                 <option value="first">Subido</option>
                                 </select> 

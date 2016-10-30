@@ -102,10 +102,10 @@ class TemplateController extends Controller
                 foreach($pspstudents as $psp) {
                     if($psp!=null){
                     $PspDocument = new PspDocument;
-                    $PspDocument->idStudent= $psp->IdAlumno;
-                    $PspDocument->idTemplate=$template->id;
-                    $PspDocument->idTipoEstado=3;
-                    if($template->idTipoEstado  == 1)
+                    $PspDocument->idstudent= $psp->IdAlumno;
+                    $PspDocument->idtemplate=$template->id;
+                    $PspDocument->idtipoestado=3;
+                    if($template->idtipoestado  == 1)
                        $PspDocument->esObligatorio='s';
                    else
                        $PspDocument->esObligatorio='n';

@@ -83,11 +83,11 @@
                         <div class="form-group">
                             <label for="estadol" class="control-label col-md-3 col-sm-3 col-xs-12">Estado</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            @if($pspDocument->idTipoEstado==3)
+                            @if($pspDocument->idtipoestado==3)
                                 <select name="estado" disabled class="form-control">
                                 <option value="first">No Subido</option>
                                 </select> 
-                            @elseif($pspDocument->idTipoEstado==4)
+                            @elseif($pspDocument->idtipoestado==4)
                                 <select name="estado" disabled class="form-control">
                                 <option value="first">Subido</option>
                                 </select> 

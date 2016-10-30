@@ -1094,17 +1094,17 @@ Route::group(['prefix' => 'tutoria'], function(){
     //Acreditacion - flujo coordinador:
     Route::group(['prefix' => 'flujoCoordinador'], function() {
         
-        Route::get('/{id}/objetivoEducacional', ['as' => 'objetivoEducacional_index.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_index']);
-        Route::get('/{id}/objetivoEducacional/create', ['as' => 'objetivoEducacional_create.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
-        Route::post('/{id}/objetivoEducacional/store', ['as' => 'objetivoEducacional_store.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
+        Route::get('/{id}/objetivoEducacional', ['as' => 'objetivoEducacional_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_index']);
+        Route::get('/{id}/objetivoEducacional/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
+        Route::post('/{id}/objetivoEducacional/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
         
-        Route::get('/{id}/aspecto', ['as' => 'objetivoEducacional_index.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_index']);
-        Route::get('/{id}/aspecto/create', ['as' => 'objetivoEducacional_create.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
-        Route::post('/{id}/aspecto/store', ['as' => 'objetivoEducacional_store.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
+        Route::get('/{id}/aspecto', ['as' => 'objetivoEducacional_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_index']);
+        Route::get('/{id}/aspecto/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
+        Route::post('/{id}/aspecto/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
 
-        Route::get('/{id}/criterio', ['as' => 'criterio_index.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@criterio_index']);
-        Route::get('/{id}/criterio/create', ['as' => 'criterio_create.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@criterio_create']);        
-        Route::post('/{id}/criterio/store', ['as' => 'criterio_store.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@criterio_store']);
+        Route::get('/{id}/criterio', ['as' => 'criterio_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_index']);
+        Route::get('/{id}/criterio/create', ['as' => 'criterio_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_create']);        
+        Route::post('/{id}/criterio/store', ['as' => 'criterio_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_store']);
 
 
     });

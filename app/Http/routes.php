@@ -1086,8 +1086,6 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
             Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
             Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
-
-            
         });
     });
 
@@ -1098,9 +1096,9 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/objetivoEducacional/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
         Route::post('/{id}/objetivoEducacional/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
         
-        Route::get('/{id}/aspecto', ['as' => 'objetivoEducacional_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_index']);
-        Route::get('/{id}/aspecto/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
-        Route::post('/{id}/aspecto/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
+        Route::get('/{id}/aspecto', ['as' => 'aspecto_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspecto_index']);
+        Route::get('/{id}/aspecto/create', ['as' => 'aspecto_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspecto_create']);        
+        Route::post('/{id}/aspecto/store', ['as' => 'aspecto_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspecto_store']);
 
         Route::get('/{id}/criterio', ['as' => 'criterio_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_index']);
         Route::get('/{id}/criterio/create', ['as' => 'criterio_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_create']);        

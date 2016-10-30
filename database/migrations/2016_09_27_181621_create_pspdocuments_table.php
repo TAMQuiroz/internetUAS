@@ -16,7 +16,7 @@ class CreatePspdocumentsTable extends Migration
             $table->increments('id');
             $table->string('ruta');
             $table->string('observaciones');
-            $table->char('esObligatorio');
+            $table->char('eso_obligatorio');
             $table->integer('idstudent');
             $table->integer('idtemplate')->unsigned();
             $table->integer('idtipoestado')->unsigned();

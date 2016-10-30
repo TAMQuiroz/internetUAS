@@ -31,7 +31,7 @@ class FlujoAdministradorTest extends TestCase
 	    		'user' => $user
     		])->visit('/flujoAdministrador/academicCycle/create')
     		->select('2020','anio')
-    		->select('1','numberC')
+    		->select('2','numberC')
     		->press('Guardar')
     		->seePageIs('/flujoAdministrador/academicCycle/')
     		->see('El ciclo académico se ha registrado exitosamente');

@@ -18,7 +18,7 @@ use Intranet\Models\Tutstudentxevaluation;
 use Intranet\Models\Evalternative;
 use Intranet\Models\Alternative;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
-use DateTime;
+
 class EvaluationController extends Controller
 {
     /**
@@ -45,6 +45,28 @@ class EvaluationController extends Controller
         'evaluations'    =>  $evals->appends($filters),
         ];
         return view('evaluations.evaluation.index', $data);
+    }
+
+    public function indexal(Request $request)
+    {        
+        $id = Session::get('user')->id;
+       $tutstudentxevaluations = Tutstudent::find($id)->evaluations;//saco las evaluaciones del alumno
+       $evaluations = array();
+       foreach ($tutstudentxevaluations as $tutstudentxevaluation) {
+           array_push($evaluations,$tutstudentxevaluation->evaluation);
+       }
+
+       // dd($evaluations);
+       $data = [
+       'evaluations'               =>  $evaluations,
+       'tutstudentxevaluations'    =>  $tutstudentxevaluations,
+       ];
+       return view('evaluations.evaluation.indexal', $data);
+    }
+
+    public function indexev(Request $request)
+    {
+       
     }
 
     /**
@@ -115,8 +137,8 @@ class EvaluationController extends Controller
                                 $pregunta->rpta  = $preg->rpta;
                             }
                             else if ($preg->tipo == 3){
-                                $pregunta->tamano_arch  = $preg->tamanomax;
-                                $pregunta->extension_arch  = $preg->extension; 
+                                $pregunta->tamano_arch  = $preg->tamano_arch;
+                                $pregunta->extension_arch  = $preg->extension_arch; 
                             }
                             $pregunta->save();
 
@@ -145,7 +167,7 @@ class EvaluationController extends Controller
                             $tutstudentxevaluation = new Tutstudentxevaluation;
                             $tutstudentxevaluation->id_tutstudent = $student->id;
                             $tutstudentxevaluation->id_evaluation = $evaluacion->id;
-                            $tutstudentxevaluation->intentos = 0 ;
+                            $tutstudentxevaluation->intentos = 1 ;
                             $tutstudentxevaluation->save() ;
                         }
 
@@ -156,7 +178,7 @@ class EvaluationController extends Controller
                             $tutstudentxevaluation = new Tutstudentxevaluation;
                             $tutstudentxevaluation->id_tutstudent = $idStudent;
                             $tutstudentxevaluation->id_evaluation = $evaluacion->id;
-                            $tutstudentxevaluation->intentos = 0 ;
+                            $tutstudentxevaluation->intentos = 1 ;
                             $tutstudentxevaluation->save() ;
                         }
                     }          
@@ -184,6 +206,36 @@ class EvaluationController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function rendir($id)
+    {//muestra las datos de la evaluacion antes de ser rendida por el alumno
+        $evaluation   = Evaluation::find($id);//saco la evaluacion
+
+        $data = [        
+        'evaluation'   =>  $evaluation,        
+        ];
+        return view('evaluations.evaluation.rendir', $data);
+    }
+
+    public function rendirEv($id)
+    {//se rinde la evaluacion
+        $evaluation   = Evaluation::find($id);//saco la evaluacion
+        // dd($evaluation);
+        $data = [        
+        'evaluation'   =>  $evaluation,        
+        ];
+        return view('evaluations.evaluation.rendirev', $data);
+    }
+
+    public function storeEv(Request $request)
+    {//guarda las respuestas de la evaluacion
+        dd($request);
+        
+        $data = [        
+        'evaluation'   =>  $evaluation,        
+        ];
+        return view('evaluations.evaluation.indexal', $data);
     }
 
      public function activate($id)
@@ -342,8 +394,8 @@ class EvaluationController extends Controller
                                 $pregunta->rpta  = $preg->rpta;
                             }
                             else if ($preg->tipo == 3){
-                                $pregunta->tamano_arch  = $preg->tamanomax;
-                                $pregunta->extension_arch  = $preg->extension; 
+                                $pregunta->tamano_arch  = $preg->tamano_arch;
+                                $pregunta->extension_arch  = $preg->extension_arch; 
                             }
                             $pregunta->save();
 
@@ -377,7 +429,7 @@ class EvaluationController extends Controller
                             $tutstudentxevaluation = new Tutstudentxevaluation;
                             $tutstudentxevaluation->id_tutstudent = $student->id;
                             $tutstudentxevaluation->id_evaluation = $id;
-                            $tutstudentxevaluation->intentos = 0 ;
+                            $tutstudentxevaluation->intentos = 1 ;
                             $tutstudentxevaluation->save() ;
                         }
 
@@ -388,7 +440,7 @@ class EvaluationController extends Controller
                             $tutstudentxevaluation = new Tutstudentxevaluation;
                             $tutstudentxevaluation->id_tutstudent = $idStudent;
                             $tutstudentxevaluation->id_evaluation = $id;
-                            $tutstudentxevaluation->intentos = 0 ;
+                            $tutstudentxevaluation->intentos = 1 ;
                             $tutstudentxevaluation->save() ;
                         }
                     }          

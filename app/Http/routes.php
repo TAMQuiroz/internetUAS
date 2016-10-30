@@ -705,6 +705,7 @@ $api->version('v1', function ($api) {
             //INVESTIGACION
 
             $api->group(['namespace' => 'Investigation','prefix' => 'investigation'], function($api){
+
                 $api->get('/{id}/groups', 'Group\GroupController@getById');
                 $api->post('/{id}/groups', 'Group\GroupController@edit');
                 $api->get('/{id}/investigators', 'Investigator\InvestigatorController@getById');
@@ -712,10 +713,11 @@ $api->version('v1', function ($api) {
 
             });
 
+            $api->get('/getAllInvestigators', 'Investigation\Investigator\InvestigatorController@getAll');
+            $api->get('/getAllInvGroups', 'Investigation\Group\GroupController@getAll');
+            $api->get('/getAllProjects', 'Investigation\Project\ProjectController@getAll');
 
-            $api->get('getAllInvestigators', 'Investigation\Investigator\InvestigatorController@getAll');
-            $api->get('getAllInvGroups', 'Investigation\Group\GroupController@getAll');
-            $api->get('getAllProjects', 'Investigation\Project\ProjectController@getAll');
+            
 
 
             //TUTORIA

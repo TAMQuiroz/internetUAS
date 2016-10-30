@@ -1,4 +1,4 @@
-<?php
+waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<?php
 
 namespace Intranet\Http\Controllers\API\Investigation\Group;
 

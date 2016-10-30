@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Intranet\Models\criterion;
 
+use Session;
+use Intranet\Models\Faculty;
+
 class FlujoCoordinadorController extends Controller
 {
+
     //profesores
     public function criterio_index ($id){
 
@@ -25,7 +29,22 @@ class FlujoCoordinadorController extends Controller
     	return view('flujoAdministrador.profesor_create', ['idEspecialidad'=>$id]);
     }
     
-    public function criterio_store (Request $request, $id){
+    //objetivos educacionales
+    public function objetivoEducacional_index ($id){
+
+		$especialidad = Faculty::findOrFail($id);
+		$objetivos = $especialidad->objectives;
+		return view('flujoCoordinador.objetivoEducacional_index', ['teachers'=>$objetivos, 'idEspecialidad' =>$id]);
+    	
+    }
+
+
+    public function profesor_create ($id){
+    	//return 'crear objetivo de la especialidad '.$id;
+    	return view('flujoAdministrador.profesor_create', ['idEspecialidad'=>$id]);
+    }
+    
+    public function profesor_store (Request $request, $id){
     	
         //crear un usuario 
         $password = bcrypt(123);
@@ -58,7 +77,5 @@ class FlujoCoordinadorController extends Controller
         return redirect()->route('profesor_index.flujoAdministrador', ['id' => $id])
                             ->with('success', 'El profesor se ha registrado exitosamente');
     }
-
-
 
 }

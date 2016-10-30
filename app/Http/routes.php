@@ -1104,7 +1104,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/criterio/create', ['as' => 'criterio_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_create']);        
         Route::post('/{id}/criterio/store', ['as' => 'criterio_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_store']);
 
-        Route::get('/end1', ['as' => 'end.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
+        Route::get('/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
 
     });
 

@@ -195,7 +195,7 @@
 
               @if(in_array(25,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Aspectos</a>
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.aspects') }}"><i class="material-icons">assessment</i>Aspectos</a>
               </li>
               @endif
 

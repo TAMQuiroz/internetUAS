@@ -10,7 +10,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
     <div class="x_content">
-      <form action="{{ route('aspect_create.flujoAdministrador')}}" method="POST" id="formAspect" name="formAspect" novalidate="true" class="form-horizontal">
+      <form action="{{ route('aspect_create.flujoCoordinador')}}" method="POST" id="formAspect" name="formAspect" novalidate="true" class="form-horizontal">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="row">
             <div class="col-md-9 col-sm-12 col-xs-12">

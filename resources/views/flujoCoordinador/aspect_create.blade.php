@@ -18,13 +18,13 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form class="form-horizontal" novalidate="true" action="{{ route('aspect_store.flujoAdministrador')}}" method="POST" id="formAcademic" name="formAcademic">
+				<form class="form-horizontal" novalidate="true" action="{{ route('aspect_store.flujoCoordinador')}}" method="POST" id="formAcademic" name="formAcademic">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="x_content">
 						<div class="form-group">
 				          <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Resultado Estudiantil <span class="error">*</span></label>
 				          <div class="col-md-6 col-sm-6 col-xs-12">
-		                      <select id="studentsResult_new_code" class="form-control col-md-7 col-xs-12" type="text" name="studentsResult_new_code" >
+		                      <select class="form-control col-md-7 col-xs-12" type="text" disabled='true' >
 		                        @if($resultado==null)
 		                        	<option value="">-- Seleccione un resultado--</option>
 		                        @else($resultado!=null)
@@ -35,6 +35,7 @@
 		                      </select>
 	                    	</div>
 				        </div>
+				        <input id="studentsResult_new_code" class="form-control col-md-7 col-xs-12" type="hidden" name="studentsResult_new_code" value="{{$resultado->IdResultadoEstudiantil}}" >
 						<div class="form-group">
 				          <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre del Aspecto<span class="error">*</span></label>
 				          <div class="col-md-6 col-sm-6 col-xs-12">
@@ -44,7 +45,7 @@
 						<div class="row">
 							<div class="col-md-9 col-sm-12 col-xs-12">
 								<button class="btn btn-success pull-right" type="submit" value="Guardar">Guardar</button>
-								<a class="btn btn-default pull-right" href="{{ route('aspect_index.flujoAdministrador') }}">Atras</a>
+								<a class="btn btn-default pull-right" href="{{ route('aspect_index.flujoCoordinador') }}">Atras</a>
 							</div>
 						</div>
 					</div>

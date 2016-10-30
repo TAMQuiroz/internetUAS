@@ -37,14 +37,14 @@ class FlujoCoordinadorController extends Controller
 		} catch(\Exception $e) {
 			dd($e);
 		}
-		return view('flujoAdministrador.aspect_index', $data);
+		return view('flujoCoordinador.aspect_index', $data);
 	}
 
 	public function aspect_create(AspectRequest $request) {
 	
 			$data['title'] = 'Nuevo Aspecto';
 			$data['resultado']=$this->studentsResultService->findById($request->all());
-			return view('flujoAdministrador.aspect_create', $data);
+			return view('flujoCoordinador.aspect_create', $data);
 				
 	}
 
@@ -54,7 +54,7 @@ class FlujoCoordinadorController extends Controller
 		} catch(\Exception $e) {
 			dd($e);
 		}
-		return redirect()->route('aspect_index.flujoAdministrador')->with('success', 'El aspecto se ha registrado exitosamente');
+		return redirect()->route('aspect_index.flujoCoordinador')->with('success', 'El aspecto se ha registrado exitosamente');
 	}
 
     //profesores

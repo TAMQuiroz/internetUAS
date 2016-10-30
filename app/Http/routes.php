@@ -1014,11 +1014,6 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/academicCycle/create', ['as' => 'academicCycle_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_create']);        
         Route::post('/academicCycle/store', ['as' => 'academicCycle_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_store']);
         Route::get('/end', ['as' => 'end.flujoAdministrador', 'uses' => 'FlujoAdministradorController@end']);
-
-        Route::get('/aspect', ['as' => 'aspect_index.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@aspect_index']);
-        Route::post('/aspect/create', ['as' => 'aspect_create.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@aspect_create']);
-        Route::post('/aspect/store', ['as' => 'aspect_store.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@aspect_store']);
-    
     });
     
     //MODULO UAS PARA EVALUACIONES
@@ -1101,10 +1096,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/objetivoEducacional/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
         Route::post('/{id}/objetivoEducacional/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
         
-        Route::get('/{id}/aspecto', ['as' => 'aspecto_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspecto_index']);
-        Route::get('/{id}/aspecto/create', ['as' => 'aspecto_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspecto_create']);        
-        Route::post('/{id}/aspecto/store', ['as' => 'aspecto_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspecto_store']);
-
+        Route::get('/aspect', ['as' => 'aspect_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_index']);
+        Route::post('/aspect/create', ['as' => 'aspect_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_create']);
+        Route::post('/aspect/store', ['as' => 'aspect_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_store']);
+    
         Route::get('/{id}/criterio', ['as' => 'criterio_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_index']);
         Route::get('/{id}/criterio/create', ['as' => 'criterio_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_create']);        
         Route::post('/{id}/criterio/store', ['as' => 'criterio_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_store']);

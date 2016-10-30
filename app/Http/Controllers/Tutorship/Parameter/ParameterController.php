@@ -20,7 +20,7 @@ class ParameterController extends Controller
     {
         $mayorId    = Session::get('faculty-code');
         $parameters = Parameter::where('id_especialidad', $mayorId)->first();
-
+        // dd($parameters);
         $data = [
             'duration' => 0
         ];
@@ -38,7 +38,6 @@ class ParameterController extends Controller
     {
         try {
             $mayorId = Session::get('faculty-code');
-
             $parameters = Parameter::where('id_especialidad', $mayorId)->first();
             if ($parameters) {
                 $parameters->duracionCita   = $request['duration'];
@@ -49,9 +48,9 @@ class ParameterController extends Controller
                 $newParameters->id_especialidad = $mayorId;
                 $newParameters->save();
             }
-            return redirect()->route('parametro.index.duration')->with('success', 'El parámetro se ha actualizado exitosamente');
+            return redirect()->route('parametro.index.duration')->with('success', 'La duración de la cita se ha actualizado exitosamente');
         } catch (Exception $e) {
-            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+            return redirect()->route('parametro.index.duration')->with('warning', 'Ocurrió un error al hacer esta acción');
         }
     }
 }

@@ -17,7 +17,7 @@
             <div class="x_title">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="#filter-tutors" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                        <!-- <a href="#filter-tutors" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a> -->
                         <a href="{{ route('evaluador.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo evaluador</a>
                     </div>
                 </div>
@@ -28,28 +28,30 @@
                             <th class="column-title">Código </th>
                             <th class="column-title">Apellidos y Nombres </th>                        
                             <th class="column-title">Correo </th>                            
+                            <th class="column-title">Especialidad </th>                            
                             <th class="column-title last">Acciones</th>                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($evaluators as $evaluator)
                         <tr class="even pointer">
-                            <td class=" ">{{ $evaluator->Codigo }}</td>
-                            <td class=" ">{{ $evaluator->ApellidoPaterno.' '.$evaluator->ApellidoMaterno.', '.$evaluator->Nombre }}</td>
-                            <td class=" ">{{ $evaluator->Correo }}</td>                            
+                            <td class=" ">{{ $evaluator->codigo }}</td>
+                            <td class=" ">{{ $evaluator->app.' '.$evaluator->apm.', '.$evaluator->nombre }}</td>
+                            <td class=" ">{{ $evaluator->correo }}</td>                            
+                            <td class=" ">{{ $evaluator->nombre_esp }}</td>                            
                             <td class=" ">
-                                <!-- <a href="{{route('evaluador.show',$evaluator->IdDocente)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
+                                <!-- <a href="{{route('evaluador.show',$evaluator->id)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-search"></i>
                                 </a> -->
-                                <a href="{{route('evaluador.edit',$evaluator->IdDocente)}}" title="Editar" class="btn btn-primary btn-xs view-group"">
+                                <a href="{{route('evaluador.edit',$evaluator->id)}}" title="Editar" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$evaluator->IdDocente}}">
+                                <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$evaluator->id}}">
                                     <i class="fa fa-remove"></i>
                                 </a>
                             </td>
                         </tr>
-                        @include('modals.delete', ['id'=> $evaluator->IdDocente, 'message' => '¿Está seguro que desea desactivar este evaluador?', 'route' => route('evaluador.delete', $evaluator->IdDocente)])
+                        @include('modals.delete', ['id'=> $evaluator->id, 'message' => '¿Está seguro que desea desactivar este evaluador?', 'route' => route('evaluador.delete', $evaluator->id)])
                         @endforeach
                     </tbody>
                 </table>

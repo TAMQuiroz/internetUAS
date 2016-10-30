@@ -30,4 +30,15 @@ class PspGroupController extends BaseController
         $pspGroup = PspGroup::where('numero',$groupNumber)->get();
         return $this->response->array($pspGroup->toArray());   
     }
+
+    public function selectGroup($id){
+        $user =  JWTAuth::parseToken()->authenticate();
+        $alumno = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
+        $alumno->idPspGroup = $id;
+        $alumno->save();
+
+        $mensaje = "Seleccion su grupo satisfactoriamente";
+
+        echo $mensaje;
+    }
 }   

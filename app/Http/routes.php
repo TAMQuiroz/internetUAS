@@ -106,6 +106,10 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('/getEnhacementPlan/{improvementPlanId}', ['uses' => 'EnhacementPlan\EnhacementController@getEnhacementPlan']);
         Route::get('/CiclesAndTeachers', ['uses' => 'EnhacementPlan\EnhacementController@CiclesAndTeachers']);
+
+        Route::post('/saveModal', ['as' => 'saveModalNew.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNew']);
+        Route::post('/saveModalEdit', ['as' => 'saveModalNewEdit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNewEdit']);
+
     });
 
     //DictatedCourses Plan Routes
@@ -471,7 +475,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/new', ['as' => 'form.academicCycle', 'uses' => 'AcademicCycle\AcademicCycleController@create']);
         Route::post('/save', ['as' => 'save.academicCycle', 'uses' => 'AcademicCycle\AcademicCycleController@save']);
         Route::get('/delete', ['as' => 'delete.academicCycle', 'uses' => 'AcademicCycle\AcademicCycleController@delete']);
-
+ 
         //AYAX routes
 
         Route::get('/getCycle/{cycle}', ['uses' => 'AcademicCycle\AcademicCycleController@getCycle']);
@@ -520,8 +524,18 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
                 Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
                 Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
+
+                //Seleccion de integrantes de para un proceso de psp
+                Route::group(['prefix' => 'participant'], function(){
+                    Route::post('createSupervisor', ['as' => 'supervisor.participant.store.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@storeSupervisor']);
+                    Route::get('deleteSupervisor/{id}', ['as' => 'supervisor.participant.delete.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@destroySupervisor']);
+
+                    Route::post('createTeacher', ['as' => 'supervisor.participant.store.docente', 'uses' => 'Psp\Supervisor\ParticipationController@storeTeacher']);
+                    Route::get('deleteTeacher/{id}', ['as' => 'supervisor.participant.delete.docente', 'uses' => 'Psp\Supervisor\ParticipationController@destroyTeacher']);
+                });
             });
 
+        });
             //Template
             Route::group(['prefix' => 'template'], function() {
                 Route::get('/', ['as' => 'template.index', 'uses' => 'Psp\Template\TemplateController@index']);
@@ -531,10 +545,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
                 Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
                 Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
-            });
-        });
-
-            
+            });                    
 
             //PspGroups Luis Llanos
 
@@ -559,6 +570,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'pspProcess.edit', 'uses' => 'Psp\PspProcess\PspProcessController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspProcess.update', 'uses' => 'Psp\PspProcess\PspProcessController@update']);
                 Route::get('delete/{id}', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
+                Route::post('activarProfesor', ['as' => 'pspProcess.activateTeacher', 'uses' => 'Psp\PspProcess\PspProcessController@activateTeacher']);
+                Route::post('activarAlumnos', ['as' => 'pspProcess.activateStudents', 'uses' => 'Psp\PspProcess\PspProcessController@activateStudents']);
             });
 
             //FreeHour            
@@ -581,6 +594,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'meeting.edit', 'uses' => 'Psp\meeting\MeetingController@edit']);
                 Route::post('edit/{id}', ['as' => 'meeting.update', 'uses' => 'Psp\meeting\MeetingController@update']);
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
+            });
+
+            //Inscription File
+            Route::group(['prefix' => 'inscription'], function() {
+                Route::get('/', ['as' => 'inscription.index', 'uses' => 'Psp\Inscription\InscriptionController@index']);
+                Route::get('create', ['as' => 'inscription.create', 'uses' => 'Psp\Inscription\InscriptionController@create']);
+                Route::post('create', ['as' => 'inscription.store', 'uses' => 'Psp\Inscription\InscriptionController@store']);
+                Route::get('show/{id}', ['as' => 'inscription.show', 'uses' => 'Psp\Inscription\InscriptionController@show']);
+                Route::get('edit/{id}', ['as' => 'inscription.edit', 'uses' => 'Psp\Inscription\InscriptionController@edit']);
+                Route::post('edit/{id}', ['as' => 'inscription.update', 'uses' => 'Psp\Inscription\InscriptionController@update']);
+                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);    
             });
 
             //Phase
@@ -679,7 +703,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{f_id}/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
 
             });
-            
+           
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
                 $api->get('/{f_id}/actual/semesters', 'PeriodController@getSemesters');
                 $api->get('/{f_id}/list', 'PeriodController@getPeriodList');
@@ -696,11 +720,12 @@ $api->version('v1', function ($api) {
                 $api->get('groups/all','PspGroup\PspGroupController@getAll');
                 $api->get('groups/{id}','PspGroup\PspGroupController@getById');
                 $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
+                $api->get('students/all','Students\PspStudentsController@getAll');
+                $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
+                $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+                $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
+                $api->get('phases/all','Phases\PspPhasesController@getAll');
             });
-
-
-
-
 
             //INVESTIGACION
 
@@ -722,8 +747,8 @@ $api->version('v1', function ($api) {
 
             //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
-            $api->get('getTutorInfo/{id_usuario}','Tutoria\TutstudentController@getTutorById');
-            $api->post('registerStudentAppointment', 'Tutoria\TutstudentController@postAppointment');
+            $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
+            $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
         });
     });
 
@@ -924,6 +949,8 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
             Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
             Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
+            Route::get('reassign/{id}', ['as' => 'tutor.reassign', 'uses' => 'Tutorship\Tutor\TutorController@reassign']);
+            Route::post('reassign/{id}', ['as' => 'tutor.deactivate', 'uses' => 'Tutorship\Tutor\TutorController@deactivate']);
         });
                 
         
@@ -977,10 +1004,18 @@ Route::group(['prefix' => 'tutoria'], function(){
 
         Route::post('/facultad', ['as' => 'facultad_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_store']);
         Route::get('/facultad', ['as' => 'facultad_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_create']);
+        Route::get('/facultad/edit/{id}', ['as' => 'facultad_edit.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_edit']);
+        Route::post('/facultad/update', ['as' => 'facultad_update.flujoAdministrador', 'uses' => 'FlujoAdministradorController@facultad_update']);
 
         Route::get('/facultad/{id}/profesor', ['as' => 'profesor_index.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_index']);
         Route::get('/facultad/{id}/profesor/create', ['as' => 'profesor_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_create']);        
-        Route::post('/profesor', ['as' => 'profesor_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_store']);
+        Route::post('/facultad/{id}/profesor/store', ['as' => 'profesor_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@profesor_store']);
+        Route::post('/facultad/{id}/coordinador/store', ['as' => 'coordinador_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@coordinador_store']);
+    
+        Route::get('/academicCycle', ['as' => 'academicCycle_index.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_index']);
+        Route::get('/academicCycle/create', ['as' => 'academicCycle_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_create']);        
+        Route::post('/academicCycle/store', ['as' => 'academicCycle_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_store']);
+        Route::get('/end', ['as' => 'end.flujoAdministrador', 'uses' => 'FlujoAdministradorController@end']);
     });
     
     //MODULO UAS PARA EVALUACIONES
@@ -1051,6 +1086,8 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('edit/{id}', ['as' => 'evaluacion.edit', 'uses' => 'Evaluations\Evaluation\EvaluationController@edit']);
             Route::post('edit/{id}', ['as' => 'evaluacion.update', 'uses' => 'Evaluations\Evaluation\EvaluationController@update']);
             Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
+            Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
+            Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
 
             
         });

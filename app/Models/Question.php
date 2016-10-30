@@ -28,7 +28,7 @@ class Question extends Model
 
     static public function getQuestionsFiltered($filters, $specialty) {        
         
-        $query = Question::where('id_especialidad',$specialty);
+        $query = Question::where('id_especialidad',$specialty)->orderBy('updated_at', 'desc');
 
         if (array_key_exists("tipo", $filters) && $filters["tipo"] != "") {
             $query = $query->where("tipo", $filters["tipo"]);

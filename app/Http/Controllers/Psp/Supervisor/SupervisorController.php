@@ -61,6 +61,10 @@ class SupervisorController extends Controller
     public function store(SupervisorRequest $request)
     {
         try {
+            $u = User::where('Usuario',$request['codigo'])->first();
+            if($u!=null){
+                return redirect()->route('supervisor.create')->with('warning', 'El código de supervisor que se intenta registrar ya existe.');
+            }
             //Crear usuario
             $usuario = new User;
             $usuario->Usuario       = $request['codigo'];

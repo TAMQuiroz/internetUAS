@@ -39,9 +39,9 @@
                             @if($template->idTipoEstado==1)
                             <td>obligatorio</td> 
                             @else
-                            <td>no obligatorio</td> 
+                            <td>nopcional</td> 
                             @endif
-                            <td>{{$template->idPhase}}</td> 
+                            <td>{{$template->Phase->numero}}</td> 
                             <td>
                                 <a href="{{route('template.edit', $template->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                 <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$template->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>

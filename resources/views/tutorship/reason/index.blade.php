@@ -42,8 +42,11 @@
                             <tr class="headings">
                                 <th class="column-title">Código </th>
                                 <th class="column-title">Tipo </th>                        
-                                <th class="column-title">Nombre </th>                        
-                                <th class="column-title last">Acciones</th>                           
+                                <th class="column-title">Nombre </th>  
+                                <th class="column-title last">Acciones</th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                                </th>                       
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +56,7 @@
                                 <td class=" ">{{ $reason->id }}</td>
                                 <td class=" "> @if ($reason->tipo == 1) De cancelación/rechazo de cita @else De desactivación de tutor @endif </td>
                                 <td class=" ">{{ $reason->nombre }}</td>                            
-                                <td class="">
+                                <td class=" ">
                                     @if($reason->id != 1 && $reason->id != 2 )
                                     <a href="{{route('motivo.edit',$reason->id)}}" class="btn btn-primary btn-xs view-group"">
                                         <i class="fa fa-pencil"></i>

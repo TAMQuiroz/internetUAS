@@ -30,7 +30,7 @@
 
             <td>{{ $question->descripcion }}</td>
 
-            <td>{{ $question->tiempo }}</td>            
+            <td class="tiempo">{{ $question->tiempo }}</td>            
             
             @if($question->dificultad == 1)
             <td>Baja</td>

@@ -81,3 +81,124 @@ h3.faculty-name{
   height: 300px;
   overflow-y: scroll;
 }
+
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* NEW LOOK */
+
+.userView .bar-info {
+  width: 220px;
+  margin-left: auto;
+  margin-right: auto;  
+  text-align: center !important;
+}
+
+#info-user span{
+  font-size: 12pt !important;
+  font-weight: bold !important;
+}
+
+#info-faculty span, #info-endcycle span{
+  font-size: 9pt !important;
+}
+
+.bar-info span {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+.main-container-sumajg{
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-content-sumajg h3 {
+  font-size: 20pt !important;
+}
+
+td .btn-primary, td .btn-danger {
+  height: 25px !important;
+  width: 25px !important;
+}
+
+.bar-top{
+  background-color: #3F5367;
+}
+
+.page-content-sumajg label, .form-group label {
+  color: #73879C !important;
+  /*#ECF0F1; #FCFCFC*/
+  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.471 !important;
+}
+
+textarea {
+  resize: none;
+}
+
+.page-content-sumajg input[type="checkbox"], .modal-body input[type="checkbox"] {
+  position: relative;
+  left: 0px;
+  opacity: 1;
+}
+.page-content-sumajg input[type="text"], .modal-body input[type="text"] {
+  font-size: 10pt !important;
+}
+
+.userView {
+  background-color: #69C1A5;
+}
+
+.modal {
+  /*display: table !important; */
+  max-width : 100% !important;
+}
+
+.modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: #ffffff;
+}
+
+.modal-content {
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+
+.modal-body {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal .modal-footer{
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  background-color: #ffffff;
+}
+
+.btn-success, .btn-default {
+  margin-right: 10px !important;
+}
+
+.bar-top .button-collapse:hover {
+  color: #ffffff;
+  /*text-decoration: underline;*/
+}
+
+/*logout btn*/
+
+.nav-wrapper .logout i, .nav-wrapper .logout span {
+  line-height: 25px !important;
+}

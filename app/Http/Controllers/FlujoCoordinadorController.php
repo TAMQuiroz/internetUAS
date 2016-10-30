@@ -9,11 +9,55 @@ use Intranet\Models\criterion;
 
 use Session;
 use Intranet\Models\Faculty;
+use Intranet\Models\EducationalObjetive;
+use Intranet\Http\Requests\EducationalObjetiveRequest;
+
+use Intranet\Http\Services\StudentsResult\StudentsResultService;
+use Intranet\Http\Services\Aspect\AspectService;
+use Intranet\Http\Requests\AspectRequest;
 
 use Intranet\Http\Requests\CriterioResquest;
 
 class FlujoCoordinadorController extends Controller
 {
+	protected $aspectService;
+	protected $studentsResultService;
+
+	public function __construct() {
+		$this->aspectService = new AspectService();
+		$this->studentsResultService = new StudentsResultService();
+	}
+
+
+    //
+    public function aspect_index() {
+		$data['title'] = 'Aspectos';
+		try {			
+			$studentResults= $this->studentsResultService->findByFaculty();
+			$data['studentsResults'] = $studentResults;
+			$data['aspects'] = $this->aspectService->findByRE($studentResults);
+		} catch(\Exception $e) {
+			dd($e);
+		}
+		return view('flujoCoordinador.aspect_index', $data);
+	}
+
+	public function aspect_create(AspectRequest $request) {
+	
+			$data['title'] = 'Nuevo Aspecto';
+			$data['resultado']=$this->studentsResultService->findById($request->all());
+			return view('flujoCoordinador.aspect_create', $data);
+				
+	}
+
+	public function aspect_store(Request $request) {
+		try {
+			$this->aspectService->create($request->all());
+		} catch(\Exception $e) {
+			dd($e);
+		}
+		return redirect()->route('aspect_index.flujoCoordinador')->with('success', 'El aspecto se ha registrado exitosamente');
+	}
 
     //Criterios
     public function criterio_index ($id){
@@ -35,48 +79,30 @@ class FlujoCoordinadorController extends Controller
 
 		$especialidad = Faculty::findOrFail($id);
 		$objetivos = $especialidad->objectives;
-		return view('flujoCoordinador.objetivoEducacional_index', ['teachers'=>$objetivos, 'idEspecialidad' =>$id]);
-    	
+		return view('flujoCoordinador.objetivoEducacional_index', ['objetivos'=>$objetivos, 'idEspecialidad' =>$id]);
+
     }
 
-
-    public function profesor_create ($id){
+    public function objetivoEducacional_create ($id){
     	//return 'crear objetivo de la especialidad '.$id;
-    	return view('flujoAdministrador.profesor_create', ['idEspecialidad'=>$id]);
+    	return view('flujoCoordinador.objetivoEducacional_create', ['idEspecialidad'=>$id]);
     }
     
-    public function profesor_store (Request $request, $id){
-    	
-        //crear un usuario 
-        $password = bcrypt(123);
+    public function objetivoEducacional_store (EducationalObjetiveRequest $request, $id){
 
-        $user = User::create([
-            'Usuario' => $request->input('teachercode'),
-            'Contrasena' => $password,
-            'IdPerfil' => 2
-        ]);
+        //crear un nuevo objetivo educacional
+        $numberOE = EducationalObjetive::where('IdEspecialidad',Session::get('faculty-code'))
+									   ->where('deleted_at',null)->count();
+		$numberOE = ($numberOE) + 1;
+		$educationalObjetive = EducationalObjetive::create([
+			'IdEspecialidad' => $id,
+			'Numero' => $numberOE,
+			'Descripcion' => $request->input('descripcion'),
+			'Estado' => 1,
+		]);
 
-        //crear un nuevo profesor
-        $teacher = Teacher::create([
-            'Correo' => $request->input('teacheremail'),
-            'Nombre' => $request->input('teachername'),
-            'Codigo' => $request->input('teachercode'),
-            'ApellidoPaterno' => $request->input('teacherlastname'),
-            'ApellidoMaterno' => $request->input('teachersecondlastname'),
-            'IdEspecialidad' => $id, //$data['specialty']= Session::get('faculty-code'),
-            'IdUsuario' => $user->IdUsuario,
-            'Vigente' => intval($request->input('teacherstatus')),
-            'Descripcion' => $request->input('teacherdescription'),
-            'Cargo' => $request->input('teacherposition')
-        ]);
-
-        //enviar el corrreo al profesor:
-        if ($user) {
-            $this->passwordService->sendSetPasswordLink($user, $request->input('teacheremail'));
-        }
-
-        return redirect()->route('profesor_index.flujoAdministrador', ['id' => $id])
-                            ->with('success', 'El profesor se ha registrado exitosamente');
+        return redirect()->route('objetivoEducacional_index.flujoCoordinador', ['id' => $id])
+                            ->with('success', 'El objetivo educacional se ha registrado exitosamente');
     }
 
 }

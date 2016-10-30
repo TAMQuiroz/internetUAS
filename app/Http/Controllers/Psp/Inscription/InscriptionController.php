@@ -14,7 +14,8 @@ use Intranet\Models\Faculty;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\Inscription;
-
+use Intranet\Models\Studentxinscriptionfiles;
+use Intranet\Models\Student;
 use Intranet\Http\Requests\InscriptionRequest;
 
 use Auth;
@@ -86,8 +87,14 @@ class InscriptionController extends Controller
             $inscription->ubicacion_area            = $request['ubicacion_area'];
 
             $inscription->save();
-
-            
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first();  
+            if($student!=null){
+                $studentxinscription  = new Studentxinscriptionfiles;
+                $studentxinscription->idInscriptionFile =$inscription->id;
+                $studentxinscription->idStudent=$student->IdAlumno;
+                $studentxinscription->acepta_terminos=1;
+                $studentxinscription->save();
+            }
             return redirect()->route('inscription.index')->with('success', 'La información se ha registrado exitosamente');
         }catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

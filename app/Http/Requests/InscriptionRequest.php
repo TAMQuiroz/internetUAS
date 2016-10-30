@@ -43,7 +43,8 @@ class InscriptionRequest extends Request
             'razon_social'              =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
             'recomendaciones'           =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
             'telef_jefe_directo'        =>'required|digits:9', 
-            'ubicacion_area'            =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
+            'ubicacion_area'            =>'regex:/^[\pL\s\-]+$/u|required|max:200',
+            'terminos'                  =>'required',
             ];
     }
 

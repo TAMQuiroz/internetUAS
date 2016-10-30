@@ -100,6 +100,14 @@ class PeriodController extends BaseController
       return response()->json($semesters);
     }
 
+
+
+    public function getPeriodbyId($period_id){
+      $period = Period::where('IdPeriodo',$period_id)->with('configuration')->first();
+      return Response::json($period);
+    }
+
+
   
 
 

@@ -40,4 +40,10 @@ class Faculty extends Model {
     public function specialty(){
         return Faculty::where('IdEspecialidad',$this->IdEspecialidad)->first();
     }    
+
+
+    public function objectives(){
+        return $this->hasMany('Intranet\Models\EducationalObjetive', 'IdEspecialidad');
+    }
+
 }

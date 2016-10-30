@@ -255,6 +255,12 @@ class StudentsResultService {
         $studentsResult = StudentsResult::where('IdResultadoEstudiantil', $request['studentsResult-code'])->first();
         return $studentsResult;
     }
+    public function findById($request) {
+        
+        $studentsResult = StudentsResult::where('IdResultadoEstudiantil', $request['resultado'])->first();
+        return $studentsResult;
+        
+    }
 
     public function findActiveStudentsResults() {
         $studentsResults = StudentsResult::where('deleted_at', null)->get();

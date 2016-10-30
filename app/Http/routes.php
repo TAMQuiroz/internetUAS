@@ -1014,6 +1014,11 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/academicCycle/create', ['as' => 'academicCycle_create.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_create']);        
         Route::post('/academicCycle/store', ['as' => 'academicCycle_store.flujoAdministrador', 'uses' => 'FlujoAdministradorController@academicCycle_store']);
         Route::get('/end', ['as' => 'end.flujoAdministrador', 'uses' => 'FlujoAdministradorController@end']);
+
+        Route::get('/aspect', ['as' => 'aspect_index.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@aspect_index']);
+        Route::post('/aspect/create', ['as' => 'aspect_create.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@aspect_create']);
+        Route::post('/aspect/store', ['as' => 'aspect_store.flujoAdministrador', 'uses' => 'FlujoCoordinadorController@aspect_store']);
+    
     });
     
     //MODULO UAS PARA EVALUACIONES

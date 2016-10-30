@@ -46,4 +46,8 @@ class Faculty extends Model {
         return $this->hasMany('Intranet\Models\EducationalObjetive', 'IdEspecialidad');
     }
 
+    public function studentsResults(){
+        return $this->hasMany('Intranet\Models\StudentsResult', 'IdEspecialidad');
+    }
+
 }

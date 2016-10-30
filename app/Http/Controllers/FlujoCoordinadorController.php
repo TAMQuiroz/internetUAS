@@ -10,24 +10,25 @@ use Intranet\Models\criterion;
 use Session;
 use Intranet\Models\Faculty;
 
+use Intranet\Http\Requests\CriterioResquest;
+
 class FlujoCoordinadorController extends Controller
 {
 
-    //profesores
+    //Criterios
     public function criterio_index ($id){
 
 		$especialidad = Faculty::findOrFail($id);
-		$objetivos = $especialidad->objetives;
-		return view('flujoAdministrador.profesor_index', ['teachers'=>$profesores, 'idEspecialidad' =>$id]);
+		$resultados = $especialidad->studentsResults;
+		return view('flujoCoordinador.criterio_index', ['resultados'=>$resultados, 'idEspecialidad' =>$id]);
     	//return "profesor creado";
     }
 
-
-
-    public function criterio_create ($id){
-    	//return 'crear profesor de la especialidad '.$id;
-    	return view('flujoAdministrador.profesor_create', ['idEspecialidad'=>$id]);
+    public function criterio_create (CriterioResquest $request, $id){
+    	return 'crear criterio '.$id. ' '. $request->get('resultado'). ' '. $request->get('aspecto');
+    	//return view('flujoCoordinador.criterio_create', ['idEspecialidad'=>$id]);
     }
+    //Fin de criterio
     
     //objetivos educacionales
     public function objetivoEducacional_index ($id){

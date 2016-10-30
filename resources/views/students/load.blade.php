@@ -24,6 +24,11 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="idTimeTable" value="{{ $timeTable->IdHorario }}">
 						<br>
+						PSP
+						<input type="checkbox" class="flat" id="selectPsp" name="selectPsp">
+						<br>
+						<br>
+						<br>						
 						<button class="btn btn-primary">Cargar alumnos</button>
 
 					</form>

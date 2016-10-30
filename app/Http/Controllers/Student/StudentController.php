@@ -9,6 +9,7 @@ use Intranet\Models\Student;
 use Intranet\Models\TimeTable;
 use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Score;
+use Intranet\Models\Tutstudent;
 use DB;
 use Excel;
 
@@ -57,6 +58,19 @@ class StudentController extends BaseController {
 				$sheet->fromArray($data);
 	        });
 		})->download($type);
+
+		return back()->with('success', 'Se descargo el archivo');
+	}
+
+	public function storeExcel($data){
+
+		return Excel::create('AlumnosNoEncontrados', function($excel) use($data) {
+
+			$excel->sheet('Sheetname', function($sheet) use($data) {
+		        $sheet->fromArray($data);
+		    });
+
+		})->store('xls', storage_path('/')); //storage
 	}
 
 	public function importExcel(Request $request)
@@ -79,10 +93,13 @@ class StudentController extends BaseController {
 				}
 
 				$students = [];
+				$studentsNotFound = [];
 				foreach ($data as $key => $value) {
-					if (is_numeric($value[1])){
+					$value_int = intval($value[1]);
+					if ($value_int != 0){ 
+
 						$insert = [
-							'Codigo' => $value[1], 
+							'Codigo' => $value_int, 
 							'Nombre' => $value[2],
 							'ApellidoPaterno' => $value[3],
 							'ApellidoMaterno' => $value[4],
@@ -90,12 +107,25 @@ class StudentController extends BaseController {
 							'IdHorario' => $idTimeTable,
 						];
 
-						array_push($students, $insert); 
+						// Para el curso PSP
+						if(isset($request['selectPsp'])){
+							// Buscar alumno en la tabla de tutoria
+							$student = Tutstudent::where('codigo', $value_int)->first();
+							if($student != null) { //encontro alumno -> obtener su idusuario
+								$insert['IdUsuario'] = $student->id_usuario;
+								array_push($students, $insert); 
+							}
+							else {
+								// no encontro alumno -> agregar al excel para eviarlo a Tutoria y que creen alumno
+								array_push($studentsNotFound, $insert); 
+							}
+						}
 					}else{
+
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 					}
 				}
-				
+
 				if(!empty($students)){
 					foreach ($students as $student) {
 						$alumno = new Student;
@@ -104,6 +134,7 @@ class StudentController extends BaseController {
 						$alumno->ApellidoPaterno = $student['ApellidoPaterno'];
 						$alumno->ApellidoMaterno = $student['ApellidoMaterno'];
 						$alumno->IdHorario = $student['IdHorario'];
+						$alumno->IdUsuario = $student['IdUsuario'];
 
 						//Campos nuevos para PSP
 
@@ -111,7 +142,7 @@ class StudentController extends BaseController {
 						$alumno->telefono = null;
 						$alumno->correo = null;
 						$alumno->direccion = null;
-						$alumno->IdUsuario = null;
+						//$alumno->IdUsuario = null;
 						$alumno->idPspGroup = null;
 						$alumno->IdEspecialidad = null;
 						$alumno->idSupervisor = null;
@@ -119,22 +150,27 @@ class StudentController extends BaseController {
 						
 						$alumno->save();
 					}
+
+					$horario = TimeTable::find($alumno->IdHorario);
+				
+					$horario->TotalAlumnos = $data->count();
+					$horario->save();
 				}
 
 				//Agregar tamaño a tabla horario
 				//dd($alumno->IdHorario);
-				//$horario = TimeTable::find('IdHorario');
-				$horario = TimeTable::find($alumno->IdHorario);
-				
-				$horario->TotalAlumnos = $data->count();
-				$horario->save();
+				//$horario = TimeTable::find('IdHorario');				
+
+				if(!empty($studentsNotFound)){					
+					$this->storeExcel($studentsNotFound);
+				}
 
 			}else{
 				return redirect()->back()->with('warning', 'Hubo un problema con el archivo de excel');
 			}
 		}
 
-		return back()->with('success', 'La carga de alumnos se ha realizado exitosamente');
+		return back()->with('success', 'La carga de alumnos se ha realizado exitosamente, se descargo archivo con alumnos no encontrados');
 	}
 
 	public function delete(Request $request)

@@ -33,33 +33,35 @@ class FlujoCoordinadorController extends Controller
 
 
     //
-    public function aspect_index() {
+    public function aspect_index($id) {
 		$data['title'] = 'Aspectos';
 		try {			
-			$studentResults= $this->studentsResultService->findByFaculty();
+			$studentResults= $this->studentsResultService->findByFaculty2($id);
 			$data['studentsResults'] = $studentResults;
 			$data['aspects'] = $this->aspectService->findByRE($studentResults);
+            $data['idEspecialidad']=$id;
 		} catch(\Exception $e) {
 			dd($e);
 		}
 		return view('flujoCoordinador.aspect_index', $data);
 	}
 
-	public function aspect_create(AspectRequest $request) {
+	public function aspect_create(AspectRequest $request, $id) {
 	
 			$data['title'] = 'Nuevo Aspecto';
 			$data['resultado']=$this->studentsResultService->findById($request->all());
+            $data['idEspecialidad']=$id;
 			return view('flujoCoordinador.aspect_create', $data);
 				
 	}
 
-	public function aspect_store(Request $request) {
+	public function aspect_store(Request $request,$id) {
 		try {
 			$this->aspectService->create($request->all());
 		} catch(\Exception $e) {
 			dd($e);
 		}
-		return redirect()->route('aspect_index.flujoCoordinador')->with('success', 'El aspecto se ha registrado exitosamente');
+		return redirect()->route('aspect_index.flujoCoordinador',$id)->with('success', 'El aspecto se ha registrado exitosamente');
 	}
 
     //Criterios
@@ -125,6 +127,10 @@ class FlujoCoordinadorController extends Controller
 
         return redirect()->route('objetivoEducacional_index.flujoCoordinador', ['id' => $id])
                             ->with('success', 'El objetivo educacional se ha registrado exitosamente');
+    }
+
+    public function end1 (){
+        return view ('flujoCoordinador.end1');
     }
 
 }

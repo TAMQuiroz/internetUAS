@@ -195,7 +195,7 @@
 
               @if(in_array(25,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Aspectos</a>
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.aspects') }}"><i class="material-icons">assessment</i>Aspectos</a>
               </li>
               @endif
 
@@ -307,7 +307,7 @@
 
               <!-- nueva barra PSP -->
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 7 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
+              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 0 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
@@ -412,7 +412,7 @@
               @if(Auth::user() && ((Auth::user()->IdPerfil <= 2)  ) )
 
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Investigación</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Evaluaciones</a>
                 <div class="collapsible-body">
                   <ul>
                     @if(Auth::user()->IdPerfil == 1)   <!-- coordinador de especialidad-->

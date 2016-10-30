@@ -17,6 +17,7 @@ class CreateParametersTable extends Migration
             $table->integer('duracionCita')->unsigned();
             $table->timestamps();
         });
+
     }
 
     /**

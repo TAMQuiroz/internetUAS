@@ -39,7 +39,7 @@ class TutstudentController extends Controller
 
         $tutorId = $request->input('tutorId', null);
 
-        $tutors = Teacher::getTutorsFiltered($isTutor = true, [], $mayorId);
+        $tutors = Teacher::getTutorsFiltered( [], $mayorId);
         
         $students = Tutstudent::getFilteredStudents($filters, $tutorId, $mayorId);
 
@@ -172,8 +172,20 @@ class TutstudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
+        try {            
+            //se busca un alumno con el mismo codigo
+            $u = User::where('Usuario',$request['codigo'])->first();
+            if($u!=null){
+                return redirect()->route('alumno.create')->with('warning', 'El código de alumno que se intenta registrar ya existe.');
+            }
+
             $student = Tutstudent::find($id);
+            $user = User::find($student->id_usuario);
+            //cambio el usuario del alumno
+            $user->Usuario = $request['codigo'];
+            $user->save();
+
+            //cambio el alumno            
             $student->codigo       = $request['codigo'];            
             $student->nombre       = $request['nombre'];            
             $student->ape_paterno  = $request['app'];            
@@ -265,6 +277,7 @@ class TutstudentController extends Controller
                         $tutoriaIngresada = DB::table('tutorships')->where([
                             ['id_tutor', '=', $idTeacher],
                             ['id_alumno', '=', $students[$n_al]->id],
+                            ['deleted_at', '=', null],//para que no asigne a una tutorship eliminada
                             ])->get()[0];
 
                         

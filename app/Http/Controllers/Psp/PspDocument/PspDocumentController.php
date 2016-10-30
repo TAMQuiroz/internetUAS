@@ -33,7 +33,7 @@ class PspDocumentController extends Controller
         $data['student'] = $students->first();
 
         //$data['groups'] = $this->groupService->retrieveAll();
-        return view('psp.PspDocument.index', $data);
+        return view('psp.pspDocument.index', $data);
     }
 
     /**
@@ -154,7 +154,7 @@ class PspDocumentController extends Controller
         ];
         $data['student'] = $student;
 
-        return view('psp.PspDocument.search', $data);       
+        return view('psp.pspDocument.search', $data);       
 
     }
 
@@ -179,7 +179,7 @@ class PspDocumentController extends Controller
             $pspDocument->observaciones  = $request['observaciones'];
             $pspDocument->idTipoEstado  = 5;
             $pspDocument->save();
-            return redirect()->route('pspDocument.search',$pspDocument->idStudent)->with('success', 'Se ha subido el documento exitosamente');
+            return redirect()->route('pspDocument.search',$pspDocument->idStudent)->with('success', 'Se ha registrado la observacion exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

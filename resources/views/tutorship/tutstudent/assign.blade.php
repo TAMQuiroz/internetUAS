@@ -34,7 +34,7 @@
                     <tr class="headings">                            
                         <th class="column-title">Código </th>
                         <th class="column-title">Tutor </th>                        
-                        <th class="column-title">Horas a la semana</th>                        
+                        <th class="column-title">Horas semanales</th>                        
                         <th class="column-title">Cantidad actual </th>
                         <th class="column-title last">A asignar</th>                            
                     </tr>

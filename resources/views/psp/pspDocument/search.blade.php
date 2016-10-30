@@ -13,12 +13,14 @@
         <div class="x_panel">
 
             <div class="x_content">
-                <a>Codigo</a>
+                @if($student!=null)
+                <a>Codigo</a>                
                 <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->Codigo); ?>"/>
                 <br/>
                 <br/>
                 <a>Alumno</a>
                 <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->Nombre); ?>"/>
+                @endif
                 <br/>
                 <br/>
                 <div class="clearfix"></div>
@@ -37,6 +39,7 @@
                     </thead>
                     <tbody>
                         @foreach($pspdocuments as $pspdocument)
+
                         <tr> 
                             <td>{{$pspdocument->template->titulo}}</td> 
                             <td>{{$pspdocument->template->ruta}}</td> 
@@ -74,6 +77,7 @@
                               </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
                         </tr>
+
                         @endforeach 
                     </tbody>
                 </table>

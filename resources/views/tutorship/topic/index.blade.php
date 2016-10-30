@@ -1,26 +1,43 @@
 @extends('app')
 @section('content')
-<div class="page-title">
-    <div class="title_left">
-        <h3>Temas de Citas</h3>
-    </div>
-    <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-            <div class="input-group">
 
+<ul class="tabs-page">
+    <a href="{{route('parametro.index.duration')}}">
+        <div class="tab-page-wrapper">
+            <li class="tab-page">Citas</li>
+        </div>
+    </a>
+    <div class="tab-page-wrapper active">
+        <li class="tab-page">Temas</li>
+    </div>
+    <a href="{{route('motivo.index')}}">
+        <div class="tab-page-wrapper">
+            <li class="tab-page">Motivos</li>
+        </div>
+    </a>
+</ul>
+<div class="tab-content-container">
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Temas de Citas</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">
-            
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <a href="{{ route('tema.create') }}" class="btn btn-success pull-right">
-                        <i class="fa fa-plus"></i> Nuevo Tema</a>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title"> 
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <a href="{{ route('tema.create') }}" class="btn btn-success pull-right">
+                            <i class="fa fa-plus"></i> Nuevo Tema</a>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -55,8 +72,10 @@
                         </tbody>
                     </table>
                 </div>
-                
             </div>
         </div>
     </div>
-    @endsection
+
+</div>
+
+@endsection

@@ -28,7 +28,9 @@
 						<select name="competencia" required="required" class="form-control">
 							<option value="">Seleccione</option>
 							@foreach($competences as $competence)
+							@if(in_array($competence->id, $arrcompetences))
 							<option value="{{$competence->id}}" >{{$competence->nombre}}</option>
+							@endif
 							@endforeach	
 						</select>						
 					</div>

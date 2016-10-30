@@ -77,6 +77,17 @@
       @endif
 
     </div>
+
+    <div class="row"></div>
+      <div class="separator"></div>
+      <div class="row">
+
+          <div class="col-md-12 col-sm-12 col-xs-12">
+               <a  href="" class="btn btn-success pull-right">Siguiente ></a>
+               <a  href="" class="btn btn-default pull-left">Atras</a>
+          </div>
+      </div>
+
   </div>
 </div>
 

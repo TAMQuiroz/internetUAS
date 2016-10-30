@@ -5,7 +5,6 @@ namespace Intranet\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
-use Intranet\Models\criterion;
 
 use Session;
 use Intranet\Models\Faculty;
@@ -17,6 +16,10 @@ use Intranet\Http\Services\Aspect\AspectService;
 use Intranet\Http\Requests\AspectRequest;
 
 use Intranet\Http\Requests\CriterioResquest;
+use Intranet\Http\Requests\CriterioStoreRequest;
+use Intranet\Models\Aspect;
+use Intranet\Models\criterion;
+use Intranet\Models\StudentsResult;
 
 class FlujoCoordinadorController extends Controller
 {
@@ -69,8 +72,27 @@ class FlujoCoordinadorController extends Controller
     }
 
     public function criterio_create (CriterioResquest $request, $id){
-    	return 'crear criterio '.$id. ' '. $request->get('resultado'). ' '. $request->get('aspecto');
-    	//return view('flujoCoordinador.criterio_create', ['idEspecialidad'=>$id]);
+    	//$idResultado = $request->get('resultado');
+    	//$resultado= StudentsResult::findOrFail($idResultado);
+
+    	$idAspecto = $request->get('aspecto');
+    	$aspecto= Aspect::findOrFail($idAspecto);
+
+    	return view('flujoCoordinador.criterio_create', ['idEspecialidad'=>$id, 'aspecto'=>$aspecto]);
+    }
+
+    public function criterio_store(CriterioStoreRequest $request, $id){
+    	$criterio = new Criterion;
+
+    	$criterio->IdAspecto= $request->idAspecto;
+    	$criterio->Nombre= $request->nombre;
+    	$criterio->Estado= 1;
+
+    	$criterio->save();
+
+    	return redirect()->route('criterio_index.flujoCoordinador', ['id' => $id])
+                            ->with('success', 'El criterio se ha registrado exitosamente');
+
     }
     //Fin de criterio
     

@@ -689,8 +689,8 @@ $api->version('v1', function ($api) {
             $api->get('users/me', 'User\UserController@getUserInfo');
 
             $api->group(['namespace' => 'Faculty', 'prefix' => 'faculties'], function($api) {
-                $api->get('/getFaculty/{faculty_id}','FacultyController@getSpecialty');
                 $api->get('/', 'FacultyController@get');
+                $api->get('/getFaculty/{faculty_id}','FacultyController@getSpecialty');
                 $api->get('/{faculty_id}/educational-objectives', 'FacultyController@getEducationalObjectives');
                 $api->get('/{faculty_id}/students-results', 'FacultyController@getStudentsResult');
                 $api->get('/{faculty_id}/aspects', 'FacultyController@getAspects');

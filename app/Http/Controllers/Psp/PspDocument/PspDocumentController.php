@@ -26,12 +26,12 @@ class PspDocumentController extends Controller
         $students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
         $pspdocuments = PspDocument::where('idstudent',$student->IdAlumno)->get();
-
+        //$templates = Template::get();
         $data = [
             'pspdocuments'    =>  $pspdocuments,
         ];
         $data['student'] = $students->first();
-
+        //$data['templates'] = $templates;
         //$data['groups'] = $this->groupService->retrieveAll();
         return view('psp.pspDocument.index', $data);
     }
@@ -147,6 +147,7 @@ class PspDocumentController extends Controller
         //$students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         //$student  =$students->first();
         $student = Student::find($id);
+        
         $pspdocuments = PspDocument::where('idstudent',$id)->get();
 
         $data = [

@@ -32,6 +32,7 @@ class TemplateController extends Controller
         $data = [
             'templates'    =>  $templates,
         ];
+        //$data['phases'] = Phase::get();
         return view('psp.template.index', $data);
         //return view('template.index');
     }
@@ -57,8 +58,9 @@ class TemplateController extends Controller
     {
         try {
             $template = new Template;
+           //$phase         = Phase::find($request['fase']);
             $template->idphase       = $request['fase']; 
-
+            //$data['phases'] = Phase::get();
             //$template->idTipoEstado  = 1;
             if(Auth::User()->IdPerfil==6){
                 $supervisors = Supervisor::where('iduser',Auth::User()->IdUsuario)->get();  
@@ -106,9 +108,9 @@ class TemplateController extends Controller
                     $PspDocument->idtemplate=$template->id;
                     $PspDocument->idtipoestado=3;
                     if($template->idtipoestado  == 1)
-                       $PspDocument->esObligatorio='s';
+                       $PspDocument->eso_obligatorio='s';
                    else
-                       $PspDocument->esObligatorio='n';
+                       $PspDocument->eso_obligatorio='n';
                     $PspDocument->fecha_limite=Phase::find($request['fase'])->fecha_fin;
                     $PspDocument->save();
                     }
@@ -159,6 +161,7 @@ class TemplateController extends Controller
      */
     public function update(TemplateEditRequest $request, $id)
     {
+        //$data['phases'] = Phase::get();
         try {
             $template = Template::find($id);
             $template->idphase       = $request['fase'];

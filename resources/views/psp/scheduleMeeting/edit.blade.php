@@ -1,0 +1,70 @@
+@extends('app')
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-title">
+        	<div class="title_left">
+        		<h3>Editar Semana de Reuniones</h3>
+        	</div>
+        </div>
+    </div>
+</div>        
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Información</h3>
+            </div>
+            <div class="panel-body">
+            {{Form::open(['route' => ['scheduleMeeting.update',$schedule->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+
+            	
+                <div class="form-group">
+                    {{Form::label('Fase *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-6 col-sm-6 col-xs-12">                                
+                        <select name="fase" id="fase" class="form-control" required="required">
+                            @foreach( $phases as $phase)
+                            <option value="{{$phase->id}}" selected="">{{$phase->numero.': '.$phase->fecha_inicio.' - '.$phase->fecha_fin}} </option>
+                            @endforeach
+                        </select>                              
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    {{Form::label('Fecha de Inicio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-4">
+                        {{Form::date('fecha_inicio',$schedule->fecha_inicio,['class'=>'form-control', 'required'])}}
+                    </div>
+                </div>  
+
+                <div class="form-group">
+                    {{Form::label('Fecha de Fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-4">
+                        {{Form::date('fecha_fin',$schedule->fecha_fin,['class'=>'form-control', 'required'])}}
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label for="tipol" class="control-label col-md-3 col-sm-3 col-xs-12">Fase</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select name="tipo" disabled class="form-control">
+                            <option value="first">{{$schedule->tipo}}</option>
+                        </select>   
+                    </div>
+                </div>      
+
+                </br>
+                <div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
+                        <a class="btn btn-default pull-right" href="{{ route('scheduleMeeting.index') }}">Cancelar</a>
+                    </div>
+                </div>
+                {{Form::close()}}
+
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

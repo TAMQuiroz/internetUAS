@@ -39,12 +39,11 @@
                     </thead>
                     <tbody>
                         @foreach($pspdocuments as $pspdocument)
-
                         <tr> 
                             <td>{{$pspdocument->template->titulo}}</td> 
                             <td>{{$pspdocument->template->ruta}}</td> 
                             <td>{{$pspdocument->ruta}}</td> 
-                            @if($pspdocument->esObligatorio=='s')
+                            @if($pspdocument->eso_obligatorio=='s')
                             <td>obligatorio</td> 
                             @else
                             <td>no obligatorio</td> 

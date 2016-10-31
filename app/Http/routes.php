@@ -618,6 +618,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'phase.delete', 'uses' => 'Psp\Phase\PhaseController@destroy']);    
             });
 
+            //Schedule Meeting
+            Route::group(['prefix' => 'scheduleMeeting'], function() {
+                Route::get('/', ['as' => 'scheduleMeeting.index', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@index']);
+                Route::get('create', ['as' => 'scheduleMeeting.create', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@create']);
+                Route::post('create', ['as' => 'scheduleMeeting.store', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@store']);
+                Route::get('show/{id}', ['as' => 'scheduleMeeting.show', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@show']);
+                Route::get('edit/{id}', ['as' => 'scheduleMeeting.edit', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@edit']);
+                Route::post('edit/{id}', ['as' => 'scheduleMeeting.update', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@update']);
+                Route::get('delete/{id}', ['as' => 'scheduleMeeting.delete', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@destroy']);    
+            });
+
             //Status
             Route::group(['prefix' => 'status'], function() {
                 Route::get('/', ['as' => 'status.index', 'uses' => 'Psp\Status\StatusController@index']);

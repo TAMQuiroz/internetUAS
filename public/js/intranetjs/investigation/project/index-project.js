@@ -2,7 +2,7 @@ $(document).ready(function() {
     var activeSystemClass = $('.list-group-item.active');
 
     //something is entered in search form
-    $('#group-search').keyup( function() {
+    $('#project-search').keyup( function() {
        var that = this;
         // affect all table rows on in systems table
         var tableBody = $('.table-list-search tbody');

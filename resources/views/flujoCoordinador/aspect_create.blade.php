@@ -18,7 +18,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form class="form-horizontal" novalidate="true" action="{{ route('aspect_store.flujoCoordinador')}}" method="POST" id="formAcademic" name="formAcademic">
+				<form class="form-horizontal" novalidate="true" action="{{ route('aspect_store.flujoCoordinador',$idEspecialidad)}}" method="POST" id="formAcademic" name="formAcademic">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div class="x_content">
 						<div class="form-group">
@@ -45,7 +45,7 @@
 						<div class="row">
 							<div class="col-md-9 col-sm-12 col-xs-12">
 								<button class="btn btn-success pull-right" type="submit" value="Guardar">Guardar</button>
-								<a class="btn btn-default pull-right" href="{{ route('aspect_index.flujoCoordinador') }}">Atras</a>
+								<a class="btn btn-default pull-right" href="{{ route('aspect_index.flujoCoordinador',$idEspecialidad) }}">Atras</a>
 							</div>
 						</div>
 					</div>

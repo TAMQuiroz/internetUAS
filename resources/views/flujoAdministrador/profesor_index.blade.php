@@ -16,9 +16,9 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        @if(in_array(10, Session::get('actions')))
-                            <a href="{{ route('profesor_create.flujoAdministrador', $idEspecialidad) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Profesor</a>
-                        @endif
+                    
+                        <a href="{{ route('profesor_create.flujoAdministrador', $idEspecialidad) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Profesor</a>
+                      
                     </div>
                 </div>
 

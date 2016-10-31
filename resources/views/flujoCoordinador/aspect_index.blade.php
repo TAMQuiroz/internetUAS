@@ -10,7 +10,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
     <div class="x_content">
-      <form action="{{ route('aspect_create.flujoCoordinador')}}" method="POST" id="formAspect" name="formAspect" novalidate="true" class="form-horizontal">
+      <form action="{{ route('aspect_create.flujoCoordinador',$idEspecialidad)}}" method="POST" id="formAspect" name="formAspect" novalidate="true" class="form-horizontal">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="row">
             <div class="col-md-9 col-sm-12 col-xs-12">
@@ -77,6 +77,17 @@
       @endif
 
     </div>
+
+    <div class="row"></div>
+      <div class="separator"></div>
+      <div class="row">
+
+          <div class="col-md-12 col-sm-12 col-xs-12">
+               <a  href="{{ route('criterio_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+               <a  href="" class="btn btn-default pull-left">Atras</a>
+          </div>
+      </div>
+
   </div>
 </div>
 

@@ -31,6 +31,13 @@ class StudentsResultService {
 
         return $studentResults;
     }
+    public function findByFaculty2($faculty_id) {
+
+        $studentResults = StudentsResult::where('IdEspecialidad', $faculty_id)
+            ->where('deleted_at', null)->get();
+
+        return $studentResults;
+    }
 
     public function findByFacultyAndCicle()
     {

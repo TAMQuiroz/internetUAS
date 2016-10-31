@@ -129,8 +129,8 @@ class FlujoCoordinadorController extends Controller
                             ->with('success', 'El objetivo educacional se ha registrado exitosamente');
     }
 
-    public function end1 (){
-        return view ('flujoCoordinador.end1');
+    public function end1 ($id){
+        return view ('flujoCoordinador.end1', ['idEspecialidad'=>$id]);
     }
 
 }

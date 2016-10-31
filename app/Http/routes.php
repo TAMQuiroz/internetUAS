@@ -742,6 +742,10 @@ $api->version('v1', function ($api) {
                 $api->get('/getAllInvGroups', 'Group\GroupController@getAll');
                 $api->get('/getAllProjects', 'Project\ProjectController@getAll');
 
+                $api->get('/{id}/event', 'Event\EventController@getById');
+                $api->post('/{id}/event', 'Event\EventController@edit');
+                $api->get('/{id}/events', 'Event\EventController@getByGroupId');
+
             });
 
             

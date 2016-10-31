@@ -29,4 +29,8 @@ class Group extends Model
     public function teachers(){
         return $this->belongsToMany('Intranet\Models\Teacher','teacherxgroups','id_grupo','id_profesor')->orderBy('Nombre', 'asc')->withPivot('id');    
     }
+
+    public function events(){
+        return $this->HasMany('Intranet\Models\Event', 'id_grupo');
+    }
 }

@@ -29,16 +29,16 @@
                         <div class="form-group">
                             <label for="titulol" class="control-label col-md-3 col-sm-3 col-xs-12">Titulo</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id=titulo type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->template->titulo); ?>"/>
+                            <input id=titulo type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->titulo_plantilla); ?>"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="plantillal" class="control-label col-md-3 col-sm-3 col-xs-12">Plantilla</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id=plantilla type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->template->ruta); ?>"/>
+                            <input id=plantilla type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->ruta_plantilla); ?>"/>
                             </div>
-                            <a class="btn btn-primary btn-xs" href="{{route('getentry.template', $pspDocument->template->id)}}" title="Descargar Plantilla"><i class="fa fa-download"></i></a>
+                            <a class="btn btn-primary btn-xs" href="{{route('getentry.template', $pspDocument->idtemplate)}}" title="Descargar Plantilla"><i class="fa fa-download"></i></a>
                         </div>
 
                         <div class="form-group">

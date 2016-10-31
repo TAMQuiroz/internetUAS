@@ -13,7 +13,7 @@ class AddFkToInvdocumentsTable extends Migration
     public function up()
     {
         Schema::table('invdocuments', function (Blueprint $table) {
-            $table->foreign('id_investigador')->references('id')->on('investigators');
+            $table->foreign('id_investigador')->references('IdUsuario')->on('Usuario');
             $table->foreign('id_entregable')->references('id')->on('deliverables');
         });
     }

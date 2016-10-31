@@ -74,7 +74,7 @@
 		    		</div>
 
 		    		<div class="form-group">
-		    			{{Form::label('Descripcion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Descripcion',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::textarea('descripcion', $evento->descripcion, ['class' => 'form-control', 'rows'=>'5', 'readonly', 'maxlength'=>200])}}
 		    			</div>

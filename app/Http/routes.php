@@ -710,6 +710,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{p_id}/instruments', 'PeriodController@getMeasurementInstOfPeriod');
                 $api->get('/{p_id}/cycles', 'PeriodController@getCyclesofPeriod');  
                 $api->get('/{p_id}/show', 'PeriodController@getPeriodbyId');                          
+                $api->get('/{p_id}/{f_id}/objectives', 'PeriodController@getEducationalObjectivesofPeriod');                          
             });
 
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){

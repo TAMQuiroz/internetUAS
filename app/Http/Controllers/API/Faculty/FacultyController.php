@@ -5,6 +5,8 @@ namespace Intranet\Http\Controllers\API\Faculty;
 use JWTAuth;
 use Response;
 use Intranet\Models\Course;
+use Intranet\Models\Schedule;
+use Intranet\Models\CoursexCycle;
 use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
 use Intranet\Models\Aspect;
@@ -26,7 +28,7 @@ use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
-
+use Intranet\Models\Evaluation;
 class FacultyController extends BaseController
 {
     use Helpers;
@@ -117,7 +119,13 @@ class FacultyController extends BaseController
       }
 
 
-      public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
+    public function getCourseSchedule($course_id,$academic_cycle_id){
+        $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_cycle_id)->first();
+        $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)->get();
+        return Response::json($schedules);
+    }
+
+    public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
 

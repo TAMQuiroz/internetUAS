@@ -40,7 +40,7 @@ $(document).ready(function() {
         //all tr elements are hidden
         if(tableRowsClass.children(':visible').length == 0)
         {
-            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No se encontraon resultados.</td></tr>');
+            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No se encontraron resultados.</td></tr>');
         }
     });
 });

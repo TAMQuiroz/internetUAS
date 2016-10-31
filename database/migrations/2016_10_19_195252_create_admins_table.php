@@ -21,8 +21,8 @@ class CreateAdminsTable extends Migration
             $table->string('correo');
             $table->string('direccion');
             $table->string('codigo_trabajador');
-            $table->integer('idUser');
-            $table->integer('idEspecialidad');
+            $table->integer('iduser');
+            $table->integer('idespecialidad');
             $table->timestamps();
             $table->softDeletes();
         });

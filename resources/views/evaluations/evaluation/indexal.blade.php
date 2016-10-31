@@ -13,10 +13,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a data-toggle="modal" data-target="#filter-evaluations"  class="btn btn-warning pull-left">
                         <i class="fa fa-filter"></i> Filtrar
-                    </a>
-                    <a href="{{ route('evaluacion.create') }}" class="btn btn-success pull-right">
-                        <i class="fa fa-plus"></i> Nueva evaluación
-                    </a>
+                    </a>                    
                 </div>
             </div>   
             <div class="table-responsive">

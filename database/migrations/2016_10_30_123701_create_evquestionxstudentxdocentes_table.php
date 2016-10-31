@@ -21,6 +21,7 @@ class CreateEvquestionxstudentxdocentesTable extends Migration
             $table->string('respuesta',5000)->nullable();
             $table->string('comentario',1000)->nullable();
             $table->string('clave_elegida',1)->nullable();
+            $table->string('path_archivo',500)->nullable();
             $table->timestamps();
         });
 

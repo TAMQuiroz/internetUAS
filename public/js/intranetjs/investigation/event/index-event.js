@@ -2,7 +2,7 @@ $(document).ready(function() {
     var activeSystemClass = $('.list-group-item.active');
 
     //something is entered in search form
-    $('#investigator-search').keyup( function() {
+    $('#event-search').keyup( function() {
        var that = this;
         // affect all table rows on in systems table
         var tableBody = $('.table-list-search tbody');
@@ -40,7 +40,7 @@ $(document).ready(function() {
         //all tr elements are hidden
         if(tableRowsClass.children(':visible').length == 0)
         {
-            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No se encontraon resultados.</td></tr>');
+            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No se encontraron resultados.</td></tr>');
         }
     });
 });

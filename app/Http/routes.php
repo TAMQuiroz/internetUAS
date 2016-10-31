@@ -734,13 +734,21 @@ $api->version('v1', function ($api) {
 
                 $api->get('/{id}/groups', 'Group\GroupController@getById');
                 $api->post('/{id}/groups', 'Group\GroupController@edit');
+                
                 $api->get('/{id}/investigators', 'Investigator\InvestigatorController@getById');
                 $api->post('/{id}/investigators', 'Investigator\InvestigatorController@edit');
-                $api->get('/{id}/projects', 'Project\ProjectController@getById');
                 
+                $api->get('/{id}/projects', 'Project\ProjectController@getById');
+                $api->post('/{id}/projects', 'Project\ProjectController@edit');
+                
+
                 $api->get('/getAllInvestigators', 'Investigator\InvestigatorController@getAll');
                 $api->get('/getAllInvGroups', 'Group\GroupController@getAll');
                 $api->get('/getAllProjects', 'Project\ProjectController@getAll');
+
+                $api->get('/{id}/deliverable', 'Deliverable\DeliverableController@getById');
+                $api->post('/{id}/deliverable', 'Deliverable\DeliverableController@edit');
+                $api->get('/{id}/deliverables', 'Deliverable\DeliverableController@getByProjectId');
 
                 $api->get('/{id}/event', 'Event\EventController@getById');
                 $api->post('/{id}/event', 'Event\EventController@edit');
@@ -749,10 +757,6 @@ $api->version('v1', function ($api) {
             });
 
             
-
-            
-
-
             //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');

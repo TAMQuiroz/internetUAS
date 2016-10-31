@@ -13,8 +13,8 @@ class AddFkToAdmins extends Migration
     public function up()
     {
         Schema::table('admins', function (Blueprint $table) {
-             $table->foreign('idUser')->references('IdUsuario')->on('Usuario');
-             $table->foreign('idEspecialidad')->references('IdEspecialidad')->on('Especialidad');
+             $table->foreign('iduser')->references('IdUsuario')->on('Usuario');
+             $table->foreign('idespecialidad')->references('IdEspecialidad')->on('Especialidad');
         });
     }
 
@@ -26,8 +26,8 @@ class AddFkToAdmins extends Migration
     public function down()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->dropForeign('admins_idUser_foreign');
-            $table->dropForeign('admins_idEspecialidad_foreign');
+            $table->dropForeign('admins_iduser_foreign');
+            $table->dropForeign('admins_idespecialidad_foreign');
         }); 
     }
 }

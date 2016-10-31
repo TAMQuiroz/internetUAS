@@ -21,9 +21,8 @@ class SubindexController extends BaseController {
         $data['faculties'] = [];
 
         $user = $data['userSession'] = Session::get('user');
-      
         try {
-            $allFaculties = $this->facultyService->retrieveAll();               
+            $allFaculties = $this->facultyService->retrieveAll();    
             if (($user->IdDocente!=null)  && ($user->IdDocente == 0)){//detect admin
                 $data['faculties'] = $allFaculties;
                 $data['isEmpty'] = false;
@@ -55,7 +54,7 @@ class SubindexController extends BaseController {
                 $data['faculties'] = $allFaculties;
                 $data['isEmpty'] = false;
             }else if ($user->user->IdPerfil== 6 || !$user->user->idPerfil){ //Supervisores
-                array_push($data['faculties'], $this->facultyService->find($user->idFaculty));
+                array_push($data['faculties'], $this->facultyService->find($user->idfaculty));
                 $data['isEmpty'] = false;
             } else { // Logic of ACREDITORS
                 $data['isEmpty'] = false;

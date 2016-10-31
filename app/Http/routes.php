@@ -1096,6 +1096,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/objetivoEducacional/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
         Route::post('/{id}/objetivoEducacional/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
         
+        Route::get('/{id}/studentResult', ['as' => 'studentResult_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@studentResult_index']);
+        Route::get('/{id}/studentResult/create', ['as' => 'studentResult_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@studentResult_create']);        
+        Route::post('/{id}/studentResult/store', ['as' => 'studentResult_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@studentResult_store']);
+
         Route::get('/{id}/aspect', ['as' => 'aspect_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_index']);
         Route::post('/{id}/aspect/create', ['as' => 'aspect_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_create']);
         Route::post('/{id}/aspect/store', ['as' => 'aspect_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_store']);

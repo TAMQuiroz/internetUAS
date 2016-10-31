@@ -737,6 +737,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/investigators', 'Investigator\InvestigatorController@getById');
                 $api->post('/{id}/investigators', 'Investigator\InvestigatorController@edit');
                 $api->get('/{id}/projects', 'Project\ProjectController@getById');
+                $api->post('/{id}/projects', 'Project\ProjectController@edit');
                 
                 $api->get('/getAllInvestigators', 'Investigator\InvestigatorController@getAll');
                 $api->get('/getAllInvGroups', 'Group\GroupController@getAll');

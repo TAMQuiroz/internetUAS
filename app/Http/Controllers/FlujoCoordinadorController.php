@@ -12,6 +12,7 @@ use Intranet\Models\Faculty;
 use Intranet\Models\EducationalObjetive;
 use Intranet\Http\Requests\EducationalObjetiveRequest;
 
+use Intranet\Http\Services\Faculty\FacultyService;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Http\Services\Aspect\AspectService;
 use Intranet\Http\Requests\AspectRequest;
@@ -20,14 +21,25 @@ class FlujoCoordinadorController extends Controller
 {
 	protected $aspectService;
 	protected $studentsResultService;
+	protected $facultyService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
 		$this->studentsResultService = new StudentsResultService();
+		$this->facultyService = new FacultyService();
 	}
 
 
     //
+
+    public function index()
+    {
+
+    	$data['idEspecialidad']=$this->facultyService->getFacultyxDocente();
+
+      	return view('flujoCoordinador.index',$data);
+    }
+
     public function aspect_index() {
 		$data['title'] = 'Aspectos';
 		try {			

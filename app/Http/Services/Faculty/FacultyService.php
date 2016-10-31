@@ -114,6 +114,12 @@ class FacultyService {
 		return $faculty;
 	}
 
+	public function getFacultyxDocente() {
+		$teacher = Teacher::where('IdUsuario', Session::get('user')->IdUsuario)->first();
+		$faculty = Faculty::where('IdDocente', $teacher->IdDocente)->first();
+		return $faculty;
+	}
+
 	public function getName($nombre) {
 		$faculty = Faculty::where('Nombre', $nombre)->first();
 		$retVal = (is_null($faculty)) ? True : False ;

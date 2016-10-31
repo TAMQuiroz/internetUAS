@@ -1091,7 +1091,7 @@ Route::group(['prefix' => 'tutoria'], function(){
 
     //Acreditacion - flujo coordinador:
     Route::group(['prefix' => 'flujoCoordinador'], function() {
-        
+        Route::get('/', ['as' => 'index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@index']);
         Route::get('/{id}/objetivoEducacional', ['as' => 'objetivoEducacional_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_index']);
         Route::get('/{id}/objetivoEducacional/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
         Route::post('/{id}/objetivoEducacional/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);

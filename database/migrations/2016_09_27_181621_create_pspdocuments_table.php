@@ -15,11 +15,14 @@ class CreatePspdocumentsTable extends Migration
         Schema::create('pspdocuments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ruta');
+            $table->string('titulo_plantilla')->nullable();
+            $table->string('ruta_plantilla')->nullable();
             $table->string('observaciones');
             $table->char('eso_obligatorio');
             $table->integer('idstudent');
             $table->integer('idtemplate')->unsigned();
             $table->integer('idtipoestado')->unsigned();
+            $table->integer('numerofase')->nullable();
             $table->date('fecha_limite');
             $table->softDeletes();
             $table->timestamps();

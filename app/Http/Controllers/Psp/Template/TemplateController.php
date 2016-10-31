@@ -58,8 +58,9 @@ class TemplateController extends Controller
     {
         try {
             $template = new Template;
-           //$phase         = Phase::find($request['fase']);
+            $phase         = Phase::find($request['fase']);
             $template->idphase       = $request['fase']; 
+            $template->numerofase = $phase->numero;
             //$data['phases'] = Phase::get();
             //$template->idTipoEstado  = 1;
             if(Auth::User()->IdPerfil==6){
@@ -106,12 +107,15 @@ class TemplateController extends Controller
                     $PspDocument = new PspDocument;
                     $PspDocument->idstudent= $psp->IdAlumno;
                     $PspDocument->idtemplate=$template->id;
+                    $PspDocument->titulo_plantilla=$template->titulo;
+                    $PspDocument->ruta_plantilla=$template->ruta;
                     $PspDocument->idtipoestado=3;
                     if($template->idtipoestado  == 1)
                        $PspDocument->eso_obligatorio='s';
                    else
                        $PspDocument->eso_obligatorio='n';
                     $PspDocument->fecha_limite=Phase::find($request['fase'])->fecha_fin;
+                    $PspDocument->numerofase=Phase::find($request['fase'])->numero;
                     $PspDocument->save();
                     }
                 }
@@ -165,6 +169,7 @@ class TemplateController extends Controller
         try {
             $template = Template::find($id);
             $template->idphase       = $request['fase'];
+            $template->numerofase    = Phase::find($request['fase'])->numero;
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
                 $template->idtipoestado  = 1;

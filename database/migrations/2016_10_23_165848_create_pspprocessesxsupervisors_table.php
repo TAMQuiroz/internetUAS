@@ -13,6 +13,7 @@ class CreatePspprocessesxsupervisorsTable extends Migration
     public function up()
     {
         Schema::create('pspprocessesxsupervisors', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('idpspprocess')->unsigned();
             $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
             $table->integer('idsupervisor')->unsigned();

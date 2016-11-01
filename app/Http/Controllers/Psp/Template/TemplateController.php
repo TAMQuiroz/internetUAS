@@ -112,9 +112,9 @@ class TemplateController extends Controller
                     $PspDocument->ruta_plantilla=$template->ruta;
                     $PspDocument->idtipoestado=3;
                     if($template->idtipoestado  == 1)
-                       $PspDocument->eso_obligatorio='s';
+                       $PspDocument->es_obligatorio='s';
                    else
-                       $PspDocument->eso_obligatorio='n';
+                       $PspDocument->es_obligatorio='n';
                     $PspDocument->fecha_limite=Phase::find($request['fase'])->fecha_fin;
                     $PspDocument->numerofase=Phase::find($request['fase'])->numero;
                     $PspDocument->save();

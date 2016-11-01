@@ -12,6 +12,7 @@ use Intranet\Http\Requests\TemplateEditRequest;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\PspDocument;
+use Intranet\Models\PspStudent;
 use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Intranet\Models\Supervisor;
@@ -100,12 +101,12 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
 
-                $pspstudents=Student::get();
+                $pspstudents=PspStudent::get();
                 //$pspstudents=Student::where('lleva_psp','t')->get();
                 foreach($pspstudents as $psp) {
                     if($psp!=null){
                     $PspDocument = new PspDocument;
-                    $PspDocument->idstudent= $psp->IdAlumno;
+                    $PspDocument->idstudent= $psp->idalumno;
                     $PspDocument->idtemplate=$template->id;
                     $PspDocument->titulo_plantilla=$template->titulo;
                     $PspDocument->ruta_plantilla=$template->ruta;

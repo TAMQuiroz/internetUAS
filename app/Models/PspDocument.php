@@ -11,15 +11,15 @@ class PspDocument extends Model
     protected $table = 'pspdocuments';
 
     public function status(){
-        return $this->belongsTo('Intranet\Models\Status', 'idTipoEstado');
+        return $this->belongsTo('Intranet\Models\Status', 'idtipoestado');
     }
 
     public function template(){
-        return $this->belongsTo('Intranet\Models\Template', 'idTemplate');
+        return $this->belongsTo('Intranet\Models\Template', 'idtemplate');
     }
 
     public function student(){
-        return $this->belongsTo('Intranet\Models\Student', 'IdAlumno');
+        return $this->belongsTo('Intranet\Models\Student', 'idstudent');
     }
 
 }

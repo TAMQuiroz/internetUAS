@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests;
 use Intranet\Models\Schedule_meetings;
+use Intranet\Http\Requests\ScheduleMeetingRequest;
 use Intranet\Models\Phase;
 use Auth;
 
@@ -98,7 +99,7 @@ class scheduleMeetingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ScheduleMeetingRequest $request, $id)
     {
         try {
             //Crear 

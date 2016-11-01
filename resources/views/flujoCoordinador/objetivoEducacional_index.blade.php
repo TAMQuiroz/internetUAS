@@ -32,7 +32,7 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="objetivos-fc-table">
                     @foreach($objetivos as $objetivo)
                         <tr class="even pointer">
                             <td class="id" hidden="true">{{$objetivo->IdObjetivoEducacional}}</td>
@@ -53,9 +53,9 @@
                 <div class="separator"></div>
                 <div class="row">
 
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                         <a  href="" class="btn btn-success pull-right">Siguiente ></a>
+                    <div class="col-md-12 col-sm-12 col-xs-12">                         
                          <a class="btn btn-default" href="{{ route('index.flujoCoordinador') }}">Atras</a>
+                         <a  id ="objetivo-siguiente-btn" href="{{ route('studentResult_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
                     </div>
                 </div>
 
@@ -63,8 +63,13 @@
         
         <script src="{{ URL::asset('js/intranetjs/educationalObjetives/index-educationalObjetive-script.js')}}"></script>
         <script type="text/javascript">
-        @if( @Session::has('error') )
-           toastr.error('{{ @Session::get('error') }}');
-        @endif
-    </script>
+            @if( @Session::has('error') )
+               toastr.error('{{ @Session::get('error') }}');
+            @endif
+
+            var fila = $("#objetivos-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#objetivo-siguiente-btn').attr("disabled","disabled");
+            }
+        </script>
 @endsection

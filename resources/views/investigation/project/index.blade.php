@@ -37,9 +37,9 @@
 			                </div>
 			            </form>
 			        </div>
-			        <div class="col-md-6">
-						<a href="{{route('investigador.create')}}">
-							{{Form::button('<i class="fa fa-plus"></i> Crear investigador',['class'=>'btn btn-success pull-right'])}}
+					<div class="col-md-6">
+						<a href="{{route('proyecto.create')}}">
+							{{Form::button('<i class="fa fa-plus"></i> Crear Proyecto',['class'=>'btn btn-success pull-right'])}}
 						</a>
 					</div>
 				</div>

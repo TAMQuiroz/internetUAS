@@ -121,7 +121,8 @@ class FacultyController extends BaseController
 
     public function getCourseSchedule($course_id,$academic_cycle_id){
         $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_cycle_id)->first();
-        $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)->get();
+        $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)->with('professors')->get();
+
         return Response::json($schedules);
     }
 

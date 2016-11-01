@@ -697,7 +697,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/evaluated_courses', 'FacultyController@getEvaluatedCourses');
                 $api->get('course/{course_id}/cycle/{academic_cycle_id}','FacultyController@getCourseSchedule');
                 $api->get('/{faculty_id}/evaluated_courses/{course_id}/semesters/{semester_id}', 'FacultyController@getCourseReport');
-                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureRepor|t');
+                $api->get('/{faculty_id}/measure_report', 'FacultyController@getMeasureReport');
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');

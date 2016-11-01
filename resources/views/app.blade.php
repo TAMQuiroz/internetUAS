@@ -343,18 +343,24 @@
                 </li>  
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
+              @if(Auth::user() && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin')))
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Investigación</a>
                 <div class="collapsible-body">
                   <ul>
-                    @if(Auth::user()->IdPerfil == 2)
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin'))
                       <li><a href="{{route('investigador.index')}}">Administrar Investigadores</a></li>
                       <li><a href="{{route('grupo.index')}}">Administrar Grupos de Investigación</a></li>
-                      <li><a href="{{route('area.index')}}">Administrar Áreas</a></li>
+                    @endif
+
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                    <li><a href="{{route('area.index')}}">Administrar Áreas</a></li>
+                    @endif
+
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin'))
                       <li><a href="{{route('evento.index')}}">Administrar Eventos</a></li>
                       <li><a href="{{route('proyecto.index')}}">Administrar Proyectos</a></li>
-                    @endif
+                    @endif                    
                   </ul>
                 </div>
               </li> 

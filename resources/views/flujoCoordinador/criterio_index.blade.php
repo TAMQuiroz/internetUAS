@@ -71,7 +71,7 @@
                         
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="criterio-fc-table">
 
                      
                     @foreach($resultados as $resultado)
@@ -110,7 +110,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <a href="{{ route('aspect_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
-                        <a href="{{ route('end1.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+                        <a id="criterio-siguiente-btn" href="{{ route('end1.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
                          
                     </div>
                 </div>
@@ -122,6 +122,14 @@
 
         </div>
     </div>
-        
-        <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}"></script>
+        <script>      
+            var fila = $("#criterio-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#criterio-siguiente-btn').attr("disabled","disabled");
+                $('#criterio-siguiente-btn').click(function(){return false;});
+            }
+
+        </script>
+        <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}">
+    
 @endsection

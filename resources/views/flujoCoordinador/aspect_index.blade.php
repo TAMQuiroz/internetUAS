@@ -56,7 +56,7 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody id="aspecto-fc-table">
 
           @foreach($aspects as $asp)
             <tr class="even pointer aspect {{ $asp->studentsResult->Identificador }}">
@@ -86,14 +86,23 @@
       <div class="row">
 
           <div class="col-md-12 col-sm-12 col-xs-12">
-               <a  href="{{ route('criterio_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
-               <a  href="" class="btn btn-default pull-left">Atras</a>
+               <a id="aspecto-siguiente-btn" href="{{ route('criterio_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+               <a  href="{{ route('studentResult_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-left">Atras</a>
           </div>
       </div>
 
   </div>
 </div>
 
-<script src="{{ URL::asset('js/intranetjs/aspects/index-aspect-script.js')}}"></script>
+<script src="{{ URL::asset('js/intranetjs/aspects/index-aspect-script.js')}}">
+  
+
+ var fila = $("#aspecto-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#aspecto-siguiente-btn').attr("disabled","disabled");
+                $('#aspecto-siguiente-btn').click(function(){return false;});
+            }
+
+</script>
 
 @endsection

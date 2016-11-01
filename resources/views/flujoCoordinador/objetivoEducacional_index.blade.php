@@ -54,7 +54,7 @@
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12 col-xs-12">                         
-                         <a class="btn btn-default" href="{{ route('index.flujoCoordinador') }}">Atras</a>
+                         
                          <a  id ="objetivo-siguiente-btn" href="{{ route('studentResult_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
                     </div>
                 </div>
@@ -70,6 +70,7 @@
             var fila = $("#objetivos-fc-table").find("tr");
             if (fila.length == 0) {
                 $('#objetivo-siguiente-btn').attr("disabled","disabled");
+                $('#objetivo-siguiente-btn').click(function(){return false;});
             }
         </script>
 @endsection

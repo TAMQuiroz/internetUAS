@@ -110,7 +110,7 @@
                     <div class="separator"></div>
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
-                                @if(($pspDocument->fecha_limite>=$date )&&($pspDocument->idTipoEstado!=5 ))
+                                @if(($pspDocument->fecha_limite>=$date )&&($pspDocument->idtipoestado!=5 ))
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
                                 @endif
                                 <a href="{{ route('pspDocument.index') }}" class="btn btn-default pull-right"> Cancelar</a>

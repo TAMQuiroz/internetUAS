@@ -27,7 +27,7 @@
                         <th class="column-title">Descripción</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id=resultado-fc-table>
                     @foreach($studentsResults as $stdRslt)
                     <tr class="even pointer">
                         <td class="id" hidden >{{ $stdRslt->IdResultadoEstudiantil }}</td>
@@ -47,7 +47,8 @@
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                         <a  href="{{ route('aspect_index.flujoCoordinador', $id) }}" class="btn btn-success pull-right">Siguiente ></a>
+                        <a class="btn btn-default" href="{{ route('objetivoEducacional_index.flujoCoordinador', $id) }}">< Atras</a>
+                         <a id="resultado-siguiente-btn" href="{{ route('aspect_index.flujoCoordinador', $id) }}" class="btn btn-success pull-right">Siguiente ></a>
                          
                     </div>
                 </div>
@@ -63,6 +64,14 @@
     @if( @Session::has('error') )
        toastr.error('{{ @Session::get('error') }}');
     @endif
+
+
+    var fila = $("#resultado-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#resultado-siguiente-btn').attr("disabled","disabled");
+                $('#resultado-siguiente-btn').click(function(){return false;});
+            }
+
 </script>
 
 @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar el resultado estudiantil?'])

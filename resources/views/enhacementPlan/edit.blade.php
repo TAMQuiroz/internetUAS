@@ -104,8 +104,7 @@
 
                         <div class="row title_right">
                             @if(Auth::user() && ((Auth::user()->IdPerfil == 3) || (Auth::user()->IdPerfil == 1)))
-                                <a type="button" class="btn btn-success pull-right cicleModalEdit" data-toggle="modal" 
-                                data-target="#cicleModalEdit" > Nuevo ciclo</a>
+                                <a href="{{ route('add-cicle-edit.enhacementPlan',$improvementPlan->IdPlanMejora) }}" class="btn btn-success pull-right"> Nuevo Ciclo</a>
                             @endif
                        </div>
 

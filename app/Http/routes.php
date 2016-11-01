@@ -107,9 +107,12 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/getEnhacementPlan/{improvementPlanId}', ['uses' => 'EnhacementPlan\EnhacementController@getEnhacementPlan']);
         Route::get('/CiclesAndTeachers', ['uses' => 'EnhacementPlan\EnhacementController@CiclesAndTeachers']);
 
-        Route::post('/saveModal', ['as' => 'saveModalNew.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNew']);
-        Route::post('/saveModalEdit', ['as' => 'saveModalNewEdit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNewEdit']);
-
+        Route::get('/addCicle', ['as' => 'add-cicle.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@addCicleNew']);
+        Route::get('/{id}/addCicle', ['as' => 'add-cicle-edit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@addCicleEdit']);
+        Route::post('/save-addCicle', ['as' => 'save-cicle.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveCicleNew']);
+        Route::post('/{id}/editCicle', ['as' => 'save-cicle-edit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveEditCicleNew']);
+        Route::get('/{id}/edit', ['as' => 'edit-AddCicle.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@backEdit']);
+          
     });
 
     //DictatedCourses Plan Routes

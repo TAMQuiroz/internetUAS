@@ -83,8 +83,7 @@
                         <div class="separator"></div>
                         <div class="row title_right">
                             @if(Auth::user() && ((Auth::user()->IdPerfil == 3) || (Auth::user()->IdPerfil == 1)))
-                                <button class="btn btn-success pull-right cicleModal" type="submit" data-toggle="modal" 
-                                data-target="#cicleModal" > Nuevo ciclo</button>
+                                <a href="{{ route('add-cicle.enhacementPlan') }}" class="btn btn-success pull-right"> Nuevo Ciclo</a>
                             @endif
                        </div>
                         <table class="table table-bordered" id="address-table" name="address-table">
@@ -204,5 +203,4 @@
     <script src="{{ URL::asset('js/intranetjs/improvementPlans/form-improvementPlans-script.js')}}"></script>
     <script src="{{ URL::asset('js/myvalidations/improvementPlan.js')}}"></script>
 
-    @include('enhacementPlan.save-modal', ['title' => 'Ver Plan de Mejora'])
 @endsection

@@ -21,9 +21,13 @@
                     	<div class="form-group">
                             {{Form::label('Fase *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-6 col-sm-6 col-xs-12">                                
-                                <select name="fase" id="fase" class="form-control" required="required">
+                            <select name="fase" id="fase" class="form-control" required="required">
                                 @foreach( $phases as $phase)
-                                <option value="{{$phase->id}}" selected="">{{$phase->numero}} </option>
+                                    @if($phase->id==$template->idphase)
+                                    <option value="{{$phase->id}}" selected="selected">{{$phase->numero}} </option>
+                                    @else
+                                    <option value="{{$phase->id}}" >{{$phase->numero}} </option>
+                                    @endif
                                 @endforeach
                             </select>                              
                             </div>
@@ -47,9 +51,9 @@
                             {{Form::label('Obligatorio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-1 col-sm-1 col-xs-12">
                             <?php if($template->obligatorio==2) : ?>
-                            {{Form::checkbox('obligatorio',$template->idTipoEstado,false, ['class' => 'form-control'])}}
+                            {{Form::checkbox('obligatorio',$template->idtipoestado,false, ['class' => 'form-control'])}}
                             <?php else : ?>
-                            {{Form::checkbox('obligatorio',$template->idTipoEstado,true, ['class' => 'form-control'])}}
+                            {{Form::checkbox('obligatorio',$template->idtipoestado,true, ['class' => 'form-control'])}}
                             <?php endif; ?>
                             </div>                            
                         </div>     

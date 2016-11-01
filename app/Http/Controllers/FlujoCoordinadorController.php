@@ -13,19 +13,23 @@ use Intranet\Models\EducationalObjetive;
 use Intranet\Http\Requests\EducationalObjetiveRequest;
 
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
+use Intranet\Http\Services\EducationalObjetive\EducationalObjetiveService;
 use Intranet\Http\Services\Aspect\AspectService;
 use Intranet\Http\Requests\AspectRequest;
 
 use Intranet\Http\Requests\CriterioResquest;
+use Intranet\Http\Requests\StudentResultRequest;
 
 class FlujoCoordinadorController extends Controller
 {
 	protected $aspectService;
 	protected $studentsResultService;
+	protected $educationalObjetiveService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
 		$this->studentsResultService = new StudentsResultService();
+		$this->educationalObjetiveService = new EducationalObjetive();
 	}
 
 
@@ -105,6 +109,44 @@ class FlujoCoordinadorController extends Controller
 
         return redirect()->route('objetivoEducacional_index.flujoCoordinador', ['id' => $id])
                             ->with('success', 'El objetivo educacional se ha registrado exitosamente');
+    }
+
+    public function studentResult_index($id){        
+
+        $data['title'] = "Resultados Estudiantiles";
+        $data['id'] = $id;
+        try {
+            $data['studentsResults'] = $this->studentsResultService->retrieveAllByFaculty($id);
+            //dd($data['studentsResults']);
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un erroaar'); 
+        }
+        
+        return view('flujoCoordinador.studentResult_index', $data);
+    }
+
+    public function studentResult_create($id){
+        $data['title'] = "Nuevo Resultado Estudiantil";
+        $data['id'] = $id;
+
+        try {            
+            //$data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty($id);     
+            $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', Session::get('faculty-code'))
+											->where('deleted_at', null)->get();       
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        //dd($data['educationalObjetives']);
+        return view('flujoCoordinador.studentResult_create', $data);
+    }
+
+    public function studentResult_store(StudentResultRequest $request, $id){
+        try {
+            $studentsResult = $this->studentsResultService->create($request->all());
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        return redirect()->route('studentResult_index.flujoCoordinador',$id)->with('success', "El resultado estudiantil se ha registrado exitosamente");
     }
 
 }

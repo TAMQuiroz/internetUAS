@@ -10,8 +10,10 @@ use Intranet\Models\TimeTable;
 use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Score;
 use Intranet\Models\Tutstudent;
+use Illuminate\Support\Facades\Storage;
 use DB;
 use Excel;
+use Session;
 
 
 class StudentController extends BaseController {
@@ -37,12 +39,19 @@ class StudentController extends BaseController {
 					}
 				}
 			}
-			$data['studentsExist'] = $studentsExist;				
+			$data['studentsExist'] = $studentsExist;	
+
+			if(Session::get('filename')){				
+				$data['filename'] = Session::get('filename');
+			}	
+			else {
+				$data['filename'] = null;
+			}		
 
 		} catch(\Exception $e) {
-			dd($e);
+			return back()->with('error', 'Ha ocurrido un error');
 		}
-		return view('students.load',$data);
+		return view('students.load', $data);
 	}
 
 	public function importExport()
@@ -64,14 +73,22 @@ class StudentController extends BaseController {
 
 	public function storeExcel($data){
 
-		return Excel::create('AlumnosNoEncontrados', function($excel) use($data) {
+		return Excel::create('alumnosPorCrear', function($excel) use($data) {
 
 			$excel->sheet('Sheetname', function($sheet) use($data) {
 		        $sheet->fromArray($data);
 		    });
 
-		})->store('xls', storage_path('/')); //storage
+		})->store('xls', storage_path(''), true); //storage
+		
 	}
+
+	public function getDownload($filename){
+       
+        $file = Storage::disk('local')->get('alumnosPorCrear.xls');
+
+        return (new Response($file))->header('Content-Type', 'text/xls');
+    }
 
 	public function importExcel(Request $request)
 	{
@@ -160,9 +177,9 @@ class StudentController extends BaseController {
 				//Agregar tamaño a tabla horario
 				//dd($alumno->IdHorario);
 				//$horario = TimeTable::find('IdHorario');				
-
+				
 				if(!empty($studentsNotFound)){					
-					$this->storeExcel($studentsNotFound);
+					$fileExc = $this->storeExcel($studentsNotFound);
 				}
 
 			}else{
@@ -170,7 +187,8 @@ class StudentController extends BaseController {
 			}
 		}
 
-		return back()->with('success', 'La carga de alumnos se ha realizado exitosamente, se descargo archivo con alumnos no encontrados');
+		$param = ['success' => 'La lista de alumnos se ha eliminado exitosamente', 'filename' => $fileExc['full']];
+		return back()->with($param);
 	}
 
 	public function delete(Request $request)
@@ -184,6 +202,7 @@ class StudentController extends BaseController {
 			dd($e);
 			}
 		}
+
 		return back()->with('success', 'La lista de alumnos se ha eliminado exitosamente');
 	}
 

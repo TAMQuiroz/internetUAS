@@ -329,6 +329,7 @@ Route::group(['middleware' => 'auth'], function(){
 
             Route::get('/importExport', 'Student\StudentController@importExport');
             Route::get('/downloadExcel/{type}', 'Student\StudentController@downloadExcel');
+            //Route::get('/download/{filename}', ['as' => 'getDownload.students' , 'uses' => 'Student\StudentController@getDownload']);
             Route::post('/importExcel', [ 'as' => 'upload.students', 'uses' => 'Student\StudentController@importExcel']);
             Route::get('/delete', 'Student\StudentController@delete');
         });

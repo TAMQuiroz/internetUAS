@@ -10,6 +10,7 @@ use Session;
 use Intranet\Models\Faculty;
 use Intranet\Models\EducationalObjetive;
 use Intranet\Http\Requests\EducationalObjetiveRequest;
+use Intranet\Http\Requests\InstrumentRequest;
 
 use Intranet\Http\Services\Faculty\FacultyService;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
@@ -26,6 +27,7 @@ use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\criterion;
 use Intranet\Models\StudentsResult;
+use Intranet\Models\MeasurementSource;
 
 class FlujoCoordinadorController extends Controller
 {
@@ -269,4 +271,33 @@ class FlujoCoordinadorController extends Controller
         }
         return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Las modificaciones se han guardado exitosamente');
     }
+
+
+    //instrumentos
+    public function instrumento_index ($id){
+
+        $especialidad = Faculty::findOrFail($id);
+        $instrumentos = $especialidad->instruments;
+        return view('flujoCoordinador.instrumento_index', ['instrumentos'=>$instrumentos, 'idEspecialidad' =>$id]);
+
+    }
+
+    public function instrumento_create ($id){
+        //return 'crear objetivo de la especialidad '.$id;
+        return view('flujoCoordinador.instrumento_create', ['idEspecialidad'=>$id]);
+    }
+    
+    public function instrumento_store (InstrumentRequest $request, $id){
+
+        //crear un nuevo instrumento
+        
+        $measurementSource = MeasurementSource::create([
+            'IdEspecialidad' => $id,
+            'Nombre' => $request->input('nombre'),
+        ]);
+
+        return redirect()->route('instrumento_index.flujoCoordinador', ['id' => $id])
+                            ->with('success', 'El instrumento se ha registrado exitosamente');
+    }
+
 }

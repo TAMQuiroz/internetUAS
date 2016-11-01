@@ -67,6 +67,11 @@ class CourseService
         return $course;
     }
 
+    public function findCourseByIdRegular($course_id)
+    {
+        $course = Course::where('IdCurso', $course_id)->with('regularProfessors.faculty')->first();
+        return $course;
+    }
     public function findCoursesByTeacher($teacher_id)
     {
         $coursesxTeacher = CoursexTeacher::where('IdDocente', $teacher_id)->get();

@@ -15,11 +15,14 @@ use Intranet\Http\Services\Faculty\FacultyService;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Http\Services\EducationalObjetive\EducationalObjetiveService;
 use Intranet\Http\Services\Aspect\AspectService;
-use Intranet\Http\Requests\AspectRequest;
+use Intranet\Http\Services\Course\CourseService;
+use Intranet\Http\Services\Teacher\TeacherService;
 
+use Intranet\Http\Requests\AspectRequest;
 use Intranet\Http\Requests\CriterioResquest;
 use Intranet\Http\Requests\StudentResultRequest;
 use Intranet\Http\Requests\CriterioStoreRequest;
+use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\criterion;
 use Intranet\Models\StudentsResult;
@@ -30,12 +33,17 @@ class FlujoCoordinadorController extends Controller
 	protected $studentsResultService;
     protected $educationalObjetiveService;
 	protected $facultyService;
+    protected $courseService;
+    protected $teacherService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
 		$this->studentsResultService = new StudentsResultService();
         $this->educationalObjetiveService = new EducationalObjetive();
 		$this->facultyService = new FacultyService();
+        $this->courseService = new CourseService();
+        $this->teacherService = new TeacherService();
+
 	}
 
 
@@ -184,9 +192,81 @@ class FlujoCoordinadorController extends Controller
         }
         return redirect()->route('studentResult_index.flujoCoordinador',$id)->with('success', "El resultado estudiantil se ha registrado exitosamente");
     }
-    
+
     public function end1 ($id){
         return view ('flujoCoordinador.end1', ['idEspecialidad'=>$id]);
     }
 
+    public function courses_index($id){
+        //$faculty_id = Session::get('faculty-code');
+        $data['title'] = "Courses";
+        $data['idEspecialidad'] = $id;
+        try {
+            $data['faculty'] = $this->facultyService->find($id);
+        } catch (Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        try {
+            $data['courses'] = $this->courseService->retrieveByFaculty($id);
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        return view('flujoCoordinador.courses_index', $data);
+    }
+   
+    public function courses_create($id){
+        $data['title'] = 'New Course';
+
+        try {
+            $data['idEspecialidad'] = $id;
+            $data['faculties'] = $this->facultyService->retrieveAll();
+            $data['studentResults'] = $this->studentsResultService->findByFaculty($id);
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        return view('flujoCoordinador.courses_create', $data);
+    }
+
+    public function courses_store(CourseRequest $request, $id){
+
+        try {
+            $currentStudentsResults = $this->studentsResultService->findByFaculty();
+            $this->courseService->createCourse($request->all(), $currentStudentsResults);
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'El curso se ha registrado exitosamente');
+    }
+
+    public function courses_edit(Request $request, $id, $idCourse){
+        $data['title'] = 'Edit Course';
+        $data['idEspecialidad'] = $id;
+        try {
+            $data['faculties'] = $this->facultyService->retrieveAll();
+            //dd('asas');
+            $data['course'] = $this->courseService->findCourseByIdRegular($idCourse);
+            //dd($data['course']);
+            $data['studentResults'] = $this->studentsResultService->findByFaculty($id);
+            //Needs to get it from the selected one in the courses table
+            $data['teachers'] = $this->teacherService->retrieveAll();
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+       
+        return view('flujoCoordinador.courses_edit', $data);
+    }
+
+    public function courses_update(Request $request, $id){
+        //dd($id);
+        try {
+            $currentStudentsResults = $this->studentsResultService->findByFaculty($id);
+            $this->courseService->updateCourse($request->all(), $currentStudentsResults);
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Las modificaciones se han guardado exitosamente');
+    }
 }

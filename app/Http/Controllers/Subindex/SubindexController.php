@@ -50,8 +50,8 @@ class SubindexController extends BaseController {
                         $data['isEmpty'] = false;
                     }
                 }
-            } else if ($user->user->IdPerfil==5){ //Investigadores
-                $data['faculties'] = $allFaculties;
+            } else if ($user->user->IdPerfil == 5){ //Investigadores
+                array_push($data['faculties'], $this->facultyService->find($user->id_especialidad));
                 $data['isEmpty'] = false;
             }else if ($user->user->IdPerfil== 6){ //Supervisores
                 array_push($data['faculties'], $this->facultyService->find($user->idfaculty));

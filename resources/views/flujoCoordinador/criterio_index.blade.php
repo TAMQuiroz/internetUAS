@@ -109,8 +109,9 @@
                 <div class="separator"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                         <button class="btn btn-success pull-right" type="submit">Siguiente ></button>
-                         <a href="{{ route('facultad_edit.flujoAdministrador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
+                        <a href="{{ route('aspect_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
+                        <a href="{{ route('end1.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+                         
                     </div>
                 </div>
 

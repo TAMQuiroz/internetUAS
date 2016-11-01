@@ -5,36 +5,50 @@ namespace Intranet\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
-use Intranet\Models\criterion;
 
 use Session;
 use Intranet\Models\Faculty;
 use Intranet\Models\EducationalObjetive;
 use Intranet\Http\Requests\EducationalObjetiveRequest;
 
+use Intranet\Http\Services\Faculty\FacultyService;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Http\Services\EducationalObjetive\EducationalObjetiveService;
 use Intranet\Http\Services\Aspect\AspectService;
 use Intranet\Http\Requests\AspectRequest;
 
 use Intranet\Http\Requests\CriterioResquest;
-use Intranet\Http\Requests\StudentResultRequest;
+use Intranet\Http\Requests\CriterioStoreRequest;
+use Intranet\Models\Aspect;
+use Intranet\Models\criterion;
+use Intranet\Models\StudentsResult;
 
 class FlujoCoordinadorController extends Controller
 {
 	protected $aspectService;
 	protected $studentsResultService;
-	protected $educationalObjetiveService;
+	protected $facultyService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
 		$this->studentsResultService = new StudentsResultService();
-		$this->educationalObjetiveService = new EducationalObjetive();
+		$this->facultyService = new FacultyService();
 	}
 
 
     //
+
+
+    public function index()
+    {
+
+    	$data['idEspecialidad']=$this->facultyService->getFacultyxDocente();
+
+      	return view('flujoCoordinador.index',$data);
+    }
+
     public function aspect_index($id) {
+
 		$data['title'] = 'Aspectos';
 		try {			
 			$studentResults= $this->studentsResultService->findByFaculty2($id);
@@ -75,8 +89,27 @@ class FlujoCoordinadorController extends Controller
     }
 
     public function criterio_create (CriterioResquest $request, $id){
-    	return 'crear criterio '.$id. ' '. $request->get('resultado'). ' '. $request->get('aspecto');
-    	//return view('flujoCoordinador.criterio_create', ['idEspecialidad'=>$id]);
+    	//$idResultado = $request->get('resultado');
+    	//$resultado= StudentsResult::findOrFail($idResultado);
+
+    	$idAspecto = $request->get('aspecto');
+    	$aspecto= Aspect::findOrFail($idAspecto);
+
+    	return view('flujoCoordinador.criterio_create', ['idEspecialidad'=>$id, 'aspecto'=>$aspecto]);
+    }
+
+    public function criterio_store(CriterioStoreRequest $request, $id){
+    	$criterio = new Criterion;
+
+    	$criterio->IdAspecto= $request->idAspecto;
+    	$criterio->Nombre= $request->nombre;
+    	$criterio->Estado= 1;
+
+    	$criterio->save();
+
+    	return redirect()->route('criterio_index.flujoCoordinador', ['id' => $id])
+                            ->with('success', 'El criterio se ha registrado exitosamente');
+
     }
     //Fin de criterio
     
@@ -111,42 +144,8 @@ class FlujoCoordinadorController extends Controller
                             ->with('success', 'El objetivo educacional se ha registrado exitosamente');
     }
 
-    public function studentResult_index($id){        
-
-        $data['title'] = "Resultados Estudiantiles";
-        $data['id'] = $id;
-        try {
-            $data['studentsResults'] = $this->studentsResultService->retrieveAllByFaculty($id);
-            //dd($data['studentsResults']);
-        } catch(\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un erroaar'); 
-        }
-        
-        return view('flujoCoordinador.studentResult_index', $data);
-    }
-
-    public function studentResult_create($id){
-        $data['title'] = "Nuevo Resultado Estudiantil";
-        $data['id'] = $id;
-
-        try {            
-            //$data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty($id);     
-            $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', Session::get('faculty-code'))
-											->where('deleted_at', null)->get();       
-        } catch (\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un error'); 
-        }
-        //dd($data['educationalObjetives']);
-        return view('flujoCoordinador.studentResult_create', $data);
-    }
-
-    public function studentResult_store(StudentResultRequest $request, $id){
-        try {
-            $studentsResult = $this->studentsResultService->create($request->all());
-        } catch(\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un error'); 
-        }
-        return redirect()->route('studentResult_index.flujoCoordinador',$id)->with('success', "El resultado estudiantil se ha registrado exitosamente");
+    public function end1 ($id){
+        return view ('flujoCoordinador.end1', ['idEspecialidad'=>$id]);
     }
 
 }

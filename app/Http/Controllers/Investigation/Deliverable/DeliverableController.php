@@ -242,16 +242,12 @@ class DeliverableController extends Controller
     {
         try {
 
-            //FALTA: Revisar que la persona que sube sea uno de los asignados a hacerlo
-
             $entregable = Deliverable::find($request['id_entregable']);
-
-            dd($entregable->teachers);
 
             $habilitado = false;
 
             //Busca en profesores
-            if(!$habilitado){
+            if(!$habilitado && $entregable->teachers){
                 foreach ($entregable->teachers as $teacher) {
                     if($teacher->IdUsuario == $request['id_usuario']){
                         $habilitado = true;
@@ -261,7 +257,7 @@ class DeliverableController extends Controller
             }
 
             //Busca en investigadores
-            if(!$habilitado){
+            if(!$habilitado && $entregable->investigators){
                 foreach ($entregable->investigators as $investigator) {
                     if($investigator->id_usuario == $request['id_usuario']){
                         $habilitado = true;

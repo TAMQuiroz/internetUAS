@@ -13,11 +13,11 @@ class AddFkToTemplates extends Migration
     public function up()
     {
         Schema::table('templates', function (Blueprint $table) {
-             $table->foreign('idPhase')->references('id')->on('phases');
-             $table->foreign('idSupervisor')->references('id')->on('supervisors');
-            $table->foreign('idProfesor')->references('IdDocente')->on('Docente');
-            $table->foreign('idAdmin')->references('IdUsuario')->on('Usuario');
-            $table->foreign('idTipoEstado')->references('id')->on('statuses');
+             $table->foreign('idphase')->references('id')->on('phases');
+             $table->foreign('idsupervisor')->references('id')->on('supervisors');
+            $table->foreign('idprofesor')->references('IdDocente')->on('Docente');
+            $table->foreign('idadmin')->references('IdUsuario')->on('Usuario');
+            $table->foreign('idtipoestado')->references('id')->on('statuses');
         });
     }
 
@@ -29,11 +29,11 @@ class AddFkToTemplates extends Migration
     public function down()
     {
         Schema::table('templates', function (Blueprint $table) {
-            $table->dropForeign('templates_idPhase_foreign');
-            $table->dropForeign('templates_idSupervisor_foreign');
-            $table->dropForeign('templates_idProfesor_foreign');
-            $table->dropForeign('templates_idAdmin_foreign');
-            $table->dropForeign('templates_idTipoEstado_foreign');
+            $table->dropForeign('templates_idphase_foreign');
+            $table->dropForeign('templates_idsupervisor_foreign');
+            $table->dropForeign('templates_idprofesor_foreign');
+            $table->dropForeign('templates_idadmin_foreign');
+            $table->dropForeign('templates_idtipoestado_foreign');
         });
     }
 }

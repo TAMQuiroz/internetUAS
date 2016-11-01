@@ -53,8 +53,11 @@ class SubindexController extends BaseController {
             } else if ($user->user->IdPerfil==5){ //Investigadores
                 $data['faculties'] = $allFaculties;
                 $data['isEmpty'] = false;
-            }else if ($user->user->IdPerfil== 6 || !$user->user->idPerfil){ //Supervisores
+            }else if ($user->user->IdPerfil== 6){ //Supervisores
                 array_push($data['faculties'], $this->facultyService->find($user->idfaculty));
+                $data['isEmpty'] = false;
+            }else if (!$user->user->idPerfil){ //Alumnos
+                array_push($data['faculties'], $this->facultyService->find($user->id_especialidad));
                 $data['isEmpty'] = false;
             } else { // Logic of ACREDITORS
                 $data['isEmpty'] = false;
@@ -65,7 +68,6 @@ class SubindexController extends BaseController {
                     $data['faculties'] = $allFaculties;
                 }
             }
-
             Session::forget("numFaculties");
             Session::put("numFaculties",count($data['faculties']));
         } catch(\Exception $e) {

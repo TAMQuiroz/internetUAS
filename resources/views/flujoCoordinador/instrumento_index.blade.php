@@ -26,7 +26,7 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody id="instrumentos-fc-table">
+                    <tbody id="instrumento-fc-table">
                     @foreach($instrumentos as $instrumento)
                         <tr class="even pointer">
                             <td class="id" hidden="true">{{$instrumento->IdFuenteMedicion}}</td>
@@ -43,8 +43,8 @@
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12 col-xs-12">                         
-                         <a href="" class="btn btn-default pull-left">< Atras</a>
-                         <a id ="instrumento-siguiente-btn" href="" class="btn btn-success pull-right">Siguiente ></a>
+                         <a href="{{ route('criterio_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-left">< Atras</a>
+                         <a id ="instrumento-siguiente-btn" href="{{ route('end1.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
                     </div>
                 </div>
 

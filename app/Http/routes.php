@@ -1124,6 +1124,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         
         Route::get('/{id}/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
 
+        Route::get('/{id}/profesor', ['as' => 'profesor_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@profesor_index']);
+        Route::get('/{id}/profesor/create', ['as' => 'profesor_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@profesor_create']);        
+        Route::post('/{id}/profesor/store', ['as' => 'profesor_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@profesor_store']);
+
     });
 
 

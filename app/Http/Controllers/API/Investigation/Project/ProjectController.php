@@ -30,39 +30,12 @@ class ProjectController extends BaseController
         return $this->response->array($project->toArray());
     }
 
-<<<<<<< HEAD
-    public function edit(Request $request, $id){
-        $nombre    = $request->only('nombre');
-        $descripcion         = $request->only('descripcion');
-        $num_entregables         = $request->only('num_entregables');
 
-        $fecha_ini              = $request->only('fecha_ini');
-        $fecha_ini1=$fecha_ini['fecha_ini'];
-        $fecha_fin             = $request->only('fecha_fin');
-        $fecha_fin1=$fecha_fin['fecha_fin'];
-        
-        $format = "d/m/Y";
-        $fecha_ini_Aux=DateTime::createFromFormat($format,$fecha_ini1);
-        $fecha_fin_Aux=DateTime::createFromFormat($format,$fecha_fin1);
-
-        //Guardar
-        $project = Project::find($id);
-        $project->nombre           = $nombre['nombre'];
-        $project->descripcion      = $descripcion['descripcion'];
-        $project->num_entregables      = $ape_materno['num_entregables'];
-        $project->fecha_ini           = $fecha_ini_Aux;
-        $project->fecha_fin          = $fecha_fin_Aux;
-        $project->save();
-
-        //Retornar mensaje
-        $mensaje = 'Se modifico correctamente';
-
-        return $mensaje;
-    }
-=======
     public function edit(ProjectMobileRequest $request, $id)
     {
         $proyecto           = Project::find($id);
+        $nombre             = $request->only('nombre');
+        $descripcion        = $request->only('descripcion');
         $num_entregables    = $request->only('num_entregables');
         $fecha_ini          = $request->only('fecha_ini');
         $fecha_fin          = $request->only('fecha_fin');
@@ -73,6 +46,8 @@ class ProjectController extends BaseController
 
             if($status){
                 
+                $proyecto->nombre  = $nombre['nombre'];
+                $proyecto->descripcion  = $descripcion['descripcion'];
                 $proyecto->num_entregables  = $num_entregables['num_entregables'];
                 $proyecto->fecha_ini        = $fecha_ini['fecha_ini'];
                 $proyecto->fecha_fin        = $fecha_fin['fecha_fin'];
@@ -89,6 +64,6 @@ class ProjectController extends BaseController
         return $mensaje;
     }
 
->>>>>>> 42c97a4941d30ef36082e01dbfc06db115f9afd1
+
    
 }   

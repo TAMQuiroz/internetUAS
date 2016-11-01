@@ -13,10 +13,10 @@ class AddFkToPspmeetings extends Migration
     public function up()
     {
         Schema::table('pspmeetings', function (Blueprint $table) {
-             $table->foreign('idStudent')->references('IdAlumno')->on('Alumno');
-             $table->foreign('idSupervisor')->references('id')->on('supervisors');
-             $table->foreign('idTipoEstado')->references('id')->on('statuses');
-             $table->foreign('idFreeHour')->references('id')->on('freehours');
+             $table->foreign('idstudent')->references('IdAlumno')->on('Alumno');
+             $table->foreign('idsupervisor')->references('id')->on('supervisors');
+             $table->foreign('idtipoestado')->references('id')->on('statuses');
+             $table->foreign('idfreehour')->references('id')->on('freehours');
         });
     }
 
@@ -28,9 +28,9 @@ class AddFkToPspmeetings extends Migration
     public function down()
     {
         Schema::table('pspmeetings', function (Blueprint $table) {
-            $table->dropForeign('pspmeetings_idStudent_foreign');
-            $table->dropForeign('pspmeetings_idSupervisor_foreign');
-            $table->dropForeign('pspmeetings_idTipoEstado_foreign');
+            $table->dropForeign('pspmeetings_idstudent_foreign');
+            $table->dropForeign('pspmeetings_idsupervisor_foreign');
+            $table->dropForeign('pspmeetings_idtipoestado_foreign');
         }); 
     }
 }

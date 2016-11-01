@@ -17,8 +17,8 @@ class CreatePspprocessesTable extends Migration
             $table->integer('numero_Fases');
             $table->integer('numero_Plantillas');
             $table->integer('max_tam_plantilla');
-            $table->integer('idEspecialidad');
-            $table->integer('idCurso');
+            $table->integer('idespecialidad');
+            $table->integer('idcurso');
             $table->integer('idCiclo');
             $table->timestamps();
             $table->softDeletes();

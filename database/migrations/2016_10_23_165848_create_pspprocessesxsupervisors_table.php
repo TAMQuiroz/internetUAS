@@ -17,6 +17,8 @@ class CreatePspprocessesxsupervisorsTable extends Migration
             $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
             $table->integer('idsupervisor')->unsigned();
             $table->foreign('idsupervisor')->references('id')->on('supervisors');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

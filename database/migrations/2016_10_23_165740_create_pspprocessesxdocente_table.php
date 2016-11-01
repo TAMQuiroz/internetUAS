@@ -17,6 +17,8 @@ class CreatePspprocessesxdocenteTable extends Migration
             $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
             $table->integer('iddocente');
             $table->foreign('iddocente')->references('IdDocente')->on('Docente');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

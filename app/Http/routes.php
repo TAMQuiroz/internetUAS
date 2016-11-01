@@ -1120,6 +1120,9 @@ Route::group(['prefix' => 'tutoria'], function(){
 
         Route::get('/{id}/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
 
+
+        //AJAX
+        Route::get('/aspectosDelResultado', ['as' => 'aspectosDelResultado.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspectosDelResultado']);
     });
 
 

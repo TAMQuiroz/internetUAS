@@ -269,4 +269,17 @@ class FlujoCoordinadorController extends Controller
         }
         return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Las modificaciones se han guardado exitosamente');
     }
+
+
+
+    //AJAX
+    public function aspectosDelResultado(Request $request){
+       
+        $idResultado= $request->get('resultado');
+        $resultadoEstudiantil= StudentsResult::findOrFail($idResultado);
+
+        $aspectos = $resultadoEstudiantil->aspects;
+        //return "llegue hasta aqui". $resultadoEstudiantil->;
+        return $aspectos->lists('Nombre', 'IdAspecto');
+    }
 }

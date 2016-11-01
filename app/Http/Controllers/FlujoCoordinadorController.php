@@ -10,6 +10,7 @@ use Session;
 use Intranet\Models\Faculty;
 use Intranet\Models\EducationalObjetive;
 use Intranet\Http\Requests\EducationalObjetiveRequest;
+use Intranet\Http\Requests\InstrumentRequest;
 
 use Intranet\Http\Services\Faculty\FacultyService;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
@@ -26,6 +27,7 @@ use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\criterion;
 use Intranet\Models\StudentsResult;
+use Intranet\Models\MeasurementSource;
 
 class FlujoCoordinadorController extends Controller
 {
@@ -272,6 +274,7 @@ class FlujoCoordinadorController extends Controller
 
 
 
+
     //AJAX
     public function aspectosDelResultado(Request $request){
        
@@ -282,4 +285,82 @@ class FlujoCoordinadorController extends Controller
         //return "llegue hasta aqui". $resultadoEstudiantil->;
         return $aspectos->lists('Nombre', 'IdAspecto');
     }
+
+    //instrumentos
+    public function instrumento_index ($id){
+
+        $especialidad = Faculty::findOrFail($id);
+        $instrumentos = $especialidad->instruments;
+        return view('flujoCoordinador.instrumento_index', ['instrumentos'=>$instrumentos, 'idEspecialidad' =>$id]);
+
+    }
+
+    public function instrumento_create ($id){
+        //return 'crear objetivo de la especialidad '.$id;
+        return view('flujoCoordinador.instrumento_create', ['idEspecialidad'=>$id]);
+    }
+    
+    public function instrumento_store (InstrumentRequest $request, $id){
+
+        //crear un nuevo instrumento
+        
+        $measurementSource = MeasurementSource::create([
+            'IdEspecialidad' => $id,
+            'Nombre' => $request->input('nombre'),
+        ]);
+
+        return redirect()->route('instrumento_index.flujoCoordinador', ['id' => $id])
+                            ->with('success', 'El instrumento se ha registrado exitosamente');
+    }
+
+    //profesores
+    public function profesor_index ($id){
+
+        $especialidad = Faculty::findOrFail($id);
+        $profesores = $especialidad->teachers;
+        return view('flujoCoordinador.profesor_index', ['teachers'=>$profesores, 'idEspecialidad' =>$id]);
+        //return "profesor creado";
+    }
+
+
+
+    public function profesor_create ($id){
+        //return 'crear profesor de la especialidad '.$id;
+        return view('flujoCoordinador.profesor_create', ['idEspecialidad'=>$id]);
+    }
+    
+    public function profesor_store (Request $request, $id){
+        
+        //crear un usuario 
+        $password = bcrypt(123);
+
+        $user = User::create([
+            'Usuario' => $request->input('teachercode'),
+            'Contrasena' => $password,
+            'IdPerfil' => 2
+        ]);
+
+        //crear un nuevo profesor
+        $teacher = Teacher::create([
+            'Correo' => $request->input('teacheremail'),
+            'Nombre' => $request->input('teachername'),
+            'Codigo' => $request->input('teachercode'),
+            'ApellidoPaterno' => $request->input('teacherlastname'),
+            'ApellidoMaterno' => $request->input('teachersecondlastname'),
+            'IdEspecialidad' => $id, //$data['specialty']= Session::get('faculty-code'),
+            'IdUsuario' => $user->IdUsuario,
+            'Vigente' => intval($request->input('teacherstatus')),
+            'Descripcion' => $request->input('teacherdescription'),
+            'Cargo' => $request->input('teacherposition')
+        ]);
+
+        //enviar el corrreo al profesor:
+        if ($user) {
+            $this->passwordService->sendSetPasswordLink($user, $request->input('teacheremail'));
+        }
+
+        return redirect()->route('profesor_index.flujoCoordinador', ['id' => $id])
+                            ->with('success', 'El profesor se ha registrado exitosamente');
+    }
+
 }

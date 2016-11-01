@@ -7,6 +7,7 @@ use Response;
 use Intranet\Models\Period;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\AcademicCycle;
+use Intranet\Models\PeriodxObjective;
 use Intranet\Models\PeriodxMeasurement;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -118,7 +119,45 @@ class PeriodController extends BaseController
     }
 
 
-  
+    public function getEducationalObjectivesofPeriod($period_id, $faculty_id)
+    {
+      /*
+      
+        $date = date('Y-m-d H:i:s', $request->get('since', 0));
+        $objectives = EducationalObjetive::lastUpdated($date)
+                                           ->with('studentsResults')
+                                           ->where('idEspecialidad', $faculty_id)
+                                           ->get();
+
+                                           */
+                                
+
+       $perobjectives = PeriodxObjective::with('educationalObjetive')->where('IdPeriodo',$period_id)->get();
+       //return response()->json($perobjectives);
+
+       $objectives = collect();
+
+       foreach($perobjectives as $perobj){
+        //return $perobj;
+        /*
+        $eo = $perobj->educational_objetive;
+        return $eo;
+        */
+        /*
+        if($perobj->educational_objetive->IdEspecialidad == $faculty_id){
+          $objectives->push($perobj->educational_objetive);
+        }
+        */
+        if($perobj->educationalObjetive->IdEspecialidad == $faculty_id){
+           $objectives->push($perobj->educationalObjetive);
+         }
+
+
+       }
+
+        return response()->json($objectives);
+    }
+
 
 
 

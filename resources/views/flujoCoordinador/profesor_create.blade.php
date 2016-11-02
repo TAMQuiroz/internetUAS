@@ -12,7 +12,7 @@
 				<h2>Información del Profesor</h2>
 				<div class="clearfix"></div>
 			</div>
-			<form action="{{ route('profesor_store.flujoAdministrador', $idEspecialidad)}}" method="POST" id="formTeacher" name="formTeacher" novalidate="true" class="form-horizontal">
+			<form action="{{ route('profesor_store.flujoCoordinador', $idEspecialidad)}}" method="POST" id="formTeacher" name="formTeacher" novalidate="true" class="form-horizontal">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<input type="text" id="validarCode" name="validarCode" hidden>
 			<input type="text" id="validarEmail" name="validarEmail" hidden>
@@ -80,7 +80,7 @@
 				<div class="row">
 					<div class="col-md-9 col-sm-12 col-xs-12">
 						 <button class="btn btn-success pull-right" type="submit"> Guardar</button>
-						 <a href="{{ route('profesor_index.flujoAdministrador', $idEspecialidad) }}" class="btn btn-default pull-right"> Cancelar</a>
+						 <a href="{{ route('profesor_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-right"> Cancelar</a>
 					</div>
 				</div>
 			</div>

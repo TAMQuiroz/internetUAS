@@ -132,7 +132,7 @@ class TutorController extends Controller {
         $razones = Reason::where('tipo', 2)->get();
         $idEspecialidad = Session::get('faculty-code');
         $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria', null)->get();
-        $tutors = Teacher::where('IdEspecialidad', $idEspecialidad)->where('rolTutoria', 1)->where('IdDocente','!=',$id)->get();
+        $tutors = Teacher::where('IdEspecialidad', $idEspecialidad)->where('rolTutoria', 1)->where('IdDocente', '!=', $id)->get();
 
         $horas = [];
         foreach ($tutors as $t) {
@@ -149,6 +149,42 @@ class TutorController extends Controller {
         ];
 
         return view('tutorship.tutor.reassign', $data);
+    }
+
+    public function deactivate(Request $request, $id) {
+        $sum = 0;
+        if ($request['cant'] != null && $request['total'] != 0) {
+            foreach ($request['cant'] as $idTeacher => $value) {
+                $sum = $sum + $value;
+            }
+            if ($sum != $request['total']) {
+                return redirect()->back()->with('warning', 'Los campos deben sumar el total de alumnos a reasignar.');
+            } else {
+                //cambiar tutor principal y ponerles tutor suplente
+                foreach ($request['cant'] as $idTeacher => $cantAlumnos) {
+                    $tutorships = Tutorship::where('id_tutor', $id)->take($cantAlumnos)->get();
+                    foreach ($tutorships as $t) {
+                        $tutorship = Tutorship::find($t->id);
+                        $tutorship->id_tutor = $idTeacher;
+                        $tutorship->id_suplente = $idTeacher;
+                        $tutorship->save();
+
+                        $citas = TutMeeting::where('id_tutstudent', $t->id_alumno)->where('id_docente', $t->id_tutor)->where('estado', 'Confirmada')->get();
+                        if ($citas->count() != 0) {
+                            foreach ($citas as $c) {
+                                $cita = TutMeeting::find($c->id);
+                                $cita->estado = 'Cancelada';
+                                $cita->id_reason= $request['motivo'];
+                                $cita->save();
+                            }
+                        }
+                    }
+                }
+            }
+            return redirect()->route('alumno.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
+        } else {
+            return redirect()->route('alumno.index')->with('warning', 'No se puede hacer la reasignación.');
+        }
     }
 
     /**

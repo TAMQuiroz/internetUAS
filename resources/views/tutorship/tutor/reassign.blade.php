@@ -22,9 +22,10 @@
                         {{Form::label('Motivo',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
                             @foreach($razones as $razon)
-                            {{Form::radio('motivo', $razon->id , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
+                                {{Form::radio('motivo', $razon->id , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
                             @endforeach                            
-                        </div>                        
+                        </div>                     
+                        {{Form::text('total',count($students), ['class'=>'','hidden'])}}
                     </div>                                        
 
                     <div class="form-group">
@@ -38,8 +39,7 @@
                                         <th class="column-title">Apellidos&nbsp;y&nbsp;Nombres</th>                                                                
                                         <th class="column-title">Horas semanales</th>
                                         <th class="column-title">Alumnos</th>
-                                        <th class="column-title">Asignación </th>                                        
-                                        <th class="column-title last">Seleccionar</th>                            
+                                        <th class="column-title">Asignación </th>                                                                                                       
                                     </tr>
                                 </thead>
                                 <tbody>         
@@ -49,8 +49,7 @@
                                         <td class="">{{ $t->ApellidoPaterno.' '.$t->ApellidoMaterno.', '.$t->Nombre }}</td>
                                         <td class="">{{ $horas[$t->IdDocente] }}</td>
                                         <td class="">{{ count($t->tutorships)}} </td>
-                                        <td class="">{{ Form::number('cant['.$t->IdDocente.']',0,['class'=>'form-control', 'required','min'=>'0', 'maxlength' => 50]) }}</td>                            
-                                        <td class="">{{ Form::checkbox('name', 'value') }}</td>
+                                        <td class="">{{ Form::number('cant['.$t->IdDocente.']',0,['class'=>'form-control', 'required','min'=>'0', 'maxlength' => 50]) }}</td>                                                                    
                                     </tr>
                                     @endforeach
                                 </tbody>

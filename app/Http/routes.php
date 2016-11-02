@@ -1120,6 +1120,16 @@ Route::group(['prefix' => 'tutoria'], function(){
 
         Route::get('/{id}/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
 
+        Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
+        Route::get('/{id}/period/create', ['as' => 'period_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createPeriod']);
+        Route::get('/{id}/period/view', ['as' => 'period_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewPeriod']);
+        Route::post('/{id}/period/store', ['as' => 'period_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod']);
+        
+        Route::get('/{id}/academicCycle', ['as' => 'academicCycle_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initAcademicCycle']);
+        Route::get('/{id}/academicCycle/create', ['as' => 'academicCycle_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createAcademicCycle']);
+        Route::get('/{id}/academicCycle/view', ['as' => 'academicCycle_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewAcademicCycle']);
+        Route::post('/{id}/academicCycle/store', ['as' => 'academicCycle_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storeAcademicCycle']);
+    
     });
 
 

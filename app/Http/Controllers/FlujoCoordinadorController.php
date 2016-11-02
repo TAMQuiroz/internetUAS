@@ -17,6 +17,9 @@ use Intranet\Http\Services\EducationalObjetive\EducationalObjetiveService;
 use Intranet\Http\Services\Aspect\AspectService;
 use Intranet\Http\Services\Course\CourseService;
 use Intranet\Http\Services\Teacher\TeacherService;
+use Intranet\Http\Services\MeasurementSource\MeasurementSourceService;
+use Intranet\Http\Services\Period\PeriodService;
+use Intranet\Http\Services\Cicle\CicleService;
 
 use Intranet\Http\Requests\AspectRequest;
 use Intranet\Http\Requests\CriterioResquest;
@@ -27,6 +30,7 @@ use Intranet\Models\Aspect;
 use Intranet\Models\criterion;
 use Intranet\Models\StudentsResult;
 
+
 class FlujoCoordinadorController extends Controller
 {
 	protected $aspectService;
@@ -35,14 +39,18 @@ class FlujoCoordinadorController extends Controller
 	protected $facultyService;
     protected $courseService;
     protected $teacherService;
+    protected $periodService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
 		$this->studentsResultService = new StudentsResultService();
-        $this->educationalObjetiveService = new EducationalObjetive();
+        $this->educationalObjetiveService = new EducationalObjetiveService();
 		$this->facultyService = new FacultyService();
         $this->courseService = new CourseService();
         $this->teacherService = new TeacherService();
+        $this->measureService= new MeasurementSourceService();
+        $this->periodService= new PeriodService();
+        $this->cicleService=new CicleService();
 
 	}
 
@@ -67,7 +75,7 @@ class FlujoCoordinadorController extends Controller
 			$data['aspects'] = $this->aspectService->findByRE($studentResults);
             $data['idEspecialidad']=$id;
 		} catch(\Exception $e) {
-			dd($e);
+			redirect()->back()->with('warning','Ha ocurrido un error');
 		}
 		return view('flujoCoordinador.aspect_index', $data);
 	}
@@ -85,7 +93,7 @@ class FlujoCoordinadorController extends Controller
 		try {
 			$this->aspectService->create($request->all());
 		} catch(\Exception $e) {
-			dd($e);
+			redirect()->back()->with('warning','Ha ocurrido un error');
 		}
 		return redirect()->route('aspect_index.flujoCoordinador',$id)->with('success', 'El aspecto se ha registrado exitosamente');
 	}
@@ -269,4 +277,179 @@ class FlujoCoordinadorController extends Controller
         }
         return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Las modificaciones se han guardado exitosamente');
     }
+
+    
+
+    ///inicializando periodos y ciclos
+
+    public function createPeriod($id)
+    {
+        $data['title'] = 'Iniciar Nuevo Periodo';
+        $data['idEspecialidad'] = $id;
+        //dd("hola2");
+        try {
+            $data['semesters'] = $this->facultyService->AllCycleAcademic();
+            $data['measures'] = $this->measureService->allByFaculty($id);
+            $data['studentsResults'] = $this->studentsResultService->findByFaculty2($id);
+            $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty2($id);
+            
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        //dd("hola");
+        return view('flujoCoordinador.period_create', $data);
+    }
+
+    public function viewPeriod($id)
+    {
+        $data['title'] = 'Información del Periodo Actual';
+
+        try {
+            $data['idEspecialidad']=$id;
+            $data['period'] = $this->periodService->get(Session::get('period-code'));
+            $data['semesters'] = $this->facultyService->AllCycleAcademic();
+            $data['measures'] = $this->measureService->allByFaculty(Session::get('period-code'));
+            $data['period_semesters'] = $this->cicleService->getCicleByPeriod(Session::get('period-code'));
+            $data['studentsResults'] = $this->studentsResultService->findByFaculty();
+            $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        return view('flujoCoordinador.period_view', $data);
+    }
+
+    public function storePeriod(Request $request,$id)
+    {
+        try {
+                    
+            $period = $this->facultyService->createConfFaculty($request->all());
+
+            Session::put('period-code', $period->IdPeriodo);
+
+        } catch (Exception $e) { 
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+
+        return $this->initAcademicCycle($id);
+    }
+    
+    public function createAcademicCycle($id) {
+        $data['title'] = 'Información del Ciclo Actual';
+        $data['teachers'] = $this->teacherService->findTeacherByFaculty($id);
+        $data['idEspecialidad']=$id;
+        try {
+            $cycle = Session::get('academic-cycle');
+            $data['cycle'] = $cycle;
+            if($cycle!=null){
+                    $data['dateI'] = date('d/m/Y',strtotime($cycle->FechaInicio.''));
+                    $data['dateF'] = date('d/m/Y',strtotime($cycle->FechaFin.''));
+            }
+            else{
+                    $data['dateI'] = null;
+                    $data['dateF'] = null;
+
+            }
+
+        $data['cicle'] = $this->facultyService->findCycle($id);
+        $data['cycleAcademic'] = $this->facultyService->AllCyclesAcademics();
+        $data['results'] = $this->facultyService->allResultsInPeriod();
+        if(Session::get('academic-cycle')!= null){
+            $data['cyclexresults'] = $this->facultyService->findResultsxCycle(Session::get('academic-cycle')->IdCicloAcademico);
+        }else{
+            $data['cyclexresults'] = null;
+        }
+
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return view('flujoCoordinador.academicCycle_create', $data);
+        
+    }
+
+    public function viewAcademicCycle($id) {
+        $data['title'] = 'Información del Ciclo Actual';
+        $data['teachers'] = $this->teacherService->findTeacherByFaculty( Session::get('faculty-code'));
+        $data['idEspecialidad'] = $id;
+        try {
+            $cycle = Session::get('academic-cycle');
+            $data['cycle'] = $cycle;
+            if($cycle!=null){
+                    $data['dateI'] = date('d/m/Y',strtotime($cycle->FechaInicio.''));
+                    $data['dateF'] = date('d/m/Y',strtotime($cycle->FechaFin.''));
+            }
+            else{
+                    $data['dateI'] = null;
+                    $data['dateF'] = null;
+
+            }
+        $data['cicle'] = $this->facultyService->findCycle(Session::get('faculty-code'));
+        $data['period'] = $this->facultyService->findPeriod(Session::get('faculty-code'));
+        if(Session::get('academic-cycle')!= null){
+            $data['cyclexresults'] = $this->facultyService->findResultsxCycle(Session::get('academic-cycle')->IdCicloAcademico);
+        }
+
+
+
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        return view('flujoCoordinador.academicCycle_view', $data);
+    }
+
+    public function storeAcademicCycle(Request $request,$id) {
+        try {
+            $data['idEspecialidad'] = $id;
+            $data['title'] = 'Crear Profesor';
+            $data['idEspecialidad']=$id;
+            $cycle = $this->facultyService->createCycle($request->all());
+            $info = 1;
+            
+            $this->facultyService->activateCycle($request->all());
+            $cycle = $this->facultyService->findCycle(Session::get('faculty-code'));
+            Session::forget('academic-cycle');
+            Session::set('academic-cycle',$cycle);
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        
+        return redirect()->route('academicCycle_view.flujoCoordinador',$data)->with('success', 'Inició el Ciclo Académico');
+        
+    }
+
+    
+
+    public function initPeriod($id)
+    {
+        try {
+            $data['idEspecialidad']=$id;
+            //dd(Session::get('period-code'));
+            if(Session::get('period-code')!=null){
+                return $this->viewPeriod($id);
+            }else{
+                return $this->createPeriod($id);
+            }
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        
+    }
+
+    public function initAcademicCycle($id)
+    {
+        try {
+            $data['idEspecialidad']=$id;
+            
+            if(Session::get('academic-cycle')!=null){
+                return $this->viewAcademicCycle($id);
+            }else{
+                return $this->createAcademicCycle($id);
+            }
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        
+    }
+
+    
+
 }

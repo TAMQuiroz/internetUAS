@@ -495,8 +495,8 @@ class FacultyService {
 		return $cycle;
 	}
 
-	public function findAcademicCycle($idFacultyAcademicCycle) {
-		$facultyAcademicCycle = ConfFaculty::where('IdConfEspecialidad', $idFacultyAcademicCycle)->first();
+	public function findAcademicCycle($IdEspecialidad) {
+		$facultyAcademicCycle = ConfFaculty::where('IdEspecialidad', $IdEspecialidad)->first();
 		return $facultyAcademicCycle;
 	}
 

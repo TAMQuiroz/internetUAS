@@ -762,7 +762,10 @@ $api->version('v1', function ($api) {
             //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
+            $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
+            $api->get('getAppointmentList', 'Tutoria\TutStudentController@getAppointmentList');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
+
         });
     });
 

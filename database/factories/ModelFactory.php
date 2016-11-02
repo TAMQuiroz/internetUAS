@@ -50,7 +50,7 @@ $factory->define(Intranet\Models\Area::class, function (Faker\Generator $faker) 
 
 $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator $faker) {
     return [
-        'id_usuario'        => 2,
+        'id_usuario'        => 51,
         'nombre'            => $faker->firstNameMale,
         'ape_paterno'       => $faker->lastName,
         'ape_materno'       => $faker->lastName,
@@ -154,7 +154,7 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
     $student =   factory(Intranet\Models\Student::class)->create();
 
     return [
-        'eso_obligatorio'       =>  't',
+        'es_obligatorio'       =>  't',
         //'observaciones'       =>  'bien',
         //'ruta'               =>  'uploads/pspdocuments/0.pdf',
         'idStudent'         =>  1,

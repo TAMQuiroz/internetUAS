@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label for="obligatoriol" class="control-label col-md-3 col-sm-3 col-xs-12">Obligatorio</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                            @if($pspDocument->eso_obligatorio=='s')
+                            @if($pspDocument->es_obligatorio=='s')
                                 <input id=obligatorio type="checkbox" class="form-control" disabled name="" checked="true"/>
                             @else
                                 <input id=obligatorio type="checkbox" class="form-control" disabled name="" />

@@ -160,13 +160,11 @@ class FacultyController extends BaseController
         return $this->response->array($courses->toArray());
       }
 
-    public function getAspects($faculty_id, Request $request)
+    public function getAspects($sr_id,Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $aspects = Aspect::lastUpdated($date)
-                           ->whereHas('studentsResult', function($query) use ($faculty_id) {
-                              $query->where('IdEspecialidad', $faculty_id);
-                           })->with('criterion')
+                           ->where('IdResultadoEstudiantil',$sr_id)
                            ->get();
 
         return $this->response->array($aspects->toArray());

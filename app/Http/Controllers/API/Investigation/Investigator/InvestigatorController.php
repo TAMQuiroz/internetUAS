@@ -13,8 +13,7 @@ class InvestigatorController extends BaseController
    
     public function getAll()
     {
-        $investigator = Investigator::with('faculty')->with('user')->with('area')->get();
-                
+        $investigator = Investigator::with('faculty')->with('area')->get();
         return $this->response->array($investigator->toArray());
     }
 

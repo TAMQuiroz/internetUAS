@@ -22,22 +22,22 @@
             <table class="table table-striped responsive-utilities jambo_table bulk_action">
                 <thead>
                     <tr class="headings">
-                        <th class="column-title">Estado</th>
                         <th class="column-title">Identificador</th>
                         <th class="column-title">Descripción</th>
+                        <th class="column-title">Estado</th>
                     </tr>
                 </thead>
                 <tbody id=resultado-fc-table>
                     @foreach($studentsResults as $stdRslt)
                     <tr class="even pointer">
                         <td class="id" hidden >{{ $stdRslt->IdResultadoEstudiantil }}</td>
+                        <td class="">{{ $stdRslt->Identificador }}</td>
+                        <td class="">{{ str_limit($stdRslt->Descripcion, 60) }}</td>
                         @if($stdRslt->Estado == 1)
                         <td class=""><span class="label label-success"> Activo </span></td>
                         @else
                         <td class=""><span class="label label-danger"> Inactivo </span></td>
                         @endif
-                        <td class="">{{ $stdRslt->Identificador }}</td>
-                        <td class="">{{ str_limit($stdRslt->Descripcion, 60) }}</td>
                     </tr>
                     @endforeach
                 </tbody>

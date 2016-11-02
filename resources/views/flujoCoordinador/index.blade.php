@@ -23,11 +23,11 @@
           <p>
             Durante el transcurso de este flujo se le guiará por 3 funcionalidades importantes e imprescindibles para la acreditación de una especialidad. Las funcionalidades mencionadas son:
           </p>
-          <p>- Creación del objetivo educacional</p>
-          <p>- Creación del resultado estudiantil</p>
-          <p>- Creación del aspecto</p>
-          <p>- Creación del criterio</p>
-
+          <p>- Creación de objetivos educacionales</p>
+          <p>- Creación de resultados estudiantiles</p>
+          <p>- Creación de aspectos</p>
+          <p>- Creación de criterios</p>
+          <p>- Creación de instrumentos</p>
             <p>Una vez iniciado el flujo, este no podrá ser cancelado hasta concluirlo.</p>
 
           </p>

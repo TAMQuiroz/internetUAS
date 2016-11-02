@@ -37,11 +37,11 @@
                             <div class="col-sm-4 col-xs-12">
                                 <select  required="true" name="aspecto" id="aspecto" class="form-control">
                                     <option value="">--Seleccione--</option>
-                                    @foreach($resultados as $resultado)
+                                    <!--@foreach($resultados as $resultado)
                                         @foreach ($resultado->aspects as $aspecto)
                                             <option value= "{{$aspecto->IdAspecto}}">{{$aspecto->Nombre}}</option>
                                         @endforeach
-                                    @endforeach
+                                    @endforeach-->
                                 </select>
                             </div>
                             <div  class="col-sm-2"></div>
@@ -110,7 +110,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <a href="{{ route('aspect_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
-                        <a id="criterio-siguiente-btn" href="{{ route('end1.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+                        <a id="criterio-siguiente-btn" href="{{ route('instrumento_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
                          
                     </div>
                 </div>
@@ -119,14 +119,31 @@
 
         </div>
     </div>
-        <script>      
-            var fila = $("#criterio-fc-table").find("tr");
-            if (fila.length == 0) {
-                $('#criterio-siguiente-btn').attr("disabled","disabled");
-                $('#criterio-siguiente-btn').click(function(){return false;});
-            }
 
-        </script>
-        <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}">
+
+    <script>      
+        var fila = $("#criterio-fc-table").find("tr");
+        if (fila.length == 0) {
+            $('#criterio-siguiente-btn').attr("disabled","disabled");
+            $('#criterio-siguiente-btn').click(function(){return false;});
+        }
+
+        //para el combobox se refresque solo
+        $(document).ready(function(){
+            $('#resultado').change(function(){
+                $.get("{{ route('aspectosDelResultado.flujoCoordinador') }}",
+                { resultado: $(this).val() },
+                function(data) {
+                    $('#aspecto').empty();
+                    $.each(data, function(key, element) {
+                        $('#aspecto').append("<option value='" + key + "'>" + element + "</option>");
+                    });
+                });
+            });
+        });     
+
+
+    </script>
+    <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}">
     
 @endsection

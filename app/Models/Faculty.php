@@ -50,4 +50,8 @@ class Faculty extends Model {
         return $this->hasMany('Intranet\Models\StudentsResult', 'IdEspecialidad');
     }
 
+    public function instruments(){
+        return $this->hasMany('Intranet\Models\MeasurementSource', 'IdEspecialidad');
+    }
+
 }

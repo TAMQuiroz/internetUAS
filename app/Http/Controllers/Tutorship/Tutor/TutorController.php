@@ -10,6 +10,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
 use Intranet\Models\TutSchedule;
 use Intranet\Models\Tutorship;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\Reason;
 use Illuminate\Support\Facades\Session; //<---------------------------------necesario para usar session
 
@@ -29,10 +30,10 @@ class TutorController extends Controller {
         $horas = [];
         $alumnos = [];
         foreach ($tutors as $t) {
-            $tutSchedule = TutSchedule::where('id_docente', $t->IdDocente)->get();            
+            $tutSchedule = TutSchedule::where('id_docente', $t->IdDocente)->get();
             $horas[$t->IdDocente] = $tutSchedule->count();
-            
-            $tutorship = Tutorship::where('id_tutor',$t->IdDocente)->get();
+
+            $tutorship = Tutorship::where('id_tutor', $t->IdDocente)->get();
             $alumnos[$t->IdDocente] = $tutorship->count();
         }
 
@@ -95,7 +96,7 @@ class TutorController extends Controller {
         $tutor = Teacher::find($id);
         $tutSchedule = TutSchedule::where('id_docente', $tutor->IdDocente)->get();
         $horas = $tutSchedule->count();
-        
+
         $data = [
             'tutor' => $tutor,
             'horas' => $horas,
@@ -126,18 +127,30 @@ class TutorController extends Controller {
     }
 
     public function reassign($id) {
-        
+
         $tutor = Teacher::find($id);
-        $razones = Reason::where('tipo',2)->get();
-        
+        $razones = Reason::where('tipo', 2)->get();
+        $idEspecialidad = Session::get('faculty-code');
+        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria', null)->get();
+        $tutors = Teacher::where('IdEspecialidad', $idEspecialidad)->where('rolTutoria', 1)->where('IdDocente','!=',$id)->get();
+
+        $horas = [];
+        foreach ($tutors as $t) {
+            $tutSchedule = TutSchedule::where('id_docente', $t->IdDocente)->get();
+            $horas[$t->IdDocente] = $tutSchedule->count();
+        }
+
         $data = [
-            'tutor' => $tutor,   
+            'tutor' => $tutor,
             'razones' => $razones,
+            'students' => $students,
+            'tutors' => $tutors,
+            'horas' => $horas,
         ];
-        
+
         return view('tutorship.tutor.reassign', $data);
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -146,9 +159,6 @@ class TutorController extends Controller {
      */
     public function destroy($id) { //PENDIENTE PARA REASIGNAR
         try {
-
-            //DB::table('')
-
             DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
             return redirect()->route('tutor.index')->with('success', 'Se desactivó al tutor exitosamente');
         } catch (Exception $e) {

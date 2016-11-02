@@ -161,6 +161,17 @@
                         {{Form::text('ubicacion_area',null,['class'=>'form-control', 'required','maxlength' => 200])}}
                     </div>
                 </div>
+
+                <div class="form-group">
+                    {{Form::label('Acepta terminos y condiciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-4">
+                    <a href="http://inform.pucp.edu.pe/~inf008/" target="_blank">Ir a la pagina donde se contiene los terminos y condiciones</a>
+                    </div>  
+                    </br>
+                    <div class="col-md-4">
+                        {{Form::checkbox('terminos',1,false, ['class' => 'form-control', 'required'])}}(Debes aceptar los terminos para registrar la ficha)
+                    </div>                            
+                </div>                 
                 
 
                 <div class="row">

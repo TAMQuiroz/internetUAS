@@ -17,8 +17,8 @@ class FreeHourController extends Controller
      */
     public function index()
     {
-        $supervisor = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get()->first();
-        $freeHours = FreeHour::where('idSupervisor',$supervisor->id)->get();
+        $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
+        $freeHours = FreeHour::where('idsupervisor',$supervisor->id)->get();
 
         $data = [
             'freeHours'    =>  $freeHours,
@@ -51,8 +51,8 @@ class FreeHourController extends Controller
             $freeHour->fecha = $request['fecha'];
             $freeHour->hora_ini = $request['hora_ini'];
             $freeHour->cantidad = 1;
-            $supervisor = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get()->first();            
-            $freeHour->idSupervisor = $supervisor->id;
+            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();            
+            $freeHour->idsupervisor = $supervisor->id;
             $freeHour->save();
             return redirect()->route('freeHour.index')->with('success','La disponibilidad se ha registrado exitosamente');
 

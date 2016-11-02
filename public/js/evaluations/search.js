@@ -8,6 +8,18 @@ $(document).ready(function($) {
 
 	var form = $('#form-search-question');
 
+	//Datepickers
+	$(".input-group.date").datepicker({
+		    format: "dd/mm/yyyy",
+		    startDate: "today", 
+		    language: "es",
+		    autoclose: true,
+		    todayHighlight: true
+		 });	
+	$('.input-group.date').datepicker('setDate',"");
+
+	console.log("datepicker");
+
 	$('#search-question').on('click', function() {			
 		var data = form.serialize();
 		$.post(form.attr('action'), data, function(table) {

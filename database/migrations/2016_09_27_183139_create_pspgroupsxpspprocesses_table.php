@@ -13,10 +13,10 @@ class CreatePspgroupsxpspprocessesTable extends Migration
     public function up()
     {
         Schema::create('pspgroupsxpspprocesses', function (Blueprint $table) {
-            $table->integer('idPSPGroup')->unsigned();
-            $table->foreign('idPSPGroup')->references('id')->on('pspgroups');
-            $table->integer('idPspProcess')->unsigned();
-            $table->foreign('idPspProcess')->references('id')->on('pspprocesses');
+            $table->integer('idpspgroup')->unsigned();
+            $table->foreign('idpspgroup')->references('id')->on('pspgroups');
+            $table->integer('idpspprocess')->unsigned();
+            $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
             $table->timestamps();
         });
     }

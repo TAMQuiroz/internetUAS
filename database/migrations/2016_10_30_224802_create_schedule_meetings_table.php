@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFreehoursTable extends Migration
+class CreateScheduleMeetingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,14 @@ class CreateFreehoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('freehours', function (Blueprint $table) {
+        Schema::create('schedule_meetings', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
-            $table->integer('hora_ini');
-            $table->integer('cantidad');
-            $table->integer('idSupervisor')->unsigned();
-            $table->softDeletes();
+            $table->string('tipo');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->integer('idfase')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateFreehoursTable extends Migration
      */
     public function down()
     {
-        Schema::drop('freehours');
+        Schema::drop('schedule_meetings');
     }
 }

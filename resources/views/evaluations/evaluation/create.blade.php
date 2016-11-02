@@ -29,13 +29,19 @@
 
 				<div class="form-group">
 					{{Form::label('Fecha inicio: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
-					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_inicio',null,['class'=>'form-control', 'id'=>'fecha_inicio' ,'required'])}}
+					<div class="col-md-3 col-sm-3 col-xs-8">						
+			            <div class="input-group date">
+				            <input type="text" class="form-control input-date" name="fecha_inicio" id="fecha_inicio" placeholder="dd/mm/aaaa" required/>
+				            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			            </div>			            
 					</div>
 
 					{{Form::label('Fecha fin: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_fin',null,['class'=>'form-control','id'=>'fecha_fin' ,'required'])}}
+						<div class="input-group date">
+				            <input type="text" class="form-control input-date" name="fecha_fin" id="fecha_fin" placeholder="dd/mm/aaaa" required/>
+				            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			            </div>	
 					</div>
 				</div>
 

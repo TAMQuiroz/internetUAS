@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3>Mis Evaluaciones</h3>
+        <h3>Mis Evaluaciones por corregir</h3>
     </div>    
 </div>
 

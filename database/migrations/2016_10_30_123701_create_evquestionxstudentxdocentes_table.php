@@ -16,6 +16,7 @@ class CreateEvquestionxstudentxdocentesTable extends Migration
             $table->increments('id');
             $table->integer('id_tutstudent')->unsigned();
             $table->integer('id_evquestion')->unsigned();
+            $table->integer('id_evaluation')->unsigned();
             $table->integer('id_docente')->nullable();
             $table->float('puntaje',8,2)->unsigned();
             $table->string('respuesta',5000)->nullable();
@@ -28,6 +29,7 @@ class CreateEvquestionxstudentxdocentesTable extends Migration
         Schema::table('evquestionxstudentxdocentes', function (Blueprint $table) {
              $table->foreign('id_tutstudent')->references('id')->on('tutstudents');
              $table->foreign('id_evquestion')->references('id')->on('evquestions');
+             $table->foreign('id_evaluation')->references('id')->on('evaluations');
              $table->foreign('id_docente')->references('IdDocente')->on('Docente');
         });
     }
@@ -42,6 +44,7 @@ class CreateEvquestionxstudentxdocentesTable extends Migration
          Schema::table('evquestionxstudentxdocentes', function (Blueprint $table) {
             $table->dropForeign('evquestionxstudentxdocentes_id_tutstudent_foreign');
             $table->dropForeign('evquestionxstudentxdocentes_id_evquestion_foreign');
+            $table->dropForeign('evquestionxstudentxdocentes_id_evaluation_foreign');
             $table->dropForeign('evquestionxstudentxdocentes_id_docente_foreign');
         });  
 

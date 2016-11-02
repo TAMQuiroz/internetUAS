@@ -68,8 +68,24 @@ class EvaluationController extends Controller
 
  public function indexev(Request $request)
  {
+    $id = Session::get('user')->IdDocente;    
+       $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->select('evaluations.id','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->get();
+       
+       
+       // $evaluations = array();
+       // foreach ($evquestionxstudentxdocentes as $key => $value) {        
+       //   $ev = Evaluation::find($value); 
+       //   array_push($evaluations,$ev);
+       //  }
+       dd($evquestionxstudentxdocentes); 
 
- }
+     
+     // $data = [
+     // 'evaluations'               =>  $evaluations,     
+     // ];
+     // return view('evaluations.evaluation.indexev', $data);
+
+}
 
     /**
      * Show the form for creating a new resource.
@@ -225,6 +241,7 @@ class EvaluationController extends Controller
         $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//saco la evaluacion del alumno 
         if($tutstudentxevaluation->intentos>0){
             $tutstudentxevaluation->intentos-=1;
+            $tutstudentxevaluation->fecha_hora = date('Y-m-d H:i:s ', time());
             $tutstudentxevaluation->save(); //disminuyo la cantidad de intentos del alumno
 
             $evaluation   = Evaluation::find($id);//saco la evaluacion        
@@ -247,6 +264,7 @@ public function storeEv(Request $request)
             $ev = new Evquestionxstudentxdocente;
             $ev->id_tutstudent = Session::get('user')->id;
             $ev->id_evquestion = $idEvquestion;
+            $ev->id_evaluation = $evquestion->id_evaluation;
             $ev->id_docente    = $evquestion->id_docente;
             if($evquestion->tipo == 2){//si es abierta
                 $ev->respuesta    = $answer;

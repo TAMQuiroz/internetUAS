@@ -723,9 +723,9 @@ $api->version('v1', function ($api) {
                 $api->get('groups/all','PspGroup\PspGroupController@getAll');
                 $api->get('groups/{id}','PspGroup\PspGroupController@getById');
                 $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
-                $api->get('students/all','Students\PspStudentsController@getAll');
-                $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
-                $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+                $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
+              //$api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
+                $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
             });

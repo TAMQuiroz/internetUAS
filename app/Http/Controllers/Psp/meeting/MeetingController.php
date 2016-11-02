@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\meeting;
-use Intranet\Models\student;
+use Intranet\Models\Student;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\freeHour;

@@ -25,5 +25,28 @@ class InvestigatorController extends BaseController
         return $this->response->array($investigator->toArray());
     }
 
+    public function edit(Request $request, $id){
+        $nombre    = $request->only('nombre');
+        $ape_paterno         = $request->only('ape_paterno');
+        $ape_materno         = $request->only('ape_materno');
+        $correo              = $request->only('correo');
+        $celular             = $request->only('celular');
+        
+
+        //Guardar
+        $investigator = Investigator::find($id);
+        $investigator->nombre           = $nombre['nombre'];
+        $investigator->ape_paterno      = $ape_paterno['ape_paterno'];
+        $investigator->ape_materno      = $ape_materno['ape_materno'];
+        $investigator->correo           = $correo['correo'];
+        $investigator->celular          = $celular['celular'];
+        $investigator->save();
+
+        //Retornar mensaje
+        $mensaje = 'Se modifico correctamente';
+
+        return $mensaje;
+    }
+
    
 }   

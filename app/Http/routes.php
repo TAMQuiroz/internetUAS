@@ -881,6 +881,17 @@ Route::group(['middleware' => 'auth'], function(){
                 
             });
 
+            //Reportes de Investigación
+            Route::group(['prefix' => 'reporteISA'], function(){
+                Route::get('/', ['as' => 'reporteISA.index', 'uses' => 'Report\ReportController@indexISA']);
+                Route::post('/generateISA', ['as' => 'reporteISA.generateISA', 'uses' => 'Report\ReportController@generateISA']);
+                Route::get('show/{id}', ['as' => 'reporteISA.show', 'uses' => 'Report\ReportController@show']);
+            });
+
+            Route::group(['prefix' => 'reporteISP'], function(){
+                Route::get('/', ['as' => 'reporteISP.index', 'uses' => 'Report\ReportController@indexISP']);
+                Route::post('/generateISP', ['as' => 'reporteISP.generateISP', 'uses' => 'Report\ReportController@generateISP']);
+            });
             
         });      
 

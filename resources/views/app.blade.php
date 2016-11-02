@@ -366,6 +366,18 @@
               </li> 
               @endif
 
+
+              <!-- Menu Reportes: Sin permisos ya que cualquier usuario puede generar los reportes-->
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Reportes</a>
+                <div class="collapsible-body">
+                  <ul>
+                      <li><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
+                      <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>                  
+                  </ul>
+                </div>
+              </li>
+
               <!--Menu Tutotia-->
               <!--Si son alumnos de tutoria idPerfil == 0 -->
               @if(Auth::user() && ((Auth::user()->professor != null && 

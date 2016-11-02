@@ -7,27 +7,48 @@ use DateTime;
 use Illuminate\Http\Request;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
-use Intranet\Models\TutSchedule;
 use Intranet\Models\Tutorship;
+use Intranet\Models\tutmeeting;
 use Intranet\Models\Topic;
+use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
 //Tested
 class TutStudentController extends BaseController
 {
-    use Helpers;
+    user_error() Helpers;
     
     public function getAll()
     {
         $groups = Tutstudent::get();
         return $this->response->array($groups->toArray());
     }
-    
+
+
     public function getById($id)
     {        
-        $groups = Tutstudent::where('id',$id)->get();
+        $groups = Tutstudent::where('id',$id)->get();       
         return $this->response->array($groups->toArray());
     }
+
+
+    public function getAppointmentList()
+    {
+         // return "civil ctm";
+         $appointmentInfo = tutmeeting::get();
+         $i = 0;
+
+       foreach ($appointmentInfo as $appointInfo) {
+
+           $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
+           $statusInfo =  Status::where('id', $appointInfo['estado'])->get();
+           $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
+           $appointmentInfo[$i]['nombreEstado'] = $statusInfo[0]['nombre'];
+           $i++;
+        }
+         return $this->response->array($appointmentInfo->toArray());
+    }
+
 
     public function postAppointment(Request $request)
     {        
@@ -43,7 +64,7 @@ class TutStudentController extends BaseController
         $hora =  $horaAux2.":00"; // hora reserva ejem 12:00:00
         $dateHour = $dateString." ".$hora;
         $format = "d/m/Y H:i:s";
-        $dateTime= DateTime::createFromFormat($format, $dateHour); //dateTime para registrar a la base de datos
+        $dateTimeBegin= DateTime::createFromFormat($format, $dateHour); //dateTime para registrar a la base de datos
         //--------------END DATETIME------------------
 
         //------------BEGIN MOTIVO--------------------
@@ -53,14 +74,24 @@ class TutStudentController extends BaseController
 
         //--------------END MOTIVO--------------------
 
+        //------INICIO OBTENIENDO ID DEL TUTOR--------
+         $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
+        // $idDocente = $tutorshipInfo[0]['id_profesor']; 
+         $idDocente = 4;                                    // Por el momento
+        //------FIN OBTENIENDO ID DEL TUTOR-----------
+
 
         //-------------BEGIN DATABASE INSERT ---------------
         DB::table('tutmeetings')->insertGetId(
             [
                 'id_tutstudent' => $studentInfo[0]['id'],
-                'inicio' => $dateTime,
-                'observacion' => $motivoInfo[0]['id']
-
+                'inicio' => $dateTimeBegin,
+                //'fin'  => $dateTimeFin,
+                //'duracion' => $dateTimeEnd,
+                'id_docente' => $idDocente,
+                'id_topic' => $motivoInfo[0]['id'],
+                'no_programada' => 0,
+                'estado' => 12
             ]
 
         );

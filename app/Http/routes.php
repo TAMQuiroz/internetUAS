@@ -1090,6 +1090,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::group(['prefix' => 'evaluaciones'], function(){    
             Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
             Route::get('evaluador', ['as' => 'evaluacion_evaluador.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexev']);
+            Route::get('evaluaciones_alumnos/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexeval']);
+            Route::get('corregir/{id}{ev}', ['as' => 'evaluacion.corregir', 'uses' => 'Evaluations\Evaluation\EvaluationController@corregir']);
+            Route::post('corregida/{id}{ev}', ['as' => 'evaluacion_corregida.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@storeEvCorregida']);
+            Route::get('descargar/{id}', ['as' => 'evaluacion.descargar_respuesta', 'uses' => 'Evaluations\Evaluation\EvaluationController@download_evquestion']);
             Route::get('alumno', ['as' => 'evaluacion_alumno.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexal']);
             Route::get('create', ['as' => 'evaluacion.create', 'uses' => 'Evaluations\Evaluation\EvaluationController@create']);
             Route::post('create', ['as' => 'evaluacion.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@store']);

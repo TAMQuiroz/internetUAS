@@ -70,20 +70,25 @@ class EvaluationController extends Controller
  {
     $id = Session::get('user')->IdDocente;    
        $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->select('evaluations.id','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->get();
-       
-       
-       // $evaluations = array();
-       // foreach ($evquestionxstudentxdocentes as $key => $value) {        
-       //   $ev = Evaluation::find($value); 
-       //   array_push($evaluations,$ev);
-       //  }
-       dd($evquestionxstudentxdocentes); 
-
      
-     // $data = [
-     // 'evaluations'               =>  $evaluations,     
-     // ];
-     // return view('evaluations.evaluation.indexev', $data);
+     $data = [
+     'evaluations'               =>  $evquestionxstudentxdocentes,     
+     ];
+     return view('evaluations.evaluation.indexev', $data);
+
+}
+
+public function indexeval(Request $request,$id)
+ {
+    
+    $evaluation = Evaluation::find($id);
+    $tutstudentxevaluations = Tutstudentxevaluation::where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();    
+     // dd($id);
+     $data = [
+     'evaluation'               =>  $evaluation, 
+     'tutstudentxevaluations'   =>  $tutstudentxevaluations, 
+     ];
+     return view('evaluations.evaluation.evaluaciones_alumnos', $data);
 
 }
 
@@ -226,6 +231,30 @@ class EvaluationController extends Controller
         //
     }
 
+    public function corregir($id,$ev)
+    {//muestra las preguntas de la evaluacion para ser corregidas
+        $id_docente = Session::get('user')->IdDocente;    
+        $tutstudent = Tutstudent::find($id);
+        $evaluation   = Evaluation::find($ev);//saco la evaluacion        
+        $evquestionxstudentxdocentes = Evquestionxstudentxdocente::where('id_tutstudent',$id)->where('id_docente',$id_docente)->where('id_evaluation',$ev)->get();
+
+        $data = [        
+        'evaluation'                 =>  $evaluation,                
+        'tutstudent'                 =>  $tutstudent,                
+        'evs' =>  $evquestionxstudentxdocentes,        
+        ];
+        return view('evaluations.evaluation.corregir', $data);
+    }
+
+    public function storeEvCorregida($id,$ev)
+    {//guarda las correcciones
+        $id_docente = Session::get('user')->IdDocente;    
+        $tutstudent = Tutstudent::find($id);
+        $evaluation   = Evaluation::find($ev);//saco la evaluacion        
+        $evquestionxstudentxdocentes = Evquestionxstudentxdocente::where('id_tutstudent',$id)->where('id_docente',$id_docente)->where('id_evaluation',$ev)->get();
+        dd($tutstudent);
+    }
+
     public function rendir($id)
     {//muestra las datos de la evaluacion antes de ser rendida por el alumno
         $evaluation   = Evaluation::find($id);//saco la evaluacion
@@ -235,6 +264,14 @@ class EvaluationController extends Controller
         ];
         return view('evaluations.evaluation.rendir', $data);
     }
+    public function download_evquestion($id)
+    {//descarga el archivo de la pregunta subida por el alumno
+        $evquestion   = Evquestionxstudentxdocente::find($id);//saco la pregunta
+
+        $path = $evquestion->path_archivo;
+        // dd($path);
+        return response()->download(public_path() . "/". $path );
+    }    
 
     public function rendirEv($id)
     {//se rinde la evaluacion 

@@ -10,7 +10,7 @@ $(document).ready(function($) {
 
 	//Datepickers
 	$(".input-group.date").datepicker({
-		    format: "dd/mm/yyyy",
+		    format: "yyyy-mm-dd",
 		    startDate: "today", 
 		    language: "es",
 		    autoclose: true,

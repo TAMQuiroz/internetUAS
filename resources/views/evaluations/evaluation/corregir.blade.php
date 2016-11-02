@@ -26,9 +26,15 @@
 						@elseif($ev->pregunta->tipo == 3)
 						<a style="text-decoration: underline" href="{{route('evaluacion.descargar_respuesta',$ev->id)}}">Descargar archivo</a>@endif	
 						<textarea placeholder="Escriba un comentario de la corrección" class="form-control" name="arr_comentario[{{$ev->id}}]" rows="4" maxlength="5000"></textarea>
-						<div class="input-group">
-							<span class="input-group-addon">Puntaje</span>
-							<input type="text" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" maxlength="6" name="arr_puntaje[{{$ev->id}}]">							
+						<h5 class="col-md-2 col-sm-3 col-xs-5">Puntaje:</h5>
+						<div class="input-group col-md-2 col-sm-3 col-xs-5">
+							<input type="number" required class="form-control" min="0" max="{{$ev->pregunta->puntaje}}" name="arr_puntaje1[{{$ev->id}}]">							
+							<span class="input-group-addon">.</span>
+							<select class="form-control" name="arr_puntaje2[{{$ev->id}}]">
+								<option value="0.00">00</option>
+								<option value="0.25">25</option>
+								<option value="0.50">50</option>
+							</select>							
 						</div>
 					</div><br>
 					@endforeach					

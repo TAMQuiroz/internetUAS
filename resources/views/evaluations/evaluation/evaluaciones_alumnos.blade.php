@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3>{{$evaluation->nombre}}</h3>
+        <h3>{{$evaluation->nombre}}: Pendientes ({{count($tutstudentxevaluations)}})</h3>
     </div>    
 </div>
 
@@ -14,8 +14,8 @@
                     
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Evaluación </th>                                                    
-                            <th class="column-title">Fecha corrección </th>                            
+                            <th class="column-title">Código </th>                                                    
+                            <th class="column-title">Fecha de registro </th>                            
                             <th class="column-title last">Acciones</th>                                
                         </tr>
                     </thead>
@@ -23,7 +23,7 @@
                         @foreach($tutstudentxevaluations as $tutstudentxevaluation)
                         <tr class="even pointer">                                                   
                             <td class=" ">{{$tutstudentxevaluation->id }}</td>
-                            <td class=" ">-</td>                                                                                    
+                            <td class=" ">{{ date("d/m/Y H:i", strtotime($tutstudentxevaluation->fecha_hora))}}</td>                                                                                    
                             <td class="">                                
                                 <a href="{{route('evaluacion.corregir',[$tutstudentxevaluation->id_tutstudent,$tutstudentxevaluation->id_evaluation])}}" title="Corregir" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-pencil"></i>

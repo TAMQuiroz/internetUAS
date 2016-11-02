@@ -79,14 +79,18 @@ class EvaluationController extends Controller
 }
 
 public function indexeval(Request $request,$id)
- {
-    
+ {//muestra las evaluaciones pendietes por corregir de un evaluador
+    $id_docente = Session::get('user')->IdDocente;
     $evaluation = Evaluation::find($id);
-    $tutstudentxevaluations = Tutstudentxevaluation::where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();    
-     // dd($id);
+    $tutstudentxevaluations = DB::table('tutstudentxevaluations')->where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();
+    $no_include = DB::table('tutstudentxevaluations')->join('teacherxtutstudentxevaluations', 'teacherxtutstudentxevaluations.id_tutstudentxevaluation', '=', 'tutstudentxevaluations.id')->where('fecha_hora','<>',null)->where('id_docente',$id_docente)->where('id_evaluation',$id)->get();        
+    
+    
+     
      $data = [
      'evaluation'               =>  $evaluation, 
      'tutstudentxevaluations'   =>  $tutstudentxevaluations, 
+     'no_include'   =>  $no_include, 
      ];
      return view('evaluations.evaluation.evaluaciones_alumnos', $data);
 
@@ -246,13 +250,21 @@ public function indexeval(Request $request,$id)
         return view('evaluations.evaluation.corregir', $data);
     }
 
-    public function storeEvCorregida($id,$ev)
+    public function storeEvCorregida(Request $request, $id,$ev)
     {//guarda las correcciones
-        $id_docente = Session::get('user')->IdDocente;    
-        $tutstudent = Tutstudent::find($id);
-        $evaluation   = Evaluation::find($ev);//saco la evaluacion        
-        $evquestionxstudentxdocentes = Evquestionxstudentxdocente::where('id_tutstudent',$id)->where('id_docente',$id_docente)->where('id_evaluation',$ev)->get();
-        dd($tutstudent);
+        $id_docente = Session::get('user')->IdDocente;
+        
+        // dd($request);
+        foreach ($request['arr_comentario'] as $key => $value) {
+            $evaluation = Evquestionxstudentxdocente::find($key);
+            $evaluation->comentario = $value;
+            $evaluation->puntaje = (float)($request['arr_puntaje1'][$key]) + (float)($request['arr_puntaje2'][$key]);            
+            $evaluation->save();
+        }
+        //guardo la relacion de evaluador con la evaluacion
+        $tutstudentxevaluation = Tutstudentxevaluation::where('id_tutstudent',$id)->where('id_evaluation',$ev)->first();
+        DB::table('teacherxtutstudentxevaluations')->insert(['id_tutstudentxevaluation' =>$tutstudentxevaluation->id , 'id_docente' => $id_docente]);
+        return redirect()->route('evaluacion.ver_evaluaciones_alumnos',$ev)->with('success', 'La evaluación se ha corregido exitosamente');
     }
 
     public function rendir($id)
@@ -267,7 +279,7 @@ public function indexeval(Request $request,$id)
     public function download_evquestion($id)
     {//descarga el archivo de la pregunta subida por el alumno
         $evquestion   = Evquestionxstudentxdocente::find($id);//saco la pregunta
-
+        // dd($evquestion);
         $path = $evquestion->path_archivo;
         // dd($path);
         return response()->download(public_path() . "/". $path );

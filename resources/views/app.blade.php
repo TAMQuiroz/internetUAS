@@ -418,7 +418,7 @@
               @if(Auth::user() && ((Auth::user()->IdPerfil <= 2)  ) )
 
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Evaluaciones</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">receipt</i>Evaluaciones</a>
                 <div class="collapsible-body">
                   <ul>
                     @if(Auth::user()->IdPerfil == 1)   <!-- coordinador de especialidad-->
@@ -437,8 +437,12 @@
                     @if(Auth::user()->professor != null)
                       @if(Auth::user()->professor->rolEvaluaciones == 2) <!-- Evaluador de competencias -->
                       <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>                
-                      <li><a href="{{route('evaluacion.index')}}"> Mis Evaluaciones</a></li>
+                      <li><a href="{{route('evaluacion_evaluador.index')}}"> Mis Evaluaciones</a></li>
                       @endif
+                    @endif
+
+                    @if(Auth::user()->IdPerfil == 0)<!-- Alumno  -->                    
+                    <li><a href="{{route('evaluacion_alumno.index')}}"><i class="material-icons">reorder</i> Mis evaluaciones</a></li>
                     @endif
                   </ul>
                 </div>

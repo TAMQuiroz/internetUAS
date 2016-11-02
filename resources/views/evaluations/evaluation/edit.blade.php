@@ -95,8 +95,8 @@
 									@foreach($questions as $key=>$question)
 									<tr id="question_{{$question->id}}">
 										<td class="order">{{$key+1}}</td>
-										<td hidden><input type="number" value="{{$question->id}}" name="arrIds[{{$question->id}}]"></td>
-										<td class="id">{{ $question->id }}</td>
+										<td hidden><input type="number" value="{{$question->id}}" name="arrEvIds[{{$question->id}}]"></td>
+										<td class="id">{{ '#'.$question->id }}</td>
 
 										@if($question->tipo == 1)
 										<td>Cerrada</td>
@@ -121,10 +121,10 @@
 										<td>Alta</td>
 										@endif
 
-										<td hidden><input class="row_puntaje" type="number" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
+										<td hidden><input class="row_puntaje" type="number" value="{{$question->puntaje}}" name="arrEvPuntajes[{{$question->id}}]"></td>
 										<td class="oculto puntaje" >{{ $question->puntaje }}</td>
 
-										<td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
+										<td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvEvaluadores[{{$question->id}}]"></td>
 										<td class="oculto responsable" >{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
 
 										<td><a class="editbtn btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></a></td>                    

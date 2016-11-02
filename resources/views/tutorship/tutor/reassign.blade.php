@@ -24,7 +24,7 @@
                             @foreach($razones as $razon)
                             {{Form::radio('motivo', $razon->id , false, array('class' => 'check'))}} {{$razon->nombre}} <br> 
                             @endforeach                            
-                        </div>
+                        </div>                        
                     </div>                                        
 
                     <div class="form-group">
@@ -35,28 +35,33 @@
                                 <thead>
                                     <tr class="headings">                                        
                                         <th class="column-title">Código </th>
-                                        <th class="column-title">Tutor</th>                                                                
+                                        <th class="column-title">Apellidos&nbsp;y&nbsp;Nombres</th>                                                                
                                         <th class="column-title">Horas semanales</th>
                                         <th class="column-title">Alumnos</th>
                                         <th class="column-title">Asignación </th>                                        
                                         <th class="column-title last">Seleccionar</th>                            
                                     </tr>
                                 </thead>
-                                <tbody>                                    
+                                <tbody>         
+                                    @foreach($tutors as $t)
                                     <tr class="even pointer">                                        
-                                        <td class=""></td>
-                                        <td class=" "></td>
-                                        <td class=" "></td>
-                                        <td class=" "></td>
-                                        <td class=" "></td>                            
-                                        <td class=" "></td>                                         
-                                    </tr>                                    
+                                        <td class="">{{ $t->Codigo }}</td>
+                                        <td class="">{{ $t->ApellidoPaterno.' '.$t->ApellidoMaterno.', '.$t->Nombre }}</td>
+                                        <td class="">{{ $horas[$t->IdDocente] }}</td>
+                                        <td class="">{{ count($t->tutorships)}} </td>
+                                        <td class="">{{ Form::number('cant['.$t->IdDocente.']',0,['class'=>'form-control', 'required','min'=>'0', 'maxlength' => 50]) }}</td>                            
+                                        <td class="">{{ Form::checkbox('name', 'value') }}</td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
-
                         </div>
                     </div>                                        
-                        
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <h4>Cantidad de alumnos a reasignar: {{count($tutor->tutorships)}}</h4>                        
+                    </div>
+
                     <div class="row">
                         <div class="col-md-8 col-sm-12 col-xs-12">
                             {{Form::submit('Desactivar tutor y reasignar', ['class'=>'btn btn-success pull-right'])}}

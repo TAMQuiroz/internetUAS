@@ -651,6 +651,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'student.delete', 'uses' => 'Psp\Student\StudentController@destroy']);    
             });
 
+            //PSP Student Final score
+            Route::group(['prefix' => 'studentScore'], function() {
+                Route::get('/', ['as' => 'studentScore.index', 'uses' => 'Psp\StudentScore\StudentScoreController@index']);  
+            });
+
 
             //PSP Document
             Route::group(['prefix' => 'pspDocument'], function() {

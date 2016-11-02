@@ -90,7 +90,8 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  
+  <!-- Datepicker -->
+  <link href="{{  URL::asset('css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css">  
 
 </head>
 
@@ -613,6 +614,9 @@
 
 <!-- dropzone -->
 <script src="{{ URL::asset('js/dropzone/dropzone.js')}}"></script>
+
+<!-- datepicker -->
+<script src="{{ URL::asset('js/bootstrap-datepicker.js')}}"></script>
 
 <script>
   $(function() {

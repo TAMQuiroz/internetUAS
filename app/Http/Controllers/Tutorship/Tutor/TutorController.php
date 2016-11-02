@@ -174,7 +174,7 @@ class TutorController extends Controller {
                             foreach ($citas as $c) {
                                 $cita = TutMeeting::find($c->id);
                                 $cita->estado = 'Cancelada';
-                                $cita->id_reason= $request['motivo'];
+                                $cita->id_reason = $request['motivo'];
                                 $cita->save();
                             }
                         }

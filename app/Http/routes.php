@@ -841,6 +841,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'proyecto.edit', 'uses' => 'Investigation\Project\ProjectController@edit']);
                 Route::post('edit/{id}', ['as' => 'proyecto.update', 'uses' => 'Investigation\Project\ProjectController@update']);
                 Route::get('delete/{id}', ['as' => 'proyecto.delete', 'uses' => 'Investigation\Project\ProjectController@destroy']);
+                Route::get('/getProject/{id}', ['as' => 'proyecto.ajax.getProject', 'uses' => 'Investigation\Project\ProjectController@getProject']);
 
                 //Seleccion de integrantes de proyecto
                 Route::group(['prefix' => 'afiliacion'], function(){
@@ -869,6 +870,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/show/{id}/viewVersion', ['as' => 'entregable.viewVersion', 'uses' => 'Investigation\Deliverable\DeliverableController@viewVersion']);
                 Route::post('/saveObservation', ['as' => 'entregable.saveObservation', 'uses' => 'Investigation\Deliverable\DeliverableController@saveObservation']);
                 Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);    
+                Route::get('/getDeliverable/{id}', ['as' => 'entregable.ajax.getDeliverable', 'uses' => 'Investigation\Deliverable\DeliverableController@getDeliverable']);
 
                 //Seleccion de integrantes de proyecto
                 Route::group(['prefix' => 'afiliacion'], function(){

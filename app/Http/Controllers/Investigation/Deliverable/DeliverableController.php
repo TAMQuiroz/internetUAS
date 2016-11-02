@@ -53,13 +53,15 @@ class DeliverableController extends Controller
      */
     public function create($id)
     {
-        $proyecto = Project::find($id);
-        $cantidad = count($proyecto->deliverables);
+        $proyecto       = Project::find($id);
+        $cantidad       = count($proyecto->deliverables);
+        $entregables    = $proyecto->deliverables->lists('nombre','id');
 
         if($cantidad < $proyecto->num_entregables){
 
             $data = [
                 'proyecto'      =>  $proyecto,
+                'entregables'   =>  $entregables,
             ];
 
             return view('investigation.deliverable.create', $data);
@@ -82,6 +84,7 @@ class DeliverableController extends Controller
             $entregable->id_proyecto     = $request->id_proyecto;
             $entregable->fecha_inicio    = $request->fecha_ini;
             $entregable->fecha_limite    = $request->fecha_fin;
+            $entregable->id_padre        = $request->padre_id;
             $entregable->porcen_avance   = 0;
 
             $entregable->save();
@@ -139,16 +142,18 @@ class DeliverableController extends Controller
      */
     public function edit($id)
     {
-        $entregable = Deliverable::find($id);
-        $proyecto   = $entregable->project;
-        $investigators  = $this->deliverableService->getNotSelectedInvestigators($id);
+        $entregable         = Deliverable::find($id);
+        $proyecto           = $entregable->project;
+        $investigators      = $this->deliverableService->getNotSelectedInvestigators($id);
         $elegible_teachers  = $this->deliverableService->getNotSelectedTeachers($id);
-
+        $entregables        = $proyecto->deliverables->lists('nombre','id')->forget($entregable->id);
+        
         $data = [
             'entregable'        =>  $entregable,
             'proyecto'          =>  $proyecto,
-            'investigators'    =>  $investigators,
-            'elegible_teachers' =>  $elegible_teachers
+            'investigators'     =>  $investigators,
+            'elegible_teachers' =>  $elegible_teachers,
+            'entregables'       =>  $entregables,
         ];
 
         return view('investigation.deliverable.edit', $data);
@@ -169,6 +174,7 @@ class DeliverableController extends Controller
             $entregable->fecha_inicio    = $request->fecha_ini;
             $entregable->fecha_limite    = $request->fecha_fin;
             $entregable->porcen_avance   = $request->porcen_avance;
+            $entregable->id_padre        = $request->padre_id;
 
             $entregable->save();
             
@@ -366,8 +372,14 @@ class DeliverableController extends Controller
                 return redirect()->back()->with('warning', 'No se puede registar una observación debido a que no es el lider');
             }
         } catch(\Exception $e) {
-            dd($e);
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
+    }
+
+    public function getDeliverable($id){
+
+        $entregable = Deliverable::find($id);
+
+        return $entregable;
     }
 }

@@ -714,6 +714,13 @@ $api->version('v1', function ($api) {
                 $api->get('/{p_id}/{f_id}/objectives', 'PeriodController@getEducationalObjectivesofPeriod');                          
             });
 
+
+            $api->group(['namespace' => 'ImprovementPlan','prefix'=>'improvementplan'],function($api){
+                
+            });
+
+
+
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
                 $api->get('/{id}/criterions', 'AspectController@getCriterions');
             });

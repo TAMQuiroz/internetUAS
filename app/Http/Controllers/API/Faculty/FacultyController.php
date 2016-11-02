@@ -196,7 +196,7 @@ class FacultyController extends BaseController
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $improvement_plans = ImprovementPlan::lastUpdated($date)
                                             ->where('IdEspecialidad', $faculty_id)
-                                            ->with('typeImprovementPlan', 'teacher', 'actions', 'file')
+                                            ->with('typeImprovementPlan', 'teacher' , 'file')
                                             ->get();
 
         return $this->response->array($improvement_plans->toArray());

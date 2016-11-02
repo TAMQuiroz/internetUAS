@@ -7,6 +7,7 @@ use Response;
 use Intranet\Models\Course;
 use Intranet\Models\Schedule;
 use Intranet\Models\CoursexCycle;
+use Intranet\Models\ResultxObjective;
 use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
 use Intranet\Models\Aspect;
@@ -70,23 +71,24 @@ class FacultyController extends BaseController
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $objectives = EducationalObjetive::lastUpdated($date)
-                                           ->with('studentsResults')
                                            ->where('idEspecialidad', $faculty_id)
                                            ->get();
 
         return $this->response->array($objectives->toArray());
     }
 
-    public function getStudentsResult($faculty_id, Request $request)
+    public function getStudentsResult($faculty_id, $eos_id, Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
+
         $results = StudentsResult::lastUpdated($date)
-                                   ->with('aspects')
-                                   ->with(['educationalObjectives' => function($q) {
-                                        return $q->whereNotNull('ResultadoxObjetivo.deleted_at');
-                                   }])
                                    ->where('idEspecialidad', $faculty_id)
+                                   ->whereHas('resultxObjective',function($query) use ($eos_id){
+                                      $query->where('resultadoxobjetivo.IdObjetivoEducacional',$eos_id);
+                                   })
                                    ->get();
+        
+
 
         return $this->response->array($results->toArray());
     }

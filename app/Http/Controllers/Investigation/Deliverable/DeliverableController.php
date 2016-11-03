@@ -242,32 +242,64 @@ class DeliverableController extends Controller
     {
         try {
 
-            //FALTA: Revisar que la persona que sube sea uno de los asignados a hacerlo
-
             $entregable = Deliverable::find($request['id_entregable']);
-            $lastversion = $entregable->lastversion->first();
 
-            $invdocument = new Invdocument;
-            $invdocument->id_investigador   = $request['id_usuario'];
+            $habilitado = false;
 
-            if($lastversion){
-                $invdocument->version = $lastversion->version + 1;
-            }else{
-                $invdocument->version = 1;
+            //Busca en profesores
+            if(!$habilitado && $entregable->teachers){
+                foreach ($entregable->teachers as $teacher) {
+                    if($teacher->IdUsuario == $request['id_usuario']){
+                        $habilitado = true;
+                        break;
+                    }
+                }
             }
 
-            $invdocument->id_entregable     = $request['id_entregable'];
-            $invdocument->save();
+            //Busca en investigadores
+            if(!$habilitado && $entregable->investigators){
+                foreach ($entregable->investigators as $investigator) {
+                    if($investigator->id_usuario == $request['id_usuario']){
+                        $habilitado = true;
+                        break;
+                    }
+                }
+            }
 
-            $destinationPath = 'uploads/entregables/'; // upload path
-            $extension = $request['archivo']->getClientOriginalExtension();
-            $filename = $entregable->nombre.'V'.$invdocument->id.'.'.$extension; 
-            $request['archivo']->move($destinationPath, $filename);
+            //Jefe de investigacion
+            if($entregable->project->group->leader->IdUsuario == $request['id_usuario']){
+                $habilitado = true;
+            }
 
-            $invdocument->ruta = $destinationPath.$filename;
-            $invdocument->save();
+            if($habilitado){
 
-            return redirect()->route('entregable.show',$entregable->id)->with('success', 'El entregable se ha subido exitosamente');
+                $lastversion = $entregable->lastversion->first();
+
+                $invdocument = new Invdocument;
+                $invdocument->id_investigador   = $request['id_usuario'];
+
+                if($lastversion){
+                    $invdocument->version = $lastversion->version + 1;
+                }else{
+                    $invdocument->version = 1;
+                }
+
+                $invdocument->id_entregable     = $request['id_entregable'];
+                $invdocument->save();
+
+                $destinationPath = 'uploads/entregables/'; // upload path
+                $extension = $request['archivo']->getClientOriginalExtension();
+                $filename = $entregable->nombre.'V'.$invdocument->id.'.'.$extension; 
+                $request['archivo']->move($destinationPath, $filename);
+
+                $invdocument->ruta = $destinationPath.$filename;
+                $invdocument->save();
+
+                return redirect()->route('entregable.show',$entregable->id)->with('success', 'El entregable se ha subido exitosamente');
+
+            }else{
+                return redirect()->back()->with('warning', 'Usted no esta asignado para hacer esta accion');     
+            }
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción'); 
         }

@@ -618,6 +618,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'phase.delete', 'uses' => 'Psp\Phase\PhaseController@destroy']);    
             });
 
+            //Schedule Meeting
+            Route::group(['prefix' => 'scheduleMeeting'], function() {
+                Route::get('/', ['as' => 'scheduleMeeting.index', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@index']);
+                Route::get('create', ['as' => 'scheduleMeeting.create', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@create']);
+                Route::post('create', ['as' => 'scheduleMeeting.store', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@store']);
+                Route::get('show/{id}', ['as' => 'scheduleMeeting.show', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@show']);
+                Route::get('edit/{id}', ['as' => 'scheduleMeeting.edit', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@edit']);
+                Route::post('edit/{id}', ['as' => 'scheduleMeeting.update', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@update']);
+                Route::get('delete/{id}', ['as' => 'scheduleMeeting.delete', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@destroy']);    
+            });
+
             //Status
             Route::group(['prefix' => 'status'], function() {
                 Route::get('/', ['as' => 'status.index', 'uses' => 'Psp\Status\StatusController@index']);
@@ -1106,9 +1117,18 @@ Route::group(['prefix' => 'tutoria'], function(){
         //Evaluaciones
         Route::group(['prefix' => 'evaluaciones'], function(){    
             Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
+            Route::get('evaluador', ['as' => 'evaluacion_evaluador.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexev']);
+            Route::get('evaluaciones_alumnos/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexeval']);
+            Route::get('corregir/{id}{ev}', ['as' => 'evaluacion.corregir', 'uses' => 'Evaluations\Evaluation\EvaluationController@corregir']);
+            Route::post('corregida/{id}{ev}', ['as' => 'evaluacion_corregida.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@storeEvCorregida']);
+            Route::get('descargar/{id}', ['as' => 'evaluacion.descargar_respuesta', 'uses' => 'Evaluations\Evaluation\EvaluationController@download_evquestion']);
+            Route::get('alumno', ['as' => 'evaluacion_alumno.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexal']);
             Route::get('create', ['as' => 'evaluacion.create', 'uses' => 'Evaluations\Evaluation\EvaluationController@create']);
             Route::post('create', ['as' => 'evaluacion.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@store']);
+            Route::post('rendir_eval', ['as' => 'evaluacion_alumno.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@storeEv']);
             Route::get('show/{id}', ['as' => 'evaluacion.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@show']);
+            Route::get('rendir/{id}', ['as' => 'evaluacion.rendir', 'uses' => 'Evaluations\Evaluation\EvaluationController@rendir']);
+            Route::get('rendirev/{id}', ['as' => 'evaluacion.rendirev', 'uses' => 'Evaluations\Evaluation\EvaluationController@rendirEv']);
             Route::get('edit/{id}', ['as' => 'evaluacion.edit', 'uses' => 'Evaluations\Evaluation\EvaluationController@edit']);
             Route::post('edit/{id}', ['as' => 'evaluacion.update', 'uses' => 'Evaluations\Evaluation\EvaluationController@update']);
             Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);

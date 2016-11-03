@@ -25,13 +25,13 @@ class PspDocumentController extends Controller
 
         $students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
-        $pspdocuments = PspDocument::where('idStudent',$student->IdAlumno)->get();
-
+        $pspdocuments = PspDocument::where('idstudent',$student->IdAlumno)->get();
+        //$templates = Template::get();
         $data = [
             'pspdocuments'    =>  $pspdocuments,
         ];
         $data['student'] = $students->first();
-
+        //$data['templates'] = $templates;
         //$data['groups'] = $this->groupService->retrieveAll();
         return view('psp.pspDocument.index', $data);
     }
@@ -111,7 +111,7 @@ class PspDocumentController extends Controller
     {
         try {
             $pspDocument = PspDocument::find($id);
-            $pspDocument->idTipoEstado  = 4;
+            $pspDocument->idtipoestado  = 4;
             $pspDocument->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 if(file_exists($pspDocument->ruta)){
@@ -147,7 +147,8 @@ class PspDocumentController extends Controller
         //$students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         //$student  =$students->first();
         $student = Student::find($id);
-        $pspdocuments = PspDocument::where('idStudent',$id)->get();
+        
+        $pspdocuments = PspDocument::where('idstudent',$id)->get();
 
         $data = [
             'pspdocuments'    =>  $pspdocuments,
@@ -177,9 +178,9 @@ class PspDocumentController extends Controller
         try {
             $pspDocument = PspDocument::find($id);
             $pspDocument->observaciones  = $request['observaciones'];
-            $pspDocument->idTipoEstado  = 5;
+            $pspDocument->idtipoestado  = 5;
             $pspDocument->save();
-            return redirect()->route('pspDocument.search',$pspDocument->idStudent)->with('success', 'Se ha registrado la observacion exitosamente');
+            return redirect()->route('pspDocument.search',$pspDocument->idstudent)->with('success', 'Se ha registrado la observacion exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

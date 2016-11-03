@@ -90,7 +90,8 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  
+  <!-- Datepicker -->
+  <link href="{{  URL::asset('css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css">  
 
 </head>
 
@@ -307,18 +308,18 @@
 
               <!-- nueva barra PSP -->
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 0 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
+              @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 0 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
                     <ul>
-                        @if(Auth::user()->IdPerfil == 2) <!--si es profesor-->
+                        @if(Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 1) <!--si es profesor o coordinador-->
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
-                        {{--<li><a href=""> Cronograma de reunión</a></li>
-                        <li><a href=""> Ver alumnos</a></li>--}}
+                        <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
+                        {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
                         @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
@@ -343,18 +344,24 @@
                 </li>  
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5))
+              @if(Auth::user() && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin')))
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Investigación</a>
                 <div class="collapsible-body">
                   <ul>
-                    @if(Auth::user()->IdPerfil == 2)
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin'))
                       <li><a href="{{route('investigador.index')}}">Administrar Investigadores</a></li>
                       <li><a href="{{route('grupo.index')}}">Administrar Grupos de Investigación</a></li>
-                      <li><a href="{{route('area.index')}}">Administrar Áreas</a></li>
+                    @endif
+
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                    <li><a href="{{route('area.index')}}">Administrar Áreas</a></li>
+                    @endif
+
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin'))
                       <li><a href="{{route('evento.index')}}">Administrar Eventos</a></li>
                       <li><a href="{{route('proyecto.index')}}">Administrar Proyectos</a></li>
-                    @endif
+                    @endif                    
                   </ul>
                 </div>
               </li> 
@@ -412,7 +419,7 @@
               @if(Auth::user() && ((Auth::user()->IdPerfil <= 2)  ) )
 
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Evaluaciones</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">receipt</i>Evaluaciones</a>
                 <div class="collapsible-body">
                   <ul>
                     @if(Auth::user()->IdPerfil == 1)   <!-- coordinador de especialidad-->
@@ -431,8 +438,12 @@
                     @if(Auth::user()->professor != null)
                       @if(Auth::user()->professor->rolEvaluaciones == 2) <!-- Evaluador de competencias -->
                       <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>                
-                      <li><a href="{{route('evaluacion.index')}}"> Mis Evaluaciones</a></li>
+                      <li><a href="{{route('evaluacion_evaluador.index')}}"> Mis Evaluaciones</a></li>
                       @endif
+                    @endif
+
+                    @if(Auth::user()->IdPerfil == 0)<!-- Alumno  -->                    
+                    <li><a href="{{route('evaluacion_alumno.index')}}"><i class="material-icons">reorder</i> Mis evaluaciones</a></li>
                     @endif
                   </ul>
                 </div>
@@ -603,6 +614,9 @@
 
 <!-- dropzone -->
 <script src="{{ URL::asset('js/dropzone/dropzone.js')}}"></script>
+
+<!-- datepicker -->
+<script src="{{ URL::asset('js/bootstrap-datepicker.js')}}"></script>
 
 <script>
   $(function() {

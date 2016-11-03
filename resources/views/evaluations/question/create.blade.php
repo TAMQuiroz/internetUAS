@@ -48,7 +48,7 @@
 					{{Form::label('Puntaje: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
 					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="puntaje" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
+							<input name="puntaje" required="required" type="text" min="1" max="200" class="form-control" aria-describedby="basic-addon1" onkeypress="return validateFloatKeyPress(this,event);" >
 							<span class="input-group-addon" id="basic-addon1">puntos</span>
 						</div>						
 					</div>
@@ -211,7 +211,34 @@
 		}
 	});
 
-	
+	function validateFloatKeyPress(el, evt) {
+		var charCode = (evt.which) ? evt.which : event.keyCode;
+		var number = el.value.split('.');
+		if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+			return false;
+		}
+	    //just one dot (thanks ddlab)
+	    if(number.length>1 && charCode == 46){
+	    	return false;
+	    }
+	    //get the carat position
+	    var caratPos = getSelectionStart(el);
+	    var dotPos = el.value.indexOf(".");
+	    if( caratPos > dotPos && dotPos>-1 && (number[1].length > 1)){
+	    	return false;
+	    }
+	    return true;
+	}
+
+	//thanks: http://javascript.nwbox.com/cursor_position/
+	function getSelectionStart(o) {
+		if (o.createTextRange) {
+			var r = document.selection.createRange().duplicate()
+			r.moveEnd('character', o.value.length)
+			if (r.text == '') return o.value.length
+				return o.value.lastIndexOf(r.text)
+		} else return o.selectionStart
+	}
 	
 </script>
 

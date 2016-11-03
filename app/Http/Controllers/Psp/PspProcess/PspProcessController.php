@@ -75,7 +75,7 @@ class PspProcessController extends Controller
                 $procesos = $this->pspprocessservice->find();
                 $array = $courses->toArray();
                 foreach ($procesos as $proceso) {
-                    unset($array[$proceso['idCurso']]);
+                    unset($array[$proceso['idcurso']]);
                 }
             }
 
@@ -107,7 +107,7 @@ class PspProcessController extends Controller
     		$proceso->numero_Plantillas = 0;
     		$proceso->max_tam_plantilla = 0;
     		$proceso->idEspecialidad = Session::get('faculty-code');
-    		$proceso->idCurso = $request['IdCurso'];
+    		$proceso->idcurso = $request['IdCurso'];
     		$proceso->idCiclo = $request['idCiclo']; //el mismo idcicloacademico que se encuentra en tabla cicloxespecialida
     		$teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
 			$proceso->save();
@@ -123,7 +123,7 @@ class PspProcessController extends Controller
     {
         $this->pspprocessservice = new PspProcessService;
         $proceso = $this->pspprocessservice->findById($id);
-        $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
+        $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idcurso);
         $cont=0;
         foreach ($teachers as $teacher) {
             $existe=PspProcessxTeacher::where('idPspProcess',$id)->where('IdDocente',$teacher['IdDocente'])->first();
@@ -165,6 +165,23 @@ class PspProcessController extends Controller
     {
      try {
             $proceso   = PspProcess::where('id',$id)->first();
+            $profesores = PspProcessxTeacher::where('idpspprocess',$id)->get();
+            $this->pspprocessservice = new PspProcessService;
+            foreach ($profesores as $profesor) {
+                $request = [
+                    'idProceso'      =>  $proceso->id,
+                    'idProfesor' =>$profesor->iddocente,
+                ];
+                $students = $this->pspprocessservice->haveStudents($request);
+                foreach ($students as $student) {
+                    $upd = Student::find($student->IdAlumno);
+                    $upd->lleva_psp = null;
+                    $upd->save();
+                }
+                $profesor->delete();
+            }
+
+
             $proceso->delete();
 
             return redirect()->route('pspProcess.index')->with('success', 'El modulo Psp se ha cerrado exitosamente');
@@ -182,7 +199,7 @@ class PspProcessController extends Controller
 
             $this->pspprocessservice = new PspProcessService;
             $proceso = $this->pspprocessservice->findById($request['idProceso']);
-            $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
+            $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idcurso);
             
             $cont=0;
             foreach ($teachers as $teacher) {
@@ -208,7 +225,7 @@ class PspProcessController extends Controller
             $this->pspprocessservice = new PspProcessService;
             $students = $this->pspprocessservice->haveStudents($request);
             $proceso = $this->pspprocessservice->findById($request['idProceso']);
-            $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idCurso);
+            $teachers = $this->pspprocessservice->retrieveTeachers($proceso->idcurso);
 
             foreach ($students as $student) {
                 $upd = Student::find($student->IdAlumno);

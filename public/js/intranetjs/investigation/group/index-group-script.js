@@ -1,29 +1,46 @@
-$(document).ready(function(){
-	$('.view-group').on("click", function(event){
-		var groupId = $(this).closest('tr').find('.group-id').text();
-		console.log(groupId);
-		$.ajax({
-			type:"GET",
-			url:baseUrl + "/investigacion/grupo/view?groupId=" + groupId,
-			dataType: "json",
-			data: data,
-			contentType: "application/json; charset=utf-8",
-			success: function(data){
-		      $('#modal-group #group-id').html(data.group.id);
-		      $('#modal-group #group-name').html(data.group.nombre);
-		      $('#modal-group #group-fac').html(data.group.id_especialidad);
-		      $('#modal-group #group-desc').html(data.group.descripcion);
-		      $('#modal-group #group-lider').html(data.group.id_lider);
-		      $('#modal-group').modal();
-			},
-			error: function (data, errorThrown) {
-                  alert('request failed :'+errorThrown);
-              }
-		})
-	});
+$(document).ready(function() {
+    var activeSystemClass = $('.list-group-item.active');
 
-	$('.delete-group').on("click", function(event){
-		var groupId = $(this).closest('tr').find('.group-id').text();
-		$('#modal-button').attr('href', baseUrl + "/investigacion/grupo/delete/" + groupId );
-	});
+    //something is entered in search form
+    $('#group-search').keyup( function() {
+       var that = this;
+        // affect all table rows on in systems table
+        var tableBody = $('.table-list-search tbody');
+        var tableRowsClass = $('.table-list-search tbody tr');
+        $('.search-sf').remove();
+        tableRowsClass.each( function(i, val) {
+        
+            //Lower text for case insensitive
+            var rowText = $(val).text().toLowerCase();
+            var inputText = $(that).val().toLowerCase();
+            if(inputText != '')
+            {
+                $('.search-query-sf').remove();
+                tableBody.prepend('<tr class="search-query-sf"><td colspan="6"><strong>Buscando: "'
+                    + $(that).val()
+                    + '"</strong></td></tr>');
+            }
+            else
+            {
+                $('.search-query-sf').remove();
+            }
+
+            if( rowText.indexOf( inputText ) == -1 )
+            {
+                //hide rows
+                tableRowsClass.eq(i).hide();
+                
+            }
+            else
+            {
+                $('.search-sf').remove();
+                tableRowsClass.eq(i).show();
+            }
+        });
+        //all tr elements are hidden
+        if(tableRowsClass.children(':visible').length == 0)
+        {
+            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No se encontraron resultados.</td></tr>');
+        }
+    });
 });

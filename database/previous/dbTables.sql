@@ -89,34 +89,25 @@ DROP TABLE IF EXISTS `Alumno`;
 CREATE TABLE `Alumno` (
   `IdAlumno` int(11) NOT NULL AUTO_INCREMENT,
   `IdHorario` int(11) DEFAULT NULL,
-  `Codigo` char(8) DEFAULT NULL,
   `Nombre` varchar(100) DEFAULT NULL,
   `ApellidoPaterno` varchar(100) DEFAULT NULL,
   `ApellidoMaterno` varchar(100) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
--- campos agregados para psp
-  `id` int(10) unsigned DEFAULT NULL, /*id de la tabla statuses*/
-  `telefono` char(9) DEFAULT NULL,
-  `correo` varchar(100) DEFAULT NULL,
-  `direccion` varchar(200) DEFAULT NULL,
+  `Codigo` char(8) DEFAULT NULL, 
+-- campos agregados para psp 
   `IdUsuario` int(11) DEFAULT NULL,
-  `idPspGroup` int(10) unsigned DEFAULT NULL,
-  `IdEspecialidad` int(11) DEFAULT NULL,
-  `idSupervisor` int(10) unsigned DEFAULT NULL,
   `lleva_psp` char(1) DEFAULT NULL,
 -- fin de campos agregados para psp
   PRIMARY KEY (`IdAlumno`),
   KEY `IdHorario` (`IdHorario`),
-  KEY `IdEspecialidad` (`IdEspecialidad`),
   KEY `IdUsuario` (`IdUsuario`),  
 --  KEY `id` (`id`),
 --  KEY `idPspGroup` (`idPspGroup`),
 --  KEY `idSupervisor` (`idSupervisor`), 
   CONSTRAINT `Alumno_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
-  CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`),
-  CONSTRAINT `Alumno_ibfk_3` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`)
+  CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`)
 --  CONSTRAINT `Alumno_ibfk_4` FOREIGN KEY (`id`) REFERENCES `statuses` (`id`),
 --  CONSTRAINT `Alumno_ibfk_5` FOREIGN KEY (`idPspGroup`) REFERENCES `pspgroups` (`id`),
 --  CONSTRAINT `Alumno_ibfk_6` FOREIGN KEY (`idSupervisor`) REFERENCES `supervisors` (`id`)  

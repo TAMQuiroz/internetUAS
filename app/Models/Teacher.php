@@ -115,5 +115,8 @@ class Teacher extends Model {
 
     }
     
+    public function pspProcesses(){
+        return $this->hasMany('Intranet\Models\PspProcessxTeacher', 'IdDocente');
+    }
 
 }

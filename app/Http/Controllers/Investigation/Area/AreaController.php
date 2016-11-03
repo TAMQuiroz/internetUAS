@@ -125,8 +125,13 @@ class AreaController extends Controller
         try {
             $area   = Area::find($id);
             $message = "";
-            if(count($area->investigators)){
+
+            if(count($area->investigators) != 0){
                 return redirect()->back()->with('warning', 'Esta area esta asignada a investigadores');
+            }
+
+            if(count($area->projects) != 0 ){
+                return redirect()->back()->with('warning', 'Esta area esta asignada a proyectos');
             }
 
             $area->delete();

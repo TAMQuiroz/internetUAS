@@ -78,7 +78,9 @@
 
                     <div class="row">
                         <div class="col-md-11 col-sm-12 col-xs-12">
+                            @if(Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
                             <a class="btn btn-success pull-right" href="{{ route('proyecto.edit',$proyecto->id) }}">Editar</a>
+                            @endif
                             <a class="btn btn-default pull-right" href="{{ route('proyecto.index') }}">Regresar</a>
                         </div>
                     </div>
@@ -178,7 +180,10 @@
                                     @if(count($deliverable->versions)!=0)
                                     <a href="{{route('entregable.download', $deliverable->lastversion->first()->id)}}" class="btn btn-primary btn-xs" title="Descargar"><i class="fa fa-download"></i></a>
                                     @endif
+                                    @if(Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
                                     <a href="{{route('entregable.notify', $deliverable->project->group->id)}}" class="btn btn-primary btn-xs" title="Notificar"><i class="fa fa-envelope"></i></a>
+                                    @endif
+
                                 </td>
                             </tr> 
                             @endforeach

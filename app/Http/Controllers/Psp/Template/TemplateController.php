@@ -12,9 +12,11 @@ use Intranet\Http\Requests\TemplateEditRequest;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\PspDocument;
+use Intranet\Models\PspStudent;
 use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Intranet\Models\Supervisor;
+use DB;
 
 class TemplateController extends Controller
 {
@@ -32,6 +34,7 @@ class TemplateController extends Controller
         $data = [
             'templates'    =>  $templates,
         ];
+        //$data['phases'] = Phase::get();
         return view('psp.template.index', $data);
         //return view('template.index');
     }
@@ -57,25 +60,27 @@ class TemplateController extends Controller
     {
         try {
             $template = new Template;
-            $template->idPhase       = $request['fase']; 
-
+            $phase         = Phase::find($request['fase']);
+            $template->idphase       = $request['fase']; 
+            $template->numerofase = $phase->numero;
+            //$data['phases'] = Phase::get();
             //$template->idTipoEstado  = 1;
             if(Auth::User()->IdPerfil==6){
-                $supervisors = Supervisor::where('IdUser',Auth::User()->IdUsuario)->get();  
+                $supervisors = Supervisor::where('iduser',Auth::User()->IdUsuario)->get();  
                 $supervisor  =$supervisors->first();             
-                $template->idSupervisor  = $supervisor->id;
+                $template->idsupervisor  = $supervisor->id;
 
             }
             if(Auth::User()->IdPerfil==2){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();  
                 //teacher =$teacherss->first();
                 if($teacher!=null){
-                $template->idProfesor  = $teacher->IdDocente;
+                $template->idprofesor  = $teacher->IdDocente;
                 }
             }
             if(Auth::User()->IdPerfil==3){
                 //$admin = Admin::where('idUser',Auth::User()->IdUsuario)->first(); 
-                $template->idAdmin   = Auth::User()->IdUsuario;
+                $template->idadmin   = Auth::User()->IdUsuario;
             }
             /*
             $template->idProfesor  = Auth::User()->IdUsuario;
@@ -84,9 +89,9 @@ class TemplateController extends Controller
             */
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->idTipoEstado  = 1;
+                $template->idtipoestado  = 1;
             else
-                $template->idTipoEstado  = 2;
+                $template->idtipoestado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 $destinationPath = 'uploads/templates/'; // upload path
@@ -97,19 +102,23 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
 
-                $pspstudents=Student::get();
+                $pspstudents=PspStudent::get();
                 //$pspstudents=Student::where('lleva_psp','t')->get();
                 foreach($pspstudents as $psp) {
                     if($psp!=null){
                     $PspDocument = new PspDocument;
-                    $PspDocument->idStudent= $psp->IdAlumno;
-                    $PspDocument->idTemplate=$template->id;
-                    $PspDocument->idTipoEstado=3;
-                    if($template->idTipoEstado  == 1)
-                       $PspDocument->esObligatorio='s';
+                    $PspDocument->idstudent= $psp->idalumno;
+                    $PspDocument->idtemplate=$template->id;
+                    $PspDocument->titulo_plantilla=$template->titulo;
+                    $PspDocument->ruta_plantilla=$template->ruta;
+                    $PspDocument->idtipoestado=3;
+                    $PspDocument->es_fisico=0;
+                    if($template->idtipoestado  == 1)
+                       $PspDocument->es_obligatorio='s';
                    else
-                       $PspDocument->esObligatorio='n';
+                       $PspDocument->es_obligatorio='n';
                     $PspDocument->fecha_limite=Phase::find($request['fase'])->fecha_fin;
+                    $PspDocument->numerofase=Phase::find($request['fase'])->numero;
                     $PspDocument->save();
                     }
                 }
@@ -159,14 +168,16 @@ class TemplateController extends Controller
      */
     public function update(TemplateEditRequest $request, $id)
     {
+        //$data['phases'] = Phase::get();
         try {
             $template = Template::find($id);
-            $template->idPhase       = $request['fase'];
+            $template->idphase       = $request['fase'];
+            $template->numerofase    = Phase::find($request['fase'])->numero;
             $template->titulo  = $request['titulo'];
             if($request['obligatorio']==true)
-                $template->idTipoEstado  = 1;
+                $template->idtipoestado  = 1;
             else
-                $template->idTipoEstado  = 2;
+                $template->idtipoestado  = 2;
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 if(file_exists($template->ruta)){
@@ -177,8 +188,22 @@ class TemplateController extends Controller
                 $filename = $template->id.'.'.$extension; 
                 $request['ruta']->move($destinationPath, $filename);
                 $template->ruta = $destinationPath.$filename;
-                $template->save();
+                $template->save();                               
             }
+            $pspdocuments = PspDocument::where('idtemplate',$id)->get();
+            //dd($pspdocuments);
+                foreach($pspdocuments as $pspdoc) {    
+                    $psp=PspDocument::find($pspdoc->id);
+                    if($template->idtipoestado  == 1)
+                       $psp->es_obligatorio='s';
+                   else
+                       $psp->es_obligatorio='n';
+                    $psp->fecha_limite=Phase::find($template->idphase)->fecha_fin;
+                    $psp->numerofase=$template->numerofase;
+                    $psp->titulo_plantilla=$template->titulo;
+                    $psp->ruta_plantilla=$template->ruta;
+                    $psp->save();                    
+            } 
             return redirect()->route('template.index')->with('success', 'La plantilla se ha modificado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

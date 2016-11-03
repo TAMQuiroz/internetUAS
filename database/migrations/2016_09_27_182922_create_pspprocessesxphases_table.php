@@ -13,10 +13,10 @@ class CreatePspprocessesxphasesTable extends Migration
     public function up()
     {
         Schema::create('pspprocessesxphases', function (Blueprint $table) {
-            $table->integer('idPhase')->unsigned();
-            $table->foreign('idPhase')->references('id')->on('phases');
-            $table->integer('idPspProcess')->unsigned();
-            $table->foreign('idPspProcess')->references('id')->on('pspprocesses');
+            $table->integer('idphase')->unsigned();
+            $table->foreign('idphase')->references('id')->on('phases');
+            $table->integer('idpspprocess')->unsigned();
+            $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
             $table->timestamps();
         });
     }

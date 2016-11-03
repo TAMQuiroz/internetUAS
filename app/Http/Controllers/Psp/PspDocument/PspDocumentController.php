@@ -14,6 +14,8 @@ use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Carbon\Carbon;
 use Auth;
+use Mail;
+use DateTime;
 
 class PspDocumentController extends Controller
 {
@@ -165,6 +167,28 @@ class PspDocumentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function mail($id)
+    {        
+        try {
+            $pspDocument = PspDocument::find($id);
+            $student = PspStudent::where('idalumno',$pspDocument->idstudent)->first();
+            $now = Carbon::now();
+            $fecha = $pspDocument->fecha_limite;
+            $datetime1 = new DateTime(($now));
+            $datetime2 = new DateTime(($fecha));
+            $interval = $datetime1->diff($datetime2);
+            $days = $interval->format('%R%a days');
+            //dd($days);
+             Mail::send('emails.notifyDatelimit', ['user' => $student ], function ($m) use ($student) {
+                $m->from('hello@app.com', 'Supervisor de PSP');
+                $m->to($student->correo)->subject('Recordatorio de fecha limite para entrega de documento!');
+            });
+             return redirect()->back()->with('success', 'Notificacon Enviada');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        } 
     }
 
     public function search($id)

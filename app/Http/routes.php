@@ -728,6 +728,7 @@ $api->version('v1', function ($api) {
 
             $api->group(['namespace' => 'ImprovementPlan','prefix'=>'improvementplans'],function($api){
                 $api->get('/{ip_id}/view', 'ImprovementPlanController@getipbyId');
+                $api->get('/{ip_id}/actions', 'ImprovementPlanController@getActionsofIp');
                 
             });
 

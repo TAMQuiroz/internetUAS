@@ -8,6 +8,18 @@ $(document).ready(function($) {
 
 	var form = $('#form-search-question');
 
+	//Datepickers
+	$(".input-group.date").datepicker({
+		    format: "yyyy-mm-dd",
+		    startDate: "today", 
+		    language: "es",
+		    autoclose: true,
+		    todayHighlight: true
+		 });	
+	// $('.input-group.date').datepicker('setDate',"");
+
+	
+
 	$('#search-question').on('click', function() {			
 		var data = form.serialize();
 		$.post(form.attr('action'), data, function(table) {
@@ -56,7 +68,7 @@ $(document).ready(function($) {
 			$.get('/evaluaciones/preguntas/editQuestion',{id_competence:idCompetence},function(data){
 		    	$('#datosPregunta').empty();//vacio los datos
 		    	$('#datosPregunta').append(data);	 //mete un select con los evaluadores
-		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" min="1" max="1000" type="number" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');
+		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" type="text" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');
 		    	$('#modal-editar-pregunta').modal('show');//muestro el modal
 		    });
 
@@ -171,8 +183,38 @@ function selectQuestions(){
 
 	function cambiosvalidos(){
 		var n = $("#input_puntaje").val();
-		if( (Number(n) == NaN) || (n=="") || (n <= 0) ||  (n > 100) || (!Number.isInteger(n*10))  )  {
+		if( (Number(n) == NaN) || (n=="") || (n <= 0) ||  (n > 100) || (!Number.isInteger(n*100))  )  {
 			return false;
 		}		
 		return true;
+	}
+
+
+	function validateFloatKeyPress(el, evt) {
+	    var charCode = (evt.which) ? evt.which : event.keyCode;
+	    var number = el.value.split('.');
+	    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+	        return false;
+	    }
+	    //just one dot (thanks ddlab)
+	    if(number.length>1 && charCode == 46){
+	         return false;
+	    }
+	    //get the carat position
+	    var caratPos = getSelectionStart(el);
+	    var dotPos = el.value.indexOf(".");
+	    if( caratPos > dotPos && dotPos>-1 && (number[1].length > 1)){
+	        return false;
+	    }
+	    return true;
+	}
+
+	//thanks: http://javascript.nwbox.com/cursor_position/
+	function getSelectionStart(o) {
+	    if (o.createTextRange) {
+	        var r = document.selection.createRange().duplicate()
+	        r.moveEnd('character', o.value.length)
+	        if (r.text == '') return o.value.length
+	        return o.value.lastIndexOf(r.text)
+	    } else return o.selectionStart
 	}

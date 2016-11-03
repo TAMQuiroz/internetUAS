@@ -41,7 +41,7 @@
                             <td>{{$pspdocument->titulo_plantilla}}</td> 
                             <td>{{$pspdocument->ruta_plantilla}}</td>  
                             <td>{{$pspdocument->ruta}}</td> 
-                            @if($pspdocument->eso_obligatorio=='s')
+                            @if($pspdocument->es_obligatorio=='s')
                             <td>obligatorio</td> 
                             @else
                             <td>no obligatorio</td> 

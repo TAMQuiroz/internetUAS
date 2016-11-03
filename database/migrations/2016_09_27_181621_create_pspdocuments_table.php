@@ -25,6 +25,7 @@ class CreatePspdocumentsTable extends Migration
             $table->integer('numerofase')->nullable();
             $table->integer('es_fisico')->nullable();
             $table->date('fecha_limite');
+            $table->integer('es_fisico')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

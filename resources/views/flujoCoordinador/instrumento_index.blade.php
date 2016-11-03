@@ -43,8 +43,8 @@
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12 col-xs-12">                         
-                         <a href="{{ route('criterio_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-left">< Atras</a>
-                         <a id ="instrumento-siguiente-btn" href="{{ route('end1.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+                         <a href="{{ route('criterio_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-left">< ATRAS </a>
+                         <a id ="instrumento-siguiente-btn" href="{{ route('period_init.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">SIGUIENTE ></a>
                     </div>
                 </div>
 

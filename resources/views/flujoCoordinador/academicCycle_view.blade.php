@@ -14,9 +14,7 @@
 		<div class="x_panel">
 			<div class="x_content">
 				<div class="form-horizontal">
-				<form action="{{ route('academicCycle_store.flujoCoordinador',$idEspecialidad) }}" method="POST" id="formEditCycle" novalidate="true" name="formEditCycle" class="form-horizontal">
-				
-					 
+									 
 					<div class="row" style="margin-top: 10px;"> 	
 					<div class="form-group">
 						<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo<span class="error">*</span></label>
@@ -71,14 +69,16 @@
 					@endif
 					</tbody>
 				</table>
-
+					<div class="row"></div>
+                    <div class="separator"></div>
+                    
 					@if($period != null)
 	                <div class="row">
-						<div class="col-md-9 col-sm-12 col-xs-12">
-							<a class="btn btn-default pull-left submit" href="{{ route('period_init.flujoCoordinador',$idEspecialidad) }}">Anterior</a>
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+							<a class="btn btn-default pull-left submit" href="{{ route('period_init.flujoCoordinador',$idEspecialidad) }}">< ATRAS</a>
 							<!--<a class="btn btn-primary pull-right init" href="{{ route('activate.faculty') }}">Iniciar Ciclo</a>-->
 							
-							<button class="btn btn-success pull-right submit" type="submit">Siguiente</button>
+							<a class="btn btn-success pull-right submit" href="{{ route('profesor_index.flujoCoordinador',$idEspecialidad) }}">SIGUIENTE > </a>
 							
 						</div>
 					</div>
@@ -91,12 +91,11 @@
                        	</div>
                   	</div>
                   	@endif
-                  </form>
+                  
 			</div>
 		</div>
 		
 	</div>
 </div>
-<script src="{{ URL::asset('js/myvalidations/confFaculty.js')}}"></script>
 
 	@endsection

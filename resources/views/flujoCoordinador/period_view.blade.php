@@ -244,14 +244,14 @@
                             </table>
                         </div>
 
+                        <div class="row"></div>
                         <div class="separator"></div>
-
-                        <div class="row" style="margin-top: 10px;">
-                            <div class="col-md-9 col-sm-9 col-xs-9"></div>
-                                <div class="col-md-3 col-sm-3 col-xs-3">
-                                <a class="btn btn-default submit" href="">Anterior</a>
-
-                                <button class="btn btn-success pull-right submit" type="submit">Siguiente</button>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                
+                                    <a class="btn btn-default pull-left" href="{{ route('instrumento_index.flujoCoordinador',$idEspecialidad) }}">< ATRAS</a>
+                                    <button class="btn btn-success pull-right submit" type="submit">SIGUIENTE ></button>
+                                
                             </div>
                         </div>
 

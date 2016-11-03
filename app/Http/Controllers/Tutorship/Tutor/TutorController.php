@@ -12,6 +12,7 @@ use Intranet\Models\TutSchedule;
 use Intranet\Models\Tutorship;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Reason;
+use Intranet\Models\TutMeeting;
 use Illuminate\Support\Facades\Session; //<---------------------------------necesario para usar session
 
 class TutorController extends Controller {
@@ -131,7 +132,7 @@ class TutorController extends Controller {
         $tutor = Teacher::find($id);
         $razones = Reason::where('tipo', 2)->get();
         $idEspecialidad = Session::get('faculty-code');
-        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria', null)->get();
+        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria', '!=', null)->get();
         $tutors = Teacher::where('IdEspecialidad', $idEspecialidad)->where('rolTutoria', 1)->where('IdDocente', '!=', $id)->get();
 
         $horas = [];
@@ -152,7 +153,7 @@ class TutorController extends Controller {
     }
 
     public function deactivate(Request $request, $id) {
-        $sum = 0;
+        $sum = 0;        
         if ($request['cant'] != null && $request['total'] != 0) {
             foreach ($request['cant'] as $idTeacher => $value) {
                 $sum = $sum + $value;
@@ -181,9 +182,9 @@ class TutorController extends Controller {
                     }
                 }
             }
-            return redirect()->route('alumno.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
+            return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
         } else {
-            return redirect()->route('alumno.index')->with('warning', 'No se puede hacer la reasignación.');
+            return redirect()->route('tutor.index')->with('warning', 'No se puede hacer la reasignación.');
         }
     }
 

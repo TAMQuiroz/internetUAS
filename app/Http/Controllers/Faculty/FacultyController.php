@@ -412,7 +412,7 @@ class FacultyController extends BaseController
     public function endPeriod($period_id)
     {
         $this->facultyService->desactivatePeriod($period_id, Session::get('faculty-code'));
-
+        Session::forget('period-code');
         if(Session::get('academic-cycle')!=null){
             Session::forget('academic-cycle');
         }

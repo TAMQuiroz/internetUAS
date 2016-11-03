@@ -116,6 +116,10 @@ class MeetingController extends Controller
     public function edit($id)
     {
         //
+        $meeting = meeting::with('supervisor','student')->where('idstudent',$id)->get()->first();
+        $data['meeting'] = $meeting;
+        //dd($meeting);
+        return view('psp.meeting.edit',$data);
     }
 
     /**

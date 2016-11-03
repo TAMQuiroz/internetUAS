@@ -25,7 +25,8 @@
                         <th class="column-title">Apellido Materno</th>
                         <th class="column-title">Telefono</th>
                         <th class="column-title">Correo</th>   
-                        <th colspan="2">Acciones</th>                     
+                        <th colspan="1">Acciones</th> 
+                        <th colspan="1">Reuniones</th>                                             
                     </tr>
                     </thead>
                     <tbody>
@@ -39,6 +40,9 @@
                             <td>{{$student->correo}}</td> 
                             <td>
                                 <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Documentos"><i class="fa fa-files-o"></i></a>
+                            </td>
+                            <td>
+                                <a href= "{{route('meeting.edit', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Reuniones"><i class="fa fa-handshake-o"></i></a>
                             </td>
                         </tr> 
                         @endforeach

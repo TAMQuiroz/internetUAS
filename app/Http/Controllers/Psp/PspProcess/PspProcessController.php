@@ -165,6 +165,23 @@ class PspProcessController extends Controller
     {
      try {
             $proceso   = PspProcess::where('id',$id)->first();
+            $profesores = PspProcessxTeacher::where('idpspprocess',$id)->get();
+            $this->pspprocessservice = new PspProcessService;
+            foreach ($profesores as $profesor) {
+                $request = [
+                    'idProceso'      =>  $proceso->id,
+                    'idProfesor' =>$profesor->iddocente,
+                ];
+                $students = $this->pspprocessservice->haveStudents($request);
+                foreach ($students as $student) {
+                    $upd = Student::find($student->IdAlumno);
+                    $upd->lleva_psp = null;
+                    $upd->save();
+                }
+                $profesor->delete();
+            }
+
+
             $proceso->delete();
 
             return redirect()->route('pspProcess.index')->with('success', 'El modulo Psp se ha cerrado exitosamente');

@@ -5,6 +5,7 @@ namespace Intranet\Http\Controllers\API\ImprovementPlan;
 use JWTAuth;
 use Response;
 use Intranet\Models\ImprovementPlan;
+use Intranet\Models\ActionPlan;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
 class ImprovementPlanController extends BaseController
@@ -22,6 +23,11 @@ class ImprovementPlanController extends BaseController
       //dd($ip);
       return response()->json($ip);
 
+    }
+
+    public function getActionsofIp($ip_id){
+      $actions = ActionPlan::where('IdPlanMejora',$ip_id)->with('teacher', 'cicle')->get();
+      return response()->json($actions);
     }
 
     /*

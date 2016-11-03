@@ -3,7 +3,7 @@
 
 <div class="page-title">
 	<div class="title_left">
-		<h3>Alumnos</h3>
+		<h3>Notas Finales</h3>
 	</div>
 </div>
 
@@ -23,10 +23,8 @@
                         <th class="column-title">Nombre</th>
                         <th class="column-title">Apellido Paterno</th>
                         <th class="column-title">Apellido Materno</th>
-                        <th class="column-title">Telefono</th>
-                        <th class="column-title">Correo</th>   
-                        <th colspan="2">Acciones</th> 
-                                                                    
+                        <th class="column-title">Nota Final</th> 
+                        <th colspan="2">Detalle</th>                     
                     </tr>
                     </thead>
                     <tbody>
@@ -36,12 +34,10 @@
                             <td>{{$student->Student->Nombre}}</td> 
                             <td>{{$student->Student->ApellidoPaterno}}</td> 
                             <td>{{$student->Student->ApellidoMaterno}}</td> 
-                            <td>{{$student->telefono}}</td> 
-                            <td>{{$student->correo}}</td> 
+                            <td></td> 
                             <td>
-                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Documentos"><i class="fa fa-files-o"></i></a>
-                                <a href= "{{route('meeting.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Reuniones"><i class="fa fa-clock-o"></i></a>
-                            </td>                            
+                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
+                            </td>
                         </tr> 
                         @endforeach
                     </tbody>

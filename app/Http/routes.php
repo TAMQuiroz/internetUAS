@@ -594,6 +594,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'meeting.edit', 'uses' => 'Psp\meeting\MeetingController@edit']);
                 Route::post('edit/{id}', ['as' => 'meeting.update', 'uses' => 'Psp\meeting\MeetingController@update']);
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
+                Route::get('search/{id}', ['as' => 'meeting.search', 'uses' => 'Psp\meeting\MeetingController@search']);    
             });
 
             //Inscription File
@@ -617,6 +618,20 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('edit/{id}', ['as' => 'phase.update', 'uses' => 'Psp\Phase\PhaseController@update']);
                 Route::get('delete/{id}', ['as' => 'phase.delete', 'uses' => 'Psp\Phase\PhaseController@destroy']);    
             });
+
+            
+
+            //Aspecto
+            Route::group(['prefix' => 'Aspecto'], function() {
+                Route::get('/', ['as' => 'Aspecto.index', 'uses' => 'Psp\Aspecto\AspectoController@index']);
+                Route::get('create', ['as' => 'Aspecto.create', 'uses' => 'Psp\Aspecto\AspectoController@create']);
+                Route::post('create', ['as' => 'Aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
+                Route::get('show/{id}', ['as' => 'Aspecto.show', 'uses' => 'Psp\Aspecto\AspectoController@show']);
+                Route::get('edit/{id}', ['as' => 'Aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);
+                Route::post('edit/{id}', ['as' => 'Aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
+                Route::get('delete/{id}', ['as' => 'Aspecto.delete', 'uses' => 'Psp\Aspecto\AspectoController@destroy']);    
+            });
+            
 
             //Schedule Meeting
             Route::group(['prefix' => 'scheduleMeeting'], function() {
@@ -651,18 +666,24 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'student.delete', 'uses' => 'Psp\Student\StudentController@destroy']);    
             });
 
+            //PSP Student Final score
+            Route::group(['prefix' => 'studentScore'], function() {
+                Route::get('/', ['as' => 'studentScore.index', 'uses' => 'Psp\StudentScore\StudentScoreController@index']);  
+            });
+
 
             //PSP Document
             Route::group(['prefix' => 'pspDocument'], function() {
                 Route::get('/', ['as' => 'pspDocument.index', 'uses' => 'Psp\PspDocument\PspDocumentController@index']);
-                Route::get('create', ['as' => 'pspDocument.create', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
-                Route::post('create', ['as' => 'pspDocument.store', 'uses' => 'Psp\PspDocument\PspDocumentController@store']);
+                Route::get('create/{id}', ['as' => 'pspDocument.create', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
+                Route::post('create/{id}', ['as' => 'pspDocument.store', 'uses' => 'Psp\PspDocument\PspDocumentController@store']);
                 Route::get('show/{id}', ['as' => 'pspDocument.show', 'uses' => 'Psp\PspDocument\PspDocumentController@show']);
                 Route::get('edit/{id}', ['as' => 'pspDocument.edit', 'uses' => 'Psp\PspDocument\PspDocumentController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspDocument.update', 'uses' => 'Psp\PspDocument\PspDocumentController@update']);
                 Route::get('check/{id}', ['as' => 'pspDocument.check', 'uses' => 'Psp\PspDocument\PspDocumentController@check']);
                 Route::post('check/{id}', ['as' => 'pspDocument.updateC', 'uses' => 'Psp\PspDocument\PspDocumentController@updateC']);
                 Route::get('delete/{id}', ['as' => 'pspDocument.delete', 'uses' => 'Psp\PspDocument\PspDocumentController@destroy']);
+                Route::get('mail/{id}', ['as' => 'pspDocument.mail', 'uses' => 'Psp\PspDocument\PspDocumentController@mail']);
                 Route::get('search/{id}', ['as' => 'pspDocument.search', 'uses' => 'Psp\PspDocument\PspDocumentController@search']);    
             });
 
@@ -728,6 +749,7 @@ $api->version('v1', function ($api) {
 
             $api->group(['namespace' => 'ImprovementPlan','prefix'=>'improvementplans'],function($api){
                 $api->get('/{ip_id}/view', 'ImprovementPlanController@getipbyId');
+                $api->get('/{ip_id}/actions', 'ImprovementPlanController@getActionsofIp');
                 
             });
 

@@ -115,7 +115,7 @@
                                             nombre          = entregables[key].nombre;
                                             fecha_inicio    = new Date(entregables[key].fecha_inicio.replace(/-/g, '\/'));
                                             fecha_fin       = new Date(entregables[key].fecha_limite.replace(/-/g, '\/'));
-                                            porcentaje      = entregables[key].porcen_avance;
+                                            porcentaje      = parseInt(entregables[key].porcen_avance);
                                             dependencia     = entregables[key].id_padre;
 
                                             if(dependencia){

@@ -7,6 +7,7 @@ use Intranet\Models\Student;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\freeHour;
+use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
 use Auth;
 
@@ -61,24 +62,25 @@ class MeetingController extends Controller
         try {
             $meeting = new meeting;
             $freeHour = FreeHour::find($request['disponibilidad']);
-            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first();  
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+            $pspstudent =PspStudent::where('IdAlumno',$student->IdAlumno)->first(); 
 
-            $meeting->idTipoEstado = 1;
+            $meeting->idtipoestado = 1;
             $meeting->fecha=$freeHour->fecha;
-            $meeting->idSupervisor=$freeHour->idSupervisor;
-            $meeting->idStudent=$student->IdAlumno;
+            $meeting->idsupervisor=$freeHour->idsupervisor;
+            $meeting->idstudent=$student->IdAlumno;
 
             $timestamp = mktime($freeHour->hora_ini,0,0, 0,0,0);
             $time = date('H:i:s', $timestamp);
             $meeting->hora_inicio=$time;
             $meeting->asistencia='o';
-            $meeting->idFreeHour=$freeHour->id;
-            $meeting->tipoReunion=1;
+            $meeting->idfreeHour=$freeHour->id;
+            $meeting->tiporeunion=1;
 
             $meeting->save();
 
-            $student->idSupervisor=$freeHour->idSupervisor;
-            $student->save();            
+            $pspstudent->idsupervisor=$freeHour->idsupervisor;
+            $pspstudent->save();            
 
             return redirect()->route('meeting.index')->with('success','La cita se ha registrado exitosamente');
         } catch (Exception $e) {

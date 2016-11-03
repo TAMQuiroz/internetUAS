@@ -5,6 +5,9 @@ namespace Intranet\Http\Controllers\API\Faculty;
 use JWTAuth;
 use Response;
 use Intranet\Models\Course;
+use Intranet\Models\Schedule;
+use Intranet\Models\CoursexCycle;
+use Intranet\Models\ResultxObjective;
 use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
 use Intranet\Models\Aspect;
@@ -26,7 +29,7 @@ use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
-
+use Intranet\Models\Evaluation;
 class FacultyController extends BaseController
 {
     use Helpers;
@@ -68,23 +71,24 @@ class FacultyController extends BaseController
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $objectives = EducationalObjetive::lastUpdated($date)
-                                           ->with('studentsResults')
                                            ->where('idEspecialidad', $faculty_id)
                                            ->get();
 
         return $this->response->array($objectives->toArray());
     }
 
-    public function getStudentsResult($faculty_id, Request $request)
+    public function getStudentsResult($faculty_id, $eos_id, Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
+
         $results = StudentsResult::lastUpdated($date)
-                                   ->with('aspects')
-                                   ->with(['educationalObjectives' => function($q) {
-                                        return $q->whereNotNull('ResultadoxObjetivo.deleted_at');
-                                   }])
                                    ->where('idEspecialidad', $faculty_id)
+                                   ->whereHas('resultxObjective',function($query) use ($eos_id){
+                                      $query->where('resultadoxobjetivo.IdObjetivoEducacional',$eos_id);
+                                   })
                                    ->get();
+        
+
 
         return $this->response->array($results->toArray());
     }
@@ -117,7 +121,14 @@ class FacultyController extends BaseController
       }
 
 
-      public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
+    public function getCourseSchedule($course_id,$academic_cycle_id){
+        $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_cycle_id)->first();
+        $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)->with('professors')->get();
+
+        return Response::json($schedules);
+    }
+
+    public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
 
@@ -149,13 +160,11 @@ class FacultyController extends BaseController
         return $this->response->array($courses->toArray());
       }
 
-    public function getAspects($faculty_id, Request $request)
+    public function getAspects($sr_id,Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $aspects = Aspect::lastUpdated($date)
-                           ->whereHas('studentsResult', function($query) use ($faculty_id) {
-                              $query->where('IdEspecialidad', $faculty_id);
-                           })->with('criterion')
+                           ->where('IdResultadoEstudiantil',$sr_id)
                            ->get();
 
         return $this->response->array($aspects->toArray());
@@ -185,7 +194,7 @@ class FacultyController extends BaseController
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $improvement_plans = ImprovementPlan::lastUpdated($date)
                                             ->where('IdEspecialidad', $faculty_id)
-                                            ->with('typeImprovementPlan', 'teacher', 'actions', 'file')
+                                            ->with('typeImprovementPlan', 'teacher' , 'file')
                                             ->get();
 
         return $this->response->array($improvement_plans->toArray());

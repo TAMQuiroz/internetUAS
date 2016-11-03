@@ -38,17 +38,17 @@
                     <tbody>
                         @foreach($pspdocuments as $pspdocument)
                         <tr> 
-                            <td>{{$pspdocument->template->titulo}}</td> 
-                            <td>{{$pspdocument->template->ruta}}</td> 
+                            <td>{{$pspdocument->titulo_plantilla}}</td> 
+                            <td>{{$pspdocument->ruta_plantilla}}</td>  
                             <td>{{$pspdocument->ruta}}</td> 
-                            @if($pspdocument->esObligatorio=='s')
+                            @if($pspdocument->eso_obligatorio=='s')
                             <td>obligatorio</td> 
                             @else
                             <td>no obligatorio</td> 
                             @endif
-                            @if($pspdocument->idTipoEstado==3)
+                            @if($pspdocument->idtipoestado==3)
                             <td>No Subido</td>
-                            @elseif($pspdocument->idTipoEstado==4)
+                            @elseif($pspdocument->idtipoestado==4)
                             <td>Subido</td>
                             @else
                             <td>Revisado</td>
@@ -56,7 +56,7 @@
                             <td>{{$pspdocument->fecha_limite}}</td> 
                             <td>
                                 <a href="{{route('pspDocument.edit',$pspdocument->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
-                                @if($pspdocument->idTipoEstado==5)
+                                @if($pspdocument->idtipoestado==5)
                                 <a class="btn btn-primary btn-xs" href="" title="observaciones" data-toggle="modal" data-target="#obsModal{{$pspdocument->id}}"><i class="fa fa-info"></i></a>
                                 @endif
                             </td>

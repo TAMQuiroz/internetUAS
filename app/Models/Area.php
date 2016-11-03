@@ -9,7 +9,13 @@ class Area extends Model
 {
     use SoftDeletes;
 
-    //projects
+    public function projects()
+    {
+		return $this->hasMany('Intranet\Models\Project', 'id_area');
+    }
 
-    //investigators
+    public function investigators()
+    {
+		return $this->hasMany('Intranet\Models\Investigator', 'id_area');
+    }
 }

@@ -74,7 +74,7 @@
 		    		</div>
 
 		    		<div class="form-group">
-		    			{{Form::label('Descripcion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Descripcion',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-8">
 		    				{{Form::textarea('descripcion', $evento->descripcion, ['class' => 'form-control', 'rows'=>'5', 'readonly', 'maxlength'=>200])}}
 		    			</div>
@@ -82,7 +82,9 @@
 
 		    		<div class="row">
 						<div class="col-md-11 col-sm-12 col-xs-12">
+							@if(Auth::user()->IdUsuario == $evento->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
 							<a class="btn btn-success pull-right" href="{{ route('evento.edit',$evento->id) }}">Editar</a>
+							@endif
 							<a class="btn btn-default pull-right" href="{{ route('evento.index') }}">Regresar</a>
 						</div>
 					</div>

@@ -53,13 +53,14 @@ class DeliverableController extends Controller
      */
     public function create($id)
     {
-        $proyecto = Project::find($id);
-        $cantidad = count($proyecto->deliverables);
-
+        $proyecto       = Project::find($id);
+        $cantidad       = count($proyecto->deliverables);
+        $entregables    = $proyecto->deliverables->lists('nombre','id')->put(0, 'No tiene');
         if($cantidad < $proyecto->num_entregables){
 
             $data = [
                 'proyecto'      =>  $proyecto,
+                'entregables'   =>  $entregables,
             ];
 
             return view('investigation.deliverable.create', $data);
@@ -82,6 +83,13 @@ class DeliverableController extends Controller
             $entregable->id_proyecto     = $request->id_proyecto;
             $entregable->fecha_inicio    = $request->fecha_ini;
             $entregable->fecha_limite    = $request->fecha_fin;
+            
+            if($request->padre_id == 0){
+                $entregable->id_padre    = null;
+            }else{
+                $entregable->id_padre    = $request->padre_id;
+            }
+
             $entregable->porcen_avance   = 0;
 
             $entregable->save();
@@ -139,16 +147,18 @@ class DeliverableController extends Controller
      */
     public function edit($id)
     {
-        $entregable = Deliverable::find($id);
-        $proyecto   = $entregable->project;
-        $investigators  = $this->deliverableService->getNotSelectedInvestigators($id);
+        $entregable         = Deliverable::find($id);
+        $proyecto           = $entregable->project;
+        $investigators      = $this->deliverableService->getNotSelectedInvestigators($id);
         $elegible_teachers  = $this->deliverableService->getNotSelectedTeachers($id);
-
+        $entregables        = $proyecto->deliverables->lists('nombre','id')->put(0, 'No tiene')->forget($entregable->id);
+        
         $data = [
             'entregable'        =>  $entregable,
             'proyecto'          =>  $proyecto,
-            'investigators'    =>  $investigators,
-            'elegible_teachers' =>  $elegible_teachers
+            'investigators'     =>  $investigators,
+            'elegible_teachers' =>  $elegible_teachers,
+            'entregables'       =>  $entregables,
         ];
 
         return view('investigation.deliverable.edit', $data);
@@ -169,6 +179,12 @@ class DeliverableController extends Controller
             $entregable->fecha_inicio    = $request->fecha_ini;
             $entregable->fecha_limite    = $request->fecha_fin;
             $entregable->porcen_avance   = $request->porcen_avance;
+            
+            if($request->padre_id == 0){
+                $entregable->id_padre    = null;
+            }else{
+                $entregable->id_padre    = $request->padre_id;
+            }
 
             $entregable->save();
             
@@ -242,32 +258,64 @@ class DeliverableController extends Controller
     {
         try {
 
-            //FALTA: Revisar que la persona que sube sea uno de los asignados a hacerlo
-
             $entregable = Deliverable::find($request['id_entregable']);
-            $lastversion = $entregable->lastversion->first();
 
-            $invdocument = new Invdocument;
-            $invdocument->id_investigador   = $request['id_usuario'];
+            $habilitado = false;
 
-            if($lastversion){
-                $invdocument->version = $lastversion->version + 1;
-            }else{
-                $invdocument->version = 1;
+            //Busca en profesores
+            if(!$habilitado && $entregable->teachers){
+                foreach ($entregable->teachers as $teacher) {
+                    if($teacher->IdUsuario == $request['id_usuario']){
+                        $habilitado = true;
+                        break;
+                    }
+                }
             }
 
-            $invdocument->id_entregable     = $request['id_entregable'];
-            $invdocument->save();
+            //Busca en investigadores
+            if(!$habilitado && $entregable->investigators){
+                foreach ($entregable->investigators as $investigator) {
+                    if($investigator->id_usuario == $request['id_usuario']){
+                        $habilitado = true;
+                        break;
+                    }
+                }
+            }
 
-            $destinationPath = 'uploads/entregables/'; // upload path
-            $extension = $request['archivo']->getClientOriginalExtension();
-            $filename = $entregable->nombre.'V'.$invdocument->id.'.'.$extension; 
-            $request['archivo']->move($destinationPath, $filename);
+            //Jefe de investigacion
+            if($entregable->project->group->leader->IdUsuario == $request['id_usuario']){
+                $habilitado = true;
+            }
 
-            $invdocument->ruta = $destinationPath.$filename;
-            $invdocument->save();
+            if($habilitado){
 
-            return redirect()->route('entregable.show',$entregable->id)->with('success', 'El entregable se ha subido exitosamente');
+                $lastversion = $entregable->lastversion->first();
+
+                $invdocument = new Invdocument;
+                $invdocument->id_investigador   = $request['id_usuario'];
+
+                if($lastversion){
+                    $invdocument->version = $lastversion->version + 1;
+                }else{
+                    $invdocument->version = 1;
+                }
+
+                $invdocument->id_entregable     = $request['id_entregable'];
+                $invdocument->save();
+
+                $destinationPath = 'uploads/entregables/'; // upload path
+                $extension = $request['archivo']->getClientOriginalExtension();
+                $filename = $entregable->nombre.'V'.$invdocument->id.'.'.$extension; 
+                $request['archivo']->move($destinationPath, $filename);
+
+                $invdocument->ruta = $destinationPath.$filename;
+                $invdocument->save();
+
+                return redirect()->route('entregable.show',$entregable->id)->with('success', 'El entregable se ha subido exitosamente');
+
+            }else{
+                return redirect()->back()->with('warning', 'Usted no esta asignado para hacer esta accion');     
+            }
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción'); 
         }
@@ -334,8 +382,14 @@ class DeliverableController extends Controller
                 return redirect()->back()->with('warning', 'No se puede registar una observación debido a que no es el lider');
             }
         } catch(\Exception $e) {
-            dd($e);
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
+    }
+
+    public function getDeliverable($id){
+
+        $entregable = Deliverable::find($id);
+
+        return $entregable;
     }
 }

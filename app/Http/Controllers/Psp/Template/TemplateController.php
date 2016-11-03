@@ -188,9 +188,10 @@ class TemplateController extends Controller
                 $filename = $template->id.'.'.$extension; 
                 $request['ruta']->move($destinationPath, $filename);
                 $template->ruta = $destinationPath.$filename;
-                $template->save();
-                $pspdocuments = PspDocument::where('idtemplate',$id)->get();
-                //dd($pspdocuments);
+                $template->save();                               
+            }
+            $pspdocuments = PspDocument::where('idtemplate',$id)->get();
+            //dd($pspdocuments);
                 foreach($pspdocuments as $pspdoc) {    
                     $psp=PspDocument::find($pspdoc->id);
                     if($template->idtipoestado  == 1)
@@ -202,8 +203,7 @@ class TemplateController extends Controller
                     $psp->titulo_plantilla=$template->titulo;
                     $psp->ruta_plantilla=$template->ruta;
                     $psp->save();                    
-                }                
-            }
+            } 
             return redirect()->route('template.index')->with('success', 'La plantilla se ha modificado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

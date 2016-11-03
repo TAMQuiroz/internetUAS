@@ -32,7 +32,7 @@
                             <input id=titulo type="text" class="form-control" disabled name="" value="<?php echo htmlspecialchars($pspDocument->titulo_plantilla); ?>"/>
                             </div>
                         </div>
-
+                        @if($pspDocument->es_fisico==0)
                         <div class="form-group">
                             <label for="plantillal" class="control-label col-md-3 col-sm-3 col-xs-12">Plantilla</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -50,7 +50,7 @@
                             <a class="btn btn-primary btn-xs" href="{{route('getentry.pspDocument', $pspDocument->id)}}" title="Descargar Documento"><i class="fa fa-download"></i></a>
                             @endif                            
                         </div>
-
+                        @endif 
                         <div class="form-group">
                             <div  class="col-md-12 col-sm-12 col-xs-12">
                             <label for="obligatoriol" class="control-label col-md-3 col-sm-3 col-xs-12">Obligatorio</label>

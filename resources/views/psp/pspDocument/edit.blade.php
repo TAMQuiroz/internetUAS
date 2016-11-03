@@ -41,6 +41,8 @@
                             </div>
                         </div>
 
+
+                        @if($pspDocument->es_fisico==0)
                         <div class="form-group">
                             <label for="plantillal" class="control-label col-md-3 col-sm-3 col-xs-12">Plantilla</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -60,6 +62,8 @@
                             @endif
                             </div>
                         </div>
+                        @endif 
+
 
                         <div class="form-group">
                             <label for="obligatoriol" class="control-label col-md-3 col-sm-3 col-xs-12">Obligatorio</label>
@@ -110,7 +114,7 @@
                     <div class="separator"></div>
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
-                                @if(($pspDocument->fecha_limite>=$date )&&($pspDocument->idtipoestado!=5 ))
+                                @if(($pspDocument->fecha_limite>=$date )&&($pspDocument->idtipoestado!=5 )&&($pspDocument->es_fisico==0))
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
                                 @endif
                                 <a href="{{ route('pspDocument.index') }}" class="btn btn-default pull-right"> Cancelar</a>

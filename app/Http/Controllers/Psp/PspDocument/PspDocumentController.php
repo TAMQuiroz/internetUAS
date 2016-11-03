@@ -9,6 +9,8 @@ use Intranet\Http\Requests\pspDocumentRevRequest;
 use Intranet\Http\Requests\pspDocumentEditRequest;
 use Intranet\Http\Requests;
 use Intranet\Models\Template;
+use Intranet\Models\PspStudent;
+use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Carbon\Carbon;
 use Auth;
@@ -44,8 +46,12 @@ class PspDocumentController extends Controller
     public function create($id)
     {
         //
-        
-        return view('psp.pspDocument.create');
+        $student = Student::find($id);
+        $data = [
+        'student' => $student,
+        ];
+        $data['phases'] = Phase::get();
+        return view('psp.pspDocument.create',$data);
     }
 
     /**
@@ -56,7 +62,24 @@ class PspDocumentController extends Controller
      */
     public function store(Request $request, $id)
     {
-        //
+        try {
+                $PspDocument = new PspDocument;
+                $PspDocument->idstudent= $id;
+                $PspDocument->titulo_plantilla = $request['titulo'];
+                if($request['obligatorio']==true)
+                    $PspDocument->es_obligatorio='s';
+                else
+                    $PspDocument->es_obligatorio='n';
+                $PspDocument->idtipoestado=4;
+                $PspDocument->es_fisico=1;
+                $PspDocument->fecha_limite=Phase::find($request['fase'])->fecha_fin;
+                $PspDocument->numerofase=Phase::find($request['fase'])->numero;
+                $PspDocument->save();
+
+            return redirect()->route('pspDocument.search',$id)->with('success', 'Se ha registrado el documento exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }        
     }
 
     /**

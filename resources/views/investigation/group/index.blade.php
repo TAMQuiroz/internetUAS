@@ -1,4 +1,5 @@
-@extends('app')
+@extends(Auth::user() ? 'app' : 'appPublic')
+
 @section('content')
 
 <div class="row">
@@ -30,7 +31,7 @@
                             </div>
                         </form>
                     </div>
-                    @if(Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                    @if(Auth::user() && (Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin')))
                     <div class="col-md-6">
                         <a href="{{route('grupo.create')}}">
                             {{Form::button('<i class="fa fa-plus"></i> Crear Grupo',['class'=>'btn btn-success pull-right'])}}
@@ -55,7 +56,7 @@
                             <td>{{ $group->leader->Nombre}} {{ $group->leader->ApellidoPaterno}} {{ $group->leader->ApellidoMaterno}}</td>
                             <td>
                                 <a href="{{route('grupo.show',$group->id)}}" class="btn btn-primary btn-xs view-group""><i class="fa fa-eye"></i></a>
-                                @if(Auth::user()->IdUsuario == $group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                                @if(Auth::user() && (Auth::user()->IdUsuario == $group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
                                 <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$group->id}}"><i class="fa fa-remove"></i></a>
                                 @endif
                             </td>

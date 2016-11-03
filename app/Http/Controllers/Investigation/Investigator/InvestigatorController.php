@@ -38,7 +38,6 @@ class InvestigatorController extends Controller
         ];
 
         return view('investigation.investigator.index', $data);
-
     }
 
     /**
@@ -60,11 +59,7 @@ class InvestigatorController extends Controller
             'areas'             =>  $areas,
         ];
 
-        if(Auth::user()){
-            return view('investigation.investigator.create', $data);
-        }else{
-            return view('investigation.investigator.createPublic', $data);
-        }
+        return view('investigation.investigator.create', $data);
     }
 
     /**
@@ -124,11 +119,7 @@ class InvestigatorController extends Controller
             'investigador'    =>  $investigador,
         ];
 
-        if(Auth::user()){
-            return view('investigation.investigator.show', $data);
-        }else{
-            return view('investigation.investigator.showPublic', $data);
-        }
+        return view('investigation.investigator.show', $data);
     }
 
     /**

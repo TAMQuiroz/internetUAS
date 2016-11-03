@@ -16,8 +16,8 @@ use Illuminate\Routing\Controller as BaseController;
 //Tested
 class TutStudentController extends BaseController
 {
-    user_error() Helpers;
-    
+    use Helpers;
+
     public function getAll()
     {
         $groups = Tutstudent::get();
@@ -32,10 +32,13 @@ class TutStudentController extends BaseController
     }
 
 
-    public function getAppointmentList()
+    public function getAppointmentList($id)
     {
          // return "civil ctm";
-         $appointmentInfo = tutmeeting::get();
+
+
+         $studentInfo = Tutstudent::where('id_usuario', $id)->get();
+         $appointmentInfo = tutmeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
          $i = 0;
 
        foreach ($appointmentInfo as $appointInfo) {
@@ -47,6 +50,7 @@ class TutStudentController extends BaseController
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());
+         
     }
 
 

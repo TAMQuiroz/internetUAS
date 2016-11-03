@@ -21,7 +21,7 @@ class SubindexController extends BaseController {
         $data['faculties'] = [];
 
         $user = $data['userSession'] = Session::get('user');
-      
+        //dd($user);
         try {
             $allFaculties = $this->facultyService->retrieveAll();               
             if (($user->IdDocente!=null)  && ($user->IdDocente == 0)){//detect admin
@@ -46,10 +46,14 @@ class SubindexController extends BaseController {
                     }
                     $data['faculties'] = $teachersFaculties;
                     if(empty($teachersFaculties)){
-                        $data['isEmpty'] = true;
+                        $fac = $this->facultyService->find($user->IdEspecialidad);
+                        array_push($teachersFaculties, $fac);
+                        $data['faculties'] = $teachersFaculties;
+                        $data['isEmpty'] = false;
                     }else{
                         $data['isEmpty'] = false;
                     }
+
                 }
             } else if ($user->user->IdPerfil==5){ //Investigadores
                 $data['faculties'] = $allFaculties;

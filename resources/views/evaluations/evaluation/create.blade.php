@@ -23,19 +23,25 @@
 				<div class="form-group">
 					{{Form::label('Nombre: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-8 col-sm-8 col-xs-8">
-						{{Form::text('nombre',null,['class'=>'form-control','id'=>'nombre', 'required', 'maxlength' => 200])}}
+						{{Form::text('nombre',null,['class'=>'form-control','id'=>'nombre','value'=> 'old(nombre)', 'required', 'maxlength' => 200])}}
 					</div>
 				</div>
 
 				<div class="form-group">
 					{{Form::label('Fecha inicio: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
-					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_inicio',null,['class'=>'form-control', 'id'=>'fecha_inicio' ,'required'])}}
+					<div class="col-md-3 col-sm-3 col-xs-8">						
+			            <div class="input-group date">
+				            <input type="text" value="{{ old('fecha_inicio') }}" class="form-control input-date" name="fecha_inicio" id="fecha_inicio" placeholder="dd/mm/aaaa" required/>
+				            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			            </div>			            
 					</div>
 
 					{{Form::label('Fecha fin: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_fin',null,['class'=>'form-control','id'=>'fecha_fin' ,'required'])}}
+						<div class="input-group date">
+				            <input type="text" value="{{ old('fecha_fin') }}" class="form-control input-date" name="fecha_fin" id="fecha_fin" placeholder="dd/mm/aaaa" required/>
+				            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			            </div>	
 					</div>
 				</div>
 
@@ -50,7 +56,7 @@
 					{{Form::label('Duración:*',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-8 col-sm-8 col-xs-8">
 						<div class="input-group">							
-							<input name="tiempo" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
+							<input name="tiempo" value="{{ old('tiempo') }}" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
 							<span class="input-group-addon" id="basic-addon1">minutos</span>
 						</div>
 					</div>

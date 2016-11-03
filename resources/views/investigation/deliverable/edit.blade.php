@@ -18,7 +18,7 @@
 		  	<div class="panel-body">
 
 		    	{{Form::open(['route' => ['entregable.update', $entregable->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
-		    		{{Form::hidden('id_proyecto',$proyecto->id)}}
+		    		{{Form::hidden('id_proyecto',$proyecto->id,['id'=>'id_proyecto'])}}
                     <div class="form-group">
 		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-4">
@@ -46,6 +46,13 @@
 		    				{{Form::date('fecha_fin',$entregable->fecha_limite,['id'=>'fecha_fin','class'=>'form-control', 'required','min'=> $proyecto->fecha_ini, 'max'=>$proyecto->fecha_fin])}}
 		    			</div>
 		    		</div>
+
+                    <div class="form-group">
+                        {{Form::label('Tarea padre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-4">
+                            {{Form::select('padre_id',$entregables,$entregable->id_padre,['id'=>'padre','class'=>'form-control', 'required'])}}
+                        </div>
+                    </div>
 
 		    		<div class="row">
 						<div class="col-md-8 col-sm-12 col-xs-12">

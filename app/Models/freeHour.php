@@ -12,6 +12,6 @@ class FreeHour extends Model
     protected $table = 'freehours';
 
 	public function supervisor()    {
-		return $this->belongsTo('Intranet\Models\Supervisor','idSupervisor');
+		return $this->belongsTo('Intranet\Models\Supervisor','idsupervisor');
 	}
 }

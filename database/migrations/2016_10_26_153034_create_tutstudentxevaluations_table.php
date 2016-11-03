@@ -17,6 +17,7 @@ class CreateTutstudentxevaluationsTable extends Migration
             $table->integer('id_tutstudent')->unsigned();
             $table->integer('id_evaluation')->unsigned();
             $table->integer('intentos')->unsigned();
+            $table->datetime('fecha_hora')->nullable();
             $table->timestamps();
         });        
     }

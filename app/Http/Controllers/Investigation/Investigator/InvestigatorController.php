@@ -16,6 +16,8 @@ use Intranet\Models\Investigator;
 
 use Intranet\Http\Requests\InvestigatorRequest;
 
+use Auth;
+
 class InvestigatorController extends Controller
 {
     public function __construct() {
@@ -58,7 +60,11 @@ class InvestigatorController extends Controller
             'areas'             =>  $areas,
         ];
 
-        return view('investigation.investigator.create', $data);
+        if(Auth::user()){
+            return view('investigation.investigator.create', $data);
+        }else{
+            return view('investigation.investigator.createPublic', $data);
+        }
     }
 
     /**
@@ -118,7 +124,11 @@ class InvestigatorController extends Controller
             'investigador'    =>  $investigador,
         ];
 
-        return view('investigation.investigator.show', $data);
+        if(Auth::user()){
+            return view('investigation.investigator.show', $data);
+        }else{
+            return view('investigation.investigator.showPublic', $data);
+        }
     }
 
     /**

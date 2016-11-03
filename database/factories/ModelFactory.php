@@ -65,7 +65,7 @@ $factory->define(Intranet\Models\Investigator::class, function (Faker\Generator 
 
 $factory->define(Intranet\Models\Template::class, function (Faker\Generator $faker) {
     return [
-        'idPhase'          => 1,
+        'idphase'          => 1,
         'titulo'          => $faker->text,
     ];
 });
@@ -154,7 +154,7 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
     $student =   factory(Intranet\Models\Student::class)->create();
 
     return [
-        'esObligatorio'       =>  't',
+        'es_obligatorio'       =>  't',
         //'observaciones'       =>  'bien',
         //'ruta'               =>  'uploads/pspdocuments/0.pdf',
         'idStudent'         =>  1,
@@ -198,4 +198,9 @@ $factory->define(Intranet\Models\FreeHour::class, function (Faker\Generator $fak
     ];
 });
 
-
+$factory->define(Intranet\Models\Schedule_meetings::class, function (Faker\Generator $faker) {
+    return [
+        'id'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
+        'tipo' => 'Jefe-Supervisor',
+    ];
+});

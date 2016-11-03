@@ -28,4 +28,8 @@ class Deliverable extends Model
     public function lastversion(){
         return $this->hasMany('Intranet\Models\Invdocument', 'id_entregable')->orderBy('version','desc');
     }
+
+    public function father(){
+        return $this->belongsTo('Intranet\Models\Deliverable', 'id_padre');
+    }
 }

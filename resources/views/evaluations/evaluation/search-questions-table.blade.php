@@ -40,7 +40,7 @@
             <td>Alta</td>
             @endif
 
-            <td hidden><input class="row_puntaje" type="number" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
+            <td hidden><input class="row_puntaje" type="text" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
             <td class="oculto puntaje" hidden>{{ $question->puntaje }}</td>
 
             <td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>

@@ -36,12 +36,12 @@
                         <tr> 
                             <td>{{$template->titulo}}</td> 
                             <td>{{$template->ruta}}</td> 
-                            @if($template->idTipoEstado==1)
+                            @if($template->idtipoestado==1)
                             <td>obligatorio</td> 
                             @else
-                            <td>nopcional</td> 
-                            @endif
-                            <td>{{$template->Phase->numero}}</td> 
+                            <td>opcional</td> 
+                            @endif 
+                            <td>{{$template->numerofase}}</td>
                             <td>
                                 <a href="{{route('template.edit', $template->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                 <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$template->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>

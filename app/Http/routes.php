@@ -618,6 +618,20 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'phase.delete', 'uses' => 'Psp\Phase\PhaseController@destroy']);    
             });
 
+            
+
+            //Aspecto
+            Route::group(['prefix' => 'Aspecto'], function() {
+                Route::get('/', ['as' => 'Aspecto.index', 'uses' => 'Psp\Aspecto\AspectoController@index']);
+                Route::get('create', ['as' => 'Aspecto.create', 'uses' => 'Psp\Aspecto\AspectoController@create']);
+                Route::post('create', ['as' => 'Aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
+                Route::get('show/{id}', ['as' => 'Aspecto.show', 'uses' => 'Psp\Aspecto\AspectoController@show']);
+                Route::get('edit/{id}', ['as' => 'Aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);
+                Route::post('edit/{id}', ['as' => 'Aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
+                Route::get('delete/{id}', ['as' => 'Aspecto.delete', 'uses' => 'Psp\Aspecto\AspectoController@destroy']);    
+            });
+            
+
             //Schedule Meeting
             Route::group(['prefix' => 'scheduleMeeting'], function() {
                 Route::get('/', ['as' => 'scheduleMeeting.index', 'uses' => 'Psp\ScheduleMeeting\scheduleMeetingController@index']);

@@ -1,47 +1,30 @@
 <?php
 
-namespace Intranet\Http\Controllers\API\Faculty;
+namespace Intranet\Http\Controllers\API\ImprovementPlan;
 
 use JWTAuth;
 use Response;
-use Intranet\Models\Course;
-use Intranet\Models\Schedule;
-use Intranet\Models\CoursexCycle;
-use Intranet\Models\ResultxObjective;
-use Intranet\Models\Cicle;
-use Intranet\Models\Rubric;
-use Intranet\Models\Aspect;
-use Intranet\Models\Teacher;
-use Illuminate\Http\Request;
-use Intranet\Models\Faculty;
-use Dingo\Api\Routing\Helpers;
-use Intranet\Models\Suggestion;
-use Intranet\Models\StudentsResult;
 use Intranet\Models\ImprovementPlan;
-use Intranet\Models\EvaluatedCourses;
-use Intranet\Models\EducationalObjetive;
-use Intranet\Models\AcademicCycle;
-use Intranet\Http\Services\Course\CourseService;
-use Intranet\Http\Services\Period\PeriodService;
-use Intranet\Http\Services\Faculty\FacultyService;
+use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
-use Intranet\Http\Services\TimeTable\TimeTableService;
-use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
-use Intranet\Http\Services\StudentsResult\StudentsResultService;
-use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
-use Intranet\Models\Evaluation;
-class FacultyController extends BaseController
+class ImprovementPlanController extends BaseController
 {
     use Helpers;
 
     public function __construct()
     {
-        $this->facultyService= new FacultyService;
-        $this->course_service = new CourseService;
-        $this->period_service = new PeriodService;
-        $this->studentResultsService = new StudentsResultService();
-        $this->timeTableService = new TimeTableService();
+       
     }
+
+
+    public function getipbyId($ip_id){
+      $ip = ImprovementPlan::where('IdPlanMejora',$ip_id)->with('teacher','typeImprovementPlan')->first();
+      //dd($ip);
+      return response()->json($ip);
+
+    }
+
+    /*
 
     public function get(Request $request)
     {
@@ -285,5 +268,7 @@ class FacultyController extends BaseController
 
       return view('consolidated.results.api', $data);
     }
+
+    */
 
 }

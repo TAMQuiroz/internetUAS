@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
 use Intranet\Models\Tutorship;
+use Intranet\Models\TutSchedule;
 use Intranet\Models\tutmeeting;
 use Intranet\Models\Topic;
 use Intranet\Models\Status;
@@ -107,6 +108,7 @@ class TutStudentController extends BaseController
     public function getTutorById($id_usuario)
     {        
 
+        
         $studentInfo = Tutstudent::where('id_usuario',$id_usuario)->get(); //deberia darme 5
        // $tutorshipInfo = Tutorship::where('id',5)->get();
         $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
@@ -116,11 +118,12 @@ class TutStudentController extends BaseController
         $teacherInfo[0]['scheduleInfo'] = '';
         $i = 0;
 
-       foreach ($teacherInfo as $teacher) {
+        foreach ($teacherInfo as $teacher) {
            $teacherInfo[$i]->scheduleInfo= $scheduleInfo;
            $i++;
         }
-                        
+              
+                       
         return $this->response->array($teacherInfo->toArray());
 
 

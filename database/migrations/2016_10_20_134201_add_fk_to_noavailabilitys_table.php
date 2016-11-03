@@ -25,7 +25,7 @@ class AddFkToNoavailabilitysTable extends Migration
     public function down()
     {
         Schema::table('noavailabilitys', function (Blueprint $table) {
-             $table->dropForeign('noAvailabilitys_id_docente_foreign');             
+             $table->dropForeign('noavailabilitys_id_docente_foreign');             
         });
     }
 }

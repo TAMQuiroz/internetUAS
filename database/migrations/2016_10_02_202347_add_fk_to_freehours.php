@@ -13,7 +13,7 @@ class AddFkToFreehours extends Migration
     public function up()
     {
         Schema::table('freehours', function (Blueprint $table) {
-             $table->foreign('idSupervisor')->references('id')->on('supervisors');
+             $table->foreign('idsupervisor')->references('id')->on('supervisors');
         });
     }
 
@@ -25,7 +25,7 @@ class AddFkToFreehours extends Migration
     public function down()
     {
         Schema::table('freehours', function (Blueprint $table) {
-            $table->dropForeign('freehours_idSupervisor_foreign');
+            $table->dropForeign('freehours_idsupervisor_foreign');
         });  
     }
 }

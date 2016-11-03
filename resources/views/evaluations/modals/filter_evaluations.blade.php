@@ -3,19 +3,19 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-				</button>                
-			</div>
-			<div class="modal-body" >
+				</button>            
 				<div class="text-left">
 					<p style="font-size: 18px"><strong>Filtros de búsqueda</strong></p>
 					<p style="font-size: 16px">Seleccione uno o más filtros:</p>
-				</div>
+				</div>    
+			</div>
+			<div class="modal-body" >				
 				<form method="GET" action="{{$route}}" class="form-horizontal" >		
 
 					<div class="form-group">
 						{{Form::label('Nombre:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
 						<div class="col-md-6 col-sm-6 col-xs-6">
-							<input type="text" name="nombre" placeholder="Escriba el nombre de la evaluación">
+							<input type="text" name="nombre" placeholder="Escriba el nombre de la evaluación" maxlength="30">
 						</div>   
 					</div>
 					<div class="form-group">

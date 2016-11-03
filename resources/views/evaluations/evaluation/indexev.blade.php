@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3>Mis Evaluaciones por corregir</h3>
+        <h3>Mis evaluaciones</h3>
     </div>    
 </div>
 
@@ -11,15 +11,15 @@
         <div class="x_title">                              
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">                    
-                    <col width="20%">
-                    <col width="20%">
-                    <col width="30%">                    
-                    <col width="10%">                                       
-                    <col width="20%">
+                    <col width="10%">
+                    <col width="50%">
+                    <col width="30%">
+                    <col width="10%"> 
                     <thead>
                         <tr class="headings">                                   
                             <th class="column-title">Código </th>    
                             <th class="column-title">Nombre </th>                                                        
+                            <th class="column-title">Especialidad </th>                                                        
                             <th class="column-title last">Acciones</th>                                
                         </tr>
                     </thead>
@@ -28,6 +28,7 @@
                         <tr class="even pointer">
                             <td class=" ">{{ $evaluation->id}}</td>                                                      
                             <td class=" ">{{ $evaluation->nombre }}</td>                                          
+                            <td class=" ">{{ $evaluation->Nombre }}</td>                                          
                             <td class="">                                
                                 <a href="{{route('evaluacion.ver_evaluaciones_alumnos',$evaluation->id)}}" title="Ver evaluaciones por corregir" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-search"></i>

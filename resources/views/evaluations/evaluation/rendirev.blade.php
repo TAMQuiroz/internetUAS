@@ -68,10 +68,10 @@
 							</li>
 							@foreach($pregunta->alternativas as $key => $alternativa)
 							<li>
-								<p>
-									<input name="arrQuestion[{{$pregunta->id}}]" value="{{$alternativa->letra}}" type="radio" id="clave_{{$pregunta->id}}_{{$alternativa->letra}}" />
-									<label for="clave_{{$pregunta->id}}_{{$alternativa->letra}}"><strong>{{$alternativa->letra}}.</strong> {{$alternativa->descripcion}}</label>
-								</p>															
+								<div class="radio">
+								<label><input name="arrQuestion[{{$pregunta->id}}]" value="{{$alternativa->letra}}" type="radio" id="clave_{{$pregunta->id}}_{{$alternativa->letra}}" /> {{$alternativa->letra}}. {{$alternativa->descripcion}} </label>
+								</div>
+																						
 							</li>
 							@endforeach
 						</ul>

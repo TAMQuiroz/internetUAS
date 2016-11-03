@@ -55,44 +55,47 @@ class EvaluationController extends Controller
        $tutstudentxevaluations = Tutstudent::find($id)->evaluations;//saco las evaluaciones del alumno
        $evaluations = array();
        foreach ($tutstudentxevaluations as $tutstudentxevaluation) {
-         array_push($evaluations,$tutstudentxevaluation->evaluation);
-     }
+           array_push($evaluations,$tutstudentxevaluation->evaluation);
+       }
 
        // dd($evaluations);
-     $data = [
-     'evaluations'               =>  $evaluations,
-     'tutstudentxevaluations'    =>  $tutstudentxevaluations,
-     ];
-     return view('evaluations.evaluation.indexal', $data);
- }
+       $data = [
+       'evaluations'               =>  $evaluations,
+       'tutstudentxevaluations'    =>  $tutstudentxevaluations,
+       ];
+       return view('evaluations.evaluation.indexal', $data);
+   }
 
- public function indexev(Request $request)
- {
+   public function indexev(Request $request)
+   {
     $id = Session::get('user')->IdDocente;    
-       $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->select('evaluations.id','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->get();
-     
-     $data = [
-     'evaluations'               =>  $evquestionxstudentxdocentes,     
-     ];
-     return view('evaluations.evaluation.indexev', $data);
+    $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->join('Especialidad', 'id_especialidad', '=', 'IdEspecialidad')->select('Especialidad.Nombre','evaluations.id','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->get();
+
+    $data = [
+    'evaluations'               =>  $evquestionxstudentxdocentes,     
+    ];
+    return view('evaluations.evaluation.indexev', $data);
 
 }
 
 public function indexeval(Request $request,$id)
  {//muestra las evaluaciones pendietes por corregir de un evaluador
+
     $id_docente = Session::get('user')->IdDocente;
     $evaluation = Evaluation::find($id);
-    $tutstudentxevaluations = DB::table('tutstudentxevaluations')->where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();
-    $no_include = DB::table('tutstudentxevaluations')->join('teacherxtutstudentxevaluations', 'teacherxtutstudentxevaluations.id_tutstudentxevaluation', '=', 'tutstudentxevaluations.id')->where('fecha_hora','<>',null)->where('id_docente',$id_docente)->where('id_evaluation',$id)->get();        
-    
-    
-     
-     $data = [
-     'evaluation'               =>  $evaluation, 
-     'tutstudentxevaluations'   =>  $tutstudentxevaluations, 
-     'no_include'   =>  $no_include, 
-     ];
-     return view('evaluations.evaluation.evaluaciones_alumnos', $data);
+    $tutstudentxevaluations = Tutstudentxevaluation::where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();
+    $no_include = DB::table('teacherxtutstudentxevaluations')->where('id_docente',$id_docente)->get();        
+    $arr_no_include = array();
+    foreach ($no_include as $value) {
+        array_push($arr_no_include, $value->id_tutstudentxevaluation);
+    }
+
+    $data = [
+    'evaluation'               =>  $evaluation, 
+    'tutstudentxevaluations'   =>  $tutstudentxevaluations, 
+    'arr_no_include'           =>  $arr_no_include, 
+    ];
+    return view('evaluations.evaluation.evaluaciones_alumnos', $data);
 
 }
 
@@ -263,6 +266,7 @@ public function indexeval(Request $request,$id)
         }
         //guardo la relacion de evaluador con la evaluacion
         $tutstudentxevaluation = Tutstudentxevaluation::where('id_tutstudent',$id)->where('id_evaluation',$ev)->first();
+
         DB::table('teacherxtutstudentxevaluations')->insert(['id_tutstudentxevaluation' =>$tutstudentxevaluation->id , 'id_docente' => $id_docente]);
         return redirect()->route('evaluacion.ver_evaluaciones_alumnos',$ev)->with('success', 'La evaluación se ha corregido exitosamente');
     }
@@ -279,10 +283,11 @@ public function indexeval(Request $request,$id)
     public function download_evquestion($id)
     {//descarga el archivo de la pregunta subida por el alumno
         $evquestion   = Evquestionxstudentxdocente::find($id);//saco la pregunta
-        // dd($evquestion);
+        
         $path = $evquestion->path_archivo;
-        // dd($path);
-        return response()->download(public_path() . "/". $path );
+        if($path!=null){
+            return response()->download(public_path() . "/". $path );
+        }
     }    
 
     public function rendirEv($id)
@@ -290,7 +295,7 @@ public function indexeval(Request $request,$id)
         $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//saco la evaluacion del alumno 
         if($tutstudentxevaluation->intentos>0){
             $tutstudentxevaluation->intentos-=1;
-            $tutstudentxevaluation->fecha_hora = date('Y-m-d H:i:s ', time());
+            
             $tutstudentxevaluation->save(); //disminuyo la cantidad de intentos del alumno
 
             $evaluation   = Evaluation::find($id);//saco la evaluacion        
@@ -305,11 +310,12 @@ public function indexeval(Request $request,$id)
         }
     }   
 
-public function storeEv(Request $request)
-    {//guarda las respuestas de la evaluacion
-                    
+    public function storeEv(Request $request)
+    {//guarda las respuestas de la evaluacion    
+        $id=0    ;
         foreach ($request['arrQuestion'] as $idEvquestion => $answer) {
             $evquestion = EvQuestion::find($idEvquestion);
+            $id = $evquestion->id_evaluation;//
             $ev = new Evquestionxstudentxdocente;
             $ev->id_tutstudent = Session::get('user')->id;
             $ev->id_evquestion = $idEvquestion;
@@ -326,7 +332,7 @@ public function storeEv(Request $request)
                 if($request->hasFile($idEvquestion)){
                     $destinationPath = 'uploads/respuestas/'; // upload path
                     $extension = $request->file($idEvquestion)->getClientOriginalExtension();
-                    $filename = $ev->id.'.'.$extension; 
+                    $filename = 'Eval_'.$evquestion->evaluacion->id.'_Preg_'.$evquestion->id.'_'.$ev->id.'.'.$extension; 
                     $request->file($idEvquestion)->move($destinationPath, $filename);
 
                     $ev->path_archivo = $destinationPath.$filename;                    
@@ -334,7 +340,11 @@ public function storeEv(Request $request)
                 }
             }
             
-        }        
+        }  
+        //guardo la hora de la evaluacion
+        $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//
+        $tutstudentxevaluation->fecha_hora = date('Y-m-d H:i:s ', time());
+        $tutstudentxevaluation->save();      
         
         return redirect()->route('evaluacion_alumno.index')->with('success', 'La evaluación ha sido rendida exitosamente');
     }

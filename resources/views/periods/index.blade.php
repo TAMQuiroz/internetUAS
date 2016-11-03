@@ -20,8 +20,10 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        @if(Session::get('period-code')==null)
                         <a href="{{ route('createPeriod.faculty') }}" class="btn btn-success pull-right">
                                 <i class="fa fa-plus"></i> Iniciar Nuevo Periodo</a>
+                        @endif
                     </div>
                 </div>
 

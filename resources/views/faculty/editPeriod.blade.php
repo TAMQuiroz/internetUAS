@@ -7,8 +7,9 @@
 	</div>
 </div>
 
-
+@if(Session::get('academic-cycle')==null)
 {{ Form::button('Finalizar Periodo', ['class' => 'btn btn-primary pull-right final', 'data-toggle' => 'modal', 'data-target' => '#modalDelete'])}}
+@endif
 
 <form action="{{ route('updatePeriod.faculty') }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
 	<input type="hidden" name="conf-code" value="{{ $period->configuration->IdConfEspecialidad }}">

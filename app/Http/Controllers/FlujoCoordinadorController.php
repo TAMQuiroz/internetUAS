@@ -415,7 +415,7 @@ class FlujoCoordinadorController extends Controller
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
         
-        return redirect()->route('academicCycle_view.flujoCoordinador',$data)->with('success', 'Inició el Ciclo Académico');
+        return redirect()->route('profesor_index.flujoCoordinador',$data)->with('success', 'Inició el Ciclo Académico');
         
     }
 

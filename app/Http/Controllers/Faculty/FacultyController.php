@@ -371,7 +371,7 @@ class FacultyController extends BaseController
     public function desactivatePeriod(Request $request) {
         try {
             $this->facultyService->desactivatePeriod($request->all(), Session::get('faculty-code'));
-            Session::forget('period-code');
+            
 
         } catch(\Exception $e) {
             dd($e);

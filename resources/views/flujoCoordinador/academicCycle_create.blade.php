@@ -105,19 +105,16 @@
 						</tbody>
 					</table>
 
-					 <div class="row" style="margin-top: 10px;">
-	                    <div class="col-md-8 col-sm-8 col-xs-9"></div>
-		                  	<div class="col-md-3 col-sm-3 col-xs-3">
-
-	                  	</div>
-	                </div>
+					
+	                <div class="row"></div>
+                    <div class="separator"></div>
 
 	                <div class="row">
-						<div class="col-md-9 col-sm-12 col-xs-12">
-							<a class="btn btn-default pull-left submit" href="{{ route('period_init.flujoCoordinador',$idEspecialidad) }}">Anterior</a>
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+							<a class="btn btn-default pull-left submit" href="{{ route('period_init.flujoCoordinador',$idEspecialidad) }}">< ATRAS</a>
 							<!--<a class="btn btn-primary pull-right init" href="{{ route('activate.faculty') }}">Iniciar Ciclo</a>-->
 							
-							<button class="btn btn-success pull-right submit" type="submit">Siguiente</button>
+							<button class="btn btn-success pull-right submit" type="submit">SIGUIENTE ></button>
 							
 						</div>
 					</div>

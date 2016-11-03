@@ -357,6 +357,7 @@ class FacultyService {
 					'Vigente' =>'0'
 				));
 			}
+			Session::forget('period-code');
 		}
 	}
 
@@ -375,7 +376,7 @@ class FacultyService {
 						'Vigente' =>'2'
 			));
 		}
-
+		Session::forget('period-code');
 
 	}
 

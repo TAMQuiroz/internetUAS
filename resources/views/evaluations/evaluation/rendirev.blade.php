@@ -29,8 +29,8 @@
 	<div class="col-md-12">
 		<div class="page-title">
 			<div class="title_left">
-				<h3>{{$evaluation->nombre}}</h3>				
-				<input hidden type="number" id="minutos" value="{{$evaluation->tiempo}}">
+				<h3>{{$evaluation->nombre}}</h3>							
+				<input hidden type="number" id="minutos" value="{{$evaluation->tiempo}}">				
 			</div>
 		</div>
 	</div>
@@ -46,6 +46,7 @@
 			</div>
 			
 			{{Form::open(['route' => 'evaluacion_alumno.store','files'=>true, 'class'=>'form-horizontal', 'id'=>'respuestas'])}}
+				<input hidden type="number" name="id_evaluation" value="{{$evaluation->id}}">
 				
 					@foreach($evaluation->preguntas as $key => $pregunta)
 					@if($pregunta->tipo == 2)

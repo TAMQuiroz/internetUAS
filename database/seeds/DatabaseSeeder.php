@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TeachersTableSeeder::class);
         $this->call(CompetenceTableSeeder::class);    
         $this->call(QuestionsTableSeeder::class);    
+        //psp
+        $this->call(CaseInscriptionFileSeeder::class);
 
-        
- 
 
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Intranet\Http\Controllers\API\Psp\Students;
 
+use DB;
+use Mail;
 use Illuminate\Http\Request;
 use Intranet\Models\Student;
 use Intranet\Models\Inscription;
@@ -31,15 +33,39 @@ class PspStudentsInscriptionFiles extends BaseController
     }
 
 
-   public function edit(Request $request, $id){
+   public function edit(Request $request, $id , $idAlumno){
     
         $recomendaciones     = $request->only('recomendaciones');
              
         //Guardar
         $inscription = Inscription::find($id);
         $inscription->recomendaciones  = $recomendaciones['recomendaciones'];
-
         $inscription->save();
+
+
+        $recomendacion  =  $inscription->recomendaciones ; 
+
+
+$mail = 'jemarroquin@pucp.edu.pe';
+
+        try
+        {
+            Mail::send('emails.notifyObservationForInscriptionFilePSP', compact('recomendacion'), function($m) use($mail) {
+                $m->subject('Recomendacion Registrada - PSP');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
+
+
+
+
+
+
+
 
         //Retornar mensaje
         $mensaje = 'Se modifico correctamente';

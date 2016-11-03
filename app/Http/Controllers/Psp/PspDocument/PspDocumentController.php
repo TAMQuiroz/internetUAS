@@ -181,10 +181,20 @@ class PspDocumentController extends Controller
             $interval = $datetime1->diff($datetime2);
             $days = $interval->format('%R%a days');
             //dd($days);
-             Mail::send('emails.notifyDatelimit', ['user' => $student ], function ($m) use ($student) {
+           /*  Mail::send('emails.notifyDatelimit', ['user' => $student ], function ($m) use ($student) {
                 $m->from('hello@app.com', 'Supervisor de PSP');
                 $m->to($student->correo)->subject('Recordatorio de fecha limite para entrega de documento!');
-            });
+            });*/
+            $hoy                = Carbon::now();
+            $fechaLimite        = Carbon::parse($pspDocument->fecha_limite);
+            $diasRestantes      = $hoy->diffInDays($fechaLimite);
+            
+                $mail = $student->correo;
+                Mail::send('emails.notifyDatelimit', compact('diasRestantes'), function($m) use($mail){
+                    $m->subject('Notificacion de fecha limite');
+                    $m->to($mail);
+                });
+            
              return redirect()->back()->with('success', 'Notificacon Enviada');
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

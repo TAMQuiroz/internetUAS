@@ -791,6 +791,12 @@ $api->version('v1', function ($api) {
 
 });
 
+Route::group(['prefix' => 'investigacion'], function(){
+    Route::group(['prefix' => 'investigador'], function(){
+        Route::get('show/{id}', ['as' => 'investigador.show', 'uses' => 'Investigation\Investigator\InvestigatorController@show']);
+    });
+});
+
 //NUEVAS RUTAS PARA SEGUNDA PARTE DEL PROYECTO
 
 Route::group(['middleware' => 'auth'], function(){  
@@ -818,12 +824,10 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/', ['as' => 'investigador.index', 'uses' => 'Investigation\Investigator\InvestigatorController@index']);
                 Route::get('create', ['as' => 'investigador.create', 'uses' => 'Investigation\Investigator\InvestigatorController@create']);
                 Route::post('create', ['as' => 'investigador.store', 'uses' => 'Investigation\Investigator\InvestigatorController@store']);
-                Route::get('show/{id}', ['as' => 'investigador.show', 'uses' => 'Investigation\Investigator\InvestigatorController@show']);
+                //Route::get('show/{id}', ['as' => 'investigador.show', 'uses' => 'Investigation\Investigator\InvestigatorController@show']);
                 Route::get('edit/{id}', ['as' => 'investigador.edit', 'uses' => 'Investigation\Investigator\InvestigatorController@edit']);
                 Route::post('edit/{id}', ['as' => 'investigador.update', 'uses' => 'Investigation\Investigator\InvestigatorController@update']);
                 Route::get('delete/{id}', ['as' => 'investigador.delete', 'uses' => 'Investigation\Investigator\InvestigatorController@destroy']);
-
-
             });
 
             //Administrar Grupo de Investigacion
@@ -880,6 +884,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'proyecto.edit', 'uses' => 'Investigation\Project\ProjectController@edit']);
                 Route::post('edit/{id}', ['as' => 'proyecto.update', 'uses' => 'Investigation\Project\ProjectController@update']);
                 Route::get('delete/{id}', ['as' => 'proyecto.delete', 'uses' => 'Investigation\Project\ProjectController@destroy']);
+                Route::get('/getProject/{id}', ['as' => 'proyecto.ajax.getProject', 'uses' => 'Investigation\Project\ProjectController@getProject']);
 
                 //Seleccion de integrantes de proyecto
                 Route::group(['prefix' => 'afiliacion'], function(){
@@ -908,6 +913,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/show/{id}/viewVersion', ['as' => 'entregable.viewVersion', 'uses' => 'Investigation\Deliverable\DeliverableController@viewVersion']);
                 Route::post('/saveObservation', ['as' => 'entregable.saveObservation', 'uses' => 'Investigation\Deliverable\DeliverableController@saveObservation']);
                 Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);    
+                Route::get('/getDeliverable/{id}', ['as' => 'entregable.ajax.getDeliverable', 'uses' => 'Investigation\Deliverable\DeliverableController@getDeliverable']);
 
                 //Seleccion de integrantes de proyecto
                 Route::group(['prefix' => 'afiliacion'], function(){
@@ -920,6 +926,17 @@ Route::group(['middleware' => 'auth'], function(){
                 
             });
 
+            //Reportes de Investigación
+            Route::group(['prefix' => 'reporteISA'], function(){
+                Route::get('/', ['as' => 'reporteISA.index', 'uses' => 'Report\ReportController@indexISA']);
+                Route::post('/generateISA', ['as' => 'reporteISA.generateISA', 'uses' => 'Report\ReportController@generateISA']);
+                Route::get('show/{id}', ['as' => 'reporteISA.show', 'uses' => 'Report\ReportController@show']);
+            });
+
+            Route::group(['prefix' => 'reporteISP'], function(){
+                Route::get('/', ['as' => 'reporteISP.index', 'uses' => 'Report\ReportController@indexISP']);
+                Route::post('/generateISP', ['as' => 'reporteISP.generateISP', 'uses' => 'Report\ReportController@generateISP']);
+            });
             
         });      
 

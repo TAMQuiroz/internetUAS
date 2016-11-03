@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('Fecha de Fecha fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        {{Form::label('Fecha de fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
                             {{Form::text('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin','class'=>'form-control', 'readonly','min'=>\Carbon\Carbon::today()->toDateString()])}}
                         </div>
@@ -100,42 +100,44 @@
 
                                 function drawChart() {
                                     var entregables = {!!$proyecto->deliverables!!};
-                                    var data = new google.visualization.DataTable();
-                                    data.addColumn('string', 'Task ID');
-                                    data.addColumn('string', 'Task Name');
-                                    data.addColumn('date', 'Start Date');
-                                    data.addColumn('date', 'End Date');
-                                    data.addColumn('number', 'Duration');
-                                    data.addColumn('number', 'Percent Complete');
-                                    data.addColumn('string', 'Dependencies');
+                                    if(entregables.length != 0){
+                                        var data = new google.visualization.DataTable();
+                                        data.addColumn('string', 'Task ID');
+                                        data.addColumn('string', 'Task Name');
+                                        data.addColumn('date', 'Start Date');
+                                        data.addColumn('date', 'End Date');
+                                        data.addColumn('number', 'Duration');
+                                        data.addColumn('number', 'Percent Complete');
+                                        data.addColumn('string', 'Dependencies');
 
-                                    for (key in entregables){
-                                        id              = entregables[key].id;
-                                        nombre          = entregables[key].nombre;
-                                        fecha_inicio    = new Date(entregables[key].fecha_inicio.replace(/-/g, '\/'));
-                                        fecha_fin       = new Date(entregables[key].fecha_limite.replace(/-/g, '\/'));
-                                        porcentaje      = entregables[key].porcen_avance;
-                                        dependencia     = entregables[key].id_padre;
+                                        for (key in entregables){
+                                            id              = entregables[key].id;
+                                            nombre          = entregables[key].nombre;
+                                            fecha_inicio    = new Date(entregables[key].fecha_inicio.replace(/-/g, '\/'));
+                                            fecha_fin       = new Date(entregables[key].fecha_limite.replace(/-/g, '\/'));
+                                            porcentaje      = entregables[key].porcen_avance;
+                                            dependencia     = entregables[key].id_padre;
 
-                                        if(dependencia){
-                                            data.addRows([
-                                                ['T'+id, nombre, fecha_inicio, fecha_fin, null,  porcentaje,  'T'+dependencia],
-                                            ]);
-                                        }else{
-                                            data.addRows([
-                                                ['T'+id, nombre, fecha_inicio, fecha_fin, null,  porcentaje,  null],
-                                            ]);
+                                            if(dependencia){
+                                                data.addRows([
+                                                    ['T'+id, nombre, fecha_inicio, fecha_fin, null,  porcentaje,  'T'+dependencia],
+                                                ]);
+                                            }else{
+                                                data.addRows([
+                                                    ['T'+id, nombre, fecha_inicio, fecha_fin, null,  porcentaje,  null],
+                                                ]);
+                                            }
+                                            
                                         }
-                                        
+
+                                        var options = {
+                                            height: 300
+                                        };
+
+                                        var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+                                        chart.draw(data, options);
                                     }
-
-                                    var options = {
-                                        height: 300
-                                    };
-
-                                    var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-
-                                    chart.draw(data, options);
                                 }
                             </script>
                             <div id="chart_div"></div>

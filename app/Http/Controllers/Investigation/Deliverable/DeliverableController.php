@@ -55,8 +55,7 @@ class DeliverableController extends Controller
     {
         $proyecto       = Project::find($id);
         $cantidad       = count($proyecto->deliverables);
-        $entregables    = $proyecto->deliverables->lists('nombre','id');
-
+        $entregables    = $proyecto->deliverables->lists('nombre','id')->put(0, 'No tiene');
         if($cantidad < $proyecto->num_entregables){
 
             $data = [
@@ -146,7 +145,7 @@ class DeliverableController extends Controller
         $proyecto           = $entregable->project;
         $investigators      = $this->deliverableService->getNotSelectedInvestigators($id);
         $elegible_teachers  = $this->deliverableService->getNotSelectedTeachers($id);
-        $entregables        = $proyecto->deliverables->lists('nombre','id')->forget($entregable->id);
+        $entregables        = $proyecto->deliverables->lists('nombre','id')->put(0, 'No tiene')->forget($entregable->id);
         
         $data = [
             'entregable'        =>  $entregable,

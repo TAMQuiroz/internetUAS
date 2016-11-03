@@ -50,7 +50,12 @@
                     <div class="form-group">
                         {{Form::label('Tarea padre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
+                            @if($entregable->id_padre == null)
+                            {{Form::select('padre_id',$entregables,0,['id'=>'padre','class'=>'form-control', 'required'])}}                            
+                            @else
                             {{Form::select('padre_id',$entregables,$entregable->id_padre,['id'=>'padre','class'=>'form-control', 'required'])}}
+                            @endif
+                            
                         </div>
                     </div>
 

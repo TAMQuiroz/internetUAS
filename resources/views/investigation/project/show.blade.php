@@ -1,4 +1,4 @@
-@extends('app')
+@extends(Auth::user() ? 'app' : 'appPublic')
 @section('content')
 
 <div class="row">
@@ -78,7 +78,7 @@
 
                     <div class="row">
                         <div class="col-md-11 col-sm-12 col-xs-12">
-                            @if(Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                            @if(Auth::user() && (Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
                             <a class="btn btn-success pull-right" href="{{ route('proyecto.edit',$proyecto->id) }}">Editar</a>
                             @endif
                             <a class="btn btn-default pull-right" href="{{ route('proyecto.index') }}">Regresar</a>
@@ -202,9 +202,11 @@
                     <div class="col-xs-12 col-md-6">
                         <h4>Se ha terminado {{$entregables_realizados}} entregable(s) de {{$proyecto->num_entregables}}</h4>
                     </div>
+                    @if(Auth::user())
                     <div class="col-xs-12 col-md-6">
                         <a href="{{route('entregable.index',$proyecto->id)}}" class="btn btn-success pull-right">Mis entregables</a>
                     </div>
+                    @endif
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
@@ -248,7 +250,7 @@
                                     @if(count($deliverable->versions)!=0)
                                     <a href="{{route('entregable.download', $deliverable->lastversion->first()->id)}}" class="btn btn-primary btn-xs" title="Descargar"><i class="fa fa-download"></i></a>
                                     @endif
-                                    @if(Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                                    @if(Auth::user() && (Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
                                     <a href="{{route('entregable.notify', $deliverable->project->group->id)}}" class="btn btn-primary btn-xs" title="Notificar"><i class="fa fa-envelope"></i></a>
                                     @endif
 

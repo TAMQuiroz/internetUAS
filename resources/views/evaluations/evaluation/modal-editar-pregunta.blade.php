@@ -11,9 +11,9 @@
                 <!-- aca iran los datos a editar de la pregunta -->
                 </form>                
             </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
-                <button class="btn btn-default" onclick="guardarCambios()">Guardar</button>
+            <div class="modal-footer">                
+                <button class="btn btn-success" onclick="guardarCambios()">Guardar</button>
+                <button type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
             </div>
         </div>
     </div>

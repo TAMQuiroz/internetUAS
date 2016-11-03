@@ -68,7 +68,7 @@ $(document).ready(function($) {
 			$.get('/evaluaciones/preguntas/editQuestion',{id_competence:idCompetence},function(data){
 		    	$('#datosPregunta').empty();//vacio los datos
 		    	$('#datosPregunta').append(data);	 //mete un select con los evaluadores
-		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" type="text" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');
+		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" maxlength="5" type="text" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');
 		    	$('#modal-editar-pregunta').modal('show');//muestro el modal
 		    });
 

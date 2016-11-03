@@ -45,14 +45,9 @@ class AuthController extends BaseController
             $user->load('accreditor');
         }else if ($user->IdPerfil == 5){
             $user->load('investigator');
-        }else if($user->IdPerfil == 3){
-            $faculties = Faculty::all();
-            foreach ($faculties as $key => $value) {
-                $value->load('coordinator');
-            }
         }
 
-        return Response::json(compact('token', 'user','faculties'));
+        return Response::json(compact('token', 'user'));
     }
 
 }

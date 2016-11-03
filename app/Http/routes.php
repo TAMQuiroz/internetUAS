@@ -1035,10 +1035,15 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::group(['prefix' => 'miperfil'], function(){    
             Route::get('/', ['as' => 'miperfil.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
             Route::get('edit/{id}', ['as' => 'miperfil.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
-            Route::post('edit/{id}', ['as' => 'miperfil.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
-            
+            Route::post('edit/{id}', ['as' => 'miperfil.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);            
         });
 
+        //reporte
+        Route::group(['prefix' => 'reporte'], function(){    
+            Route::get('/', ['as' => 'reporte.index', 'uses' => 'Tutorship\Report\ReportController@index']);                    
+        });
+        
+        
         //cita_alumno
         Route::group(['prefix' => 'miscitas'], function(){    
             Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@create']);

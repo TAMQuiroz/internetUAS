@@ -403,6 +403,7 @@
                       @if(Auth::user()->professor->rolTutoria == 2)
                       <li><a href="{{route('tutor.index')}}"> Tutores</a></li>
                       <li><a href="{{route('alumno.index')}}"> Alumnos</a></li>
+                      <li><a href="{{route('reporte.index')}}"> Reportes</a></li>
                       <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
                       @endif
 

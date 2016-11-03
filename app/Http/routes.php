@@ -660,8 +660,8 @@ Route::group(['middleware' => 'auth'], function(){
             //PSP Document
             Route::group(['prefix' => 'pspDocument'], function() {
                 Route::get('/', ['as' => 'pspDocument.index', 'uses' => 'Psp\PspDocument\PspDocumentController@index']);
-                Route::get('create', ['as' => 'pspDocument.create', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
-                Route::post('create', ['as' => 'pspDocument.store', 'uses' => 'Psp\PspDocument\PspDocumentController@store']);
+                Route::get('create/{id}', ['as' => 'pspDocument.create', 'uses' => 'Psp\PspDocument\PspDocumentController@create']);
+                Route::post('create/{id}', ['as' => 'pspDocument.store', 'uses' => 'Psp\PspDocument\PspDocumentController@store']);
                 Route::get('show/{id}', ['as' => 'pspDocument.show', 'uses' => 'Psp\PspDocument\PspDocumentController@show']);
                 Route::get('edit/{id}', ['as' => 'pspDocument.edit', 'uses' => 'Psp\PspDocument\PspDocumentController@edit']);
                 Route::post('edit/{id}', ['as' => 'pspDocument.update', 'uses' => 'Psp\PspDocument\PspDocumentController@update']);

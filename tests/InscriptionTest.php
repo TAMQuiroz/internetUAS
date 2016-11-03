@@ -12,34 +12,79 @@ class InscriptionTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+   /* public function testExample()
     {
         $this->assertTrue(true);
-    }
-/*
-    public function test_psp_cr_sup_01()
+    }*/
+
+    public function test_psp_cr_ins_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
     	$this->actingAs($user)
             ->withSession([
 	    		'actions' => [],
-	    		'user' => factory(Intranet\Models\Teacher::class)->make()
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
+	    		'user' => factory(Intranet\Models\Student::class)->make()
+    		])->visit('/psp/inscription/create')
+            ->type('ar','activ_formativas')
+    		->type('trabajar','actividad_economica')
+    		->type('bien','cond_seguridad_area')
+    		->type('a','correo_jefe_directo')
+    		->type('san juan','distrito_empresa')
+    		->type('av juan','direccion_empresa')
+    		->type('personas','equi_del_practicante')
+    		->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            ->check('terminos')
     		->press('Guardar')
-    		->seePageIs('/psp/supervisor')
-    		->see('Supervisores')
-    		->see('El supervisor se ha registrado exitosamente');
+    		->seePageIs('/psp/inscription');
     		
     }
 
+        public function test_psp_cr_ins_02()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+            ->type('ar','activ_formativas')
+            ->type('trabajar','actividad_economica')
+            ->type('bien','cond_seguridad_area')
+            ->type('a','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create');
+            
+    }
+/*
     public function test_psp_cr_sup_02()
     {
         $user = factory(Intranet\Models\User::class)->make();

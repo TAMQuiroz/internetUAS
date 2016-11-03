@@ -31,14 +31,14 @@
                     <tbody>
                         @foreach($students as $student)
                         <tr> 
-                            <td>{{$student->Codigo}}</td> 
-                            <td>{{$student->Nombre}}</td> 
-                            <td>{{$student->ApellidoPaterno}}</td> 
-                            <td>{{$student->ApellidoMaterno}}</td> 
+                            <td>{{$student->Student->Codigo}}</td> 
+                            <td>{{$student->Student->Nombre}}</td> 
+                            <td>{{$student->Student->ApellidoPaterno}}</td> 
+                            <td>{{$student->Student->ApellidoMaterno}}</td> 
                             <td>{{$student->telefono}}</td> 
                             <td>{{$student->correo}}</td> 
                             <td>
-                                <a href="{{route('pspDocument.search', $student->IdAlumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
+                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
                             </td>
                         </tr> 
                         @endforeach

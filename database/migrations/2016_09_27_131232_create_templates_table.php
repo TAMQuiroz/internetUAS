@@ -20,6 +20,7 @@ class CreateTemplatesTable extends Migration
             $table->integer('idsupervisor')->unsigned()->nullable();
             $table->integer('idadmin')->nullable();
             $table->string('titulo');
+            $table->integer('numerofase')->nullable();
             $table->string('ruta');
             $table->softDeletes();
             $table->timestamps();

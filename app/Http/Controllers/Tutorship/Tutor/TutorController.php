@@ -182,7 +182,7 @@ class TutorController extends Controller {
                             }
                         }
                     }
-                    DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
+                    DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
@@ -201,7 +201,7 @@ class TutorController extends Controller {
      */
     public function destroy($id) { //PENDIENTE PARA REASIGNAR
         try {
-            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
+            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
             return redirect()->route('tutor.index')->with('success', 'Se desactivó al tutor exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

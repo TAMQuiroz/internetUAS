@@ -13,10 +13,10 @@ class CreateStudentxinscriptionfilesTable extends Migration
     public function up()
     {
         Schema::create('studentxinscriptionfiles', function (Blueprint $table) {
-            $table->integer('idInscriptionFile')->unsigned();
-            $table->foreign('idInscriptionFile')->references('id')->on('inscriptionfiles');
-            $table->integer('idStudent');
-            $table->foreign('idStudent')->references('IdAlumno')->on('Alumno');
+            $table->integer('idinscriptionfile')->unsigned();
+            $table->foreign('idinscriptionfile')->references('id')->on('inscriptionfiles');
+            $table->integer('idstudent');
+            $table->foreign('idstudent')->references('IdAlumno')->on('Alumno');
             //$table->integer('aceptaTerminos')->unsigned();
             //$table->foreign('aceptaTerminos')->references('id')->on('statuses');
             $table->integer('acepta_terminos');

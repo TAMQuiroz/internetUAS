@@ -26,6 +26,10 @@ class Tutstudent extends Model
   	  return $this->hasOne('Intranet\Models\Tutorship','id_alumno');//bien
     }
 
+    public function evaluations(){
+      return $this->hasMany('Intranet\Models\Tutstudentxevaluation','id_tutstudent');//bien
+    }
+
     static public function loadStudents($csv_path, $mayor) {
 
         if (($csv_file = fopen($csv_path, "r")) !== FALSE ) {

@@ -1,4 +1,4 @@
-@extends('app')
+@extends(Auth::user() ? 'app' : 'appPublic')
 @section('content')
 
 <div class="row">
@@ -54,9 +54,11 @@
 
                     <div class="row">
                         <div class="col-md-11 col-sm-12 col-xs-12">
+                            @if(Auth::user() && (Auth::user()->IdUsuario == $group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
                             <a href="{{route('grupo.edit', $group->id)}}">
                                 <button class="btn btn-success submit pull-right" type="submit">Editar</button>
                             </a>
+                            @endif
                             <a href="{{ route('grupo.index') }}" class="btn btn-default pull-right"> Regresar</a>
                         </div>
                     </div>

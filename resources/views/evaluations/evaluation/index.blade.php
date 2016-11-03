@@ -11,6 +11,9 @@
         <div class="x_title">                
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a data-toggle="modal" data-target="#filter-evaluations"  class="btn btn-warning pull-left">
+                        <i class="fa fa-filter"></i> Filtrar
+                    </a>
                     <a href="{{ route('evaluacion.create') }}" class="btn btn-success pull-right">
                         <i class="fa fa-plus"></i> Nueva evaluación
                     </a>
@@ -40,13 +43,13 @@
                         @foreach($evaluations as $evaluation)
                         <tr class="even pointer">                        
                             @if($evaluation->estado == 1)
-                            <td class=" ">Creada</td>
+                            <td class=" ">Registrada</td>
                             @elseif($evaluation->estado == 0)
                             <td class=" ">Cancelada</td>
                             @elseif($evaluation->estado == 2)
-                            <td class=" ">Vigente</td>
+                            <td class=" ">Activa</td>
                             @elseif($evaluation->estado == 3)
-                            <td class=" ">Expirada</td>
+                            <td class=" ">Inactiva</td>
                             @endif
                             <td class=" ">{{date("d/m/Y", strtotime($evaluation->fecha_inicio)) }}</td>
                             <td class=" ">{{date("d/m/Y", strtotime($evaluation->fecha_fin)) }}</td>
@@ -58,6 +61,9 @@
                                 <a href="{{route('evaluacion.edit',$evaluation->id)}}" title="Editar" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-pencil"></i>
                                 </a>
+                                <a href="{{route('evaluacion.activate',$evaluation->id)}}" title="Activar" class="btn btn-primary btn-xs view-group"">
+                                    <i class="fa fa-check"></i>
+                                </a>
                                 <a href="" class="btn btn-danger btn-xs delete-group" title="Eliminar" data-toggle="modal" data-target="#{{'eliminar'.$evaluation->id}}">
                                     <i class="fa fa-remove"></i>
                                 </a>
@@ -68,7 +74,7 @@
                                 </a>
                                 @endif
                                 @if($evaluation->estado == 0)  
-                                <a href="" class="btn btn-default btn-xs delete-group" title="Activar" data-toggle="modal" data-target="#{{$evaluation->id}}">
+                                <a href="{{route('evaluacion.activate',$evaluation->id)}}" class="btn btn-default btn-xs" title="Activar" data-toggle="modal">
                                     <i class="fa fa-check"></i>
                                 </a>
                                 @endif
@@ -79,14 +85,16 @@
                                 @endif
                             </td>
                         </tr>
-                        @include('modals.delete', ['id'=> $evaluation->id, 'message' => '¿Está seguro que desea cancelar esta evaluación?', 'route' => route('evaluacion.delete', $evaluation->id)])
+                        @include('modals.delete', ['id'=> $evaluation->id, 'message' => '¿Está seguro que desea cancelar esta evaluación?', 'route' => route('evaluacion.cancel', $evaluation->id)])
                         @include('modals.delete', ['id'=> 'eliminar'.$evaluation->id, 'message' => '¿Está seguro que desea eliminar esta evaluación?', 'route' => route('evaluacion.delete', $evaluation->id)])
                         @endforeach
                     </tbody>
                 </table>
+                {{ $evaluations->links() }}
             </div>             
             
         </div>
     </div>
 </div>
+@include('evaluations.modals.filter_evaluations', ['title' => 'Filtrar', 'route' => route('evaluacion.index')])
 @endsection

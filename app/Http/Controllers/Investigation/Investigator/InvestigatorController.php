@@ -16,6 +16,8 @@ use Intranet\Models\Investigator;
 
 use Intranet\Http\Requests\InvestigatorRequest;
 
+use Auth;
+
 class InvestigatorController extends Controller
 {
     public function __construct() {
@@ -36,7 +38,6 @@ class InvestigatorController extends Controller
         ];
 
         return view('investigation.investigator.index', $data);
-
     }
 
     /**

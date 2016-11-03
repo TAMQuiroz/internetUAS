@@ -30,9 +30,12 @@ class ProjectController extends BaseController
         return $this->response->array($project->toArray());
     }
 
+
     public function edit(ProjectMobileRequest $request, $id)
     {
         $proyecto           = Project::find($id);
+        $nombre             = $request->only('nombre');
+        $descripcion        = $request->only('descripcion');
         $num_entregables    = $request->only('num_entregables');
         $fecha_ini          = $request->only('fecha_ini');
         $fecha_fin          = $request->only('fecha_fin');
@@ -43,6 +46,8 @@ class ProjectController extends BaseController
 
             if($status){
                 
+                $proyecto->nombre  = $nombre['nombre'];
+                $proyecto->descripcion  = $descripcion['descripcion'];
                 $proyecto->num_entregables  = $num_entregables['num_entregables'];
                 $proyecto->fecha_ini        = $fecha_ini['fecha_ini'];
                 $proyecto->fecha_fin        = $fecha_fin['fecha_fin'];
@@ -58,6 +63,7 @@ class ProjectController extends BaseController
 
         return $mensaje;
     }
+
 
    
 }   

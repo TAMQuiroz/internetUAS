@@ -693,7 +693,7 @@ $api->version('v1', function ($api) {
                 $api->get('/getFaculty/{faculty_id}','FacultyController@getSpecialty');
                 $api->get('/{faculty_id}/educational-objectives', 'FacultyController@getEducationalObjectives');
                 $api->get('/{faculty_id}/eob/{eos_id}/students_results', 'FacultyController@getStudentsResult');
-                $api->get('/{faculty_id}/aspects', 'FacultyController@getAspects');
+                $api->get('/student_result/{sr_id}/aspects', 'FacultyController@getAspects');
                 $api->get('/{faculty_id}/evaluated_courses', 'FacultyController@getEvaluatedCourses');
                 $api->get('course/{course_id}/cycle/{academic_cycle_id}','FacultyController@getCourseSchedule');
                 $api->get('/{faculty_id}/evaluated_courses/{course_id}/semesters/{semester_id}', 'FacultyController@getCourseReport');
@@ -713,6 +713,14 @@ $api->version('v1', function ($api) {
                 $api->get('/{p_id}/show', 'PeriodController@getPeriodbyId');                          
                 $api->get('/{p_id}/{f_id}/objectives', 'PeriodController@getEducationalObjectivesofPeriod');                          
             });
+
+
+            $api->group(['namespace' => 'ImprovementPlan','prefix'=>'improvementplans'],function($api){
+                $api->get('/{ip_id}/view', 'ImprovementPlanController@getipbyId');
+                
+            });
+
+
 
             $api->group(['namespace' => 'Aspect','prefix' => 'aspects'], function($api){
                 $api->get('/{id}/criterions', 'AspectController@getCriterions');
@@ -763,7 +771,10 @@ $api->version('v1', function ($api) {
             //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
+            $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
+            $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
+
         });
     });
 

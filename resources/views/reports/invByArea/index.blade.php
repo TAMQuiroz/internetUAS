@@ -1,12 +1,43 @@
-@extends(Auth::user() ? 'app' : 'appPublic')
-
+@extends('app')
 @section('content')
 
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-            <h3>Lista de Investigadores</h3>
+	        <div class="title_left">
+	            <h3>Investigadores según Área</h3>
+	        </div>
 	    </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title">Configuración</h3>
+			</div>
+		  	<div class="panel-body">
+
+		    	{{Form::open(['route' => 'reporteISA.generateISA', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+		    		<div class="form-group">
+		    			{{Form::label('Area',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+		    			<div class="col-xs-12 col-md-4">
+
+		    				{{Form::select('area',$areas, null, ['class'=>'form-control', 'required'])}}
+		    			</div>
+		    		</div>
+
+		    		<div class="row">
+						<div class="col-md-8 col-sm-12 col-xs-12">
+							{{Form::submit('Generar', ['class'=>'btn btn-success pull-right'])}}
+							<a class="btn btn-default pull-right" href="{{ route('reporteISA.index') }}">Cancelar</a>
+						</div>
+					</div>
+		    	{{Form::close()}}
+
+		  	</div>
+		</div>
     </div>
 </div>
 
@@ -29,15 +60,8 @@
 			                </div>
 			            </form>
 			        </div>
-
-			        @if(Auth::user() && (Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin')))
-			        <div class="col-md-6">
-						<a href="{{route('investigador.create')}}">
-							{{Form::button('<i class="fa fa-plus"></i> Crear investigador',['class'=>'btn btn-success pull-right'])}}
-						</a>
-					</div>
-					@endif
 				</div>
+
 		  		<div class="table-responsive">
 					<table class="table table-list-search table-striped responsive-utilities jambo_table bulk_action"> 
 						<thead> 
@@ -47,9 +71,10 @@
 								<th>Apellido Materno</th> 
 								<th>Correo</th> 
 								<th>Especialidad</th> 
-								<th colspan="2">Acciones</th>
+								<!--<th colspan="2">Acciones</th>-->
 							</tr> 
-						</thead> 
+						</thead>
+						@if($investigadores != null)
 						<tbody> 
 							@foreach($investigadores as $investigador)
 							<tr> 
@@ -58,18 +83,13 @@
 								<td>{{$investigador->ape_materno}}</td> 
 								<td>{{$investigador->correo}}</td> 
 								<td>{{$investigador->faculty->Nombre}}</td>
-								<td>
-									<a href="{{route('investigador.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-eye"></i></a>
-									@if(Auth::user() && (Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin')))
-									<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$investigador->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
-									@endif
-								</td>
-							</tr> 
-
-							@include('modals.delete', ['id'=> $investigador->id, 'message' => '¿Esta seguro que desea eliminar este investigador?', 'route' => route('investigador.delete', $investigador->id)])
+								<!--<td>
+									<a href="{{route('reporteISA.show', $investigador->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-eye"></i></a>
+								</td>-->
+							</tr>
 							@endforeach
-							
-						</tbody> 
+						</tbody>
+						@endif 
 					</table>
 				</div>
 		  	</div>
@@ -77,6 +97,7 @@
     </div>
 </div>
 
+<script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script>
 <script src="{{ URL::asset('js/intranetjs/investigation/investigator/index-investigator.js')}}"></script>
 
 @endsection

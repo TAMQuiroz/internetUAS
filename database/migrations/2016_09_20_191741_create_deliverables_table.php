@@ -18,6 +18,7 @@ class CreateDeliverablesTable extends Migration
             $table->integer('id_proyecto')->unsigned();
             $table->date('fecha_inicio');
             $table->date('fecha_limite');
+            $table->integer('id_padre')->unsigned()->nullable();
             $table->integer('porcen_avance');
             $table->softDeletes();
             $table->timestamps();

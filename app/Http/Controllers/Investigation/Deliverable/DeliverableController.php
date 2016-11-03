@@ -83,7 +83,13 @@ class DeliverableController extends Controller
             $entregable->id_proyecto     = $request->id_proyecto;
             $entregable->fecha_inicio    = $request->fecha_ini;
             $entregable->fecha_limite    = $request->fecha_fin;
-            $entregable->id_padre        = $request->padre_id;
+            
+            if($request->padre_id == 0){
+                $entregable->id_padre    = null;
+            }else{
+                $entregable->id_padre    = $request->padre_id;
+            }
+
             $entregable->porcen_avance   = 0;
 
             $entregable->save();
@@ -173,7 +179,12 @@ class DeliverableController extends Controller
             $entregable->fecha_inicio    = $request->fecha_ini;
             $entregable->fecha_limite    = $request->fecha_fin;
             $entregable->porcen_avance   = $request->porcen_avance;
-            $entregable->id_padre        = $request->padre_id;
+            
+            if($request->padre_id == 0){
+                $entregable->id_padre    = null;
+            }else{
+                $entregable->id_padre    = $request->padre_id;
+            }
 
             $entregable->save();
             

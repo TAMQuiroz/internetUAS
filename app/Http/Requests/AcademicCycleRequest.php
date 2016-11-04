@@ -25,10 +25,10 @@ class AcademicCycleRequest extends Request
      */
     public function rules()
     {
-
+        
         return [
-            'anio' => 'required',
-            'numberC' => 'required',
+            'anio' => 'required|min:4|max:5',
+            'numberC' => 'required|max:2|regex:/^[0-2]/',
         ];
     }
 }

@@ -99,11 +99,22 @@ public function indexeval(Request $request,$id)
 
 }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+public function indexevalcoord(Request $request,$id)
+ {//muestra las evaluaciones rendidas
+
+    $id_docente = Session::get('user')->IdDocente;
+    $evaluation = Evaluation::find($id);
+    $tutstudentxevaluations = Tutstudentxevaluation::where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();
+
+
+    $data = [
+    'evaluation'               =>  $evaluation, 
+    'tutstudentxevaluations'   =>  $tutstudentxevaluations, 
+    ];
+    return view('evaluations.evaluation.evaluaciones_alumnos_coord', $data);
+
+}
+
     public function create()
     {
         $specialty = Session::get('faculty-code');  
@@ -238,6 +249,20 @@ public function indexeval(Request $request,$id)
         //
     }
 
+    
+    public function vercorregida($id)
+    {//muestra las preguntas de la evaluacion del alumno corregidas o no
+        $tutstudentxevaluation = Tutstudentxevaluation::find($id);
+         $evquestionxstudentxdocentes = Evquestionxstudentxdocente::where('id_tutstudent',$tutstudentxevaluation->alumno->id)->where('id_evaluation',$tutstudentxevaluation->evaluation->id)->get();
+
+        $data = [        
+        'evaluation'                 =>  $tutstudentxevaluation->evaluation,                
+        'tutstudent'                 =>  $tutstudentxevaluation->alumno,                
+        'evs'                        =>  $evquestionxstudentxdocentes,        
+        ];
+
+        return view('evaluations.evaluation.corregida', $data);
+    }
     public function corregir($id,$ev)
     {//muestra las preguntas de la evaluacion para ser corregidas
         $id_docente = Session::get('user')->IdDocente;    

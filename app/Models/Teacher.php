@@ -128,4 +128,8 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\PspProcessxTeacher', 'IdDocente');
     }
 
+    public function groups(){
+        return $this->hasMany('Intranet\Models\Group','id_lider');
+    }
+
 }

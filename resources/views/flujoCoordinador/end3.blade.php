@@ -40,7 +40,7 @@
 
           <div class="col-md-12 col-sm-12 col-xs-12">
                <a  href="{{ route('cursosCiclo_index.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Continuar ></a>
-               <a  href="{{ route('academicCycle_init.flujoCoordinador',$idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>
+               <!--<a  href="{{ route('academicCycle_init.flujoCoordinador',$idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>-->
           </div>
       </div>
 

@@ -43,7 +43,7 @@
 
           <div class="col-md-12 col-sm-12 col-xs-12">
                <a  href="{{ route('index.subindex') }}" class="btn btn-success pull-right">Finalizar</a>
-               <a  href="#"  class="btn btn-default pull-left">< Atras</a>
+               <!--<a  href="#"  class="btn btn-default pull-left">< Atras</a>-->
           </div>
       </div>
 

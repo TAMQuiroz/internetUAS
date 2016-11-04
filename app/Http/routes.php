@@ -598,6 +598,18 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('search/{id}', ['as' => 'meeting.search', 'uses' => 'Psp\meeting\MeetingController@search']);    
             });
 
+            //MeetingTeacher
+            Route::group(['prefix' => 'MeetingTeacher'], function() {
+                Route::get('/', ['as' => 'MeetingTeacher.index', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@index']);
+                Route::get('create', ['as' => 'MeetingTeacher.create', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@create']);
+                Route::post('create', ['as' => 'MeetingTeacher.store', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@store']);
+                Route::get('show/{id}', ['as' => 'MeetingTeacher.show', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@show']);
+                Route::get('edit/{id}', ['as' => 'MeetingTeacher.edit', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@edit']);
+                Route::post('edit/{id}', ['as' => 'MeetingTeacher.update', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@update']);
+                Route::get('delete/{id}', ['as' => 'MeetingTeacher.delete', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@destroy']);    
+                Route::get('search/{id}', ['as' => 'MeetingTeacher.search', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@search']);    
+            });
+
             //Inscription File
             Route::group(['prefix' => 'inscription'], function() {
                 Route::get('/', ['as' => 'inscription.index', 'uses' => 'Psp\Inscription\InscriptionController@index']);

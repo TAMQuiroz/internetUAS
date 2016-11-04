@@ -40,7 +40,7 @@ class CicleService
 
     public function getCicleByPeriod($period_id)
     {
-        return Cicle::where('IdPeriodo', $period_id)->with('academicCycle')->orderBy('FechaInicio', 'asc')->get();
+        return Cicle::where('IdPeriodo', $period_id)->where('deleted_at', null)->where('Vigente',1)->with('academicCycle')->orderBy('FechaInicio', 'asc')->get();
     }
 
     public function deleteCicle($request) {

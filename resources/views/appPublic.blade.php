@@ -101,12 +101,15 @@
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Investigación</a>
                 <div class="collapsible-body">
-                  <ul>
-                      <li><a href="{{route('investigador.index')}}">Ver Investigadores</a></li>
-                      <li><a href="{{route('grupo.index')}}">Ver Grupos de Investigación</a></li>
-                      <li><a href="{{route('evento.index')}}">Ver Eventos</a></li>
-                      <li><a href="{{route('proyecto.index')}}">Ver Proyectos</a></li>
-                  </ul>
+                    <ul>
+                        <li><a href="{{route('investigacion.index')}}">Home</a></li>
+                        <li><a href="{{route('investigador.index')}}">Ver Investigadores</a></li>
+                        <li><a href="{{route('grupo.index')}}">Ver Grupos de Investigación</a></li>
+                        <li><a href="{{route('evento.index')}}">Ver Eventos</a></li>
+                        <li><a href="{{route('proyecto.index')}}">Ver Proyectos</a></li>
+                        <li><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
+                        <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>  
+                    </ul>
                 </div>
               </li> 
             </ul>   
@@ -116,7 +119,7 @@
         <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
         <!--Fin barra de hamburgauesa-->            
 
-        <a href="#" class="brand-logo center">UAS</a>
+        <a href="/" class="brand-logo center">UAS</a>
 
 
       </div>

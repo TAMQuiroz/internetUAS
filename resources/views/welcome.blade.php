@@ -91,6 +91,9 @@
             <div>
               <button class="btn btn-default submit">Iniciar Sesión</button>
             </div>
+            <div>
+              <a href="{{route('investigacion.index')}}" class="btn btn-default public_link">Sección Publica</a>
+            </div>
             <div class="clearfix"></div>
             </div>
           </form>

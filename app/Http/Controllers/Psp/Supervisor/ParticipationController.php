@@ -15,6 +15,7 @@ use Intranet\Models\Teacher;
 use Intranet\Models\Teacherxgroup;
 use Intranet\Models\User;
 use Intranet\Models\Course;
+use Illuminate\Support\Facades\DB;
 
 use Session;
 use Auth;
@@ -29,30 +30,16 @@ class ParticipationController extends Controller
      */
     public function index()
     {
-     /*   $supervisores = Supervisor::get();
         $user = Auth::User()->professor;
-        $procesos = PspProcessxTeacher::where('iddocente',$user->IdDocente)->get()->toArray();
-    
-        $cont=0;
-        foreach ($procesos as $proceso) {
-            $process = PspProcess::find($proceso['idpspprocess'])->first();
-            $course = Course::find($process['idcurso'])->first();
-            $process['nombreCurso'] = $course->Nombre;
-            array_push($procesos, $proceso);
-            $cont++;
-        }
-        array_splice($procesos, 0,$cont);        
-        dd($procesos);
-        $data = [
-            'supervisores'    =>  $supervisores,
-            'procesos'      =>  $procesos,
-        ];
-        return view('psp.supervisor.index-participant',$data);*/
+        $procesos = PspProcessxTeacher::where('iddocente',$user->IdDocente)->get();
+        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('curso','pspprocesses.idcurso', '=', 'curso.IdCurso')->select('pspprocesses.id','curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->lists('Nombre','id');
+        
         $supervisores = Supervisor::get();
-        $user = Auth::User()->professor;
         $data = [
             'supervisores'    =>  $supervisores,
+            'procesos'      =>  $process,
         ];
+
         return view('psp.supervisor.index-participant',$data);
     }
 

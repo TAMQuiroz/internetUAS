@@ -327,8 +327,6 @@
                         @endif
                         @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
-                        <li><a href=""> Reuniones</a></li>
-                        <li><a href=""> Documentos</a></li>
                         <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                         <li><a href="{{route('studentScore.index')}}"> Notas Finales</a></li>
                         @endif

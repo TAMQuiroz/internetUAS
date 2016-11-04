@@ -20,7 +20,7 @@
                     <div class="form-group">
                         {{Form::label('Proceso PSP',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
-                            
+                            {{ Form::select('IdProceso', $procesos, null, ['class'=>'form-control']) }}
 
                         </div>
                     </div>

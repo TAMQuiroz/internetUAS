@@ -33,7 +33,7 @@ use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
-use Intranet\Models\criterion;
+use Intranet\Models\Criterion;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
 

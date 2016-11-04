@@ -57,11 +57,13 @@ class ImprovementPlanController extends BaseController
         foreach ($suggestions as $key => $value) {
             $nombre = Teacher::where('IdDocente', $value->IdDocente)->first()->Nombre;
             $created_at = $value->created_at->toDateTimeString();
+            $updated_at = $value->updated_at->toDateTimeString();
             $title = $value->Titulo;
             $descripcion = $value->Descripcion;
             $response = [
               'name' => $nombre,
               'created' => $created_at,
+              'updated' => $updated_at,
               'title' => $title,
               'description' =>$descripcion
             ];

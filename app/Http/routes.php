@@ -746,8 +746,8 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');
-                $api->get('/{f_id}/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
-
+                $api->get('/{f_id}/semester/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
+                $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
@@ -762,6 +762,9 @@ $api->version('v1', function ($api) {
 
             $api->group(['namespace' => 'ImprovementPlan','prefix'=>'improvementplans'],function($api){
                 $api->get('/{ip_id}/view', 'ImprovementPlanController@getipbyId');
+                $api->get('/{ip_id}/actions', 'ImprovementPlanController@getActionsofIp');
+                $api->get('/{ip_id}/suggestions','ImprovementPlanController@getSuggestion');
+                $api->post('/{ip_id}/suggestions','ImprovementPlanController@createSuggestion');
                 
             });
 
@@ -776,8 +779,15 @@ $api->version('v1', function ($api) {
                 $api->get('groups/all','PspGroup\PspGroupController@getAll');
                 $api->get('groups/{id}','PspGroup\PspGroupController@getById');
                 $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
+                
+                $api->get('student/group','PspGroup\PspGroupController@getGroupByStudent');
+                $api->get('teacher/students/all','Students\PspStudentsController@getAll');
+                $api->get('student','PspGroup\PspGroupController@getStudent');
+                $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
+                $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+
                 $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
-              //$api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
+           
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
@@ -819,6 +829,8 @@ $api->version('v1', function ($api) {
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
+            $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
+            $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
 
         });
     });

@@ -102,7 +102,7 @@ class FlujoAdministradorTest extends TestCase
             ->select('Diseño','name')
             ->select('holi','description')
             ->press('Siguiente')
-            ->seePageIs('/flujoAdministrador/facultad/1/profesor');
+            ->seePageIs('/flujoAdministrador/facultad/5/profesor');
     }
 
     public function test_uas_crear_profesor_02(){
@@ -142,5 +142,11 @@ class FlujoAdministradorTest extends TestCase
             ->seePageIs('/flujoCoordinador/facultad/2/objetivoEducacional')
             ->see('El objetivo educacional se ha registrado exitosamente');
     }
+
+    ////de melgar01 flujo Coordinador
+
+    
+
+    //////hasta aca es de melgar01
 
 }

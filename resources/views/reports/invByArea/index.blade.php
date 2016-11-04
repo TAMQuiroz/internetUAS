@@ -24,7 +24,7 @@
 		    			{{Form::label('Area',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-4">
 
-		    				{{Form::select('area',$areas, null, ['class'=>'form-control', 'required'])}}
+		    				{{Form::select('area',$comboAreas, $idArea, ['class'=>'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 

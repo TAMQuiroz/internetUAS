@@ -813,6 +813,8 @@ $api->version('v1', function ($api) {
 
 //Rutas publicas de investigacion
 Route::group(['prefix' => 'investigacion'], function(){
+    Route::get('/', ['as' => 'investigacion.index', 'uses' => 'Investigation\InvestigationController@index']);
+
     Route::group(['prefix' => 'investigador'], function(){
         Route::get('/', ['as' => 'investigador.index', 'uses' => 'Investigation\Investigator\InvestigatorController@index']);
         Route::get('show/{id}', ['as' => 'investigador.show', 'uses' => 'Investigation\Investigator\InvestigatorController@show']);
@@ -856,7 +858,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::group(['prefix' => 'investigacion'], function(){
 
             //Home de investigacion
-            Route::get('/', ['as' => 'investigation.index', 'uses' => 'Investigation\InvestigationController@index']);
+            //Route::get('/', ['as' => 'investigation.index', 'uses' => 'Investigation\InvestigationController@index']);
 
             //Administrar Investigador
             Route::group(['prefix' => 'investigador'], function(){

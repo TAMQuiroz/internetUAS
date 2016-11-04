@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CompetenceTableSeeder::class);    
         $this->call(QuestionsTableSeeder::class);    
         //psp
-        $this->call(CaseInscriptionFileSeeder::class);
+        //$this->call(CaseInscriptionFileSeeder::class);
 
 
     }

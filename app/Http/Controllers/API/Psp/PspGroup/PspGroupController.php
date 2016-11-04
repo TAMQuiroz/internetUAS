@@ -48,7 +48,8 @@ class PspGroupController extends BaseController
     public function getGroupByStudent(){
         $user =  JWTAuth::parseToken()->authenticate();
         $alumno = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
-        $idGroup  = $alumno->idPspGroup;
+        $pspAlumno   = PspStudent::where('IdAlumno' , $alumno->IdAlumno)->get()->first();
+        $idGroup  = $pspAlumno->idPspGroup;
         $pspGroup = PspGroup::where('id',$idGroup)->get();
         return $this->response->array($pspGroup->toArray());
     }

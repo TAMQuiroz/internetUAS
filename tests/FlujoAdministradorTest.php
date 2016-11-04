@@ -138,7 +138,7 @@ class FlujoAdministradorTest extends TestCase
             ])->visit('/flujoCoordinador/1/objetivoEducacional/create')
             ->select('ObjetivoCreado','descripcion')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/facultad/2/objetivoEducacional')
+            ->seePageIs('/flujoCoordinador/1/objetivoEducacional')
             ->see('El objetivo educacional se ha registrado exitosamente');
     }
 

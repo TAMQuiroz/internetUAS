@@ -361,15 +361,29 @@
                     @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin'))
                       <li><a href="{{route('evento.index')}}">Administrar Eventos</a></li>
                       <li><a href="{{route('proyecto.index')}}">Administrar Proyectos</a></li>
-                    @endif                    
+                    @endif
+                      <!-- Menu Reportes: Sin permisos ya que cualquier usuario puede generar los reportes-->
+                      <li class="no-padding">
+                        <ul class="collapsible collapsible-accordion">
+                          <li class=""></li>
+                          <li class="bold">
+                            <a class="collapsible-header waves-effect waves-teal">Reportes</a>
+                              <div class="collapsible-body">
+                               <ul>
+                                <li class="bold"><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
+                                <li class="bold"><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>  
+                                </ul>
+                              </div>
+                          </li>
+                        </ul>
+                      </li>
                   </ul>
                 </div>
               </li> 
               @endif
 
-
               <!-- Menu Reportes: Sin permisos ya que cualquier usuario puede generar los reportes-->
-              <li class="bold">
+              <!--<li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Reportes</a>
                 <div class="collapsible-body">
                   <ul>
@@ -377,7 +391,7 @@
                       <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>                  
                   </ul>
                 </div>
-              </li>
+              </li>-->
 
               <!--Menu Tutotia-->
               <!--Si son alumnos de tutoria idPerfil == 0 -->

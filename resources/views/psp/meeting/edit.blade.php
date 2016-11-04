@@ -68,27 +68,27 @@
                 <div class="form-group">
                     {{Form::label('Lugar',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('observaciones',$meeting->luger,['class'=>'form-control', 'required'])}}    
+                        {{Form::text('lugar',$meeting->lugar,['class'=>'form-control'])}}    
                     </div>                    
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Observaciones',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('observaciones',$meeting->observaciones,['class'=>'form-control', 'required'])}}    
+                        {{Form::text('observaciones',$meeting->observaciones,['class'=>'form-control'])}}    
                     </div>                    
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Retroalimentacion',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('observaciones',$meeting->retroalimentacion,['class'=>'form-control', 'required'])}}    
+                        {{Form::text('retroalimentacion',$meeting->retroalimentacion,['class'=>'form-control'])}}    
                     </div>                    
                 </div>
 
                 <div class="row">
                     <div class="col-md-8 col-sm-12 col-xs-12">
-                        {{--Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])--}}
+                        {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
                         <a class="btn btn-default pull-right" href="{{route('student.index')}}">Cancelar</a>
                     </div>
                 </div>

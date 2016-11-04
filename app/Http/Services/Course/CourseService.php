@@ -22,18 +22,31 @@ class CourseService
     public function retrieveByFacultyandCicle($faculty_id)
     {
         $courses = [];
-        $IdCicloAcademico=Session::get('academic-cycle')->IdCicloAcademico;
-        $coursesxCycles = CoursexCycle::where('IdCicloAcademico', $IdCicloAcademico)
-            ->where('deleted_at', null)->get();
-
-        
-        foreach ($coursesxCycles as $coursesxCycle){
-            if($coursesxCycle->course->IdEspecialidad == $faculty_id &&
-                    $coursesxCycle->course->deleted_at == null){
-                array_push($courses, $coursesxCycle->course);
+        if(Session::get('academic-cycle') != null){
+            $IdCicloAcademico=Session::get('academic-cycle')->IdCicloAcademico;
+            if($IdCicloAcademico){
+                $coursesxCycles = CoursexCycle::where('IdCicloAcademico', $IdCicloAcademico)
+                    ->where('deleted_at', null)->get();
+                
+                if($coursesxCycles){
+                    foreach ($coursesxCycles as $coursesxCycle){
+                        if($coursesxCycle->course!=null){
+                            if($coursesxCycle->course->IdEspecialidad == $faculty_id &&
+                                    $coursesxCycle->course->deleted_at == null){
+                                array_push($courses, $coursesxCycle->course);
+                            }
+                        }
+                    }
+                    return $courses;
+                }else{
+                    return $courses;
+                }
+            }else{
+                return $courses;
             }
+        }else{
+            return $courses;
         }
-        return $courses;
 
     }
 
@@ -54,6 +67,11 @@ class CourseService
         return $course;
     }
 
+    public function findCourseByIdRegular($course_id)
+    {
+        $course = Course::where('IdCurso', $course_id)->with('regularProfessors.faculty')->first();
+        return $course;
+    }
     public function findCoursesByTeacher($teacher_id)
     {
         $coursesxTeacher = CoursexTeacher::where('IdDocente', $teacher_id)->get();

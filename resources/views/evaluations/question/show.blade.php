@@ -1,6 +1,10 @@
 @extends('app')
 @section('content')
-
+<style type="text/css">
+	input { 
+    text-align: center; 
+}
+</style>
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
@@ -13,7 +17,10 @@
 
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="panel panel-default">			
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Información</h3>
+			</div>			
 			<div class="panel-body">
 				{{Form::open(['route' => ['pregunta.edit',$question->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 				<div class="form-group">
@@ -33,7 +40,7 @@
 					{{Form::label('Tiempo estimado:*',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-6'])}}
 					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="tiempo" readonly type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1" value="{{$question->tiempo}}">
+							<input name="tiempo" readonly type="text" class="form-control" aria-describedby="basic-addon1" value="{{$question->tiempo}}">
 							<span class="input-group-addon" id="basic-addon1">minutos</span>
 						</div>
 					</div>
@@ -41,16 +48,20 @@
 					{{Form::label('Puntaje: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
 					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="puntaje" readonly type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1" value="{{$question->puntaje}}">
+							<input name="puntaje" readonly type="text" class="form-control" aria-describedby="basic-addon1" value="{{$question->puntaje}}">
 							<span class="input-group-addon" id="basic-addon1">puntos</span>
 						</div>						
 					</div>
 
 					{{Form::label('Dificultad: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
 					<div class="col-md-2 col-sm-2 col-xs-6">
-						<input class="form-control" type="text" readonly value="@if($question->dificultad==1) Baja 
-						@elseif ($question->dificultad==2) Media 
-						@elseif ($question->dificultad==3) Alta @endif" >							
+					@if($question->dificultad==1)
+						<input class="form-control" type="text" readonly value="Baja"> 
+					@elseif ($question->dificultad==2) 
+						<input class="form-control" type="text" readonly value="Media">
+					@elseif ($question->dificultad==3)
+						<input class="form-control" type="text" readonly value="Alta">
+					@endif							
 					</div>
 				</div>
 

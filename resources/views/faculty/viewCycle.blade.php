@@ -7,6 +7,10 @@
 	</div>
 </div>
 
+@if(Session::get('academic-cycle')!=null)
+	<a class="btn btn-primary pull-right final" href="{{ route('desactivate.faculty') }}">Finalizar Ciclo</a>
+@endif
+
 <div class="clearfix"></div>
 
 <div class="row">
@@ -83,10 +87,15 @@
 					</tbody>
 				</table>
 
-					@if($period != null)
+					@if($period != null && Session::get('academic-cycle')==null)
 	                <div class="row">
 						<div class="col-md-9 col-sm-12 col-xs-12">
-							<a href="{{ route('editCycle.faculty') }}" class="btn btn-success pull-right submit">Editar</a>
+							<a href="{{ route('editCycle.faculty') }}" class="btn btn-success pull-right submit">Crear</a>
+						</div>
+					</div>
+					@elseif (Session::get('academic-cycle')!=null)
+					<div class="row">
+						<div class="col-md-9 col-sm-12 col-xs-12">
 						</div>
 					</div>
 					@else
@@ -102,6 +111,7 @@
 		</div>
 		
 	</div>
+</div>
 </div>
 <script src="{{ URL::asset('js/myvalidations/confFaculty.js')}}"></script>
 

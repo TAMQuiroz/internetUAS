@@ -40,6 +40,7 @@
     justify-content: center;
 }
 .tabs-page {
+	margin-top: 20px;
 	display: flex;
 	padding: 5px;
 	padding-bottom: 0;
@@ -95,4 +96,19 @@
 	.input-filter {
 		max-width: 380px;
 	}
+}
+
+.label-modal {
+	font-size: 1.3rem;
+    color: #73879C !important;
+}
+
+.input-modal {
+	font-size: 1.3rem !important;
+	color: #73879C !important;	
+}
+
+html.remodal-is-locked {
+    overflow: initial !important;
+    touch-action: none !important;
 }

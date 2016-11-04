@@ -148,7 +148,7 @@
             </div>
 
             <div class="panel-heading">
-                <h3 class="panel-title">Investigadores</h3>
+                <h3 class="panel-title">Integrantes</h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -246,7 +246,9 @@
                                     {{$deliverable->porcen_avance}} %
                                 </td>
                                 <td>
+                                    @if(Auth::user())
                                     <a href="{{route('entregable.show', $deliverable->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                    @endif
                                     @if(count($deliverable->versions)!=0)
                                     <a href="{{route('entregable.download', $deliverable->lastversion->first()->id)}}" class="btn btn-primary btn-xs" title="Descargar"><i class="fa fa-download"></i></a>
                                     @endif

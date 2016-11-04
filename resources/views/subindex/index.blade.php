@@ -32,12 +32,19 @@
         </div>
         <br>
         <div class="x_content">
-            <div class="row">
-                <h3>Botones de Configuración</h3>
-            </div>
+            
             <div class="row">
                 @if(Auth::user() && (Auth::user()->IdPerfil == 3))
+                <div class="row">
+                    <h3>Botón de Configuración</h3>
+                </div>
                 <a href="{{ route('index.flujoAdministrador') }}" class="btn btn-success pull-left"><i class="fa fa-cogs"></i> Iniciar Especialidad</a>
+                @endif
+                @if(Auth::user() && (Auth::user()->IdPerfil == 1))
+                <div class="row">
+                    <h3>Botones de Configuración</h3>
+                </div>
+                <a href="{{ route('index.flujoCoordinador') }}" class="btn btn-success pull-left"><i class="fa fa-cogs"></i> Iniciar Configuración</a>
                 @endif
             </div>
         </div>

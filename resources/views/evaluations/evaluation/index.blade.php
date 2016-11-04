@@ -69,6 +69,9 @@
                                 </a>
                                 @endif
                                 @if($evaluation->estado == 2)    
+                                <a href="{{route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id)}}" class="btn btn-primary btn-xs" title="Visualizar" >
+                                    <i class="fa fa-eye"></i>
+                                </a>
                                 <a href="" class="btn btn-danger btn-xs delete-group" title="Cancelar" data-toggle="modal" data-target="#{{$evaluation->id}}">
                                     <i class="fa fa-remove"></i>
                                 </a>
@@ -79,13 +82,13 @@
                                 </a>
                                 @endif
                                 @if($evaluation->estado == 3)
-                                <a href="{{route('evaluacion.show',$evaluation->id)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
-                                    <i class="fa fa-search"></i>
+                                <a href="{{route('evaluacion.show',$evaluation->id)}}" title="Visualizar" class="btn btn-primary btn-xs view-group"">
+                                    <i class="fa fa-eye"></i>
                                 </a>                                
                                 @endif
                             </td>
                         </tr>
-                        @include('modals.delete', ['id'=> $evaluation->id, 'message' => '¿Está seguro que desea cancelar esta evaluación?', 'route' => route('evaluacion.cancel', $evaluation->id)])
+                        @include('evaluations.modals.delete', ['id'=> $evaluation->id, 'message' => 'Está a punto de cancelar esta evaluación. Si continúa, ningún alumno tendrá acceso a rendirla. ¿Desea continuar?', 'route' => route('evaluacion.cancel', $evaluation->id)])
                         @include('modals.delete', ['id'=> 'eliminar'.$evaluation->id, 'message' => '¿Está seguro que desea eliminar esta evaluación?', 'route' => route('evaluacion.delete', $evaluation->id)])
                         @endforeach
                     </tbody>

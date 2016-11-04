@@ -89,6 +89,8 @@
                     <div class="row">
                         @if($group->imagen)
                         {{Html::image(asset($group->imagen), null, ['class'=>'img-thumbnail'])}}
+                        @else
+                        {{Html::image(asset('images/nofoto.png'), null, ['class'=>'img-thumbnail'])}}
                         @endif
                     </div>
                 </div>

@@ -108,3 +108,7 @@
 	color: #73879C !important;	
 }
 
+html.remodal-is-locked {
+    overflow: initial !important;
+    touch-action: none !important;
+}

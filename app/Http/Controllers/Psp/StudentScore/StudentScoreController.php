@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\Http\Controllers\Psp\Student;
+namespace Intranet\Http\Controllers\Psp\StudentScore;
 
 use Illuminate\Http\Request;
 use Intranet\Models\Student;
@@ -10,9 +10,11 @@ use Intranet\Models\PspDocument;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Studentxinscriptionfiles;
+
 use Auth;
 
-class StudentController extends Controller
+class StudentScoreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,13 +23,15 @@ class StudentController extends Controller
      */
     public function index()
     {
+
         $supervisor = Supervisor::where('idUser',Auth::User()->IdUsuario)->first();
         $students = PspStudent::where('idsupervisor',$supervisor->id)->get();
+        $scores = $supervisor = Studentxinscriptionfiles::where('acepta_terminos',1)->get();  
 
         $data = [
             'students'    =>  $students,
         ];
-        return view('psp.student.index', $data);
+        return view('psp.finalScore.index', $data);
     }
 
     /**

@@ -23,6 +23,7 @@ use Intranet\Http\Services\MeasurementSource\MeasurementSourceService;
 use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Cicle\CicleService;
 use Intranet\Http\Services\DictatedCourses\DictatedCoursesService;
+use Intranet\Http\Services\User\PasswordService;
 
 use Intranet\Http\Requests\AspectRequest;
 use Intranet\Http\Requests\CriterioResquest;
@@ -30,6 +31,8 @@ use Intranet\Http\Requests\StudentResultRequest;
 use Intranet\Http\Requests\CriterioStoreRequest;
 use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
+use Intranet\Models\User;
+use Intranet\Models\Teacher;
 use Intranet\Models\criterion;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
@@ -45,6 +48,7 @@ class FlujoCoordinadorController extends Controller
     protected $teacherService;
     protected $periodService;
     protected $dictatedCoursesService;
+    protected $passwordService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
@@ -57,7 +61,7 @@ class FlujoCoordinadorController extends Controller
         $this->periodService= new PeriodService();
         $this->cicleService=new CicleService();
         $this->dictatedCoursesService = new DictatedCoursesService();
-
+        $this->passwordService= new PasswordService();
 	}
 
 
@@ -418,7 +422,7 @@ class FlujoCoordinadorController extends Controller
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
         
-        return redirect()->route('profesor_index.flujoCoordinador',$data)->with('success', 'Inició el Ciclo Académico');
+        return redirect()->route('end3.flujoCoordinador',$data)->with('success', 'Inició el Ciclo Académico');
         
     }
 
@@ -548,6 +552,14 @@ class FlujoCoordinadorController extends Controller
 
     public function end2 ($id){
         return view ('flujoCoordinador.end2', ['idEspecialidad'=>$id]);
+    }
+    
+    public function end3 ($id){
+        return view ('flujoCoordinador.end3', ['idEspecialidad'=>$id]);
+    }
+
+    public function end4 ($id){
+        return view ('flujoCoordinador.end4', ['idEspecialidad'=>$id]);
     }
 
     public function cursosCiclo_index($id){

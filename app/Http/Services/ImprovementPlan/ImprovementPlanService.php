@@ -60,10 +60,16 @@ class ImprovementPlanService {
     }
 
     public function retrieveCicleAcademic(){
-        $vigente = "1";
-        $cicle = AcademicCycle::where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();
-        $cyclesAcademic=AcademicCycle::where('Numero','>=',$cicle->Numero)->get();
-        return $cyclesAcademic;
+        if(Session::get('academic-cycle')!=null){
+            $vigente = "1";
+            $cicle = AcademicCycle::where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();
+            $cyclesAcademic=AcademicCycle::where('Numero','>=',$cicle->Numero)->get();
+            return $cyclesAcademic;
+        }
+        else{
+            return null;
+        }
+        
     }
 
     public function create($request) {

@@ -88,4 +88,59 @@ class FlujoAdministradorTest extends TestCase
             ->see('El profesor se ha registrado exitosamente');
     }
 
+    public function test_uas_crear_facultad_01(){
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoAdministrador/facultad')
+            ->select('DIS','code')
+            ->select('Diseño','name')
+            ->select('holi','description')
+            ->press('Siguiente')
+            ->seePageIs('/flujoAdministrador/facultad/1/profesor');
+    }
+
+    public function test_uas_crear_profesor_02(){
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/1/profesor/create')
+            ->select('22222222','teachercode')
+            ->select('Nombre','teachername')
+            ->select('Apellido1','teacherlastname')
+            ->select('Apellido2','teachersecondlastname')
+            ->select('testo@correo.com','teacheremail')
+            ->select('Profesor Asociado','teacherposition')
+            ->select('algo','teacherdescription')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/facultad/2/profesor')
+            ->see('El profesor se ha registrado exitosamente');
+    }
+
+    public function test_uas_crear_objetivo_01(){
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/1/objetivoEducacional/create')
+            ->select('ObjetivoCreado','descripcion')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/facultad/2/objetivoEducacional')
+            ->see('El objetivo educacional se ha registrado exitosamente');
+    }
+
 }

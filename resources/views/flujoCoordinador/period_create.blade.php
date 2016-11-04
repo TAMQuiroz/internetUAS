@@ -214,7 +214,7 @@
                     <div class="separator"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
-                            <a class="btn btn-default pull-left" href="{{ route('instrumento_index.flujoCoordinador',$idEspecialidad) }}"> < ATRAS</a>
+                            <a class="btn btn-default pull-left" href="{{ route('end2.flujoCoordinador',$idEspecialidad) }}"> < ATRAS</a>
                             <button class="btn btn-success pull-right submit" type="submit" >SIGUIENTE > </button>
                                 
                                 

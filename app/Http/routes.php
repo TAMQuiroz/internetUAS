@@ -621,14 +621,8 @@ Route::group(['middleware' => 'auth'], function(){
             
 
             //Aspecto
-            Route::group(['prefix' => 'Aspecto'], function() {
-                Route::get('/', ['as' => 'Aspecto.index', 'uses' => 'Psp\Aspecto\AspectoController@index']);
-                Route::get('create', ['as' => 'Aspecto.create', 'uses' => 'Psp\Aspecto\AspectoController@create']);
-                Route::post('create', ['as' => 'Aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
-                Route::get('show/{id}', ['as' => 'Aspecto.show', 'uses' => 'Psp\Aspecto\AspectoController@show']);
-                Route::get('edit/{id}', ['as' => 'Aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);
-                Route::post('edit/{id}', ['as' => 'Aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
-                Route::get('delete/{id}', ['as' => 'Aspecto.delete', 'uses' => 'Psp\Aspecto\AspectoController@destroy']);    
+            Route::group(['prefix' => 'aspecto'], function() {
+                Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
             });
             
 
@@ -656,6 +650,8 @@ Route::group(['middleware' => 'auth'], function(){
 
             //PSP Student
             Route::group(['prefix' => 'student'], function() {
+                //prefijo
+                //ruta vista controlador
                 Route::get('/', ['as' => 'student.index', 'uses' => 'Psp\Student\StudentController@index']);
                 Route::get('create', ['as' => 'student.create', 'uses' => 'Psp\Student\StudentController@create']);
                 Route::post('create', ['as' => 'student.store', 'uses' => 'Psp\Student\StudentController@store']);

@@ -2,9 +2,9 @@
 @section('content')
 
 <div class="page-title">
-	<div class="title_left">
-		<h3>Alumnos</h3>
-	</div>
+    <div class="title_left">
+        <h3>Seleccione un alumno</h3>
+    </div>
 </div>
 
 <div class="clearfix"></div>
@@ -14,6 +14,7 @@
 
             <div class="x_content">
                 <div class="clearfix"></div>
+
 
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
@@ -37,8 +38,7 @@
                             <td>{{$student->telefono}}</td> 
                             <td>{{$student->correo}}</td> 
                             <td>
-                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
-                                <a href= "{{route('aspecto.edit', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-list-ol"></i></a>
+                                <a href= "{{route('Aspecto.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
                             </td>
                         </tr> 
                         @endforeach

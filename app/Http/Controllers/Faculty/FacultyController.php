@@ -279,7 +279,7 @@ class FacultyController extends BaseController
         }
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return view('faculty.editCycle', $data);
     }
@@ -302,7 +302,7 @@ class FacultyController extends BaseController
             //Session::forget('academic-cycle');
             //Session::set('academic-cycle',$cycle);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return redirect()->route('editCycle.faculty')->with('success', 'La Información del Ciclo ha sido actualizada con éxito');
     }
@@ -315,7 +315,7 @@ class FacultyController extends BaseController
             $data['faculty'] = $this->facultyService->find($data['conf']->IdEspecialidad);
             $data['coordinator'] = $this->facultyService->getTeacherById($data['conf']->IdDocente);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return $data;
     }
@@ -325,7 +325,7 @@ class FacultyController extends BaseController
         try {
             $this->facultyService->updateAcademicCycle($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return redirect()->route('indexAcademicCycle.faculty')->with('success', 'La especialidad ha sido actualizada con éxito');
     }
@@ -346,7 +346,7 @@ class FacultyController extends BaseController
             Session::forget('academic-cycle');
             Session::set('academic-cycle',$cycle);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         if($info == 0){
         	return redirect()->route('viewCycle.faculty')->with('success', 'La Información del Ciclo ha sido actualizada con éxito');
@@ -363,7 +363,7 @@ class FacultyController extends BaseController
             }
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return redirect()->route('viewCycle.faculty')->with('success', 'Finalizó el Ciclo Académico');
     }
@@ -371,10 +371,10 @@ class FacultyController extends BaseController
     public function desactivatePeriod(Request $request) {
         try {
             $this->facultyService->desactivatePeriod($request->all(), Session::get('faculty-code'));
-            Session::forget('period-code');
+            
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
 
         return redirect()->route('viewPeriod.faculty')->with('success', 'Finalizó el Periodo');
@@ -386,6 +386,7 @@ class FacultyController extends BaseController
         try {
             $periods = $this->periodService->getAll(Session::get('faculty-code'));
         } catch (Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
 
         return view('periods.index', compact('periods'));
@@ -403,7 +404,7 @@ class FacultyController extends BaseController
             $data['studentsResults'] = $this->studentsResultService->findByFaculty();
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
 
         return view('faculty.editPeriod', $data);
@@ -412,7 +413,7 @@ class FacultyController extends BaseController
     public function endPeriod($period_id)
     {
         $this->facultyService->desactivatePeriod($period_id, Session::get('faculty-code'));
-
+        Session::forget('period-code');
         if(Session::get('academic-cycle')!=null){
             Session::forget('academic-cycle');
         }
@@ -430,7 +431,7 @@ class FacultyController extends BaseController
             $data['studentsResults'] = $this->studentsResultService->findByFaculty();
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
 
         return view('periods.create', $data);
@@ -442,7 +443,9 @@ class FacultyController extends BaseController
             $period = $this->facultyService->createConfFaculty($request->all());
 
             Session::put('period-code', $period->IdPeriodo);
-        } catch (Exception $e) { }
+        } catch (Exception $e) { 
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
 
         return redirect()->route('viewPeriod.faculty')->with('success', 'El periodo se ha iniciado satisfactoriamente');
     }

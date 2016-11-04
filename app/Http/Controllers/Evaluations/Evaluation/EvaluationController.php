@@ -311,11 +311,14 @@ public function indexeval(Request $request,$id)
     }   
 
     public function storeEv(Request $request)
-    {//guarda las respuestas de la evaluacion    
-        $id=0    ;
+    {//guarda las respuestas de la evaluacion
+        $id=$request['id_evaluation'];
+
+        //se borran las respuestas anteriores, si hubiesen
+        DB::table('evquestionxstudentxdocentes')->where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->delete();        
+        
         foreach ($request['arrQuestion'] as $idEvquestion => $answer) {
-            $evquestion = EvQuestion::find($idEvquestion);
-            $id = $evquestion->id_evaluation;//
+            $evquestion = EvQuestion::find($idEvquestion);            
             $ev = new Evquestionxstudentxdocente;
             $ev->id_tutstudent = Session::get('user')->id;
             $ev->id_evquestion = $idEvquestion;
@@ -326,6 +329,14 @@ public function indexeval(Request $request,$id)
             }
             else if ($evquestion->tipo == 1){//si es cerrada
                 $ev->clave_elegida    = $answer;
+                //se corrige
+                $respuesta_correcta = $evquestion->rpta;
+                if( ($answer=="0") || ($answer != $respuesta_correcta)  ){//no se marco ninguna alternativa o es incorrecta
+                    $ev->puntaje = 0;
+                }
+                else {
+                    $ev->puntaje = $evquestion->puntaje; //se le asigna el puntaje completo
+                }
             }
             $ev->save();
             if ($evquestion->tipo == 3){//si es archivo
@@ -344,7 +355,7 @@ public function indexeval(Request $request,$id)
         //guardo la hora de la evaluacion
         $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//
         $tutstudentxevaluation->fecha_hora = date('Y-m-d H:i:s ', time());
-        $tutstudentxevaluation->save();      
+        $tutstudentxevaluation->save(); 
         
         return redirect()->route('evaluacion_alumno.index')->with('success', 'La evaluación ha sido rendida exitosamente');
     }
@@ -431,7 +442,7 @@ public function indexeval(Request $request,$id)
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EvaluationRequest $request, $id)
     {
         // dd($request);
 

@@ -1,7 +1,7 @@
 
-Se le informa que su cuenta ya ha sido habilitada con el usuario {{ $username }}.
-Por favor acceda al siguiente enlace para que pueda
-escoger una contraseña : <br>
+Se le informa que su cuenta ha sido registrada satisfactoriamente.<br>
+Su usuario para acceder al sistema es el siguiente: {{ $username }}.<br>
+Finalmente, con el objetivo de completar la validación de su cuenta, por favor acceder al siguiente enlace para establecer una contraseña: <br>
 <br>
 {{ $password_link }}
 <br>

@@ -56,7 +56,7 @@
                                 <td>{{ $p->configuration->cycleAcademicEnd->Descripcion or 'No ha sido definida' }} </td>
                                 <td>
                                     @if($p->Vigente)
-                                        <a href="{{ url("/faculty/periods/{$p->IdPeriodo}") }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ url("/faculty/periods/{$p->IdPeriodo}") }}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-pencil"></i></a>
                                     @endif
                                 </td>
                             </tr>

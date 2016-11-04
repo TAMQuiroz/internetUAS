@@ -356,8 +356,9 @@ class FacultyService {
 				->update(array(
 					'Vigente' =>'0'
 				));
+				Session::forget('period-code');
 			}
-			Session::forget('period-code');
+			
 		}
 	}
 

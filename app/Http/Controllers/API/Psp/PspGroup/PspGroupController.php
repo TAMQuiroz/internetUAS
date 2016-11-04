@@ -34,7 +34,9 @@ class PspGroupController extends BaseController
     public function selectGroup($id){
         $user =  JWTAuth::parseToken()->authenticate();
         $alumno = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
-        $alumno->idPspGroup = $id;
+        $pspAlumno   = PspStudent::where('IdAlumno' , $alumno->IdAlumno)->get()->first();
+
+        $pspAlumno->idPspGroup = $id;
         $alumno->save();
 
         $mensaje = "Seleccion su grupo satisfactoriamente";

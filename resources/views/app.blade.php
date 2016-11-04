@@ -121,7 +121,6 @@
                 @endif
                 </span>
               </div>
-
               <div id="info-faculty" class="bar-info">
                 <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
                 @if(Session::get('academic-cycle')!=null)
@@ -311,12 +310,12 @@
               <!-- nueva barra PSP -->
 
 
-              @if(Auth::user() && (Auth::user()->professor || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil==0)) 
+              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil==0)) 
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
                     <ul>
-                        @if(Auth::user()->professor) <!--si es profesor o coordinador-->
+                        @if(Auth::user()->professor && count(Auth::user()->professor->pspProcesses!=null)>0) <!--si es profesor o coordinador-->
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>

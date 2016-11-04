@@ -2,17 +2,22 @@
 @section('content')
 
 <div class="page-title">
-	<div class="title_left">
-		<h3>Alumnos</h3>
-	</div>
+    <div class="title_left">
+        <h3>Asignar Reunión</h3>
+    </div>
 </div>
 
 <div class="clearfix"></div>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
+
             <div class="x_content">
                 <div class="clearfix"></div>
+                <div class="row">
+                </div>
+                <div class="clearfix"></div>
+
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                     <tr class="headings">
@@ -35,9 +40,7 @@
                             <td>{{$student->telefono}}</td> 
                             <td>{{$student->correo}}</td> 
                             <td>
-                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Documentos"><i class="fa fa-files-o"></i></a>
-                                <a href= "{{route('aspecto.edit', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Ver aspectos del alumno"><i class="fa fa-list-ol"></i></a>
-                                <a href= "{{route('meeting.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Reuniones"><i class="fa fa-clock-o"></i></a>
+                                <a href= "{{route('MeetingTeacher.create', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
                             </td>               
                         </tr> 
                         @endforeach

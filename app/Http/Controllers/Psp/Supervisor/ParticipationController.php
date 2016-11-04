@@ -10,10 +10,15 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Supervisor;
 use Intranet\Models\PspProcess;
 use Intranet\Models\PspProcessxSupervisor;
+use Intranet\Models\PspProcessxTeacher;
 use Intranet\Models\Teacher;
 use Intranet\Models\Teacherxgroup;
+use Intranet\Models\User;
+use Intranet\Models\Course;
+use Illuminate\Support\Facades\DB;
 
 use Session;
+use Auth;
 
 class ParticipationController extends Controller
 {
@@ -23,6 +28,21 @@ class ParticipationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        $user = Auth::User()->professor;
+        $procesos = PspProcessxTeacher::where('iddocente',$user->IdDocente)->get();
+        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('curso','pspprocesses.idcurso', '=', 'curso.IdCurso')->select('pspprocesses.id','curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->lists('Nombre','id');
+        
+        $supervisores = Supervisor::get();
+        $data = [
+            'supervisores'    =>  $supervisores,
+            'procesos'      =>  $process,
+        ];
+
+        return view('psp.supervisor.index-participant',$data);
+    }
+
     public function storeSupervisor(Request $request)
     {
         try {

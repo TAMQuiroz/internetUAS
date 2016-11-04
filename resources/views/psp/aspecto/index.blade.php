@@ -2,17 +2,20 @@
 @section('content')
 
 <div class="page-title">
-	<div class="title_left">
-		<h3>Alumnos</h3>
-	</div>
+    <div class="title_left">
+        <h3>Seleccione un alumno</h3>
+    </div>
 </div>
 
 <div class="clearfix"></div>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
+
             <div class="x_content">
                 <div class="clearfix"></div>
+
+
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                     <tr class="headings">
@@ -22,7 +25,7 @@
                         <th class="column-title">Apellido Materno</th>
                         <th class="column-title">Telefono</th>
                         <th class="column-title">Correo</th>   
-                        <th colspan="2">Acciones</th>               
+                        <th colspan="2">Acciones</th>                     
                     </tr>
                     </thead>
                     <tbody>
@@ -35,10 +38,8 @@
                             <td>{{$student->telefono}}</td> 
                             <td>{{$student->correo}}</td> 
                             <td>
-                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
-                                <a href= "{{route('aspecto.edit', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Ver aspectos del alumno"><i class="fa fa-list-ol"></i></a>
-                                <a href= "{{route('meeting.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Reuniones"><i class="fa fa-clock-o"></i></a>
-                            </td>               
+                                <a href= "{{route('Aspecto.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
+                            </td>
                         </tr> 
                         @endforeach
                     </tbody>

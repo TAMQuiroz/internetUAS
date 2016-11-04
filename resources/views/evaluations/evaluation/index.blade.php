@@ -69,6 +69,9 @@
                                 </a>
                                 @endif
                                 @if($evaluation->estado == 2)    
+                                <a href="{{route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id)}}" class="btn btn-primary btn-xs" title="Visualizar" >
+                                    <i class="fa fa-eye"></i>
+                                </a>
                                 <a href="" class="btn btn-danger btn-xs delete-group" title="Cancelar" data-toggle="modal" data-target="#{{$evaluation->id}}">
                                     <i class="fa fa-remove"></i>
                                 </a>

@@ -1,6 +1,10 @@
 @extends('app')
 @section('content')
-
+<style type="text/css">
+	input,option { 
+    text-align: center; 
+}
+</style>
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">

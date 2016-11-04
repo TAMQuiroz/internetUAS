@@ -117,7 +117,7 @@ class CompetenceController extends Controller
                 return redirect()->route('competencia.index')->with('success', 'La competencia se ha eliminado exitosamente');
             }
             else{
-                return redirect()->back()->with('warning', 'No se puede eliminar una competencia ya usada.');
+                return redirect()->back()->with('warning', 'La competencia ya ha sido usada.');
             }            
             
         } catch (Exception $e) {

@@ -20,7 +20,7 @@ class TutTutorController extends BaseController
     
     public function getTutorAppoints($id)
     {
-    	 $docenteInfo = Teacher::where('idUsuario',$id)->get();
+	    	 $docenteInfo = Teacher::where('idUsuario',$id)->get();
          $appointmentInfo = tutmeeting::where('id_docente',$docenteInfo[0]['IdDocente'])->get();
          $i = 0;
          foreach ($appointmentInfo as $appointInfo) {
@@ -36,8 +36,8 @@ class TutTutorController extends BaseController
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());
-        return $this->response->array($appointmentInfo->toArray());
     }
+
 
 
 

@@ -9,9 +9,13 @@ use Intranet\Http\Requests\pspDocumentRevRequest;
 use Intranet\Http\Requests\pspDocumentEditRequest;
 use Intranet\Http\Requests;
 use Intranet\Models\Template;
+use Intranet\Models\PspStudent;
+use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Carbon\Carbon;
 use Auth;
+use Mail;
+use DateTime;
 
 class PspDocumentController extends Controller
 {
@@ -41,9 +45,15 @@ class PspDocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $student = Student::find($id);
+        $data = [
+        'student' => $student,
+        ];
+        $data['phases'] = Phase::get();
+        return view('psp.pspDocument.create',$data);
     }
 
     /**
@@ -52,9 +62,26 @@ class PspDocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        try {
+                $PspDocument = new PspDocument;
+                $PspDocument->idstudent= $id;
+                $PspDocument->titulo_plantilla = $request['titulo'];
+                if($request['obligatorio']==true)
+                    $PspDocument->es_obligatorio='s';
+                else
+                    $PspDocument->es_obligatorio='n';
+                $PspDocument->idtipoestado=4;
+                $PspDocument->es_fisico=1;
+                $PspDocument->fecha_limite=Phase::find($request['fase'])->fecha_fin;
+                $PspDocument->numerofase=Phase::find($request['fase'])->numero;
+                $PspDocument->save();
+
+            return redirect()->route('pspDocument.search',$id)->with('success', 'Se ha registrado el documento exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }        
     }
 
     /**
@@ -140,6 +167,38 @@ class PspDocumentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function mail($id)
+    {        
+        try {
+            $pspDocument = PspDocument::find($id);
+            $student = PspStudent::where('idalumno',$pspDocument->idstudent)->first();
+            $now = Carbon::now();
+            $fecha = $pspDocument->fecha_limite;
+            $datetime1 = new DateTime(($now));
+            $datetime2 = new DateTime(($fecha));
+            $interval = $datetime1->diff($datetime2);
+            $days = $interval->format('%R%a days');
+            //dd($days);
+           /*  Mail::send('emails.notifyDatelimit', ['user' => $student ], function ($m) use ($student) {
+                $m->from('hello@app.com', 'Supervisor de PSP');
+                $m->to($student->correo)->subject('Recordatorio de fecha limite para entrega de documento!');
+            });*/
+            $hoy                = Carbon::now();
+            $fechaLimite        = Carbon::parse($pspDocument->fecha_limite);
+            $diasRestantes      = $hoy->diffInDays($fechaLimite);
+            
+                $mail = $student->correo;
+                Mail::send('emails.notifyDatelimit', compact('diasRestantes'), function($m) use($mail){
+                    $m->subject('Notificacion de fecha limite');
+                    $m->to($mail);
+                });
+            
+             return redirect()->back()->with('success', 'Notificacon Enviada');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        } 
     }
 
     public function search($id)

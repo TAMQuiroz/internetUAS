@@ -14,6 +14,7 @@ class AddFkToDeliverablesTable extends Migration
     {
         Schema::table('deliverables', function (Blueprint $table) {
             $table->foreign('id_proyecto')->references('id')->on('projects');
+            $table->foreign('id_padre')->references('id')->on('deliverables');
         });
     }
 

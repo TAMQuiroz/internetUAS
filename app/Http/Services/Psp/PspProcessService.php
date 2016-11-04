@@ -79,11 +79,9 @@ class PspProcessService{
 		$IdDocente =    $request['idProfesor'];
 		$proceso = PspProcess::where('id',$request['idProceso'])->first();
 		
-		
 		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
 		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
 		$horarioAct = null;
-
 		foreach ($horarios as $horario) {
 			$temp = SchedulexTeacher::where('IdDocente',$IdDocente)->where('IdHorario',$horario->IdHorario)->first();
 			if($temp!=null)

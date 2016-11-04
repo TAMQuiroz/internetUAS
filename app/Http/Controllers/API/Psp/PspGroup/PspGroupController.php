@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Student;
 use Intranet\Models\PspGroup;
 use Dingo\Api\Routing\Helpers;
+use Intranet\Models\PspStudent;
 use Illuminate\Routing\Controller as BaseController;
 
 class PspGroupController extends BaseController
@@ -32,6 +33,8 @@ class PspGroupController extends BaseController
     }
 
     public function selectGroup($id){
+
+        try{
         $user =  JWTAuth::parseToken()->authenticate();
         $alumno = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
         $pspAlumno   = PspStudent::where('IdAlumno' , $alumno->IdAlumno)->get()->first();
@@ -42,6 +45,15 @@ class PspGroupController extends BaseController
         $mensaje = "Seleccion su grupo satisfactoriamente";
 
        return json_encode($mensaje);
+
+        } catch (Exception $e) {
+            
+            $message  = "No se pudo asignar grupo";
+
+            return json_encode($message);
+
+        }
+
     }
 
 

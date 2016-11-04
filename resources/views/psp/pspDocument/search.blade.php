@@ -24,6 +24,12 @@
                 <br/>
                 <br/>
                 <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <a href="{{route('pspDocument.create',$student->IdAlumno) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Documento Fisico</a>
+                    </div>
+                </div>
             
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
@@ -31,6 +37,7 @@
                         <th class="column-title">Titulo</th>
                         <th class="column-title">Plantilla</th>
                         <th class="column-title">Documento</th>
+                        <th class="column-title">Tipo</th>
                         <th class="column-title">Obligatorio</th>
                         <th class="column-title">Estado</th> 
                         <th class="column-title">Fecha Limite</th>    
@@ -43,7 +50,12 @@
                             <td>{{$pspdocument->titulo_plantilla}}</td> 
                             <td>{{$pspdocument->ruta_plantilla}}</td> 
                             <td>{{$pspdocument->ruta}}</td> 
-                            @if($pspdocument->eso_obligatorio=='s')
+                            @if($pspdocument->es_fisico==0)
+                            <td>digital</td> 
+                            @else
+                            <td>fisico</td> 
+                            @endif
+                            @if($pspdocument->es_obligatorio=='s')
                             <td>obligatorio</td> 
                             @else
                             <td>no obligatorio</td> 
@@ -58,6 +70,9 @@
                             <td>{{$pspdocument->fecha_limite}}</td> 
                             <td>
                                 <a href="{{route('pspDocument.check',$pspdocument->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
+                                @if($pspdocument->idtipoestado==3 && ($pspdocument->fecha_limite>\Carbon\Carbon::now()) && $pspdocument->es_fisico==0)
+                                <a href="{{route('pspDocument.mail',$pspdocument->id)}}" class="btn btn-primary btn-xs" title="notificar"><i class="fa fa-envelope"></i></a>
+                                @endif
                                 @if($pspdocument->idtipoestado==5)
                                 <a class="btn btn-primary btn-xs" href="" title="observaciones" data-toggle="modal" data-target="#obsModal{{$pspdocument->id}}"><i class="fa fa-info"></i></a>
                                 @endif

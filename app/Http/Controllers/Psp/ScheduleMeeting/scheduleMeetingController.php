@@ -9,7 +9,7 @@ use Intranet\Models\Schedule_meetings;
 use Intranet\Http\Requests\ScheduleMeetingRequest;
 use Intranet\Models\Phase;
 use Auth;
-
+use Carbon\Carbon;
 
 
 class scheduleMeetingController extends Controller
@@ -104,8 +104,8 @@ class scheduleMeetingController extends Controller
         try {
             //Crear 
             $schedule                   = Schedule_meetings::find($id);
-            $schedule->fecha_inicio      = $request['fecha_inicio'];
-            $schedule->fecha_fin      = $request['fecha_fin']; 
+            $schedule->fecha_inicio      = Carbon::createFromFormat('d/m/Y',$request['fecha_inicio']); 
+            $schedule->fecha_fin      = Carbon::createFromFormat('d/m/Y',$request['fecha_fin']);
             $phase = Phase::find($request['fase']);
             if($phase!=null){
             if(($phase->fecha_inicio>$schedule->fecha_inicio)||($schedule->fecha_inicio>$phase->fecha_fin)){

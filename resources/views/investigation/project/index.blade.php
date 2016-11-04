@@ -1,4 +1,4 @@
-@extends('app')
+@extends(Auth::user() ? 'app' : 'appPublic')
 @section('content')
 
 
@@ -29,7 +29,7 @@
 			                </div>
 			            </form>
 			        </div>
-			        @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.admin'))
+			        @if(Auth::user() && $esLider && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.admin')))
 					<div class="col-md-6">
 						<a href="{{route('proyecto.create')}}">
 							{{Form::button('<i class="fa fa-plus"></i> Crear Proyecto',['class'=>'btn btn-success pull-right'])}}
@@ -44,6 +44,7 @@
 								<th>Nombre</th> 
 								<th>Fecha final</th> 
 								<th>Area</th> 
+								<th>Grupo</th>
 								<th>Cantidad de integrantes</th> 
 								<th>Estado</th> 
 								<th colspan="2">Acciones</th>
@@ -55,6 +56,7 @@
 								<td>{{$proyecto->nombre}}</td> 
 								<td>{{$proyecto->fecha_fin}}</td> 
 								<td>{{$proyecto->area->nombre}}</td> 
+								<td>{{$proyecto->group->nombre}}</td>
 								<td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
 								<td>
 								@if($proyecto->status)
@@ -63,7 +65,7 @@
 								</td>
 								<td>
 									<a href="{{route('proyecto.show', $proyecto->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-eye"></i></a>
-									@if(Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
+									@if(Auth::user() && (Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
 									<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$proyecto->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
 									@endif
 								</td>

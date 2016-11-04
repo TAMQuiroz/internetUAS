@@ -116,6 +116,10 @@ class MeetingController extends Controller
     public function edit($id)
     {
         //
+        $meeting = meeting::with('supervisor','student')->find($id)->get()->first();
+        $data['meeting'] = $meeting;
+        //dd($meeting);
+        return view('psp.meeting.edit',$data);
     }
 
     /**
@@ -128,6 +132,17 @@ class MeetingController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            $meeting = meeting::find($id);
+            $meeting->lugar = $request['lugar'];
+            $meeting->observaciones = $request['observaciones'];
+            $meeting->retroalimentacion = $request['retroalimentacion'];
+            $meeting->save();
+
+            return redirect()->route('meeting.show',$id)->with('success','La reunion se ha actualizado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 
     /**
@@ -139,5 +154,21 @@ class MeetingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search($id)
+    {
+        
+        $student = Student::find($id);
+        
+        $meetings = meeting::where('idstudent',$id)->get();
+
+        $data = [
+            'meetings'    =>  $meetings,
+        ];
+        $data['student'] = $student;
+
+        return view('psp.meeting.search', $data);       
+
     }
 }

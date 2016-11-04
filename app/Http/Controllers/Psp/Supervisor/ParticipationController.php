@@ -10,10 +10,15 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Supervisor;
 use Intranet\Models\PspProcess;
 use Intranet\Models\PspProcessxSupervisor;
+use Intranet\Models\PspProcessxTeacher;
 use Intranet\Models\Teacher;
 use Intranet\Models\Teacherxgroup;
+use Intranet\Models\User;
+use Intranet\Models\Course;
+use Illuminate\Support\Facades\DB;
 
 use Session;
+use Auth;
 
 class ParticipationController extends Controller
 {
@@ -23,6 +28,31 @@ class ParticipationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        $user = Auth::User()->professor;
+        $procesos = PspProcessxTeacher::where('iddocente',$user->IdDocente)->get();
+        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('curso','pspprocesses.idcurso', '=', 'curso.IdCurso')->select('pspprocesses.id','curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->lists('Nombre','id');
+        
+        $first_key = key($process);
+        $primerProc = PspProcess::find($first_key);
+        $supActivos = PspProcessxSupervisor::where('idpspprocess',$first_key)->get();
+
+        $ids = [];
+        foreach ($supActivos as $sup) {
+            array_push($ids, $sup->id);
+        }
+        $supervisores = Supervisor::where('idfaculty',$primerProc->idespecialidad)->whereNotIn('id',$ids)->get();
+
+        $data = [
+            'supervisores'    =>  $supervisores,
+            'procesos'      =>  $process,
+            'supActivos'    =>  $supActivos,
+        ];
+
+        return view('psp.supervisor.index-participant',$data);
+    }
+
     public function storeSupervisor(Request $request)
     {
         try {
@@ -50,13 +80,13 @@ class ParticipationController extends Controller
     public function destroySupervisor($id)
     {
         try {
-            $investigatorXgroup = Investigatorxgroup::find($id);
+            $supervisor = PspProcessxSupervisor::find($id);
 
-            if($investigatorXgroup){
+            if($supervisor){
                 $group = Group::find($investigatorXgroup->id_grupo);
                 $investigatorXgroup->delete();
 
-                return redirect()->route('grupo.edit',$group->id)->with('success', 'El investigador se ha quitado exitosamente');
+                return redirect()->route('psp.supervisor.index-participant',$data)->with('success', 'El supervisor se ha quitado exitosamente');
             }else{
                 return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');    
             }

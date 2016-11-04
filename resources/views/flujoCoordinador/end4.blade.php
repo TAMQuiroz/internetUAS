@@ -11,7 +11,7 @@
   <div class="x_panel">
 
     <div class="x_title">
-      <h2>Segunda parte del Flujo terminada con exito</h2>
+      <h2>Cuarta parte del Flujo terminada con exito</h2>
       <div class="clearfix"></div>
     </div>
 
@@ -21,13 +21,16 @@
         <div class="form-group">
           <div class="col-md-12 col-sm-12"></div>
           <p>
-            La segunda parte del flujo de coordinador está por concluir, se agregaron los siguientes elementos:
+            La cuarta parte del flujo de coordinador está por concluir, se agregaron los siguientes elementos:
           </p>
           <br>
-          <p>- Profesores creados</p>
-          <p>- Cursos creados</p>
+          <p>- Horarios asignados a cada curso dictado en un ciclo</p>
+          <p>- Matriz de aporte</p>
+          <p>- Tipo de evidencia</p>
           <br>
-          <p>Usted ha terminado satisfactoriamente la segunda parte del flujo. Se guardarán los cambios.</p>
+          <p>Usted ha terminado satisfactoriamente la cuarta parte del flujo. </p>
+          <br>
+          <p>Si necesita agregar mas información, podra hacerlo desde las opciones del menú.</p>
           </p>
         </div>
       </div>        
@@ -39,8 +42,8 @@
       <div class="row">
 
           <div class="col-md-12 col-sm-12 col-xs-12">
-               <a  href="{{ route('period_init.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Continuar ></a>
-               <a  href="{{ route('courses_index.flujoCoordinador',$idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>
+               <a  href="{{ route('index.subindex') }}" class="btn btn-success pull-right">Finalizar</a>
+               <a  href="#"  class="btn btn-default pull-left">< Atras</a>
           </div>
       </div>
 

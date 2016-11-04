@@ -30,7 +30,6 @@
                                     <th class="column-title">Código</th>
                                     <th class="column-title">Nombre del Curso</th>
                                     <th class="column-title">Nivel Académico</th>
-                                    <th class="column-title">Especialidad</th>
                                     <th class="column-title last">Acciones</th>
                                     <th class="bulk-actions" colspan="7">
                                         <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
@@ -47,11 +46,6 @@
                                             <td class=" ">Electivo</td>
                                         @else
                                             <td class=" ">{{$dic->course->NivelAcademico}}</td>
-                                        @endif
-                                        @if($dic->course->specialty!= null)
-                                            <td class=" ">{{$dic->course->specialty->Nombre}}</td>
-                                        @else
-                                            <td class=" ">-</td>
                                         @endif
                                         <td class=" ">
                                             @if(in_array(35,Session::get('actions')))
@@ -94,8 +88,8 @@
     <div class="row">
       <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
-               <a  href="#" class="btn btn-success pull-right">Siguiente ></a>
-               <a  href="#" class="btn btn-default pull-left">Atras</a>
+               <a  href="{{ route('end4.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+               <a  href="{{ route('end3.flujoCoordinador',$idEspecialidad) }}" class="btn btn-default pull-left">< Atras</a>
           </div>
       </div>
 

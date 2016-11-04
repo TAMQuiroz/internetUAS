@@ -50,7 +50,7 @@ class PhaseTest extends TestCase
             ->press('Guardar')
             ->seePageIs('/psp/phase/create')
             ->see('Creación de Fase')
-            ->see('numero debe tener 1 dígitos');
+            ->see('numero debe tener 1 dígitos')
     		->press('Guardar')
     		->seePageIs('/psp/phase/create')
     		->see('Creación de Fase')

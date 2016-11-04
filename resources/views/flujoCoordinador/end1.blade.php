@@ -21,7 +21,7 @@
         <div class="form-group">
           <div class="col-md-12 col-sm-12"></div>
           <p>
-            La primera parte del flujo de administrador está por concluir, se agregaron los siguientes elementos:
+            La primera parte del flujo de coordinador está por concluir, se agregaron los siguientes elementos:
           </p>
           <br>
           <p>- Nuevos Objetivos Educacionales creados</p>
@@ -42,7 +42,8 @@
       <div class="row">
 
           <div class="col-md-12 col-sm-12 col-xs-12">
-               <a  href="" class="btn btn-success pull-right">Continuar ></a>
+
+               <a  href="{{ route('profesor_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Continuar ></a>
                <a  href="{{ route('instrumento_index.flujoCoordinador', $idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>
           </div>
       </div>

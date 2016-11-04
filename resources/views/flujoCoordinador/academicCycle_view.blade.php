@@ -78,7 +78,7 @@
 							<a class="btn btn-default pull-left submit" href="{{ route('period_init.flujoCoordinador',$idEspecialidad) }}">< ATRAS</a>
 							<!--<a class="btn btn-primary pull-right init" href="{{ route('activate.faculty') }}">Iniciar Ciclo</a>-->
 							
-							<a class="btn btn-success pull-right submit" href="{{ route('profesor_index.flujoCoordinador',$idEspecialidad) }}">SIGUIENTE > </a>
+							<a class="btn btn-success pull-right submit" href="{{ route('end3.flujoCoordinador',$idEspecialidad) }}">SIGUIENTE > </a>
 							
 						</div>
 					</div>

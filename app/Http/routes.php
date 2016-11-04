@@ -1247,6 +1247,8 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/aspectosDelResultado', ['as' => 'aspectosDelResultado.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspectosDelResultado']);
         
         Route::get('/{id}/end2', ['as' => 'end2.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end2']);
+        Route::get('/{id}/end3', ['as' => 'end3.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end3']);
+        Route::get('/{id}/end4', ['as' => 'end4.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end4']);
 
 
     });

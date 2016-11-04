@@ -87,7 +87,7 @@
 
           <div class="col-md-12 col-sm-12 col-xs-12">
                <a id="aspecto-siguiente-btn" href="{{ route('criterio_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
-               <a  href="{{ route('studentResult_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-left">Atras</a>
+               <a  href="{{ route('studentResult_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-left">< Atras</a>
           </div>
       </div>
 

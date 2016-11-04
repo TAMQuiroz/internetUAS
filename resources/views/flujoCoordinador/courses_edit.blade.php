@@ -3,7 +3,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Editaraa Curso</h3>
+                <h3>Editar Curso</h3>
             </div>
         </div>
         <div class="row">

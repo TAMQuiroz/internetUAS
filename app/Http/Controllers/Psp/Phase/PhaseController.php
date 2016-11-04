@@ -18,6 +18,7 @@ use Intranet\Models\Phase;
 use Intranet\Http\Requests\PhaseRequest;
 
 use Auth;
+use Carbon\Carbon;
 
 class PhaseController extends Controller
 {
@@ -61,14 +62,12 @@ class PhaseController extends Controller
     public function store(PhaseRequest $request)
     {
         try {
-
-            
-
+            //dd($request['fecha_inicio']);
             $Phase                   = new Phase;
             $Phase->numero          = $request['numero'];
             $Phase->descripcion      = $request['descripcion'];
-            $Phase->fecha_inicio      = $request['fecha_inicio'];
-            $Phase->fecha_fin      = $request['fecha_fin'];
+            $Phase->fecha_inicio      = Carbon::createFromFormat('d/m/Y',$request['fecha_inicio']); 
+            $Phase->fecha_fin      = Carbon::createFromFormat('d/m/Y',$request['fecha_fin']);
             $Phaseses = Phase::get();
             if($Phaseses!=null){
                 foreach($Phaseses as $Phases){
@@ -133,8 +132,8 @@ class PhaseController extends Controller
             $Phase                   = Phase::find($id);
             $Phase->numero           = $request['numero'];
             $Phase->descripcion           = $request['descripcion'];
-            $Phase->fecha_inicio      = $request['fecha_inicio'];
-            $Phase->fecha_fin      = $request['fecha_fin']; 
+            $Phase->fecha_inicio      = Carbon::createFromFormat('d/m/Y',$request['fecha_inicio']); 
+            $Phase->fecha_fin      = Carbon::createFromFormat('d/m/Y',$request['fecha_fin']);
             $Phaseses = Phase::get();
             if($Phaseses!=null){
                 foreach($Phaseses as $Phases){

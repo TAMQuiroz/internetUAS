@@ -14,9 +14,7 @@
                     <div class="clearfix"></div>
                 </div>
 
-
-                {{Form::open(['route' => 'meeting.store','class' => ' form-horizontal','id'=>'formSuggestion'])}}
-                    
+                {{Form::open(['route' => ['MeetingTeacher.store', $student->IdAlumno],'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}    
                 <div class="form-group">
                     {{Form::label('Cita',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4 col-sm-6 col-xs-12">

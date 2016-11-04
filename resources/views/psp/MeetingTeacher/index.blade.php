@@ -31,7 +31,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                   
+                        @foreach($students as $student)
+                        <tr> 
+                            <td>{{$student->Student->Codigo}}</td> 
+                            <td>{{$student->Student->Nombre}}</td> 
+                            <td>{{$student->Student->ApellidoPaterno}}</td> 
+                            <td>{{$student->Student->ApellidoMaterno}}</td> 
+                            <td>{{$student->telefono}}</td> 
+                            <td>{{$student->correo}}</td> 
+                            <td>
+                                <a href= "{{route('MeetingTeacher.create', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
+                            </td>               
+                        </tr> 
+                        @endforeach
                     </tbody>
                 </table>
             </div>

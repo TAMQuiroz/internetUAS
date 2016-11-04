@@ -601,8 +601,8 @@ Route::group(['middleware' => 'auth'], function(){
             //MeetingTeacher
             Route::group(['prefix' => 'MeetingTeacher'], function() {
                 Route::get('/', ['as' => 'MeetingTeacher.index', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@index']);
-                Route::get('create', ['as' => 'MeetingTeacher.create', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@create']);
-                Route::post('create', ['as' => 'MeetingTeacher.store', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@store']);
+                Route::get('create/{id}', ['as' => 'MeetingTeacher.create', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@create']);
+                Route::post('create/{id}', ['as' => 'MeetingTeacher.store', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@store']);
                 Route::get('show/{id}', ['as' => 'MeetingTeacher.show', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@show']);
                 Route::get('edit/{id}', ['as' => 'MeetingTeacher.edit', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@edit']);
                 Route::post('edit/{id}', ['as' => 'MeetingTeacher.update', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@update']);

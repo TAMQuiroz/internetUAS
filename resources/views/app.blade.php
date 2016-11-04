@@ -362,21 +362,9 @@
                       <li><a href="{{route('evento.index')}}">Administrar Eventos</a></li>
                       <li><a href="{{route('proyecto.index')}}">Administrar Proyectos</a></li>
                     @endif
-                      <!-- Menu Reportes: Sin permisos ya que cualquier usuario puede generar los reportes-->
-                      <li class="no-padding">
-                        <ul class="collapsible collapsible-accordion">
-                          <li class=""></li>
-                          <li class="bold">
-                            <a class="collapsible-header waves-effect waves-teal">Reportes</a>
-                              <div class="collapsible-body">
-                               <ul>
-                                <li class="bold"><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
-                                <li class="bold"><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>  
-                                </ul>
-                              </div>
-                          </li>
-                        </ul>
-                      </li>
+                    <!-- Menu Reportes: Sin permisos ya que cualquier usuario puede generar los reportes-->
+                        <li><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
+                        <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>  
                   </ul>
                 </div>
               </li> 

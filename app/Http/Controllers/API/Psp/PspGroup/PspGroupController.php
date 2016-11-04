@@ -1,8 +1,9 @@
 <?php
 
 namespace Intranet\Http\Controllers\API\Psp\PspGroup;
-
+use JWTAuth;
 use Illuminate\Http\Request;
+use Intranet\Models\Student;
 use Intranet\Models\PspGroup;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
@@ -39,6 +40,26 @@ class PspGroupController extends BaseController
 
         $mensaje = "Seleccion su grupo satisfactoriamente";
 
-        echo $mensaje;
+       return json_encode($mensaje);
     }
+
+
+    public function getGroupByStudent(){
+        $user =  JWTAuth::parseToken()->authenticate();
+        $alumno = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
+        $idGroup  = $alumno->idPspGroup;
+        $pspGroup = PspGroup::where('id',$idGroup)->get();
+        return $this->response->array($pspGroup->toArray());
+    }
+
+
+    public function getStudent(){
+        $user =  JWTAuth::parseToken()->authenticate();
+        $alumno = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
+        return $this->response->array($alumno->toArray());
+
+
+    }
+
+
 }   

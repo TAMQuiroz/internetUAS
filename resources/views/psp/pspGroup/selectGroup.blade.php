@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="page-title">
             <div class="title_left">
-                <h3>Seleccione Grupo</h3>
+                <h3>Eleccion del grupo</h3>
             </div>
         </div>
     </div>
@@ -24,9 +24,9 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
                     <thead> 
                         <tr class="headings"> 
-                        	<th colspan="1"></th>
-                            <th>Numero</th> 
-                            <th>Observacion</th>       
+                        	<th colspan="1">Seleccionar</th>
+                            <th class="column-title">Numero</th> 
+                            <th class="column-title">Observacion</th>       
                         </tr> 
                     </thead> 
                     <tbody> 
@@ -45,7 +45,7 @@
                 <div class="row">
 					<div class="col-md-8 col-sm-12 col-xs-12">						
 						{{Form::submit('Seleccionar', ['class'=>'btn btn-success pull-right'])}}
-						<a class="btn btn-default pull-right" href="{{ route('index.subindex') }}">Cancelar</a>
+						<a class="btn btn-default pull-right" href="{{ route('index.ourFaculty',$idFaculty) }}">Cancelar</a>
 					</div>
 				</div>
                 {{Form::close()}}

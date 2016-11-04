@@ -813,6 +813,8 @@ $api->version('v1', function ($api) {
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
+            $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
+            $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
 
         });
     });

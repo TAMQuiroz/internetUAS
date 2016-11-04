@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StudentsTableSeeder extends Seeder
+class CaseInscriptionFileSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,20 +24,30 @@ class StudentsTableSeeder extends Seeder
 	        'Nombre'		=>  'Juan',
             'ApellidoPaterno'  => 'Perez',
             'ApellidoMaterno'  => 'Ramirez',
-            'Codigo' => '20001234'
+            'Codigo' => '20001234',
 	        'idUsuario'     	=>   65,
 	        'lleva_psp'    	=> 'S',
         ]);
-
         DB::table('pspstudents')->insert([
             'idAlumno'              => 1,
-            'idHorario'            => 1,
             'idTipoestado'            => 1,
             'telefono'            => '123-4567',
             'correo'            => 'jemarroquin@pucp.edu.pe',
             'direccion'            => 'Av. Uni 123',
             'idespecialidad'            => 1,
         ]);
+        DB::table('tutstudents')->insert([
+            'id'              => 1,
+            'id_usuario'            => 65,
+            'codigo'            => '20001234',
+            'nombre'            => 'Juan',
+            'ape_paterno'            => 'Perez',
+            'ape_materno'            => 'Ramirez',
+            'correo'            => 'jemarroquin@pucp.edu.pe',
+            'id_especialidad'            => 1,
+        ]);
+
+
 
 
     }

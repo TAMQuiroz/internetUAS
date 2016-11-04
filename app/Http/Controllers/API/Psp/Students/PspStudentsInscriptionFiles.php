@@ -33,7 +33,7 @@ class PspStudentsInscriptionFiles extends BaseController
     }
 
 
-   public function edit(Request $request, $id , $idAlumno){
+   public function edit(Request $request, $id ){
     
         $recomendaciones     = $request->only('recomendaciones');
              
@@ -41,13 +41,8 @@ class PspStudentsInscriptionFiles extends BaseController
         $inscription = Inscription::find($id);
         $inscription->recomendaciones  = $recomendaciones['recomendaciones'];
         $inscription->save();
-
-
         $recomendacion  =  $inscription->recomendaciones ; 
-
-
-$mail = 'jemarroquin@pucp.edu.pe';
-
+        $mail = 'jemarroquin@pucp.edu.pe';
         try
         {
             Mail::send('emails.notifyObservationForInscriptionFilePSP', compact('recomendacion'), function($m) use($mail) {
@@ -59,14 +54,6 @@ $mail = 'jemarroquin@pucp.edu.pe';
         {
             dd($e->getMessage());
         }
-
-
-
-
-
-
-
-
         //Retornar mensaje
         $mensaje = 'Se modifico correctamente';
 

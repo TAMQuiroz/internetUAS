@@ -733,8 +733,8 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');
-                $api->get('/{f_id}/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
-
+                $api->get('/{f_id}/semester/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
+                $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){

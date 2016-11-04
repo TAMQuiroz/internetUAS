@@ -774,6 +774,10 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/criterions', 'AspectController@getCriterions');
             });
 
+            $api->group(['namespace' => 'Criterion','prefix' => 'criterions'], function($api){
+                $api->get('/{id}/levels', 'CriterionController@getLevels');
+            });
+
             //PSP
             $api->group(['namespace' => 'Psp','prefix' => 'psp'],function($api){
                 $api->get('groups/all','PspGroup\PspGroupController@getAll');

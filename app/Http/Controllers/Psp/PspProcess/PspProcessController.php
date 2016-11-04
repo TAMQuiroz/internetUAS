@@ -83,7 +83,6 @@ class PspProcessController extends Controller
                 'courses' => $array,
                 'cycle' => $cycle_id
             ];
-
 	    	return view('psp.pspProcess.create',$data);
     	}
     	else{

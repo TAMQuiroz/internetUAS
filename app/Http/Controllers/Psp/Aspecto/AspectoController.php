@@ -1,9 +1,10 @@
 <?php
 
-namespace Intranet\Http\Controllers\Psp\Student;
+namespace Intranet\Http\Controllers\Psp\Aspecto;
 
 use Illuminate\Http\Request;
 use Intranet\Models\Student;
+use Intranet\Models\Aspect; /*ya existia en el uas */
 use Intranet\Models\User;
 use Intranet\Models\Supervisor;
 use Intranet\Models\PspDocument;
@@ -12,7 +13,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspStudent;
 use Auth;
 
-class StudentController extends Controller
+class AspectoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,6 +22,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+
         $supervisor = Supervisor::where('idUser',Auth::User()->IdUsuario)->first();
         $students = PspStudent::where('idsupervisor',$supervisor->id)->get();
 
@@ -49,6 +51,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+        //$nota = $request['nota'];  //con esto se obtiene lo que se selecciona con el combobox
     }
 
     /**
@@ -71,6 +74,13 @@ class StudentController extends Controller
     public function edit($id)
     {
         //
+
+        $aspectos = null;
+
+        $data = [
+            'aspectos'    =>  $aspectos,
+        ];
+        return view('psp.aspecto.edit', $data);
     }
 
     /**

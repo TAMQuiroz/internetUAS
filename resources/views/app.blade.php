@@ -320,14 +320,13 @@
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
+                        <li><a href="{{route('supervisor.index-participant')}}"> Añadir Supervisores/Profesores</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
                         @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
-                        <li><a href=""> Reuniones</a></li>
-                        <li><a href=""> Documentos</a></li>
                         <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                         <li><a href="{{route('studentScore.index')}}"> Notas Finales</a></li>
                         @endif

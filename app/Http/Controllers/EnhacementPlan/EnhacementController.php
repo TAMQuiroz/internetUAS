@@ -73,7 +73,19 @@ class EnhacementController extends BaseController {
     }
 
 
-    public function saveModalNew(Request $request) {
+    public function addCicleNew() {
+        $data['title'] = 'Nuevo Ciclo Académico';
+        return view('enhacementPlan.add-cicle',$data);
+    } 
+    
+    public function addCicleEdit($id) {
+
+        $data['improvementPlanId']=$id;
+        $data['title'] = 'Editar Ciclo Académico';
+        return view('enhacementPlan.add-cicle-edit',$data);
+    } 
+
+    public function saveCicleNew(Request $request) {
         try {
             $anio = $request['anio'];
             $numberC = $request['numberC'];
@@ -90,8 +102,9 @@ class EnhacementController extends BaseController {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('new.enhacementPlan')->with('success', 'El ciclo académico se ha registrado exitosamente');
-    }  
-    public function saveModalNewEdit(Request $request) {
+    } 
+    public function saveEditCicleNew(Request $request,$id) {
+
         try {
             $anio = $request['anio'];
             $numberC = $request['numberC'];
@@ -103,12 +116,37 @@ class EnhacementController extends BaseController {
                 'Numero' => $numero,
                 'Descripcion' => $descripcion
             ]);
-            
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
-        return redirect()->route('edit.enhacementPlan')->with('success', 'El ciclo académico se ha registrado exitosamente');
-    }      
+
+        $data['title'] = 'Editar Plan de Mejora';
+        try {
+            $data['actionplan'] = ActionPlan::where('IdPlanMejora', $id)->get();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
+            $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
+            $data['improvementPlan'] = ImprovementPlan::where('IdPlanMejora', $id)->first();
+            $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        return view('enhacementPlan.edit', $data);
+    }
+    public function backEdit($id) {
+        $data['title'] = 'Editar Plan de Mejora';
+        try {
+            $data['actionplan'] = ActionPlan::where('IdPlanMejora', $id)->get();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
+            $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
+            $data['improvementPlan'] = ImprovementPlan::where('IdPlanMejora', $id)->first();
+            $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        return view('enhacementPlan.edit', $data);
+    }   
 
     public function edit(Request $request) {
         $data['title'] = 'Editar Plan de Mejora';

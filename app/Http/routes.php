@@ -107,9 +107,12 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/getEnhacementPlan/{improvementPlanId}', ['uses' => 'EnhacementPlan\EnhacementController@getEnhacementPlan']);
         Route::get('/CiclesAndTeachers', ['uses' => 'EnhacementPlan\EnhacementController@CiclesAndTeachers']);
 
-        Route::post('/saveModal', ['as' => 'saveModalNew.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNew']);
-        Route::post('/saveModalEdit', ['as' => 'saveModalNewEdit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveModalNewEdit']);
-
+        Route::get('/addCicle', ['as' => 'add-cicle.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@addCicleNew']);
+        Route::get('/{id}/addCicle', ['as' => 'add-cicle-edit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@addCicleEdit']);
+        Route::post('/save-addCicle', ['as' => 'save-cicle.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveCicleNew']);
+        Route::post('/{id}/editCicle', ['as' => 'save-cicle-edit.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@saveEditCicleNew']);
+        Route::get('/{id}/edit', ['as' => 'edit-AddCicle.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@backEdit']);
+          
     });
 
     //DictatedCourses Plan Routes
@@ -329,6 +332,7 @@ Route::group(['middleware' => 'auth'], function(){
 
             Route::get('/importExport', 'Student\StudentController@importExport');
             Route::get('/downloadExcel/{type}', 'Student\StudentController@downloadExcel');
+            //Route::get('/download/{filename}', ['as' => 'getDownload.students' , 'uses' => 'Student\StudentController@getDownload']);
             Route::post('/importExcel', [ 'as' => 'upload.students', 'uses' => 'Student\StudentController@importExcel']);
             Route::get('/delete', 'Student\StudentController@delete');
         });
@@ -1193,8 +1197,82 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
             Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
             Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
-
-            
         });
     });
+
+    //Acreditacion - flujo coordinador:
+    Route::group(['prefix' => 'flujoCoordinador'], function() {
+        Route::get('/', ['as' => 'index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@index']);
+        Route::get('/{id}/objetivoEducacional', ['as' => 'objetivoEducacional_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_index']);
+        Route::get('/{id}/objetivoEducacional/create', ['as' => 'objetivoEducacional_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_create']);        
+        Route::post('/{id}/objetivoEducacional/store', ['as' => 'objetivoEducacional_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@objetivoEducacional_store']);
+        
+        Route::get('/{id}/studentResult', ['as' => 'studentResult_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@studentResult_index']);
+        Route::get('/{id}/studentResult/create', ['as' => 'studentResult_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@studentResult_create']);        
+        Route::post('/{id}/studentResult/store', ['as' => 'studentResult_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@studentResult_store']);
+
+        Route::get('/{id}/aspect', ['as' => 'aspect_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_index']);
+        Route::post('/{id}/aspect/create', ['as' => 'aspect_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_create']);
+        Route::post('/{id}/aspect/store', ['as' => 'aspect_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspect_store']);
+    
+        Route::get('/{id}/criterio', ['as' => 'criterio_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_index']);
+        Route::get('/{id}/criterio/create', ['as' => 'criterio_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_create']);        
+        Route::post('/{id}/criterio/store', ['as' => 'criterio_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@criterio_store']);
+
+        Route::get('/{id}/courses', ['as' => 'courses_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_index']);
+        Route::get('/{id}/courses/create', ['as' => 'courses_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_create']);
+        Route::post('/{id}/courses/store', ['as' => 'courses_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_store']);
+        Route::get('/{id}/courses/{idCourse}/edit', ['as' => 'courses_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_edit']);
+        Route::post('/{id}/courses/update', ['as' => 'courses_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_update']);
+
+
+        /* cursos en el ciclo */        
+        Route::get('/{id}/cursosCiclo', ['as' => 'cursosCiclo_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@cursosCiclo_index']);
+        // agregar cursos de la especialidad
+        Route::get('/{id}/cursosCiclo/edit', ['as' => 'cursosCiclo_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@cursosCiclo_edit']);
+        Route::post('/{id}/cursosCiclo/update', ['as' => 'cursosCiclo_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@cursosCiclo_update']);
+        // asignar horarios a los cursos 
+        Route::get('/{id}/horario/{idCourse}', ['as' => 'cursosCicloHorario_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@cursosCicloHorario_index']);
+        Route::get('/{id}/horario/{idCourse}/create', ['as' => 'cursosCicloHorario_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@cursosCicloHorario_create']);
+        Route::post('/{id}/horario/{idCourse}/store',['as'=>'cursosCicloHorario_store.flujoCoordinador','uses'=>'FlujoCoordinadorController@cursosCicloHorario_store']);
+        Route::get('/{id}/horario/{idCourse}/edit/{idTimetable}', ['as' => 'cursosCicloHorario_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@cursosCicloHorario_edit']);
+        Route::post('/{id}/horario/{idCourse}/update/{idTimetable}',['as'=>'cursosCicloHorario_update.flujoCoordinador','uses'=>'FlujoCoordinadorController@cursosCicloHorario_update']);
+        Route::get('/horario/{idCourse}/delete/{idTimetable}', ['as' => 'cursosCicloHorario_delete.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@cursosCicloHorario_delete']);
+
+
+        Route::get('/{id}/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
+
+        Route::get('/{id}/instrumento', ['as' => 'instrumento_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumento_index']);
+        Route::get('/{id}/instrumento/create', ['as' => 'instrumento_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumento_create']);        
+        Route::post('/{id}/instrumento/store', ['as' => 'instrumento_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumento_store']);
+        
+        Route::get('/{id}/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
+
+
+        Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
+        Route::get('/{id}/period/create', ['as' => 'period_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createPeriod']);
+        Route::get('/{id}/period/view', ['as' => 'period_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewPeriod']);
+        Route::post('/{id}/period/store', ['as' => 'period_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod']);
+        
+        Route::get('/{id}/academicCycle', ['as' => 'academicCycle_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initAcademicCycle']);
+        Route::get('/{id}/academicCycle/create', ['as' => 'academicCycle_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createAcademicCycle']);
+        Route::get('/{id}/academicCycle/view', ['as' => 'academicCycle_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewAcademicCycle']);
+        Route::post('/{id}/academicCycle/store', ['as' => 'academicCycle_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storeAcademicCycle']);
+    
+
+        Route::get('/{id}/profesor', ['as' => 'profesor_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@profesor_index']);
+        Route::get('/{id}/profesor/create', ['as' => 'profesor_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@profesor_create']);        
+        Route::post('/{id}/profesor/store', ['as' => 'profesor_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@profesor_store']);
+
+        //AJAX
+        Route::get('/aspectosDelResultado', ['as' => 'aspectosDelResultado.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@aspectosDelResultado']);
+        
+        Route::get('/{id}/end2', ['as' => 'end2.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end2']);
+        Route::get('/{id}/end3', ['as' => 'end3.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end3']);
+        Route::get('/{id}/end4', ['as' => 'end4.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end4']);
+
+
+    });
+
+
 });

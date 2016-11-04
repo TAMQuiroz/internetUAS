@@ -21,17 +21,14 @@
         <div class="form-group">
           <div class="col-md-12 col-sm-12"></div>
           <p>
-            Durante el transcurso de este flujo se le guiará por 3 funcionalidades importantes e impresindibles para la acreditacion de una especialidad. Las funcionalidades mencionadas son:
+            Durante el transcurso de este flujo se le guiará por 3 funcionalidades importantes e imprescindibles para la acreditación de una especialidad. Las funcionalidades mencionadas son:
           </p>
-          <p>- Creacion de la especialidad</p>
-          <p>- Creacion de profesor y asignación de coordinador</p>
-          <p>- Creacion de ciclos academicos</p>
+          <p>- Creación de la especialidad</p>
+          <p>- Creación de profesor y asignación de coordinador</p>
+          <p>- Creación de ciclos academicos</p>
 
-            <p>Una ves iniciado el flujo, este no podrá ser cancelado hasta concluirlo.</p>
-            
-            
+            <p>Una vez iniciado el flujo, este no podrá ser cancelado hasta concluirlo.</p>
 
-            
           </p>
         </div>
       </div>        

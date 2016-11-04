@@ -24,6 +24,11 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="idTimeTable" value="{{ $timeTable->IdHorario }}">
 						<br>
+						PSP
+						<input type="checkbox" class="flat" id="selectPsp" name="selectPsp">
+						<br>
+						<br>
+						<br>						
 						<button class="btn btn-primary">Cargar alumnos</button>
 
 					</form>
@@ -39,7 +44,7 @@
 		</div>
 	</div>
 </div>
-			<div class="row">
+<div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			@if ($studentsExist)
@@ -61,6 +66,17 @@
 		</div>
 	</div>
 </div>
+
+@if($filename)
+	<div class="row">
+		<a href="{{ route('getDownload.students', 'alumnosPorCrear.xls') }}" class="">
+		    <li style="margin-left:12px">
+		      <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+		      <span class="glyphicon-class">descargar</span>
+		    </li>
+		</a>
+	</div>
+@endif
 <script type="text/javascript">
 	//Code for showing error messages
 	@if( @Session::has('error') )

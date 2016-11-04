@@ -132,6 +132,17 @@ class MeetingController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            $meeting = meeting::find($id);
+            $meeting->lugar = $request['lugar'];
+            $meeting->observaciones = $request['observaciones'];
+            $meeting->retroalimentacion = $request['retroalimentacion'];
+            $meeting->save();
+
+            return redirect()->route('meeting.show',$id)->with('success','La reunion se ha actualizado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 
     /**

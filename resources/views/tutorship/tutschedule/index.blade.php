@@ -81,7 +81,7 @@
                     <div class="form-group">
                         {{Form::label('Horas semanales',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
-                            {{Form::text('horas','-',['class'=>'form-control', 'readonly'])}}
+                            {{Form::text('horas',$horas,['class'=>'form-control', 'readonly'])}}
                         </div>
                     </div>
 

@@ -46,9 +46,9 @@
                             <td hidden class="group-id">{{ $tutor->IdDocente }}</td>
 
                             @if ($tutor->rolTutoria == 1) 
-                            <td class=""><span class="label label-success"> Activo </span></td>
-                            @elseif ($tutor->rolTutoria == 0) 
-                            <td class=""><span class="label label-danger"> Inactivo </span></td>
+                                <td class=""><span class="label label-success"> Activo </span></td>
+                            @elseif ($tutor->rolTutoria == 3) 
+                                <td class=""><span class="label label-danger"> Inactivo </span></td>
                             @endif
 
                             <td class=" ">{{ $tutor->Codigo }}</td>

@@ -25,6 +25,11 @@ class DictatedCoursesService {
 		return $coursesxcicle;
 	}
 
+	public function getCoursesxCycleByCycle($idAcademicCycle) {
+		$coursesxcicle = DictatedCourses::where('IdCicloAcademico', $idAcademicCycle)->get();
+		return $coursesxcicle;
+	}
+
 	public function retrieveAllCourses(){
 		return Course::where('IdEspecialidad', Session::get('faculty-code'))->orderby('NivelAcademico','DESC')->get();
 	}
@@ -87,6 +92,7 @@ class DictatedCoursesService {
 		return $coursesxcicle;
 	}
 
+	
 	public function update($request) {
 
 		if(count($_REQUEST['check']) != 1){
@@ -278,5 +284,122 @@ class DictatedCoursesService {
         }
 
     }
+
+    /* Flujo coordinador*/
+
+    public function findNewCoursexCicle($idCourse, $idAcademicCycle) {
+		$coursesxcicle = DictatedCourses::where('IdCurso', $idCourse)
+										->where('IdCicloAcademico', $idAcademicCycle)->first();
+		return $coursesxcicle;
+	}
+
+	public function findTeachersByCourses($idCourse) {
+		$teachers = CoursexTeacher::where('IdCurso', $idCourse)->get();
+		return $teachers;
+	}
+
+	public function updateByNewCycle($request, $idAcademicCycle) {
+
+		if(count($_REQUEST['check']) != 1){
+
+			$cursos = DictatedCourses::where('IdCicloAcademico', $idAcademicCycle)->get();
+
+			for($j=0; $j<count($cursos); $j++){
+					$presente = false;
+					for($z=1; $z<count($_REQUEST['check']);$z++){
+						if($cursos[$j]->IdCurso == $_REQUEST['check'][$z]){
+							$presente = true;
+						}
+					}
+					if($presente == false){
+						$cdic = DictatedCourses::where('IdCurso', $cursos[$j]->IdCurso)
+											 ->where('IdCicloAcademico', $idAcademicCycle)
+											 ->first();
+        				$cdic->delete();
+					}
+					
+			}
+
+			for ($i=1; $i<count($_REQUEST['check']); $i++)
+			{	
+
+				$cursoCiclo = DictatedCourses::where('IdCurso',$_REQUEST['check'][$i])
+											 ->where('IdCicloAcademico', $idAcademicCycle)->first();
+				
+				if($cursoCiclo == null){
+
+					$DictatedCourses =  DictatedCourses::create([
+						'IdCurso' => $_REQUEST['check'][$i],
+						'IdCicloAcademico' => $idAcademicCycle
+					]);
+				}
+				
+			}
+			return 1;
+		}else{
+
+			$cdic = DictatedCourses::where('IdCicloAcademico', $idAcademicCycle)->get();
+			foreach ($cdic as $borrar) {
+				$borrar->delete();
+			}	
+        	return 0;
+		}
+		
+	}
+
+	public function findCourseById($idCourse) {
+		$course = Course::where('IdCurso', $idCourse)->first();
+		return $course;
+	}
+
+	public function retrieveTimeTablesByCourse($idCourse, $idAcademicCycle) {
+		$coursesxcicle = DictatedCourses::where('IdCurso', $idCourse)
+										->where('IdCicloAcademico', $idAcademicCycle)->first();
+
+		$timetable = TimeTable:: where('IdCursoxCiclo', $coursesxcicle->IdCursoxCiclo)->get();
+
+		return $timetable;
+	}
+
+	public function retrieveAllTeachersByCourse($idCourse, $idAcademicCycle) {
+		$coursesxcicle = DictatedCourses::where('IdCurso', $idCourse)
+										->where('IdCicloAcademico', $idAcademicCycle)->first();
+		$timetable = TimeTable:: where('IdCursoxCiclo', $coursesxcicle->IdCursoxCiclo)->get();
+		$horarioxProfe = array();
+		foreach ($timetable as $time) {
+			$timetablexteacher = TimeTablexTeacher:: where('IdHorario', $time->IdHorario)->get();
+			array_push($horarioxProfe, $timetablexteacher);
+		}
+
+		return $horarioxProfe;
+	}
+
+	public function findTimeTableById($idHorario) {
+		$timetable = TimeTable::where('Idhorario', $idHorario)->first();
+		return $timetable;
+	}
+
+	public function findTeachersxTimeTableByTimeTable($idHorario) {
+		$teacherxtimetable = TimeTablexTeacher::where('IdHorario', $idHorario)->get();
+		return $teacherxtimetable;
+	}
+
+	public function findCoursexCicleByCourse($idCourse, $idAcademicCycle) {
+		$coursesxcicle = DictatedCourses::where('IdCurso', $idCourse)
+										->where('IdCicloAcademico', $idAcademicCycle)->first();
+		return $coursesxcicle;
+	}
+
+	public function deleteById($idHorario) {
+		$timetablexteacher = TimeTablexTeacher::where('IdHorario', $idHorario)->get();
+
+		foreach($timetablexteacher as $txt){
+			$txt->delete();
+		}
+
+		$timetable = TimeTable::where('IdHorario', $idHorario)->first();
+		$timetable->delete();
+
+	}
 
 }

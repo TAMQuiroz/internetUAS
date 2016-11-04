@@ -141,21 +141,33 @@ class PspGroupController extends Controller
     {        
         try {            
             $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();            
+            $pspGroup = PspGroup::find($request['id']);
             $pspStudent = PspStudent::where('idalumno',$student->IdAlumno)->get()->first();            
             $pspStudent->idPspGroup = $request['id'];            
             $pspStudent->save();
-            return redirect()->route('index.subindex')->with('success','Elegiste tu grupo satisfactoriamente');
+            return redirect()->route('index.ourFaculty',$pspStudent->idespecialidad)->with('success','Elegiste el grupo: '.$pspGroup->numero.' '.$pspGroup->descripcion);
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }
     }
 
     public function selectGroupCreate(){
-        $pspGroups = PspGroup::get();
 
-        $data = [
-            'pspGroups' => $pspGroups,
-        ];
-        return view('psp.pspGroup.selectGroup',$data);
+        $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();
+        $pspStudent = PspStudent::where('idalumno',$student->IdAlumno)->get()->first();
+        
+
+        if($pspStudent->idpspgroup==NULL){
+            $pspGroups = PspGroup::get();
+            $data = [
+                'pspGroups' => $pspGroups,
+                'idFaculty' => $pspStudent->idespecialidad,
+            ];            
+            return view('psp.pspGroup.selectGroup',$data);
+        }else{
+            $pspgroup = PspGroup::find($pspStudent->idpspgroup);
+            return redirect()->back()->with('warning','Ya selecciono el grupo: '.$pspgroup->numero.' '.$pspgroup->descripcion);
+        }
+        
     }
 }

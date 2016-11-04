@@ -18,7 +18,7 @@ class CreateEvquestionxstudentxdocentesTable extends Migration
             $table->integer('id_evquestion')->unsigned();
             $table->integer('id_evaluation')->unsigned();
             $table->integer('id_docente')->nullable();
-            $table->float('puntaje',8,2)->unsigned();
+            $table->float('puntaje',8,2)->unsigned()->nullable();
             $table->string('respuesta',5000)->nullable();
             $table->string('comentario',1000)->nullable();
             $table->string('clave_elegida',1)->nullable();

@@ -102,10 +102,10 @@ class FlujoAdministradorTest extends TestCase
             ->select('Diseño','name')
             ->select('holi','description')
             ->press('Siguiente')
-            ->seePageIs('/flujoAdministrador/facultad/1/profesor');
+            ->seePageIs('/flujoAdministrador/facultad/5/profesor');
     }
 
-    public function test_uas_crear_profesor_02(){
+    public function test_uas_crear_profesor2_01(){
 
         $user = factory(Intranet\Models\User::class)->make();
         //$facultad = factory(Intranet\Models\Faculty::class)->make();
@@ -130,7 +130,6 @@ class FlujoAdministradorTest extends TestCase
     public function test_uas_crear_objetivo_01(){
 
         $user = factory(Intranet\Models\User::class)->make();
-        //$facultad = factory(Intranet\Models\Faculty::class)->make();
 
         $this->actingAs($user)
             ->withSession([
@@ -139,8 +138,29 @@ class FlujoAdministradorTest extends TestCase
             ])->visit('/flujoCoordinador/1/objetivoEducacional/create')
             ->select('ObjetivoCreado','descripcion')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/facultad/2/objetivoEducacional')
+            ->seePageIs('/flujoCoordinador/1/objetivoEducacional')
             ->see('El objetivo educacional se ha registrado exitosamente');
+    }
+
+
+    ////de melgar01 flujo Coordinador
+
+    
+
+    //////hasta aca es de melgar01
+
+
+    public function test_uas_crear_objetivo_02(){
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/1/objetivoEducacional/create')
+            ->select('','descripcion')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/1/objetivoEducacional/create');
     }
 
 }

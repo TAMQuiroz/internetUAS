@@ -54,6 +54,12 @@ class TutMeetingController extends Controller
      * Este create es cuando el alumno pide una cita a su tutor
      *     
      */
+
+    public function indexMyDates()
+    {
+        return view('tutorship.tutormydates.index');
+    }
+
     public function createDate($id)
     {
         return view('tutorship.tutormydates.create');

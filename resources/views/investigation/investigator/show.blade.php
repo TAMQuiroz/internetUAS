@@ -1,4 +1,5 @@
-@extends('app')
+@extends(Auth::user() ? 'app' : 'appPublic')
+
 @section('content')
 
 <div class="row">
@@ -67,10 +68,11 @@
 		    				{{Form::text('area', $investigador->area->nombre, ['class' => 'form-control', 'readonly'])}}
 		    			</div>
 		    		</div>
-
 		    		<div class="row">
 						<div class="col-md-8 col-sm-12 col-xs-12">
+							@if(Auth::user() && (Auth::user()->IdUsuario == $investigador->id_usuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
 							<a class="btn btn-success pull-right" href="{{ route('investigador.edit',$investigador->id) }}">Editar</a>
+							@endif
 							<a class="btn btn-default pull-right" href="{{ route('investigador.index') }}">Regresar</a>
 						</div>
 					</div>

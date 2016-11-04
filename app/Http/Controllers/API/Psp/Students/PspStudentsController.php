@@ -14,7 +14,8 @@ class PspStudentsController extends BaseController
     
     public function getAll()
     {
-       $students = Student::get();
+
+       $students = PspStudent::get();
         return $this->response->array($students->toArray());
     }
     
@@ -37,5 +38,3 @@ class PspStudentsController extends BaseController
         $documentsById = PspDocument::where('idStudent',$id)->get();
         return $this->response->array($documentsById->toArray());
     }
-
-}  

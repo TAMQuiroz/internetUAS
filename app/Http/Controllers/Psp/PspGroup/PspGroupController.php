@@ -6,6 +6,7 @@ use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspGroup;
 use Intranet\Models\Student;
+use Intranet\Models\PspStudent;
 use Intranet\Http\Requests\PspGroupRequest;
 
 class PspGroupController extends Controller
@@ -137,14 +138,13 @@ class PspGroupController extends Controller
     }
 
     public function selectGroupStore(Request $request)
-    {
-        //Pendiente de modificar!!
-        try {
-            //idPerfil Alum 7
-            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();
-            $student->idPspGroup = $request['id'];            
-            $student->save();
-            return redirect()->back()->with('success','Elegiste el grupo');
+    {        
+        try {            
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();            
+            $pspStudent = PspStudent::where('idalumno',$student->IdAlumno)->get()->first();            
+            $pspStudent->idPspGroup = $request['id'];            
+            $pspStudent->save();
+            return redirect()->route('index.subindex')->with('success','Elegiste tu grupo satisfactoriamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }

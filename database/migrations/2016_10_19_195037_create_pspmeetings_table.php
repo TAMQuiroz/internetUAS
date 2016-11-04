@@ -14,18 +14,18 @@ class CreatePspmeetingsTable extends Migration
     {
         Schema::create('pspmeetings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idTipoEstado')->unsigned();
+            $table->integer('idtipoestado')->unsigned();
             $table->time('hora_inicio');
             $table->time('hora_fin');
             $table->date('fecha');
-            $table->integer('idStudent');
-            $table->integer('idSupervisor')->unsigned();
+            $table->integer('idstudent');
+            $table->integer('idsupervisor')->unsigned();
             $table->char('asistencia');
             $table->string('lugar');
             $table->string('observaciones');
-            $table->string('retroalimentacion');    
-            $table->integer('tipoReunion');
-            $table->integer('idFreeHour')->unsigned()->nullable();         /* para reservar cita(lesly)*/            
+            $table->string('retroalimentacion');   
+            $table->integer('tiporeunion');
+            $table->integer('idfreehour')->unsigned()->nullable();         /* para reservar cita(lesly)*/      
             $table->timestamps();
             $table->softDeletes();
         });

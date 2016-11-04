@@ -20,7 +20,6 @@ class PspGroupController extends BaseController
         return $this->response->array($pspGroups->toArray());
     }
 
-    
     public function getById($id)
     {
         $pspGroup = PspGroup::where('id',$id)->get();

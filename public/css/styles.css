@@ -202,3 +202,11 @@ textarea {
 .nav-wrapper .logout i, .nav-wrapper .logout span {
   line-height: 25px !important;
 }
+
+/*Necesario para todos los radio buttons*/
+input[type="radio"] {
+  position: relative !important;
+  left: 0px !important;
+  opacity: 1 !important;
+}
+

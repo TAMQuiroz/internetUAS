@@ -114,6 +114,13 @@ class Teacher extends Model {
         return $query->paginate(10);
 
     }
+
+    public function evaluaciones(){
+        return $this->belongsToMany('Intranet\Models\Tutstudentxevaluation','teacherxtutstudentxevaluations','id_tutstudentxevaluation','id_docente');
+    }
     
+    public function pspProcesses(){
+        return $this->hasMany('Intranet\Models\PspProcessxTeacher', 'IdDocente');
+    }
 
 }

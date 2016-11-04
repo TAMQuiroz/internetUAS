@@ -53,6 +53,9 @@ class TutStudentController extends BaseController
            else if  (2 == $appointInfo['estado']){
                 $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
            }
+           else if  (3 == $appointInfo['estado']){
+                $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+           }
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());

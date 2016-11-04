@@ -18,6 +18,8 @@ use Intranet\Http\Services\Investigation\Group\GroupService;
 
 use Intranet\Http\Requests\ProjectRequest;
 
+use Auth;
+
 class ProjectController extends Controller
 {
 
@@ -37,10 +39,18 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $proyectos = Project::get();
-
+        $proyectos  = Project::get();
+        $usuario    = Auth::user();
+        $profesor   = $usuario->professor;
+        $esLider    = false;
+        if($profesor && count($profesor->groups)!=0){
+            $esLider = true;
+        }else{
+            $esLider = false;
+        }
         $data = [
             'proyectos'    =>  $proyectos,
+            'esLider'      =>  $esLider,
         ];
 
         return view('investigation.project.index', $data);
@@ -53,7 +63,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $grupos     = Group::lists('nombre', 'id');
+        $grupos     = Group::where('id_lider',Auth::user()->professor->IdDocente)->lists('nombre', 'id');
         $areas     = Area::lists('nombre', 'id');
         if($grupos->isEmpty() || $areas->isEmpty()){
             return redirect()->back()->with('warning','Primero debe crear areas o grupos');

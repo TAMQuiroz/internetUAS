@@ -148,7 +148,7 @@
             </div>
 
             <div class="panel-heading">
-                <h3 class="panel-title">Investigadores</h3>
+                <h3 class="panel-title">Integrantes</h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">

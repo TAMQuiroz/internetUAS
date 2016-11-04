@@ -32,7 +32,7 @@
 		                        <th>Ciclo Académico</th>
 		                    </tr>
 	                    </thead>
-	                    <tbody>
+	                    <tbody id="cicloacademico-fc-table">
 	                         @foreach($academicCycle as $ac)
 	                    	<tr>
 	                          	<td class="cycleId" hidden="true">{{$ac->IdCicloAcademico}}</td>
@@ -50,13 +50,20 @@
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                         <a  href="{{ route('end.flujoAdministrador') }}" class="btn btn-success pull-right">Siguiente ></button>
+                         <a id="cicloacademico-siguiente-btn" href="{{ route('end.flujoAdministrador') }}" class="btn btn-success pull-right">Siguiente ></a>
                          <a href="{{ route('profesor_index.flujoAdministrador', $id) }}" class="btn btn-default">< Atras</a>
                     </div>
                 </div>
 			</div>
 		</div>
 	</div>
+	<script>
+	var fila = $("#cicloacademico-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#cicloacademico-siguiente-btn').attr("disabled","disabled");
+                $('#cicloacademico-siguiente-btn').click(function(){return false;});
+            }
+	</script>
 	<script src="{{ URL::asset('js/myvalidations/academicCycle.js')}}"></script>
 
 @endsection

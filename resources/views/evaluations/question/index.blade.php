@@ -50,22 +50,22 @@
                             }}</td>
                             <td class=" ">{{ $question->descripcion }}</td>                            
                             @if($question->tipo == 1)
-                            <td class="">Cerrada</td> 
+                            <td class=""><i class="fa fa-list-ul fa-2x" title="Cerrada" aria-hidden="true"></i></td> 
                             @elseif ($question->tipo == 2)
-                            <td class="">Abierta</td> 
+                            <td class=""><i class="fa fa-pencil-square-o fa-2x" title="Abierta" aria-hidden="true"></i></td> 
                             @else
-                            <td class="">Archivo</td> 
+                            <td class=""><i class="fa fa-file fa-2x" title="Archivo" aria-hidden="true"></i></td> 
                             @endif    
                             <td class=" ">{{ $question->competencia->nombre }}</td>                         
                             <td class="">
-                                <a href="{{route('pregunta.show',$question->id)}}" class="btn btn-primary btn-xs view-group" title="Ver">
-                                <i class="fa fa-search"></i>
+                                <a href="{{route('pregunta.show',$question->id)}}" class="btn btn-primary btn-xs view-group" title="Visualizar">
+                                <i class="fa fa-eye"></i>
                                 </a>
                                 @if(in_array($question->competencia->id, $arrcompetences))
                                 <a href="{{route('pregunta.edit',$question->id)}}" class="btn btn-primary btn-xs view-group" title="Editar">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$question->id}}" title="Elimiar">
+                                <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$question->id}}" title="Eliminar">
                                     <i class="fa fa-remove"></i>
                                 </a>
                                 @endif                                

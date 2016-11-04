@@ -70,7 +70,9 @@
                             <td>{{$pspdocument->fecha_limite}}</td> 
                             <td>
                                 <a href="{{route('pspDocument.check',$pspdocument->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
+                                @if($pspdocument->idtipoestado==3 && ($pspdocument->fecha_limite>\Carbon\Carbon::now()) && $pspdocument->es_fisico==0)
                                 <a href="{{route('pspDocument.mail',$pspdocument->id)}}" class="btn btn-primary btn-xs" title="notificar"><i class="fa fa-envelope"></i></a>
+                                @endif
                                 @if($pspdocument->idtipoestado==5)
                                 <a class="btn btn-primary btn-xs" href="" title="observaciones" data-toggle="modal" data-target="#obsModal{{$pspdocument->id}}"><i class="fa fa-info"></i></a>
                                 @endif

@@ -45,10 +45,14 @@ class SubindexController extends BaseController {
                     }
                     $data['faculties'] = $teachersFaculties;
                     if(empty($teachersFaculties)){
-                        $data['isEmpty'] = true;
+                        $fac = $this->facultyService->find($user->IdEspecialidad);
+                        array_push($teachersFaculties, $fac);
+                        $data['faculties'] = $teachersFaculties;
+                        $data['isEmpty'] = false;
                     }else{
                         $data['isEmpty'] = false;
                     }
+
                 }
             } else if ($user->user->IdPerfil == 5){ //Investigadores
                 array_push($data['faculties'], $this->facultyService->find($user->id_especialidad));
@@ -71,9 +75,9 @@ class SubindexController extends BaseController {
             Session::forget("numFaculties");
             Session::put("numFaculties",count($data['faculties']));
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
-        //dd($data);
+        
         return view('subindex.index',$data);
     }
 }

@@ -35,7 +35,7 @@
                             <td>{{$student->telefono}}</td> 
                             <td>{{$student->correo}}</td> 
                             <td>
-                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>
+                                <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Documentos"><i class="fa fa-files-o"></i></a>
                                 <a href= "{{route('aspecto.edit', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Ver aspectos del alumno"><i class="fa fa-list-ol"></i></a>
                                 <a href= "{{route('meeting.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Reuniones"><i class="fa fa-clock-o"></i></a>
                             </td>               

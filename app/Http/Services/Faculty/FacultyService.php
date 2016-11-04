@@ -114,6 +114,12 @@ class FacultyService {
 		return $faculty;
 	}
 
+	public function getFacultyxDocente() {
+		$teacher = Teacher::where('IdUsuario', Session::get('user')->IdUsuario)->first();
+		$faculty = Faculty::where('IdDocente', $teacher->IdDocente)->first();
+		return $faculty;
+	}
+
 	public function getName($nombre) {
 		$faculty = Faculty::where('Nombre', $nombre)->first();
 		$retVal = (is_null($faculty)) ? True : False ;
@@ -350,7 +356,9 @@ class FacultyService {
 				->update(array(
 					'Vigente' =>'0'
 				));
+				Session::forget('period-code');
 			}
+			
 		}
 	}
 
@@ -369,7 +377,7 @@ class FacultyService {
 						'Vigente' =>'2'
 			));
 		}
-
+		Session::forget('period-code');
 
 	}
 
@@ -489,8 +497,8 @@ class FacultyService {
 		return $cycle;
 	}
 
-	public function findAcademicCycle($idFacultyAcademicCycle) {
-		$facultyAcademicCycle = ConfFaculty::where('IdConfEspecialidad', $idFacultyAcademicCycle)->first();
+	public function findAcademicCycle($IdEspecialidad) {
+		$facultyAcademicCycle = ConfFaculty::where('IdEspecialidad', $IdEspecialidad)->first();
 		return $facultyAcademicCycle;
 	}
 

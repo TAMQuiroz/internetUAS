@@ -41,11 +41,15 @@
                                     </tr> 
                                 </thead> 
                                 <tbody> 
-                                    
+                                    @foreach($supActivos as $sup) 
                                     <tr> 
-                                        
+                                        <td >{{$sup->codigo_trabajador}}</td>
+                                        <td >{{$sup->nombres}}</td>
+                                        <td >{{$sup->apellido_paterno}}</td>
+                                        <td ><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#af{{$sup->id}}" title="Quitar"><i class="fa fa-remove"></i></a></td>
                                     </tr> 
-                                    
+                                    @include('modals.delete', ['id'=> 'af'.$sup->id, 'message' => '¿Esta seguro que desea quitar este supervisor del proceso?', 'route' => route('supervisor.participant.delete.supervisor', $sup->id)])
+                                    @endforeach
                                     
                                 </tbody> 
                             </table>

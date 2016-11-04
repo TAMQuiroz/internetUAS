@@ -20,4 +20,8 @@ class Evquestion extends Model
     public function competencia(){
   	  return $this->belongsTo('Intranet\Models\Competence','id_competence');
     }
+
+    public function evaluacion(){
+      return $this->belongsTo('Intranet\Models\Evaluation', 'id_evaluation');
+    }
 }

@@ -203,7 +203,8 @@ textarea {
   line-height: 25px !important;
 }
 
-td input[type="radio"] {
+/*Necesario para todos los radio buttons*/
+input[type="radio"] {
   position: relative !important;
   left: 0px !important;
   opacity: 1 !important;

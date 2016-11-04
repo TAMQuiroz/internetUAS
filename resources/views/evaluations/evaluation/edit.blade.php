@@ -30,12 +30,18 @@
 				<div class="form-group">
 					{{Form::label('Fecha inicio: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_inicio',$evaluation->fecha_inicio,['class'=>'form-control', 'id'=>'fecha_inicio' ,'required'])}}
+						<div class="input-group date">
+							<input type="text" value="{{ $evaluation->fecha_inicio }}" class="form-control input-date" name="fecha_inicio" id="fecha_inicio" placeholder="dd/mm/aaaa" required/>
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						</div>						
 					</div>
 
 					{{Form::label('Fecha fin: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">
-						{{Form::date('fecha_fin',$evaluation->fecha_fin,['class'=>'form-control','id'=>'fecha_fin' ,'required'])}}
+						<div class="input-group date">
+						<input type="text" value="{{ $evaluation->fecha_fin }}" class="form-control input-date" name="fecha_fin" id="fecha_fin" placeholder="dd/mm/aaaa" required/>
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						</div>						
 					</div>
 				</div>
 
@@ -95,8 +101,8 @@
 									@foreach($questions as $key=>$question)
 									<tr id="question_{{$question->id}}">
 										<td class="order">{{$key+1}}</td>
-										<td hidden><input type="number" value="{{$question->id}}" name="arrIds[{{$question->id}}]"></td>
-										<td class="id">{{ $question->id }}</td>
+										<td hidden><input type="number" value="{{$question->id}}" name="arrEvIds[{{$question->id}}]"></td>
+										<td class="id">{{ '#'.$question->id }}</td>
 
 										@if($question->tipo == 1)
 										<td>Cerrada</td>
@@ -121,10 +127,10 @@
 										<td>Alta</td>
 										@endif
 
-										<td hidden><input class="row_puntaje" type="number" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
+										<td hidden><input class="row_puntaje" type="text" value="{{$question->puntaje}}" name="arrEvPuntajes[{{$question->id}}]"></td>
 										<td class="oculto puntaje" >{{ $question->puntaje }}</td>
 
-										<td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
+										<td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvEvaluadores[{{$question->id}}]"></td>
 										<td class="oculto responsable" >{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
 
 										<td><a class="editbtn btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></a></td>                    

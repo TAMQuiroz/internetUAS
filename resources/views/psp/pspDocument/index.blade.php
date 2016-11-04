@@ -29,6 +29,7 @@
                         <th class="column-title">Titulo</th>
                         <th class="column-title">Plantilla</th>
                         <th class="column-title">Documento</th>
+                        <th class="column-title">Tipo</th>
                         <th class="column-title">Obligatorio</th>
                         <th class="column-title">Estado</th> 
                         <th class="column-title">Fecha Limite</th>   
@@ -41,6 +42,11 @@
                             <td>{{$pspdocument->titulo_plantilla}}</td> 
                             <td>{{$pspdocument->ruta_plantilla}}</td>  
                             <td>{{$pspdocument->ruta}}</td> 
+                            @if($pspdocument->es_fisico==0)
+                            <td>digital</td> 
+                            @else
+                            <td>fisico</td> 
+                            @endif
                             @if($pspdocument->es_obligatorio=='s')
                             <td>obligatorio</td> 
                             @else

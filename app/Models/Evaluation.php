@@ -18,4 +18,20 @@ class Evaluation extends Model
   	  return $this->hasMany('Intranet\Models\Evquestion','id_evaluation');
     }
 
+    static public function getEvaluationsFiltered($filters, $specialty) {  
+
+    	$query = Evaluation::where('id_especialidad',$specialty)->orderBy('updated_at', 'desc');        
+        
+        if (array_key_exists("nombre", $filters) && $filters["nombre"] != "") {
+            $query = $query->where("nombre", "like", "%" . $filters["nombre"] . "%");
+        }        
+
+        if (array_key_exists("estado", $filters) && $filters["estado"] != "") {
+            $query = $query->where("estado",$filters["estado"]);
+        }
+
+        return $query->paginate(10);
+
+    }
+
 }

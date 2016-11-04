@@ -48,10 +48,17 @@
 								<td>{{$entregable->nombre}}</td> 
 								<td>
 									<ul>
-										@if(count($entregable->investigators))
-											@foreach($entregable->investigators as $investigator)
-												<li> {{$investigator->nombre}} {{$investigator->ape_paterno}} </li>
-											@endforeach
+										@if(count($entregable->investigators) && count($entregable->teachers))
+											@if(count($entregable->investigators))
+												@foreach($entregable->investigators as $investigator)
+													<li> {{$investigator->nombre}} {{$investigator->ape_paterno}} </li>
+												@endforeach
+											@endif
+											@if(count($entregable->teachers))
+												@foreach($entregable->teachers as $teacher)
+													<li> {{$teacher->Nombre}} {{$teacher->ApePaterno}} </li>
+												@endforeach
+											@endif
 										@else
 											<li> No hay asignados </li>
 										@endif
@@ -80,6 +87,11 @@
 		  	</div>
 		</div>
     </div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<a class="btn btn-default pull-right" href="{{ route('proyecto.show',$proyecto->id) }}">Regresar</a>
+	</div>
 </div>
 
 @endsection

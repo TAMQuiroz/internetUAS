@@ -13,7 +13,10 @@
 
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="panel panel-default">			
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Información</h3>
+			</div>		
 			<div class="panel-body">
 				{{Form::open(['route' => ['pregunta.update',$question->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 				<div class="form-group">
@@ -53,7 +56,7 @@
 					{{Form::label('Puntaje: *',null,['class'=>'control-label col-md-2 col-sm-1 col-xs-6'])}}
 					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
-							<input name="puntaje" required="required" type="text" min="1" max="200" class="form-control" aria-describedby="basic-addon1" onkeypress="return validateFloatKeyPress(this,event);" value="{{$question->puntaje}}">
+							<input name="puntaje" required="required" type="text" maxlength="5" class="form-control" aria-describedby="basic-addon1" onkeypress="return validateFloatKeyPress(this,event);" value="{{$question->puntaje}}">
 							<span class="input-group-addon" id="basic-addon1">puntos</span>
 						</div>						
 					</div>
@@ -83,12 +86,15 @@
 							<div class="col-md-6 col-sm-6 col-xs-6">						
 								<div class="radio">
 									<label><input type="radio" value="2" name="tipo" @if($question->tipo==2) checked @endif >Abierta</label>
+									<i class="fa fa-pencil-square-o fa-2x" title="Abierta" aria-hidden="true"></i>
 								</div>
 								<div class="radio">
 									<label><input type="radio" value="3" name="tipo" @if($question->tipo==3) checked @endif>Archivo</label>
+									<i class="fa fa-file fa-2x" title="Archivo" aria-hidden="true"></i>
 								</div>
 								<div class="radio">
 									<label><input type="radio" value="1" name="tipo" @if($question->tipo==1) checked @endif>Cerrada</label>
+									<i class="fa fa-list-ul fa-2x" title="Cerrada" aria-hidden="true"></i>
 								</div>						
 							</div>
 						</div>
@@ -97,14 +103,14 @@
 						<div class="form-group">							
 							{{Form::label('Extensión: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
 							<div class="col-md-4 col-sm-4 col-xs-6">
-								{{Form::text('extension',$question->extension_arch,['class'=>'form-control tArch','placeholder'=>'p.e. doc/ppt/xlxs/zip/mp4', 'maxlength' => 1000])}}
+								{{Form::text('extension',$question->extension_arch,['class'=>'form-control tArch','placeholder'=>'p.e. doc/ppt/xlxs/zip/mp4', 'maxlength' => 10])}}
 							</div>						
 						</div>
 						<div class="form-group">
 							{{Form::label('Tamaño máximo: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
 							<div class="col-md-4 col-sm-4 col-xs-6">
 								<div class="input-group ">							
-									<input name="tamanomax" type="number" min="1" class="form-control tArch" aria-describedby="basic-addon1" value="{{$question->tamano_arch}}">
+									<input name="tamanomax" type="number" min="1" max="10000" class="form-control tArch" aria-describedby="basic-addon1" value="{{$question->tamano_arch}}">
 									<span class="input-group-addon" id="basic-addon1">MB</span>
 								</div>	
 							</div>							

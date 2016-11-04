@@ -79,13 +79,13 @@
                                 </a>
                                 @endif
                                 @if($evaluation->estado == 3)
-                                <a href="{{route('evaluacion.show',$evaluation->id)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
-                                    <i class="fa fa-search"></i>
+                                <a href="{{route('evaluacion.show',$evaluation->id)}}" title="Visualizar" class="btn btn-primary btn-xs view-group"">
+                                    <i class="fa fa-eye"></i>
                                 </a>                                
                                 @endif
                             </td>
                         </tr>
-                        @include('modals.delete', ['id'=> $evaluation->id, 'message' => '¿Está seguro que desea cancelar esta evaluación?', 'route' => route('evaluacion.cancel', $evaluation->id)])
+                        @include('evaluations.modals.delete', ['id'=> $evaluation->id, 'message' => 'Está a punto de cancelar esta evaluación. Si continúa, ningún alumno tendrá acceso a rendirla. ¿Desea continuar?', 'route' => route('evaluacion.cancel', $evaluation->id)])
                         @include('modals.delete', ['id'=> 'eliminar'.$evaluation->id, 'message' => '¿Está seguro que desea eliminar esta evaluación?', 'route' => route('evaluacion.delete', $evaluation->id)])
                         @endforeach
                     </tbody>

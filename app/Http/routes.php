@@ -823,6 +823,8 @@ $api->version('v1', function ($api) {
 
 //Rutas publicas de investigacion
 Route::group(['prefix' => 'investigacion'], function(){
+    Route::get('/', ['as' => 'investigacion.index', 'uses' => 'Investigation\InvestigationController@index']);
+
     Route::group(['prefix' => 'investigador'], function(){
         Route::get('/', ['as' => 'investigador.index', 'uses' => 'Investigation\Investigator\InvestigatorController@index']);
         Route::get('show/{id}', ['as' => 'investigador.show', 'uses' => 'Investigation\Investigator\InvestigatorController@show']);
@@ -846,6 +848,18 @@ Route::group(['prefix' => 'investigacion'], function(){
     Route::group(['prefix' => 'entregable'], function(){
         Route::get('download/{id}', ['as' => 'entregable.download', 'uses' => 'Investigation\Deliverable\DeliverableController@download']);
     });
+
+    //Reportes de Investigación
+    Route::group(['prefix' => 'reporteISA'], function(){
+        Route::get('/', ['as' => 'reporteISA.index', 'uses' => 'Report\ReportController@indexISA']);
+        Route::post('/generateISA', ['as' => 'reporteISA.generateISA', 'uses' => 'Report\ReportController@generateISA']);
+        Route::get('show/{id}', ['as' => 'reporteISA.show', 'uses' => 'Report\ReportController@show']);
+    });
+
+    Route::group(['prefix' => 'reporteISP'], function(){
+        Route::get('/', ['as' => 'reporteISP.index', 'uses' => 'Report\ReportController@indexISP']);
+        Route::post('/generateISP', ['as' => 'reporteISP.generateISP', 'uses' => 'Report\ReportController@generateISP']);
+    });
 });
 
 //Rutas privadas
@@ -866,7 +880,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::group(['prefix' => 'investigacion'], function(){
 
             //Home de investigacion
-            Route::get('/', ['as' => 'investigation.index', 'uses' => 'Investigation\InvestigationController@index']);
+            //Route::get('/', ['as' => 'investigation.index', 'uses' => 'Investigation\InvestigationController@index']);
 
             //Administrar Investigador
             Route::group(['prefix' => 'investigador'], function(){
@@ -974,20 +988,9 @@ Route::group(['middleware' => 'auth'], function(){
                 });
                 
             });
-
-            //Reportes de Investigación
-            Route::group(['prefix' => 'reporteISA'], function(){
-                Route::get('/', ['as' => 'reporteISA.index', 'uses' => 'Report\ReportController@indexISA']);
-                Route::post('/generateISA', ['as' => 'reporteISA.generateISA', 'uses' => 'Report\ReportController@generateISA']);
-                Route::get('show/{id}', ['as' => 'reporteISA.show', 'uses' => 'Report\ReportController@show']);
-            });
-
-            Route::group(['prefix' => 'reporteISP'], function(){
-                Route::get('/', ['as' => 'reporteISP.index', 'uses' => 'Report\ReportController@indexISP']);
-                Route::post('/generateISP', ['as' => 'reporteISP.generateISP', 'uses' => 'Report\ReportController@generateISP']);
-            });
             
-        });      
+        });
+
 
 });  
 

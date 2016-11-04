@@ -143,9 +143,24 @@ class FlujoAdministradorTest extends TestCase
     }
 
 
-    ////de melgar01 flujo Coordinador
+    ////de melgar01 flujo Coordinador ---no funciona todavia
 
-    
+    public function test_uas_crear_aspecto_01(){
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/1/aspect/create')
+            ->select("J - Conocer temas de actualidad",'aspect_id')
+            ->select('Super aspecto','aspect_new_name')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/1/aspect')
+            ->see('El aspecto se ha registrado exitosamente');
+    }
 
     //////hasta aca es de melgar01
 

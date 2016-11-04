@@ -107,6 +107,8 @@
                         <li><a href="{{route('grupo.index')}}">Ver Grupos de Investigación</a></li>
                         <li><a href="{{route('evento.index')}}">Ver Eventos</a></li>
                         <li><a href="{{route('proyecto.index')}}">Ver Proyectos</a></li>
+                        <li><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
+                        <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>  
                     </ul>
                 </div>
               </li> 

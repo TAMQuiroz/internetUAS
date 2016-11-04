@@ -140,12 +140,11 @@ class PspGroupController extends Controller
     public function selectGroupStore(Request $request)
     {        
         try {            
-            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();
-            $pspStudent = PspStudent::where('idalumno',$student->id)->get()->first();
-            $pspStudent->idPspGroup = $request['id'];
-            dd($pspStudent);            
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();            
+            $pspStudent = PspStudent::where('idalumno',$student->IdAlumno)->get()->first();            
+            $pspStudent->idPspGroup = $request['id'];            
             $pspStudent->save();
-            return redirect()->route('index')->with('success','Elegiste tu grupo satisfactoriamente');
+            return redirect()->route('index.subindex')->with('success','Elegiste tu grupo satisfactoriamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }

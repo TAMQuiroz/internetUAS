@@ -410,7 +410,7 @@
                       <!-- tutor-->
                       @if(Auth::user()->professor->rolTutoria == 1)
                       <li><a href="{{route('miperfil.index')}}"> Mi perfil</a></li>
-                      <li><a href="{{route('cita_alumno.index')}}"> Mis alumnos</a></li>                  
+                      <li><a href="{{route('mis_alumnos.index')}}"> Mis alumnos</a></li>                  
                       <li><a href="{{route('cita_alumno.index')}}"> Citas</a></li>
                       @endif   
                     

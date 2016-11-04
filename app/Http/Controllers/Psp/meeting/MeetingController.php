@@ -116,6 +116,10 @@ class MeetingController extends Controller
     public function edit($id)
     {
         //
+        $meeting = meeting::with('supervisor','student')->find($id)->get()->first();
+        $data['meeting'] = $meeting;
+        //dd($meeting);
+        return view('psp.meeting.edit',$data);
     }
 
     /**
@@ -139,5 +143,21 @@ class MeetingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search($id)
+    {
+        
+        $student = Student::find($id);
+        
+        $meetings = meeting::where('idstudent',$id)->get();
+
+        $data = [
+            'meetings'    =>  $meetings,
+        ];
+        $data['student'] = $student;
+
+        return view('psp.meeting.search', $data);       
+
     }
 }

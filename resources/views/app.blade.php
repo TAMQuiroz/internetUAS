@@ -114,6 +114,8 @@
                 <span class="white-text email">
                 @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
                     {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+                @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
+                    {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
                 @else
                     {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
                 @endif
@@ -308,27 +310,28 @@
 
               <!-- nueva barra PSP -->
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil == 0 || Auth::user()->IdPerfil == 3)) <!--ahorita solo deja entrar a perfil Profesor, falta supervisor y alumno-->
+
+              @if(Auth::user() && (Auth::user()->professor || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil==0)) 
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
                     <ul>
-                        @if(Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 1) <!--si es profesor o coordinador-->
+                        @if(Auth::user()->professor) <!--si es profesor o coordinador-->
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
+                        <li><a href="{{route('supervisor.index-participant')}}"> Añadir Supervisores/Profesores</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
                         @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
-                        <li><a href=""> Reuniones</a></li>
-                        <li><a href=""> Documentos</a></li>
                         <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
+                        <li><a href="{{route('studentScore.index')}}"> Notas Finales</a></li>
                         @endif
                         @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
-                        <li><a href="{{route('pspProcess.index')}}"> Activar módulo</a></li>
+                        <li><a href="{{route('pspProcess.index')}}"> Activar Módulo Psp</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>

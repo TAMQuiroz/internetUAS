@@ -12,7 +12,11 @@ class meeting extends Model
     protected $table = 'pspmeetings';
 
     public function supervisor(){
-        return $this->belongsTo('Intranet\Models\Supervisor', 'idSupervisor');
+        return $this->belongsTo('Intranet\Models\Supervisor', 'idsupervisor');
+    }
+
+    public function student(){
+    	return $this->belongsTo('Intranet\Models\Student','idstudent');
     }
     
 }

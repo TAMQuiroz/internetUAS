@@ -63,7 +63,7 @@
                 $('#cicloacademico-siguiente-btn').attr("disabled","disabled");
                 $('#cicloacademico-siguiente-btn').click(function(){return false;});
             }
-	</script>script>
+	</script>
 	<script src="{{ URL::asset('js/myvalidations/academicCycle.js')}}"></script>
 
 @endsection

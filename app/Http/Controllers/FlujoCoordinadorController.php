@@ -370,7 +370,7 @@ class FlujoCoordinadorController extends Controller
         }
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return view('flujoCoordinador.academicCycle_create', $data);
         
@@ -401,7 +401,7 @@ class FlujoCoordinadorController extends Controller
 
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return view('flujoCoordinador.academicCycle_view', $data);
     }

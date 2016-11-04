@@ -20,23 +20,63 @@ class TutTutorController extends BaseController
     
     public function getTutorAppoints($id)
     {
-	    	 $docenteInfo = Teacher::where('idUsuario',$id)->get();
+	    
+
+
+	       $docenteInfo = Teacher::where('idUsuario',$id)->get();
          $appointmentInfo = tutmeeting::where('id_docente',$docenteInfo[0]['IdDocente'])->get();
          $i = 0;
          foreach ($appointmentInfo as $appointInfo) {
 
-           $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
-           $statusInfo =  Status::where('id', $appointInfo['estado'])->get();
-		   $studentInfo =  Tutstudent::where('id', $appointInfo['id_tutstudent'])->get();
+          $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
+		      $studentInfo =  Tutstudent::where('id', $appointInfo['id_tutstudent'])->get();
 
-           $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-           $appointmentInfo[$i]['nombreEstado'] = $statusInfo[0]['nombre'];
-		   $appointmentInfo[$i]['nombreAlumno'] = $studentInfo[0]['nombre']." ".$studentInfo[0]['ape_paterno']." ".$studentInfo[0]['ape_materno'];
+          if (1 == $appointInfo['estado']){
+           		$appointmentInfo[$i]['nombreEstado']  = "Pendiente";
+          }
+          else if  (2 == $appointInfo['estado']){
+           		$appointmentInfo[$i]['nombreEstado']  = "Confirmada";
+          }
+          else if  (3 == $appointInfo['estado']){
+              $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+          }
+
+          $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
+		      $appointmentInfo[$i]['nombreAlumno'] = $studentInfo[0]['nombre']." ".$studentInfo[0]['ape_paterno']." ".$studentInfo[0]['ape_materno'];
 
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());
     }
+
+    public function updatePendienteAppointmentList(Request $request)
+    {
+	    
+        $idUser = $request->only('idUser');
+        //Guardar
+        $groupTut = tutmeeting::find($idUser['idUser']);
+        $groupTut->estado = 2;
+        $groupTut->save();
+
+        //Retornar mensaje
+        $mensaje = 'Se modifico correctamente';
+
+    }
+
+      public function cancelAppointmentList(Request $request)
+    {
+      
+        $idUser = $request->only('idUser');
+        //Guardar
+        $groupTut = tutmeeting::find($idUser['idUser']);
+        $groupTut->estado = 3;
+        $groupTut->save();
+
+        //Retornar mensaje
+        $mensaje = 'Se modifico correctamente';
+
+    }
+
 
 
 

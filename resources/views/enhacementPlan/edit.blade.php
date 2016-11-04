@@ -104,8 +104,7 @@
 
                         <div class="row title_right">
                             @if(Auth::user() && ((Auth::user()->IdPerfil == 3) || (Auth::user()->IdPerfil == 1)))
-                                <a type="button" class="btn btn-success pull-right cicleModalEdit" data-toggle="modal" 
-                                data-target="#cicleModalEdit" > Nuevo ciclo</a>
+                                <a href="{{ route('add-cicle-edit.enhacementPlan',$improvementPlan->IdPlanMejora) }}" class="btn btn-success pull-right"> Nuevo Ciclo</a>
                             @endif
                        </div>
 
@@ -125,18 +124,22 @@
                                 <td hidden="true"><input type="text" name="idAction[]" id="idAction"/></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="cicle[]" id="cicle">
+                                        @if($cicles!=null)
                                         @foreach($cicles as $cicle)
                                             <option value="{{$cicle->IdCicloAcademico}}">{{$cicle->Descripcion}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" title="Debe ingresar la Descripción de la Acción" required style="resize: vertical;"></textarea></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                         <option value="0">--Todos--</option>
+                                        @if($teachers!=null)
                                         @foreach($teachers as $teach)
                                             <option value="{{$teach->IdDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td class="text-center eliminar" style="vertical-align:middle">
@@ -151,22 +154,26 @@
                                     <td hidden="true"><input type="text" name="idAction[]" id="idAction" value="{{$act->IdPlanAccion}}"/></td>
                                     <td style="vertical-align:middle">
                                         <select class="form-control col-md-7 col-xs-12 " name="cicle[]" id="cicle">
+                                            @if($cicles!=null)
                                             @foreach($cicles as $cicle)
                                                 <option value="{{$cicle->IdCicloAcademico}}" <?php if ($act->IdCicloAcademico == $cicle->IdCicloAcademico): ?>
                                                 selected="true"
                                                 <?php endif ?>>{{$cicle->Descripcion}}</option>
                                             @endforeach
+                                            @endif
                                         </select>
                                     </td>
                                     <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" title="Debe ingresar la Descripción de la Acción" required style="resize: vertical;">{{$act->Descripcion}}</textarea></td>
                                     <td style="vertical-align:middle">
                                         <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                             <option value="0">--Todos--</option>
+                                            @if($teachers!=null)
                                             @foreach($teachers as $teach)
                                                 <option value="{{$teach->IdDocente}}" <?php if ($act->IdDocente== $teach->IdDocente): ?>
                                                 selected="true"
                                                 <?php endif ?>>{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                             @endforeach
+                                            @endif
                                         </select>
                                     </td>
                                     <td class="text-center eliminar" style="vertical-align:middle">

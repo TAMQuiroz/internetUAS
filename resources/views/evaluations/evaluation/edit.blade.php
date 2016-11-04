@@ -16,7 +16,7 @@
 		<div class="panel panel-default">
 			{{Form::open(['route' => ['evaluacion.update',$evaluation->id], 'class'=>'form-horizontal'])}}
 			<div class="panel-heading">
-				<h4 class="">Información</h4>
+				<h3 class="panel-title">Información</h3>
 			</div>
 			<div class="panel-body">
 				
@@ -64,13 +64,13 @@
 
 			</div>
 			<div class="panel-heading">
-				<h4 class="">Preguntas</h4>
+				<h3 class="panel-title">Preguntas</h3>
 			</div>
 			<div class="panel-body">				
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<center>
-							<a class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar-banco-preguntas"  ><i class="fa fa-university fa-2x pull-left" aria-hidden="true"></i> Abrir banco <br> de preguntas</a>
+							<a class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar-banco-preguntas"  ><i class="fa fa-university fa-2x pull-left" aria-hidden="true"></i> Abrir banco de preguntas</a>
 						</center>
 						
 					</div>
@@ -143,16 +143,16 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="form-group">
-							<h5><strong>Cantidad de preguntas: <i id="total_preg">{{count($questions)}}</i></strong></h5>
-							<h5><strong>Puntaje total: <i id="total_puntaje">{{$sum_puntaje}}</i></strong></h5>
-							<h5><strong>Tiempo acumulado: <i id="total_tiempo">{{$sum_tiempo}}</i> minutos</strong></h5>
+						<div class="form-group pull-right">
+							<h4><strong>Cantidad de preguntas: <i id="total_preg">{{count($questions)}}</i></strong></h4>
+							<h4><strong>Puntaje total: <i id="total_puntaje">{{$sum_puntaje}}</i></strong></h4>
+							<h4><strong>Tiempo acumulado: <i id="total_tiempo">{{$sum_tiempo}}</i> minutos</strong></h4>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="panel-heading">
-				<h4 class="">Alumnos</h4>
+				<h3 class="panel-title">Alumnos</h3>
 			</div>
 			<div class="panel-body">
 				<div class="row">

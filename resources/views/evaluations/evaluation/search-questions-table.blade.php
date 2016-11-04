@@ -8,7 +8,7 @@
             <th class="column-title">Pregunta</th>
             <th class="column-title">Tiempo</th>
             <th class="column-title">Dificultad</th>
-            <th class="column-title">Selecc.</th>
+            <th class="column-title">Seleccionar</th>
         </tr>
     </thead>
     <tbody>
@@ -47,7 +47,7 @@
             <td class="oculto responsable" hidden>{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
             
             <td>
-                <input type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected btn btn-success">
+                <input type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected">
             </td>                    
         </tr>
         @endforeach
@@ -56,9 +56,8 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <center>
-            <a class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a evaluación</a>
+            <a class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a la evaluación</a>
         </center>
-
     </div>
 </div>
 @else

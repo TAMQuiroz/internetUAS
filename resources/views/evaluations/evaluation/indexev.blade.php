@@ -31,7 +31,7 @@
                             <td class=" ">{{ $evaluation->Nombre }}</td>                                          
                             <td class="">                                
                                 <a href="{{route('evaluacion.ver_evaluaciones_alumnos',$evaluation->id)}}" title="Ver evaluaciones por corregir" class="btn btn-primary btn-xs view-group"">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a> 
                             </td>
                         </tr>                 

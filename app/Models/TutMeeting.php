@@ -22,6 +22,5 @@ class TutMeeting extends Model
                             'id_reason',
                             'id_tutstudent0',
                             'id_docente'];
-    
-    
+  
 }

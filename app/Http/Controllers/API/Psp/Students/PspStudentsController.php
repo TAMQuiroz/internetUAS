@@ -16,8 +16,22 @@ class PspStudentsController extends BaseController
     public function getAll()
     {
 
-       $students = PspStudent::get();
-        return $this->response->array($students->toArray());
+        $pspstudents = PspStudent::get();
+
+
+        $students = array();
+        foreach ($pspstudents as $pspstudent) {
+
+
+            $student = Student::where('IdAlumno',  $pspstudent->idalumno)->get()->first();
+            array_push($students, $student);
+          
+        }
+
+   
+
+
+        return $this->response->array($students);
     }
     
   

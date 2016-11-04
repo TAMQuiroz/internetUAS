@@ -21,9 +21,12 @@ class TutScheduleController extends Controller
     {
         $user = Session::get('user');     
         $teacher = Teacher::find($user->IdDocente);
+        $tutSchedule = TutSchedule::where('id_docente', $teacher->IdDocente)->get();
+        $horas = $tutSchedule->count();
         
         $data = [
             'teacher'    =>  $teacher,
+            'horas' => $horas,
         ];
         
         return view('tutorship.tutschedule.index', $data);

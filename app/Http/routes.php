@@ -527,6 +527,7 @@ Route::group(['middleware' => 'auth'], function(){
 
                 //Seleccion de integrantes de para un proceso de psp
                 Route::group(['prefix' => 'participant'], function(){
+                    Route::get('/', ['as' => 'supervisor.index-participant', 'uses' => 'Psp\Supervisor\ParticipationController@index']);
                     Route::post('createSupervisor', ['as' => 'supervisor.participant.store.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@storeSupervisor']);
                     Route::get('deleteSupervisor/{id}', ['as' => 'supervisor.participant.delete.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@destroySupervisor']);
 

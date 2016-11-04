@@ -319,6 +319,7 @@
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
+                        <li><a href="{{route('supervisor.index-participant')}}"> Añadir Supervisores/Profesores</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}

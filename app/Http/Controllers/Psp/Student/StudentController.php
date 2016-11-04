@@ -21,7 +21,6 @@ class StudentController extends Controller
      */
     public function index()
     {
-
         $supervisor = Supervisor::where('idUser',Auth::User()->IdUsuario)->first();
         $students = PspStudent::where('idsupervisor',$supervisor->id)->get();
 

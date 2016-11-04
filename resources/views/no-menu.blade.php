@@ -100,6 +100,8 @@
                 <span class="label label-default hidden-xs hidden-sm">
                   @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
                       {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
+                  @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
+                    {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
                   @else
                       {{Session::get('user')->Nombre}} {{Session::get('user')->ApellidoPaterno}} {{Session::get('user')->ApellidoMaterno}}
                   @endif

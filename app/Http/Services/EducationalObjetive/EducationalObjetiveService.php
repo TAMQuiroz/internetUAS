@@ -21,6 +21,13 @@ class EducationalObjetiveService {
 
 		return $educationalObjetives;
 	}
+	public function findByFaculty2($faculty_id) {
+
+		$educationalObjetives = EducationalObjetive::where('IdEspecialidad', $faculty_id)
+			->where('deleted_at', null)->get();
+
+		return $educationalObjetives;
+	}
 
 	// obtener todos los objetivos educacionales del periodo actual y de la especialidad 
 	public function findByFacultyPeriod() {

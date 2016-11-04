@@ -45,7 +45,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Tarea padre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::select('padre_id',$entregables, null, ['id'=>'padre','class'=>'form-control', 'required'])}}
+		    				{{Form::select('padre_id',$entregables, 0, ['id'=>'padre','class'=>'form-control', 'required'])}}
 		    			</div>
 		    		</div>
 

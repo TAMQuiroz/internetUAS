@@ -47,12 +47,17 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\Tutorship','id_tutor');
     }
 
+    
+    public function projects(){
+        return $this->belongsToMany('Intranet\Models\Project','teacherxprojects','id_profesor','id_proyecto')->withPivot('id');   
+    }
+
     static public function getTutorsFiltered($filters, $specialty) {
 
         $query = Teacher::where('IdEspecialidad', $specialty);
 
         if(!array_key_exists("estado", $filters)){
-            $query = $query->where('rolTutoria', 1);
+            $query = $query->whereIn('rolTutoria', array(1,3));
         }
         elseif ( $filters["estado"] != "") {
             $query = $query->where('rolTutoria', $filters["estado"]);
@@ -119,5 +124,12 @@ class Teacher extends Model {
         return $this->belongsToMany('Intranet\Models\Tutstudentxevaluation','teacherxtutstudentxevaluations','id_tutstudentxevaluation','id_docente');
     }
     
+    public function pspProcesses(){
+        return $this->hasMany('Intranet\Models\PspProcessxTeacher', 'iddocente');
+    }
+
+    public function groups(){
+        return $this->hasMany('Intranet\Models\Group','id_lider');
+    }
 
 }

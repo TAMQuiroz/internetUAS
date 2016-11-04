@@ -4,9 +4,11 @@ namespace Intranet\Http\Controllers\Tutorship\Parameter;
 use Intranet\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
+use Intranet\Http\Requests\ParameterRequest;
 use Intranet\Models\Parameter;
 use Illuminate\Support\Facades\Session;
 use Intranet\Http\Services\User\PasswordService;
+use DateTime;
 
 class ParameterController extends Controller
 {
@@ -20,31 +22,59 @@ class ParameterController extends Controller
     {
         $mayorId    = Session::get('faculty-code');
         $parameters = Parameter::where('id_especialidad', $mayorId)->first();
-        // dd($parameters);
+
+        $today = date('d-m-Y'); 
+        $futureDay = date('d-m-Y', strtotime($today . '+185 day'));
         $data = [
-            'duration' => 0
+            'duration'      => 0,
+            'startDate'     => $today,
+            'endDate'       => $today,
+            'numberDays'    => 1,
         ];
 
         if ($parameters) {
-            $data = [
-                'duration' => $parameters->duracionCita
+            $format     = 'd-m-Y'; 
+            $duration   = ($parameters->duracionCita) ? 
+                            $parameters->duracionCita : 0;
+            $startDate  = ($parameters->start_date) ? 
+                            date($format, strtotime($parameters->start_date)) : $today;
+            $endDate    = ($parameters->end_date) ? 
+                            date($format, strtotime($parameters->end_date)) : $today;
+            $numberDays = ($parameters->number_days) ? 
+                            $parameters->number_days : 1;
+            $data       = [
+                'duration'      => $duration,
+                'startDate'     => $startDate,
+                'endDate'       => $endDate,
+                'numberDays'    => $numberDays,
+                'futureDay'     => $futureDay,
             ];
         }
 
         return view('tutorship.settings.index', $data);
     }
 
-    public function updateDuration(Request $request)
+    public function updateDuration(ParameterRequest $request)
     {
+        $format     = 'd-m-Y';
+        $startDate  = DateTime::createFromFormat($format, $request['startDate']);
+        $endDate    = DateTime::createFromFormat($format, $request['endDate']);
+
         try {
-            $mayorId = Session::get('faculty-code');
+            $mayorId    = Session::get('faculty-code');
             $parameters = Parameter::where('id_especialidad', $mayorId)->first();
             if ($parameters) {
                 $parameters->duracionCita   = $request['duration'];
+                $parameters->start_date     = $startDate;
+                $parameters->end_date       = $endDate;
+                $parameters->number_days    = $request['numberDays'];
                 $parameters->save();
             } else {
                 $newParameters = new Parameter;
                 $newParameters->duracionCita    = $request['duration'];
+                $newParameters->start_date      = $startDate;
+                $newParameters->end_date        = $endDate;
+                $newParameters->number_days     = $request['numberDays'];
                 $newParameters->id_especialidad = $mayorId;
                 $newParameters->save();
             }

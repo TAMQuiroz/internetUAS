@@ -7,8 +7,9 @@
 	</div>
 </div>
 
-
+@if(Session::get('academic-cycle')==null)
 {{ Form::button('Finalizar Periodo', ['class' => 'btn btn-primary pull-right final', 'data-toggle' => 'modal', 'data-target' => '#modalDelete'])}}
+@endif
 
 <form action="{{ route('updatePeriod.faculty') }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
 	<input type="hidden" name="conf-code" value="{{ $period->configuration->IdConfEspecialidad }}">
@@ -26,7 +27,7 @@
 						<div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Inicio<span class="error">*</span></label>
 	                            <div class="col-md-6 col-sm-6 col-xs-12">
-	                              	<select name="cycleStart" id="cycleStart" class="form-control" required="true">
+	                              	<select name="cycleStart" id="cycleStart" class="form-control" required="true" disabled="true">
 										<option value="0">-- Seleccione --</option>
 										@foreach($semesters as $s)
 											@if($s->deleted_at == null)
@@ -41,7 +42,7 @@
 						<div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ciclo Fin<span class="error">*</span></label>
 	                            <div class="col-md-6 col-sm-6 col-xs-12">
-	                              	<select name="cycleEnd" id="cycleEnd" class="form-control" required="true">
+	                              	<select name="cycleEnd" id="cycleEnd" class="form-control" required="true" disabled="true">
 										<option value="0">-- Seleccione --</option>
 										@foreach($semesters as $s)
 											@if($s->deleted_at == null)
@@ -57,7 +58,7 @@
 						 <div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nivel de Criterio <span class="error"> *</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input id="criteriaLevel" class="form-control col-md-7 col-xs-12" type="number" name="criteriaLevel" value="{{ $period->configuration->CantNivelCriterio }}">
+								<input id="criteriaLevel" disabled="true" class="form-control col-md-7 col-xs-12" type="number" name="criteriaLevel" value="{{ $period->configuration->CantNivelCriterio }}">
 							</div>
 						</div>
 						</div>
@@ -66,7 +67,7 @@
 						 <div class="form-group">
 							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nivel de Aceptación <span class="error">*</span></label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input id="facultyAgreementLevel" class="form-control col-md-7 col-xs-12" type="number" name="facultyAgreementLevel" value="{{$period->configuration->NivelEsperado}}" >
+								<input id="facultyAgreementLevel" disabled="true" class="form-control col-md-7 col-xs-12" type="number" name="facultyAgreementLevel" value="{{$period->configuration->NivelEsperado}}" >
 							</div>
 						</div>
 						</div>
@@ -75,7 +76,7 @@
 							 <div class="form-group">
 								<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Aceptación % <span class="error">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="facultyAgreement" class="form-control col-md-7 col-xs-12" type="number" name="facultyAgreement"  value="{{$period->configuration->UmbralAceptacion}}" >
+									<input id="facultyAgreement" disabled="true" class="form-control col-md-7 col-xs-12" type="number" name="facultyAgreement"  value="{{$period->configuration->UmbralAceptacion}}" >
 								</div>
 							</div>
 						</div>
@@ -84,19 +85,15 @@
 	                        <div class="col-md-6">
 	                            <h2> Instrumentos de Medición </h2>
 	                        </div>
-	                        <div class="col-md-6 col-sm-12 col-xs-12">
-	                            <div class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-measures">
-	                                <i class="fa fa-plus"></i> Asociar Instrumentos de Medición
-	                            </div>
-	                        </div>
+	                        
 	                    </div>
 
 	                    <div class="row">
 	                        <table class="table table-striped responsive-utilities jambo_table bulk_action" id="measaure_table"  name="table-objs">
 	                            <thead>
 	                            <tr class="headings">
-	                                <th class="column-title">Nombre</th>
-	                                <th class="column-title">Acción</th>
+	                                <th class="column-title text-center">Nombre del Instrumento de Medición</th>
+                                    
 	                            </tr>
 	                            </thead>
 	                            <tbody>
@@ -104,7 +101,7 @@
 	                            		<tr>
 											<input type="hidden" name="measures[]" value="{{ $m->IdFuenteMedicion }}">
 	                            			<td>{{ $m->Nombre }}</td>
-	                            			<td><div class="btn btn-danger btn-xs delete-measure"><i class="fa fa-remove"></i></div></td>
+	                            			
 	                            		</tr>
 	                            	@endforeach
 								</tbody>
@@ -122,7 +119,6 @@
 	                            <tr class="headings">
 	                                <th class="column-title">Estado</th>
 	                                <th class="column-title">Ciclo</th>
-	                                <th class="column-title">Editar periodo actual</th>
 	                            </tr>
 	                            </thead>
 	                            <tbody>
@@ -136,11 +132,7 @@
 	                                            @endif
 	                                        </td>
 	                                        <td>{{ $semester->academicCycle->Descripcion }}</td>
-	                                        <td>
-	                                            @if($semester->Vigente)
-	                                                <a href="{{ url('/faculty/viewCycle') }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
-	                                            @endif
-	                                        </td>
+	                                        
 	                                    </tr>
 	                                @endforeach
 	                            </tbody>
@@ -160,7 +152,7 @@
 								<thead>
 								<tr class="headings">
 									<th>
-										<input type="checkbox" id="objCheckAll" name="objCheckAll">
+										<input type="checkbox" id="objCheckAll" name="objCheckAll" disabled="true">
 									</th>
 									<th colspan="3" scope="colgroup" class="text-center"> Objetivos Educacionales </th>
 								</tr>
@@ -178,7 +170,7 @@
 									@endforeach
 									<tr>
 										<td>
-											<input type="checkbox" value="{{$obj->IdObjetivoEducacional}}" id="objCheck{{$obj->IdObjetivoEducacional}}" class="objCheck {{$results}}" name="objCheck[]" {{$tempObj}} />
+											<input disabled="true" type="checkbox" value="{{$obj->IdObjetivoEducacional}}" id="objCheck{{$obj->IdObjetivoEducacional}}" class="objCheck {{$results}}" name="objCheck[]" {{$tempObj}} />
 										</td>
 										<td colspan="3" scope="colgroup">{{$obj->Numero}}. {{$obj->Descripcion}}</td>
 									</tr>
@@ -199,7 +191,7 @@
 								<thead>
 								<tr class="headings">
 									<th>
-										<input type="checkbox" id="stRstCheckAll" name="stRstCheckAll">
+										<input type="checkbox" disabled="true" id="stRstCheckAll" name="stRstCheckAll">
 									</th>
 									<th colspan="3" scope="colgroup" class="text-center"> Resultados Estudiantiles </th>
 								</tr>
@@ -216,7 +208,7 @@
 									@endforeach
 									<tr class="success">
 										<td>
-											<input type="checkbox" value="{{$stRst->IdResultadoEstudiantil}}" id="stRstCheckA{{$stRst->IdResultadoEstudiantil}}" class="stRstCheck {{$objs}}" name="stRstCheck[]" {{$tempStRst}} />
+											<input type="checkbox" disabled="true" value="{{$stRst->IdResultadoEstudiantil}}" id="stRstCheckA{{$stRst->IdResultadoEstudiantil}}" class="stRstCheck {{$objs}}" name="stRstCheck[]" {{$tempStRst}} />
 										</td>
 										<td colspan="3" scope="colgroup">{{$stRst->Identificador}}. {{$stRst->Descripcion}}</td>
 									</tr>
@@ -228,7 +220,7 @@
 										<tr>
 											<td></td>
 											<td>
-												<input type="checkbox" value="{{$asp->IdAspecto}}" id="aspCheckC{{$asp->IdAspecto}}" class="aspCheck A{{$stRst->IdResultadoEstudiantil}} {{$objs}}" name="aspCheck[]" {{$tempAsp}} />
+												<input type="checkbox" disabled="true" value="{{$asp->IdAspecto}}" id="aspCheckC{{$asp->IdAspecto}}" class="aspCheck A{{$stRst->IdResultadoEstudiantil}} {{$objs}}" name="aspCheck[]" {{$tempAsp}} />
 											</td>
 											<td colspan="2" scope="colgroup">{{ $asp->Nombre }}</td>
 										</tr>
@@ -241,7 +233,7 @@
 												<td scope="col" ></td>
 												<td scope="col" ></td>
 												<td>
-													<input type="checkbox" value="{{$crt->IdCriterio}}" id="crtCheck{{$crt->IdCriterio}}" class="crtCheck A{{$stRst->IdResultadoEstudiantil}} C{{$asp->IdAspecto}} {{$objs}}" name="crtCheck[]" {{$tempCrt}} />
+													<input type="checkbox" disabled="true" value="{{$crt->IdCriterio}}" id="crtCheck{{$crt->IdCriterio}}" class="crtCheck A{{$stRst->IdResultadoEstudiantil}} C{{$asp->IdAspecto}} {{$objs}}" name="crtCheck[]" {{$tempCrt}} />
 												</td>
 												<td colspan="1" scope="colgroup">{{ $crt->Nombre }}</td>
 											</tr>
@@ -257,9 +249,9 @@
 						<div class="row" style="margin-top: 10px;">
 		                    <div class="col-md-9 col-sm-9 col-xs-9"></div>
 			                  	<div class="col-md-3 col-sm-3 col-xs-3">
-			                    <a class="btn btn-default submit" href="{{ url('faculty/periods') }}">Cancelar</a>
+			                    <a class="btn btn-default submit" href="{{ url('faculty/periods') }}">Regresar</a>
 
-								<button class="btn btn-success pull-right submit" type="submit">Guardar</button>
+								
 		                  	</div>
 		                </div>
 

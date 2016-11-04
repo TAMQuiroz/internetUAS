@@ -40,4 +40,18 @@ class Faculty extends Model {
     public function specialty(){
         return Faculty::where('IdEspecialidad',$this->IdEspecialidad)->first();
     }    
+
+
+    public function objectives(){
+        return $this->hasMany('Intranet\Models\EducationalObjetive', 'IdEspecialidad');
+    }
+
+    public function studentsResults(){
+        return $this->hasMany('Intranet\Models\StudentsResult', 'IdEspecialidad');
+    }
+
+    public function instruments(){
+        return $this->hasMany('Intranet\Models\MeasurementSource', 'IdEspecialidad');
+    }
+
 }

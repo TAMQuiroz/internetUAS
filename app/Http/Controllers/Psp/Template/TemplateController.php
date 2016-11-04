@@ -16,6 +16,7 @@ use Intranet\Models\PspStudent;
 use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Intranet\Models\Supervisor;
+use DB;
 
 class TemplateController extends Controller
 {
@@ -111,6 +112,7 @@ class TemplateController extends Controller
                     $PspDocument->titulo_plantilla=$template->titulo;
                     $PspDocument->ruta_plantilla=$template->ruta;
                     $PspDocument->idtipoestado=3;
+                    $PspDocument->es_fisico=0;
                     if($template->idtipoestado  == 1)
                        $PspDocument->es_obligatorio='s';
                    else
@@ -186,8 +188,22 @@ class TemplateController extends Controller
                 $filename = $template->id.'.'.$extension; 
                 $request['ruta']->move($destinationPath, $filename);
                 $template->ruta = $destinationPath.$filename;
-                $template->save();
+                $template->save();                               
             }
+            $pspdocuments = PspDocument::where('idtemplate',$id)->get();
+            //dd($pspdocuments);
+                foreach($pspdocuments as $pspdoc) {    
+                    $psp=PspDocument::find($pspdoc->id);
+                    if($template->idtipoestado  == 1)
+                       $psp->es_obligatorio='s';
+                   else
+                       $psp->es_obligatorio='n';
+                    $psp->fecha_limite=Phase::find($template->idphase)->fecha_fin;
+                    $psp->numerofase=$template->numerofase;
+                    $psp->titulo_plantilla=$template->titulo;
+                    $psp->ruta_plantilla=$template->ruta;
+                    $psp->save();                    
+            } 
             return redirect()->route('template.index')->with('success', 'La plantilla se ha modificado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

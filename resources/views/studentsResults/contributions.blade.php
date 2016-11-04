@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-success submit pull-right" type="submit">Guardar</button>
-                    <a href="{{ route('index.studentsResult') }}" class="btn btn-default pull-right"> Cancelar</a>
+                    <!--<a href="{{ route('index.studentsResult') }}" class="btn btn-default pull-right"> Cancelar</a>-->
                 </div>
             </div>
         </div>

@@ -71,4 +71,7 @@ class User extends Authenticatable
         return $this->belongsTo('Intranet\Models\Profile', 'IdPerfil');
     }
 
+    public function pspStudent() {
+        return $this->hasOne('Intranet\Models\Student', 'IdUsuario');
+    }
 }

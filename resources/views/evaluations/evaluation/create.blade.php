@@ -16,14 +16,14 @@
 		<div class="panel panel-default">
 			{{Form::open(['route' => 'evaluacion.store', 'class'=>'form-horizontal'])}}
 			<div class="panel-heading">
-				<h4 class="">Información</h4>
+				<h3 class="panel-title">Información</h3>
 			</div>
 			<div class="panel-body">
 				
 				<div class="form-group">
 					{{Form::label('Nombre: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-8 col-sm-8 col-xs-8">
-						{{Form::text('nombre',null,['class'=>'form-control','id'=>'nombre', 'required', 'maxlength' => 200])}}
+						{{Form::text('nombre',null,['class'=>'form-control','id'=>'nombre','value'=> 'old(nombre)', 'required', 'maxlength' => 200])}}
 					</div>
 				</div>
 
@@ -31,7 +31,7 @@
 					{{Form::label('Fecha inicio: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">						
 			            <div class="input-group date">
-				            <input type="text" class="form-control input-date" name="fecha_inicio" id="fecha_inicio" placeholder="dd/mm/aaaa" required/>
+				            <input type="text" value="{{ old('fecha_inicio') }}" class="form-control input-date" name="fecha_inicio" id="fecha_inicio" placeholder="dd/mm/aaaa" required/>
 				            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 			            </div>			            
 					</div>
@@ -39,7 +39,7 @@
 					{{Form::label('Fecha fin: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-3 col-sm-3 col-xs-8">
 						<div class="input-group date">
-				            <input type="text" class="form-control input-date" name="fecha_fin" id="fecha_fin" placeholder="dd/mm/aaaa" required/>
+				            <input type="text" value="{{ old('fecha_fin') }}" class="form-control input-date" name="fecha_fin" id="fecha_fin" placeholder="dd/mm/aaaa" required/>
 				            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 			            </div>	
 					</div>
@@ -56,7 +56,7 @@
 					{{Form::label('Duración:*',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-8 col-sm-8 col-xs-8">
 						<div class="input-group">							
-							<input name="tiempo" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
+							<input name="tiempo" value="{{ old('tiempo') }}" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
 							<span class="input-group-addon" id="basic-addon1">minutos</span>
 						</div>
 					</div>
@@ -64,13 +64,13 @@
 
 			</div>
 			<div class="panel-heading">
-				<h4 class="">Preguntas</h4>
+				<h3 class="panel-title">Preguntas</h3>
 			</div>
 			<div class="panel-body">				
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<center>
-							<a class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar-banco-preguntas"  ><i class="fa fa-university fa-2x pull-left" aria-hidden="true"></i> Abrir banco <br> de preguntas</a>
+							<a class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar-banco-preguntas"  ><i class="fa fa-university fa-2x pull-left" aria-hidden="true"></i> Abrir banco de preguntas</a>
 						</center>
 						
 					</div>
@@ -106,16 +106,16 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="form-group">
-							<h5><strong>Cantidad de preguntas: <i id="total_preg">0</i></strong></h5>
-							<h5><strong>Puntaje total: <i id="total_puntaje">0</i></strong></h5>
-							<h5><strong>Tiempo acumulado: <i id="total_tiempo">0</i> minutos</strong></h5>
+						<div class="form-group pull-right">
+							<h4><strong>Cantidad de preguntas: <i id="total_preg">0</i></strong></h4>
+							<h4><strong>Puntaje total: <i id="total_puntaje">0</i></strong></h4>
+							<h4><strong>Tiempo acumulado: <i id="total_tiempo">0</i> minutos</strong></h4>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="panel-heading">
-				<h4 class="">Alumnos</h4>
+				<h3 class="panel-title">Alumnos</h3>
 			</div>
 			<div class="panel-body">
 				<div class="row">

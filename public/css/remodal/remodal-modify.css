@@ -97,3 +97,14 @@
 		max-width: 380px;
 	}
 }
+
+.label-modal {
+	font-size: 1.3rem;
+    color: #73879C !important;
+}
+
+.input-modal {
+	font-size: 1.3rem !important;
+	color: #73879C !important;	
+}
+

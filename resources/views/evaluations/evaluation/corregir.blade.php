@@ -14,36 +14,52 @@
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
-			<div class="panel-body">
-			{{Form::open(['route' => ['evaluacion_corregida.store',$evaluation->id,$tutstudent],'files'=>true, 'class'=>'form-horizontal', 'id'=>'respuestas'])}}
-					@foreach($evs as $key => $ev)					
-					<div class="form-group">
-						<h4>Pregunta {{$key+1}}: ({{$ev->pregunta->puntaje}} puntos)</h4>
+			<div id="panel" class="panel-body">
+			{{Form::open(['route' => ['evaluacion_corregida.store',$tutstudent->id,$evaluation->id],'files'=>true, 'class'=>'form-horizontal', 'id'=>'respuestas'])}}
+					@foreach($evs as $key => $ev)
+					@if($ev->pregunta->tipo != 1)					
+					<div class="pregunta form-group">
+						<h4>Pregunta: ({{$ev->pregunta->puntaje}} puntos)</h4>
 						<p>{{$ev->pregunta->descripcion}}</p>
 						<h5>Respuesta:</h5>
+
 						@if($ev->pregunta->tipo == 2)
+						@if($ev->respuesta == "")
+						<p>-</p>
+						@else
 						<p>{{$ev->respuesta}}</p>
+						@endif
 						@elseif($ev->pregunta->tipo == 3)
-						<a style="text-decoration: underline" href="{{route('evaluacion.descargar_respuesta',$ev->id)}}">Descargar archivo</a>@endif	
+
+						@if($ev->path_archivo != null)
+						<a style="color:blue;text-decoration: underline" href="{{route('evaluacion.descargar_respuesta',$ev->id)}}">Descargar archivo</a>
+						@else
+						<p style="color:gray;text-decoration: underline" >Sin archivo</p>
+						@endif
+						@endif
+
 						<textarea placeholder="Escriba un comentario de la corrección" class="form-control" name="arr_comentario[{{$ev->id}}]" rows="4" maxlength="5000"></textarea>
-						<h5 class="col-md-2 col-sm-3 col-xs-5">Puntaje:</h5>
-						<div class="input-group col-md-2 col-sm-3 col-xs-5">
-							<input type="number" required class="form-control" min="0" max="{{$ev->pregunta->puntaje}}" name="arr_puntaje1[{{$ev->id}}]">							
-							<span class="input-group-addon">.</span>
-							<select class="form-control" name="arr_puntaje2[{{$ev->id}}]">
-								<option value="0.00">00</option>
-								<option value="0.25">25</option>
-								<option value="0.50">50</option>
-							</select>							
+						<label class="control-label col-md-2 col-sm-3 col-xs-5">Puntaje:</label>
+						<div hidden>
+							<input type="text" class="puntaje_bd form-control" value="{{$ev->pregunta->puntaje}}">
 						</div>
+						<div class="col-md-2 col-sm-2 col-xs-3">
+							
+							<input type="text" required class="puntaje form-control" maxlength="5" onkeypress="return validateFloatKeyPress(this,event);" name="arr_puntaje1[{{$ev->id}}]">							
+						</div>
+						
+							
+							
 					</div><br>
+					@endif
 					@endforeach					
 
 					<div class="form-group">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<center>
-								<a id="terminar" class="btn btn-success" data-toggle="modal" data-target="#modal-enviar-respuestas">Terminar corrección <i class="fa fa-paper-plane" aria-hidden="true"></i></a>	
-								<h6 hidden id="mensaje-size">Algunos archivos son muy grandes.</h6>				
+								<a class="btn btn-default" href="{{ route('evaluacion.ver_evaluaciones_alumnos',$evaluation->id) }}">Cancelar</a>
+								<a id="terminar" class="btn btn-success" data-toggle="modal" onclick="validar()" >Terminar corrección <i class="fa fa-paper-plane" aria-hidden="true"></i></a>							
+								<h6 hidden style="color: red" id="mensaje">Algunos puntajes son incorrectos.</h6>					
 							</center>												
 						</div>
 					</div>					
@@ -101,6 +117,27 @@ function getSelectionStart(o) {
 	} else return o.selectionStart
 }
 
+function esvalido(){
+	var cond = true;
+	$('#panel').find('.pregunta').each(function(){//para cada pregunta
+		var puntaje_bd = parseFloat($(this).find('.puntaje_bd').val());
+		var puntaje = parseFloat($(this).find('.puntaje').val());
+		if(puntaje > puntaje_bd){
+			cond = false;
+		}
+	});	
+	return cond;
+}
+function validar(){
+	var d = esvalido(); 
+	if( d == true  ){
+		$('#mensaje').hide();
+		$('#modal-enviar-respuestas').modal('show');
+	}
+	else{
+		$('#mensaje').show();
+	}
+}
 </script>
 @endsection
 

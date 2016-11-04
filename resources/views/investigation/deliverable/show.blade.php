@@ -20,32 +20,43 @@
 		  	<div class="panel-body">
 			  	<div class="form-horizontal">
 		    		<div class="form-group">
-		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Nombre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-4">
 		    				{{Form::text('nombre',$entregable->nombre,['class'=>'form-control', 'readonly'])}}
 		    			</div>
 		    		</div>
 
                     <div class="form-group">
-                        {{Form::label('Porcentaje de avance *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                        {{Form::label('Porcentaje de avance',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-4">
                             {{Form::number('porcen_avance', $entregable->porcen_avance,['class'=>'form-control', 'readonly'])}}
                         </div>
                     </div>
 
 		    		<div class="form-group">
-		    			{{Form::label('Fecha inicio *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Fecha inicio',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-4">
 		    				{{Form::date('fecha_ini',$entregable->fecha_inicio,['id'=>'fecha_ini','class'=>'form-control', 'readonly'])}}
 		    			</div>
 		    		</div>
 
 		    		<div class="form-group">
-		    			{{Form::label('Fecha limite *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+		    			{{Form::label('Fecha limite',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-4">
 		    				{{Form::date('fecha_fin',$entregable->fecha_limite,['id'=>'fecha_fin','class'=>'form-control', 'readonly'])}}
 		    			</div>
 		    		</div>
+
+                    <div class="form-group">
+                        {{Form::label('Tarea padre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-4">
+                            @if($entregable->father)
+                                {{Form::text('padre_id',$entregable->father->nombre,['class'=>'form-control', 'readonly'])}}
+                            @else
+                                {{Form::text('padre_id','No tiene padre',['class'=>'form-control', 'readonly'])}}
+                            @endif
+                        </div>
+                    </div>
 
 		    		<div class="row">
 						<div class="col-md-8 col-sm-12 col-xs-12">

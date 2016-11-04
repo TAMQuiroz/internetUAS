@@ -8,7 +8,7 @@
             <th class="column-title">Pregunta</th>
             <th class="column-title">Tiempo</th>
             <th class="column-title">Dificultad</th>
-            <th class="column-title">Selecc.</th>
+            <th class="column-title">Seleccionar</th>
         </tr>
     </thead>
     <tbody>
@@ -40,14 +40,14 @@
             <td>Alta</td>
             @endif
 
-            <td hidden><input class="row_puntaje" type="number" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
+            <td hidden><input class="row_puntaje" type="text" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
             <td class="oculto puntaje" hidden>{{ $question->puntaje }}</td>
 
             <td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
             <td class="oculto responsable" hidden>{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
             
             <td>
-                <input type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected btn btn-success">
+                <input type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected">
             </td>                    
         </tr>
         @endforeach
@@ -56,9 +56,8 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <center>
-            <a class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a evaluación</a>
+            <a class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a la evaluación</a>
         </center>
-
     </div>
 </div>
 @else

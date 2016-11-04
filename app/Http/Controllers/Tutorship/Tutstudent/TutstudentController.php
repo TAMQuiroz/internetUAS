@@ -212,7 +212,7 @@ class TutstudentController extends Controller
                 }
                 catch (\Exception $e)
                 {
-                    dd($e->getMessage());
+                    return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }  
             }       
             

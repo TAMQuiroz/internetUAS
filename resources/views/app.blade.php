@@ -367,6 +367,18 @@
               </li> 
               @endif
 
+
+              <!-- Menu Reportes: Sin permisos ya que cualquier usuario puede generar los reportes-->
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Reportes</a>
+                <div class="collapsible-body">
+                  <ul>
+                      <li><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
+                      <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>                  
+                  </ul>
+                </div>
+              </li>
+
               <!--Menu Tutotia-->
               <!--Si son alumnos de tutoria idPerfil == 0 -->
               @if(Auth::user() && ((Auth::user()->professor != null && 
@@ -375,7 +387,7 @@
 
 
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Tutoría</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">person_pin</i>Tutoría</a>
                 <div class="collapsible-body">
                   <ul>
 
@@ -384,13 +396,14 @@
                     
                     <!-- coordinador de especialidad-->
                       @if(Auth::user()->IdPerfil == 1) 
-                      <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                      <li><a href="{{route('coordinadorTutoria.index')}}"> Coordinadores</a></li>
                       @endif
 
                       <!-- coordinador de tutoria -->
                       @if(Auth::user()->professor->rolTutoria == 2)
-                      <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
-                      <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
+                      <li><a href="{{route('tutor.index')}}"> Tutores</a></li>
+                      <li><a href="{{route('alumno.index')}}"> Alumnos</a></li>
+                      <li><a href="{{route('reporte.index')}}"> Reportes</a></li>
                       <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
                       @endif
 
@@ -428,22 +441,22 @@
 
                     @if(Auth::user()->professor != null)
                       @if(Auth::user()->professor->rolEvaluaciones == 1)  <!-- Aministrador de evaluaciones-->
-                      <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
-                      <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
-                      <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
-                      <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
+                      <li><a href="{{route('competencia.index')}}"> Competencias</a></li>
+                      <li><a href="{{route('pregunta.index')}}"> Preguntas</a></li>
+                      <li><a href="{{route('evaluador.index')}}"> Evaluadores</a></li>
+                      <li><a href="{{route('evaluacion.index')}}"> Evaluaciones</a></li>
                       @endif
                     @endif
 
                     @if(Auth::user()->professor != null)
                       @if(Auth::user()->professor->rolEvaluaciones == 2) <!-- Evaluador de competencias -->
-                      <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>                
+                      <li><a href="{{route('pregunta.index')}}"> Preguntas</a></li>                
                       <li><a href="{{route('evaluacion_evaluador.index')}}"> Mis Evaluaciones</a></li>
                       @endif
                     @endif
 
                     @if(Auth::user()->IdPerfil == 0)<!-- Alumno  -->                    
-                    <li><a href="{{route('evaluacion_alumno.index')}}"><i class="material-icons">reorder</i> Mis evaluaciones</a></li>
+                    <li><a href="{{route('evaluacion_alumno.index')}}">Mis evaluaciones</a></li>
                     @endif
                   </ul>
                 </div>

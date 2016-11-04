@@ -1,9 +1,10 @@
-<?php namespace Intranet\Http\Controllers\Psp\meeting;
+<?php namespace Intranet\Http\Controllers\Psp\MeetingTeacher;
 
 use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
-use Intranet\Models\meeting;
+use Intranet\Models\MeetingTeacher;
 use Intranet\Models\Student;
+use Intranet\Models\meeting;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\freeHour;
@@ -11,7 +12,7 @@ use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
 use Auth;
 
-class MeetingController extends Controller
+class MeetingTeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,12 +21,18 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        $meeting = meeting::get();
+        $MeetingTeacher = MeetingTeacher::get();
+        $students = PspStudent::get();
 
         $data = [
-            'meeting'    =>  $meeting,
+            'MeetingTeacher'    =>  $MeetingTeacher,
         ];
-        return view('psp.meeting.index', $data);
+
+        $data = [
+            'students'    =>  $students,
+        ];
+
+        return view('psp.MeetingTeacher.index', $data);
         //return view('template.index');
     }
 
@@ -34,20 +41,17 @@ class MeetingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
+
         $arr = [];
         $horas = freeHour::get();
-        /*foreach ($horas as $hora) {
-            $cadena = $hora->fecha.' - '.$hora->hora_ini.' - '.$hora->supervisor->nombres.' '.$hora->supervisor->apellido_paterno;
-            array_push($arr, $cadena);
-        }*/
-
-        //$data['freeHours'] = $arr;
+        $student = Student::find($id);
         $data['freeHours'] = $horas;
-        $data['meeting'] = meeting::get();
-     
-        return view('psp.meeting.create',$data);
+
+        $data['MeetingTeacher'] = MeetingTeacher::get();
+        $data['student'] = $student;
+        return view('psp.MeetingTeacher.create',$data);
     }
 
     /**
@@ -56,19 +60,16 @@ class MeetingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MeetingRequest $request)
+    public function store(MeetingRequest $request, $id)
     {
-        
-        try {
-            $meeting = new meeting;
-            $freeHour = FreeHour::find($request['disponibilidad']);
-            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
-            $pspstudent =PspStudent::where('IdAlumno',$student->IdAlumno)->first(); 
-
+         try {
+            $meeting = new meeting;   
+            $pspstudent =PspStudent::where('IdAlumno',$id)->first(); 
             $meeting->idtipoestado = 1;
+            $freeHour = FreeHour::find($request['disponibilidad']);
             $meeting->fecha=$freeHour->fecha;
             $meeting->idsupervisor=$freeHour->idsupervisor;
-            $meeting->idstudent=$student->IdAlumno;
+            $meeting->idstudent=$id;
 
             $timestamp = mktime($freeHour->hora_ini,0,0, 0,0,0);
             $time = date('H:i:s', $timestamp);
@@ -82,10 +83,11 @@ class MeetingController extends Controller
             $pspstudent->idsupervisor=$freeHour->idsupervisor;
             $pspstudent->save();            
 
-            return redirect()->route('meeting.index')->with('success','La cita se ha registrado exitosamente');
+            return redirect()->route('MeetingTeacher.index')->with('success','La cita se ha registrado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
-        }
+        }       
+        
 
     }
 
@@ -97,14 +99,7 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        $meeting = meeting::find($id);
-
-        $data = [
-            'meeting' => $meeting,
-        ];
-
-        $data['supervisor'] = supervisor::find($meeting->idSupervisor);
-        return view('psp.meeting.show',$data);
+       
     }
 
     /**
@@ -115,11 +110,7 @@ class MeetingController extends Controller
      */
     public function edit($id)
     {
-        //
-        $meeting = meeting::with('supervisor','student')->find($id)->get()->first();
-        $data['meeting'] = $meeting;
-        //dd($meeting);
-        return view('psp.meeting.edit',$data);
+       
     }
 
     /**
@@ -132,17 +123,6 @@ class MeetingController extends Controller
     public function update(Request $request, $id)
     {
         //
-        try {
-            $meeting = meeting::find($id);
-            $meeting->lugar = $request['lugar'];
-            $meeting->observaciones = $request['observaciones'];
-            $meeting->retroalimentacion = $request['retroalimentacion'];
-            $meeting->save();
-
-            return redirect()->route('meeting.show',$id)->with('success','La reunion se ha actualizado exitosamente');
-        } catch (Exception $e) {
-            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
-        }
     }
 
     /**
@@ -153,22 +133,12 @@ class MeetingController extends Controller
      */
     public function destroy($id)
     {
-        //
+    
     }
 
     public function search($id)
     {
-        
-        $student = Student::find($id);
-        
-        $meetings = meeting::where('idstudent',$id)->get();
-
-        $data = [
-            'meetings'    =>  $meetings,
-        ];
-        $data['student'] = $student;
-
-        return view('psp.meeting.search', $data);       
+           
 
     }
 }

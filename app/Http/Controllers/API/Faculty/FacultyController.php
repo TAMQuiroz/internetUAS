@@ -85,7 +85,7 @@ class FacultyController extends BaseController
         $results = StudentsResult::lastUpdated($date)
                                    ->where('idEspecialidad', $faculty_id)
                                    ->whereHas('resultxObjective',function($query) use ($eos_id){
-                                      $query->where('resultadoxobjetivo.IdObjetivoEducacional',$eos_id);
+                                      $query->where('ResultadoxObjetivo.IdObjetivoEducacional',$eos_id);
                                    })
                                    ->get();
         

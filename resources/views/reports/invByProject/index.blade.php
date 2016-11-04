@@ -1,4 +1,4 @@
-@extends('app')
+@extends(Auth::user() ? 'app' : 'appPublic')
 @section('content')
 
 <div class="row">

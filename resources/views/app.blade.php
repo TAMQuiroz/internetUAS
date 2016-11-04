@@ -366,8 +366,8 @@
                       <li><a href="{{route('proyecto.index')}}">Administrar Proyectos</a></li>
                     @endif
                     <!-- Menu Reportes: Sin permisos ya que cualquier usuario puede generar los reportes-->
-                        <li><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
-                        <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>  
+                      <li><a href="{{route('reporteISP.index')}}">Investigadores según proyecto</a></li>
+                      <li><a href="{{route('reporteISA.index')}}">Investigadores según área</a></li>  
                   </ul>
                 </div>
               </li> 

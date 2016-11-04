@@ -18,7 +18,7 @@ class CaseInscriptionFileSeeder extends Seeder
             'Contrasena'        => bcrypt(20001234),
         ]);
 
-        DB::table('alumno')->insert([
+        DB::table('Alumno')->insert([
         	'idAlumno'				=> 1,
 	        //'idHorario'            => 1,
 	        'Nombre'		=>  'Juan',

@@ -82,9 +82,9 @@
                                 </a>
                                 @endif
                                 @if($evaluation->estado == 3)
-                                <a href="{{route('evaluacion.show',$evaluation->id)}}" title="Visualizar" class="btn btn-primary btn-xs view-group"">
+                                <a href="{{route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id)}}" class="btn btn-primary btn-xs" title="Visualizar" >
                                     <i class="fa fa-eye"></i>
-                                </a>                                
+                                </a>                               
                                 @endif
                             </td>
                         </tr>

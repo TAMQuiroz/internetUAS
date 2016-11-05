@@ -29,6 +29,10 @@ class Deliverable extends Model
         return $this->hasMany('Intranet\Models\Invdocument', 'id_entregable')->orderBy('version','desc');
     }
 
+    public function dependencies(){
+        return $this->hasMany('Intranet\Models\Deliverable', 'id_padre');
+    }
+
     public function father(){
         return $this->belongsTo('Intranet\Models\Deliverable', 'id_padre');
     }

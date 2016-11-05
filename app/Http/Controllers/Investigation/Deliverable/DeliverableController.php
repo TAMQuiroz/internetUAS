@@ -214,6 +214,10 @@ class DeliverableController extends Controller
                     return redirect()->back()->with('warning', 'El entregable tiene versiones creadas');
                 }
 
+                if(count($entregable->dependencies) > 0){
+                    return redirect()->back()->with('warning', 'El entregable tiene dependencias');
+                }
+
                 $entregable->delete();
 
                 return redirect()->route('entregable.index',$proyecto->id)->with('success', 'El entregable se ha eliminado exitosamente');

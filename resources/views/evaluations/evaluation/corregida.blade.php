@@ -1,5 +1,6 @@
 @extends('app')
 @section('content')
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
@@ -19,53 +20,58 @@
 					@foreach($evs as $key => $ev)
 										
 					<div class="pregunta form-group">
-						<h4>Pregunta:{{$key}} ({{$ev->pregunta->puntaje}} puntos)</h4>
+						<h4>Pregunta:{{$key+1}} ({{$ev->pregunta->puntaje}} puntos)</h4>
 						<p>{{$ev->pregunta->descripcion}}</p>
-						<h5>Respuesta:</h5>
+						<h5>Respuesta del alumno:</h5>
 
-						@if($ev->pregunta->tipo == 2)
+						@if($ev->pregunta->tipo == 2) <!-- ABIERTA -->
 							@if($ev->respuesta == "")
 							<p>-</p>
 							@else
 							<p>{{$ev->respuesta}}</p>
 							@endif
-						@elseif($ev->pregunta->tipo == 1)
+							<h5>Comentario del evaluador:</h5>
+							@if( is_null( $ev->puntaje) )
+							<h6>Aún no corregida</h6>
+							@else
+							<textarea readonly class="form-control" rows="4">{{$ev->comentario}}</textarea>
+							<label class="control-label">Puntaje asignado: {{$ev->puntaje}}</label>
+							@endif
+
+						@elseif($ev->pregunta->tipo == 1) <!-- CERRADA -->
 						<ul>
 							@foreach($ev->pregunta->alternativas as $key => $alt)
 							<li>
-
-								<div class="radio">
-								<label>
-								@if($ev->clave_elegida == $alt->letra)
-								<input checked type="radio"/>
-								@else
-								<input type="radio"/>
-								@endif
+								<div style="" class="radio">
+								<label @if(($ev->clave_elegida == $alt->letra) && ($ev->pregunta->rpta != $ev->clave_elegida) ) 
+											style="background-color:red"
+											@elseif ($ev->pregunta->rpta == $alt->letra ) 
+											style="background-color:green"
+								 @endif >								
+								<input onclick="return false;" type="radio" @if($ev->clave_elegida == $alt->letra) checked @endif  />								
 								 {{$alt->letra}}. {{$alt->descripcion}} 
 								 </label>
 								</div>
 																						
 							</li>
 							@endforeach
+							<strong>Respuesta correcta: {{$ev->pregunta->rpta}}</strong><br>
+							<label class="control-label ">Puntaje asignado: {{$ev->puntaje}}</label>
 						</ul>
-						@elseif($ev->pregunta->tipo == 3)
+						@elseif($ev->pregunta->tipo == 3) <!-- ARCHIVO -->
 							@if($ev->path_archivo != null)
 							<a style="color:blue;text-decoration: underline" href="{{route('evaluacion.descargar_respuesta',$ev->id)}}">Descargar archivo</a>
 							@else
 							<p style="color:gray;text-decoration: underline" >Sin archivo</p>
 							@endif
-						@endif
-						<h5>Corrección:</h5>
-						@if(( is_null( $ev->puntaje)) && ($ev->pregunta->tipo !=1) )
-						<h6>Aun no corregida</h6>
-						@elseif (($ev->puntaje >= 0) && ($ev->pregunta->tipo !=1) )
-						<textarea readonly class="form-control" rows="4">{{$ev->comentario}}</textarea>
-						<label class="control-label col-md-2 col-sm-3 col-xs-5">Puntaje:</label>
-						<div class="col-md-2 col-sm-2 col-xs-3">							
-							<input type="text" value="{{$ev->puntaje}}" readonly class="form-control" >			
-						</div>
-						@elseif ($ev->pregunta->tipo ==1 )
-						<strong>Respuesta correcta: {{$ev->pregunta->rpta}}</strong>
+
+							<h5>Comentario del evaluador:</h5>
+							@if( is_null( $ev->puntaje) )
+							<h6>Aún no corregida</h6>
+							@else
+							<textarea readonly class="form-control" rows="4">{{$ev->comentario}}</textarea>
+							<label class="control-label ">Puntaje asignado: {{$ev->puntaje}}</label>	
+							@endif
 						@endif
 					</div><br>
 					

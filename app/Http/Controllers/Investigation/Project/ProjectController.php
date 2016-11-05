@@ -41,7 +41,10 @@ class ProjectController extends Controller
     {
         $proyectos  = Project::get();
         $usuario    = Auth::user();
-        $profesor   = $usuario->professor;
+        $profesor   = null;
+        if($usuario){
+            $profesor   = $usuario->professor;
+        }
         $esLider    = false;
         if($profesor && count($profesor->groups)!=0){
             $esLider = true;

@@ -9,7 +9,7 @@ use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
 use Intranet\Models\Tutorship;
 use Intranet\Models\TutSchedule;
-use Intranet\Models\tutmeeting;
+use Intranet\Models\TutMeeting;
 use Intranet\Models\Topic;
 use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
@@ -38,7 +38,7 @@ class TutStudentController extends BaseController
 
 
          $studentInfo = Tutstudent::where('id_usuario', $id)->get();
-         $appointmentInfo = tutmeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+         $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
          $i = 0;
 
          

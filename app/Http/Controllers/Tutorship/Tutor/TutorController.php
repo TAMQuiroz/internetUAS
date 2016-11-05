@@ -157,7 +157,7 @@ class TutorController extends Controller {
         if ($request['cant'] != null && $request['total'] != 0) {
             foreach ($request['cant'] as $idTeacher => $value) {
                 $sum = $sum + $value;
-            }
+            }            
             if ($sum != $request['total']) {
                 return redirect()->back()->with('warning', 'Los campos deben sumar el total de alumnos a reasignar.');
             } else {
@@ -182,12 +182,13 @@ class TutorController extends Controller {
                             }
                         }
                     }
-                    DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
+                    
+                    DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);                    
+                    return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
-            }
-            return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
+            }            
         } else {
             return redirect()->route('tutor.index')->with('warning', 'No se puede hacer la reasignación.');
         }

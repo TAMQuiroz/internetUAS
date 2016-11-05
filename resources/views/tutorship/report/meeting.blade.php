@@ -46,16 +46,16 @@
                                 {{Form::open(['route' => ['motivo.update', ''], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 
                                 <div class="form-group">
-                                    {{Form::label('Tipo: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
+                                    {{Form::label('Desde:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
                                     <div class="col-md-4 col-sm-4 col-xs-6">
-                                        {{Form::select('tipo', [null=>'Seleccione',1=>'De cancelación/rechazo de cita',2=>'De desactivación de tutor'], '', ['class' => 'form-control', 'required'])}}
+                                        {{Form::select('desde', [null=>'Seleccione',1=>'De cancelación/rechazo de cita',2=>'De desactivación de tutor'], '', ['class' => 'form-control', 'required'])}}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    {{Form::label('Nombre: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
+                                    {{Form::label('Hasta:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
                                     <div class="col-md-4 col-sm-4 col-xs-6">
-                                        {{Form::text('nombre','',['class'=>'form-control', 'required', 'maxlength' => 50])}}
+                                        {{Form::text('hasta','',['class'=>'form-control', 'required', 'maxlength' => 50])}}
                                     </div>
                                 </div>		    		
 

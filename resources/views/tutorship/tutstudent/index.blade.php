@@ -103,23 +103,23 @@
   <form method="GET" action="{{route('alumno.index')}}">
     <div class="flex-container is-wrap has-space-between">
             <div class="flex-element input-container">
-                <label class="label-input">Código</label>
-                <input class="input-filter" type="text" name="code">
+                <label class="label-input label-modal">Código</label>
+                <input class="input-filter input-modal" type="text" name="code" maxlength="10">
             </div>
             <div class="flex-element input-container">
-                <label class="label-input">Nombre</label>
-                <input class="input-filter" type="text" name="name">
+                <label class="label-input label-modal">Nombre</label>
+                <input class="input-filter input-modal" type="text" name="name" maxlength="30">
             </div>
             <div class="flex-element input-container">
-                <label class="label-input">Apellido Paterno</label>
-                <input class="input-filter" type="text" name="lastName">
+                <label class="label-input label-modal">Apellido Paterno</label>
+                <input class="input-filter input-modal" type="text" name="lastName" maxlength="30">
             </div>
             <div class="flex-element input-container">
-                <label class="label-input">Apellido Materno</label>
-                <input class="input-filter" type="text" name="secondLastName">
+                <label class="label-input label-modal">Apellido Materno</label>
+                <input class="input-filter input-modal" type="text" name="secondLastName" maxlength="30">
             </div>
             <div class="flex-element input-container has-select">
-                <label class="label-input">Tutor</label>
+                <label class="label-input label-modal">Tutor</label>
                 <select class="form-control input-filter" name="tutorId">
                     <option value>Todos</option>
                     @foreach ($tutors as $tutor)

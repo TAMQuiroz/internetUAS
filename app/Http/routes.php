@@ -746,8 +746,8 @@ $api->version('v1', function ($api) {
                 $api->get('/{faculty_id}/suggestions', 'FacultyController@getSuggestions');
                 $api->get('/{faculty_id}/improvement_plans', 'FacultyController@getImprovementsPlans');
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');
-                $api->get('/{f_id}/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
-
+                $api->get('/{f_id}/semester/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
+                $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
@@ -762,6 +762,9 @@ $api->version('v1', function ($api) {
 
             $api->group(['namespace' => 'ImprovementPlan','prefix'=>'improvementplans'],function($api){
                 $api->get('/{ip_id}/view', 'ImprovementPlanController@getipbyId');
+                $api->get('/{ip_id}/actions', 'ImprovementPlanController@getActionsofIp');
+                $api->get('/{ip_id}/suggestions','ImprovementPlanController@getSuggestion');
+                $api->post('/{ip_id}/suggestions','ImprovementPlanController@createSuggestion');
                 
             });
 
@@ -771,13 +774,24 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/criterions', 'AspectController@getCriterions');
             });
 
+            $api->group(['namespace' => 'Criterion','prefix' => 'criterions'], function($api){
+                $api->get('/{id}/levels', 'CriterionController@getLevels');
+            });
+
             //PSP
             $api->group(['namespace' => 'Psp','prefix' => 'psp'],function($api){
                 $api->get('groups/all','PspGroup\PspGroupController@getAll');
                 $api->get('groups/{id}','PspGroup\PspGroupController@getById');
                 $api->get('groups/number/{number}','PspGroup\PspGroupController@getByNumber');
+                
+                $api->get('student/group','PspGroup\PspGroupController@getGroupByStudent');
+                $api->get('teacher/students/all','Students\PspStudentsController@getAll');
+                $api->get('student','PspGroup\PspGroupController@getStudent');
+                $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
+                $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+
                 $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
-              //$api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
+           
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
@@ -819,6 +833,8 @@ $api->version('v1', function ($api) {
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
+            $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
+            $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
 
         });
     });
@@ -1019,8 +1035,11 @@ Route::group(['prefix' => 'uas'], function(){
 });
 
 
-    //MODULO DE TUTORIA
+//MODULO DE TUTORIA - Inicio de rutas
+
 Route::group(['prefix' => 'tutoria'], function(){
+
+    /***   PARA EL COORDINADOR DE TUTORÍA   ***/
 
     //Configuraciones
     Route::group(['prefix' => 'parametros'], function(){   
@@ -1053,57 +1072,72 @@ Route::group(['prefix' => 'tutoria'], function(){
 
 
     //Tutores
-        Route::group(['prefix' => 'tutores'], function(){    
-            Route::get('/', ['as' => 'tutor.index', 'uses' => 'Tutorship\Tutor\TutorController@index']);
-            Route::get('create', ['as' => 'tutor.create', 'uses' => 'Tutorship\Tutor\TutorController@create']);
-            Route::post('create', ['as' => 'tutor.store', 'uses' => 'Tutorship\Tutor\TutorController@store']);
-            Route::get('show/{id}', ['as' => 'tutor.show', 'uses' => 'Tutorship\Tutor\TutorController@show']);
-            Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
-            Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
-            Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
-            Route::get('reassign/{id}', ['as' => 'tutor.reassign', 'uses' => 'Tutorship\Tutor\TutorController@reassign']);
-            Route::post('reassign/{id}', ['as' => 'tutor.deactivate', 'uses' => 'Tutorship\Tutor\TutorController@deactivate']);
-        });
+    Route::group(['prefix' => 'tutores'], function(){    
+        Route::get('/', ['as' => 'tutor.index', 'uses' => 'Tutorship\Tutor\TutorController@index']);
+        Route::get('create', ['as' => 'tutor.create', 'uses' => 'Tutorship\Tutor\TutorController@create']);
+        Route::post('create', ['as' => 'tutor.store', 'uses' => 'Tutorship\Tutor\TutorController@store']);
+        Route::get('show/{id}', ['as' => 'tutor.show', 'uses' => 'Tutorship\Tutor\TutorController@show']);
+        Route::get('edit/{id}', ['as' => 'tutor.edit', 'uses' => 'Tutorship\Tutor\TutorController@edit']);
+        Route::post('edit/{id}', ['as' => 'tutor.update', 'uses' => 'Tutorship\Tutor\TutorController@update']);
+        Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
+        Route::get('reassign/{id}', ['as' => 'tutor.reassign', 'uses' => 'Tutorship\Tutor\TutorController@reassign']);
+        Route::post('reassign/{id}', ['as' => 'tutor.deactivate', 'uses' => 'Tutorship\Tutor\TutorController@deactivate']);
+    });
                 
         
-        //Alumnos de la especialidad
-        Route::group(['prefix' => 'alumnos'], function(){    
-            Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
-            Route::get('create', ['as' => 'alumno.create', 'uses' => 'Tutorship\Tutstudent\TutstudentController@create']);
-            Route::get('createAll', ['as' => 'alumno.createAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@createAll']);
-            Route::post('create', ['as' => 'alumno.store', 'uses' => 'Tutorship\Tutstudent\TutstudentController@store']);
-            Route::post('createAll', ['as' => 'alumno.storeAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@storeAll']);
-            Route::get('show/{id}', ['as' => 'alumno.show', 'uses' => 'Tutorship\Tutstudent\TutstudentController@show']);
-            Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
-            Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
-            Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
-            Route::get('restore/{id}', ['as' => 'alumno.restore', 'uses' => 'Tutorship\Tutstudent\TutstudentController@restore']);
-            Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
-            Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
-            Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
-        });
-
-        //mitutor
-        Route::group(['prefix' => 'mitutor'], function(){    
-            Route::get('/', ['as' => 'mitutor.index', 'uses' => 'Tutorship\MyTutor\MyTutorController@index']);
-            
-        });
-
-        //miperfil
-        Route::group(['prefix' => 'miperfil'], function(){    
-            Route::get('/', ['as' => 'miperfil.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
-            Route::get('edit/{id}', ['as' => 'miperfil.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
-            Route::post('edit/{id}', ['as' => 'miperfil.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);
-            
-        });
-
-        //cita_alumno
-        Route::group(['prefix' => 'miscitas'], function(){    
-            Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@create']);
-            
-        });
-
+    //Alumnos de la especialidad
+    Route::group(['prefix' => 'alumnos'], function(){    
+        Route::get('/', ['as' => 'alumno.index', 'uses' => 'Tutorship\Tutstudent\TutstudentController@index']);
+        Route::get('create', ['as' => 'alumno.create', 'uses' => 'Tutorship\Tutstudent\TutstudentController@create']);
+        Route::get('createAll', ['as' => 'alumno.createAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@createAll']);
+        Route::post('create', ['as' => 'alumno.store', 'uses' => 'Tutorship\Tutstudent\TutstudentController@store']);
+        Route::post('createAll', ['as' => 'alumno.storeAll', 'uses' => 'Tutorship\Tutstudent\TutstudentController@storeAll']);
+        Route::get('show/{id}', ['as' => 'alumno.show', 'uses' => 'Tutorship\Tutstudent\TutstudentController@show']);
+        Route::get('edit/{id}', ['as' => 'alumno.edit', 'uses' => 'Tutorship\Tutstudent\TutstudentController@edit']);
+        Route::post('edit/{id}', ['as' => 'alumno.update', 'uses' => 'Tutorship\Tutstudent\TutstudentController@update']);
+        Route::get('delete/{id}', ['as' => 'alumno.delete', 'uses' => 'Tutorship\Tutstudent\TutstudentController@destroy']);
+        Route::get('restore/{id}', ['as' => 'alumno.restore', 'uses' => 'Tutorship\Tutstudent\TutstudentController@restore']);
+        Route::get('asignartutores', ['as' => 'alumno.asignar', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutor']);
+        Route::post('asignartutores', ['as' => 'alumno.asignardo', 'uses' => 'Tutorship\Tutstudent\TutstudentController@assignTutorDo']);
+        Route::get('example', ['as' => 'alumno.example', 'uses' => 'Tutorship\Tutstudent\TutstudentController@downLoadExample']);
     });
+
+    //Reportes
+    Route::group(['prefix' => 'reporte'], function(){    
+        Route::get('/meeting', ['as' => 'reporte.meeting', 'uses' => 'Tutorship\Report\ReportController@meeting']);                    
+    });
+
+    /***   PARA EL ALUMNO DE TUTORÍA   ***/
+
+    //Mitutor
+    Route::group(['prefix' => 'mitutor'], function(){    
+        Route::get('/', ['as' => 'mitutor.index', 'uses' => 'Tutorship\MyTutor\MyTutorController@index']); 
+    });
+
+    /***   PARA EL TUTOR DE TUTORÍA   ***/
+
+    //Miperfil
+    Route::group(['prefix' => 'miperfil'], function(){    
+        Route::get('/', ['as' => 'miperfil.index', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@index']);
+        Route::get('edit/{id}', ['as' => 'miperfil.edit', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@edit']);
+        Route::post('edit/{id}', ['as' => 'miperfil.update', 'uses' => 'Tutorship\TutSchedule\TutScheduleController@update']);            
+    });
+        
+    //Mis Alumnos
+    Route::group(['prefix' => 'misalumnos'], function(){    
+        Route::get('/', ['as' => 'mis_alumnos.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyStudents']);
+        Route::get('show/{id}', ['as' => 'mis_alumnos.show', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showMyStudent']);
+        
+    });
+
+    //Mis Citas
+    Route::group(['prefix' => 'miscitas'], function(){    
+        Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDates']);
+        Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
+        
+    });
+});
+//MODULO DE TUTORIA - Fin de rutas
 
     //Acreditacion - flujo administrador:
     Route::group(['prefix' => 'flujoAdministrador'], function() {
@@ -1193,8 +1227,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::group(['prefix' => 'evaluaciones'], function(){    
             Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
             Route::get('evaluador', ['as' => 'evaluacion_evaluador.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexev']);
+            Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
             Route::get('evaluaciones_alumnos/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexeval']);
             Route::get('corregir/{id}{ev}', ['as' => 'evaluacion.corregir', 'uses' => 'Evaluations\Evaluation\EvaluationController@corregir']);
+            Route::get('show_corregida/{id}', ['as' => 'evaluacion_corregida.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@vercorregida']);
             Route::post('corregida/{id}{ev}', ['as' => 'evaluacion_corregida.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@storeEvCorregida']);
             Route::get('descargar/{id}', ['as' => 'evaluacion.descargar_respuesta', 'uses' => 'Evaluations\Evaluation\EvaluationController@download_evquestion']);
             Route::get('alumno', ['as' => 'evaluacion_alumno.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexal']);

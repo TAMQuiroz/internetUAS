@@ -45,7 +45,7 @@
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-3">
 							
-							<input type="text" required class="puntaje form-control" maxlength="4" onkeypress="return validateFloatKeyPress(this,event);" name="arr_puntaje1[{{$ev->id}}]">							
+							<input type="text" required class="puntaje form-control" maxlength="5" onkeypress="return validateFloatKeyPress(this,event);" name="arr_puntaje1[{{$ev->id}}]">							
 						</div>
 						
 							

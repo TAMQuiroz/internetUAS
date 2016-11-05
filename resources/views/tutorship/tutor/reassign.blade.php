@@ -36,10 +36,10 @@
                                     <thead>
                                         <tr class="headings">                                        
                                             <th class="column-title">Código </th>
-                                            <th class="column-title">Apellidos&nbsp;y&nbsp;Nombres</th>                                                                
+                                            <th class="column-title">&nbsp;&nbsp;Apellidos&nbsp;y&nbsp;Nombres&nbsp;&nbsp;</th>                                                                
                                             <th class="column-title">Horas semanales</th>
-                                            <th class="column-title">Alumnos</th>
-                                            <th class="column-title">Asignación </th>                                                                                                       
+                                            <th class="column-title">Alumnos del tutor</th>
+                                            <th class="column-title">Alumnos&nbsp;a asignar </th>                                                                                                       
                                         </tr>
                                     </thead>
                                     <tbody>         

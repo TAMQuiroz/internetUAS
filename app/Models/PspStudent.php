@@ -17,4 +17,8 @@ class PspStudent extends Model
     {
     	return $this->belongsTo('Intranet\Models\PspGroup','IdPspGroup');
     }
+
+    public function pspprocess(){
+        return $this->belongsTo('Intranet\Models\PspProcess', 'idpspprocess');
+    }
 }

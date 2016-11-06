@@ -27,7 +27,8 @@
                         <th class="column-title">Titulo</th>
                         <th class="column-title">Plantilla</th>
                         <th class="column-title">Obligatorio</th>
-                        <th class="column-title">Fase</th>   
+                        <th class="column-title">Fase</th>  
+                        <th class="column-title">Curso</th> 
                         <th colspan="2">Acciones</th>                     
                     </tr>
                     </thead>
@@ -42,6 +43,7 @@
                             <td>opcional</td> 
                             @endif 
                             <td>{{$template->numerofase}}</td>
+                            <td>{{$template->Phase->PspProcess->Course->Nombre}}</td>
                             <td>
                                 <a href="{{route('template.edit', $template->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                 <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$template->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>

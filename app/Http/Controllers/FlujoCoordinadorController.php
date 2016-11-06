@@ -64,10 +64,6 @@ class FlujoCoordinadorController extends Controller
         $this->passwordService= new PasswordService();
 	}
 
-
-    //
-
-
     public function index()
     {
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStudentxinscriptionfilesTable extends Migration
+class CreatePspstudentsxinscriptionfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,18 @@ class CreateStudentxinscriptionfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('studentxinscriptionfiles', function (Blueprint $table) {
+        Schema::create('pspstudentsxinscriptionfiles', function (Blueprint $table) {
+            //$table->increments('id');
             $table->integer('idinscriptionfile')->unsigned();
             $table->foreign('idinscriptionfile')->references('id')->on('inscriptionfiles');
             $table->integer('idstudent');
-            $table->foreign('idstudent')->references('IdAlumno')->on('Alumno');
-            //$table->integer('aceptaTerminos')->unsigned();
-            //$table->foreign('aceptaTerminos')->references('id')->on('statuses');
+            $table->foreign('idpspstudents')->references('id')->on('pspstudents'); //referencia a la tabla pspstudents            
             $table->integer('acepta_terminos');
             $table->integer('nota_final');
+            $table->softDeletes();
             $table->timestamps();
+            //$table->integer('aceptaTerminos')->unsigned();
+            //$table->foreign('aceptaTerminos')->references('id')->on('statuses');
         });
     }
 
@@ -32,6 +34,6 @@ class CreateStudentxinscriptionfilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('studentxinscriptionfiles');
+        Schema::drop('pspstudentsxinscriptionfiles');
     }
 }

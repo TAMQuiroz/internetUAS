@@ -24,6 +24,7 @@ class CreateSupervisorsTable extends Migration
             $table->integer('idfaculty');
             $table->integer('iduser');
             $table->integer('vigente');
+            $table->integer('idpspprocess')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

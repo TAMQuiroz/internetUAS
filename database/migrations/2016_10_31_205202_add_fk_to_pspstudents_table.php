@@ -19,6 +19,7 @@ class AddFkToPspstudentsTable extends Migration
             $table->foreign('idpspgroup')->references('id')->on('pspgroups');
             $table->foreign('idespecialidad')->references('IdEspecialidad')->on('Especialidad');
             $table->foreign('idsupervisor')->references('id')->on('supervisors');
+            $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
         });
     }
 
@@ -36,6 +37,7 @@ class AddFkToPspstudentsTable extends Migration
              $table->dropForeign('pspstudents_idpspgroup_foreign');
              $table->dropForeign('pspstudents_idespecialidad_foreign');
              $table->dropForeign('pspstudents_idsupervisor_foreign');
+             $table->dropForeign('pspstudents_idpspprocess_foreign');
         });
     }
 }

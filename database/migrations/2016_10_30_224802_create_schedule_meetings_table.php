@@ -18,6 +18,7 @@ class CreateScheduleMeetingsTable extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->integer('idfase')->unsigned()->nullable();
+            $table->integer('idpspprocess')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1271,7 +1271,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/end3', ['as' => 'end3.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end3']);
         Route::get('/{id}/end4', ['as' => 'end4.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end4']);
 
-
+        //insturmentos de medicion de los cursos del ciclo:
+        Route::get('/{id}/instrumentosDelCurso', ['as' => 'instrumentosDelCurso_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_index']);
+        Route::get('/{id}/instrumentosDelCurso/edit', ['as' => 'instrumentosDelCurso_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_edit']);        
+        Route::post('/{id}/instrumentosDelCurso/update', ['as' => 'instrumentosDelCurso_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_update']);
     });
 
 

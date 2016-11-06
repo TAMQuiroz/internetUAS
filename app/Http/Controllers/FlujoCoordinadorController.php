@@ -36,6 +36,7 @@ use Intranet\Models\Teacher;
 use Intranet\Models\Criterion;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
+use DB;
 
 
 class FlujoCoordinadorController extends Controller
@@ -694,5 +695,40 @@ class FlujoCoordinadorController extends Controller
         }
         return redirect()->route('cursosCicloHorario_index.flujoCoordinador', ['id' => $id,'idCourse' => $idCourse])->with('success', 'Se eliminó el horario con éxito');
 
+    }
+
+    public function instrumentosDelCurso_index($id){
+        $cursosDelCicloyEspecialidad =[];
+        $data['title'] = "Cursos Dictados en el Ciclo";
+        $facultad = Faculty::findOrFail($id);
+
+        $data['facultad']=$facultad;
+
+        try {
+            if(Session::get('academic-cycle')!=null){
+              
+                $cursosDelCicloyEspecialidad =  DB::table('cursoxciclo')
+                                        ->join('curso', 'curso.IdCurso', '=', 'cursoxciclo.IdCurso')
+
+                                        ->select('curso.*')
+
+                                        ->where ('curso.IdEspecialidad', '=', $id)
+                                        ->where ('cursoxciclo.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico)
+
+                                        //->orderBy('cliente.apellidoPaterno', 'asc')
+                                        ->get(); 
+                $data['dictatedCourses']= $cursosDelCicloyEspecialidad;
+                //$data['dictatedCourses']= $this->courseService->retrieveByFacultyandCicle($id);
+
+                //$data['dictatedCourses'] = $this->dictatedCoursesService->retrieveAllCoursesxCycle();
+            }
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        //return $cursosDelCicloyEspecialidad;
+        return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
+                                                                    'facultad'=> $facultad,
+                                                                    'cursos' => $cursosDelCicloyEspecialidad
+                                                                    ]);
     }
 }

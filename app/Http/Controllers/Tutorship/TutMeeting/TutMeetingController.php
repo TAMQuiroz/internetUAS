@@ -9,6 +9,8 @@ use Intranet\Http\Requests;
 use Intranet\Models\Tutorship;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
+use Illuminate\Support\Facades\Session;
+use Intranet\Http\Services\User\PasswordService;
 
 class TutMeetingController extends Controller
 {
@@ -17,20 +19,50 @@ class TutMeetingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexMyStudents(Request $request)
     {
-        //
+        $mayorId = Session::get('faculty-code');
+
+        $user       = Session::get('user');
+
+        $filters = [
+            "code" => $request->input('code'),
+            "name" => $request->input('name'),
+            "lastName" => $request->input('lastName'),
+            "secondLastName" => $request->input('secondLastName'),
+        ];
+
+        $myStudents = Tutstudent::getFilteredStudents($filters, $user->IdDocente, $mayorId);
+
+        $data = [
+            'students' =>  $myStudents,
+        ];
+
+        return view('tutorship.tutormystudents.index', $data);
+    
     }
 
+    public function showMyStudent($id)
+    {
+        $student       = Tutstudent::find($id);
+        $data = [
+            'student'      =>  $student,
+        ];
+        return view('tutorship.tutormystudents.show', $data);
+    }
     /**
      * Este create es cuando el alumno pide una cita a su tutor
      *     
      */
-    public function create()
+
+    public function indexMyDates()
     {
-        $codigoAlumno = Auth::user()->Usuario;
-        $alumno = Tutstudent::where('codigo',$codigoAlumno)->first();
-        dd($alumno);
+        return view('tutorship.tutormydates.index');
+    }
+
+    public function createDate($id)
+    {
+        return view('tutorship.tutormydates.create');
     }
 
     /**

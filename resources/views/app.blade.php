@@ -121,7 +121,6 @@
                 @endif
                 </span>
               </div>
-
               <div id="info-faculty" class="bar-info">
                 <span class="label label-info hidden-xs hidden-sm">{{Session::get('faculty-name')}}</span>
                 @if(Session::get('academic-cycle')!=null)
@@ -311,18 +310,19 @@
               <!-- nueva barra PSP -->
 
 
-              @if(Auth::user() && (Auth::user()->professor || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil==0)) 
+              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil==0)) 
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
                     <ul>
-                        @if(Auth::user()->professor) <!--si es profesor o coordinador-->
+                        @if(Auth::user()->professor && count(Auth::user()->professor->pspProcesses!=null)>0) <!--si es profesor o coordinador-->
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
                         <li><a href="{{route('supervisor.index-participant')}}"> Añadir Supervisores/Profesores</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
+                        <li><a href="{{route('MeetingTeacher.index')}}">Reservar Reunión</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
                         @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
@@ -392,7 +392,7 @@
 
 
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Tutoría</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">person_pin</i>Tutoría</a>
                 <div class="collapsible-body">
                   <ul>
 
@@ -401,20 +401,21 @@
                     
                     <!-- coordinador de especialidad-->
                       @if(Auth::user()->IdPerfil == 1) 
-                      <li><a href="{{route('coordinadorTutoria.index')}}"> Administrar Coordinadores</a></li>
+                      <li><a href="{{route('coordinadorTutoria.index')}}"> Coordinadores</a></li>
                       @endif
 
                       <!-- coordinador de tutoria -->
                       @if(Auth::user()->professor->rolTutoria == 2)
-                      <li><a href="{{route('tutor.index')}}"> Administrar Tutores</a></li>
-                      <li><a href="{{route('alumno.index')}}"> Administrar Alumnos</a></li>
+                      <li><a href="{{route('tutor.index')}}"> Tutores</a></li>
+                      <li><a href="{{route('alumno.index')}}"> Alumnos</a></li>
+                      <li><a href="{{route('reporte.meeting')}}"> Reportes</a></li>
                       <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
                       @endif
 
                       <!-- tutor-->
                       @if(Auth::user()->professor->rolTutoria == 1)
                       <li><a href="{{route('miperfil.index')}}"> Mi perfil</a></li>
-                      <li><a href="{{route('cita_alumno.index')}}"> Mis alumnos</a></li>                  
+                      <li><a href="{{route('mis_alumnos.index')}}"> Mis alumnos</a></li>                  
                       <li><a href="{{route('cita_alumno.index')}}"> Citas</a></li>
                       @endif   
                     
@@ -445,22 +446,22 @@
 
                     @if(Auth::user()->professor != null)
                       @if(Auth::user()->professor->rolEvaluaciones == 1)  <!-- Aministrador de evaluaciones-->
-                      <li><a href="{{route('competencia.index')}}"> Administrar Competencia</a></li>
-                      <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>
-                      <li><a href="{{route('evaluador.index')}}"> Administrar Evaluadores</a></li>
-                      <li><a href="{{route('evaluacion.index')}}"> Administrar Evaluaciones</a></li>
+                      <li><a href="{{route('competencia.index')}}"> Competencias</a></li>
+                      <li><a href="{{route('pregunta.index')}}"> Preguntas</a></li>
+                      <li><a href="{{route('evaluador.index')}}"> Evaluadores</a></li>
+                      <li><a href="{{route('evaluacion.index')}}"> Evaluaciones</a></li>
                       @endif
                     @endif
 
                     @if(Auth::user()->professor != null)
                       @if(Auth::user()->professor->rolEvaluaciones == 2) <!-- Evaluador de competencias -->
-                      <li><a href="{{route('pregunta.index')}}"> Administrar Preguntas</a></li>                
+                      <li><a href="{{route('pregunta.index')}}"> Preguntas</a></li>                
                       <li><a href="{{route('evaluacion_evaluador.index')}}"> Mis Evaluaciones</a></li>
                       @endif
                     @endif
 
                     @if(Auth::user()->IdPerfil == 0)<!-- Alumno  -->                    
-                    <li><a href="{{route('evaluacion_alumno.index')}}"><i class="material-icons">reorder</i> Mis evaluaciones</a></li>
+                    <li><a href="{{route('evaluacion_alumno.index')}}">Mis evaluaciones</a></li>
                     @endif
                   </ul>
                 </div>

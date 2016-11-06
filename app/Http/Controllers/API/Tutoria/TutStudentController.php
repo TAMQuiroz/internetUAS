@@ -9,7 +9,7 @@ use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
 use Intranet\Models\Tutorship;
 use Intranet\Models\TutSchedule;
-use Intranet\Models\tutmeeting;
+use Intranet\Models\TutMeeting;
 use Intranet\Models\Topic;
 use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
@@ -35,22 +35,31 @@ class TutStudentController extends BaseController
 
     public function getAppointmentList($id)
     {
-         // return "civil ctm";
 
 
          $studentInfo = Tutstudent::where('id_usuario', $id)->get();
-         $appointmentInfo = tutmeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+         $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
          $i = 0;
 
+         
        foreach ($appointmentInfo as $appointInfo) {
 
            $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
-           $statusInfo =  Status::where('id', $appointInfo['estado'])->get();
+           //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
            $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-           $appointmentInfo[$i]['nombreEstado'] = $statusInfo[0]['nombre'];
+           if (1 == $appointInfo['estado']){
+                $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
+           }
+           else if  (2 == $appointInfo['estado']){
+                $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
+           }
+           else if  (3 == $appointInfo['estado']){
+                $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+           }
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());
+         
          
     }
 
@@ -81,8 +90,8 @@ class TutStudentController extends BaseController
 
         //------INICIO OBTENIENDO ID DEL TUTOR--------
          $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
-        // $idDocente = $tutorshipInfo[0]['id_profesor']; 
-         $idDocente = 4;                                    // Por el momento
+         $idDocente = $tutorshipInfo[0]['id_profesor']; 
+        // $idDocente = 4;                                    // Por el momento
         //------FIN OBTENIENDO ID DEL TUTOR-----------
 
 
@@ -95,8 +104,9 @@ class TutStudentController extends BaseController
                 //'duracion' => $dateTimeEnd,
                 'id_docente' => $idDocente,
                 'id_topic' => $motivoInfo[0]['id'],
+                'creador' => 0,
                 'no_programada' => 0,
-                'estado' => 12
+                'estado' => 1
             ]
 
         );

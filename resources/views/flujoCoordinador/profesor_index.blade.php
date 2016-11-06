@@ -74,7 +74,7 @@
             
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                     <a class="btn btn-default pull-left submit" href="{{ route('end1.flujoCoordinador',$idEspecialidad) }}"> < ATRAS </a>
+                     <!--<a class="btn btn-default pull-left submit" href="{{ route('end1.flujoCoordinador',$idEspecialidad) }}"> < ATRAS </a>-->
                     <a  id ="objetivo-siguiente-btn" href="{{ route('courses_index.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">SIGUIENTE ></a>
                 </div>
             </div>

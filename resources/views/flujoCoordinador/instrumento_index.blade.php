@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-title">
         <div class="title_left">
-            <h3>Lista de Instrumentos de Medición</h3>
+            <h3>Lista de Instrumentos de Medición - Tipos de Evidencia</h3>
         </div>
     </div>
     

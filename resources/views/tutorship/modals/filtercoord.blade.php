@@ -6,21 +6,21 @@
 	</div>
 	<form class="form-horizontal" method="GET" action="{{$route}}">
 		<div class="form-group">
-			<label class="control-label col-md-4 col-sm-4 col-xs-6">Nombre</label>
+			<label class="control-label col-md-4 col-sm-4 col-xs-6 label-modal">Nombre</label>
 			<div class="col-md-6 col-sm-6 col-xs-6">
-				<input class="form-control" type="text" name="name">
+				<input class="form-control input-modal" type="text" name="name" maxlength="30">
 			</div>			
 		</div>
 		<div class="form-group">
-			<label class="control-label col-md-4 col-sm-4 col-xs-6">Apellido Paterno</label>
+			<label class="control-label col-md-4 col-sm-4 col-xs-6 label-modal">Apellido Paterno</label>
 			<div class="col-md-6 col-sm-6 col-xs-6">
-				<input class="form-control" type="text" name="lastName">
+				<input class="form-control input-modal" type="text" name="lastName" maxlength="30">
 			</div>			
 		</div>
 		<div class="form-group">
-			<label class="control-label col-md-4 col-sm-4 col-xs-6">Apellido Materno</label>
+			<label class="control-label col-md-4 col-sm-4 col-xs-6 label-modal">Apellido Materno</label>
 			<div class="col-md-6 col-sm-6 col-xs-6">
-				<input class="form-control" type="text" name="secondLastName">
+				<input class="form-control input-modal" type="text" name="secondLastName" maxlength="30">
 			</div>			
 		</div>		
 		<div class="form-group">

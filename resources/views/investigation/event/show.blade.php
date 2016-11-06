@@ -97,6 +97,8 @@
                     <div class="row">
                         @if($evento->imagen)
                         {{Html::image(asset($evento->imagen), null, ['class'=>'img-thumbnail'])}}
+                        @else
+                        {{Html::image(asset('images/nofoto.png'), null, ['class'=>'img-thumbnail'])}}
                         @endif
                     </div>
 		    	</div>

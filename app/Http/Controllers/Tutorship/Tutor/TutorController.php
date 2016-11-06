@@ -153,13 +153,16 @@ class TutorController extends Controller {
     }
 
     public function deactivate(Request $request, $id) {
-        $sum = 0;
+        if ($request['motivo']==""){
+                return redirect()->back()->with('warning', 'Se debe seleccionar un motivo por el cual se está reasignando los alumnos del tutor.');
+        }        
         if ($request['cant'] != null && $request['total'] != 0) {
+            $sum = 0;
             foreach ($request['cant'] as $idTeacher => $value) {
                 $sum = $sum + $value;
-            }
+            }            
             if ($sum != $request['total']) {
-                return redirect()->back()->with('warning', 'Los campos deben sumar el total de alumnos a reasignar.');
+                return redirect()->back()->with('warning', 'Se cuenta con '.$request['total'].' alumnos para reasignar, pero se está asignando '.$sum.' alumnos a los tutores suplentes.');                                
             } else {
                 try {
                     //cambiar tutor principal y ponerles tutor suplente
@@ -181,13 +184,13 @@ class TutorController extends Controller {
                                 }
                             }
                         }
-                    }
-                    DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
+                    }                    
+                    DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);                    
+                    return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores suplentes a: (' . $request['total'] . ') alumnos.');
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
-            }
-            return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
+            }            
         } else {
             return redirect()->route('tutor.index')->with('warning', 'No se puede hacer la reasignación.');
         }

@@ -577,6 +577,9 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
                 Route::post('activarProfesor', ['as' => 'pspProcess.activateTeacher', 'uses' => 'Psp\PspProcess\PspProcessController@activateTeacher']);
                 Route::post('activarAlumnos', ['as' => 'pspProcess.activateStudents', 'uses' => 'Psp\PspProcess\PspProcessController@activateStudents']);
+                Route::get('conf', ['as' => 'pspProcess.conf', 'uses' => 'Psp\PspProcess\PspProcessController@indexconf']);
+                Route::get('confedit/{id}', ['as' => 'pspProcess.editconf', 'uses' => 'Psp\PspProcess\PspProcessController@editconf']);
+                Route::post('confedit/{id}', ['as' => 'pspProcess.updateconf', 'uses' => 'Psp\PspProcess\PspProcessController@updateconf']);
             });
 
             //FreeHour            

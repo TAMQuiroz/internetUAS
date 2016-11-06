@@ -31,6 +31,7 @@ class AddFkToPspmeetings extends Migration
             $table->dropForeign('pspmeetings_idstudent_foreign');
             $table->dropForeign('pspmeetings_idsupervisor_foreign');
             $table->dropForeign('pspmeetings_idtipoestado_foreign');
+            $table->dropForeign('pspmeetings_idfreehour_foreign');
         }); 
     }
 }

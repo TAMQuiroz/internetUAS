@@ -96,6 +96,14 @@
 
 <script src="{{ URL::asset('js/intranetjs/aspects/index-aspect-script.js')}}">
 
+
+ var fila = $("#aspecto-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#aspecto-siguiente-btn').attr("disabled","true");
+                $('#aspecto-siguiente-btn').click(function(){return false;});
+            }
+
+
 </script>
 
 @endsection

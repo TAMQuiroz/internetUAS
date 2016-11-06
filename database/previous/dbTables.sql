@@ -807,7 +807,7 @@ CREATE TABLE `Especialidad` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `IdDocente` int(11) DEFAULT NULL,
+  `IdDocente` int(11) NOT NULL,
   PRIMARY KEY (`IdEspecialidad`),
   KEY `Especialidad_ibfk_1` (`IdDocente`),
   CONSTRAINT `Especialidad_ibfk_1` FOREIGN KEY (`IdDocente`) REFERENCES `Docente` (`IdDocente`)
@@ -820,7 +820,7 @@ CREATE TABLE `Especialidad` (
 
 LOCK TABLES `Especialidad` WRITE;
 /*!40000 ALTER TABLE `Especialidad` DISABLE KEYS */;
-INSERT INTO `Especialidad` VALUES (1,'INF','Ingeniería Informática','Tendrás una excelente base tecnológica y científica para la automatización de la información en cualquier organización.',NULL,'2016-06-18 05:00:00','2016-06-18 17:29:10',1),(2,'IND','Ingeniería Industrial','Podrás desarrollarte en el ámbito de los proceso y la gerencia industrial.',NULL,'2016-06-18 05:00:00','2016-06-18 17:57:10',2),(3,'CIV','Ingeniería Civil','Podrás ser responsable del planeamiento, diseño y construcción de obras.',NULL,'2016-06-18 05:00:00','2016-06-18 17:57:18',3),(4,'TEL','Ingenieria de las Telecomunicaciones','Como ingenierio de telecomunicaciones te encargaras de planificar, diseñar y de mantener operativa esta infraestructura.',NULL,'2016-06-24 11:45:15','2016-06-24 11:55:26',NULL);
+INSERT INTO `Especialidad` VALUES (1,'INF','Ingeniería Informática','Tendrás una excelente base tecnológica y científica para la automatización de la información en cualquier organización.',NULL,'2016-06-18 05:00:00','2016-06-18 17:29:10',1),(2,'IND','Ingeniería Industrial','Podrás desarrollarte en el ámbito de los proceso y la gerencia industrial.',NULL,'2016-06-18 05:00:00','2016-06-18 17:57:10',2),(3,'CIV','Ingeniería Civil','Podrás ser responsable del planeamiento, diseño y construcción de obras.',NULL,'2016-06-18 05:00:00','2016-06-18 17:57:18',3),(4,'TEL','Ingenieria de las Telecomunicaciones','Como ingenierio de telecomunicaciones te encargaras de planificar, diseñar y de mantener operativa esta infraestructura.',NULL,'2016-06-24 11:45:15','2016-06-24 11:55:26',4);
 /*!40000 ALTER TABLE `Especialidad` ENABLE KEYS */;
 UNLOCK TABLES;
 

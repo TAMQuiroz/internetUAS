@@ -104,7 +104,7 @@ public function indexevalcoord(Request $request,$id)
 
     $id_docente = Session::get('user')->IdDocente;
     $evaluation = Evaluation::find($id);
-    $tutstudentxevaluations = Tutstudentxevaluation::where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();
+    $tutstudentxevaluations = Tutstudentxevaluation::where('inicio','<>',null)->where('id_evaluation',$id)->get();
 
 
     $data = [
@@ -320,7 +320,7 @@ public function indexevalcoord(Request $request,$id)
         $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//saco la evaluacion del alumno 
         if($tutstudentxevaluation->intentos>0){
             $tutstudentxevaluation->intentos-=1;
-            
+            $tutstudentxevaluation->inicio = date('Y-m-d H:i:s ', time());
             $tutstudentxevaluation->save(); //disminuyo la cantidad de intentos del alumno
 
             $evaluation   = Evaluation::find($id);//saco la evaluacion        
@@ -333,6 +333,21 @@ public function indexevalcoord(Request $request,$id)
         else{
             return redirect()->route('evaluacion_alumno.index')->with('warning', 'Ya no le quedan más intentos para dar esta evaluación.');
         }
+    }   
+
+    public function darPermisoExtra($student,$ev)
+    {
+        $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',$student)->where('id_evaluation',$ev)->first();//saco la evaluacion del alumno 
+        if( $tutstudentxevaluation != null ){
+            $tutstudentxevaluation->intentos+=1;            
+            $tutstudentxevaluation->save(); //aumento la cantidad de intentos del alumno
+            return redirect()->route('evaluacion.ver_evaluaciones_alumnos_coord',$ev)->with('success', 'Se le ha otorgado al alumno un nuevo intento exitosamente.');        
+        }
+        else{
+         return redirect()->route('evaluacion.ver_evaluaciones_alumnos_coord',$ev)->with('warning', 'Ha ocurrido un error.');           
+        }
+        
+            
     }   
 
     public function storeEv(Request $request)

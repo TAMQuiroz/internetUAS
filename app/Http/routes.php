@@ -1229,6 +1229,7 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
             Route::get('evaluador', ['as' => 'evaluacion_evaluador.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexev']);
             Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
+            Route::get('dar_permiso/{id}{ev}', ['as' => 'evaluacion.dar_permiso', 'uses' => 'Evaluations\Evaluation\EvaluationController@darPermisoExtra']);
             Route::get('evaluaciones_alumnos/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexeval']);
             Route::get('corregir/{id}{ev}', ['as' => 'evaluacion.corregir', 'uses' => 'Evaluations\Evaluation\EvaluationController@corregir']);
             Route::get('show_corregida/{id}', ['as' => 'evaluacion_corregida.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@vercorregida']);

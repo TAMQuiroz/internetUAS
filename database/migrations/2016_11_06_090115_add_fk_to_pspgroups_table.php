@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToScheduleMeetingsTable extends Migration
+class AddFkToPspgroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,8 @@ class AddFkToScheduleMeetingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('schedule_meetings', function (Blueprint $table) {
+        Schema::table('pspgroups', function (Blueprint $table) {
             //
-            $table->foreign('idfase')->references('id')->on('phases');
             $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
         });
     }
@@ -26,10 +25,9 @@ class AddFkToScheduleMeetingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('schedule_meetings', function (Blueprint $table) {
+        Schema::table('pspgroups', function (Blueprint $table) {
             //
-            $table->dropForeign('schedule_meetings_idfase_foreign');
-            $table->dropForeign('schedule_meetings_idpspprocess_foreign');
+            $table->dropForeign('pspgroups_idpspprocess_foreign');
         });
     }
 }

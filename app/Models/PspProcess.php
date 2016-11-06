@@ -17,4 +17,22 @@ class PspProcess extends Model{
 
         return $this->belongsToMany(Teachers::class, 'Docente', 'IdDocente', 'Nombre');
     }
+
+     public function course()
+    {
+
+        return $this->belongsTo('Intranet\Models\Course', 'idcurso');
+    }
+    
+    public function faculty()
+    {
+
+        return $this->belongsTo('Intranet\Models\Faculty', 'idespecialidad');
+    }
+
+    public function cicle()
+    {
+
+        return $this->belongsTo('Intranet\Models\AcademicCycle', 'idCiclo');
+    }      
 }

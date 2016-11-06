@@ -21,6 +21,7 @@ class CourseService
 
     public function retrieveByFacultyandCicle($faculty_id)
     {
+        //dd("hola func");
         $courses = [];
         if(Session::get('academic-cycle') != null){
             $IdCicloAcademico=Session::get('academic-cycle')->IdCicloAcademico;

@@ -27,8 +27,16 @@
           <p>- Periodo iniciado</p>
           <p>- Ciclo iniciado</p>
           <br>
-          <p>Usted ha terminado satisfactoriamente la tercera parte del flujo. Se guardarán los cambios.</p>
+          <p>Usted ha terminado satisfactoriamente la tercera parte del flujo. Se guardarán los cambios.
           </p>
+          <br>
+          <p>Ahora se comenzará el cuarto flujo que contienen 3 funcionalidades importantes para la acreditación de una especialidad. Las funcionalidades mencionadas son:
+          </p>
+          <br>
+          <p>- Horarios asignados a cada curso dictado en un ciclo</p>
+          <p>- Matriz de aporte</p>
+          <p>- Tipo de evidencia</p>
+          <br>
         </div>
       </div>        
       
@@ -40,7 +48,7 @@
 
           <div class="col-md-12 col-sm-12 col-xs-12">
                <a  href="{{ route('cursosCiclo_index.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Continuar ></a>
-               <!--<a  href="{{ route('academicCycle_init.flujoCoordinador',$idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>-->
+               <a  href="{{ route('academicCycle_init.flujoCoordinador',$idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>
           </div>
       </div>
 

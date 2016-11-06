@@ -16,7 +16,7 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                            <a href="{{ route('objetivoEducacional_create.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Objetivo Educacional</a>
+                        <a href="{{ route('objetivoEducacional_create.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Objetivo Educacional</a>
                     </div>
                 </div>
 
@@ -54,9 +54,8 @@
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12 col-xs-12">                         
-                        <a href="{{ route('index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default pull-left">< ATRAS </a>
-                          
-                         <a  id ="objetivo-siguiente-btn" href="{{ route('studentResult_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+                        
+                        <a  id ="objetivo-siguiente-btn" href="{{ route('studentResult_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
                     </div>
                 </div>
 

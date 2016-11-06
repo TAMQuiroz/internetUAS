@@ -85,7 +85,7 @@ class SubindexController extends BaseController {
             Session::put("numFaculties",count($data['faculties']));
             
         } catch(\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un error'); 
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         
         return view('subindex.index',$data);

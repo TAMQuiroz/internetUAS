@@ -17,11 +17,11 @@
             <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
               <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Resultado Estudiantil (RE)</label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select id="resultado" class="form-control col-md-7 col-xs-12" type="text" name="resultado" >
+                <select id="studentsResult" class="form-control col-md-7 col-xs-12" type="text" name="studentsResult-identifier" >
                   <option value="">-- Seleccione --</option>
 
                   @foreach($studentsResults as $stdRslt)
-                  <option value="{{$stdRslt->IdResultadoEstudiantil}}">
+                  <option value="{{$stdRslt->Identificador}}">
                     {{ $stdRslt->Identificador }} - {{ $stdRslt->Descripcion }} 
                   </option> 
                   @endforeach
@@ -95,13 +95,14 @@
 </div>
 
 <script src="{{ URL::asset('js/intranetjs/aspects/index-aspect-script.js')}}">
-  
+
 
  var fila = $("#aspecto-fc-table").find("tr");
             if (fila.length == 0) {
-                $('#aspecto-siguiente-btn').attr("disabled","disabled");
+                $('#aspecto-siguiente-btn').attr("disabled","true");
                 $('#aspecto-siguiente-btn').click(function(){return false;});
             }
+
 
 </script>
 

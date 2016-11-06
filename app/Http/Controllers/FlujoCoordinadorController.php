@@ -33,7 +33,7 @@ use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
-use Intranet\Models\criterion;
+use Intranet\Models\Criterion;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
 
@@ -366,7 +366,7 @@ class FlujoCoordinadorController extends Controller
         }
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return view('flujoCoordinador.academicCycle_create', $data);
         
@@ -397,7 +397,7 @@ class FlujoCoordinadorController extends Controller
 
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return view('flujoCoordinador.academicCycle_view', $data);
     }

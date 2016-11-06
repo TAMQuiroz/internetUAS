@@ -67,11 +67,13 @@
             @if( @Session::has('error') )
                toastr.error('{{ @Session::get('error') }}');
             @endif
-
-            var fila = $("#objetivos-fc-table").find("tr");
-            if (fila.length == 0) {
-                $('#objetivo-siguiente-btn').attr("disabled","disabled");
-                $('#objetivo-siguiente-btn').click(function(){return false;});
-            }
+            //para el combobox se refresque solo
+            $(document).ready(function(){
+                var fila = $("#objetivos-fc-table").find("tr");
+                if (fila.length == 0) {
+                    $('#objetivo-siguiente-btn').attr("disabled",true);
+                    $('#objetivo-siguiente-btn').click(function(){return false;});
+                }
+            });
         </script>
 @endsection

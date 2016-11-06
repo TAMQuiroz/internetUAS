@@ -57,7 +57,7 @@ class Teacher extends Model {
         $query = Teacher::where('IdEspecialidad', $specialty);
 
         if(!array_key_exists("estado", $filters)){
-            $query = $query->where('rolTutoria', 1);
+            $query = $query->whereIn('rolTutoria', array(1,3));
         }
         elseif ( $filters["estado"] != "") {
             $query = $query->where('rolTutoria', $filters["estado"]);
@@ -125,7 +125,11 @@ class Teacher extends Model {
     }
     
     public function pspProcesses(){
-        return $this->hasMany('Intranet\Models\PspProcessxTeacher', 'IdDocente');
+        return $this->hasMany('Intranet\Models\PspProcessxTeacher', 'iddocente');
+    }
+
+    public function groups(){
+        return $this->hasMany('Intranet\Models\Group','id_lider');
     }
 
 }

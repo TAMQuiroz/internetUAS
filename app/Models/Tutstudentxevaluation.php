@@ -13,4 +13,8 @@ class Tutstudentxevaluation extends Model
     public function evaluadores(){
         return $this->belongsToMany('Intranet\Models\Teacher','teacherxtutstudentxevaluations','id_tutstudentxevaluation','id_docente');
     }
+
+    public function alumno(){
+  	  return $this->belongsTo('Intranet\Models\Tutstudent','id_tutstudent');//bien
+    }
 }

@@ -3,28 +3,37 @@
 namespace Intranet\Http\Controllers\API\Investigation\Event;
 
 use Illuminate\Http\Request;
-
-use Intranet\Http\Requests;
-use Intranet\Http\Controllers\Controller;
-
 use Intranet\Models\Group;
 use Intranet\Models\Event;
+use Dingo\Api\Routing\Helpers;
 
 use Intranet\Http\Requests\EventMobileRequest;
+use Illuminate\Routing\Controller as BaseController;
+//use Intranet\Http\Controllers\Controller;
 
-class EventController extends Controller
+
+
+
+
+class EventController extends BaseController
 {
+
+    use Helpers;
+
     public function getById($id)
     {
-        $event = Event::find($id);
-        return $event;
+        $event = Event::find($id)->with('group')->get();
+        return $this->response->array($event->toArray());
+        //return $event;
     }
 
     public function getByGroupId($id)
     {
-        $group = Group::find($id);
-        $events = $group->events;
-        return $events;
+        $events = Event::where('id_grupo',$id)->with('group')->get();
+        //$group = Group::find($id);
+        //$events = $group->events;
+        return $this->response->array($events->toArray());
+        //return $events;
     }
 
     public function edit(EventMobileRequest $request, $id){

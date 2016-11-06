@@ -153,7 +153,7 @@ class TutorController extends Controller {
     }
 
     public function deactivate(Request $request, $id) {
-        $sum = 0;        
+        $sum = 0;
         if ($request['cant'] != null && $request['total'] != 0) {
             foreach ($request['cant'] as $idTeacher => $value) {
                 $sum = $sum + $value;
@@ -161,25 +161,30 @@ class TutorController extends Controller {
             if ($sum != $request['total']) {
                 return redirect()->back()->with('warning', 'Los campos deben sumar el total de alumnos a reasignar.');
             } else {
-                //cambiar tutor principal y ponerles tutor suplente
-                foreach ($request['cant'] as $idTeacher => $cantAlumnos) {
-                    $tutorships = Tutorship::where('id_tutor', $id)->take($cantAlumnos)->get();
-                    foreach ($tutorships as $t) {
-                        $tutorship = Tutorship::find($t->id);
-                        $tutorship->id_tutor = $idTeacher;
-                        $tutorship->id_suplente = $idTeacher;
-                        $tutorship->save();
+                try {
+                    //cambiar tutor principal y ponerles tutor suplente
+                    foreach ($request['cant'] as $idTeacher => $cantAlumnos) {
+                        $tutorships = Tutorship::where('id_tutor', $id)->take($cantAlumnos)->get();
+                        foreach ($tutorships as $t) {
+                            $tutorship = Tutorship::find($t->id);
+                            $tutorship->id_tutor = $idTeacher;
+                            $tutorship->id_suplente = $idTeacher;
+                            $tutorship->save();
 
-                        $citas = TutMeeting::where('id_tutstudent', $t->id_alumno)->where('id_docente', $t->id_tutor)->where('estado', 'Confirmada')->get();
-                        if ($citas->count() != 0) {
-                            foreach ($citas as $c) {
-                                $cita = TutMeeting::find($c->id);
-                                $cita->estado = 'Cancelada';
-                                $cita->id_reason = $request['motivo'];
-                                $cita->save();
+                            $citas = TutMeeting::where('id_tutstudent', $t->id_alumno)->where('id_docente', $t->id_tutor)->where('estado', 'Confirmada')->get();
+                            if ($citas->count() != 0) {
+                                foreach ($citas as $c) {
+                                    $cita = TutMeeting::find($c->id);
+                                    $cita->estado = 'Cancelada';
+                                    $cita->id_reason = $request['motivo'];
+                                    $cita->save();
+                                }
                             }
                         }
                     }
+                    DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
+                } catch (Exception $e) {
+                    return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
             }
             return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
@@ -196,7 +201,7 @@ class TutorController extends Controller {
      */
     public function destroy($id) { //PENDIENTE PARA REASIGNAR
         try {
-            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => null]);
+            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
             return redirect()->route('tutor.index')->with('success', 'Se desactivó al tutor exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');

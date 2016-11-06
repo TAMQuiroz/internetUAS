@@ -34,18 +34,21 @@
                 </div>
                 
                 <div class="form-group">
-                    {{Form::label('Fecha de Inicio *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        {{Form::date('fecha_inicio',null,['class'=>'form-control', 'required'])}}
+                    <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Fecha de Inicio <span class="error">* </span></label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_inicio" id="fecha_inicio" minlength="10" maxlength="10" value="" required/>
+                            <!--<?php echo date("d/m/Y");?>-->
                     </div>
-                </div>  
+                </div> 
 
                 <div class="form-group">
-                    {{Form::label('Fecha de Fin *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        {{Form::date('fecha_fin',null,['class'=>'form-control', 'required'])}}
+                    <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Fecha de Fin <span class="error">* </span></label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_fin" id="fecha_fin" minlength="10" maxlength="10" value="" required/>
+                            <!--<?php echo date("d/m/Y");?>-->
                     </div>
-                </div>      
+                </div>     
+
 
                
                 <div class="row">
@@ -60,4 +63,24 @@
         </div>
     </div>
 </div>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $.datepicker.setDefaults($.datepicker.regional["es"]);
+            $("#fecha_fin").datepicker({
+                firstDay: 1,
+                minDate: <?php echo date("d/m/Y");?>
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $.datepicker.setDefaults($.datepicker.regional["es"]);
+            $("#fecha_inicio").datepicker({
+                firstDay: 1,
+                minDate: <?php echo date("d/m/Y");?>
+            });
+        });
+    </script>
 @endsection

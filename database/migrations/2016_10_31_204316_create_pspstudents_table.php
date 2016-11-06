@@ -17,11 +17,10 @@ class CreatePspstudentsTable extends Migration
             $table->integer('idalumno');
             $table->integer('idtipoestado')->unsigned();
             $table->string('telefono');
-            $table->string('correo');
-            $table->string('direccion');
             $table->integer('idpspgroup')->unsigned()->nullable();
             $table->integer('idespecialidad');
             $table->integer('idsupervisor')->unsigned()->nullable();
+            $table->integer('idpspprocess')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

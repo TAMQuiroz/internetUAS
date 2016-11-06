@@ -90,8 +90,8 @@ class TutStudentController extends BaseController
 
         //------INICIO OBTENIENDO ID DEL TUTOR--------
          $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
-        // $idDocente = $tutorshipInfo[0]['id_profesor']; 
-         $idDocente = 4;                                    // Por el momento
+         $idDocente = $tutorshipInfo[0]['id_profesor']; 
+        // $idDocente = 4;                                    // Por el momento
         //------FIN OBTENIENDO ID DEL TUTOR-----------
 
 

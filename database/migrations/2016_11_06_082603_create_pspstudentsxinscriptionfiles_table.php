@@ -16,7 +16,7 @@ class CreatePspstudentsxinscriptionfilesTable extends Migration
             //$table->increments('id');
             $table->integer('idinscriptionfile')->unsigned();
             $table->foreign('idinscriptionfile')->references('id')->on('inscriptionfiles');
-            $table->integer('idstudent');
+            $table->integer('idpspstudents');
             $table->foreign('idpspstudents')->references('id')->on('pspstudents'); //referencia a la tabla pspstudents            
             $table->integer('acepta_terminos');
             $table->integer('nota_final');

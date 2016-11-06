@@ -16,7 +16,7 @@ class CreatePspstudentsTable extends Migration
             $table->increments('id');
             $table->integer('idalumno');
             $table->integer('idtipoestado')->unsigned();
-            $table->string('telefono');
+            //$table->string('telefono');
             $table->integer('idpspgroup')->unsigned()->nullable();
             $table->integer('idespecialidad');
             $table->integer('idsupervisor')->unsigned()->nullable();

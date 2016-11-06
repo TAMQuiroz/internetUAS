@@ -17,7 +17,6 @@ class AddFkToScheduleMeetingsTable extends Migration
             $table->foreign('idfase')->references('id')->on('phases');
             $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
         });
-        });
     }
 
     /**

@@ -24,7 +24,7 @@ class CourseRequest extends Request
     public function rules()
     {
         return [
-            'validateCode' => 'required',
+            'coursecode' => 'required',
             'coursename' => 'required',
             'courseacademicLevel' => 'required',
             'facultycode' => 'required',

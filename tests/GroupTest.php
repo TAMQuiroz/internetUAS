@@ -409,7 +409,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
@@ -429,7 +429,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El campo nombre es obligatorio');
     }
 
@@ -449,7 +449,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de nombre es inválido');
     }
 
@@ -469,7 +469,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de nombre es inválido');
     }
 
@@ -489,7 +489,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
@@ -509,7 +509,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El campo descripcion es obligatorio');
     }
 
@@ -529,7 +529,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de descripcion es inválido');
     }
 
@@ -549,7 +549,7 @@ class GroupTest extends TestCase
     		->attach(asset('images/1.png'), 'imagen')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de descripcion es inválido');
     }
 
@@ -588,7 +588,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('nombre no debe ser mayor que 50 caracteres');
     }
 
@@ -607,7 +607,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El campo nombre es obligatorio');
     }
 
@@ -626,7 +626,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de nombre es inválido');
     }
 
@@ -645,7 +645,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de nombre es inválido');
     }
 
@@ -664,7 +664,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('descripcion no debe ser mayor que 200 caracteres');
     }
 
@@ -683,7 +683,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El campo descripcion es obligatorio');
     }
 
@@ -702,7 +702,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de descripcion es inválido');
     }
 
@@ -721,7 +721,7 @@ class GroupTest extends TestCase
     		->type(1,'lider')
     		->press('Guardar')
     		->seePageIs('/investigacion/grupo/edit/1')
-    		->see('Editar Grupo')
+    		->see('Edicion de grupos')
     		->see('El formato de descripcion es inválido');
     }
 

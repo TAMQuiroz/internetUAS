@@ -132,12 +132,20 @@ class ProjectController extends Controller
             });
         }
 
+        $entregables_realizados = 0;
+
+        foreach ($proyecto->deliverables as $deliverable) {
+            if($deliverable->porcen_avance == 100){
+                $entregables_realizados = $entregables_realizados + 1;
+            }
+        }
 
         $data = [
-            'proyecto'      =>  $proyecto,
-            'grupos'        =>  $grupos,
-            'areas'         =>  $areas,
-            'integrantes'   =>  $sorted,
+            'proyecto'                  =>  $proyecto,
+            'grupos'                    =>  $grupos,
+            'areas'                     =>  $areas,
+            'integrantes'               =>  $sorted,
+            'entregables_realizados'    =>  $entregables_realizados,
         ];
 
         return view('investigation.project.show', $data);
@@ -241,5 +249,12 @@ class ProjectController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
+    }
+
+    public function getProject($id){
+
+        $proyecto = Project::find($id);
+
+        return $proyecto;
     }
 }

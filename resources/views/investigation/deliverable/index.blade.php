@@ -14,6 +14,7 @@
     </div>
 </div>
 
+@if(Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
 <div class="row">
 	<div class="col-md-12">
 		<a href="{{route('entregable.create',$proyecto->id)}}">
@@ -21,6 +22,7 @@
 		</a>
 	</div>
 </div>
+@endif
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -46,10 +48,17 @@
 								<td>{{$entregable->nombre}}</td> 
 								<td>
 									<ul>
-										@if(count($entregable->investigators))
-											@foreach($entregable->investigators as $investigator)
-												<li> {{$investigator->nombre}} {{$investigator->ape_paterno}} </li>
-											@endforeach
+										@if(count($entregable->investigators) && count($entregable->teachers))
+											@if(count($entregable->investigators))
+												@foreach($entregable->investigators as $investigator)
+													<li> {{$investigator->nombre}} {{$investigator->ape_paterno}} </li>
+												@endforeach
+											@endif
+											@if(count($entregable->teachers))
+												@foreach($entregable->teachers as $teacher)
+													<li> {{$teacher->Nombre}} {{$teacher->ApePaterno}} </li>
+												@endforeach
+											@endif
 										@else
 											<li> No hay asignados </li>
 										@endif
@@ -62,8 +71,10 @@
 									@if(count($entregable->lastversion) != 0)
 									<a href="{{route('entregable.download', $entregable->lastversion->first()->id)}}" class="btn btn-primary btn-xs" title="Descargar ultima version"><i class="fa fa-download"></i></a>
 									@endif
+									@if(Auth::user()->IdUsuario == $proyecto->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin'))
 									<a href="{{route('entregable.notify', $entregable->id)}}" class="btn btn-primary btn-xs" title="Notificar"><i class="fa fa-envelope"></i></a>
 									<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$entregable->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
+									@endif
 								</td>
 							</tr> 
 
@@ -76,6 +87,11 @@
 		  	</div>
 		</div>
     </div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<a class="btn btn-default pull-right" href="{{ route('proyecto.show',$proyecto->id) }}">Regresar</a>
+	</div>
 </div>
 
 @endsection

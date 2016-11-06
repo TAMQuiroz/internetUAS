@@ -29,8 +29,8 @@ class PspProcessService{
 		$cont=0;
 		if($proceso!=null){
 			foreach ($proceso as $proc) {
-				$proc['nomCurso'] = $this->courseService->findCourseById($proc['idCurso'])->Nombre;
-				$proc['codCurso'] = $this->courseService->findCourseById($proc['idCurso'])->Codigo;
+				$proc['nomCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Nombre;
+				$proc['codCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Codigo;
 				$request['cicle_code'] = $proc['idCiclo'];
 				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
 				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
@@ -48,8 +48,8 @@ class PspProcessService{
 		$this->cicleService = new CicleService;
 
 		if($proc!=null){
-				$proc->nomCurso = $this->courseService->findCourseById($proc->idCurso)->Nombre;
-				$proc['codCurso'] = $this->courseService->findCourseById($proc['idCurso'])->Codigo;
+				$proc->nomCurso = $this->courseService->findCourseById($proc->idcurso)->Nombre;
+				$proc['codCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Codigo;
 				$request['cicle_code'] = $proc['idCiclo'];
 				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
 				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
@@ -79,11 +79,9 @@ class PspProcessService{
 		$IdDocente =    $request['idProfesor'];
 		$proceso = PspProcess::where('id',$request['idProceso'])->first();
 		
-		
-		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idCurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
+		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
 		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
 		$horarioAct = null;
-
 		foreach ($horarios as $horario) {
 			$temp = SchedulexTeacher::where('IdDocente',$IdDocente)->where('IdHorario',$horario->IdHorario)->first();
 			if($temp!=null)
@@ -99,7 +97,7 @@ class PspProcessService{
 	public function desactivateStudents($id){
 		$proceso = PspProcess::where('id',$id)->first();
 		
-		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idCurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
+		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
 		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
 
 		if($horarios!=null){

@@ -100,18 +100,22 @@
                             <tr class="fila-base">
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="cicle[]" id="cicle">
+                                        @if($cicles!=null)
                                         @foreach($cicles as $cicle)
                                             <option value="{{$cicle->IdCicloAcademico}}">{{$cicle->Descripcion}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" required title="Debe ingresar la Descripción de la Acción" style="resize: vertical;"></textarea></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                         <option value="0">--Todos--</option>
+                                        @if($teachers!=null)
                                         @foreach($teachers as $teach)
                                             <option value="{{$teach->IdDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td class="text-center eliminar" style="vertical-align:middle">
@@ -123,18 +127,22 @@
                             <tr>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="cicle[]" id="cicle">
+                                        @if($cicles!=null)
                                         @foreach($cicles as $cicle)
                                             <option value="{{$cicle->IdCicloAcademico}}">{{$cicle->Descripcion}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" required title="Debe ingresar la Descripción de la Acción" style="resize: vertical;"></textarea></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                         <option value="0">--Todos--</option>
+                                        @if($teachers!=null)
                                         @foreach($teachers as $teach)
                                             <option value="{{$teach->IdDocente}}">{{$teach->Codigo}} - {{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td class="text-center eliminar" style="vertical-align:middle">

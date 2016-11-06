@@ -9,6 +9,7 @@ use Intranet\Models\Supervisor;
 use Intranet\Models\PspDocument;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
+use Intranet\Models\PspStudent;
 use Auth;
 
 class StudentController extends Controller
@@ -20,9 +21,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-
         $supervisor = Supervisor::where('idUser',Auth::User()->IdUsuario)->first();
-        $students = Student::where('idSupervisor',$supervisor->id)->get();
+        $students = PspStudent::where('idsupervisor',$supervisor->id)->get();
 
         $data = [
             'students'    =>  $students,

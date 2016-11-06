@@ -1,4 +1,4 @@
-@extends('app')
+@extends(Auth::user() ? 'app' : 'appPublic')
 @section('content')
 
 
@@ -9,14 +9,6 @@
 	    </div>
     </div>
 </div>
-
-<!--<div class="row">
-	<div class="col-md-12">
-		<a href="{{route('evento.create')}}">
-			{{Form::button('<i class="fa fa-plus"></i> Crear Evento',['class'=>'btn btn-success pull-right'])}}
-		</a>
-	</div>
-</div>-->
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -38,11 +30,13 @@
 			                </div>
 			            </form>
 			        </div>
+			        @if(Auth::user() && (Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin')))
 			        <div class="col-md-6">
 						<a href="{{route('evento.create')}}">
 							{{Form::button('<i class="fa fa-plus"></i> Crear Evento',['class'=>'btn btn-success pull-right'])}}
 						</a>
 					</div>
+					@endif
 				</div>
 
 		  		<div class="table-responsive">
@@ -71,7 +65,9 @@
 								<td>{{$event->group->nombre}}</td> 
 								<td>
 									<a href="{{route('evento.show', $event->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-eye"></i></a>
+									@if(Auth::user() && (Auth::user()->IdUsuario == $event->group->leader->user->IdUsuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
 									<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$event->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
+									@endif
 								</td>
 							</tr> 
 

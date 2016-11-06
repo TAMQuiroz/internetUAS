@@ -13,8 +13,7 @@ class InvestigatorController extends BaseController
    
     public function getAll()
     {
-        $investigator = Investigator::with('faculty')->with('user')->with('area')->get();
-                
+        $investigator = Investigator::with('faculty')->with('area')->get();
         return $this->response->array($investigator->toArray());
     }
 
@@ -23,6 +22,29 @@ class InvestigatorController extends BaseController
     {
         $investigator = Investigator::where('id',$id)->with('faculty')->with('user')->with('area')->get();
         return $this->response->array($investigator->toArray());
+    }
+
+    public function edit(Request $request, $id){
+        $nombre    = $request->only('nombre');
+        $ape_paterno         = $request->only('ape_paterno');
+        $ape_materno         = $request->only('ape_materno');
+        $correo              = $request->only('correo');
+        $celular             = $request->only('celular');
+        
+
+        //Guardar
+        $investigator = Investigator::find($id);
+        $investigator->nombre           = $nombre['nombre'];
+        $investigator->ape_paterno      = $ape_paterno['ape_paterno'];
+        $investigator->ape_materno      = $ape_materno['ape_materno'];
+        $investigator->correo           = $correo['correo'];
+        $investigator->celular          = $celular['celular'];
+        $investigator->save();
+
+        //Retornar mensaje
+        $mensaje = 'Se modifico correctamente';
+
+        return $mensaje;
     }
 
    

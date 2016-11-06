@@ -13,10 +13,10 @@ class CreatePspprocessesxteachersTable extends Migration
     public function up()
     {
         Schema::create('pspprocessesxteachers', function (Blueprint $table) {
-            $table->integer('idPspProcesses')->unsigned();
-            $table->foreign('idPspProcesses')->references('id')->on('pspprocesses');
-            $table->integer('idProfesor');
-            $table->foreign('idProfesor')->references('IdDocente')->on('Docente');
+            $table->integer('idpspprocesses')->unsigned();
+            $table->foreign('idpspprocesses')->references('id')->on('pspprocesses');
+            $table->integer('idprofesor');
+            $table->foreign('idprofesor')->references('IdDocente')->on('Docente');
             $table->timestamps();
         });
     }

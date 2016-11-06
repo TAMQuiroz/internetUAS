@@ -96,7 +96,8 @@ class AuthController extends Controller
             }else if($userSession->IdPerfil == 5){
                 $user = $this->authService->findInvestigator($userSession->IdUsuario);
             }else if($userSession->IdPerfil == 6){
-            $user = $this->authService->findSupervisor($userSession->IdUsuario);
+                $user = $this->authService->findSupervisor($userSession->IdUsuario);
+                $user->Vigente = 1;
             }else if($userSession->IdPerfil == 0) {
                 $user = $this->authService->findStudent($userSession->IdUsuario);
                 $user->Vigente = 1;
@@ -104,7 +105,6 @@ class AuthController extends Controller
             }else{
                 $user = null;
             }
-
             if($user == null) { //es admin
                 $default=(Object)['IdDocente'=> '0','Nombre'=>'Administrador','IdEspecialidad' =>'0','ApellidoPaterno'=>'del','ApellidoMaterno'=>'Sistema','Vigente'=>1,'IdPerfil'=>'3', 'IdUsuario'=>'1'];
                 $user=$default;
@@ -116,7 +116,6 @@ class AuthController extends Controller
             else {
                 Session::put('user',$user);
             }
-
 
             Session::put('actions',$actions);
         } catch (InvalidCredentialsException $e) {

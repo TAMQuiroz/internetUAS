@@ -21,9 +21,8 @@ class SubindexController extends BaseController {
         $data['faculties'] = [];
 
         $user = $data['userSession'] = Session::get('user');
-      
         try {
-            $allFaculties = $this->facultyService->retrieveAll();               
+            $allFaculties = $this->facultyService->retrieveAll();    
             if (($user->IdDocente!=null)  && ($user->IdDocente == 0)){//detect admin
                 $data['faculties'] = $allFaculties;
                 $data['isEmpty'] = false;
@@ -46,16 +45,23 @@ class SubindexController extends BaseController {
                     }
                     $data['faculties'] = $teachersFaculties;
                     if(empty($teachersFaculties)){
-                        $data['isEmpty'] = true;
+                        $fac = $this->facultyService->find($user->IdEspecialidad);
+                        array_push($teachersFaculties, $fac);
+                        $data['faculties'] = $teachersFaculties;
+                        $data['isEmpty'] = false;
                     }else{
                         $data['isEmpty'] = false;
                     }
+
                 }
-            } else if ($user->user->IdPerfil==5){ //Investigadores
-                $data['faculties'] = $allFaculties;
+            } else if ($user->user->IdPerfil == 5){ //Investigadores
+                array_push($data['faculties'], $this->facultyService->find($user->id_especialidad));
                 $data['isEmpty'] = false;
-            }else if ($user->user->IdPerfil== 6 || !$user->user->idPerfil){ //Supervisores
-                array_push($data['faculties'], $this->facultyService->find($user->idFaculty));
+            }else if ($user->user->IdPerfil== 6){ //Supervisores
+                array_push($data['faculties'], $this->facultyService->find($user->idfaculty));
+                $data['isEmpty'] = false;
+            }else if (!$user->user->idPerfil){ //Alumnos
+                array_push($data['faculties'], $this->facultyService->find($user->id_especialidad));
                 $data['isEmpty'] = false;
             } else { // Logic of ACREDITORS
                 $data['isEmpty'] = false;
@@ -66,13 +72,12 @@ class SubindexController extends BaseController {
                     $data['faculties'] = $allFaculties;
                 }
             }
-
             Session::forget("numFaculties");
             Session::put("numFaculties",count($data['faculties']));
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error');
         }
-        //dd($data);
+        
         return view('subindex.index',$data);
     }
 }

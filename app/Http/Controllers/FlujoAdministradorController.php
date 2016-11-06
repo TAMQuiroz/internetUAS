@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\FlujoAdministradorCoordinadorRequest;
-
+use Intranet\Http\Requests\AcademicCycleRequest;
 use Intranet\Http\Services\Teacher\TeacherService;
 use Intranet\Http\Services\User\UserService;
 use Intranet\Http\Services\User\PasswordService;
@@ -193,13 +193,17 @@ class FlujoAdministradorController extends Controller
         return view('flujoAdministrador.academicCycle_create', $data);   
     }
 
-    public function academicCycle_store(Request $request){
+    public function academicCycle_store(AcademicCycleRequest $request){
+        
         try {
             $academicCycle = $this->academicCycleService->save($request->all());
+            
+            return redirect()->route('academicCycle_index.flujoAdministrador')->with('success', 'El ciclo académico se ha registrado exitosamente');
+
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
-        return redirect()->route('academicCycle_index.flujoAdministrador')->with('success', 'El ciclo académico se ha registrado exitosamente');
+        
     }
 
     public function end (){

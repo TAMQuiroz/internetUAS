@@ -134,10 +134,14 @@ class GroupService {
     public function checkLeader($idGroup)
     {
         $user = Auth::user();
-        $teacher = Teacher::where('IdUsuario',$user->IdUsuario)->first();
-        $group = Group::find($idGroup);
-        $leader = $group->leader;
+        if($user->IdPerfil != 3){
+            $teacher = Teacher::where('IdUsuario',$user->IdUsuario)->first();
+            $group = Group::find($idGroup);
+            $leader = $group->leader;
 
-        return $teacher->IdDocente == $leader->IdDocente;
+            return $teacher->IdDocente == $leader->IdDocente;
+        }else{
+            return false;
+        }
     }
 }

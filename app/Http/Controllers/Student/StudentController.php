@@ -1,29 +1,19 @@
 <?php namespace Intranet\Http\Controllers\Student;
-
 use View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-
 use Illuminate\Support\Facades\Input;
 use Intranet\Models\Student;
 use Intranet\Models\TimeTable;
 use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Score;
-use Intranet\Models\Tutstudent;
-use Illuminate\Support\Facades\Storage;
 use DB;
 use Excel;
-use Session;
-
-
 class StudentController extends BaseController {
-
 	protected $timeTableService;
-
 	public function __construct() {
 		$this->timeTableService = new TimeTableService();
 	}
-
 	public function load(Request $request)  {
 		$data['title'] = 'Carga de Alumnos';
 		try {
@@ -39,21 +29,12 @@ class StudentController extends BaseController {
 					}
 				}
 			}
-			$data['studentsExist'] = $studentsExist;	
-
-			if(Session::get('filename')){				
-				$data['filename'] = Session::get('filename');
-			}	
-			else {
-				$data['filename'] = null;
-			}		
-
+			$data['studentsExist'] = $studentsExist;				
 		} catch(\Exception $e) {
-			return back()->with('error', 'Ha ocurrido un error');
+			dd($e);
 		}
-		return view('students.load', $data);
+		return view('students.load',$data);
 	}
-
 	public function importExport()
 	{
 		return view('importExport');
@@ -67,37 +48,13 @@ class StudentController extends BaseController {
 				$sheet->fromArray($data);
 	        });
 		})->download($type);
-
-		return back()->with('success', 'Se descargo el archivo');
 	}
-
-	public function storeExcel($data){
-
-		return Excel::create('alumnosPorCrear', function($excel) use($data) {
-
-			$excel->sheet('Sheetname', function($sheet) use($data) {
-		        $sheet->fromArray($data);
-		    });
-
-		})->store('xls', storage_path(''), true); //storage
-		
-	}
-
-	public function getDownload($filename){
-       
-        $file = Storage::disk('local')->get('alumnosPorCrear.xls');
-
-        return (new Response($file))->header('Content-Type', 'text/xls');
-    }
-
 	public function importExcel(Request $request)
 	{
 		$idTimeTable =$request['idTimeTable'];
-
 		if(Input::hasFile('import_file')){
 			$path = Input::file('import_file')->getRealPath();
 			$data = Excel::load($path, function($reader) {})->get();
-
 			if(!empty($data) && $data->count()){
 				//check if file was already imported
 				$studentsGroupedByHorario = DB::table('Alumno')->groupBy('IdHorario')->get();
@@ -108,41 +65,23 @@ class StudentController extends BaseController {
 						}
 					}
 				}
-
 				$students = [];
-				$studentsNotFound = [];
 				foreach ($data as $key => $value) {
-					$value_int = intval($value[1]);
-					if ($value_int != 0){ 
-
+					if (is_numeric($value[1])){
 						$insert = [
-							'Codigo' => $value_int, 
+							'Codigo' => $value[1], 
 							'Nombre' => $value[2],
 							'ApellidoPaterno' => $value[3],
 							'ApellidoMaterno' => $value[4],
 							// other fields
 							'IdHorario' => $idTimeTable,
 						];
-
-						// Para el curso PSP
-						if(isset($request['selectPsp'])){
-							// Buscar alumno en la tabla de tutoria
-							$student = Tutstudent::where('codigo', $value_int)->first();
-							if($student != null) { //encontro alumno -> obtener su idusuario
-								$insert['IdUsuario'] = $student->id_usuario;
-								array_push($students, $insert); 
-							}
-							else {
-								// no encontro alumno -> agregar al excel para eviarlo a Tutoria y que creen alumno
-								array_push($studentsNotFound, $insert); 
-							}
-						}
+						array_push($students, $insert); 
 					}else{
-
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 					}
 				}
-
+				
 				if(!empty($students)){
 					foreach ($students as $student) {
 						$alumno = new Student;
@@ -151,46 +90,35 @@ class StudentController extends BaseController {
 						$alumno->ApellidoPaterno = $student['ApellidoPaterno'];
 						$alumno->ApellidoMaterno = $student['ApellidoMaterno'];
 						$alumno->IdHorario = $student['IdHorario'];
-						$alumno->IdUsuario = $student['IdUsuario'];
-
 						//Campos nuevos para PSP
-
+						/*
 						$alumno->id = null;
 						$alumno->telefono = null;
 						$alumno->correo = null;
 						$alumno->direccion = null;
-						//$alumno->IdUsuario = null;
+						$alumno->IdUsuario = null;
 						$alumno->idPspGroup = null;
 						$alumno->IdEspecialidad = null;
 						$alumno->idSupervisor = null;
-						$alumno->lleva_psp = null;
+						*/
+						//$alumno->lleva_psp = null;
 						
 						$alumno->save();
 					}
-
-					$horario = TimeTable::find($alumno->IdHorario);
-				
-					$horario->TotalAlumnos = $data->count();
-					$horario->save();
 				}
-
 				//Agregar tamaño a tabla horario
 				//dd($alumno->IdHorario);
-				//$horario = TimeTable::find('IdHorario');				
+				//$horario = TimeTable::find('IdHorario');
+				$horario = TimeTable::find($alumno->IdHorario);
 				
-				if(!empty($studentsNotFound)){					
-					$fileExc = $this->storeExcel($studentsNotFound);
-				}
-
+				$horario->TotalAlumnos = $data->count();
+				$horario->save();
 			}else{
 				return redirect()->back()->with('warning', 'Hubo un problema con el archivo de excel');
 			}
 		}
-
-		$param = ['success' => 'La lista de alumnos se ha eliminado exitosamente', 'filename' => $fileExc['full']];
-		return back()->with($param);
+		return back()->with('success', 'La carga de alumnos se ha realizado exitosamente');
 	}
-
 	public function delete(Request $request)
 	{
 		try{
@@ -202,8 +130,6 @@ class StudentController extends BaseController {
 			dd($e);
 			}
 		}
-
 		return back()->with('success', 'La lista de alumnos se ha eliminado exitosamente');
 	}
-
 }

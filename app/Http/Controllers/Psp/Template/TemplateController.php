@@ -34,7 +34,7 @@ class TemplateController extends Controller
         $templates = null;
         if(Auth::User()->IdPerfil==3){  
                 $templates = Template::get();
-            } else if (Auth::User()->IdPerfil==2){
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
                 $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
                 $proc = array(); 
@@ -77,7 +77,7 @@ class TemplateController extends Controller
     {
         if(Auth::User()->IdPerfil==3){  
                 $Phaseses = Phase::get();
-            } else if (Auth::User()->IdPerfil==2){
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
                 $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
                 $proc = array(); 
@@ -123,7 +123,7 @@ class TemplateController extends Controller
                 $template->idsupervisor  = $supervisor->id;
 
             }
-            if(Auth::User()->IdPerfil==2){
+            if(Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();  
                 //teacher =$teacherss->first();
                 if($teacher!=null){
@@ -232,7 +232,7 @@ class TemplateController extends Controller
         ];
         if(Auth::User()->IdPerfil==3){  
                 $Phaseses = Phase::get();
-            } else if (Auth::User()->IdPerfil==2){
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
                 $Phaseses = Phase::where('idpspprocess',$template->Phase->idpspprocess)->get();
             }
         

@@ -48,7 +48,7 @@ class scheduleMeetingController extends Controller
                         'Schedules'    =>  $schedules,
                     ];
                 }
-            } else if (Auth::User()->IdPerfil==2){
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
                 $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
                 $proc = array(); 

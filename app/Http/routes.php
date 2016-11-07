@@ -1229,7 +1229,11 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
             Route::get('evaluador', ['as' => 'evaluacion_evaluador.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexev']);
             Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
+            Route::get('dar_permiso/{id}{ev}', ['as' => 'evaluacion.dar_permiso', 'uses' => 'Evaluations\Evaluation\EvaluationController@darPermisoExtra']);
             Route::get('evaluaciones_alumnos/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexeval']);
+            Route::get('evaluaciones_resultados/{id}', ['as' => 'evaluacion_resultados.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexresults']);
+            Route::get('evaluaciones_mis_resultados/{id}{ev}', ['as' => 'evaluacion.mis_resultados', 'uses' => 'Evaluations\Evaluation\EvaluationController@myresults']);
+            Route::get('enviar_resultados/{id}', ['as' => 'evaluacion.enviar_resultados', 'uses' => 'Evaluations\Evaluation\EvaluationController@sendresults']);
             Route::get('corregir/{id}{ev}', ['as' => 'evaluacion.corregir', 'uses' => 'Evaluations\Evaluation\EvaluationController@corregir']);
             Route::get('show_corregida/{id}', ['as' => 'evaluacion_corregida.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@vercorregida']);
             Route::post('corregida/{id}{ev}', ['as' => 'evaluacion_corregida.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@storeEvCorregida']);

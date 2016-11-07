@@ -15,8 +15,9 @@ use Intranet\Models\Competence;
 use Intranet\Models\Evquestion;
 use Intranet\Models\Question;
 use Intranet\Models\Tutstudent;
-use Intranet\Models\Tutstudentxevaluation;
+use Intranet\Models\Tutstudentxevaluation; 
 use Intranet\Models\Evquestionxstudentxdocente;
+use Intranet\Models\Competencextutstudentxevaluation;
 use Intranet\Models\Evalternative;
 use Intranet\Models\Alternative;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
@@ -60,6 +61,7 @@ class EvaluationController extends Controller
 
        // dd($evaluations);
        $data = [
+       'id_tutstudent'               =>  $id,
        'evaluations'               =>  $evaluations,
        'tutstudentxevaluations'    =>  $tutstudentxevaluations,
        ];
@@ -104,16 +106,100 @@ public function indexevalcoord(Request $request,$id)
 
     $id_docente = Session::get('user')->IdDocente;
     $evaluation = Evaluation::find($id);
-    $tutstudentxevaluations = Tutstudentxevaluation::where('fecha_hora','<>',null)->where('id_evaluation',$id)->get();
-
+    $tutstudentxevaluations = Tutstudentxevaluation::where('inicio','<>',null)->where('id_evaluation',$id)->get();
+    $evs = Evquestionxstudentxdocente::where('id_evaluation',$id)->get();
+    $completo = true;
+    foreach ($evs as $ev) {
+        if(is_null($ev->puntaje) ){
+            $completo = false;
+            break;
+        }
+    }
 
     $data = [
     'evaluation'               =>  $evaluation, 
     'tutstudentxevaluations'   =>  $tutstudentxevaluations, 
+    'completo'   =>  $completo, 
     ];
     return view('evaluations.evaluation.evaluaciones_alumnos_coord', $data);
 
 }
+
+public function myresults(Request $request,$id,$ev)
+ {//muestra los resultados de mi evaluacion rendida
+    $evaluation = Evaluation::find($ev);
+    $total_puntaje=0;
+    foreach ($evaluation->preguntas as $evquestion) {
+        $total_puntaje+=$evquestion->puntaje;
+    }
+
+    $tutstudentxevaluation = Tutstudentxevaluation::where('id_tutstudent',$id)->where('id_evaluation',$ev)->first();    
+
+    $compxtutxevs = Competencextutstudentxevaluation::where('id_tutev',$tutstudentxevaluation->id)->get();    
+    
+    $data = [
+    'evaluation'               =>  $evaluation, 
+    'total_puntaje'               =>  $total_puntaje, 
+    'compxtutxevs'   =>  $compxtutxevs, 
+    ];
+    return view('evaluations.evaluation.mis_resultados', $data);
+
+}
+
+public function indexresults(Request $request,$id)
+ {//muestra las evaluaciones rendidas
+    $evaluation = Evaluation::find($id);
+    $total_puntaje=0;
+    foreach ($evaluation->preguntas as $evquestion) {
+        $total_puntaje+=$evquestion->puntaje;
+    }
+
+    $compxtutxevs = DB::table('tutstudentxevaluations')->join('competencextutstudentxevaluations', 'tutstudentxevaluations.id', '=', 'id_tutev')->join('competences','competences.id','=','competencextutstudentxevaluations.id_competence')->selectRaw('id_competence,nombre, count(*) as cantidad,avg(puntaje) as prom_punt,min(puntaje) as min,max(puntaje) as max ,AVG(puntaje_maximo) as maximo')->where('fecha_hora','<>',null)->where('id_evaluation',$id)->groupBy('id_competence')->get();
+    // dd($compxtutxevs);
+    
+    $data = [
+    'evaluation'               =>  $evaluation, 
+    'total_puntaje'               =>  $total_puntaje, 
+    'compxtutxevs'   =>  $compxtutxevs, 
+    ];
+    return view('evaluations.evaluation.resultados', $data);
+
+}
+
+
+public function sendresults(Request $request,$id)
+ {//muestra las evaluaciones rendidas
+    $evaluation = Evaluation::find($id);
+
+    try {
+        //avisar a todos los alumnos
+        $students = DB::table('tutstudentxevaluations')->join('tutstudents', 'tutstudents.id', '=', 'id_tutstudent')->select('nombre','correo')->where('id_evaluation',$id)->where('fecha_hora','<>',null)->get();
+        
+
+        $evaluacion = $evaluation->nombre;        
+        foreach ($students as $student) {
+            try{
+                $nombre = $student->nombre;
+                $mail = $student->correo;                
+                Mail::send('emails.notify_results',compact('nombre','mail','evaluacion'),  function($m) use($mail) {
+                    $m->subject('UAS Evaluaciones - Resultados de evaluación');
+                    $m->to($mail);
+                });
+            }
+            catch (Exception $e)          {
+                return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+            }  
+        }
+
+
+        //actualizo el campo para que el alumno vea sus resultados
+        Tutstudentxevaluation::where('fecha_hora','<>',null)->where('id_evaluation',$id)->update(['corregida' => 1]);    
+        return redirect()->route('evaluacion_resultados.index',$evaluation->id)->with('success', 'Se han enviado los resultados exitosamente');
+    } catch (Exception $e) {
+        return redirect()->route('evaluacion_resultados.index')->with('warning', 'Ocurrió un error inesperado.');
+    }
+}
+
 
     public function create()
     {
@@ -155,6 +241,8 @@ public function indexevalcoord(Request $request,$id)
                     $evaluacion->estado               = 1;  //creada
                     $evaluacion->save();
 
+                    $arr_competences = array();
+                    $arr_puntajes = array();
 
                     //creo los datos de las preguntas            
                     foreach($request['arrIds'] as $idQuestion => $value){
@@ -182,6 +270,16 @@ public function indexevalcoord(Request $request,$id)
                                 $pregunta->extension_arch  = $preg->extension_arch; 
                             }
                             $pregunta->save();
+
+                            //guardas las competencias en el arreglo
+                            if(in_array($preg->id_competence, $arr_competences)){
+                                $pos = array_search($preg->id_competence, $arr_competences);
+                                $arr_puntajes[$pos] += $request['arrPuntajes'][$value] ; 
+                            }
+                            else{
+                                array_push($arr_competences,$preg->id_competence);
+                                array_push($arr_puntajes,$request['arrPuntajes'][$value]);
+                            }
 
                             //ahora las alternativas
                             if($preg->tipo == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
@@ -222,7 +320,21 @@ public function indexevalcoord(Request $request,$id)
                             $tutstudentxevaluation->intentos = 1 ;
                             $tutstudentxevaluation->save() ;
                         }
-                    }          
+                    }
+
+                    //ahora creo los puntajes para cada alumno
+                    $tutevs=Tutstudentxevaluation::where('id_evaluation',$evaluacion->id)->get();
+                    foreach ($tutevs as $tutev) {
+                        foreach ($arr_competences as $key => $competence) {
+                            $compxtutxev = new Competencextutstudentxevaluation;
+                            $compxtutxev->id_competence = $competence;
+                            $compxtutxev->id_tutev = $tutev->id;
+                            $compxtutxev->puntaje_maximo = $arr_puntajes[$key];
+                            $compxtutxev->puntaje =  0 ;
+                            $compxtutxev->save();
+                        }
+                    }       
+
                 }
                 else{
                     return redirect()->route('evaluacion.create')->with('warning', 'Tiene que tener preguntas.');
@@ -281,17 +393,21 @@ public function indexevalcoord(Request $request,$id)
     public function storeEvCorregida(Request $request, $id,$ev)
     {//guarda las correcciones
         $id_docente = Session::get('user')->IdDocente;
-        
+        $tutstudentxevaluation = Tutstudentxevaluation::where('id_tutstudent',$id)->where('id_evaluation',$ev)->first();
         // dd($request);
         foreach ($request['arr_comentario'] as $key => $value) {
             $evaluation = Evquestionxstudentxdocente::find($key);
             $evaluation->comentario = $value;
-            $evaluation->puntaje = (float)($request['arr_puntaje1'][$key]) + (float)($request['arr_puntaje2'][$key]);            
+            $evaluation->puntaje = (float)($request['arr_puntaje1'][$key]);            
             $evaluation->save();
-        }
-        //guardo la relacion de evaluador con la evaluacion
-        $tutstudentxevaluation = Tutstudentxevaluation::where('id_tutstudent',$id)->where('id_evaluation',$ev)->first();
 
+            //se suma al acumulado dependiendo de su competencia            
+            $compxtutxev = Competencextutstudentxevaluation::where('id_competence',$evaluation->pregunta->id_competence)->where('id_tutev',$tutstudentxevaluation->id)->first();
+            $compxtutxev->puntaje += $evaluation->puntaje; //aumento su puntaje por competencia
+            $compxtutxev->save();
+        }
+
+        //guardo la relacion de evaluador con la evaluacion      
         DB::table('teacherxtutstudentxevaluations')->insert(['id_tutstudentxevaluation' =>$tutstudentxevaluation->id , 'id_docente' => $id_docente]);
         return redirect()->route('evaluacion.ver_evaluaciones_alumnos',$ev)->with('success', 'La evaluación se ha corregido exitosamente');
     }
@@ -320,7 +436,7 @@ public function indexevalcoord(Request $request,$id)
         $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//saco la evaluacion del alumno 
         if($tutstudentxevaluation->intentos>0){
             $tutstudentxevaluation->intentos-=1;
-            
+            $tutstudentxevaluation->inicio = date('Y-m-d H:i:s ', time());
             $tutstudentxevaluation->save(); //disminuyo la cantidad de intentos del alumno
 
             $evaluation   = Evaluation::find($id);//saco la evaluacion        
@@ -335,9 +451,25 @@ public function indexevalcoord(Request $request,$id)
         }
     }   
 
+    public function darPermisoExtra($student,$ev)
+    {
+        $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',$student)->where('id_evaluation',$ev)->first();//saco la evaluacion del alumno 
+        if( $tutstudentxevaluation != null ){
+            $tutstudentxevaluation->intentos+=1;            
+            $tutstudentxevaluation->save(); //aumento la cantidad de intentos del alumno
+            return redirect()->route('evaluacion.ver_evaluaciones_alumnos_coord',$ev)->with('success', 'Se le ha otorgado al alumno un nuevo intento exitosamente.');        
+        }
+        else{
+         return redirect()->route('evaluacion.ver_evaluaciones_alumnos_coord',$ev)->with('warning', 'Ha ocurrido un error.');           
+        }
+        
+            
+    }   
+
     public function storeEv(Request $request)
     {//guarda las respuestas de la evaluacion
         $id=$request['id_evaluation'];
+        $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//
 
         //se borran las respuestas anteriores, si hubiesen
         DB::table('evquestionxstudentxdocentes')->where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->delete();        
@@ -361,6 +493,11 @@ public function indexevalcoord(Request $request,$id)
                 }
                 else {
                     $ev->puntaje = $evquestion->puntaje; //se le asigna el puntaje completo
+
+                    //se suma al acumulado dependiendo de su competencia
+                    $compxtutxev = Competencextutstudentxevaluation::where('id_competence',$evquestion->id_competence)->where('id_tutev',$tutstudentxevaluation->id)->first();
+                    $compxtutxev->puntaje += $ev->puntaje; //aumento su puntaje por competencia
+                    $compxtutxev->save();
                 }
             }
             $ev->save();
@@ -377,8 +514,7 @@ public function indexevalcoord(Request $request,$id)
             }
             
         }  
-        //guardo la hora de la evaluacion
-        $tutstudentxevaluation   = Tutstudentxevaluation::where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->first();//
+        //guardo la hora de la evaluacion        
         $tutstudentxevaluation->fecha_hora = date('Y-m-d H:i:s ', time());
         $tutstudentxevaluation->save(); 
         
@@ -491,6 +627,10 @@ public function indexevalcoord(Request $request,$id)
 
                     $evquestions = $evaluacion->preguntas;
 
+                    //arreglos
+                    $arr_competences = array();
+                    $arr_puntajes = array();
+
                     //actualizar las preguntas existentes >  tabla EvQuestion
                     if($request['arrEvIds']!=null){//si al menos llega una pregunta antigua
                         foreach ($evquestions as $evquestion) {
@@ -510,6 +650,16 @@ public function indexevalcoord(Request $request,$id)
                             else{//eliminar la pregunta antigua
                                 $evquestion->delete();
                             }
+
+                            //guardas las competencias en el arreglo
+                            if(in_array($preg->id_competence, $arr_competences)){
+                                $pos = array_search($preg->id_competence, $arr_competences);
+                                $arr_puntajes[$pos] += $request['arrEvPuntajes'][$evquestion->id] ; 
+                            }
+                            else{
+                                array_push($arr_competences,$preg->id_competence);
+                                array_push($arr_puntajes,$request['arrEvPuntajes'][$evquestion->id]);
+                            }
                         }
                     }
                     else{//se borraron todas preguntas antiguas que habian
@@ -522,20 +672,20 @@ public function indexevalcoord(Request $request,$id)
                     if($request['arrIds']!=null){//si se agregaron preguntas nuevas del banco
                         foreach($request['arrIds'] as $idQuestion => $value){
                             try {
-                            //busco la pregunta del banco
+                                //busco la pregunta del banco
                                 $preg = Question::find($value);
 
-                            //creo un nuevo objeto pregunta para la evaluacion
+                                //creo un nuevo objeto pregunta para la evaluacion
                                 $pregunta = new EvQuestion;  
                                 $pregunta->descripcion  = $preg->descripcion;                        
                                 $pregunta->tipo  = $preg->tipo;
                                 $pregunta->tiempo  = $preg->tiempo;
-                            $pregunta->puntaje  = $request['arrPuntajes'][$value] ; //el puntaje de la preg
-                            $pregunta->dificultad  = $preg->dificultad;
-                            $pregunta->requisito  = $preg->requisito;
-                            $pregunta->id_docente  = $request['arrEvaluadores'][$value] ; //el evaluador de la preg
-                            $pregunta->id_competence  = $preg->id_competence;
-                            $pregunta->id_evaluation  = $id; //el codigo de la evaluacion recien creada en bd
+                                $pregunta->puntaje  = $request['arrPuntajes'][$value] ; //el puntaje de la preg
+                                $pregunta->dificultad  = $preg->dificultad;
+                                $pregunta->requisito  = $preg->requisito;
+                                $pregunta->id_docente  = $request['arrEvaluadores'][$value] ; //el evaluador de la preg
+                                $pregunta->id_competence  = $preg->id_competence;
+                                $pregunta->id_evaluation  = $id; //el codigo de la evaluacion recien creada en bd
 
                             if($preg->tipo == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
                                 $pregunta->rpta  = $preg->rpta;
@@ -545,6 +695,16 @@ public function indexevalcoord(Request $request,$id)
                                 $pregunta->extension_arch  = $preg->extension_arch; 
                             }
                             $pregunta->save();
+
+                            //guardas las competencias en el arreglo
+                            if(in_array($preg->id_competence, $arr_competences)){
+                                $pos = array_search($preg->id_competence, $arr_competences);
+                                $arr_puntajes[$pos] += $request['arrPuntajes'][$value] ; 
+                            }
+                            else{
+                                array_push($arr_competences,$preg->id_competence);
+                                array_push($arr_puntajes,$request['arrPuntajes'][$value]);
+                            }
 
                             //ahora las alternativas
                             if($preg->tipo == 1){//si es pregunta cerrada, necesitamos las claves y respuesta
@@ -590,7 +750,20 @@ public function indexevalcoord(Request $request,$id)
                         $tutstudentxevaluation->intentos = 1 ;
                         $tutstudentxevaluation->save() ;
                     }
-                }          
+                }
+
+                //ahora creo los puntajes para cada alumno
+                $tutevs=Tutstudentxevaluation::where('id_evaluation',$evaluacion->id)->get();
+                foreach ($tutevs as $tutev) {
+                    foreach ($arr_competences as $key => $competence) {
+                        $compxtutxev = new Competencextutstudentxevaluation;
+                        $compxtutxev->id_competence = $competence;
+                        $compxtutxev->id_tutev = $tutev->id;
+                        $compxtutxev->puntaje_maximo = $arr_puntajes[$key];
+                        $compxtutxev->puntaje =  0 ;
+                        $compxtutxev->save();
+                    }
+                }             
             }
             else{
                 return redirect()->back()->with('warning', 'Tiene que tener preguntas.');

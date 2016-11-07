@@ -5,6 +5,7 @@ use View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
+use Intranet\Http\Requests\AspectRequest;
 use Intranet\Http\Services\Aspect\AspectService;
 use Intranet\Http\Services\Criterion\CriterionService;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
@@ -35,8 +36,14 @@ class AspectController extends BaseController {
 		return view('aspects.index', $data);
 	}
 
-	public function create() {
-		$data['title'] = 'Nuevo Aspecto';
+	public function create(AspectRequest $request) {
+		try {
+			$data['title'] = 'Nuevo Aspecto';
+			$data['resultado']=$this->studentsResultService->findById($request->all());
+		} catch(\Exception $e) {
+			dd($e);
+		}
+		//dd($data['resultado']);
 		return view('aspects.create', $data);
 	}
 

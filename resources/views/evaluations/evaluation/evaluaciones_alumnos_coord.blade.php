@@ -58,9 +58,14 @@
                 </table>                
             </div>             
             <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <a class="btn btn-default pull-left" href="{{ route('evaluacion.index') }}">Regresar</a>
-            </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a class="btn btn-default pull-left" href="{{ route('evaluacion.index') }}">Regresar</a>
+                    @if($completo == true)
+                    <a class="btn btn-primary pull-right" href="{{ route('evaluacion_resultados.index',$evaluation->id) }}">Ver resultados <i class="fa fa-eye"></i></a>
+                    @endif
+                </div>
+
+
                 
             </div>
         </div>

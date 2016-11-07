@@ -11,6 +11,10 @@ class Schedule_meetings extends Model
 	use SoftDeletes;
 
         public function phase(){
-        return $this->belongsTo('Intranet\Models\Phase', 'id');
+        return $this->belongsTo('Intranet\Models\Phase', 'idfase');
+    }
+
+        public function pspprocess(){
+        return $this->belongsTo('Intranet\Models\PspProcess', 'idpspprocess');
     }
 }

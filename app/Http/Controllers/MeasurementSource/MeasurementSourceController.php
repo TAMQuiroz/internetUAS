@@ -107,7 +107,7 @@ class MeasurementSourceController extends BaseController {
             dd($e);
         }
 
-        return redirect()->route('index.dictatedCourses')->with('success', "Las modificaciones se han guardado exitosamente");
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador')->with('success', "Las modificaciones se han guardado exitosamente");
     }
 
     public function findMeasuringByCriterion($idCriterioCurso) {

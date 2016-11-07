@@ -1325,8 +1325,8 @@ Route::group(['prefix' => 'tutoria'], function(){
 
         //insturmentos de medicion de los cursos del ciclo:
         Route::get('/{id}/instrumentosDelCurso', ['as' => 'instrumentosDelCurso_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_index']);
-        Route::get('/{id}/instrumentosDelCurso/edit', ['as' => 'instrumentosDelCurso_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_edit']);        
-        Route::post('/{id}/instrumentosDelCurso/update', ['as' => 'instrumentosDelCurso_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_update']);
+        Route::get('/{id}/instrumentosDelCurso/{idCurso}/edit', ['as' => 'instrumentosDelCurso_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_edit']);        
+        Route::post('/{id}/instrumentosDelCurso/{idCurso}/update', ['as' => 'instrumentosDelCurso_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_update']);
     });
 
 

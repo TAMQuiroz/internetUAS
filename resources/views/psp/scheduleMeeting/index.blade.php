@@ -34,6 +34,7 @@
                     <tbody>
                     	@foreach($Schedules as $Schedule)      	
                     	<tr class="even pointer">
+                            @if($Schedule->PspProcess!=null)
                             <td >{{$Schedule->tipo}}</td>
                             <td >{{$Schedule->fecha_inicio}}</td>
                             <td >{{$Schedule->fecha_fin}}</td>
@@ -46,6 +47,7 @@
                             <td >
                                 <a href="{{ route('scheduleMeeting.edit', $Schedule->id) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>                                
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

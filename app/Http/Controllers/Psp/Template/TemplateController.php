@@ -31,7 +31,7 @@ class TemplateController extends Controller
     public function index()
     {
         //
-        $templates = Template::get();
+        $templates = null;
         if(Auth::User()->IdPerfil==3){  
                 $templates = Template::get();
             } else if (Auth::User()->IdPerfil==2){

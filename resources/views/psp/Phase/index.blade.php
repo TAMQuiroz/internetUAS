@@ -38,6 +38,7 @@
                         @if($Phaseses!=null)
                         	@foreach($Phaseses as $Phases)      	
                         	<tr class="even pointer">
+                                @if($Phases->PspProcess!=null)
                                 <td >{{$Phases->numero}}</td>
                                 <td >{{$Phases->descripcion}}</td>
                                 <td >{{$Phases->fecha_inicio}}</td>
@@ -49,6 +50,7 @@
                                     
                                     <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$Phases->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
                                 </td>
+                                @endif
                             </tr>
                             @include('modals.delete', ['id'=> $Phases->id, 'message' => '¿Esta seguro que desea eliminar esta fase?', 'route' => route('phase.delete', $Phases->id)])
                             @endforeach
@@ -56,15 +58,6 @@
                     </tbody>
                 </table>
             </div>
-            @if($Phaseses == null)
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="alert alert-warning">
-                            <strong>Advertencia: </strong> No hay fases.
-                        </div>
-                    </div>
-                </div>    
-            @endif
         </div>
     </div>
 

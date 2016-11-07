@@ -12,6 +12,7 @@ use Intranet\Models\Template;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Phase;
 use Intranet\Models\Student;
+use Intranet\Models\Tutstudent;
 use Carbon\Carbon;
 use Auth;
 use Mail;
@@ -29,12 +30,13 @@ class PspDocumentController extends Controller
 
         $students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
+        $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
         $pspdocuments = PspDocument::where('idstudent',$student->IdAlumno)->get();
         //$templates = Template::get();
         $data = [
             'pspdocuments'    =>  $pspdocuments,
         ];
-        $data['student'] = $students->first();
+        $data['student'] = $pspstudent;
         //$data['templates'] = $templates;
         //$data['groups'] = $this->groupService->retrieveAll();
         return view('psp.pspDocument.index', $data);
@@ -106,11 +108,11 @@ class PspDocumentController extends Controller
         $pspDocument    = pspDocument::find($id);
         $students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
-
+        $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
         $data = [
             'pspDocument'    =>  $pspDocument,
         ];
-        $data['student'] = $students->first();
+        $data['student'] = $pspstudent;
         $data['date'] = Carbon::now();
         return view('psp.pspDocument.edit', $data);
     }
@@ -173,7 +175,9 @@ class PspDocumentController extends Controller
     {        
         try {
             $pspDocument = PspDocument::find($id);
-            $student = PspStudent::where('idalumno',$pspDocument->idstudent)->first();
+            $stud = Student::where('IdUsuario',$pspDocument->idstudent)->first();
+            $student = Tutstudent::where('id_usuario',$stud->IdUsuario)->first();
+
             $now = Carbon::now();
             $fecha = $pspDocument->fecha_limite;
             $datetime1 = new DateTime(($now));
@@ -206,13 +210,13 @@ class PspDocumentController extends Controller
         //$students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         //$student  =$students->first();
         $student = Student::find($id);
-        
+        $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
         $pspdocuments = PspDocument::where('idstudent',$id)->get();
 
         $data = [
             'pspdocuments'    =>  $pspdocuments,
         ];
-        $data['student'] = $student;
+        $data['student'] = $pspstudent;
 
         return view('psp.pspDocument.search', $data);       
 

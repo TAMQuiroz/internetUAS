@@ -144,6 +144,27 @@ class TemplateController extends Controller
                 $template->idtipoestado  = 1;
             else
                 $template->idtipoestado  = 2;
+            $proc = array(); 
+            $pspproc=PspProcess::find($phase->idpspprocess);
+            $size = $request['ruta']->getSize();
+            if($size > ($pspproc->max_tam_plantilla*1024*1024+10486)){
+                return redirect()->back()->with('warning', 'La plantilla que se quiere subir supera el tamaño maximo permitido');
+            }
+            //dd($size);
+            $proc2=Phase::where('idpspprocess',$phase->idpspprocess)->get();
+            foreach($proc2 as $p2){ 
+                if($p2!=null){
+                    $proc3=Template::where('idphase',$p2->id)->get();
+                        foreach($proc3 as $p3){ 
+                            if($p3!=null){
+                                $proc[]=Template::find($p3->id);
+                            }
+                    } 
+                }
+            }
+            if($pspproc->numero_Plantillas!=0){
+                if(count($proc)+1>$pspproc->numero_Plantillas)return redirect()->back()->with('warning', 'Se ha alcanzado el numero maximo de plantillas permitido para este proceso');
+            }
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 $destinationPath = 'uploads/templates/'; // upload path
@@ -154,7 +175,7 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
 
-                $pspstudents=PspStudent::get();
+                $pspstudents=PspStudent::where('idpspprocess',$phase->idpspprocess)->get();
                 //$pspstudents=Student::where('lleva_psp','t')->get();
                 foreach($pspstudents as $psp) {
                     if($psp!=null){

@@ -26,6 +26,8 @@
                         <th class="column-title">Tipo</th>
                         <th class="column-title">Fecha de Inicio</th>
                         <th class="column-title">Fecha de Fin</th>
+                        <th class="column-title">Fase</th>
+                        <th class="column-title">Curso de Psp</th>
                         <th colspan="2">Acciones</th>    
                     </tr>
                     </thead>
@@ -35,6 +37,12 @@
                             <td >{{$Schedule->tipo}}</td>
                             <td >{{$Schedule->fecha_inicio}}</td>
                             <td >{{$Schedule->fecha_fin}}</td>
+                            @if($Schedule->Phase!=null)
+                            <td >{{$Schedule->Phase->numero}}</td>
+                            @else
+                            <td >-</td>
+                            @endif
+                            <td >{{$Schedule->PspProcess->Course->Nombre}}</td>
                             <td >
                                 <a href="{{ route('scheduleMeeting.edit', $Schedule->id) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>                                
                             </td>

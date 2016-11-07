@@ -105,8 +105,8 @@ class PhaseController extends Controller
             $Phase                   = new Phase;
             $Phase->numero          = $request['numero'];
             $Phase->descripcion      = $request['descripcion'];
-            $Phase->fecha_inicio      = Carbon::createFromFormat('d/m/Y',$request['fecha_inicio']); 
-            $Phase->fecha_fin      = Carbon::createFromFormat('d/m/Y',$request['fecha_fin']);
+            $Phase->fecha_inicio      = date("Y-m-d",strtotime($request['fecha_inicio']));
+            $Phase->fecha_fin      = date("Y-m-d",strtotime($request['fecha_fin']));
             $Phase->idpspprocess = $request['Proceso_de_Psp'];            
             $Phaseses = Phase::where('idpspprocess',$request['Proceso_de_Psp'])->get();
             if($Phaseses!=null){
@@ -118,6 +118,10 @@ class PhaseController extends Controller
                     }
                 }       
             }     
+            $pspproc=PspProcess::find($Phase->idpspprocess);
+            if($pspproc->numero_Fases!=0){
+                if(count($Phaseses)+1>$pspproc->numero_Fases)return redirect()->back()->with('warning', 'Se ha alcanzado el numero maximo de fases permitido para este proceso');
+            }
             $Phase->save();
 
             return redirect()->route('phase.index')->with('success', 'La fase se ha registrado exitosamente');
@@ -180,8 +184,8 @@ class PhaseController extends Controller
             $Phase                   = Phase::find($id);
             $Phase->numero           = $request['numero'];
             $Phase->descripcion           = $request['descripcion'];
-            $Phase->fecha_inicio      = Carbon::createFromFormat('d/m/Y',$request['fecha_inicio']); 
-            $Phase->fecha_fin      = Carbon::createFromFormat('d/m/Y',$request['fecha_fin']);
+            $Phase->fecha_inicio      = date("Y-m-d",strtotime($request['fecha_inicio']));
+            $Phase->fecha_fin      = date("Y-m-d",strtotime($request['fecha_fin']));
             $Phase->idpspprocess = $request['Proceso_de_Psp'];            
             $Phaseses = Phase::where('idpspprocess',$request['Proceso_de_Psp'])->get();
             if($Phaseses!=null){
@@ -193,7 +197,8 @@ class PhaseController extends Controller
                         }
                     }
                 }       
-            }           
+            }
+            //dd($Phase);           
             $Phase->save();
 
             return redirect()->route('phase.index')->with('success', 'La fase se ha actualizado exitosamente');

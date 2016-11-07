@@ -721,7 +721,7 @@ class FlujoCoordinadorController extends Controller
                 $data['dictatedCourses']= $cursosDelCicloyEspecialidad;
             }
         } catch(\Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ha ocurrido un error');
         }
         //return $cursosDelCicloyEspecialidad;
         return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
@@ -742,7 +742,7 @@ class FlujoCoordinadorController extends Controller
             $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
             $data['idEspecialidad']= $id;
         } catch (\Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ha ocurrido un error');
         }
         
         return view('flujoCoordinador.instrumentosDelCurso_edit', $data);
@@ -752,7 +752,7 @@ class FlujoCoordinadorController extends Controller
         try {
             $this->measurementSourceService->saveMesuringByCourse($request->all());
         } catch (\Exception $e) {
-            dd($e);
+            return redirect()->back()->with('warning', 'Ha ocurrido un error');
         }
 
         return redirect()->route('instrumentosDelCurso_index.flujoCoordinador', $id)->with('success', "Las modificaciones se han guardado exitosamente");       

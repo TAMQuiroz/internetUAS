@@ -177,7 +177,7 @@ class StudentController extends BaseController {
 			if (Score::where('IdHorario',$request['timeTableId'])->get() != null){
 				return back()->with('error', 'Ya existen alumnos calificados en este horario');
 			} else {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 			}
 		}
 		return back()->with('success', 'La lista de alumnos se ha eliminado exitosamente');

@@ -31,7 +31,7 @@ class AspectController extends BaseController {
 			$data['studentsResults'] = $studentResults;
 			$data['aspects'] = $this->aspectService->findByRE($studentResults);
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return view('aspects.index', $data);
 	}
@@ -41,7 +41,7 @@ class AspectController extends BaseController {
 			$data['title'] = 'Nuevo Aspecto';
 			$data['resultado']=$this->studentsResultService->findById($request->all());
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		//dd($data['resultado']);
 		return view('aspects.create', $data);
@@ -51,7 +51,7 @@ class AspectController extends BaseController {
 		try {
 			$this->aspectService->create($request->all());
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return redirect()->route('index.aspects')->with('success', 'El aspecto se ha registrado exitosamente');
 	}
@@ -62,7 +62,7 @@ class AspectController extends BaseController {
 			$data['aspect'] = $this->aspectService->findAspect($request->all());
 			//$data['criteria'] = $this->aspectService->findCriterias($request->all());
 		} catch (\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return view('aspects.view', $data);
 	}
@@ -73,7 +73,7 @@ class AspectController extends BaseController {
 			$data['aspect'] = $this->aspectService->findAspect($request->all());
 			$data['criteria'] = $this->aspectService->findCriterias($request->all());
 		} catch (\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return view('aspects.edit', $data);
 	}
@@ -83,7 +83,7 @@ class AspectController extends BaseController {
 			$this->aspectService->update($request->all());
 			//$this->criterionService->createCriterion($request->all());
 		} catch (\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return redirect()->route('index.aspects')->with('success', 'Las modificaciones se han guardado exitosamente');
 	}
@@ -93,7 +93,7 @@ class AspectController extends BaseController {
 		try{
 			$msg =$this->aspectService->deleteAspect($request->all());
 		} catch (\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		if($msg == 1) {
 			return redirect()->route('index.aspects')->with('success', 'El registro ha sido eliminado exitosamente');
@@ -110,7 +110,7 @@ class AspectController extends BaseController {
 		try{
 			$list = $this->aspectService->retrieveAll();
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return json_encode($list);
 	}
@@ -120,7 +120,7 @@ class AspectController extends BaseController {
 		try{
 			$asp = $this->aspectService->getAspectById($aspectCode);
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return json_encode($asp);
 	}
@@ -132,7 +132,7 @@ class AspectController extends BaseController {
 		try {
 			$data['studentsResult'] = $this->studentsResultService->getById($idStudentsResult);
 		} catch (\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 
 		return json_encode($data);
@@ -155,7 +155,7 @@ class AspectController extends BaseController {
 		try {
 			$data['aspects'] = $this->studentsResultService->findAspect($idStudentsResult);
 		} catch (\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 
 		return json_encode($data);
@@ -166,7 +166,7 @@ class AspectController extends BaseController {
 		try {
 			$data['aspects'] = $this->aspectService->getAspectsByRubric($idRubric);
 		} catch (\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 
 		return json_encode($data);
@@ -177,7 +177,7 @@ class AspectController extends BaseController {
 		try{
 			$data['aspect'] = $this->aspectService->getCriteriaByAspectId($aspectCode);
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return json_encode($data);
 	}

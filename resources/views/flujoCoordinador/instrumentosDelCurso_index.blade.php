@@ -82,8 +82,8 @@
                 <div class="row">
                     
                     <div class="col-md-12 col-sm-12 col-xs-12">                         
-                         <a href="" class="btn btn-default pull-left">< ATRAS </a>
-                         <a id ="" href="" class="btn btn-success pull-right">SIGUIENTE ></a>
+                         <a href="{{ route('contributions.flujoCoordinador', $facultad->IdEspecialidad) }}" class="btn btn-default pull-left">< ATRAS </a>
+                         <a id ="" href=" {{ route('end4.flujoCoordinador', $facultad->IdEspecialidad) }} " class="btn btn-success pull-right">SIGUIENTE ></a>
                     </div>
                 </div>
             </div>

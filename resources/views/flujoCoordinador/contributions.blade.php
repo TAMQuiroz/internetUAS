@@ -84,7 +84,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a href="{{ route('cursosCiclo_index.flujoCoordinador', $idEspecialidad) }}" class="btn btn-default">< Atras</a>
                         
-                    <button class="btn btn-success pull-right" type="submit">SIGUIENTE ></button>
+                    <button class="btn btn-success pull-right" type="submit"  >SIGUIENTE ></button>
                     <!--<a href="{{ route('index.studentsResult') }}" class="btn btn-default pull-right"> Cancelar</a>-->
                 </div>
             </div>

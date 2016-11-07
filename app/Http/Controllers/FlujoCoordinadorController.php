@@ -733,24 +733,7 @@ class FlujoCoordinadorController extends Controller
     public function instrumentosDelCurso_edit($id, $idCurso){
 
         $curso= Course::findOrFail($idCurso);
-        /*$resultados = DB::table('aporte')
-                    ->join('resultadoestudiantil', 'resultadoestudiantil.IdResultadoEstudiantil', '=', 'aporte.IdResultadoEstudiantil')
-                    ->join('curso', 'curso.IdCurso', '=', 'aporte.IdCurso')
-                    //->join('cicloacademico', 'cicloacademico.IdCicloAcademico', '=', 'aporte.IdCicloAcademico')
-
-                    ->join('aspecto', 'aspecto.IdCurso', '=', 'aporte.IdCurso')
-
-                    ->select('resultadoestudiantil.*')
-
-                    ->where ('curso.IdCurso', '=', $idCurso)
-                    //->where ('aporte.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico) //cuendo alex aregle la tabla aporte
-
-                    //->orderBy('cliente.apellidoPaterno', 'asc')
-                    ->get(); 
-        */
-        //$aportes = Contribution::where ('IdCurso', '=', $idCurso) 
-                    //->where ('aporte.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico) //cuendo alex aregle la tabla aporte
-        //            ->get(); 
+        
         try{
             $data['course'] = $curso;
             $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
@@ -761,13 +744,18 @@ class FlujoCoordinadorController extends Controller
         } catch (\Exception $e) {
             dd($e);
         }
-        //dd($data);
-        //return $data['studentsResults'] ;
+        
         return view('flujoCoordinador.instrumentosDelCurso_edit', $data);
     }
 
     public function instrumentosDelCurso_update (Request $request, $id, $idCurso){
+        try {
+            $this->measurementSourceService->saveMesuringByCourse($request->all());
+        } catch (\Exception $e) {
+            dd($e);
+        }
 
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador', $id)->with('success', "Las modificaciones se han guardado exitosamente");       
     }
 
 
@@ -797,7 +785,7 @@ class FlujoCoordinadorController extends Controller
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
-        return redirect()->route('contributions.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
     }
 
 

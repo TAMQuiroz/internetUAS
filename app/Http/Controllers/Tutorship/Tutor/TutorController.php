@@ -169,10 +169,14 @@ class TutorController extends Controller {
                     foreach ($request['cant'] as $idTeacher => $cantAlumnos) {
                         $tutorships = Tutorship::where('id_tutor', $id)->take($cantAlumnos)->get();
                         foreach ($tutorships as $t) {
-                            $tutorship = Tutorship::find($t->id);
-                            $tutorship->id_tutor = $idTeacher;
-                            $tutorship->id_suplente = $idTeacher;
-                            $tutorship->save();
+                            $tutorshipTrash = Tutorship::find($t->id);
+                            $tutorshipTrash->delete();
+                            
+                            $tutorshipNew = new Tutorship;
+                            $tutorshipNew->id_tutor = $idTeacher;
+                            $tutorshipNew->id_profesor = $id;
+                            $tutorshipNew->id_suplente = $idTeacher;
+                            $tutorshipNew->save();
 
                             $citas = TutMeeting::where('id_tutstudent', $t->id_alumno)->where('id_docente', $t->id_tutor)->where('estado', 'Confirmada')->get();
                             if ($citas->count() != 0) {

@@ -124,7 +124,7 @@ class TutorController extends Controller {
             }
             
             DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 1]);            
-            return redirect()->route('tutor.index')->with('success', 'Se reasignaron los alumnos del tutor suplente al tutor original');
+            return redirect()->route('tutor.index')->with('success', 'Se activó al tutor y se reasignaron los alumnos del tutor suplente al tutor original, en caso hubiera.');
         } catch (Exception $e) {
             return redirect()->route('tutor.index')->with('warning', 'No se puede hacer la reasignación.');
         }

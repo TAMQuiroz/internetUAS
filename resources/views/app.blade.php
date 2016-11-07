@@ -310,7 +310,7 @@
               <!-- nueva barra PSP -->
 
 
-              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil==0)) 
+              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || (Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp))) 
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
@@ -336,7 +336,7 @@
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         @endif
-                        @if(Auth::user()->IdPerfil == 0) <!--si es alumno-->
+                        @if(Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp) <!--si es alumno-->
                         <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>
                         <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
                         <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>

@@ -42,13 +42,9 @@
                                         @else
                                             <td class=" ">-</td>
                                         @endif
-                                        <td class=" ">
-                                            @if(in_array(35,Session::get('actions')))
-                                                <a href="{{ route('view.dictatedCourses', ['courseId' => $curso->IdCurso]) }}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
-                                            @endif
-
+                                        <td class=" "> 
                                             @if(in_array(74,Session::get('actions')))
-                                                <a href="{{ route('viewMesuringByCourse.measurementSource', ['courseId' => $curso->IdCurso]) }}" class="btn btn-primary btn-xs" title="Administrar Instrumentos de Medición"><i class="fa fa-cogs"></i></a>
+                                                <a href="{{ route('instrumentosDelCurso_edit.flujoCoordinador', ['id'=> $facultad->IdEspecialidad,'idCurso' => $curso->IdCurso]) }}" class="btn btn-primary btn-xs" title="Administrar Instrumentos de Medición"><i class="fa fa-cogs"></i></a>
                                             @endif
                                         </td>
                                     </tr>
@@ -64,7 +60,7 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="separator"></div>
+                        
                        
                     @else
                         <div class="row">
@@ -77,6 +73,18 @@
                     @endif
 
 
+                </div>
+
+                <div class="row">                    
+                    
+                </div>
+                <div class="separator"></div>
+                <div class="row">
+                    
+                    <div class="col-md-12 col-sm-12 col-xs-12">                         
+                         <a href="" class="btn btn-default pull-left">< ATRAS </a>
+                         <a id ="" href="" class="btn btn-success pull-right">SIGUIENTE ></a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -36,6 +36,8 @@ use Intranet\Models\Teacher;
 use Intranet\Models\Criterion;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
+use Intranet\Models\Course;
+use Intranet\Models\Contribution;
 use DB;
 
 
@@ -50,6 +52,7 @@ class FlujoCoordinadorController extends Controller
     protected $periodService;
     protected $dictatedCoursesService;
     protected $passwordService;
+    protected $measurementSourceService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
@@ -63,6 +66,7 @@ class FlujoCoordinadorController extends Controller
         $this->cicleService=new CicleService();
         $this->dictatedCoursesService = new DictatedCoursesService();
         $this->passwordService= new PasswordService();
+        $this->measurementSourceService= new MeasurementSourceService();
 	}
 
     public function index()
@@ -715,9 +719,6 @@ class FlujoCoordinadorController extends Controller
                                         //->orderBy('cliente.apellidoPaterno', 'asc')
                                         ->get(); 
                 $data['dictatedCourses']= $cursosDelCicloyEspecialidad;
-                //$data['dictatedCourses']= $this->courseService->retrieveByFacultyandCicle($id);
-
-                //$data['dictatedCourses'] = $this->dictatedCoursesService->retrieveAllCoursesxCycle();
             }
         } catch(\Exception $e) {
             dd($e);
@@ -728,6 +729,47 @@ class FlujoCoordinadorController extends Controller
                                                                     'cursos' => $cursosDelCicloyEspecialidad
                                                                     ]);
     }
+
+    public function instrumentosDelCurso_edit($id, $idCurso){
+
+        $curso= Course::findOrFail($idCurso);
+        /*$resultados = DB::table('aporte')
+                    ->join('resultadoestudiantil', 'resultadoestudiantil.IdResultadoEstudiantil', '=', 'aporte.IdResultadoEstudiantil')
+                    ->join('curso', 'curso.IdCurso', '=', 'aporte.IdCurso')
+                    //->join('cicloacademico', 'cicloacademico.IdCicloAcademico', '=', 'aporte.IdCicloAcademico')
+
+                    ->join('aspecto', 'aspecto.IdCurso', '=', 'aporte.IdCurso')
+
+                    ->select('resultadoestudiantil.*')
+
+                    ->where ('curso.IdCurso', '=', $idCurso)
+                    //->where ('aporte.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico) //cuendo alex aregle la tabla aporte
+
+                    //->orderBy('cliente.apellidoPaterno', 'asc')
+                    ->get(); 
+        */
+        //$aportes = Contribution::where ('IdCurso', '=', $idCurso) 
+                    //->where ('aporte.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico) //cuendo alex aregle la tabla aporte
+        //            ->get(); 
+        try{
+            $data['course'] = $curso;
+            $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
+            $studentsResults = $this->studentsResultService->findResultEvaluated();
+            $data['studentsResults'] = $this->courseService->findStudentsResultsByCourse($idCurso, $studentsResults);
+            $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
+            $data['idEspecialidad']= $id;
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        //dd($data);
+        //return $data['studentsResults'] ;
+        return view('flujoCoordinador.instrumentosDelCurso_edit', $data);
+    }
+
+    public function instrumentosDelCurso_update (Request $request, $id, $idCurso){
+
+    }
+
 
     public function contributions($id) {
         $data = [];

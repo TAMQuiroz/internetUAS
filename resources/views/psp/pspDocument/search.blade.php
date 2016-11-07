@@ -15,11 +15,11 @@
             <div class="x_content">
                 @if($student!=null)
                 <a>Codigo</a>                
-                <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->Codigo); ?>"/>
+                <input id=codigo type="text" disabled name="" value="<?php echo htmlspecialchars($student->Student->Codigo); ?>"/>
                 <br/>
                 <br/>
                 <a>Alumno</a>
-                <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->Nombre); ?>"/>
+                <input id=alumno type="text" disabled name="" value="<?php echo htmlspecialchars($student->Student->Nombre); ?>"/>
                 @endif
                 <br/>
                 <br/>

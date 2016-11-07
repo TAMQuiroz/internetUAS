@@ -780,8 +780,8 @@ class FlujoCoordinadorController extends Controller
         }
 
         try {
-            $data['idEspecialidad']=$id;
             $this->courseService->updateContributions($request->all());
+
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }

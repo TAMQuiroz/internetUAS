@@ -47,8 +47,8 @@ class ImprovementPlanController extends BaseController
             'Descripcion' => $description['descripcion']
           ]);
 
-        $mensaje = "Sugerencia registrada correctamente";
-        return $mensaje;
+        $mensaje = ['mensaje' => 'Sugerencia registrada correctamente'];
+        return response()->json($mensaje);
     }
 
     public function getSuggestion($ip_id){

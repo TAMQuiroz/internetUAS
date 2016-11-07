@@ -27,8 +27,15 @@
           <p>- Profesores creados</p>
           <p>- Cursos creados</p>
           <br>
-          <p>Usted ha terminado satisfactoriamente la segunda parte del flujo. Se guardarán los cambios.</p>
+          <p>Usted ha terminado satisfactoriamente la segunda parte del flujo. Se guardarán los cambios.
           </p>
+          <br>
+          <p>Ahora se comenzará el tercer flujo que contienen 2 funcionalidades importantes para la acreditación de una especialidad. Las funcionalidades mencionadas son:
+          </p>
+          <br>
+          <p>- Periodo iniciado</p>
+          <p>- Ciclo iniciado</p>
+          <br>
         </div>
       </div>        
       
@@ -40,7 +47,7 @@
 
           <div class="col-md-12 col-sm-12 col-xs-12">
                <a  href="{{ route('period_init.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Continuar ></a>
-               <!--<a  href="{{ route('courses_index.flujoCoordinador',$idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>-->
+               <a  href="{{ route('courses_index.flujoCoordinador',$idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>
           </div>
       </div>
 

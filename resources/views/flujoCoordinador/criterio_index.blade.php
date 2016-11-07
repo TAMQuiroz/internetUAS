@@ -124,8 +124,8 @@
     <script>      
         var fila = $("#criterio-fc-table").find("tr");
         if (fila.length == 0) {
-            $('#criterio-siguiente-btn').attr("disabled","disabled");
-            $('#criterio-siguiente-btn').click(function(){return false;});
+            $('#criterio-siguiente-btn').attr("disabled",true);
+            //$('#criterio-siguiente-btn').click(function(){return false;});
         }
 
         //para el combobox se refresque solo

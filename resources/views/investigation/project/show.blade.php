@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Información</h3>
             </div>
@@ -23,56 +23,104 @@
                     <div class="form-group">
                         {{Form::label('Nombre *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::text('nombre',$proyecto->nombre,['class'=>'form-control', 'readonly', 'maxlength' => 50])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->nombre}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{Form::label('Número de entregables *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::text('num_entregables',$proyecto->num_entregables,['class'=>'form-control', 'readonly'])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->num_entregables}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{Form::label('Fecha de inicio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::text('fecha_ini',$proyecto->fecha_ini,['id'=>'fecha_ini','class'=>'form-control', 'readonly','min'=>\Carbon\Carbon::today()->toDateString()])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->fecha_ini}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{Form::label('Fecha de fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::text('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin','class'=>'form-control', 'readonly','min'=>\Carbon\Carbon::today()->toDateString()])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->fecha_fin}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{Form::label('Grupo *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::text('grupo', $proyecto->group->nombre, ['class' => 'form-control', 'readonly'])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->group->nombre}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{Form::label('Area *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::text('area', $proyecto->area->nombre, ['class' => 'form-control', 'readonly'])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->area->nombre}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{Form::label('Descripcion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::textarea('descripcion', $proyecto->descripcion, ['class' => 'form-control', 'readonly', 'rows'=>'5', 'maxlength'=>200])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->descripcion}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{Form::label('Estado *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
+                            @if(Auth::user())
                             {{Form::text('estado', $proyecto->status->nombre, ['class' => 'form-control', 'readonly'])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$proyecto->status->nombre}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 

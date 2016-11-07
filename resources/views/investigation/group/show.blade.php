@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Informacion del Grupo</h3>
             </div>
@@ -21,34 +21,64 @@
                     <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Código</label>
                         <div class="col-md-8 col-sm-6 col-xs-12">
+                            @if(Auth::user())
                             <input id="group-code" class="form-control col-md-7 col-xs-12" type="text" name="group-code" value="{{ $group->id }}" readonly="">
+                            @else
+                            <div class="form-control no-border">
+                                {{$group->id}}
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre <span class="error"> * </span></label>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nombre</label>
                         <div class="col-md-8 col-sm-6 col-xs-12">
+                            @if(Auth::user())
                             <input id="group-name" class="form-control col-md-7 col-xs-12" type="text" name="group-name" value="{{ $group->nombre }}" maxlength="100" required="required" readonly="">
+                            @else
+                            <div class="form-control no-border">
+                                {{$group->nombre}}
+                            </div>
+                            @endif                            
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad <span class="error">*</span></label>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad </label>
                         <div class="col-md-8 col-sm-6 col-xs-12">
+                            @if(Auth::user())
                             <input id="facultyName" class="form-control col-md-7 col-xs-12" type="text" name="facultyName" value="{{ $group->faculty->Nombre }}" readonly>
+                            @else
+                            <div class="form-control no-border">
+                                {{$group->faculty->Nombre}}
+                            </div>
+                            @endif 
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción </label>
                         <div class="col-md-8 col-sm-6 col-xs-12">
+                            @if(Auth::user())
                             <textarea class="resizable_textarea form-control" id="groupDescription" maxlength="200" readonly="" name="groupDescription" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;">{{$group->descripcion}}</textarea>
+                            @else
+                            <div class="no-border">
+                                {{$group->descripcion}}
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Lider <span class="error">*</span></label>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Lider</label>
                         <div class="col-md-8 col-sm-6 col-xs-12">
+                            @if(Auth::user())
                             {{Form::text('lider', $group->leader->Nombre.' '.$group->leader->ApellidoPaterno.' '.$group->leader->ApellidoMaterno, ['class'=>'form-control','readonly'])}}
+                            @else
+                            <div class="form-control no-border">
+                                {{$group->leader->Nombre.' '.$group->leader->ApellidoPaterno.' '.$group->leader->ApellidoMaterno}}
+                            </div>
+                            @endif
                         </div>
                     </div> 
 

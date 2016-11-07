@@ -7,6 +7,12 @@
             <h3>Editar entregable</h3>
 	    </div>
     </div>
+    <div class="col-md-12">
+        <div class="page-title">
+            <h4>Proyecto: {{$proyecto->nombre}}</h4>
+            <h4>Inicio: {{$proyecto->fecha_ini}} Fin: {{$proyecto->fecha_fin}}</h4>
+        </div>
+    </div>
 </div>
 
 <div class="row">

@@ -5,15 +5,26 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Input;
 use Intranet\Models\Student;
 use Intranet\Models\TimeTable;
+use Intranet\Models\Tutstudent;
+use Intranet\Models\User;
 use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Score;
 use DB;
 use Excel;
+use Intranet\Http\Services\User\PasswordService;
+
 class StudentController extends BaseController {
+
 	protected $timeTableService;
+	protected $passwordService;
+
 	public function __construct() {
+
 		$this->timeTableService = new TimeTableService();
+		$this->passwordService = new PasswordService();
+
 	}
+
 	public function load(Request $request)  {
 		$data['title'] = 'Carga de Alumnos';
 		try {
@@ -55,6 +66,7 @@ class StudentController extends BaseController {
 		if(Input::hasFile('import_file')){
 			$path = Input::file('import_file')->getRealPath();
 			$data = Excel::load($path, function($reader) {})->get();
+
 			if(!empty($data) && $data->count()){
 				//check if file was already imported
 				$studentsGroupedByHorario = DB::table('Alumno')->groupBy('IdHorario')->get();
@@ -65,23 +77,42 @@ class StudentController extends BaseController {
 						}
 					}
 				}
+
 				$students = [];
 				foreach ($data as $key => $value) {
-					if (is_numeric($value[1])){
+					$value_int = intval($value[1]);
+					if ($value_int != 0){ 
+
 						$insert = [
-							'Codigo' => $value[1], 
+							'Codigo' => $value_int, 
 							'Nombre' => $value[2],
 							'ApellidoPaterno' => $value[3],
 							'ApellidoMaterno' => $value[4],
 							// other fields
 							'IdHorario' => $idTimeTable,
 						];
-						array_push($students, $insert); 
+
+						// Para el curso PSP
+						if(isset($request['selectPsp'])){
+							// Buscar alumno en la tabla de tutoria
+							$student = Tutstudent::where('codigo', $value_int)->first();
+							if($student != null) { //encontro alumno -> obtener su idusuario
+								$insert['IdUsuario'] = $student->id_usuario;								 
+							}
+							else { // no encontro alumno en tutoria -> crear usuario
+								$user = $this->create_user_tutoria($insert['Codigo']);								
+								if($user != null){
+									$insert['IdUsuario'] = $user->IdUsuario;
+								}								
+							}
+							//$alumno->lleva_psp = 1;
+						}
+						array_push($students, $insert);						
 					}else{
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 					}
 				}
-				
+
 				if(!empty($students)){
 					foreach ($students as $student) {
 						$alumno = new Student;
@@ -90,35 +121,54 @@ class StudentController extends BaseController {
 						$alumno->ApellidoPaterno = $student['ApellidoPaterno'];
 						$alumno->ApellidoMaterno = $student['ApellidoMaterno'];
 						$alumno->IdHorario = $student['IdHorario'];
-						//Campos nuevos para PSP
-						/*
-						$alumno->id = null;
-						$alumno->telefono = null;
-						$alumno->correo = null;
-						$alumno->direccion = null;
-						$alumno->IdUsuario = null;
-						$alumno->idPspGroup = null;
-						$alumno->IdEspecialidad = null;
-						$alumno->idSupervisor = null;
-						*/
-						//$alumno->lleva_psp = null;
-						
+						if(!empty($insert['IdUsuario'])){
+							$alumno->IdUsuario = $insert['IdUsuario'];
+						}
+					
 						$alumno->save();
 					}
 				}
-				//Agregar tamaño a tabla horario
-				//dd($alumno->IdHorario);
-				//$horario = TimeTable::find('IdHorario');
+
 				$horario = TimeTable::find($alumno->IdHorario);
 				
 				$horario->TotalAlumnos = $data->count();
 				$horario->save();
+
 			}else{
 				return redirect()->back()->with('warning', 'Hubo un problema con el archivo de excel');
 			}
 		}
 		return back()->with('success', 'La carga de alumnos se ha realizado exitosamente');
 	}
+
+	public function create_user_tutoria($codigo){
+
+		try {
+            //se busca un alumno con el mismo codigo
+            $u = User::where('Usuario', $codigo)->first();
+            if($u!=null){
+                return null;
+            }            
+
+            // se crea un usuario primero
+            $usuario = new User;
+            $usuario->Usuario       = $codigo;            
+            $usuario->Contrasena    = bcrypt(123);
+            $usuario->IdPerfil      = 0; //perfil 0 para el alumno
+            $usuario->save();
+
+            //se envia el correo para resetear el password
+            if ($usuario) {
+                //$this->passwordService->sendSetPasswordLink($usuario, $request['correo']);
+            }
+            
+            return $usuario;
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ha ocurrido un error');
+        }
+	}
+
 	public function delete(Request $request)
 	{
 		try{

@@ -745,11 +745,7 @@ class FlujoCoordinadorController extends Controller
                 //$data['dictatedCourses'] = $this->dictatedCoursesService->retrieveAllCoursesxCycle();
             }
         } catch(\Exception $e) {
-<<<<<<< HEAD
-            dd($e);
-=======
             return redirect()->back()->with('warning', 'Ha ocurrido un error instrumentosDelCurso_index');
->>>>>>> f599b5241e0235367cbe12c2f1c5ebbd0ab18b06
         }
         //return $cursosDelCicloyEspecialidad;
         return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
@@ -758,8 +754,6 @@ class FlujoCoordinadorController extends Controller
                                                                     ]);
     }
 
-<<<<<<< HEAD
-=======
     public function instrumentosDelCurso_edit($id, $idCurso){
 
         $curso= Course::findOrFail($idCurso);
@@ -788,8 +782,6 @@ class FlujoCoordinadorController extends Controller
         return redirect()->route('instrumentosDelCurso_index.flujoCoordinador', $id)->with('success', "Las modificaciones se han guardado exitosamente");       
     }
 
-
->>>>>>> f599b5241e0235367cbe12c2f1c5ebbd0ab18b06
     public function contributions($id) {
         $data = [];
         try {

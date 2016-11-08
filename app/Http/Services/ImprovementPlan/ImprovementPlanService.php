@@ -170,6 +170,7 @@ class ImprovementPlanService {
                 'IdPlanMejora' => $ImprovementPlan->IdPlanMejora,
                 'IdCicloAcademico' => $_REQUEST['cicle'][$i],
                 'IdDocente' => $respon,
+                'Porcentaje' => 0,
                 //'IdEspecialidad' => $data['specialty'] = Session::get('faculty-code'),
                 //'Comentario' => $request['dateI'],
                 'Descripcion' => $_REQUEST['desc'][$i]
@@ -246,6 +247,7 @@ class ImprovementPlanService {
                     'IdPlanMejora' => $request['improvementPlanId'],
                     'IdCicloAcademico' => $_REQUEST['cicle'][$i],
                     'IdDocente' => $respon,
+                    'Porcentaje' => 0,
                     //'IdEspecialidad' => $data['specialty'] = Session::get('faculty-code'),
                     //'Comentario' => $request['dateI'],
                     'Descripcion' => $_REQUEST['desc'][$i]

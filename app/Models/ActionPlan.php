@@ -10,7 +10,7 @@ class ActionPlan extends Model {
 
     protected $table = 'PlanAccion';
     protected $primaryKey = 'IdPlanAccion';
-    protected $fillable = ['IdPlanMejora', 'IdCicloAcademico', 'IdDocente', 'Descripcion', 'IdEspecialidad', 'Comentario'];
+    protected $fillable = ['IdPlanMejora', 'IdCicloAcademico', 'IdDocente', 'Descripcion', 'IdEspecialidad', 'Comentario', 'Porcentaje'];
 
     public function faculty(){
         return $this->belongsTo('Intranet\Models\Faculty', 'IdEspecialidad');

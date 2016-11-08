@@ -15,8 +15,11 @@ use Intranet\Http\Services\User\UserService;
 
 use Intranet\Models\PspProcess;
 use Intranet\Models\Student;
+use Intranet\Models\PspStudent;
 use Intranet\Models\PspProcessxTeacher;
+use Intranet\Models\PspProcessxSupervisor;
 use Intranet\Models\Teacher;
+use Intranet\Models\CoursexTeacher;
 
 use Carbon\Carbon;
 use Auth;
@@ -168,20 +171,43 @@ class PspProcessController extends Controller
             $proceso   = PspProcess::where('id',$id)->first();
             $profesores = PspProcessxTeacher::where('idpspprocess',$id)->get();
             $this->pspprocessservice = new PspProcessService;
+
+            $existe = 0;
+            if(count($profesores)==0){
+                $profesores = CoursexTeacher::where('IdCurso',$proceso->idcurso)->get();
+                $existe = 1;
+            }
             foreach ($profesores as $profesor) {
-                $request = [
+                if($existe==0){
+                    $request = [
                     'idProceso'      =>  $proceso->id,
                     'idProfesor' =>$profesor->iddocente,
-                ];
+                    ];    
+                }else{
+                    $request = [
+                    'idProceso'      =>  $proceso->id,
+                    'idProfesor' =>$profesor->IdDocente,
+                    ];    
+                }
+                
                 $students = $this->pspprocessservice->haveStudents($request);
                 foreach ($students as $student) {
                     $upd = Student::find($student->IdAlumno);
                     $upd->lleva_psp = null;
                     $upd->save();
-                }
-                $profesor->delete();
-            }
 
+                    $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->where('idpspprocess',$id)->first();
+                    if($pspstudent!=null)
+                        $pspstudent->delete();
+                }
+                if($existe==0)
+                    $profesor->delete();
+            }
+            
+            $supervisors = PspProcessxSupervisor::where('idpspprocess',$id)->get();
+            foreach ($supervisors as $supervisor) {
+                $supervisor->delete();
+            }
 
             $proceso->delete();
 
@@ -232,6 +258,12 @@ class PspProcessController extends Controller
                 $upd = Student::find($student->IdAlumno);
                 $upd->lleva_psp = 1;
                 $upd->save();
+
+                //crear registro en pspstudents
+                $pspstudent = new PspStudent;
+                $pspstudent->idalumno = $student->IdAlumno;
+                $pspstudent->idpspprocess = $request['idProceso'];
+                $pspstudent->save();
             }
 
             $data = [

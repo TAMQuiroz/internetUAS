@@ -6,6 +6,7 @@ use JWTAuth;
 use Response;
 use Illuminate\Http\Request;
 use Intranet\Models\Faculty;
+use Intranet\Models\PspStudent;
 use Intranet\Http\Services\Auth\AuthService;
 use Intranet\Exceptions\InvalidCredentialsException;
 use Illuminate\Routing\Controller as BaseController;
@@ -47,7 +48,16 @@ class AuthController extends BaseController
             $user->load('investigator');
             $user->load('professor');
         }else if ($user->IdPerfil == 6){
-            //funcion que carga la informacion del supervisor
+            $user->load('supervisor');
+            $user->load('professor');
+        }else if ($user->IdPerfil == 0){
+            $user->load('pspStudent');//devuelve de la tabla alumno
+            //veamos si lleva psp
+            if ($user->pspStudent->lleva_psp == '1'){
+                $psp = PspStudent::where('idalumno',$user->pspStudent->IdAlumno)->first();
+                $user['psp'] = $psp;
+            }   
+            $user->load('tutStudent');
         }
 
         return Response::json(compact('token', 'user'));

@@ -306,7 +306,7 @@ Route::group(['middleware' => 'auth'], function(){
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
 
-        Route::post('/searchEvaluacion', ['uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
+        Route::post('/searchEvaluador', ['as' => 'search.evaluator','uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
 
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);
@@ -577,6 +577,9 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
                 Route::post('activarProfesor', ['as' => 'pspProcess.activateTeacher', 'uses' => 'Psp\PspProcess\PspProcessController@activateTeacher']);
                 Route::post('activarAlumnos', ['as' => 'pspProcess.activateStudents', 'uses' => 'Psp\PspProcess\PspProcessController@activateStudents']);
+                Route::get('conf', ['as' => 'pspProcess.conf', 'uses' => 'Psp\PspProcess\PspProcessController@indexconf']);
+                Route::get('confedit/{id}', ['as' => 'pspProcess.editconf', 'uses' => 'Psp\PspProcess\PspProcessController@editconf']);
+                Route::post('confedit/{id}', ['as' => 'pspProcess.updateconf', 'uses' => 'Psp\PspProcess\PspProcessController@updateconf']);
             });
 
             //FreeHour            
@@ -1300,7 +1303,8 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/instrumento/create', ['as' => 'instrumento_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumento_create']);        
         Route::post('/{id}/instrumento/store', ['as' => 'instrumento_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumento_store']);
         
-        Route::get('/{id}/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
+        Route::get('/{id}/contributions', ['as' => 'contributions.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@contributions']);
+        Route::post('/{id}/updateContributions', ['as' => 'updateContributions.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@updateContributions']);
 
 
         Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
@@ -1325,7 +1329,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/end3', ['as' => 'end3.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end3']);
         Route::get('/{id}/end4', ['as' => 'end4.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end4']);
 
-
+        //insturmentos de medicion de los cursos del ciclo:
+        Route::get('/{id}/instrumentosDelCurso', ['as' => 'instrumentosDelCurso_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_index']);
+        Route::get('/{id}/instrumentosDelCurso/{idCurso}/edit', ['as' => 'instrumentosDelCurso_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_edit']);        
+        Route::post('/{id}/instrumentosDelCurso/{idCurso}/update', ['as' => 'instrumentosDelCurso_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_update']);
     });
 
 

@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\Psp\PspProcess;
 
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
+use Intranet\Http\Requests\pspProcessEditRequest;
 use Intranet\Http\Controllers\Controller;
 
 use Intranet\Http\Services\Course\CourseService;
@@ -14,7 +15,11 @@ use Intranet\Http\Services\User\UserService;
 
 use Intranet\Models\PspProcess;
 use Intranet\Models\Student;
+use Intranet\Models\PspStudent;
 use Intranet\Models\PspProcessxTeacher;
+use Intranet\Models\PspProcessxSupervisor;
+use Intranet\Models\Teacher;
+use Intranet\Models\CoursexTeacher;
 
 use Carbon\Carbon;
 use Auth;
@@ -166,20 +171,43 @@ class PspProcessController extends Controller
             $proceso   = PspProcess::where('id',$id)->first();
             $profesores = PspProcessxTeacher::where('idpspprocess',$id)->get();
             $this->pspprocessservice = new PspProcessService;
+
+            $existe = 0;
+            if(count($profesores)==0){
+                $profesores = CoursexTeacher::where('IdCurso',$proceso->idcurso)->get();
+                $existe = 1;
+            }
             foreach ($profesores as $profesor) {
-                $request = [
+                if($existe==0){
+                    $request = [
                     'idProceso'      =>  $proceso->id,
                     'idProfesor' =>$profesor->iddocente,
-                ];
+                    ];    
+                }else{
+                    $request = [
+                    'idProceso'      =>  $proceso->id,
+                    'idProfesor' =>$profesor->IdDocente,
+                    ];    
+                }
+                
                 $students = $this->pspprocessservice->haveStudents($request);
                 foreach ($students as $student) {
                     $upd = Student::find($student->IdAlumno);
                     $upd->lleva_psp = null;
                     $upd->save();
-                }
-                $profesor->delete();
-            }
 
+                    $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->where('idpspprocess',$id)->first();
+                    if($pspstudent!=null)
+                        $pspstudent->delete();
+                }
+                if($existe==0)
+                    $profesor->delete();
+            }
+            
+            $supervisors = PspProcessxSupervisor::where('idpspprocess',$id)->get();
+            foreach ($supervisors as $supervisor) {
+                $supervisor->delete();
+            }
 
             $proceso->delete();
 
@@ -230,6 +258,12 @@ class PspProcessController extends Controller
                 $upd = Student::find($student->IdAlumno);
                 $upd->lleva_psp = 1;
                 $upd->save();
+
+                //crear registro en pspstudents
+                $pspstudent = new PspStudent;
+                $pspstudent->idalumno = $student->IdAlumno;
+                $pspstudent->idpspprocess = $request['idProceso'];
+                $pspstudent->save();
             }
 
             $data = [
@@ -239,4 +273,65 @@ class PspProcessController extends Controller
             ];
         return redirect()->route('pspProcess.show', $data)->with('success', 'Se dieron accesos a los alumnos del horario correctamente');
     }
+
+        public function editconf($id)
+    {
+        $psp    = PspProcess::find($id);
+
+        $data = [
+            'psp'    =>  $psp,
+        ];
+        return view('psp.pspProcess.confedit', $data);
+    }
+
+        public function updateconf(pspProcessEditRequest $request, $id)
+    {
+        try {
+            $psp    = PspProcess::find($id);
+            $psp->max_tam_plantilla  = $request['Tamaño_Maximo_de_Archivo'];
+            $psp->numero_Plantillas  = $request['Numero_maximo_de_Plantillas'];
+            $psp->numero_Fases  = $request['Numero_maximo_de_Fases'];
+            $psp->save();
+            return redirect()->route('pspProcess.conf')->with('success', 'Se ha actualizado la configuracion exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+
+    }
+
+    public function indexconf()
+    {
+        $academicCycle = Session::get('academic-cycle');
+        if($academicCycle!=null){
+            if(Auth::User()->IdPerfil==3){  
+                $proc = PspProcess::get();
+            } else if (Auth::User()->IdPerfil==2){
+                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+                $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+                $proc = array(); 
+                $r = count($procxt);   
+                if($r>0){
+                    foreach($procxt as $p){
+                        $proc[]=PspProcess::find($p->idpspprocess);
+                    }
+                }
+            }
+            if($proc != null){                  
+                $data = [
+                    'procesos'    =>  $proc,
+                ];
+            }else{
+                $data = [
+                    'procesos'    =>  null,
+                ];                
+            }
+        }
+        else{
+            $data = [
+                    'procesos'    =>  null,
+                ];
+        }
+        return view('psp.pspProcess.confindex',$data);
+    }
+
 }

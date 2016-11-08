@@ -88,8 +88,8 @@
     <div class="row">
       <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
-               <a  href="{{ route('end4.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
-               <a  href="{{ route('end3.flujoCoordinador',$idEspecialidad) }}" class="btn btn-default pull-left">< Atras</a>
+               <a  href="{{ route('contributions.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+               <!--<a  href="{{ route('end3.flujoCoordinador',$idEspecialidad) }}" class="btn btn-default pull-left">< Atras</a>-->
           </div>
       </div>
 

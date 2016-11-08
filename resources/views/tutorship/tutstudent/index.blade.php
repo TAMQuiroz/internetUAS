@@ -8,7 +8,7 @@
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
-        <div class="x_title">            
+        <div class="">            
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <a href="#filter-students" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
@@ -69,7 +69,7 @@
                     <td class=" ">
                         @if(!$student->trashed())
                         <a href="{{route('alumno.show',$student->id)}}" class="btn btn-primary btn-xs view-group">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-eye"></i>
                         </a>
                         <a href="{{route('alumno.edit',$student->id)}}" class="btn btn-primary btn-xs view-group">
                             <i class="fa fa-pencil"></i>
@@ -98,7 +98,7 @@
   <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
   <div class="text-left">
     <p style="font-size: 18px"><strong>Filtros de búsqueda</strong></p>
-    <p style="font-size: 16px">Selecciones uno o más filtros:</p>
+    <p style="font-size: 16px">Seleccione uno o más filtros:</p>
   </div>
   <form method="GET" action="{{route('alumno.index')}}">
     <div class="flex-container is-wrap has-space-between">
@@ -129,8 +129,8 @@
             </div>
     </div>
     <div class="flex-container has-flex-end" style="margin-top: 15px">
-          <button data-remodal-action="cancel" class="btn btn-danger">Cancel</button>
-          <button class="btn btn-submit" type="submit">OK</button>
+          <button data-remodal-action="cancel" class="btn btn-danger">Cancelar</button>
+          <button class="btn btn-submit" type="submit"><i class="fa fa-search"></i> Buscar</button>
     </div>
   </form>
 </div>

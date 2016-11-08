@@ -14,6 +14,7 @@ class AddFkToFreehours extends Migration
     {
         Schema::table('freehours', function (Blueprint $table) {
              $table->foreign('idsupervisor')->references('id')->on('supervisors');
+             $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
         });
     }
 
@@ -26,6 +27,7 @@ class AddFkToFreehours extends Migration
     {
         Schema::table('freehours', function (Blueprint $table) {
             $table->dropForeign('freehours_idsupervisor_foreign');
+            $table->dropForeign('freehours_idpspprocess_foreign');
         });  
     }
 }

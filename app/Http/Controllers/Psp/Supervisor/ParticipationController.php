@@ -32,22 +32,36 @@ class ParticipationController extends Controller
     {
         $user = Auth::User()->professor;
         $procesos = PspProcessxTeacher::where('iddocente',$user->IdDocente)->get();
-        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso', '=', 'Curso.IdCurso')->select('pspprocesses.id','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->lists('Nombre','id');
+        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso', '=', 'Curso.IdCurso')->select('pspprocesses.id','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->where('pspprocessesxdocente.deleted_at',null)->lists('Nombre','id');
         
         $first_key = key($process);
         $primerProc = PspProcess::find($first_key);
         $supActivos = PspProcessxSupervisor::where('idpspprocess',$first_key)->get();
-
+        
         $ids = [];
         foreach ($supActivos as $sup) {
             array_push($ids, $sup->id);
         }
-        $supervisores = Supervisor::where('idfaculty',$primerProc->idespecialidad)->whereNotIn('id',$ids)->get();
+        
+        if($primerProc!=null)
+            $supervisores = Supervisor::where('idfaculty',$primerProc->idespecialidad)->whereNotIn('id',$ids)->get();
+        else
+            $supervisores = [];
+
+        $prof = [];
+        array_push($prof, $user->IdDocente);
+        $profesores = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->where('es_supervisorpsp',null)->whereNotIn('IdDocente',$prof)->get();
+
+        //$profActivos = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->where('es_supervisorpsp',1)->get();
+        
+        $profActivos =DB::table('pspprocesses')->join('pspprocessesxdocente','pspprocesses.id','=','pspprocessesxdocente.idpspprocess')->join('Docente','pspprocessesxdocente.iddocente','=','Docente.IdDocente')->select('Docente.IdDocente','Codigo','Nombre','ApellidoPaterno','pspprocesses.id')->where('Docente.es_supervisorpsp',1)->where('Docente.IdEspecialidad',$user->IdEspecialidad)->where('pspprocessesxdocente.deleted_at',null)->get();
 
         $data = [
             'supervisores'    =>  $supervisores,
             'procesos'      =>  $process,
             'supActivos'    =>  $supActivos,
+            'profesores'    =>  $profesores,
+            'profActivos'   => $profActivos,
         ];
 
         return view('psp.supervisor.index-participant',$data);

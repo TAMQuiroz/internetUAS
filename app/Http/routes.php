@@ -1082,6 +1082,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
         Route::get('reassign/{id}', ['as' => 'tutor.reassign', 'uses' => 'Tutorship\Tutor\TutorController@reassign']);
         Route::post('reassign/{id}', ['as' => 'tutor.deactivate', 'uses' => 'Tutorship\Tutor\TutorController@deactivate']);
+        Route::get('activate/{id}', ['as' => 'tutor.activate', 'uses' => 'Tutorship\Tutor\TutorController@activate']);
     });
                 
         

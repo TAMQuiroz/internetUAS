@@ -28,6 +28,19 @@
               </div>
             </div>
 
+            <div class="form-group">
+              {{Form::label('N° de proyectos',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              <div class="col-xs-4 col-md-1">
+                {{Form::select('minProyectos',$comboEspecialidades, null, ['class'=>'form-control', 'required'])}}
+              </div>
+              <div class="col-xs-4 col-md-1 col-md-offset-1">
+                {{Form::label('entre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              </div>
+              <div class="col-xs-4 col-md-1">
+                {{Form::select('maxProyectos',$comboEspecialidades, null, ['class'=>'form-control', 'required'])}}
+              </div>
+            </div>
+
             <div class="row">
             <div class="col-md-8 col-sm-12 col-xs-12">
               {{Form::submit('Generar', ['class'=>'btn btn-success pull-right'])}}

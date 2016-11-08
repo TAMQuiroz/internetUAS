@@ -67,16 +67,6 @@
 	</div>
 </div>
 
-@if($filename)
-	<div class="row">
-		<a href="{{ route('getDownload.students', 'alumnosPorCrear.xls') }}" class="">
-		    <li style="margin-left:12px">
-		      <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-		      <span class="glyphicon-class">descargar</span>
-		    </li>
-		</a>
-	</div>
-@endif
 <script type="text/javascript">
 	//Code for showing error messages
 	@if( @Session::has('error') )

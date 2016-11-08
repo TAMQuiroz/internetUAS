@@ -30,7 +30,7 @@
           <br>
           <p>Usted ha terminado satisfactoriamente la cuarta parte del flujo. </p>
           <br>
-          <p>Si necesita agregar mas información, podra hacerlo desde las opciones del menú.</p>
+          <p>Si necesita agregar mas información, podra hacerlo desde las opciones del menú.
           </p>
         </div>
       </div>        

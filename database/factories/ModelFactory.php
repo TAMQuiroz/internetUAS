@@ -137,22 +137,6 @@ $factory->define(Intranet\Models\Student::class, function (Faker\Generator $fake
     ];
 });
 
-$factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
-
-    $template =   factory(Intranet\Models\Template::class)->create();
-    $student =   factory(Intranet\Models\Student::class)->create();
-
-    return [
-        'es_obligatorio'       =>  't',
-        //'observaciones'       =>  'bien',
-        //'ruta'               =>  'uploads/pspdocuments/0.pdf',
-        'idStudent'         =>  1,
-        'idTemplate'         =>  $template->id,
-        'idTipoEstado'         =>  1,
-        'fecha_limite'         =>  '2018-10-06',
-    ];
-});
-
 
 $factory->define(Intranet\Models\Competence::class, function (Faker\Generator $faker) {
     return [
@@ -225,5 +209,33 @@ $factory->define(Intranet\Models\Schedule_meetings::class, function (Faker\Gener
         'tipo' => 'Jefe-Supervisor',
         'idfase'  => $phase->id,
         'idpspprocess'      =>  $phase->idpspprocess,
+    ];
+});
+
+$factory->define(Intranet\Models\Template::class, function (Faker\Generator $faker) {
+
+    $phase =   factory(Intranet\Models\Phase::class)->create();
+
+    return [
+        'idphase'          => $phase->id,
+        'titulo'          => $faker->text,
+        'numerofase'    =>  $phase->numero,
+        'idtipoestado'  => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
+
+    $template =   factory(Intranet\Models\Template::class)->create();
+    $student =   factory(Intranet\Models\Student::class)->create();
+
+    return [
+        'es_obligatorio'       =>  's',
+        //'observaciones'       =>  'bien',
+        //'ruta'               =>  'uploads/pspdocuments/0.pdf',
+        'idStudent'         =>  1,
+        'idTemplate'         =>  $template->id,
+        'idTipoEstado'         =>  1,
+        'fecha_limite'         =>  '2018-10-06',
     ];
 });

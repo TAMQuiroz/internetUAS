@@ -28,42 +28,41 @@ class ParticipationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::User()->professor;
         $procesos = PspProcessxTeacher::where('iddocente',$user->IdDocente)->get();
-        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso', '=', 'Curso.IdCurso')->select('pspprocesses.id','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->where('pspprocessesxdocente.deleted_at',null)->lists('Nombre','id');
         
-        $first_key = key($process);
-        $primerProc = PspProcess::find($first_key);
-        $supActivos = PspProcessxSupervisor::where('idpspprocess',$first_key)->get();
-        
+        $primerProc = PspProcess::find($request['IdProceso']);
+        //$supActivos = PspProcessxSupervisor::where('idpspprocess',$request['IdProceso'])->get();
+        $supActivos = DB::table('pspprocessesxsupervisors')->join('pspprocesses','pspprocesses.id','=','pspprocessesxsupervisors.idpspprocess')->join('supervisors','pspprocessesxsupervisors.idsupervisor','=','supervisors.id')->select('supervisors.id','supervisors.nombres','supervisors.apellido_paterno','supervisors.codigo_trabajador')->where('pspprocesses.id',$request['IdProceso'])->where('pspprocessesxsupervisors.deleted_at',null)->get();
+
         $ids = [];
         foreach ($supActivos as $sup) {
             array_push($ids, $sup->id);
         }
         
-        if($primerProc!=null)
-            $supervisores = Supervisor::where('idfaculty',$primerProc->idespecialidad)->whereNotIn('id',$ids)->get();
-        else
-            $supervisores = [];
+        $supervisores = Supervisor::where('idfaculty',$primerProc->idespecialidad)->whereNotIn('id',$ids)->get();
+
+        $profActivos =DB::table('pspprocesses')->join('pspprocessesxdocente','pspprocesses.id','=','pspprocessesxdocente.idpspprocess')->join('Docente','pspprocessesxdocente.iddocente','=','Docente.IdDocente')->select('Docente.IdDocente','Codigo','Nombre','ApellidoPaterno','pspprocesses.id')->where('Docente.es_supervisorpsp',1)->where('pspprocesses.id',$request['IdProceso'])->where('Docente.IdEspecialidad',$user->IdEspecialidad)->where('pspprocessesxdocente.deleted_at',null)->get();
 
         $prof = [];
         array_push($prof, $user->IdDocente);
+        foreach ($profActivos as $profA) {
+            array_push($prof, $profA->IdDocente);
+        }
+        
         $profesores = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->where('es_supervisorpsp',null)->whereNotIn('IdDocente',$prof)->get();
 
-        //$profActivos = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->where('es_supervisorpsp',1)->get();
-        
-        $profActivos =DB::table('pspprocesses')->join('pspprocessesxdocente','pspprocesses.id','=','pspprocessesxdocente.idpspprocess')->join('Docente','pspprocessesxdocente.iddocente','=','Docente.IdDocente')->select('Docente.IdDocente','Codigo','Nombre','ApellidoPaterno','pspprocesses.id')->where('Docente.es_supervisorpsp',1)->where('Docente.IdEspecialidad',$user->IdEspecialidad)->where('pspprocessesxdocente.deleted_at',null)->get();
+        //$profActivos = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->where('es_supervisorpsp',1)->get();        
 
         $data = [
             'supervisores'    =>  $supervisores,
-            'procesos'      =>  $process,
+            'proceso'      =>  $primerProc,
             'supActivos'    =>  $supActivos,
             'profesores'    =>  $profesores,
             'profActivos'   => $profActivos,
         ];
-
         return view('psp.supervisor.index-participant',$data);
     }
 
@@ -78,8 +77,10 @@ class ParticipationController extends Controller
             $relation->idSupervisor = $request['idSupervisor'];
             $relation->save();
 
-
-            return redirect()->route('supervisor.index')->with('success', 'El supervisor se ha agregado exitosamente');
+            $data = [
+            'IdProceso'    =>  $process->id,
+            ];
+            return redirect()->route('supervisor.index-participant',$data)->with('success', 'El supervisor se ha agregado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -95,15 +96,12 @@ class ParticipationController extends Controller
     {
         try {
             $supervisor = PspProcessxSupervisor::find($id);
-
-            if($supervisor){
-                $group = Group::find($investigatorXgroup->id_grupo);
-                $investigatorXgroup->delete();
-
-                return redirect()->route('psp.supervisor.index-participant',$data)->with('success', 'El supervisor se ha quitado exitosamente');
-            }else{
-                return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');    
-            }
+            $data = [
+                'IdProceso'    =>  $supervisor->idpspprocess,
+            ];
+            $supervisor->delete();
+            return redirect()->route('supervisor.index-participant',$data)->with('success', 'El supervisor se ha quitado exitosamente');
+            
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

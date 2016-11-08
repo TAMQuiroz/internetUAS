@@ -20,8 +20,7 @@
                     <div class="form-group">
                         {{Form::label('Proceso PSP',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                         <div class="col-md-4">
-                            {{ Form::select('IdProceso', $procesos, null, ['class'=>'form-control']) }}
-
+                            
                         </div>
                     </div>
                 </div>
@@ -78,11 +77,11 @@
                                         <td >{{$supervisor->nombres}}</td>
                                         <td >{{$supervisor->apellido_paterno}}</td>
                                         <td>
-                                            {{Form::open(['route' => ['supervisor.participant.store.supervisor'], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                                            {{Form::open(['route' => ['supervisor.participant.store.supervisor'],'method' => 'POST','class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                                             <a href="{{ route('supervisor.show', $supervisor->id) }}"  class="btn btn-primary btn-xs" title="Ver más"><i class="fa fa-search"></i></a>
                                             {{Form::button('<i class="fa fa-plus"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit'])}}
                                             <!--<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$supervisor->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>-->
-
+                                            {{Form::hidden('idproceso',$proceso->id)}}
                                             {{Form::hidden('idSupervisor',$supervisor->id)}}
                                             {{Form::close()}}
                                         </td>
@@ -111,7 +110,6 @@
                                         <th>Código</th> 
                                         <th>Nombre</th> 
                                         <th>Apellido Paterno</th> 
-                                        <th>Apellido Materno</th>  
                                         <th colspan="2">Acciones</th>
                                     </tr> 
                                 </thead> 
@@ -139,15 +137,24 @@
                                         <th>Código</th> 
                                         <th>Nombre</th> 
                                         <th>Apellido Paterno</th> 
-                                        <th>Apellido Materno</th>  
                                         <th colspan="2">Acciones</th>
                                     </tr> 
                                 </thead> 
                                 <tbody> 
+                                    @foreach($profesores as $profesor) 
                                     <tr> 
+                                        <td>{{$profesor->Codigo}}</td>
+                                        <td>{{$profesor->Nombre}}</td>
+                                        <td>{{$profesor->ApellidoPaterno}}</td>
+                                        <td>
+                                            {{Form::open(['route' => ['supervisor.participant.store.docente'], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                                            {{Form::button('<i class="fa fa-plus"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit'])}}
+                                            {{Form::hidden('idProceso',$proceso->id)}}
+                                            {{Form::hidden('idProfesor',$profesor->id)}}
+                                            {{Form::close()}}
+                                        </td>
                                     </tr> 
-
-                                    
+                                    @endforeach
                                 </tbody> 
                             </table>
                         </div>

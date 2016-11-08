@@ -13,9 +13,31 @@
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
-
+        {{Form::open(['route' => ['supervisor.index-participant'], 'method' => 'post', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
         <div class="x_content">
             <div class="clearfix"></div>
+            <h4>Agregar supervisores y profesores a cursos PSP</h4>
+            <div class="form-group">
+                <div class="col-md-4">
+                    {{Form::label('Seleccionar curso',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                </div>    
+                <div class="col-md-4">
+                    {{ Form::select('IdProceso', $procesos, null, ['class'=>'form-control']) }}
+                </div>    
+                <div class="col-md-4">
+                    {{Form::button('<i class="fa fa-plus">Ver</i>',['class'=>'btn btn-success btn-xs','type'=>'submit'])}}
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {{Form::close()}}
+        <div class="col-md-12">
+            <hr>
+        </div>
+        <div class="x_content">
+
+            <div class="clearfix"></div>
+            <h4>Crear supervisores</h4>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a href="{{ route('supervisor.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo Supervisor</a>

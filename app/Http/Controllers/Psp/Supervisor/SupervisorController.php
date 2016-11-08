@@ -14,6 +14,7 @@ use Intranet\Models\Faculty;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\Supervisor;
+use Illuminate\Support\Facades\DB;
 
 use Intranet\Http\Requests\SupervisorRequest;
 
@@ -35,8 +36,12 @@ class SupervisorController extends Controller
 
         $supervisores = Supervisor::get();
 
+        $user = Auth::User()->professor;
+        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso', '=', 'Curso.IdCurso')->select('pspprocesses.id','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->where('pspprocessesxdocente.deleted_at',null)->lists('Nombre','id');
+
         $data = [
             'supervisores'    =>  $supervisores,
+            'procesos'      =>  $process,
         ];
         return view('psp.supervisor.index', $data);
     }

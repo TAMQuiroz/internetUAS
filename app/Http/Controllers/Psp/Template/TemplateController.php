@@ -16,6 +16,8 @@ use Intranet\Models\PspStudent;
 use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Intranet\Models\Supervisor;
+use Intranet\Models\PspProcessxTeacher;
+use Intranet\Models\PspProcess;
 use DB;
 
 class TemplateController extends Controller
@@ -29,8 +31,35 @@ class TemplateController extends Controller
     public function index()
     {
         //
-        $templates = Template::get();
-
+        $templates = null;
+        if(Auth::User()->IdPerfil==3){  
+                $templates = Template::get();
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
+                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+                $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+                $proc = array(); 
+                $r = count($procxt);   
+                if($r>0){
+                foreach($procxt as $p){
+                    $proc2=null;                
+                    $proc2=Phase::where('idpspprocess',$p->idpspprocess)->get();
+                    $r2 = count($proc2);  
+                    if($proc2!=null && $r2>0){
+                        foreach($proc2 as $p2){ 
+                            if($p2!=null){
+                                $proc3=Template::where('idphase',$p2->id)->get();
+                                foreach($proc3 as $p3){ 
+                                    if($p3!=null){
+                                        $proc[]=Template::find($p3->id);
+                                    }
+                                }                                
+                            }                            
+                        }
+                    }
+                }
+                $templates =$proc;
+            }
+        }
         $data = [
             'templates'    =>  $templates,
         ];
@@ -46,7 +75,30 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        $data['phases'] = Phase::get();
+        if(Auth::User()->IdPerfil==3){  
+                $Phaseses = Phase::get();
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
+                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+                $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+                $proc = array(); 
+                $r = count($procxt);   
+                if($r>0){
+                foreach($procxt as $p){
+                    $proc2=null;                
+                    $proc2=Phase::where('idpspprocess',$p->idpspprocess)->get();
+                    $r2 = count($proc2);  
+                    if($proc2!=null && $r2>0){
+                        foreach($proc2 as $p2){ 
+                            if($p2!=null){
+                                $proc[]=Phase::find($p2->id);
+                            }
+                        }
+                    }
+                }
+                $Phaseses=$proc;
+            }
+        }
+        $data['phases'] = $Phaseses;
         return view('psp.template.create',$data);
     }
 
@@ -71,7 +123,7 @@ class TemplateController extends Controller
                 $template->idsupervisor  = $supervisor->id;
 
             }
-            if(Auth::User()->IdPerfil==2){
+            if(Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();  
                 //teacher =$teacherss->first();
                 if($teacher!=null){
@@ -92,6 +144,29 @@ class TemplateController extends Controller
                 $template->idtipoestado  = 1;
             else
                 $template->idtipoestado  = 2;
+            $proc = array(); 
+            $pspproc=PspProcess::find($phase->idpspprocess);
+            $size = $request['ruta']->getSize();
+            if($pspproc->max_tam_plantilla!=0){
+                if($size > ($pspproc->max_tam_plantilla*1024*1024+10486)){
+                    return redirect()->back()->with('warning', 'La plantilla que se quiere subir supera el tamaño maximo permitido');
+                }
+            }
+            //dd($size);
+            $proc2=Phase::where('idpspprocess',$phase->idpspprocess)->get();
+            foreach($proc2 as $p2){ 
+                if($p2!=null){
+                    $proc3=Template::where('idphase',$p2->id)->get();
+                        foreach($proc3 as $p3){ 
+                            if($p3!=null){
+                                $proc[]=Template::find($p3->id);
+                            }
+                    } 
+                }
+            }
+            if($pspproc->numero_Plantillas!=0){
+                if(count($proc)+1>$pspproc->numero_Plantillas)return redirect()->back()->with('warning', 'Se ha alcanzado el numero maximo de plantillas permitido para este proceso');
+            }
             $template->save();
             if(isset($request['ruta']) && $request['ruta'] != ""){
                 $destinationPath = 'uploads/templates/'; // upload path
@@ -102,7 +177,7 @@ class TemplateController extends Controller
                 $template->ruta = $destinationPath.$filename;
                 $template->save();
 
-                $pspstudents=PspStudent::get();
+                $pspstudents=PspStudent::where('idpspprocess',$phase->idpspprocess)->get();
                 //$pspstudents=Student::where('lleva_psp','t')->get();
                 foreach($pspstudents as $psp) {
                     if($psp!=null){
@@ -155,7 +230,13 @@ class TemplateController extends Controller
         $data = [
             'template'    =>  $template,
         ];
-        $data['phases'] = Phase::get();
+        if(Auth::User()->IdPerfil==3){  
+                $Phaseses = Phase::get();
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
+                $Phaseses = Phase::where('idpspprocess',$template->Phase->idpspprocess)->get();
+            }
+        
+        $data['phases'] = $Phaseses;
         return view('psp.template.edit', $data);
     }
 

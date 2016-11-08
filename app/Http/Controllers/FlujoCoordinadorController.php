@@ -188,9 +188,8 @@ class FlujoCoordinadorController extends Controller
         $data['title'] = "Nuevo Resultado Estudiantil";
         $data['id'] = $id;
 
-        try {            
-            //$data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty($id);     
-            $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', Session::get('faculty-code'))
+        try {               
+            $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', $id)
                                             ->where('deleted_at', null)->get();       
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 

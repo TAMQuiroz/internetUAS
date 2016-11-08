@@ -52,7 +52,7 @@ class ParticipationController extends Controller
             array_push($prof, $profA->IdDocente);
         }
         
-        $profesores = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->where('es_supervisorpsp',null)->whereNotIn('IdDocente',$prof)->get();
+        $profesores = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->whereNotIn('IdDocente',$prof)->get();
 
         $curso = Course::find($primerProc->idcurso);
 

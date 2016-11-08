@@ -1,6 +1,13 @@
 
 var sel = document.getElementById('sel');
 sel.onchange = function () {
-    document.getElementById("ruta").href = "supervisor/participant/" + this.value ;
+	var comp = this.value;
+	
+	if(comp.localeCompare("0")!=0){
+		document.getElementById("ruta").href = "supervisor/participant/" + comp ;	
+	}
+	else{
+		document.getElementById("ruta").href = "" ;	
+	}
 }
 

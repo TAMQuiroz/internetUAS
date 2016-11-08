@@ -106,29 +106,31 @@ class TutorController extends Controller {
         return view('tutorship.tutor.show', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id) {
-        //
-    }
+    public function activate($id) {
+        try {
+            $tutorships = Tutorship::where('id_profesor', $id)->get();                        
+            
+            foreach ($tutorships as $t) {
+                $tutorshipTrash = Tutorship::find($t->id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        //
+                $tutorshipNew = new Tutorship;
+                $tutorshipNew->id_tutor = $tutorshipTrash->id_profesor;
+                $tutorshipNew->id_profesor = $tutorshipTrash->id_profesor;
+                $tutorshipNew->id_suplente = $tutorshipTrash->id_suplente;
+                $tutorshipNew->id_alumno = $tutorshipTrash->id_alumno;
+                $tutorshipNew->save();
+
+                $tutorshipTrash->delete();
+            }
+            
+            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 1]);            
+            return redirect()->route('tutor.index')->with('success', 'Se activó al tutor y se reasignaron los alumnos del tutor suplente al tutor original, en caso hubiera.');
+        } catch (Exception $e) {
+            return redirect()->route('tutor.index')->with('warning', 'No se puede hacer la reasignación.');
+        }
     }
 
     public function reassign($id) {
-
         $tutor = Teacher::find($id);
         $razones = Reason::where('tipo', 2)->get();
         $idEspecialidad = Session::get('faculty-code');
@@ -153,23 +155,32 @@ class TutorController extends Controller {
     }
 
     public function deactivate(Request $request, $id) {
-        $sum = 0;
+        if ($request['motivo'] == "") {
+            return redirect()->back()->with('warning', 'Se debe seleccionar un motivo por el cual se está reasignando los alumnos del tutor.');
+        }
         if ($request['cant'] != null && $request['total'] != 0) {
+            $sum = 0;
             foreach ($request['cant'] as $idTeacher => $value) {
                 $sum = $sum + $value;
             }
             if ($sum != $request['total']) {
-                return redirect()->back()->with('warning', 'Los campos deben sumar el total de alumnos a reasignar.');
+                return redirect()->back()->with('warning', 'Se cuenta con ' . $request['total'] . ' alumnos para reasignar, pero se está asignando ' . $sum . ' alumnos a los tutores suplentes.');
             } else {
                 try {
                     //cambiar tutor principal y ponerles tutor suplente
                     foreach ($request['cant'] as $idTeacher => $cantAlumnos) {
                         $tutorships = Tutorship::where('id_tutor', $id)->take($cantAlumnos)->get();
                         foreach ($tutorships as $t) {
-                            $tutorship = Tutorship::find($t->id);
-                            $tutorship->id_tutor = $idTeacher;
-                            $tutorship->id_suplente = $idTeacher;
-                            $tutorship->save();
+                            $tutorshipTrash = Tutorship::find($t->id);
+
+                            $tutorshipNew = new Tutorship;
+                            $tutorshipNew->id_tutor = $idTeacher;
+                            $tutorshipNew->id_profesor = $tutorshipTrash->id_profesor;
+                            $tutorshipNew->id_suplente = $idTeacher;
+                            $tutorshipNew->id_alumno = $tutorshipTrash->id_alumno;
+                            $tutorshipNew->save();
+
+                            $tutorshipTrash->delete();
 
                             $citas = TutMeeting::where('id_tutstudent', $t->id_alumno)->where('id_docente', $t->id_tutor)->where('estado', 'Confirmada')->get();
                             if ($citas->count() != 0) {
@@ -183,11 +194,11 @@ class TutorController extends Controller {
                         }
                     }
                     DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
+                    return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores suplentes a: (' . $request['total'] . ') alumnos.');
                 } catch (Exception $e) {
                     return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
                 }
             }
-            return redirect()->route('tutor.index')->with('success', 'Se reasignaron tutores a: (' . $request['total'] . ') alumnos.');
         } else {
             return redirect()->route('tutor.index')->with('warning', 'No se puede hacer la reasignación.');
         }
@@ -199,7 +210,7 @@ class TutorController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) { //PENDIENTE PARA REASIGNAR
+    public function destroy($id) {
         try {
             DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 3]);
             return redirect()->route('tutor.index')->with('success', 'Se desactivó al tutor exitosamente');

@@ -25,7 +25,11 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">                                
                         <select name="fase" id="fase" class="form-control" required="required">
                             @foreach( $phases as $phase)
-                            <option value="{{$phase->id}}" selected="">{{$phase->numero.': '.$phase->fecha_inicio.' - '.$phase->fecha_fin}} </option>
+                                @if($phase->id==$schedule->idfase)                            
+                                    <option value="{{$phase->id}}" selected="selected">{{$phase->numero.': '.date("m/d/Y",strtotime($phase->fecha_inicio)).' - '.date("m/d/Y",strtotime($phase->fecha_fin))}} </option>
+                                @else
+                                    <option value="{{$phase->id}}">{{$phase->numero.': '.date("m/d/Y",strtotime($phase->fecha_inicio)).' - '.date("m/d/Y",strtotime($phase->fecha_fin))}} </option>
+                                @endif
                             @endforeach
                         </select>                              
                     </div>
@@ -34,7 +38,11 @@
                 <div class="form-group">
                     <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de Inicio <span class="error">* </span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_inicio" id="fecha_inicio" minlength="10" maxlength="10"  value="<?php echo $schedule->fecha_inicio;?>"/>
+                        @if($schedule->fecha_inicio!="0000-00-00")
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_inicio" id="fecha_inicio" minlength="10" maxlength="10"  value="<?php echo date("m/d/Y",strtotime($schedule->fecha_inicio));?>"/>
+                        @else
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_inicio" id="fecha_inicio" minlength="10" maxlength="10" value="<?php echo date("m/d/Y",strtotime(\Carbon\Carbon::now()));?>"/>
+                        @endif
                             <!--<?php echo date("d/m/Y");?>-->
                     </div>
                 </div> 
@@ -42,7 +50,11 @@
                 <div class="form-group">
                     <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de Fin <span class="error">* </span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_fin" id="fecha_fin" minlength="10" maxlength="10" value="<?php echo $schedule->fecha_fin;?>"/>
+                        @if($schedule->fecha_fin!="0000-00-00")
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_fin" id="fecha_fin" minlength="10" maxlength="10" value="<?php echo date("m/d/Y",strtotime($schedule->fecha_fin));?>"/>
+                        @else
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_fin" id="fecha_fin" minlength="10" maxlength="10" value="<?php echo date("m/d/Y",strtotime(\Carbon\Carbon::now()));?>"/>
+                        @endif
                             <!--<?php echo date("d/m/Y");?>-->
                     </div>
                 </div> 

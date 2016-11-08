@@ -26,6 +26,10 @@ class Group extends Model
     	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxgroups','id_grupo','id_investigador')->orderBy('nombre', 'asc')->withPivot('id');	
     }
 
+    public function students(){
+        return $this->belongsToMany('Intranet\Models\Tutstudent','studentxgroups','id_grupo','id_estudiante')->orderBy('nombre', 'asc')->withPivot('id');  
+    }
+
     public function teachers(){
         return $this->belongsToMany('Intranet\Models\Teacher','teacherxgroups','id_grupo','id_profesor')->orderBy('Nombre', 'asc')->withPivot('id');    
     }

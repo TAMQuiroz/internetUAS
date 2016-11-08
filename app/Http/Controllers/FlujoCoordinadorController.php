@@ -284,7 +284,15 @@ class FlujoCoordinadorController extends Controller
         return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Las modificaciones se han guardado exitosamente');
     }
 
-
+    public function courses_delete($idCourse){
+        $id = Session::get('faculty-code');
+        try{
+            $this->courseService->deleteCourseById($idCourse);
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Se eliminó el curso con éxito');
+    }
     
 
     ///inicializando periodos y ciclos

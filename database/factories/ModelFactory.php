@@ -187,13 +187,6 @@ $factory->define(Intranet\Models\FreeHour::class, function (Faker\Generator $fak
     ];
 });
 
-$factory->define(Intranet\Models\Schedule_meetings::class, function (Faker\Generator $faker) {
-    return [
-        'id'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
-        'tipo' => 'Jefe-Supervisor',
-    ];
-});
-
 $factory->define(Intranet\Models\PspProcess::class, function (Faker\Generator $faker) {
     return [
         'idespecialidad' => 1,
@@ -219,5 +212,18 @@ $factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker)
         'fecha_inicio'      =>  '2017-10-06',
         'fecha_fin'         =>  '2018-10-06',
         'idpspprocess'      =>  $psp->id,
+    ];
+});
+
+$factory->define(Intranet\Models\Schedule_meetings::class, function (Faker\Generator $faker) {
+
+    $phase =   factory(Intranet\Models\Phase::class)->create();
+    
+    return [
+        'id'            =>  $faker->randomNumber($nbDigits = 6,$strict = true),
+        'idpspprocess' => 1,
+        'tipo' => 'Jefe-Supervisor',
+        'idfase'  => $phase->id,
+        'idpspprocess'      =>  $phase->idpspprocess,
     ];
 });

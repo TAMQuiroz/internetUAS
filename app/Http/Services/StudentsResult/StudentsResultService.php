@@ -263,8 +263,7 @@ class StudentsResultService {
         return $studentsResult;
     }
     public function findById($request) {
-        
-        $studentsResult = StudentsResult::where('IdResultadoEstudiantil', $request['resultado'])->first();
+        $studentsResult = StudentsResult::where('IdResultadoEstudiantil', $request['studentsResult-identifier'])->first();
         return $studentsResult;
         
     }

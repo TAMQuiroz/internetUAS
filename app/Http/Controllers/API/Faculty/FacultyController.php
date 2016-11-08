@@ -57,7 +57,8 @@ class FacultyController extends BaseController
         if ($user->isAcreditor())
           $faculties = Faculty::lastUpdated($date)->where('IdEspecialidad', $user->accreditor->IdEspecialidad)->get();
 
-        $faculties->load('coordinator');
+        //$faculties->load('coordinator');
+        $faculties->load('teacher');
         return $this->response->array($faculties->toArray());
     }
 

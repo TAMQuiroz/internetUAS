@@ -2,30 +2,32 @@
 <table class="table table-striped responsive-utilities jambo_table bulk_action" name="table-objs">
     <thead>
         <tr class="headings">                
-            <th class="column-title">Código</th>
+            <th class="centered column-title">Código</th>
             <th class="column-title">Apellidos, Nombres</th>
-            <th class="column-title">Especialidad</th>
-            <th class="column-title">Seleccionar</th>
+            <th class="centered column-title">Especialidad</th>
+            <th class="centered column-title">Seleccionar</th>
         </tr>
     </thead>
     <tbody>
         @foreach($teachers as $teacher)
         <tr>
-            <td>{{ $teacher->Codigo }}</td>
+            <td class="centered">{{ $teacher->Codigo }}</td>
             <td>{{ $teacher->ApellidoPaterno.' '.$teacher->ApellidoMaterno.', '.$teacher->Nombre}}</td>
-            <td>{{ $teacher->faculty->Nombre }}</td>
-            <td>
-                <button class="btn btn-success" onclick="select(
+            <td class="centered">{{ $teacher->faculty->Nombre }}</td>
+            <td class="centered">
+                <a class="btn btn-default" data-remodal-action="cancel" title="Seleccionar" onclick="select(
                     {{ $teacher->IdDocente}}, 
                     '{{$teacher->ApellidoPaterno}}',
                     '{{$teacher->ApellidoMaterno}}',
                     '{{$teacher->Nombre}}'
                     )">
                     <i class="fa fa-check"></i>
-                </button>
+                </a>
             </td>                    
         </tr>
         @endforeach
     </tbody>
 </table>
+@else
+<h5>No existen profesores con los filtros aplicados.</h5>
 @endif

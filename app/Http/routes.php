@@ -306,7 +306,7 @@ Route::group(['middleware' => 'auth'], function(){
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
 
-        Route::post('/searchEvaluacion', ['uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
+        Route::post('/searchEvaluador', ['as' => 'search.evaluator','uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
 
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);
@@ -577,6 +577,9 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'pspProcess.delete', 'uses' => 'Psp\PspProcess\PspProcessController@destroy']);    
                 Route::post('activarProfesor', ['as' => 'pspProcess.activateTeacher', 'uses' => 'Psp\PspProcess\PspProcessController@activateTeacher']);
                 Route::post('activarAlumnos', ['as' => 'pspProcess.activateStudents', 'uses' => 'Psp\PspProcess\PspProcessController@activateStudents']);
+                Route::get('conf', ['as' => 'pspProcess.conf', 'uses' => 'Psp\PspProcess\PspProcessController@indexconf']);
+                Route::get('confedit/{id}', ['as' => 'pspProcess.editconf', 'uses' => 'Psp\PspProcess\PspProcessController@editconf']);
+                Route::post('confedit/{id}', ['as' => 'pspProcess.updateconf', 'uses' => 'Psp\PspProcess\PspProcessController@updateconf']);
             });
 
             //FreeHour            
@@ -1092,6 +1095,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
         Route::get('reassign/{id}', ['as' => 'tutor.reassign', 'uses' => 'Tutorship\Tutor\TutorController@reassign']);
         Route::post('reassign/{id}', ['as' => 'tutor.deactivate', 'uses' => 'Tutorship\Tutor\TutorController@deactivate']);
+        Route::get('activate/{id}', ['as' => 'tutor.activate', 'uses' => 'Tutorship\Tutor\TutorController@activate']);
     });
                 
         
@@ -1114,8 +1118,8 @@ Route::group(['prefix' => 'tutoria'], function(){
 
     //Reportes
     Route::group(['prefix' => 'reporte'], function(){    
-        Route::get('/meeting', ['as' => 'reporte.meeting', 'uses' => 'Tutorship\Report\ReportController@meeting']);                    
-        Route::get('/reassign', ['as' => 'reporte.reassign', 'uses' => 'Tutorship\Report\ReportController@reassign']);
+        Route::get('/meeting', ['as' => 'reporte.meeting', 'uses' => 'Tutorship\Report\ReportController@meetingReport']);                    
+        Route::get('/reassign', ['as' => 'reporte.reassign', 'uses' => 'Tutorship\Report\ReportController@reassignReport']);
     });
 
     /***   PARA EL ALUMNO DE TUTORÍA   ***/
@@ -1239,7 +1243,11 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
             Route::get('evaluador', ['as' => 'evaluacion_evaluador.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexev']);
             Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
+            Route::get('dar_permiso/{id}{ev}', ['as' => 'evaluacion.dar_permiso', 'uses' => 'Evaluations\Evaluation\EvaluationController@darPermisoExtra']);
             Route::get('evaluaciones_alumnos/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexeval']);
+            Route::get('evaluaciones_resultados/{id}', ['as' => 'evaluacion_resultados.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexresults']);
+            Route::get('evaluaciones_mis_resultados/{id}{ev}', ['as' => 'evaluacion.mis_resultados', 'uses' => 'Evaluations\Evaluation\EvaluationController@myresults']);
+            Route::get('enviar_resultados/{id}', ['as' => 'evaluacion.enviar_resultados', 'uses' => 'Evaluations\Evaluation\EvaluationController@sendresults']);
             Route::get('corregir/{id}{ev}', ['as' => 'evaluacion.corregir', 'uses' => 'Evaluations\Evaluation\EvaluationController@corregir']);
             Route::get('show_corregida/{id}', ['as' => 'evaluacion_corregida.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@vercorregida']);
             Route::post('corregida/{id}{ev}', ['as' => 'evaluacion_corregida.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@storeEvCorregida']);
@@ -1305,7 +1313,8 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/instrumento/create', ['as' => 'instrumento_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumento_create']);        
         Route::post('/{id}/instrumento/store', ['as' => 'instrumento_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumento_store']);
         
-        Route::get('/{id}/end1', ['as' => 'end1.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end1']);
+        Route::get('/{id}/contributions', ['as' => 'contributions.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@contributions']);
+        Route::post('/{id}/updateContributions', ['as' => 'updateContributions.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@updateContributions']);
 
 
         Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
@@ -1330,7 +1339,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/end3', ['as' => 'end3.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end3']);
         Route::get('/{id}/end4', ['as' => 'end4.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@end4']);
 
-
+        //insturmentos de medicion de los cursos del ciclo:
+        Route::get('/{id}/instrumentosDelCurso', ['as' => 'instrumentosDelCurso_index.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_index']);
+        Route::get('/{id}/instrumentosDelCurso/{idCurso}/edit', ['as' => 'instrumentosDelCurso_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_edit']);        
+        Route::post('/{id}/instrumentosDelCurso/{idCurso}/update', ['as' => 'instrumentosDelCurso_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@instrumentosDelCurso_update']);
     });
 
 

@@ -17,4 +17,8 @@ class Phase extends Model
         return $this->belongsTo('Intranet\Models\User', 'idUser');
     }
 
+    public function pspprocess(){
+        return $this->belongsTo('Intranet\Models\PspProcess', 'idpspprocess');
+    }
+
 }

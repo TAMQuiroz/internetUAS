@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
 use Intranet\Models\Tutorship;
-use Intranet\Models\tutmeeting;
+use Intranet\Models\TutMeeting;
 use Intranet\Models\Topic;
 use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
@@ -24,7 +24,7 @@ class TutTutorController extends BaseController
 
 
 	       $docenteInfo = Teacher::where('idUsuario',$id)->get();
-         $appointmentInfo = tutmeeting::where('id_docente',$docenteInfo[0]['IdDocente'])->get();
+         $appointmentInfo = TutMeeting::where('id_docente',$docenteInfo[0]['IdDocente'])->get();
          $i = 0;
          foreach ($appointmentInfo as $appointInfo) {
 
@@ -54,7 +54,7 @@ class TutTutorController extends BaseController
 	    
         $idUser = $request->only('idUser');
         //Guardar
-        $groupTut = tutmeeting::find($idUser['idUser']);
+        $groupTut = TutMeeting::find($idUser['idUser']);
         $groupTut->estado = 2;
         $groupTut->save();
 
@@ -68,7 +68,7 @@ class TutTutorController extends BaseController
       
         $idUser = $request->only('idUser');
         //Guardar
-        $groupTut = tutmeeting::find($idUser['idUser']);
+        $groupTut = TutMeeting::find($idUser['idUser']);
         $groupTut->estado = 3;
         $groupTut->save();
 

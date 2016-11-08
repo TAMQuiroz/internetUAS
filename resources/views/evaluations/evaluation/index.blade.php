@@ -8,7 +8,7 @@
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
-        <div class="x_title">                
+        <div class="">                
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a data-toggle="modal" data-target="#filter-evaluations"  class="btn btn-warning pull-left">
@@ -44,13 +44,13 @@
                         @foreach($evaluations as $evaluation)
                         <tr class="even pointer">                        
                             @if($evaluation->estado == 1)
-                            <td class="centered">Registrada</td>
+                            <td class="centered"><span class="label label-primary"> Registrada </span></td>
                             @elseif($evaluation->estado == 0)
-                            <td class="centered">Cancelada</td>
+                            <td class="centered"><span class="label label-danger"> Cancelada </span></td>
                             @elseif($evaluation->estado == 2)
-                            <td class="centered">Activa</td>
+                            <td class="centered"><span class="label label-success"> Activa </span></td>
                             @elseif($evaluation->estado == 3)
-                            <td class="centered">Inactiva</td>
+                            <td class="centered"><span class="label label-default"> Inactiva </span></td>
                             @endif
                             <td class="centered ">{{ $evaluation->id }}</td>              
                             <td class=" ">{{ $evaluation->nombre }}</td>     

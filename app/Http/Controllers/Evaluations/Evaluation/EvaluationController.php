@@ -35,7 +35,8 @@ class EvaluationController extends Controller
         $specialty = Session::get('faculty-code');
         $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
         //cambiar de estado a las expiradas
-        $date = date("Y-m-d", time()+86400);        
+        $date = date("Y-m-d", time());  
+        
         foreach ($evaluations as $evaluation) {            
             if(($evaluation->fecha_fin <  $date) && ($evaluation->estado!=3) ){                
                 $evaluation->estado=3;

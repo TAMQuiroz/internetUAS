@@ -36,17 +36,7 @@
             </div>
         </div>
       </form>
-      @if($aspects==null)
-
-      <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="alert alert-warning">
-            <strong>Advertencia: </strong> No hay Aspectos asociados
-          </div>
-        </div>
-      </div>
-
-      @else
+      
       <table class="table table-striped responsive-utilities jambo_table bulk_action" id="aspect-table">
         <thead>
           <tr class="headings">
@@ -55,7 +45,6 @@
             <th class="col-sm-2 column-title">Estado</th>
           </tr>
         </thead>
-
         <tbody id="aspecto-fc-table">
 
           @foreach($aspects as $asp)
@@ -76,8 +65,9 @@
           @endforeach
 
         </tbody>
+        
       </table>
-      @endif
+      
 
     </div>
 
@@ -94,9 +84,9 @@
   </div>
 </div>
 
-<script src="{{ URL::asset('js/intranetjs/aspects/index-aspect-script.js')}}">
+<script src="{{ URL::asset('js/intranetjs/aspects/index-aspect-script.js')}}"></script>
 
-
+<script>
  var fila = $("#aspecto-fc-table").find("tr");
             if (fila.length == 0) {
                 $('#aspecto-siguiente-btn').attr("disabled","true");

@@ -936,6 +936,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'grupo.afiliacion.store.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'grupo.afiliacion.delete.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'grupo.afiliacion.store.estudiante', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'grupo.afiliacion.delete.estudiante', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyStudent']);
                 });
             });    
 
@@ -982,6 +985,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'proyecto.afiliacion.store.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'proyecto.afiliacion.delete.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'proyecto.afiliacion.store.estudiante', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'proyecto.afiliacion.delete.estudiante', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyStudent']);
                 });
             });
 
@@ -1011,6 +1017,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'entregable.afiliacion.store.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'entregable.afiliacion.delete.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'entregable.afiliacion.store.estudiante', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'entregable.afiliacion.delete.estudiante', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyStudent']);
                 });
                 
             });

@@ -183,25 +183,43 @@ class PspProcessController extends Controller
                     'idProceso'      =>  $proceso->id,
                     'idProfesor' =>$profesor->iddocente,
                     ];    
+                    $profesorAct = Teacher::find($profesor->iddocente);
                 }else{
                     $request = [
                     'idProceso'      =>  $proceso->id,
                     'idProfesor' =>$profesor->IdDocente,
                     ];    
+                    $profesorAct = Teacher::find($profesor->IdDocente);    
                 }
                 
-                $students = $this->pspprocessservice->haveStudents($request);
-                foreach ($students as $student) {
-                    $upd = Student::find($student->IdAlumno);
-                    $upd->lleva_psp = null;
-                    $upd->save();
+                $prof = $profesorAct->es_supervisorpsp;
+                if($prof == null){
+                    $students = $this->pspprocessservice->haveStudents($request);
+                    foreach ($students as $student) {
+                        $upd = Student::find($student->IdAlumno);
+                        $upd->lleva_psp = null;
+                        $upd->save();
 
-                    $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->where('idpspprocess',$id)->first();
-                    if($pspstudent!=null)
-                        $pspstudent->delete();
+                        $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->where('idpspprocess',$id)->first();
+                        if($pspstudent!=null)
+                            $pspstudent->delete();
+                    }    
                 }
-                if($existe==0)
+                
+                $ids = [];
+                array_push($ids, $proceso->id);
+                
+                if($existe==0){
+                    if($prof !=null){
+                        $activos = PspProcessxTeacher::where('iddocente',$profesorAct->IdDocente)->whereNotIn('idpspprocess',$ids)->get();
+
+                        if(count($activos) == 0){
+                            $profesorAct->es_supervisorpsp = null;
+                            $profesorAct->save();
+                        }
+                    }
                     $profesor->delete();
+                }
             }
             
             $supervisors = PspProcessxSupervisor::where('idpspprocess',$id)->get();

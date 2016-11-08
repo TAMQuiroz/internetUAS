@@ -132,10 +132,19 @@
                                         <td>{{$integrante->ape_paterno}}</td> 
                                         <td>{{$integrante->ape_materno}}</td> 
                                         <td>{{$integrante->faculty->Nombre}}</td>
-                                        <td>Investigador</td>
                                         <td>
-                                            <a href="{{route('investigador.show', $integrante->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                            @if($integrante->codigo)
+                                                Alumno
+                                            @else
+                                                Investigador
+                                            @endif
                                         </td>
+                                        <td>
+                                        @if(!$integrante->codigo)
+                                            <a href="{{route('investigador.show', $integrante->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>
+                                        @endif
+                                        </td>
+                                        
                                     </tr> 
                                 @elseif(isset($integrante->IdDocente))
                                     <tr> 

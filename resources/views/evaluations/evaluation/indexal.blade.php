@@ -50,6 +50,11 @@
                                     <i class="fa fa-pencil"></i>
                                 </a>                                                            
                                 @endif
+                                @if($tutstudentxevaluations[$key]->corregida == 1)
+                                <a href="{{route('evaluacion.mis_resultados',[$id_tutstudent,$evaluation->id])}}" title="Ver resultados" class="btn btn-primary btn-xs view-group"">
+                                    <i class="fa fa-eye"></i>
+                                </a>                                                            
+                                @endif
                             </td>
                         </tr>                        
                         @endif                        

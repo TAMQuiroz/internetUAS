@@ -8,7 +8,7 @@
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
-        <div class="x_title">                
+        <div class="">                
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a data-toggle="modal" data-target="#filter-evaluations"  class="btn btn-warning pull-left">
@@ -23,40 +23,42 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <col width="10%" >
                     <col width="10%">
-                    <col width="10%">
-                    <col width="35%">                    
+                    <col width="30%">
                     <col width="10%">                    
-                    <col width="10%">
-                    <col width="20%">
+                    <col width="10%">                    
+                    <col width="15%">
+                    <col width="15%">
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Estado </th>                        
-                            <th class="column-title">Desde </th>    
-                            <th class="column-title">Hasta </th>    
+                            <th class="centered column-title">Estado </th>                        
+                            <th class="centered column-title">Código </th>    
                             <th class="column-title">Nombre </th>    
-                            <th class="column-title">Cant. preg </th>    
-                            <th class="column-title">Avance </th>                            
-                            <th class="column-title last">Acciones</th>                                
+                            <th class="centered column-title">Desde </th>    
+                            <th class="centered column-title">Hasta </th>    
+                            <th class="centered column-title">Cant. preguntas</th>    
+                            <!-- <th class="column-title">Avance </th>                             -->
+                            <th class="centered column-title last">Acciones</th>                                
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($evaluations as $evaluation)
                         <tr class="even pointer">                        
                             @if($evaluation->estado == 1)
-                            <td class=" ">Registrada</td>
+                            <td class="centered"><span class="label label-primary"> Registrada </span></td>
                             @elseif($evaluation->estado == 0)
-                            <td class=" ">Cancelada</td>
+                            <td class="centered"><span class="label label-danger"> Cancelada </span></td>
                             @elseif($evaluation->estado == 2)
-                            <td class=" ">Activa</td>
+                            <td class="centered"><span class="label label-success"> Activa </span></td>
                             @elseif($evaluation->estado == 3)
-                            <td class=" ">Inactiva</td>
+                            <td class="centered"><span class="label label-default"> Inactiva </span></td>
                             @endif
-                            <td class=" ">{{date("d/m/Y", strtotime($evaluation->fecha_inicio)) }}</td>
-                            <td class=" ">{{date("d/m/Y", strtotime($evaluation->fecha_fin)) }}</td>
-                            <td class=" ">{{ $evaluation->nombre }}</td>              
-                            <td class=" ">{{ count($evaluation->preguntas) }}</td>              
-                            <td class=" ">-</td>
-                            <td class="">
+                            <td class="centered ">{{ $evaluation->id }}</td>              
+                            <td class=" ">{{ $evaluation->nombre }}</td>     
+                            <td class="centered ">{{date("d/m/Y", strtotime($evaluation->fecha_inicio)) }}</td>
+                            <td class="centered ">{{date("d/m/Y", strtotime($evaluation->fecha_fin)) }}</td>
+                            <td class="centered ">{{ count($evaluation->preguntas) }}</td>              
+                            <!-- <td class=" ">-</td> -->
+                            <td class="centered">
                                 @if($evaluation->estado == 1)
                                 <a href="{{route('evaluacion.edit',$evaluation->id)}}" title="Editar" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-pencil"></i>

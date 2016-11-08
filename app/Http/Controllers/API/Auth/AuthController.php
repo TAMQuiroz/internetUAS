@@ -40,11 +40,14 @@ class AuthController extends BaseController
         }
 
         if ($user->IdPerfil == 2 || $user->IdPerfil == 1){
-            $user->load('professor');    
+            $user->load('professor');
         }else if ($user->IdPerfil == 4){
             $user->load('accreditor');
         }else if ($user->IdPerfil == 5){
             $user->load('investigator');
+            $user->load('professor');
+        }else if ($user->IdPerfil == 6){
+            //funcion que carga la informacion del supervisor
         }
 
         return Response::json(compact('token', 'user'));

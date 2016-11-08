@@ -44,6 +44,21 @@ class FacultyController extends BaseController
         $this->timeTableService = new TimeTableService();
     }
 
+    private function getUserSpecialtyId($user){
+      $idEspecialidad = 0;
+      if ($user->IdPerfil == 2 || $user->IdPerfil == 1){
+            $user->load('professor');
+            $idEspecialidad = $user->professor->IdEspecialidad;    
+        }else if ($user->IdPerfil == 4){
+            $user->load('accreditor');
+            $idEspecialidad = $user->accreditor->IdEspecialidad;    
+        }else if ($user->IdPerfil == 5){
+            $user->load('investigator');
+            $idEspecialidad = $user->investigator->IdEspecialidad;    
+        }
+        return $idEspecialidad;
+    }
+
     public function get(Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
@@ -51,20 +66,22 @@ class FacultyController extends BaseController
 
         $faculties = collect();
 
-        if ($user->isAdmin() || $user->isGeneralAcreditor())
+        if ($user->isAdmin()){
           $faculties = Faculty::lastUpdated($date)->get();
+        }else{
+          $idEspecialidad = $this->getUserSpecialtyId($user);
+          $faculties = Faculty::lastUpdated($date)->where('IdEspecialidad', $idEspecialidad)->get();
+        }
 
-        if ($user->isAcreditor())
-          $faculties = Faculty::lastUpdated($date)->where('IdEspecialidad', $user->accreditor->IdEspecialidad)->get();
-
-        $faculties->load('coordinator');
+        $faculties->load('teacher');
         return $this->response->array($faculties->toArray());
     }
 
     public function getSpecialty(Request $request){
       $user = JWTAuth::parseToken()->authenticate();
-      $specialty = Faculty::where('IdEspecialidad',$user->accreditor->IdEspecialidad)->first();
-      $specialty->load('coordinator');
+      $idEspecialidad = $this->getUserSpecialtyId($user);
+      $specialty = Faculty::where('IdEspecialidad',$idEspecialidad)->first();
+      $specialty->load('teacher');
       return Response::json($specialty); 
     }
 
@@ -85,7 +102,7 @@ class FacultyController extends BaseController
         $results = StudentsResult::lastUpdated($date)
                                    ->where('idEspecialidad', $faculty_id)
                                    ->whereHas('resultxObjective',function($query) use ($eos_id){
-                                      $query->where('resultadoxobjetivo.IdObjetivoEducacional',$eos_id);
+                                      $query->where('ResultadoxObjetivo.IdObjetivoEducacional',$eos_id);
                                    })
                                    ->get();
         

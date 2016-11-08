@@ -30,6 +30,7 @@ class ParameterController extends Controller
             'startDate'     => $today,
             'endDate'       => $today,
             'numberDays'    => 1,
+            'futureDay'     => $futureDay,
         ];
 
         if ($parameters) {

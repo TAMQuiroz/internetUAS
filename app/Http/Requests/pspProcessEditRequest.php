@@ -4,7 +4,7 @@ namespace Intranet\Http\Requests;
 
 use Intranet\Http\Requests\Request;
 
-class AspectRequest extends Request
+class pspProcessEditRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class AspectRequest extends Request
     public function rules()
     {
         return [
-            'studentsResult-identifier' => 'Required'
+            'Tamaño_Maximo_de_Archivo' => 'required|numeric',
+            'Numero_maximo_de_Plantillas' => 'required|numeric',
+            'Numero_maximo_de_Fases' => 'required|numeric',
         ];
     }
 }

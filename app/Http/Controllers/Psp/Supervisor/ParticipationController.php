@@ -32,7 +32,7 @@ class ParticipationController extends Controller
     {
         $user = Auth::User()->professor;
         $procesos = PspProcessxTeacher::where('iddocente',$user->IdDocente)->get();
-        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('curso','pspprocesses.idcurso', '=', 'curso.IdCurso')->select('pspprocesses.id','curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->lists('Nombre','id');
+        $process = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso', '=', 'Curso.IdCurso')->select('pspprocesses.id','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->lists('Nombre','id');
         
         $first_key = key($process);
         $primerProc = PspProcess::find($first_key);

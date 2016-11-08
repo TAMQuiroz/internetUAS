@@ -67,8 +67,8 @@ class SubindexController extends BaseController {
                 $data['isEmpty'] = false;
 
             }else if (!$user->user->IdPerfil){ //Alumnos
-
-                array_push($data['faculties'], $this->facultyService->find($user->IdEspecialidad));
+                
+                array_push($data['faculties'], $this->facultyService->find($user->id_especialidad));
                 $data['isEmpty'] = false;
 
             } else { // Logic of ACREDITORS

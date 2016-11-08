@@ -97,15 +97,18 @@ class StudentController extends BaseController {
 							// Buscar alumno en la tabla de tutoria
 							$student = Tutstudent::where('codigo', $value_int)->first();
 							if($student != null) { //encontro alumno -> obtener su idusuario
-								$insert['IdUsuario'] = $student->id_usuario;								 
+								$insert['IdUsuario'] = $student->IdUsuario;								 
 							}
 							else { // no encontro alumno en tutoria -> crear usuario
-								$user = $this->create_user_tutoria($insert['Codigo']);								
+								$user = $this->create_user_tutoria($insert['Codigo']);							
 								if($user != null){
 									$insert['IdUsuario'] = $user->IdUsuario;
 								}								
 							}
-							//$alumno->lleva_psp = 1;
+							$insert['lleva_psp'] = 1;
+						}
+						else {
+							$insert['lleva_psp'] = 0;
 						}
 						array_push($students, $insert);						
 					}else{
@@ -121,10 +124,9 @@ class StudentController extends BaseController {
 						$alumno->ApellidoPaterno = $student['ApellidoPaterno'];
 						$alumno->ApellidoMaterno = $student['ApellidoMaterno'];
 						$alumno->IdHorario = $student['IdHorario'];
-						if(!empty($insert['IdUsuario'])){
-							$alumno->IdUsuario = $insert['IdUsuario'];
+						if($student['lleva_psp'] == 1){
+							$alumno->IdUsuario = $student['IdUsuario'];
 						}
-					
 						$alumno->save();
 					}
 				}

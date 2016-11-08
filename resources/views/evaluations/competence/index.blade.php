@@ -9,7 +9,6 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a href="{{ route('competencia.create') }}" class="btn btn-success pull-right">
@@ -19,22 +18,25 @@
 
                 <div class="table-responsive">
                     <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                        <col width="30%" >
+                        <col width="5%" >
+                        <col width="20%" >
                         <col width="60%">
-                        <col width="10%">
+                        <col width="15%">
                         <thead>
                             <tr class="headings">                            
-                                <th class="column-title">Nombre </th>                        
+                                <th class="centered column-title">Código </th>                        
+                                <th class="centered column-title">Nombre </th>                        
                                 <th class="column-title">Descripción </th>    
-                                <th class="column-title last">Acciones</th>                                
+                                <th class="centered column-title last">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($competences as $competence)
                             <tr class="even pointer">                            
-                                <td class=" ">{{ $competence->nombre }}</td>                            
+                                <td class="centered">{{ $competence->id }}</td>                            
+                                <td class="centered">{{ $competence->nombre }}</td>                            
                                 <td class=" ">{{ $competence->descripcion }}</td> 
-                                <td class=" ">
+                                <td class="centered">
                                     <a href="{{route('competencia.edit',$competence->id)}}" title="Editar" class="btn btn-primary btn-xs view-group"">
                                         <i class="fa fa-pencil"></i>
                                     </a>

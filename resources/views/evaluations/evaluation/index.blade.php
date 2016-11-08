@@ -57,7 +57,7 @@
                             <td class="centered ">{{date("d/m/Y", strtotime($evaluation->fecha_inicio)) }}</td>
                             <td class="centered ">{{date("d/m/Y", strtotime($evaluation->fecha_fin)) }}</td>
                             <td class="centered ">{{ count($evaluation->preguntas) }}</td>              
-                            <!-- <td class=" ">-</td> -->
+                            
                             <td class="centered">
                                 @if($evaluation->estado == 1)
                                 <a href="{{route('evaluacion.edit',$evaluation->id)}}" title="Editar" class="btn btn-primary btn-xs view-group"">
@@ -74,12 +74,12 @@
                                 <a href="{{route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id)}}" class="btn btn-primary btn-xs" title="Visualizar" >
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a href="" class="btn btn-danger btn-xs delete-group" title="Cancelar" data-toggle="modal" data-target="#{{$evaluation->id}}">
+                                <a class="btn btn-danger btn-xs delete-group" title="Cancelar" href="#cancelar_{{$evaluation->id}}">
                                     <i class="fa fa-remove"></i>
                                 </a>
                                 @endif
                                 @if($evaluation->estado == 0)  
-                                <a href="{{route('evaluacion.activate',$evaluation->id)}}" class="btn btn-default btn-xs" title="Activar" data-toggle="modal">
+                                <a href="{{route('evaluacion.activate',$evaluation->id)}}" class="btn btn-primary btn-xs" title="Activar" data-toggle="modal">
                                     <i class="fa fa-check"></i>
                                 </a>
                                 @endif
@@ -90,7 +90,7 @@
                                 @endif
                             </td>
                         </tr>
-                        @include('evaluations.modals.delete', ['id'=> $evaluation->id, 'message' => 'Está a punto de cancelar esta evaluación. Si continúa, ningún alumno tendrá acceso a rendirla. ¿Desea continuar?', 'route' => route('evaluacion.cancel', $evaluation->id)])
+                        @include('evaluations.modals.delete', ['id'=> 'cancelar_'.$evaluation->id, 'message' => 'Está a punto de cancelar esta evaluación. Si continúa, ningún alumno tendrá acceso a rendirla. ¿Desea continuar?', 'route' => route('evaluacion.cancel', $evaluation->id)])
                         @include('modals.delete', ['id'=> 'eliminar'.$evaluation->id, 'message' => '¿Está seguro que desea eliminar esta evaluación?', 'route' => route('evaluacion.delete', $evaluation->id)])
                         @endforeach
                     </tbody>

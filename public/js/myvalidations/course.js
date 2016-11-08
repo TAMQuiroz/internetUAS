@@ -48,7 +48,7 @@ jQuery(function(){
             courseacademicLevel:{
                 required: true,
                 min:0,
-                max:10
+                max:12
             },
             facultycode:{
                 required: true

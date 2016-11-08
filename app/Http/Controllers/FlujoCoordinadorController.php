@@ -745,7 +745,11 @@ class FlujoCoordinadorController extends Controller
                 //$data['dictatedCourses'] = $this->dictatedCoursesService->retrieveAllCoursesxCycle();
             }
         } catch(\Exception $e) {
+<<<<<<< HEAD
             dd($e);
+=======
+            return redirect()->back()->with('warning', 'Ha ocurrido un error instrumentosDelCurso_index');
+>>>>>>> f599b5241e0235367cbe12c2f1c5ebbd0ab18b06
         }
         //return $cursosDelCicloyEspecialidad;
         return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
@@ -754,6 +758,38 @@ class FlujoCoordinadorController extends Controller
                                                                     ]);
     }
 
+<<<<<<< HEAD
+=======
+    public function instrumentosDelCurso_edit($id, $idCurso){
+
+        $curso= Course::findOrFail($idCurso);
+        
+        try{
+            $data['course'] = $curso;
+            $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
+            $studentsResults = $this->studentsResultService->findResultEvaluated();
+            $data['studentsResults'] = $this->courseService->findStudentsResultsByCourse($idCurso, $studentsResults);
+            $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
+            $data['idEspecialidad']= $id;
+        } catch (\Exception $e) {
+            return redirect()->back()->with('warning', 'Ha ocurrido un error en instrumentosDelCurso_edit');
+        }
+        
+        return view('flujoCoordinador.instrumentosDelCurso_edit', $data);
+    }
+
+    public function instrumentosDelCurso_update (Request $request, $id, $idCurso){
+        try {
+            $this->measurementSourceService->saveMesuringByCourse($request->all());
+        } catch (\Exception $e) {
+            return redirect()->back()->with('warning', 'Ha ocurrido un error instrumentosDelCurso_update');
+        }
+
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador', $id)->with('success', "Las modificaciones se han guardado exitosamente");       
+    }
+
+
+>>>>>>> f599b5241e0235367cbe12c2f1c5ebbd0ab18b06
     public function contributions($id) {
         $data = [];
         try {
@@ -764,7 +800,7 @@ class FlujoCoordinadorController extends Controller
             $data['courses']= $this->courseService->retrieveByFacultyandCicle($id);
             //dd("hola");
         } catch (\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un error'); 
+            redirect()->back()->with('warning','Ha ocurrido un error contributions'); 
         }
         return view('flujoCoordinador.contributions', $data);
     }
@@ -777,7 +813,7 @@ class FlujoCoordinadorController extends Controller
         try {
             $this->courseService->updateContributions($request->all());
         } catch (\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un error'); 
+            redirect()->back()->with('warning','Ha ocurrido un error updateContributions'); 
         }
         return redirect()->route('contributions.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
     }

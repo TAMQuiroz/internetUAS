@@ -17,7 +17,7 @@ class CreateTutorshipsTable extends Migration
             $table->integer('id_tutor');
             $table->integer('id_profesor');
             $table->integer('id_suplente');
-            $table->integer('id_alumno')->unsigned();
+            $table->integer('id_alumno')->unsigned();            
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +25,7 @@ class CreateTutorshipsTable extends Migration
         //las llaves foraneas
         Schema::table('tutorships', function (Blueprint $table) {
              $table->foreign('id_tutor')->references('IdDocente')->on('Docente');             
+             $table->foreign('id_profesor')->references('IdDocente')->on('Docente');             
         });
     }
 

@@ -20,7 +20,7 @@ class TutMeeting extends Model
                             'estado',
                             'id_topic',
                             'id_reason',
-                            'id_tutstudent0',
+                            'id_tutstudent',
                             'id_docente'];
   
 }

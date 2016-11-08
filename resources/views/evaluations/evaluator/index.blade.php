@@ -25,21 +25,21 @@
                     <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Código </th>
+                            <th class="centered column-title">Código </th>
                             <th class="column-title">Apellidos y Nombres </th>                        
                             <th class="column-title">Correo </th>                            
-                            <th class="column-title">Especialidad </th>                            
-                            <th class="column-title last">Acciones</th>                            
+                            <th class="centered column-title">Especialidad </th>                            
+                            <th class="centered column-title last">Acciones</th>                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($evaluators as $evaluator)
                         <tr class="even pointer">
-                            <td class=" ">{{ $evaluator->codigo }}</td>
+                            <td class="centered ">{{ $evaluator->codigo }}</td>
                             <td class=" ">{{ $evaluator->app.' '.$evaluator->apm.', '.$evaluator->nombre }}</td>
                             <td class=" ">{{ $evaluator->correo }}</td>                            
-                            <td class=" ">{{ $evaluator->nombre_esp }}</td>                            
-                            <td class=" ">
+                            <td class="centered">{{ $evaluator->nombre_esp }}</td>                            
+                            <td class="centered">
                                 <!-- <a href="{{route('evaluador.show',$evaluator->id)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-search"></i>
                                 </a> -->

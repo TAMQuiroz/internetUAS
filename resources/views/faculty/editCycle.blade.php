@@ -201,7 +201,8 @@ jQuery(function ($) {
 	$(function () {
 		$.datepicker.setDefaults($.datepicker.regional["es"]);
 			$("#cycleDateI").datepicker({
-				firstDay: 1
+				firstDay: 1,
+				format: "dd/mm/yyyy",
 			});
 	});
 </script>
@@ -210,6 +211,7 @@ jQuery(function ($) {
 		$.datepicker.setDefaults($.datepicker.regional["es"]);
 			$("#cycleDateF").datepicker({
 				firstDay: 1,
+				format: "dd/mm/yyyy",
 				minDate: <?php echo date("d/m/Y");?>
 			});
 	});

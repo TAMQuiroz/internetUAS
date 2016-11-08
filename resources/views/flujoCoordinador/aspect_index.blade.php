@@ -1,4 +1,4 @@
-@extends('app')
+@extends('appWithoutHamburger')
 @section('content')
 
 <div class="page-title">
@@ -21,7 +21,7 @@
                   <option value="">-- Seleccione --</option>
 
                   @foreach($studentsResults as $stdRslt)
-                  <option value="{{$stdRslt->Identificador}}">
+                  <option value="{{$stdRslt->IdResultadoEstudiantil}}">
                     {{ $stdRslt->Identificador }} - {{ $stdRslt->Descripcion }} 
                   </option> 
                   @endforeach
@@ -59,7 +59,7 @@
         <tbody id="aspecto-fc-table">
 
           @foreach($aspects as $asp)
-            <tr class="even pointer aspect {{ $asp->studentsResult->Identificador }}">
+            <tr class="even pointer aspect {{ $asp->studentsResult->IdResultadoEstudiantil }}">
               <td class="aspect_code" hidden="true">{{ $asp->IdAspecto}}</td>
               <td class="aspect_studentsResult" hidden="true">{{ $asp->studentsResult->IdResultadoEstudiantil}}</td>
               <td class="aspect_studentsResultName" hidden="true">{{$asp->studentsResult->Identificador}} - {{$asp->studentsResult->Descripcion}}</td>
@@ -95,6 +95,14 @@
 </div>
 
 <script src="{{ URL::asset('js/intranetjs/aspects/index-aspect-script.js')}}">
+
+
+ var fila = $("#aspecto-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#aspecto-siguiente-btn').attr("disabled","true");
+                $('#aspecto-siguiente-btn').click(function(){return false;});
+            }
+
 
 </script>
 

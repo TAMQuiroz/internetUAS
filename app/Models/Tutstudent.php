@@ -41,7 +41,7 @@ class Tutstudent extends Model
                 if($student) {
                     $student->restore();
                 } else {
-                    Tutstudent::createStudentUser($studentCode = $row[0], $email = $row[4]);
+                    $id_user = Tutstudent::createStudentUser($studentCode = $row[0], $email = $row[4]);
 
                     Tutstudent::create([
                         "codigo" => $row[0],
@@ -49,7 +49,8 @@ class Tutstudent extends Model
                         "ape_paterno" => $row[2],
                         "ape_materno" => $row[3],
                         "correo" => $row[4],
-                        "id_especialidad" => $mayor
+                        "id_especialidad" => $mayor,
+                        "id_usuario" => $id_user,
                     ]);
                 }
             }

@@ -20,7 +20,37 @@ class TutMeeting extends Model
                             'estado',
                             'id_topic',
                             'id_reason',
-                            'id_tutstudent0',
+                            'id_tutstudent',
                             'id_docente'];
-  
+
+
+    static public function getNumberDay($dateString) 
+    {
+        $timestamp  = strtotime($dateString);
+        $day        = date('w', $timestamp);
+        return $day;
+    }
+
+    static public function getStringDisableDays($daysCollection)
+    {    
+        $listDays           = [];   
+        
+        foreach($daysCollection as $day) {
+
+            array_push($listDays, $day->dia);
+
+        }
+
+        $diffDays           = array_diff(array(1,2,3,4,5,6), $listDays);
+
+        $stringDiffDays     = '0';
+
+        foreach ($diffDays as $value) {
+
+            $stringDiffDays = $stringDiffDays . ',' . $value;
+
+        }
+
+        return $stringDiffDays;
+    }
 }

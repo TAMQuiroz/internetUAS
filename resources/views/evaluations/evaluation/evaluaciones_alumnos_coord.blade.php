@@ -13,36 +13,33 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <col width="10%" >
                     <col width="15%">
-                    <col width="15%">
-                    <col width="10%">
-                    <col width="40%">
+                    <col width="15%">                    
+                    <col width="50%">
                     <col width="10%">
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Número de refrencia</th>
-                            <th class="column-title">Fecha de inicio </th>                            
-                            <th class="column-title">Fecha de fin </th>                            
-                            <th class="column-title">Código </th>                            
-                            <th class="column-title">Alumno </th>                            
-                            <th class="column-title last">Acciones</th>                                
+                            <th class="centered column-title">N° referencia</th>
+                            <th class="centered column-title">Inicio </th>                            
+                            <th class="centered column-title">Fin </th>                            
+                            <th class="column-title">Código - Alumno </th>
+                            <th class="centered column-title last">Acciones</th>                                
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($tutstudentxevaluations as $tutstudentxevaluation)
                         
                         <tr class="even pointer">                                                   
-                            <td class=" ">{{$tutstudentxevaluation->id }}</td>
-                            <td class=" ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->inicio))}}</td>
+                            <td class="centered ">{{$tutstudentxevaluation->id }}</td>
+                            <td class="centered ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->inicio))}}</td>
                             @if($tutstudentxevaluation->fecha_hora != null)                                                                  
-                            <td class=" ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->fecha_hora))}}</td>
+                            <td class="centered ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->fecha_hora))}}</td>
                             @else
-                            <td class=" ">-</td>
-                            @endif                                              
-                            <td class=" ">{{ $tutstudentxevaluation->alumno->codigo }}</td>                                                                                    
-                            <td class=" ">{{ $tutstudentxevaluation->alumno->ape_paterno.' '.$tutstudentxevaluation->alumno->ape_materno.', '.$tutstudentxevaluation->alumno->nombre  }}</td>                                                                                    
-                            <td class="">  
+                            <td class="centered ">-</td>
+                            @endif                                                          
+                            <td class=" ">{{ $tutstudentxevaluation->alumno->codigo.' - '.$tutstudentxevaluation->alumno->ape_paterno.' '.$tutstudentxevaluation->alumno->ape_materno.', '.$tutstudentxevaluation->alumno->nombre  }}</td>                                                                                    
+                            <td class="centered">  
                             @if(! is_null($tutstudentxevaluation->fecha_hora)  )               
-                                <a href="{{route('evaluacion_corregida.show',$tutstudentxevaluation->id)}}" title="Visualizar" class="btn btn-primary btn-xs view-group"">
+                                <a href="{{route('evaluacion_corregida.show',$tutstudentxevaluation->id)}}" title="Visualizar evaluación" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-eye"></i>
                                 </a>                               
                                 @elseif (is_null($tutstudentxevaluation->fecha_hora)  && ($tutstudentxevaluation->intentos == 0 ))
@@ -51,22 +48,19 @@
                                 </a>                               
                                 @endif
                             </td>
-                        </tr>   
-                                           
+                        </tr>              
                         @endforeach
                     </tbody>
                 </table>                
-            </div>             
+            </div>                    
+
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <a class="btn btn-default pull-left" href="{{ route('evaluacion.index') }}">Regresar</a>
+                <div class="col-md-12 col-sm-12 col-xs-12">                    
                     @if($completo == true)
-                    <a class="btn btn-primary pull-right" href="{{ route('evaluacion_resultados.index',$evaluation->id) }}">Ver resultados <i class="fa fa-eye"></i></a>
+                    <a class="btn btn-primary pull-right" href="{{ route('evaluacion_resultados.index',$evaluation->id) }}">Ver resultados <i class="fa fa-file-text"></i></a>
                     @endif
+                    <a class="btn btn-default pull-right" href="{{ route('evaluacion.index') }}"><i class="fa fa-backward" aria-hidden="true"></i> Regresar</a>
                 </div>
-
-
-                
             </div>
         </div>
     </div>

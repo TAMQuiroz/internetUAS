@@ -40,7 +40,7 @@
             </div>             
             <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <a class="btn btn-default pull-left" href="{{ route('evaluacion_evaluador.index') }}">Regresar</a>
+                <a class="btn btn-default pull-left" href="{{ route('evaluacion_evaluador.index') }}"><i class="fa fa-backward" aria-hidden="true"></i> Regresar</a>
             </div>
                 
             </div>

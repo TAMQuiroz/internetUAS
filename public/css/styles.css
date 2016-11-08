@@ -210,3 +210,6 @@ input[type="radio"] {
   opacity: 1 !important;
 }
 
+.centered{
+  text-align: center;
+}

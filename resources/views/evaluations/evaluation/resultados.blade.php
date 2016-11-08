@@ -7,11 +7,15 @@
 </div>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">   
-            <h4>Competencias evaluadas: {{count($compxtutxevs)}}</h4>                         
-            <h4>Alumnos evaluados: {{$compxtutxevs[0]->cantidad}}</h4>                         
-            <h4>Puntaje total: {{$total_puntaje}}</h4>                         
+    <div class="x_panel">    
+        <div class="x_title">
+            <h4>Código de evaluación: {{ $evaluation->id }}</h4>
+            <h4>Evaluación: {{ $evaluation->nombre }}</h4>
+            <h4>Cantidad de competencias evaluadas: {{ count($compxtutxevs) }}</h4>            
+            <h4>Cantidad de alumnos objetivo: {{ $total_students  }}</h4>
+            <h4>Cantidad de alumnos evaluados: {{ $compxtutxevs[0]->cantidad  }}</h4>
+            <h4>Aceptación: {{ ($compxtutxevs[0]->cantidad / $total_students)*100  }}%</h4>
+            <h4>Puntaje total de la evaluación: {{$total_puntaje}}</h4>                         
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">                    
                     <col width="40%" >
@@ -26,8 +30,8 @@
                             <th class="column-title">Puntaje base</th>                            
                             <th class="column-title">Mínimo</th>
                             <th class="column-title">Máximo</th>
-                            <th class="column-title">Promedio (ptos.)</th>
-                            <th class="column-title">Promedio (%)</th>                            
+                            <th class="column-title">Promedio</th>
+                            <th class="column-title">Promedio(%)</th>                            
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +43,7 @@
                             <td class=" ">{{$compxtutxev->min }}</td>
                             <td class=" ">{{$compxtutxev->max }}</td>
                             <td class=" ">{{$compxtutxev->prom_punt }}</td>
-                            <td class=" ">{{ ($compxtutxev->prom_punt / $compxtutxev->maximo)*100 }} %</td>
+                            <td class=" ">{{ ($compxtutxev->prom_punt / $compxtutxev->maximo)*100 }}%</td>
                         </tr>                                           
                         @endforeach
                     </tbody>
@@ -47,7 +51,7 @@
             </div>             
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <a class="btn btn-default pull-left" href="{{ route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id) }}">Regresar</a>
+                    <a class="btn btn-default pull-left" href="{{ route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id) }}"><i class="fa fa-backward" aria-hidden="true"></i> Regresar</a>
                     <a class="btn btn-primary pull-right" href="{{ route('evaluacion.enviar_resultados',$evaluation->id) }}">Enviar resultados a alumnos <i class="fa fa-envelope"></i></a>
                 </div>
             </div>

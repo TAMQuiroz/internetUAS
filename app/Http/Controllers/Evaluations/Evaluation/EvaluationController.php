@@ -154,12 +154,15 @@ public function indexresults(Request $request,$id)
         $total_puntaje+=$evquestion->puntaje;
     }
 
+    $total_students = count(Tutstudentxevaluation::where('id_evaluation',$id)->get());
+
     $compxtutxevs = DB::table('tutstudentxevaluations')->join('competencextutstudentxevaluations', 'tutstudentxevaluations.id', '=', 'id_tutev')->join('competences','competences.id','=','competencextutstudentxevaluations.id_competence')->selectRaw('id_competence,nombre, count(*) as cantidad,avg(puntaje) as prom_punt,min(puntaje) as min,max(puntaje) as max ,AVG(puntaje_maximo) as maximo')->where('fecha_hora','<>',null)->where('id_evaluation',$id)->groupBy('id_competence')->get();
     // dd($compxtutxevs);
     
     $data = [
     'evaluation'               =>  $evaluation, 
     'total_puntaje'               =>  $total_puntaje, 
+    'total_students'               =>  $total_students, 
     'compxtutxevs'   =>  $compxtutxevs, 
     ];
     return view('evaluations.evaluation.resultados', $data);

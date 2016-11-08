@@ -310,7 +310,7 @@
               <!-- nueva barra PSP -->
 
 
-              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || (Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp))) 
+              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1) || (Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp))) 
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
@@ -325,7 +325,7 @@
                         <li><a href="{{route('MeetingTeacher.index')}}">Reservar Reunión</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
-                        @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
+                        @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
                         <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                         <li><a href="{{route('studentScore.index')}}"> Notas Finales</a></li>

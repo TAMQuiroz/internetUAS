@@ -130,17 +130,6 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
     ];
 });
 
-$factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker) {
-
-
-    return [
-        'numero'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
-        'descripcion'       =>  $faker->text,
-        'fecha_inicio'         =>  '2017-10-06',
-        'fecha_fin'         =>  '2018-10-06',
-    ];
-});
-
 $factory->define(Intranet\Models\Student::class, function (Faker\Generator $faker) {
 
     return [
@@ -202,5 +191,33 @@ $factory->define(Intranet\Models\Schedule_meetings::class, function (Faker\Gener
     return [
         'id'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
         'tipo' => 'Jefe-Supervisor',
+    ];
+});
+
+$factory->define(Intranet\Models\PspProcess::class, function (Faker\Generator $faker) {
+    return [
+        'idespecialidad' => 1,
+        'idCiclo'       => 1,
+        'idcurso'        => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\PspProcessxTeacher::class, function (Faker\Generator $faker) {
+    return [
+        'idpspprocess' => 1,
+        'iddocente'       => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker) {
+
+    $psp =   factory(Intranet\Models\PspProcess::class)->create();
+
+    return [
+        'numero'            =>  $faker->randomNumber($nbDigits = 1,$strict = true),
+        'descripcion'       =>  $faker->text,
+        'fecha_inicio'      =>  '2017-10-06',
+        'fecha_fin'         =>  '2018-10-06',
+        'idpspprocess'      =>  $psp->id,
     ];
 });

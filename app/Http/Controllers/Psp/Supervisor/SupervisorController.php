@@ -14,6 +14,8 @@ use Intranet\Models\Faculty;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\Supervisor;
+use Intranet\Models\PspProcessxSupervisor;
+use Illuminate\Support\Facades\DB;
 
 use Intranet\Http\Requests\SupervisorRequest;
 
@@ -35,8 +37,15 @@ class SupervisorController extends Controller
 
         $supervisores = Supervisor::get();
 
+        $user = Auth::User()->professor;
+        $proceso = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso', '=', 'Curso.IdCurso')->select('pspprocesses.id','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->where('pspprocessesxdocente.deleted_at',null)->lists('Nombre','id');
+
+        $proceso[0] = "---- Seleccione Proceso ----";
+        ksort($proceso);
+        
         $data = [
             'supervisores'    =>  $supervisores,
+            'procesos'      =>  $proceso,
         ];
         return view('psp.supervisor.index', $data);
     }
@@ -187,14 +196,17 @@ class SupervisorController extends Controller
     {
      try {
             $supervisor   = Supervisor::find($id);
-            $user         = User::find($supervisor->idUser);
+            $user         = User::find($supervisor->iduser);
             
             //Restricciones
-
-            $supervisor->delete();
-            $user->delete();
-
-            return redirect()->route('supervisor.index')->with('success', 'El supervisor se ha eliminado exitosamente');
+            $activo = PspProcessxSupervisor::where('idsupervisor',$supervisor->id)->get();
+            if(count($activo)==0){
+                $supervisor->delete();
+                $user->delete();    
+                return redirect()->route('supervisor.index')->with('success', 'El supervisor se ha eliminado exitosamente');
+            }
+            else           
+                return redirect()->route('supervisor.index')->with('warning', 'El supervisor está activo en procesos PSP'); 
         } catch (Exception $e){
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }  

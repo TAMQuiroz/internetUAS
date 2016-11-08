@@ -310,7 +310,7 @@
               <!-- nueva barra PSP -->
 
 
-              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || Auth::user()->IdPerfil==0)) 
+              @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1) || (Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp))) 
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
                   <div class="collapsible-body">
@@ -319,13 +319,13 @@
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
-                        <li><a href="{{route('supervisor.index-participant')}}"> Añadir Supervisores/Profesores</a></li>
+                        
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         <li><a href="{{route('MeetingTeacher.index')}}">Reservar Reunión</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
-                        @if(Auth::user()->IdPerfil == 6) <!--si es supervisor-->
+                        @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Horario de reuniones</a></li>
                         <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                         <li><a href="{{route('studentScore.index')}}"> Notas Finales</a></li>
@@ -336,7 +336,7 @@
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         @endif
-                        @if(Auth::user()->IdPerfil == 0) <!--si es alumno-->
+                        @if(Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp) <!--si es alumno-->
                         <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>
                         <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
                         <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>

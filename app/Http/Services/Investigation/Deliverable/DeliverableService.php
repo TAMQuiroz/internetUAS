@@ -33,6 +33,28 @@ class DeliverableService {
         return $investigators;
     }
 
+    public function getNotSelectedStudents($id)
+    {
+        $entregable = Deliverable::find($id);
+        $idsToDelete = [];
+        $indexOfIds = [];
+
+        foreach ($entregable->students as $student) {
+            array_push($idsToDelete,$student->id);
+        }
+
+        $students = $entregable->project->students;
+        foreach ($students as $key => $student) {
+            if(in_array($student->id, $idsToDelete)){
+                array_push($indexOfIds,$key);
+            }
+        }
+
+        $students->forget($indexOfIds);
+
+        return $students;
+    }
+
     public function getNotSelectedTeachers($id)
     {
         $entregable = Deliverable::find($id);

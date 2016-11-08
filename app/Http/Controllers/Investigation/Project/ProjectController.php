@@ -127,12 +127,17 @@ class ProjectController extends Controller
 
         $profesores = $proyecto->teachers;
         $investigadores = $proyecto->investigators;
+        $estudiantes = $proyecto->students;
 
         $integrantes = null;
         $sorted = [];
         
         foreach ($investigadores as $investigador) {
             $integrantes = $profesores->push($investigador);    
+        }
+        
+        foreach ($estudiantes as $estudiante) {
+            $integrantes = $profesores->push($estudiante);    
         }
         
         if($integrantes){
@@ -182,6 +187,7 @@ class ProjectController extends Controller
             $estados        = Status::where('tipo_estado',0)->lists('nombre','id');
             $investigators  = $this->projectService->getNotSelectedInvestigators($id);
             $elegible_teachers  = $this->projectService->getNotSelectedTeachers($id);
+            $students       = $this->projectService->getNotSelectedStudents($id);
 
             $data = [
                 'proyecto'          =>  $proyecto,
@@ -189,7 +195,8 @@ class ProjectController extends Controller
                 'areas'             =>  $areas,
                 'estados'           =>  $estados,
                 'investigators'     =>  $investigators,
-                'elegible_teachers' => $elegible_teachers,
+                'elegible_teachers' =>  $elegible_teachers,
+                'students'          =>  $students,
             ];
             
         }else{

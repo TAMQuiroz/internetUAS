@@ -27,7 +27,8 @@ class PhaseRequest extends Request
             'numero' => 'required|digits:1',
             'descripcion' => 'regex:/^[\pL\s\-]+$/u|required|max:100',
             'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after:fecha_inicio'   ,         
+            'fecha_fin' => 'required|date|after:fecha_inicio'   , 
+             'Proceso_de_Psp'        => 'required',        
         ];
     }
 

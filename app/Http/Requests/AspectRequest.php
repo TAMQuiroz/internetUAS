@@ -24,7 +24,7 @@ class AspectRequest extends Request
     public function rules()
     {
         return [
-            'studentsResult-identifier' => 'Required'
+            'resultado-estudiantil' => 'Required'
         ];
     }
 }

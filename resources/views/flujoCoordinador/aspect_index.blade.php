@@ -17,7 +17,7 @@
             <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
               <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Resultado Estudiantil (RE)</label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select id="studentsResult" class="form-control col-md-7 col-xs-12" type="text" name="studentsResult-identifier" >
+                <select id="studentsResult" class="form-control col-md-7 col-xs-12" type="text" name="resultado-estudiantil" >
                   <option value="">-- Seleccione --</option>
 
                   @foreach($studentsResults as $stdRslt)

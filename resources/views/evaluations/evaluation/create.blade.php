@@ -1,6 +1,10 @@
 @extends('app')
 @section('content')
-
+<style type="text/css">
+	input { 
+    text-align: center; 
+}
+</style>
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
@@ -14,7 +18,7 @@
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
-			{{Form::open(['route' => 'evaluacion.store', 'class'=>'form-horizontal'])}}
+			{{Form::open(['route' => 'evaluacion.store','novalidate'=>'true' ,'id'=>'formEvaluation','class'=>'form-horizontal'])}}
 			<div class="panel-heading">
 				<h3 class="panel-title">Información</h3>
 			</div>
@@ -56,7 +60,7 @@
 					{{Form::label('Duración:*',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
 					<div class="col-md-8 col-sm-8 col-xs-8">
 						<div class="input-group">							
-							<input name="tiempo" value="{{ old('tiempo') }}" required="required" type="number" min="1" max="200" class="form-control" aria-describedby="basic-addon1">
+							<input name="tiempo" value="{{ old('tiempo') }}" required="required" type="text" class="form-control" aria-describedby="basic-addon1">
 							<span class="input-group-addon" id="basic-addon1">minutos</span>
 						</div>
 					</div>
@@ -70,7 +74,7 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<center>
-							<a class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar-banco-preguntas"  ><i class="fa fa-university fa-2x pull-left" aria-hidden="true"></i> Abrir banco de preguntas</a>
+							<a class="btn btn-primary" href="#modal-buscar-banco-preguntas"  ><i class="fa fa-university fa-2x pull-left" aria-hidden="true"></i> Abrir banco de preguntas</a>
 						</center>
 						
 					</div>
@@ -84,16 +88,16 @@
 							<table id="actual-questions" class="table table-striped responsive-utilities jambo_table bulk_action">
 								<thead>
 									<tr class="headings">                
-										<th class="column-title">N.</th><!-- nuevo-->
-										<th class="column-title">Cód.</th>
-										<th class="column-title">Tipo</th>
-										<th class="column-title">Competencia</th>
+										<th class="centered column-title">N.</th><!-- nuevo-->
+										<th class="centered column-title">Cód.</th>
+										<th class="centered column-title">Tipo</th>
+										<th class="centered column-title">Competencia</th>
 										<th class="column-title">Pregunta</th>
-										<th class="column-title">Tiempo</th>
-										<th class="column-title">Dificultad</th>
-										<th class="column-title">Puntaje</th><!-- nuevo-->
-										<th class="column-title">Evaluador</th><!-- nuevo-->
-										<th class="column-title">Acción</th><!-- nuevo-->
+										<th class="centered column-title">Tiempo</th>
+										<th class="centered column-title">Dificultad</th>
+										<th class="centered column-title">Puntaje</th><!-- nuevo-->
+										<th class="centered column-title">Evaluador</th><!-- nuevo-->
+										<th class="centered column-title">Acción</th><!-- nuevo-->
 									</tr>
 								</thead>
 								<tbody>
@@ -136,22 +140,22 @@
 					</div>
 				</div>
 				<div class="row" id="alumnosEspecialidad" hidden>
-					<div class="col-md-6 col-md-offset-3">
+					<div class="col-md-8  col-md-offset-2 col-lg-8  col-lg-offset-2 col-sm-12 col-xs-12">
 						<div class="table-responsive">
 							<table class="table table-striped responsive-utilities jambo_table bulk_action">
 								<thead>
 									<tr class="headings">										
-										<th class="column-title">Código </th>
+										<th class="centered column-title">Código </th>
 										<th class="column-title">Apellidos y Nombres </th>
-										<th class="column-title last">Seleccionar</th>           
+										<th class="centered column-title last">Seleccionar</th>           
 									</tr>
 								</thead>
 								<tbody>
 									@foreach($students as $student)
 									<tr class="even pointer">
-										<td class=" ">{{ $student->codigo }}</td>
+										<td class="centered ">{{ $student->codigo }}</td>
 										<td class=" ">{{ $student->ape_paterno.' '.$student->ape_materno.', '.$student->nombre }}</td>
-										<td class=" ">
+										<td class="centered ">
 											<div class="checkbox">
 												<label><input type="checkbox" checked name="arrStudents[{{$student->id}}]" value="1"></label>
 											</div>
@@ -175,6 +179,7 @@
 	</div>
 </div>
 <script src="{{ URL::asset('js/evaluations/search.js')}}"></script>
+<script src="{{ URL::asset('js/myvalidations/evaluation.js')}}"></script>
 @include('evaluations.evaluation.modal-buscar-banco-preguntas')
 @include('evaluations.evaluation.modal-editar-pregunta')
 @endsection

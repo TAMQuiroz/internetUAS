@@ -80,7 +80,7 @@
 					<div class="form-group">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<center>
-								<a class="btn btn-default" href="{{ route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id) }}">	Regresar</a>												
+								<a class="btn btn-default" href="{{ route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id) }}"><i class="fa fa-backward" aria-hidden="true"></i> Regresar</a>												
 							</center>												
 						</div>
 					</div>					

@@ -57,7 +57,7 @@ class Teacher extends Model {
         $query = Teacher::where('IdEspecialidad', $specialty);
 
         if(!array_key_exists("estado", $filters)){
-            $query = $query->whereIn('rolTutoria', array(1,3));
+            $query = $query->where('rolTutoria', 1);
         }
         elseif ( $filters["estado"] != "") {
             $query = $query->where('rolTutoria', $filters["estado"]);

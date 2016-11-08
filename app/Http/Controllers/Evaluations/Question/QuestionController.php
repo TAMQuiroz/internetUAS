@@ -283,7 +283,12 @@ class QuestionController extends Controller
     {    
      try {
          $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competence', $request['id_competence'])->get();
-         return response()->view('evaluations.evaluation.datos-pregunta', compact('evaluators'));        
+
+         $data = [
+            'evaluators'      =>  $evaluators,
+            'id_evaluator'      =>  $request['id_evaluator'],
+        ];
+         return response()->view('evaluations.evaluation.datos-pregunta', $data);        
      } catch (Exception $e) {
          return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
      }

@@ -884,6 +884,7 @@ Route::group(['prefix' => 'investigacion'], function(){
     Route::group(['prefix' => 'reporteISP'], function(){
         Route::get('/', ['as' => 'reporteISP.index', 'uses' => 'Report\ReportController@indexISP']);
         Route::post('/generateISP', ['as' => 'reporteISP.generateISP', 'uses' => 'Report\ReportController@generateISP']);
+        Route::get('/test/', ['as' => 'reporteISP.generarPDF', 'uses' => 'Report\ReportController@generarPDF']);
     });
 });
 

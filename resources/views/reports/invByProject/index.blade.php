@@ -24,27 +24,65 @@
               {{Form::label('Especialidad',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-12 col-md-4">
 
-                {{Form::select('especialidad',$comboEspecialidades, $idEsp, ['class'=>'form-control', 'required'])}}
+                {{Form::select('especialidad',$comboEspecialidades, $idEsp, ['class'=>'form-control'])}}
+
               </div>
             </div>
 
             <div class="form-group">
-              {{Form::label('N° de proyectos',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              {{Form::label('Estado del proyecto',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              <div class="col-xs-12 col-md-4">
+
+                {{Form::select('estadoP',$comboEstados, $idEstado, ['class'=>'form-control'])}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              {{Form::label('Proyectos iniciados',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              <div class="col-xs-12 col-md-1">
+                {{Form::date('fechaI',null,['id'=>'fecha_ini','class'=>'form-control'])}}
+              </div>
+              <div class="col-xs-4 col-md-1 col-md-offset-1">
+                {{Form::label('entre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              </div>
+              <div class="col-xs-12 col-md-1">
+                {{Form::date('fechaF',null,['id'=>'fecha_fin','class'=>'form-control'])}}
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              {{Form::label('N° de proyectos asignados',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-4 col-md-1">
-                {{Form::select('minProyectos',$comboEspecialidades, null, ['class'=>'form-control', 'required'])}}
+                {{Form::select('minProyectos',$comboMinP, $minP, ['class'=>'form-control'])}}
               </div>
               <div class="col-xs-4 col-md-1 col-md-offset-1">
                 {{Form::label('entre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               </div>
               <div class="col-xs-4 col-md-1">
-                {{Form::select('maxProyectos',$comboEspecialidades, null, ['class'=>'form-control', 'required'])}}
+                {{Form::select('maxProyectos',$comboMaxP, $maxP, ['class'=>'form-control'])}}
               </div>
+            </div>
+
+            <div class="form-group">
+              {{Form::label('Todos',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+
+              
+              <div class="col-xs-4 col-md-1">
+                {{Form::radio('radio','Si', ($opcion=='Si'))}} Si
+              </div>
+
+              <div class="col-xs-4 col-md-1">
+                {{Form::radio('radio','No', ($opcion=='No'))}} No
+              </div>
+
             </div>
 
             <div class="row">
             <div class="col-md-8 col-sm-12 col-xs-12">
               {{Form::submit('Generar', ['class'=>'btn btn-success pull-right'])}}
               <a class="btn btn-default pull-right" href="{{ route('reporteISP.index') }}">Cancelar</a>
+              <a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>
             </div>
           </div>
           {{Form::close()}}
@@ -84,7 +122,7 @@
                 <th>Apellido Materno</th>
                 <th>Correo</th>
                 <th>Especialidad</th>
-                <th>Cantidad de proyectos</th>
+                <th>Cantidad de proyectos asignados</th>
               </tr> 
             </thead>
             @if($investigadores != null) 
@@ -110,17 +148,19 @@
                     </thead>
                     <tbody>
                       @foreach($investigador->projects as $proyecto)
-                      <tr>
-                        <td>{{$proyecto->nombre}}</td> 
-                        <td>{{$proyecto->fecha_fin}}</td> 
-                        <td>{{$proyecto->area->nombre}}</td> 
-                        <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                        <td>
-                        @if($proyecto->status)
-                          {{$proyecto->status->nombre}}
+                        @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                        <tr>
+                          <td>{{$proyecto->nombre}}</td> 
+                          <td>{{$proyecto->fecha_fin}}</td> 
+                          <td>{{$proyecto->area->nombre}}</td> 
+                          <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          <td>
+                          @if($proyecto->status)
+                            {{$proyecto->status->nombre}}
+                          @endif
+                          </td>
+                        </tr>
                         @endif
-                        </td>
-                      </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -167,7 +207,7 @@
                 <th>Apellido Materno</th>
                 <th>Correo</th>
                 <th>Especialidad</th>
-                <th>Cantidad de proyectos</th>
+                <th>Cantidad de proyectos asignados</th>
               </tr> 
             </thead>
             @if($profesores != null) 
@@ -193,17 +233,19 @@
                     </thead>
                     <tbody>
                       @foreach($profesor->projects as $proyecto)
-                      <tr>
-                        <td>{{$proyecto->nombre}}</td> 
-                        <td>{{$proyecto->fecha_fin}}</td> 
-                        <td>{{$proyecto->area->nombre}}</td> 
-                        <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                        <td>
-                        @if($proyecto->status)
-                          {{$proyecto->status->nombre}}
+                        @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                        <tr>
+                          <td>{{$proyecto->nombre}}</td> 
+                          <td>{{$proyecto->fecha_fin}}</td> 
+                          <td>{{$proyecto->area->nombre}}</td> 
+                          <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          <td>
+                          @if($proyecto->status)
+                            {{$proyecto->status->nombre}}
+                          @endif
+                          </td>
+                        </tr>
                         @endif
-                        </td>
-                      </tr>
                       @endforeach
                     </tbody>
                   </table>

@@ -29,15 +29,23 @@
             </div>
 
             <div class="form-group">
+              {{Form::label('Estado del proyecto',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              <div class="col-xs-12 col-md-4">
+
+                {{Form::select('proyectoEstado',$comboEstadosP, $estadoP, ['class'=>'form-control', 'required'])}}
+              </div>
+            </div>
+
+            <div class="form-group">
               {{Form::label('N° de proyectos',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-4 col-md-1">
-                {{Form::select('minProyectos',$comboEspecialidades, null, ['class'=>'form-control', 'required'])}}
+                {{Form::select('minProyectos',$minP, null, ['class'=>'form-control', 'required'])}}
               </div>
               <div class="col-xs-4 col-md-1 col-md-offset-1">
                 {{Form::label('entre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               </div>
               <div class="col-xs-4 col-md-1">
-                {{Form::select('maxProyectos',$comboEspecialidades, null, ['class'=>'form-control', 'required'])}}
+                {{Form::select('maxProyectos',$maxP, null, ['class'=>'form-control', 'required'])}}
               </div>
             </div>
 
@@ -110,17 +118,19 @@
                     </thead>
                     <tbody>
                       @foreach($investigador->projects as $proyecto)
-                      <tr>
-                        <td>{{$proyecto->nombre}}</td> 
-                        <td>{{$proyecto->fecha_fin}}</td> 
-                        <td>{{$proyecto->area->nombre}}</td> 
-                        <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                        <td>
-                        @if($proyecto->status)
-                          {{$proyecto->status->nombre}}
+                        @if(($estadoP == 0) || ($estadoP != 0 && ($proyecto->status->id == $estadoP)))
+                        <tr>
+                          <td>{{$proyecto->nombre}}</td> 
+                          <td>{{$proyecto->fecha_fin}}</td> 
+                          <td>{{$proyecto->area->nombre}}</td> 
+                          <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          <td>
+                          @if($proyecto->status)
+                            {{$proyecto->status->nombre}}
+                          @endif
+                          </td>
+                        </tr>
                         @endif
-                        </td>
-                      </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -193,17 +203,19 @@
                     </thead>
                     <tbody>
                       @foreach($profesor->projects as $proyecto)
-                      <tr>
-                        <td>{{$proyecto->nombre}}</td> 
-                        <td>{{$proyecto->fecha_fin}}</td> 
-                        <td>{{$proyecto->area->nombre}}</td> 
-                        <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                        <td>
-                        @if($proyecto->status)
-                          {{$proyecto->status->nombre}}
+                        @if(($estadoP == 0) || ($estadoP != 0 && ($proyecto->status->id == $estadoP)))
+                        <tr>
+                          <td>{{$proyecto->nombre}}</td> 
+                          <td>{{$proyecto->fecha_fin}}</td> 
+                          <td>{{$proyecto->area->nombre}}</td> 
+                          <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          <td>
+                          @if($proyecto->status)
+                            {{$proyecto->status->nombre}}
+                          @endif
+                          </td>
+                        </tr>
                         @endif
-                        </td>
-                      </tr>
                       @endforeach
                     </tbody>
                   </table>

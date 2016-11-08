@@ -11,6 +11,7 @@ use Intranet\Models\Investigator;
 use Intranet\Models\Group;
 use Intranet\Models\Investigatorxgroup;
 use Intranet\Models\Teacherxgroup;
+use Intranet\Models\Studentxgroup;
 
 class AffiliationController extends Controller
 {
@@ -48,6 +49,48 @@ class AffiliationController extends Controller
                 $investigatorXgroup->delete();
 
                 return redirect()->route('grupo.edit',$group->id)->with('success', 'El investigador se ha quitado exitosamente');
+            }else{
+                return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');    
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeStudent(Request $request)
+    {
+        try {
+            $group = Group::find($request['id_group']);
+            $group->students()->attach($request['id_estudiante']);
+
+            return redirect()->route('grupo.edit',$group->id)->with('success', 'El estudiante se ha agregado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyStudent($id)
+    {
+        try {
+            $studentXgroup = Studentxgroup::find($id);
+
+            if($studentXgroup){
+                $group = Group::find($studentXgroup->id_grupo);
+                $studentXgroup->delete();
+
+                return redirect()->route('grupo.edit',$group->id)->with('success', 'El estudiante se ha quitado exitosamente');
             }else{
                 return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');    
             }

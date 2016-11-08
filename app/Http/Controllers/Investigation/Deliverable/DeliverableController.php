@@ -113,12 +113,17 @@ class DeliverableController extends Controller
 
         $profesores = $entregable->teachers;
         $investigadores = $entregable->investigators;
+        $estudiantes = $entregable->students;
 
         $integrantes = null;
         $sorted = [];
         
         foreach ($investigadores as $investigador) {
             $integrantes = $profesores->push($investigador);    
+        }
+
+        foreach ($estudiantes as $estudiante) {
+            $integrantes = $profesores->push($estudiante);    
         }
         
         if($integrantes){
@@ -151,6 +156,7 @@ class DeliverableController extends Controller
         $proyecto           = $entregable->project;
         $investigators      = $this->deliverableService->getNotSelectedInvestigators($id);
         $elegible_teachers  = $this->deliverableService->getNotSelectedTeachers($id);
+        $students           = $this->deliverableService->getNotSelectedStudents($id);
         $entregables        = $proyecto->deliverables->lists('nombre','id')->put(0, 'No tiene')->forget($entregable->id);
         
         $data = [
@@ -159,6 +165,7 @@ class DeliverableController extends Controller
             'investigators'     =>  $investigators,
             'elegible_teachers' =>  $elegible_teachers,
             'entregables'       =>  $entregables,
+            'students'          =>  $students,
         ];
 
         return view('investigation.deliverable.edit', $data);

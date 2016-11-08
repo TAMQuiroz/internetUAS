@@ -13,6 +13,10 @@ class Deliverable extends Model
     	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxdeliverables','id_entregable','id_investigador')->orderBy('nombre', 'asc')->withPivot('id');	
     }
 
+    public function students(){
+        return $this->belongsToMany('Intranet\Models\Tutstudent','studentxdeliverables','id_entregable','id_estudiante')->orderBy('nombre', 'asc')->withPivot('id');   
+    }
+
     public function teachers(){
         return $this->belongsToMany('Intranet\Models\Teacher','teacherxdeliverables','id_entregable','id_profesor')->orderBy('Nombre', 'asc')->withPivot('id');    
     }

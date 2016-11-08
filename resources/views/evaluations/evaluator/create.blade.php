@@ -26,7 +26,7 @@
 						{{Form::text('nombre',null,['class'=>'form-control','id'=>'nombre', 'required','readonly' ])}}
 					</div>
 					<div class="col-md-3 col-sm-3 col-xs-3">						
-						<a class="btn btn-default" data-toggle="modal" data-target="#modal-buscar-profesor">Buscar</a>
+						<a class="btn btn-primary" href="#modal-buscar-profesor">Buscar</a>
 					</div>
 				</div>
 
@@ -35,7 +35,7 @@
 					<div class="col-md-6">
 						@foreach($competences as $competence)
 						<div class="checkbox">
-							<label><input type="checkbox" name="arr_competencias[{{$competence->id}}]">{{$competence->nombre}}</label>
+							<label><input type="checkbox" name="arr_competencias[{{$competence->id}}]"> {{$competence->nombre}}</label>
 						</div>
 						@endforeach						
 					</div>

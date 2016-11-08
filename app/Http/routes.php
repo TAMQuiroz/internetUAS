@@ -306,7 +306,7 @@ Route::group(['middleware' => 'auth'], function(){
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
 
-        Route::post('/searchEvaluacion', ['uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
+        Route::post('/searchEvaluador', ['as' => 'search.evaluator','uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
 
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);

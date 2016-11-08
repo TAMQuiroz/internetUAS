@@ -11,7 +11,7 @@
         <div class="">                
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <a data-toggle="modal" data-target="#filter-evaluations"  class="btn btn-warning pull-left">
+                    <a href="#filter-evaluations"  class="btn btn-warning pull-left">
                         <i class="fa fa-filter"></i> Filtrar
                     </a>
                     <a href="{{ route('evaluacion.create') }}" class="btn btn-success pull-right">

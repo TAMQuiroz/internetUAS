@@ -36,7 +36,7 @@
 						</div>						
 						@else
 						<div class="checkbox">
-							<label><input type="checkbox" name="arr_competencias[{{$competence->id}}]">{{$competence->nombre}}</label>
+							<label><input type="checkbox" name="arr_competencias[{{$competence->id}}]"> {{$competence->nombre}}</label>
 						</div>
 						
 						@endif						

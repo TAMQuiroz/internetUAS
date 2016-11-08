@@ -110,7 +110,7 @@ $(document).ready(function($) {
 
 
 function selectQuestions(){  
-	    $('#modal-buscar-banco-preguntas').modal('hide');//oculto todo el modal
+	    // $('#modal-buscar-banco-preguntas').modal('hide');//oculto todo el modal
 	    var questions = $('.questions_selected:checked');//saco las filas con check    
 	    fillTable(questions);
 	}

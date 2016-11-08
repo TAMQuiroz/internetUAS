@@ -46,8 +46,8 @@
             <td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
             <td class="centered oculto responsable" hidden>{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
             
-            <td class="centered">                
-                <input type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected"> 
+            <td class="centered">
+                <input style="position: relative;left: 0px;opacity: 1" type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected"> 
             </td>                    
         </tr>
         @endforeach
@@ -56,7 +56,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <center>
-            <a class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a la evaluación</a>
+            <a data-remodal-action="cancel" class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a la evaluación</a>
         </center>
     </div>
 </div>

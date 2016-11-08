@@ -15,13 +15,12 @@ class CreatePspstudentsTable extends Migration
         Schema::create('pspstudents', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idalumno');
-            $table->integer('idtipoestado')->unsigned();
-            $table->string('telefono');
-            $table->string('correo');
-            $table->string('direccion');
+            $table->integer('idtipoestado')->unsigned()->nullable();
+            //$table->string('telefono');
             $table->integer('idpspgroup')->unsigned()->nullable();
-            $table->integer('idespecialidad');
+            $table->integer('idespecialidad')->nullable();
             $table->integer('idsupervisor')->unsigned()->nullable();
+            $table->integer('idpspprocess')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

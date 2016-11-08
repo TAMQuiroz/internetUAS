@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\API\Faculty;
 
 use JWTAuth;
 use Response;
+use Intranet\Models\CoursexTeacher;
 use Intranet\Models\Course;
 use Intranet\Models\Schedule;
 use Intranet\Models\CoursexCycle;
@@ -84,7 +85,7 @@ class FacultyController extends BaseController
         $results = StudentsResult::lastUpdated($date)
                                    ->where('idEspecialidad', $faculty_id)
                                    ->whereHas('resultxObjective',function($query) use ($eos_id){
-                                      $query->where('resultadoxobjetivo.IdObjetivoEducacional',$eos_id);
+                                      $query->where('ResultadoxObjetivo.IdObjetivoEducacional',$eos_id);
                                    })
                                    ->get();
         
@@ -286,4 +287,13 @@ class FacultyController extends BaseController
       return view('consolidated.results.api', $data);
     }
 
+    public function getTeacherCourses($teacher_id){
+      $coursexteacher = CoursexTeacher::where('IdDocente',$teacher_id)->get();
+      $courses = [];
+      foreach ($coursexteacher as $key => $value) {
+        $course = Course::where('IdCurso',$value->IdCurso)->get();
+        array_push($courses, $course);
+      }
+      return $this->response->array($courses);
+    }
 }

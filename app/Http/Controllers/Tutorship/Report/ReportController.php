@@ -13,14 +13,14 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function meetingReport()
     {
         
         $teacher = null;
         $data = [
             'teacher'    =>  $teacher,
         ];
-        return view('tutorship.report.index', $data);
+        return view('tutorship.report.meeting', $data);
     }
 
     /**
@@ -28,7 +28,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function reassingReport()
     {
         //
     }

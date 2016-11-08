@@ -346,4 +346,23 @@ class CourseService
         return $perf_matrix;
     }
 
+
+    public function deleteCourseById($id) {
+        $course = Course::where('IdCurso', $id)->first();
+        $course->delete();
+
+        $coursexcycle = DictatedCourses::where('IdCurso', $id)->get();
+
+        foreach ($coursexcycle as $cxc) {
+            $cxc->delete();
+        }
+
+        $contribution = Contribution::where('IdCurso', $id)->get();
+
+        foreach ($contribution as $c) {
+            $c->delete();
+        }
+
+    }
+
 }

@@ -14,6 +14,8 @@ use Intranet\Models\Faculty;
 use Intranet\Models\Teacher;
 use Intranet\Models\User;
 use Intranet\Models\Phase;
+use Intranet\Models\PspProcessxTeacher;
+use Intranet\Models\PspProcess;
 
 use Intranet\Http\Requests\PhaseRequest;
 
@@ -33,9 +35,33 @@ class PhaseController extends Controller
      */
     public function index()
     {
-
-        $Phaseses = Phase::get();
-
+        $Phaseses=null;
+        //$Phaseses = Phase::get();
+        if(Auth::User()->IdPerfil==3){  
+                $Phaseses = Phase::get();
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
+                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+                //if($teacher!=null){
+                    $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+                    $proc = array(); 
+                    $r = count($procxt);   
+                    if($r>0){
+                    foreach($procxt as $p){
+                        $proc2=null;                
+                        $proc2=Phase::where('idpspprocess',$p->idpspprocess)->get();
+                        $r2 = count($proc2);  
+                        if($proc2!=null && $r2>0){
+                            foreach($proc2 as $p2){ 
+                                if($p2!=null){
+                                    $proc[]=Phase::find($p2->id);
+                                }
+                            }
+                        }
+                    }
+                    $Phaseses=$proc;
+                    }
+                //}
+        }
         $data = [
             'Phaseses'    =>  $Phaseses,
         ];
@@ -49,8 +75,27 @@ class PhaseController extends Controller
      */
     public function create()
     {
-
-        return view('psp.Phase.create');
+        
+        if(Auth::User()->IdPerfil==3){  
+                $proc = PspProcess::get();
+            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
+                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+                $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+                $proc = array(); 
+                $r = count($procxt);   
+            if($r>0){
+                foreach($procxt as $p){
+                    $proc[]=PspProcess::find($p->idpspprocess);
+                }
+            }
+            //dd($proc);
+        }else{
+            $proc=null;
+        }
+        $data = [
+            'pspproc'    =>  $proc,
+        ];
+        return view('psp.Phase.create',$data);
     }
 
     /**
@@ -66,18 +111,23 @@ class PhaseController extends Controller
             $Phase                   = new Phase;
             $Phase->numero          = $request['numero'];
             $Phase->descripcion      = $request['descripcion'];
-            $Phase->fecha_inicio      = Carbon::createFromFormat('d/m/Y',$request['fecha_inicio']); 
-            $Phase->fecha_fin      = Carbon::createFromFormat('d/m/Y',$request['fecha_fin']);
-            $Phaseses = Phase::get();
+            $Phase->fecha_inicio      = date("Y-m-d",strtotime($request['fecha_inicio']));
+            $Phase->fecha_fin      = date("Y-m-d",strtotime($request['fecha_fin']));
+            $Phase->idpspprocess = $request['Proceso_de_Psp'];            
+            $Phaseses = Phase::where('idpspprocess',$request['Proceso_de_Psp'])->get();
             if($Phaseses!=null){
                 foreach($Phaseses as $Phases){
                     if((($Phases->fecha_inicio<$Phase->fecha_inicio)
                         &&($Phase->fecha_inicio<$Phases->fecha_fin))||(($Phases->fecha_inicio<$Phase->fecha_fin)
                         &&($Phase->fecha_fin<$Phases->fecha_fin))){
-                        return redirect()->back()->with('warning', 'Ya existe una fase que incluye parte de este rango de fechas');
+                        return redirect()->back()->with('warning', 'Ya existe una fase que incluye parte de este rango de fechas para ese Proceso');
                     }
                 }       
             }     
+            $pspproc=PspProcess::find($Phase->idpspprocess);
+            if($pspproc->numero_Fases!=0){
+                if(count($Phaseses)+1>$pspproc->numero_Fases)return redirect()->back()->with('warning', 'Se ha alcanzado el numero maximo de fases permitido para este proceso');
+            }
             $Phase->save();
 
             return redirect()->route('phase.index')->with('success', 'La fase se ha registrado exitosamente');
@@ -99,6 +149,7 @@ class PhaseController extends Controller
         $data = [
             'Phase'      =>  $Phase,
         ];
+
         return view('psp.Phase.show',$data);
     }
 
@@ -115,6 +166,13 @@ class PhaseController extends Controller
         $data = [
             'phase'      =>  $phase,
         ];
+        if(Auth::User()->IdPerfil==3){  
+                $proc = PspProcess::get();
+            } else if (Auth::User()->IdPerfil==2|| Auth::User()->IdPerfil==1){
+                $proc = array();                     
+                $proc[]=PspProcess::find($phase->idpspprocess);           
+        }
+        $data['pspproc'] = $proc;
         return view('psp.Phase.edit',$data);
     }
 
@@ -132,9 +190,10 @@ class PhaseController extends Controller
             $Phase                   = Phase::find($id);
             $Phase->numero           = $request['numero'];
             $Phase->descripcion           = $request['descripcion'];
-            $Phase->fecha_inicio      = Carbon::createFromFormat('d/m/Y',$request['fecha_inicio']); 
-            $Phase->fecha_fin      = Carbon::createFromFormat('d/m/Y',$request['fecha_fin']);
-            $Phaseses = Phase::get();
+            $Phase->fecha_inicio      = date("Y-m-d",strtotime($request['fecha_inicio']));
+            $Phase->fecha_fin      = date("Y-m-d",strtotime($request['fecha_fin']));
+            $Phase->idpspprocess = $request['Proceso_de_Psp'];            
+            $Phaseses = Phase::where('idpspprocess',$request['Proceso_de_Psp'])->get();
             if($Phaseses!=null){
                 foreach($Phaseses as $Phases){
                     if($Phase->id!=$Phases->id){
@@ -144,7 +203,8 @@ class PhaseController extends Controller
                         }
                     }
                 }       
-            }           
+            }
+            //dd($Phase);           
             $Phase->save();
 
             return redirect()->route('phase.index')->with('success', 'La fase se ha actualizado exitosamente');

@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Fecha de Inicio <span class="error">* </span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_inicio" id="fecha_inicio" minlength="10" maxlength="10"  value="<?php echo $phase->fecha_inicio;?>"/>
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_inicio" id="fecha_inicio" minlength="10" maxlength="10"  value="<?php echo date("m/d/Y",strtotime($phase->fecha_inicio));?>"/>
                             <!--<?php echo date("d/m/Y");?>-->
                     </div>
                 </div> 
@@ -44,8 +44,19 @@
                 <div class="form-group">
                     <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Fecha de Fin <span class="error">* </span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_fin" id="fecha_fin" minlength="10" maxlength="10" value="<?php echo $phase->fecha_fin;?>"/>
+                        <input class="form-control col-md-7 col-xs-12" type="text" name="fecha_fin" id="fecha_fin" minlength="10" maxlength="10" value="<?php echo date("m/d/Y",strtotime($phase->fecha_fin));?>"/>
                             <!--<?php echo date("d/m/Y");?>-->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                        {{Form::label('Curso de PSP*',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select name="Proceso_de_Psp" id="Proceso_de_Psp" class="form-control" required="required">
+                            @foreach( $pspproc as $psp)
+                                <option selected="selected" value="{{$psp->id}}">{{$psp->Course->Nombre}}</option>
+                            @endforeach
+                        </select>                             
                     </div>
                 </div>    
 

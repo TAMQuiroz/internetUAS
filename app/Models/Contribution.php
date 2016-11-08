@@ -34,4 +34,9 @@ class Contribution extends Model{
     {
         return $this->belongsTo('Intranet\Models\Course', 'IdCurso');
     }
+
+    public function ciclosAcademicos()
+    {
+        return $this->belongsTo('Intranet\Models\AcademicCycle', 'IdCicloAcademico');
+    }
 }

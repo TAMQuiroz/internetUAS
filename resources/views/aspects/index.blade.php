@@ -10,32 +10,32 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
     <div class="x_content">
+      <form action="{{ route('create.aspects')}}" method="GET" id="formAspect" name="formAspect" novalidate="true" class="form-horizontal">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        
+        <div class="form-horizontal">
+            <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+              <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Resultado Estudiantil (RE)</label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <select id="studentsResult" class="form-control col-md-7 col-xs-12" type="text" name="studentsResult-identifier" >
+                  <option value="">-- Seleccione --</option>
 
-      <div class="form-horizontal">
-
-        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <a class="btn btn-success pull-right" data-toggle="modal" data-target="#aspect-new"><i class="fa fa-plus"></i> Nuevo Aspecto </a>
-          </div>
-        </div>
-
-          <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
-            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Resultado Estudiantil (RE)</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <select id="studentsResult" class="form-control col-md-7 col-xs-12" type="text" name="studentsResult-identifier" >
-                <option value="">-- Seleccione --</option>
-
-                @foreach($studentsResults as $stdRslt)
-                <option value="{{$stdRslt->Identificador}}">
-                  {{ $stdRslt->Identificador }} - {{ $stdRslt->Descripcion }} 
-                </option> 
-                @endforeach
-                
-              </select>
+                  @foreach($studentsResults as $stdRslt)
+                  <option value="{{$stdRslt->IdResultadoEstudiantil}}">
+                    {{ $stdRslt->Identificador }} - {{ $stdRslt->Descripcion }} 
+                  </option> 
+                  @endforeach
+                  
+                </select>
+              </div>
             </div>
-          </div>
-      </div>
-
+            <div class="row">
+                
+                   <button class="btn btn-success pull-right" type="submit"> Nuevo Aspecto</button>
+                
+              </div>
+        </div>
+      </form>
       @if($aspects==null)
 
       <div class="row">
@@ -60,7 +60,7 @@
         <tbody>
 
           @foreach($aspects as $asp)
-          <tr class="even pointer aspect {{ $asp->studentsResult->Identificador }}">
+          <tr class="even pointer aspect {{ $asp->studentsResult->IdResultadoEstudiantil }}">
             <td class="aspect_code" hidden="true">{{ $asp->IdAspecto}}</td>
             <td class="aspect_studentsResult" hidden="true">{{ $asp->studentsResult->IdResultadoEstudiantil}}</td>
             <td class="aspect_studentsResultName" hidden="true">{{$asp->studentsResult->Identificador}} - {{$asp->studentsResult->Descripcion}}</td>

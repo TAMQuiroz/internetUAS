@@ -124,6 +124,7 @@ class StudentController extends BaseController {
 						$alumno->ApellidoPaterno = $student['ApellidoPaterno'];
 						$alumno->ApellidoMaterno = $student['ApellidoMaterno'];
 						$alumno->IdHorario = $student['IdHorario'];
+						
 						if($student['lleva_psp'] == 1){
 							$alumno->IdUsuario = $student['IdUsuario'];
 						}
@@ -149,7 +150,7 @@ class StudentController extends BaseController {
             //se busca un alumno con el mismo codigo
             $u = User::where('Usuario', $codigo)->first();
             if($u!=null){
-                return null;
+                return $u;
             }            
 
             // se crea un usuario primero

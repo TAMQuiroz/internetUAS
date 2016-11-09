@@ -42,7 +42,7 @@ class StudentController extends BaseController {
 			}
 			$data['studentsExist'] = $studentsExist;				
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return view('students.load',$data);
 	}

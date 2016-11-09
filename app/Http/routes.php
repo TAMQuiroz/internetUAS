@@ -603,6 +603,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('edit/{id}', ['as' => 'meeting.update', 'uses' => 'Psp\meeting\MeetingController@update']);
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
                 Route::get('search/{id}', ['as' => 'meeting.search', 'uses' => 'Psp\meeting\MeetingController@search']);    
+                Route::get('indexSup', ['as' => 'meeting.indexSup', 'uses' => 'Psp\meeting\MeetingController@indexSup']);
             });
 
             //MeetingTeacher

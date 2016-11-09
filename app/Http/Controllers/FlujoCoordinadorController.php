@@ -36,6 +36,9 @@ use Intranet\Models\Teacher;
 use Intranet\Models\Criterion;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
+use Intranet\Models\Course;
+use Intranet\Models\Contribution;
+use DB;
 
 
 class FlujoCoordinadorController extends Controller
@@ -49,6 +52,7 @@ class FlujoCoordinadorController extends Controller
     protected $periodService;
     protected $dictatedCoursesService;
     protected $passwordService;
+    protected $measurementSourceService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
@@ -62,11 +66,8 @@ class FlujoCoordinadorController extends Controller
         $this->cicleService=new CicleService();
         $this->dictatedCoursesService = new DictatedCoursesService();
         $this->passwordService= new PasswordService();
+        $this->measurementSourceService= new MeasurementSourceService();
 	}
-
-
-    //
-
 
     public function index()
     {
@@ -695,4 +696,97 @@ class FlujoCoordinadorController extends Controller
         return redirect()->route('cursosCicloHorario_index.flujoCoordinador', ['id' => $id,'idCourse' => $idCourse])->with('success', 'Se eliminó el horario con éxito');
 
     }
+
+
+    public function instrumentosDelCurso_index($id){
+        $cursosDelCicloyEspecialidad =[];
+        $data['title'] = "Cursos Dictados en el Ciclo";
+        $facultad = Faculty::findOrFail($id);
+
+        $data['facultad']=$facultad;
+
+        try {
+            if(Session::get('academic-cycle')!=null){
+              
+                $cursosDelCicloyEspecialidad =  DB::table('cursoxciclo')
+                                        ->join('curso', 'curso.IdCurso', '=', 'cursoxciclo.IdCurso')
+
+                                        ->select('curso.*')
+
+                                        ->where ('curso.IdEspecialidad', '=', $id)
+                                        ->where ('cursoxciclo.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico)
+
+                                        //->orderBy('cliente.apellidoPaterno', 'asc')
+                                        ->get(); 
+                $data['dictatedCourses']= $cursosDelCicloyEspecialidad;
+            }
+        } catch(\Exception $e) {
+            return redirect()->back()->with('warning', 'Ha ocurrido un error');
+        }
+        //return $cursosDelCicloyEspecialidad;
+        return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
+                                                                    'facultad'=> $facultad,
+                                                                    'cursos' => $cursosDelCicloyEspecialidad
+                                                                    ]);
+    }
+
+    public function instrumentosDelCurso_edit($id, $idCurso){
+
+        $curso= Course::findOrFail($idCurso);
+        
+        try{
+            $data['course'] = $curso;
+            $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
+            $studentsResults = $this->studentsResultService->findResultEvaluated();
+            $data['studentsResults'] = $this->courseService->findStudentsResultsByCourse($idCurso, $studentsResults);
+            $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
+            $data['idEspecialidad']= $id;
+        } catch (\Exception $e) {
+            return redirect()->back()->with('warning', 'Ha ocurrido un error');
+        }
+        
+        return view('flujoCoordinador.instrumentosDelCurso_edit', $data);
+    }
+
+    public function instrumentosDelCurso_update (Request $request, $id, $idCurso){
+        try {
+            $this->measurementSourceService->saveMesuringByCourse($request->all());
+        } catch (\Exception $e) {
+            return redirect()->back()->with('warning', 'Ha ocurrido un error');
+        }
+
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador', $id)->with('success', "Las modificaciones se han guardado exitosamente");       
+    }
+
+
+    public function contributions($id) {
+        $data = [];
+        try {
+            //dd($id);
+            $data['idEspecialidad']=$id;
+            $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle();
+            
+            $data['courses']= $this->courseService->retrieveByFacultyandCicle($id);
+            //dd("hola");
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        return view('flujoCoordinador.contributions', $data);
+    }
+
+    public function updateContributions(Request $request,$id) {
+        if(!isset($request['selectorContVal'])){
+            return redirect()->back()->with('warning','La matriz de aporte no puede estar vacia.');
+        }
+
+        try {
+            $data['idEspecialidad']=$id;
+            $this->courseService->updateContributions($request->all());
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
+    }
+
+
 }

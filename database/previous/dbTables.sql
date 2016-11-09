@@ -807,7 +807,7 @@ CREATE TABLE `Especialidad` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `IdDocente` int(11) NULL DEFAULT NULL,
+  `IdDocente` int(11) DEFAULT NULL,
   PRIMARY KEY (`IdEspecialidad`),
   KEY `Especialidad_ibfk_1` (`IdDocente`),
   CONSTRAINT `Especialidad_ibfk_1` FOREIGN KEY (`IdDocente`) REFERENCES `Docente` (`IdDocente`)

@@ -8,6 +8,6 @@ class Student extends Model {
 
     protected $table = 'Alumno';
     protected $primaryKey = 'IdAlumno';
-    protected $fillable = ['IdHorario', 'Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno','IdPspGroup'];
+    protected $fillable = ['IdHorario', 'Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno'];
 
 }

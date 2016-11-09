@@ -213,3 +213,7 @@ input[type="radio"] {
 .no-border{
   border: none;
 }
+
+.centered{
+  text-align: center;
+}

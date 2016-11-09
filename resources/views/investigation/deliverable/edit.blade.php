@@ -271,19 +271,19 @@
                                         </tr> 
                                     </thead> 
                                     <tbody> 
-                                        @foreach($elegible_teachers as $teacher)
+                                        @foreach($students as $student)
                                         <tr> 
-                                            <td>{{$teacher->Nombre}}</td> 
-                                            <td>{{$teacher->ApellidoPaterno}}</td> 
-                                            <td>{{$teacher->ApellidoMaterno}}</td> 
-                                            <td>{{$teacher->faculty->Nombre}}</td> 
+                                            <td>{{$student->nombre}}</td> 
+                                            <td>{{$student->ape_paterno}}</td> 
+                                            <td>{{$student->ape_materno}}</td> 
+                                            <td>{{$student->faculty->Nombre}}</td> 
                                             <td>
-                                                {{Form::open(['route' => ['entregable.afiliacion.store.docente'], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                                                {{Form::open(['route' => ['entregable.afiliacion.store.estudiante'], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                                                     {{--<a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>--}}
                                                     {{Form::button('<i class="fa fa-plus"></i>',['class'=>'btn btn-success btn-xs','type'=>'submit'])}}
 
                                                     {{Form::hidden('id_entregable',$entregable->id)}}
-                                                    {{Form::hidden('id_docente',$teacher->IdDocente)}}
+                                                    {{Form::hidden('id_estudiante',$student->id)}}
                                                 {{Form::close()}}
                                             </td>
                                         </tr> 
@@ -314,19 +314,19 @@
                                         </tr> 
                                     </thead> 
                                     <tbody> 
-                                        @foreach($entregable->teachers as $teacher)
+                                        @foreach($entregable->students as $student)
                                         <tr> 
-                                            <td>{{$teacher->Nombre}}</td> 
-                                            <td>{{$teacher->ApellidoPaterno}}</td> 
-                                            <td>{{$teacher->ApellidoMaterno}}</td> 
-                                            <td>{{$teacher->faculty->Nombre}}</td>
+                                            <td>{{$student->nombre}}</td> 
+                                            <td>{{$student->ape_paterno}}</td> 
+                                            <td>{{$student->ape_materno}}</td> 
+                                            <td>{{$student->faculty->Nombre}}</td>
                                             <td>
                                                 {{--<a href="{{route('investigador.show', $investigator->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-search"></i></a>--}}
-                                                <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#prf{{$teacher->pivot->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
+                                                <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#est{{$student->pivot->id}}" title="Quitar"><i class="fa fa-remove"></i></a>
                                             </td>
                                         </tr> 
 
-                                        @include('modals.delete', ['id'=> 'prf'.$teacher->pivot->id, 'message' => '¿Esta seguro que desea quitar este profesor del entregable?', 'route' => route('entregable.afiliacion.delete.docente', $teacher->pivot->id)])
+                                        @include('modals.delete', ['id'=> 'est'.$student->pivot->id, 'message' => '¿Esta seguro que desea quitar este estudiante del entregable?', 'route' => route('entregable.afiliacion.delete.estudiante', $student->pivot->id)])
                                         @endforeach
                                         
                                     </tbody> 

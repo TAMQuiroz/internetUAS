@@ -16,6 +16,10 @@ use Intranet\Models\Faculty;
 use Intranet\Models\Status;
 use Illuminate\Database\Eloquent\Collection;
 
+use PDF;
+use Barryvdh\Snappy;
+
+
 class ReportController extends Controller
 {
     //
@@ -68,25 +72,32 @@ class ReportController extends Controller
     	$especialidades = Faculty::orderBy('Nombre', 'asc')->lists('Nombre', 'IdEspecialidad')->toArray();
         $comboEspecialidades = array(0 => "Seleccione ... ") + $especialidades;
         $proyectos = Project::get();
+        $estadosProyecto = Status::where('tipo_estado',0)->orderBy('Nombre', 'asc')->lists('nombre', 'id')->toArray();
+        $comboEstados = array(0 => "Seleccione ... ") + $estadosProyecto;
         //$investigadores = Investigator::orderBy('nombre', 'asc')->get();
         //$profesores = Teacher::orderBy('nombre', 'asc')->get();
         $investigadores = null;
         $profesores = null;
         $idEsp = 0;
-        $minProj = $this->minProyectos();
-        $maxProj = $this->maxProyectos();
-        $estadosP = Status::orderBy('nombre', 'asc')->where('tipo_estado', 0)->lists('nombre', 'id')->toArray();
-        $comboEstadosP = array(0 => "Seleccione ... ") + $estadosP;
-        $estadoP = 0;    
+        $idEstado = 0;
+        $minP = -1;
+        $maxP = -1;
+        $comboMinP = $this->minProyectos();
+        $comboMaxP = $this->maxProyectos();
+        $opcion = "No";
     	$data = ['comboEspecialidades' => $comboEspecialidades,
                  'proyectos' => $proyectos,
                  'investigadores' => $investigadores,
                  'profesores' => $profesores,
                  'idEsp' => $idEsp,
-                 'minP' => $minProj,
-                 'maxP' => $maxProj,
-                 'comboEstadosP' => $comboEstadosP,
-                 'estadoP' => $estadoP];
+                 'comboMinP' => $comboMinP,
+                 'comboMaxP' => $comboMaxP,
+                 'idEstado' => $idEstado,
+                 'comboEstados' => $comboEstados,
+                 'minP' => $minP,
+                 'maxP' => $maxP,
+                 'opcion' => $opcion];
+
     	return view('reports.invByProject.index', $data);
     }
 
@@ -96,66 +107,123 @@ class ReportController extends Controller
         $especialidades = Faculty::orderBy('Nombre', 'asc')->lists('Nombre', 'IdEspecialidad')->toArray();
         $comboEspecialidades = array(0 => "Seleccione ... ") + $especialidades;
         $proyectos = Project::get();
-        $estadosP = Status::orderBy('nombre', 'asc')->where('tipo_estado', 0)->lists('nombre', 'id')->toArray();
-        $comboEstadosP = array(0 => "Seleccione ... ") + $estadosP;
-        $estadoP = $request['proyectoEstado'];
-        if($idEsp == 0){
+        $comboMinP = $this->minProyectos();
+        $comboMaxP = $this->maxProyectos();
+        $idEstado = $request['estadoP'];
+        $estadosProyecto = Status::where('tipo_estado',0)->orderBy('Nombre', 'asc')->lists('nombre', 'id')->toArray();
+        $comboEstados = array(0 => "Seleccione ... ") + $estadosProyecto;
+        $minP = $request['minProyectos'];
+        $maxP = $request['maxProyectos'];
+        $opcion = $request['radio'];
+
+        if ($opcion == "Si"){
             $investigadores = Investigator::orderBy('nombre', 'asc')->get();
             $profesores = Teacher::orderBy('nombre', 'asc')->get();
         }
         else{
-            $minP = $request['minProyectos'];
-            $maxP = $request['maxProyectos'];
-            $investigadorList = Investigator::where('id_especialidad', $idEsp)->get();
-            $profesorList = Teacher::where('IdEspecialidad', $idEsp)->get();
-            $investigadores = new Collection;
-            $profesores = new Collection;
-            foreach($investigadorList as $investigador){
-                if (count($investigador->projects)>= $minP && count($investigador->projects) <= $maxP){
-                    $investigadores->add($investigador);
-                }
+            if($idEsp == 0){
+            $investigadores = Investigator::orderBy('nombre', 'asc')->get();
+            $profesores = Teacher::orderBy('nombre', 'asc')->get();
             }
-            foreach($profesorList as $profesor){
-                if (count($profesor->projects)>= $minP && count($profesor->projects) <= $maxP){
-                    $profesores->add($profesor);
+            else{
+                if($minP == -1 || $maxP == -1){
+                    $investigadores = Investigator::where('id_especialidad', $idEsp)->orderBy('nombre', 'asc')->get();
+                    $profesores = Teacher::where('IdEspecialidad', $idEsp)->orderBy('nombre', 'asc')->get();
                 }
+                elseif($minP != -1 && $maxP != -1){
+                    $investigadorList = Investigator::get();
+                    $profesorList = Teacher::get();
+                    $investigadores = new Collection;
+                    $profesores = new Collection;
+                    foreach($investigadorList as $investigador){
+                        $numP = count($investigador->projects);
+                        if($numP >= $minP && $numP <= $maxP){
+                            $investigadores->add($investigador);
+                        }
+                    }
+                    foreach($profesorList as $profesor){
+                        $numP = count($profesor->projects);
+                        if($numP >= $minP && $numP <= $maxP){
+                            $profesores->add($profesor);
+                        }
+                    }
+                }
+                
             }
-            
         }
 
-        $minProj = $this->minProyectos();
-        $maxProj = $this->maxProyectos();
-        
         $data = ['comboEspecialidades' => $comboEspecialidades,
                  'proyectos' => $proyectos,
                  'investigadores' => $investigadores,
                  'profesores' => $profesores,
                  'idEsp' => $idEsp,
-                 'minP' => $minProj,
-                 'maxP' => $maxProj,
-                 'estadoP' => $estadoP,
-                 'comboEstadosP' => $comboEstadosP];
+                 'comboMinP' => $comboMinP,
+                 'comboMaxP' => $comboMaxP,
+                 'idEstado' => $idEstado,
+                 'comboEstados' => $comboEstados,
+                 'minP' => $minP,
+                 'maxP' => $maxP,
+                 'opcion' => $opcion];
+
         return view('reports.invByProject.index', $data);
     }
+
+    public function generarPDF(){
+        $especialidades = Faculty::orderBy('Nombre', 'asc')->lists('Nombre', 'IdEspecialidad')->toArray();
+        $comboEspecialidades = array(0 => "Seleccione ... ") + $especialidades;
+        $proyectos = Project::get();
+        $estadosProyecto = Status::where('tipo_estado',0)->orderBy('Nombre', 'asc')->lists('nombre', 'id')->toArray();
+        $comboEstados = array(0 => "Seleccione ... ") + $estadosProyecto;
+        //$investigadores = Investigator::orderBy('nombre', 'asc')->get();
+        //$profesores = Teacher::orderBy('nombre', 'asc')->get();
+        $investigadores = null;
+        $profesores = null;
+        $idEsp = 0;
+        $idEstado = 0;
+        $minP = -1;
+        $maxP = -1;
+        $comboMinP = $this->minProyectos();
+        $comboMaxP = $this->maxProyectos();
+        $opcion = "No";
+        $data = ['comboEspecialidades' => $comboEspecialidades,
+                 'proyectos' => $proyectos,
+                 'investigadores' => $investigadores,
+                 'profesores' => $profesores,
+                 'idEsp' => $idEsp,
+                 'comboMinP' => $comboMinP,
+                 'comboMaxP' => $comboMaxP,
+                 'idEstado' => $idEstado,
+                 'comboEstados' => $comboEstados,
+                 'minP' => $minP,
+                 'maxP' => $maxP,
+                 'opcion' => $opcion];
+        $pdf = PDF::loadView('reports.invByProject.index', $data);
+        return $pdf->download('pruebapdf.pdf');
+    }
+
     protected function minProyectos(){
         $min = PHP_INT_MAX;
         $investigadores = Investigator::get();
         $profesores = Teacher::get();
         foreach($investigadores as $investigador){
-            if (count($investigador->projects) < $min){
-                $min = count($investigador->projects);
-            }
-        }
-        foreach($profesores as $profesor){
-            if (count($profesor->projects) < $min){
-                $min = count($profesor->projects);
+            $aux = count($investigador->projects);
+            if ($aux < $min){
+                $min = $aux;
             }
         }
 
-        for ($i = 0; $i <= $min; ++$i) {
-            $combiMinP[] = $i;
+        foreach($profesores as $profesor){
+            $aux = count($profesor->projects);
+            if ($aux < $min){
+                $min = $aux;
+            }
         }
-        return $combiMinP;
+
+        for ($i=0; $i<=$min; $i++){
+            $minProyectos[] = $i;
+        }
+        $comboMin = array(-1 => "") + $minProyectos;
+        return $comboMin;
     }
 
     protected function maxProyectos(){
@@ -163,19 +231,23 @@ class ReportController extends Controller
         $investigadores = Investigator::get();
         $profesores = Teacher::get();
         foreach($investigadores as $investigador){
-            if (count($investigador->projects) > $max){
-                $max = count($investigador->projects);
+            $aux = count($investigador->projects);
+            if ($aux > $max){
+                $max = $aux;
             }
         }
+
         foreach($profesores as $profesor){
-            if (count($profesor->projects) > $max){
-                $max = count($profesor->projects);
+            $aux = count($profesor->projects);
+            if ($aux > $max){
+                $max = $aux;
             }
         }
-        
-        for ($i = 0; $i <= $max; ++$i) {
-            $combiMaxP[] = $i;
+
+        for ($i=0; $i<=$max; $i++){
+            $maxProyectos[] = $i;
         }
-        return $combiMaxP;
+        $comboMax = array(-1=> "") + $maxProyectos;
+        return $comboMax;
     }
 }

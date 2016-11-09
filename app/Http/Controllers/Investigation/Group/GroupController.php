@@ -102,12 +102,17 @@ class GroupController extends Controller
             
             $profesores = $grupo->teachers;
             $investigadores = $grupo->investigators;
+            $estudiantes = $grupo->students;
 
             $integrantes = null;
             $sorted = [];
             
             foreach ($investigadores as $investigador) {
                 $integrantes = $profesores->push($investigador);    
+            }
+
+            foreach ($estudiantes as $estudiante) {
+                $integrantes = $profesores->push($estudiante);    
             }
             
             if($integrantes){
@@ -123,7 +128,7 @@ class GroupController extends Controller
             $data['integrantes'] = $sorted;
             $data['group'] = $grupo;
         } catch(\Exception $e) {
-            dd($e);
+            //dd($e);
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
         return view('investigation.group.show', $data);
@@ -148,6 +153,7 @@ class GroupController extends Controller
                 $data['faculty'] = $this->facultyService->find($faculty_id);
                 $data['teachers'] = $this->teacherService->findTeacherByFaculty($faculty_id);
                 $data['investigators'] = $this->groupService->getNotSelectedInvestigators($id);
+                $data['students'] = $this->groupService->getNotSelectedStudents($id);
                 $data['elegible_teachers'] = $this->groupService->getNotSelectedTeachers($id);
             }else{
                 return redirect()->back()->with('warning', 'El grupo no se puede editar debido a que no es el lider');

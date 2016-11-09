@@ -33,6 +33,7 @@ use Intranet\Http\Requests\CriterioStoreRequest;
 use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\User;
+use Intranet\Models\Course;
 use Intranet\Models\Teacher;
 use Intranet\Models\Criterion;
 use Intranet\Models\AcademicCycle;
@@ -53,6 +54,7 @@ class FlujoCoordinadorController extends Controller
     protected $dictatedCoursesService;
     protected $passwordService;
     protected $academicCycleService;
+    protected $measurementSourceService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
@@ -67,6 +69,7 @@ class FlujoCoordinadorController extends Controller
         $this->dictatedCoursesService = new DictatedCoursesService();
         $this->passwordService= new PasswordService();
         $this->academicCycleService= new AcademicCycleService();
+        $this->measurementSourceService = new MeasurementSourceService();
 	}
 
     public function index()
@@ -781,6 +784,7 @@ class FlujoCoordinadorController extends Controller
             return redirect()->back()->with('warning', 'Ha ocurrido un error instrumentosDelCurso_index');
         }
         //return $cursosDelCicloyEspecialidad;
+
         return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
                                                                     'facultad'=> $facultad,
                                                                     'cursos' => $cursosDelCicloyEspecialidad
@@ -790,15 +794,32 @@ class FlujoCoordinadorController extends Controller
     public function instrumentosDelCurso_edit($id, $idCurso){
 
         $curso= Course::findOrFail($idCurso);
-        
+        $index=0;
         try{
             $data['course'] = $curso;
-            $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
-            $studentsResults = $this->studentsResultService->findResultEvaluated();
-            $data['studentsResults'] = $this->courseService->findStudentsResultsByCourse($idCurso, $studentsResults);
-            $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
+            $index=1;
             $data['idEspecialidad']= $id;
+            $index=2;
+
+            $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
+            $index=3;
+
+            $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
+            $index=4;
+
+            $studentsResults = $this->studentsResultService->findResultEvaluated();
+            $index=5;
+
+            $data['studentsResults'] = $this->courseService->findStudentsResultsByCourse($idCurso, $studentsResults);
+            $index=6;
+
+            
+            
+
+
+
         } catch (\Exception $e) {
+        //    return $e ;
             return redirect()->back()->with('warning', 'Ha ocurrido un error en instrumentosDelCurso_edit');
         }
         
@@ -840,7 +861,7 @@ class FlujoCoordinadorController extends Controller
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error updateContributions'); 
         }
-        return redirect()->route('contributions.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
     }
 
 

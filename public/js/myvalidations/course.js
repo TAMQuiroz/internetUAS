@@ -48,7 +48,7 @@ jQuery(function(){
             courseacademicLevel:{
                 required: true,
                 min:0,
-                max:10
+                max:12
             },
             facultycode:{
                 required: true
@@ -67,7 +67,7 @@ jQuery(function(){
             courseacademicLevel: {
                 required: "Debe ingresar el nombre",
                 min: "Debe ser por lo menos 0",
-                max: "Debe ser a lo mas 10"
+                max: "Debe ser a lo mas 12"
             },
             facultycode: {
                 required: "Debe ingresar una facultad"

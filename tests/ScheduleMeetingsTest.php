@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ScheduleMeetingsTest extends TestCase
 {
+    use DatabaseMigrations;
     /**
      * A basic test example.
      *
@@ -20,8 +21,11 @@ class ScheduleMeetingsTest extends TestCase
       public function test_psp_ed_scm_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $fase  = factory(Intranet\Models\Phase::class)->create();
+        $user->IdPerfil=3;       
+        $fase  = factory(Intranet\Models\Phase::class)->create();   
         $schedule  = factory(Intranet\Models\Schedule_meetings::class)->create();
+        $fase->idpspprocess = $schedule->idpspprocess;
+        $fase->save();
 
         $this->actingAs($user)
             ->withSession([
@@ -33,14 +37,18 @@ class ScheduleMeetingsTest extends TestCase
             ->type('2017-11-20','fecha_fin')
             ->press('Guardar')
             ->seePageIs('/psp/scheduleMeeting');
+
     }
 
 
       public function test_psp_ed_scm_02()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $fase  = factory(Intranet\Models\Phase::class)->create();
+        $user->IdPerfil=3;       
+        $fase  = factory(Intranet\Models\Phase::class)->create();   
         $schedule  = factory(Intranet\Models\Schedule_meetings::class)->create();
+        $fase->idpspprocess = $schedule->idpspprocess;
+        $fase->save();
 
         $this->actingAs($user)
             ->withSession([
@@ -57,8 +65,11 @@ class ScheduleMeetingsTest extends TestCase
       public function test_psp_ed_scm_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $fase  = factory(Intranet\Models\Phase::class)->create();
+        $user->IdPerfil=3;       
+        $fase  = factory(Intranet\Models\Phase::class)->create();   
         $schedule  = factory(Intranet\Models\Schedule_meetings::class)->create();
+        $fase->idpspprocess = $schedule->idpspprocess;
+        $fase->save();
 
         $this->actingAs($user)
             ->withSession([
@@ -75,8 +86,11 @@ class ScheduleMeetingsTest extends TestCase
       public function test_psp_ed_scm_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $fase  = factory(Intranet\Models\Phase::class)->create();
+        $user->IdPerfil=3;       
+        $fase  = factory(Intranet\Models\Phase::class)->create();   
         $schedule  = factory(Intranet\Models\Schedule_meetings::class)->create();
+        $fase->idpspprocess = $schedule->idpspprocess;
+        $fase->save();
 
         $this->actingAs($user)
             ->withSession([
@@ -94,8 +108,11 @@ class ScheduleMeetingsTest extends TestCase
       public function test_psp_ed_scm_05()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $fase  = factory(Intranet\Models\Phase::class)->create();
+        $user->IdPerfil=3;       
+        $fase  = factory(Intranet\Models\Phase::class)->create();   
         $schedule  = factory(Intranet\Models\Schedule_meetings::class)->create();
+        $fase->idpspprocess = $schedule->idpspprocess;
+        $fase->save();
 
         $this->actingAs($user)
             ->withSession([

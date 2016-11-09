@@ -26,10 +26,10 @@ class InscriptionTest extends TestCase
 	    		'actions' => [],
 	    		'user' => factory(Intranet\Models\Student::class)->make()
     		])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
     		->type('trabajar','actividad_economica')
     		->type('bien','cond_seguridad_area')
-    		->type('a','correo_jefe_directo')
+    		->type('jefe@mail.com','correo_jefe_directo')
     		->type('san juan','distrito_empresa')
     		->type('av juan','direccion_empresa')
     		->type('personas','equi_del_practicante')
@@ -47,7 +47,9 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             ->check('terminos')
     		->press('Guardar')
-    		->seePageIs('/psp/inscription');
+    		->seePageIs('/psp/inscription')
+            ->see('Inscripción de Empresa')
+            ->see('La inscripción se ha registrado exitosamente');
     		
     }
 
@@ -60,10 +62,10 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('','activ_formativas')
             ->type('trabajar','actividad_economica')
             ->type('bien','cond_seguridad_area')
-            ->type('a','correo_jefe_directo')
+            ->type('jefe@mail.com','correo_jefe_directo')
             ->type('san juan','distrito_empresa')
             ->type('av juan','direccion_empresa')
             ->type('personas','equi_del_practicante')
@@ -81,1209 +83,1355 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo actividades formativas es obligatorio');
             
     }
-/*
-    public function test_psp_cr_sup_02()
+
+         public function test_psp_cr_ins_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
-    		->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('2101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('codigo debe tener 8 dígitos');
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('','actividad_economica')
+            ->type('bien','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo actividad economica es obligatorio');
+            
     }
 
-    public function test_psp_cr_sup_03()
+      public function test_psp_cr_ins_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El campo codigo es obligatorio');
-    		
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo condiciones de seguridad de área es obligatorio');
+            
     }
 
-    public function test_psp_cr_sup_04()
+      public function test_psp_cr_ins_05()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('######','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('codigo debe tener 8 dígitos');
-    		
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo correo de jefe directo es obligatorio');
+            
     }
 
-    public function test_psp_cr_sup_05()
+      public function test_psp_cr_ins_06()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('nombres no debe ser mayor que 50 caracteres');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo distrito de empresa es obligatorio');
+            
     }
 
-    public function test_psp_cr_sup_06()
+      public function test_psp_cr_ins_07()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El campo nombres es obligatorio');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo dirección de empresa es obligatorio');
+            
     }
 
-    public function test_psp_cr_sup_07()
+          public function test_psp_cr_ins_08()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('$','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de nombres es inválido');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo equipo del practicante es obligatorio');
+            
     }
 
-    public function test_psp_cr_sup_08()
+             public function test_psp_cr_ins_09()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('8','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de nombres es inválido');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type(NULL,'fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo fecha de inicio es obligatorio');
+            
     }
 
-	public function test_psp_cr_sup_09()
+      public function test_psp_cr_ins_10()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('apellido paterno no debe ser mayor que 50 caracteres');
-    }    
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type(NULL,'fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo fecha de recepción de convenio es obligatorio');
+            
+    }
 
-    public function test_psp_cr_sup_10()
+     public function test_psp_cr_ins_11()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El campo apellido paterno es obligatorio');
-    }  
-
-    public function test_psp_cr_sup_11()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('$','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de apellido paterno es inválido');
-    }  
-
-    public function test_psp_cr_sup_12()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('8','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de apellido paterno es inválido');
-    } 
-
-    public function test_psp_cr_sup_13()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('apellido materno no debe ser mayor que 50 caracteres');
-    }    
-
-    public function test_psp_cr_sup_14()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El campo apellido materno es obligatorio');
-    }  
-
-    public function test_psp_cr_sup_15()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('$','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de apellido materno es inválido');
-    }  
-
-    public function test_psp_cr_sup_16()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('8','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de apellido materno es inválido');
-    } 
-
-    public function test_psp_cr_sup_17()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('correo no es un correo válido');
-    } 
-
-    public function test_psp_cr_sup_18()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El campo correo es obligatorio');
-    } 
-
-    public function test_psp_cr_sup_19()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('$','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('correo no es un correo válido');
-    } 
-
-    public function test_psp_cr_sup_20()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('8','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('correo no es un correo válido');
-    } 
-
-    public function test_psp_cr_sup_21()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('celular debe tener 9 dígitos');
-    } 
-
-    public function test_psp_cr_sup_22()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El campo celular es obligatorio');
-    } 
-
-    public function test_psp_cr_sup_23()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('###','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('celular debe tener 9 dígitos');
-    } 
-
-        public function test_psp_cr_sup_24()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('direccion no debe ser mayor que 50 caracteres');
-    }    
-
-    public function test_psp_cr_sup_25()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El campo direccion es obligatorio');
-    }  
-
-    public function test_psp_cr_sup_26()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('$','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de direccion es inválido');
-    }  
-
-    public function test_psp_cr_sup_27()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/create')
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('8','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/create')
-    		->see('Creación de Supervisor')
-    		->see('El formato de direccion es inválido');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type(NULL,'fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo fecha de término es obligatorio');
+            
     }
 
 
-    //edit
-
-        public function test_psp_ed_sup_01()
+     public function test_psp_cr_ins_12()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor')
-    		->see('Supervisores')
-    		->see('El supervisor se ha actualizado exitosamente');
-    		
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo jefe directo auxiliar es obligatorio');
+            
     }
 
-        public function test_psp_ed_sup_02()
+     public function test_psp_cr_ins_13()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
-    		->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('2101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('codigo debe tener 8 dígitos');
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo nombre de área es obligatorio');
+            
     }
 
-    public function test_psp_ed_sup_03()
+    public function test_psp_cr_ins_14()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El campo codigo es obligatorio');
-    		
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo personal de área es obligatorio');
+            
     }
 
-    public function test_psp_ed_sup_04()
+     public function test_psp_cr_ins_15()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('######','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('codigo debe tener 8 dígitos');
-    		
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo puesto es obligatorio');
+            
     }
 
-    public function test_psp_ed_sup_05()
+      public function test_psp_cr_ins_16()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('nombres no debe ser mayor que 50 caracteres');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo razon social es obligatorio');
+            
     }
 
-    public function test_psp_ed_sup_06()
+        public function test_psp_cr_ins_17()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El campo nombres es obligatorio');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('Razon social','razon_social')
+            ->type('','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo recomendaciones es obligatorio');
+            
     }
 
-    public function test_psp_ed_sup_07()
+      public function test_psp_cr_ins_18()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('$','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de nombres es inválido');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('Razon social','razon_social')
+            ->type('Recomendaciones','recomendaciones')
+            ->type('','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo telefono comercial es obligatorio');
+            
     }
 
-    public function test_psp_ed_sup_08()
+          public function test_psp_cr_ins_19()
     {
         $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
-    	$this->actingAs($user)
+        $this->actingAs($user)
             ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('8','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de nombres es inválido');
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('Razon social','razon_social')
+            ->type('Recomendaciones','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Inscripción de Empresa')
+            ->see('El campo ubicación de área es obligatorio');
+            
     }
 
-	public function test_psp_ed_sup_09()
+      /**
+     * A basic test example.
+     *
+     * @return void
+     */
+   /* public function testExample()
     {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('apellido paterno no debe ser mayor que 50 caracteres');
-    }    
-
-    public function test_psp_ed_sup_10()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El campo apellido paterno es obligatorio');
-    }  
-
-    public function test_psp_ed_sup_11()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('$','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de apellido paterno es inválido');
-    }  
-
-    public function test_psp_ed_sup_12()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('8','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de apellido paterno es inválido');
-    } 
-
-    public function test_psp_ed_sup_13()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('apellido materno no debe ser mayor que 50 caracteres');
-    }    
-
-    public function test_psp_ed_sup_14()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El campo apellido materno es obligatorio');
-    }  
-
-    public function test_psp_ed_sup_15()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('$','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de apellido materno es inválido');
-    }  
-
-    public function test_psp_ed_sup_16()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('8','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de apellido materno es inválido');
-    } 
-
-    public function test_psp_ed_sup_17()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('correo no es un correo válido');
-    } 
-
-    public function test_psp_ed_sup_18()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El campo correo es obligatorio');
-    } 
-
-    public function test_psp_ed_sup_19()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('$','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('correo no es un correo válido');
-    } 
-
-    public function test_psp_ed_sup_20()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('8','correo')
-    		->type('999999999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('correo no es un correo válido');
-    } 
-
-    public function test_psp_ed_sup_21()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('celular debe tener 9 dígitos');
-    } 
-
-    public function test_psp_ed_sup_22()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El campo celular es obligatorio');
-    } 
-
-    public function test_psp_ed_sup_23()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('###','celular')
-    		->type('Av Mundo 1234','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('celular debe tener 9 dígitos');
-    } 
-
-        public function test_psp_ed_sup_24()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('direccion no debe ser mayor que 50 caracteres');
-    }    
-
-    public function test_psp_ed_sup_25()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El campo direccion es obligatorio');
-    }  
-
-    public function test_psp_ed_sup_26()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('$','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de direccion es inválido');
-    }  
-
-    public function test_psp_ed_sup_27()
-    {
-        $user = factory(Intranet\Models\User::class)->make();
-        $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
-
-    	$this->actingAs($user)
-            ->withSession([
-	    		'actions' => [],
-	    		'user' => $user
-    		])->visit('/psp/supervisor/edit/'.$supervisor->id)
-    		->type('20101010','codigo')
-    		->type('Laura','nombres')
-    		->type('Nazario','apellido_paterno')
-    		->type('Ortiz','apellido_materno')
-    		->type('abc@gmail1.com','correo')
-    		->type('999999999','celular')
-    		->type('8','direccion')
-    		->press('Guardar')
-    		->seePageIs('/psp/supervisor/edit/'.$supervisor->id)
-    		->see('Editar Supervisor')
-    		->see('El formato de direccion es inválido');
+        $this->assertTrue(true);
     }*/
+
+    public function test_psp_cr_ins_20()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('trabajar','actividad_economica')
+            ->type('bien','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            ->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription')
+            ->see('Editar Inscripción de Empresa')
+            ->see('La inscripción se ha registrado exitosamente');
+            
+    }
+
+        public function test_psp_cr_ins_21()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('','activ_formativas')
+            ->type('trabajar','actividad_economica')
+            ->type('bien','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo actividades formativas es obligatorio');
+            
+    }
+
+         public function test_psp_cr_ins_22()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('','actividad_economica')
+            ->type('bien','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo actividad economica es obligatorio');
+            
+    }
+
+      public function test_psp_cr_ins_23()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo condiciones de seguridad de área es obligatorio');
+            
+    }
+
+      public function test_psp_cr_ins_24()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('','correo_jefe_directo')
+            ->type('san juan','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo correo de jefe directo es obligatorio');
+            
+    }
+
+      public function test_psp_cr_ins_25()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('','distrito_empresa')
+            ->type('av juan','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo distrito de empresa es obligatorio');
+            
+    }
+
+      public function test_psp_cr_ins_26()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('','direccion_empresa')
+            ->type('personas','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo dirección de empresa es obligatorio');
+            
+    }
+
+          public function test_psp_cr_ins_27()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('','equi_del_practicante')
+            ->type('nuevo equip','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo equipo del practicante es obligatorio');
+            
+    }
+
+             public function test_psp_cr_ins_28()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type(NULL,'fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo fecha de inicio es obligatorio');
+            
+    }
+
+      public function test_psp_cr_ins_29()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type(NULL,'fecha_recep_convenio')
+            ->type('10-10-2016','fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo fecha de recepción de convenio es obligatorio');
+            
+    }
+
+     public function test_psp_cr_ins_30()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type(NULL,'fecha_termino')
+            ->type('jefe aux','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo fecha de término es obligatorio');
+            
+    }
+
+
+     public function test_psp_cr_ins_31()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('','jefe_directo_aux')
+            ->type('nueva area','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo jefe directo auxiliar es obligatorio');
+            
+    }
+
+     public function test_psp_cr_ins_32()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('','nombre_area')
+            ->type('personal','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo nombre de área es obligatorio');
+            
+    }
+
+    public function test_psp_cr_ins_33()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('','personal_area')
+            ->type('nuevo','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo personal de área es obligatorio');
+            
+    }
+
+     public function test_psp_cr_ins_34()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('','puesto')
+            ->type('razon','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo puesto es obligatorio');
+            
+    }
+
+      public function test_psp_cr_ins_35()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('','razon_social')
+            ->type('mejora','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo razon social es obligatorio');
+            
+    }
+
+        public function test_psp_cr_ins_36()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('Razon social','razon_social')
+            ->type('','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo recomendaciones es obligatorio');
+            
+    }
+
+      public function test_psp_cr_ins_37()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('Razon social','razon_social')
+            ->type('Recomendaciones','recomendaciones')
+            ->type('','telef_jefe_directo')
+            ->type('sala','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo telefono comercial es obligatorio');
+            
+    }
+
+          public function test_psp_cr_ins_38()
+    {
+        $user = factory(Intranet\Models\User::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => factory(Intranet\Models\Student::class)->make()
+            ])->visit('/psp/inscription/create')
+                         ->type('ar','activ_formativas')
+            ->type('Buena','actividad_economica')
+            ->type('Buenas condiciones','cond_seguridad_area')
+            ->type('jefe@mail.com','correo_jefe_directo')
+            ->type('San Juan','distrito_empresa')
+            ->type('San Juan 123','direccion_empresa')
+            ->type('Personas','equi_del_practicante')
+            ->type('Equipo','equipamiento_area')
+            ->type('10-08-2016','fecha_inicio')
+            ->type('10-09-2016','fecha_recep_convenio')
+            ->type('10-09-2016','fecha_termino')
+            ->type('Jefe directo','jefe_directo_aux')
+            ->type('Nueva area','nombre_area')
+            ->type('Personal de area','personal_area')
+            ->type('Practicante','puesto')
+            ->type('Razon social','razon_social')
+            ->type('Recomendaciones','recomendaciones')
+            ->type('123456789','telef_jefe_directo')
+            ->type('','ubicacion_area')
+            //->check('terminos')
+            ->press('Guardar')
+            ->seePageIs('/psp/inscription/create')
+             
+            ->see('Editar Inscripción de Empresa')
+            ->see('El campo ubicación de área es obligatorio');
+            
+    }
+
 }
 

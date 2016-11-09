@@ -13,7 +13,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function meeting()
+    public function meetingReport()
     {
         
         $teacher = null;
@@ -28,7 +28,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function reassingReport()
     {
         //
     }

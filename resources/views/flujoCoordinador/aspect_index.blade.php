@@ -37,7 +37,7 @@
         </div>
       </form>
       
-      <table class="table table-striped responsive-utilities jambo_table bulk_action" id="aspect-table">
+      <table class="table table-striped responsive-utilities jambo_table bulk_action">
         <thead>
           <tr class="headings">
             <th class="col-sm-3  column-title">Resultado Estudiantil</th>

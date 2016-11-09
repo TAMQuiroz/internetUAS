@@ -835,6 +835,7 @@ $api->version('v1', function ($api) {
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
+            $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');

@@ -137,6 +137,15 @@ $factory->define(Intranet\Models\Student::class, function (Faker\Generator $fake
     ];
 });
 
+$factory->define(Intranet\Models\PspStudent::class, function (Faker\Generator $faker) {
+    $student =   factory(Intranet\Models\Student::class)->create();
+    $psp =   factory(Intranet\Models\PspProcess::class)->create();
+
+    return [
+        'idalumno'            =>  $student->IdAlumno,
+        'idpspprocess'        =>  $psp->id,
+    ];
+});
 
 $factory->define(Intranet\Models\Competence::class, function (Faker\Generator $faker) {
     return [
@@ -233,9 +242,13 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
         'es_obligatorio'       =>  's',
         //'observaciones'       =>  'bien',
         //'ruta'               =>  'uploads/pspdocuments/0.pdf',
-        'idStudent'         =>  1,
-        'idTemplate'         =>  $template->id,
-        'idTipoEstado'         =>  1,
+        'idstudent'         =>  $student->IdAlumno,
+        //'idstudent'         =>  1,
+        'idtemplate'         =>  $template->id,
+        'titulo_plantilla'    =>   $template->titulo,
+        'ruta_plantilla'     =>   $template->ruta,
+        'idtipoestado'         =>  3,
         'fecha_limite'         =>  '2018-10-06',
+        'numerofase'           =>  1,
     ];
 });

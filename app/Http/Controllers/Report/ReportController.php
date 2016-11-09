@@ -15,8 +15,10 @@ use Intranet\Models\Teacher;
 use Intranet\Models\Faculty;
 use Intranet\Models\Status;
 use Illuminate\Database\Eloquent\Collection;
+
 use PDF;
 use Barryvdh\Snappy;
+
 
 class ReportController extends Controller
 {
@@ -72,6 +74,8 @@ class ReportController extends Controller
         $proyectos = Project::get();
         $estadosProyecto = Status::where('tipo_estado',0)->orderBy('Nombre', 'asc')->lists('nombre', 'id')->toArray();
         $comboEstados = array(0 => "Seleccione ... ") + $estadosProyecto;
+        $areas = Area::orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
+        $comboAreasP = array(0 => "Seleccione ... ") + $areas;
         //$investigadores = Investigator::orderBy('nombre', 'asc')->get();
         //$profesores = Teacher::orderBy('nombre', 'asc')->get();
         $investigadores = null;
@@ -80,6 +84,7 @@ class ReportController extends Controller
         $idEstado = 0;
         $minP = -1;
         $maxP = -1;
+        $idAreaP = 0;
         $comboMinP = $this->minProyectos();
         $comboMaxP = $this->maxProyectos();
         $opcion = "No";
@@ -94,7 +99,10 @@ class ReportController extends Controller
                  'comboEstados' => $comboEstados,
                  'minP' => $minP,
                  'maxP' => $maxP,
-                 'opcion' => $opcion];
+                 'opcion' => $opcion,
+                 'idAreaP' => $idAreaP,
+                 'comboAreasP' => $comboAreasP];
+
     	return view('reports.invByProject.index', $data);
     }
 
@@ -112,6 +120,9 @@ class ReportController extends Controller
         $minP = $request['minProyectos'];
         $maxP = $request['maxProyectos'];
         $opcion = $request['radio'];
+        $idAreaP = $request['areaP'];
+        $areas = Area::orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
+        $comboAreasP = array(0 => "Seleccione ... ") + $areas;
 
         if ($opcion == "Si"){
             $investigadores = Investigator::orderBy('nombre', 'asc')->get();
@@ -149,7 +160,6 @@ class ReportController extends Controller
             }
         }
 
-
         $data = ['comboEspecialidades' => $comboEspecialidades,
                  'proyectos' => $proyectos,
                  'investigadores' => $investigadores,
@@ -161,7 +171,9 @@ class ReportController extends Controller
                  'comboEstados' => $comboEstados,
                  'minP' => $minP,
                  'maxP' => $maxP,
-                 'opcion' => $opcion];
+                 'opcion' => $opcion,
+                 'idAreaP' => $idAreaP,
+                 'comboAreasP' => $comboAreasP];
 
         return view('reports.invByProject.index', $data);
     }
@@ -183,6 +195,9 @@ class ReportController extends Controller
         $comboMinP = $this->minProyectos();
         $comboMaxP = $this->maxProyectos();
         $opcion = "No";
+        $areas = Area::orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
+        $comboAreasP = array(0 => "Seleccione ... ") + $areas;
+        $idAreaP = 0;
         $data = ['comboEspecialidades' => $comboEspecialidades,
                  'proyectos' => $proyectos,
                  'investigadores' => $investigadores,
@@ -194,7 +209,9 @@ class ReportController extends Controller
                  'comboEstados' => $comboEstados,
                  'minP' => $minP,
                  'maxP' => $maxP,
-                 'opcion' => $opcion];
+                 'opcion' => $opcion,
+                 'idAreaP' => $idAreaP,
+                 'comboAreasP' => $comboAreasP];
         $pdf = PDF::loadView('reports.invByProject.index', $data);
         return $pdf->download('pruebapdf.pdf');
     }

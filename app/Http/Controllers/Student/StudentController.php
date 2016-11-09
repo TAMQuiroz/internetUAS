@@ -90,10 +90,14 @@ class StudentController extends BaseController {
 							'ApellidoMaterno' => $value[4],
 							// other fields
 							'IdHorario' => $idTimeTable,
+							'lleva_psp' => 0,
 						];
+
 
 						// Para el curso PSP
 						if(isset($request['selectPsp'])){
+							$insert['lleva_psp'] = 1;
+
 							// Buscar alumno en la tabla de tutoria
 							$student = Tutstudent::where('codigo', $value_int)->first();
 
@@ -106,19 +110,22 @@ class StudentController extends BaseController {
 								$alumnoTut['nombre'] = $insert['Nombre'];
 								$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
 								$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
-								$alumnoTut['correo'] = $value[5];
+
+								if($value[5] != null){
+									$alumnoTut['correo'] = $value[5];
+								}
+								else {
+									return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
+								}
 
 								$user = $this->create_user_tutoria($alumnoTut);		
 
 								if($user != null){
 									$insert['IdUsuario'] = $user->IdUsuario;
 								}								
-							}
-							$insert['lleva_psp'] = 1;
+							}							
 						}
-						else {
-							$insert['lleva_psp'] = 0;
-						}
+						
 						array_push($students, $insert);						
 					}else{
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
@@ -135,8 +142,9 @@ class StudentController extends BaseController {
 						$alumno->IdHorario = $student['IdHorario'];
 						
 						if($student['lleva_psp'] == 1){
-							$alumno->IdUsuario = $student['IdUsuario'];
+							$alumno->IdUsuario = $student['IdUsuario'];							
 						}
+						$alumno->lleva_psp = $student['lleva_psp'];																
 						$alumno->save();
 					}
 				}

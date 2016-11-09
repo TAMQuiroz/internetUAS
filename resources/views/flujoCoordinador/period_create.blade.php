@@ -9,7 +9,7 @@
 
 <div class="clearfix"></div>
 
-<form action="{{ route('period_store.flujoCoordinador',$idEspecialidad) }}" method="GET" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
+<form action="{{ route('period_continue.flujoCoordinador',$idEspecialidad) }}" method="GET" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
 
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <input type="text" id="validateIdentifier" name="validateIdentifier" hidden>

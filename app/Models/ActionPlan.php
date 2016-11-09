@@ -10,7 +10,7 @@ class ActionPlan extends Model {
 
     protected $table = 'PlanAccion';
     protected $primaryKey = 'IdPlanAccion';
-    protected $fillable = ['IdPlanMejora', 'IdCicloAcademico', 'IdDocente', 'Descripcion', 'IdEspecialidad', 'Comentario', 'Porcentaje'];
+    protected $fillable = ['IdPlanMejora', 'IdCicloAcademico', 'IdDocente', 'Descripcion', 'IdEspecialidad', 'Comentario', 'Porcentaje', 'IdArchivoEntrada'];
 
     public function faculty(){
         return $this->belongsTo('Intranet\Models\Faculty', 'IdEspecialidad');
@@ -26,5 +26,9 @@ class ActionPlan extends Model {
 
     public function cicle(){
         return $this->belongsTo('Intranet\Models\AcademicCycle', 'IdCicloAcademico');
+    }
+
+    public function file(){
+        return $this->belongsTo('Intranet\Models\FileCertificate', 'IdArchivoEntrada');
     }
 }

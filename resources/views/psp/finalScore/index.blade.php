@@ -34,6 +34,7 @@
                             <td>{{$student->Student->Nombre}}</td> 
                             <td>{{$student->Student->ApellidoPaterno}}</td> 
                             <td>{{$student->Student->ApellidoMaterno}}</td> 
+                            <!--Pendiente colocar nota Final-->
                             <td></td> 
                             <td>
                                 <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-files-o"></i></a>

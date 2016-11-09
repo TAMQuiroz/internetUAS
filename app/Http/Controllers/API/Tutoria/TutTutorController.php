@@ -49,6 +49,33 @@ class TutTutorController extends BaseController
          return $this->response->array($appointmentInfo->toArray());
     }
 
+    public function getAppointInformationTuto($id)
+    {
+      
+
+        // ACA DEBERIAMOS OBTENER LOS DATOS DEL ALUMNO DEL TUTOR, ADEMAS DE OTRAS COSAS QUE SIRVAN DE INFORMACION PARA LAS CITAS (AUN NO LO HE HECHO XD)
+
+         $docenteInfo = Teacher::where('idUsuario',$id)->get();
+         $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
+         $i=0;
+         $LovingTheAlien;
+         foreach ($tutorshipInfo as $ttshipInfo) {
+
+            $idAlumno = $ttshipInfo['id_alumno'];
+            $infoStudent = Tutstudent::where('id', $idAlumno)->get();
+            $LovingTheAlien[$i] = $infoStudent[0];
+            $LovingTheAlien[$i]['fullName'] = $infoStudent[0]['ape_paterno']." ".$infoStudent[0]['ape_materno']." ".$infoStudent[0]['nombre'];
+
+            $i++;
+         } 
+      
+
+         return $this->response->array($LovingTheAlien);
+  
+        
+    }
+
+
     public function updatePendienteAppointmentList(Request $request)
     {
 	    

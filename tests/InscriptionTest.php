@@ -26,7 +26,7 @@ class InscriptionTest extends TestCase
 	    		'actions' => [],
 	    		'user' => factory(Intranet\Models\Student::class)->make()
     		])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
     		->type('trabajar','actividad_economica')
     		->type('bien','cond_seguridad_area')
     		->type('jefe@mail.com','correo_jefe_directo')
@@ -62,7 +62,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('','activ_formativas')
+                         ->type('','activ_formativas')
             ->type('trabajar','actividad_economica')
             ->type('bien','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -83,7 +83,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo actividades formativas es obligatorio');
             
@@ -98,7 +99,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('','actividad_economica')
             ->type('bien','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -119,7 +120,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo actividad economica es obligatorio');
             
@@ -134,7 +136,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -155,7 +157,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo condiciones de seguridad de área es obligatorio');
             
@@ -170,7 +173,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('','correo_jefe_directo')
@@ -191,7 +194,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo correo de jefe directo es obligatorio');
             
@@ -206,7 +210,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -227,7 +231,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo distrito de empresa es obligatorio');
             
@@ -242,7 +247,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -263,7 +268,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo dirección de empresa es obligatorio');
             
@@ -278,7 +284,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -299,7 +305,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo equipo del practicante es obligatorio');
             
@@ -314,7 +321,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -335,7 +342,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo fecha de inicio es obligatorio');
             
@@ -350,7 +358,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -371,7 +379,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo fecha de recepción de convenio es obligatorio');
             
@@ -386,7 +395,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -407,7 +416,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo fecha de término es obligatorio');
             
@@ -423,7 +433,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -444,7 +454,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo jefe directo auxiliar es obligatorio');
             
@@ -459,7 +470,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -480,7 +491,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo nombre de área es obligatorio');
             
@@ -495,7 +507,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -516,7 +528,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo personal de área es obligatorio');
             
@@ -531,7 +544,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -552,7 +565,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo puesto es obligatorio');
             
@@ -567,7 +581,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -588,7 +602,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo razon social es obligatorio');
             
@@ -603,7 +618,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -624,7 +639,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo recomendaciones es obligatorio');
             
@@ -639,7 +655,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -660,7 +676,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo telefono comercial es obligatorio');
             
@@ -675,7 +692,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -696,7 +713,8 @@ class InscriptionTest extends TestCase
             ->type('','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Inscripción de Empresa')
             ->see('El campo ubicación de área es obligatorio');
             
@@ -721,7 +739,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('trabajar','actividad_economica')
             ->type('bien','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -757,7 +775,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('','activ_formativas')
+                         ->type('','activ_formativas')
             ->type('trabajar','actividad_economica')
             ->type('bien','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -778,7 +796,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo actividades formativas es obligatorio');
             
@@ -793,7 +812,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('','actividad_economica')
             ->type('bien','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -814,7 +833,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo actividad economica es obligatorio');
             
@@ -829,7 +849,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -850,7 +870,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo condiciones de seguridad de área es obligatorio');
             
@@ -865,7 +886,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('','correo_jefe_directo')
@@ -886,7 +907,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo correo de jefe directo es obligatorio');
             
@@ -901,7 +923,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -922,7 +944,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo distrito de empresa es obligatorio');
             
@@ -937,7 +960,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -958,7 +981,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo dirección de empresa es obligatorio');
             
@@ -973,7 +997,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -994,7 +1018,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo equipo del practicante es obligatorio');
             
@@ -1009,7 +1034,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1030,7 +1055,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo fecha de inicio es obligatorio');
             
@@ -1045,7 +1071,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1066,7 +1092,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo fecha de recepción de convenio es obligatorio');
             
@@ -1081,7 +1108,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1102,7 +1129,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo fecha de término es obligatorio');
             
@@ -1118,7 +1146,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1139,7 +1167,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo jefe directo auxiliar es obligatorio');
             
@@ -1154,7 +1183,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1175,7 +1204,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo nombre de área es obligatorio');
             
@@ -1190,7 +1220,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1211,7 +1241,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo personal de área es obligatorio');
             
@@ -1226,7 +1257,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1247,7 +1278,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo puesto es obligatorio');
             
@@ -1262,7 +1294,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1283,7 +1315,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo razon social es obligatorio');
             
@@ -1298,7 +1331,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1319,7 +1352,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo recomendaciones es obligatorio');
             
@@ -1334,7 +1368,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1355,7 +1389,8 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo telefono comercial es obligatorio');
             
@@ -1370,7 +1405,7 @@ class InscriptionTest extends TestCase
                 'actions' => [],
                 'user' => factory(Intranet\Models\Student::class)->make()
             ])->visit('/psp/inscription/create')
-            ->type('ar','activ_formativas')
+                         ->type('ar','activ_formativas')
             ->type('Buena','actividad_economica')
             ->type('Buenas condiciones','cond_seguridad_area')
             ->type('jefe@mail.com','correo_jefe_directo')
@@ -1391,7 +1426,8 @@ class InscriptionTest extends TestCase
             ->type('','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription/create');
+            ->seePageIs('/psp/inscription/create')
+             
             ->see('Editar Inscripción de Empresa')
             ->see('El campo ubicación de área es obligatorio');
             

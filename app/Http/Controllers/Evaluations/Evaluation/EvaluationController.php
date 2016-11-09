@@ -72,8 +72,8 @@ class EvaluationController extends Controller
    public function indexev(Request $request)
    {
     $id = Session::get('user')->IdDocente;    
-    $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->join('Especialidad', 'id_especialidad', '=', 'IdEspecialidad')->select('Especialidad.Nombre','evaluations.id','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->get();
-
+    $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->join('Especialidad', 'id_especialidad', '=', 'IdEspecialidad')->select('Especialidad.Nombre','evaluations.id','evaluations.fecha_fin','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->orderBy('evaluations.id', 'desc')->get();
+    
     $data = [
     'evaluations'               =>  $evquestionxstudentxdocentes,     
     ];

@@ -8,7 +8,7 @@
   </form>
     <div class="flex-container has-flex-end" style="margin-top: 15px">
           <button data-remodal-action="cancel" class="btn btn-danger">Cancelar</button>
-          <a data-remodal-action="cancel" onclick="guardarCambios()" class="btn btn-success" > Guardar</a>
+          <a onclick="guardarCambios()" class="btn btn-success" > Guardar</a>
     </div>
 </div>
 <!-- 

@@ -103,7 +103,7 @@
 					<div class="form-group">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<center>
-								<a id="terminar" class="btn btn-success" data-toggle="modal" data-target="#modal-enviar-respuestas">Terminar y enviar respuestas <i class="fa fa-paper-plane" aria-hidden="true"></i></a>	
+								<a id="terminar" class="btn btn-success" href="#modal-enviar-respuestas">Terminar y enviar respuestas <i class="fa fa-paper-plane" aria-hidden="true"></i></a>	
 								<h6 hidden id="mensaje-size">Algunos archivos son muy grandes.</h6>				
 							</center>												
 						</div>
@@ -114,7 +114,19 @@
 	</div>
 </div>
 
-<div id="modal-enviar-respuestas" class="modal fade" tabindex="-1" role="dialog">
+<div id="modal-enviar-respuestas" class="remodal" data-remodal-id="modal-enviar-respuestas" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+  <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+  <div class="text-left">
+    <p style="font-size: 18px"><strong>Confirmación</strong></p>
+  </div>
+  <p id="terminar">A continuación, se enviarán sus respuestas ingresadas y dará por terminada la evaluación.<br/> ¿Está seguro que desea continuar?</p>
+    <div class="flex-container has-flex-end" style="margin-top: 15px">
+          <button data-remodal-action="cancel" class="btn btn-danger">Cancelar</button>
+          <input id="enviar" class="btn btn-success" value="Continuar" type="submit" form="respuestas" />
+    </div>
+</div>
+
+<!-- <div id="modal-enviar-respuestas" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -131,6 +143,8 @@
         </div>
     </div>
 </div>
+ -->
+
 <script type="text/javascript" src="{{ asset('js/jquery.countdown.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/dateformat.js')}}"></script>
 <script type="text/javascript">

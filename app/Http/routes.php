@@ -306,7 +306,7 @@ Route::group(['middleware' => 'auth'], function(){
         //AJAX routes
         Route::post('/search', ['uses' => 'Teacher\TeacherController@searchModal']);
 
-        Route::post('/searchEvaluacion', ['uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
+        Route::post('/searchEvaluador', ['as' => 'search.evaluator','uses' => 'Teacher\TeacherController@searchModalEv']);//NO TOCAR!
 
         Route::get('/getTeacher/{teacherId}', ['uses' => 'Teacher\TeacherController@getTeacher']);
         Route::get('/delete/{teacherid}', ['uses' => 'Teacher\TeacherController@delete']);
@@ -885,6 +885,7 @@ Route::group(['prefix' => 'investigacion'], function(){
     Route::group(['prefix' => 'reporteISP'], function(){
         Route::get('/', ['as' => 'reporteISP.index', 'uses' => 'Report\ReportController@indexISP']);
         Route::post('/generateISP', ['as' => 'reporteISP.generateISP', 'uses' => 'Report\ReportController@generateISP']);
+        Route::get('/test/', ['as' => 'reporteISP.generarPDF', 'uses' => 'Report\ReportController@generarPDF']);
     });
 });
 
@@ -936,6 +937,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'grupo.afiliacion.store.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'grupo.afiliacion.delete.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'grupo.afiliacion.store.estudiante', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'grupo.afiliacion.delete.estudiante', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyStudent']);
                 });
             });    
 
@@ -982,6 +986,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'proyecto.afiliacion.store.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'proyecto.afiliacion.delete.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'proyecto.afiliacion.store.estudiante', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'proyecto.afiliacion.delete.estudiante', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyStudent']);
                 });
             });
 
@@ -1011,6 +1018,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'entregable.afiliacion.store.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'entregable.afiliacion.delete.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'entregable.afiliacion.store.estudiante', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'entregable.afiliacion.delete.estudiante', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyStudent']);
                 });
                 
             });
@@ -1086,6 +1096,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('delete/{id}', ['as' => 'tutor.delete', 'uses' => 'Tutorship\Tutor\TutorController@destroy']);
         Route::get('reassign/{id}', ['as' => 'tutor.reassign', 'uses' => 'Tutorship\Tutor\TutorController@reassign']);
         Route::post('reassign/{id}', ['as' => 'tutor.deactivate', 'uses' => 'Tutorship\Tutor\TutorController@deactivate']);
+        Route::get('activate/{id}', ['as' => 'tutor.activate', 'uses' => 'Tutorship\Tutor\TutorController@activate']);
     });
                 
         
@@ -1108,7 +1119,8 @@ Route::group(['prefix' => 'tutoria'], function(){
 
     //Reportes
     Route::group(['prefix' => 'reporte'], function(){    
-        Route::get('/meeting', ['as' => 'reporte.meeting', 'uses' => 'Tutorship\Report\ReportController@meeting']);                    
+        Route::get('/meeting', ['as' => 'reporte.meeting', 'uses' => 'Tutorship\Report\ReportController@meetingReport']);                    
+        Route::get('/reassign', ['as' => 'reporte.reassign', 'uses' => 'Tutorship\Report\ReportController@reassignReport']);
     });
 
     /***   PARA EL ALUMNO DE TUTORÍA   ***/
@@ -1232,7 +1244,11 @@ Route::group(['prefix' => 'tutoria'], function(){
             Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);
             Route::get('evaluador', ['as' => 'evaluacion_evaluador.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexev']);
             Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
+            Route::get('dar_permiso/{id}{ev}', ['as' => 'evaluacion.dar_permiso', 'uses' => 'Evaluations\Evaluation\EvaluationController@darPermisoExtra']);
             Route::get('evaluaciones_alumnos/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexeval']);
+            Route::get('evaluaciones_resultados/{id}', ['as' => 'evaluacion_resultados.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexresults']);
+            Route::get('evaluaciones_mis_resultados/{id}{ev}', ['as' => 'evaluacion.mis_resultados', 'uses' => 'Evaluations\Evaluation\EvaluationController@myresults']);
+            Route::get('enviar_resultados/{id}', ['as' => 'evaluacion.enviar_resultados', 'uses' => 'Evaluations\Evaluation\EvaluationController@sendresults']);
             Route::get('corregir/{id}{ev}', ['as' => 'evaluacion.corregir', 'uses' => 'Evaluations\Evaluation\EvaluationController@corregir']);
             Route::get('show_corregida/{id}', ['as' => 'evaluacion_corregida.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@vercorregida']);
             Route::post('corregida/{id}{ev}', ['as' => 'evaluacion_corregida.store', 'uses' => 'Evaluations\Evaluation\EvaluationController@storeEvCorregida']);
@@ -1276,6 +1292,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::post('/{id}/courses/store', ['as' => 'courses_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_store']);
         Route::get('/{id}/courses/{idCourse}/edit', ['as' => 'courses_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_edit']);
         Route::post('/{id}/courses/update', ['as' => 'courses_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_update']);
+        Route::get('/courses/{idCourse}/delete', ['as' => 'courses_delete.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_delete']);
 
 
         /* cursos en el ciclo */        
@@ -1305,8 +1322,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
         Route::get('/{id}/period/create', ['as' => 'period_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createPeriod']);
         Route::get('/{id}/period/view', ['as' => 'period_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewPeriod']);
+        Route::get('/{id}/period/continue', ['as' => 'period_continue.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@continuePeriod']);
         Route::post('/{id}/period/store', ['as' => 'period_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod']);
         
+
         Route::get('/{id}/academicCycle', ['as' => 'academicCycle_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initAcademicCycle']);
         Route::get('/{id}/academicCycle/create', ['as' => 'academicCycle_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createAcademicCycle']);
         Route::get('/{id}/academicCycle/view', ['as' => 'academicCycle_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewAcademicCycle']);

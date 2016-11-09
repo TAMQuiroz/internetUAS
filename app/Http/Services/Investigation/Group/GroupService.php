@@ -7,6 +7,7 @@ use Intranet\Models\User;
 use Intranet\Models\Accreditor;
 use Intranet\Models\CoursexTeacher;
 use Intranet\Models\Group;
+use Intranet\Models\Tutstudent;
 use Intranet\Http\Services\User\UserService;
 use Intranet\Http\Services\User\PasswordService;
 use DB;
@@ -115,6 +116,20 @@ class GroupService {
         $investigators = Investigator::whereNotIn('id',$ids)->orderBy('nombre', 'asc')->get();
 
         return $investigators;
+    }
+
+    public function getNotSelectedStudents($id)
+    {
+        $group = Group::find($id);
+        $ids = [];
+        
+        foreach ($group->students as $student) {
+            array_push($ids,$student->id);
+        }
+
+        $students = Tutstudent::whereNotIn('id',$ids)->orderBy('nombre', 'asc')->get();
+
+        return $students;
     }
 
     public function getNotSelectedTeachers($id)

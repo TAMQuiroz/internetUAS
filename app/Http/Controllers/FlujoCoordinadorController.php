@@ -36,8 +36,6 @@ use Intranet\Models\Teacher;
 use Intranet\Models\Criterion;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
-use Intranet\Models\Course;
-use Intranet\Models\Contribution;
 use DB;
 
 
@@ -52,7 +50,6 @@ class FlujoCoordinadorController extends Controller
     protected $periodService;
     protected $dictatedCoursesService;
     protected $passwordService;
-    protected $measurementSourceService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
@@ -66,7 +63,6 @@ class FlujoCoordinadorController extends Controller
         $this->cicleService=new CicleService();
         $this->dictatedCoursesService = new DictatedCoursesService();
         $this->passwordService= new PasswordService();
-        $this->measurementSourceService= new MeasurementSourceService();
 	}
 
     public function index()
@@ -192,9 +188,8 @@ class FlujoCoordinadorController extends Controller
         $data['title'] = "Nuevo Resultado Estudiantil";
         $data['id'] = $id;
 
-        try {            
-            //$data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty($id);     
-            $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', Session::get('faculty-code'))
+        try {               
+            $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', $id)
                                             ->where('deleted_at', null)->get();       
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
@@ -288,7 +283,15 @@ class FlujoCoordinadorController extends Controller
         return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Las modificaciones se han guardado exitosamente');
     }
 
-
+    public function courses_delete($idCourse){
+        $id = Session::get('faculty-code');
+        try{
+            $this->courseService->deleteCourseById($idCourse);
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        return redirect()->route('courses_index.flujoCoordinador', $id)->with('success', 'Se eliminó el curso con éxito');
+    }
     
 
     ///inicializando periodos y ciclos
@@ -327,6 +330,31 @@ class FlujoCoordinadorController extends Controller
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return view('flujoCoordinador.period_view', $data);
+    }
+
+    public function continuePeriod(Request $request,$id)
+    {
+        $data['title'] = 'Información del Periodo Actual';
+
+        try {
+            $data['idEspecialidad']=$id;
+/*
+            $data['a']=$request['facultyAgreementLevel'];
+            $data['b']=$request['facultyAgreement'];
+            $data['c']=$request['criteriaLevel'];
+            $data['d']=$request['cycleEnd'];
+            $data['e']=$request['cycleStart'];
+            $data['f']=$request['measures'];
+            $data['g']=$request['objCheck'];
+            $data['h']=$request['stRstCheck'];
+            $data['i']=$request['aspCheck'];
+            $data['j']=$request['crtCheck'];
+            
+*/
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        return view('flujoCoordinador.period_continue', $data);
     }
 
     public function storePeriod(Request $request,$id)
@@ -719,9 +747,12 @@ class FlujoCoordinadorController extends Controller
                                         //->orderBy('cliente.apellidoPaterno', 'asc')
                                         ->get(); 
                 $data['dictatedCourses']= $cursosDelCicloyEspecialidad;
+                //$data['dictatedCourses']= $this->courseService->retrieveByFacultyandCicle($id);
+
+                //$data['dictatedCourses'] = $this->dictatedCoursesService->retrieveAllCoursesxCycle();
             }
         } catch(\Exception $e) {
-            return redirect()->back()->with('warning', 'Ha ocurrido un error');
+            return redirect()->back()->with('warning', 'Ha ocurrido un error instrumentosDelCurso_index');
         }
         //return $cursosDelCicloyEspecialidad;
         return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
@@ -742,7 +773,7 @@ class FlujoCoordinadorController extends Controller
             $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
             $data['idEspecialidad']= $id;
         } catch (\Exception $e) {
-            return redirect()->back()->with('warning', 'Ha ocurrido un error');
+            return redirect()->back()->with('warning', 'Ha ocurrido un error en instrumentosDelCurso_edit');
         }
         
         return view('flujoCoordinador.instrumentosDelCurso_edit', $data);
@@ -752,12 +783,11 @@ class FlujoCoordinadorController extends Controller
         try {
             $this->measurementSourceService->saveMesuringByCourse($request->all());
         } catch (\Exception $e) {
-            return redirect()->back()->with('warning', 'Ha ocurrido un error');
+            return redirect()->back()->with('warning', 'Ha ocurrido un error instrumentosDelCurso_update');
         }
 
         return redirect()->route('instrumentosDelCurso_index.flujoCoordinador', $id)->with('success', "Las modificaciones se han guardado exitosamente");       
     }
-
 
     public function contributions($id) {
         $data = [];
@@ -769,7 +799,7 @@ class FlujoCoordinadorController extends Controller
             $data['courses']= $this->courseService->retrieveByFacultyandCicle($id);
             //dd("hola");
         } catch (\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un error'); 
+            redirect()->back()->with('warning','Ha ocurrido un error contributions'); 
         }
         return view('flujoCoordinador.contributions', $data);
     }
@@ -780,12 +810,11 @@ class FlujoCoordinadorController extends Controller
         }
 
         try {
-            $data['idEspecialidad']=$id;
             $this->courseService->updateContributions($request->all());
         } catch (\Exception $e) {
-            redirect()->back()->with('warning','Ha ocurrido un error'); 
+            redirect()->back()->with('warning','Ha ocurrido un error updateContributions'); 
         }
-        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
+        return redirect()->route('contributions.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
     }
 
 

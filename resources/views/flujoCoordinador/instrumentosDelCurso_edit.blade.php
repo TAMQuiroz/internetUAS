@@ -140,7 +140,7 @@
             <div class="row">
                 <div class="col-md-9 col-sm-12 col-xs-12">
                     <button class="btn btn-success pull-right" type="submit">Guardar</button>
-                    <a href="{{ route('index.dictatedCourses') }}" class="btn btn-default pull-right">Cancelar</a>
+                    <a href="{{ route('instrumentosDelCurso_index.flujoCoordinador',$idEspecialidad) }}" class="btn btn-default pull-right">Cancelar</a>
                 </div>
             </div>
 

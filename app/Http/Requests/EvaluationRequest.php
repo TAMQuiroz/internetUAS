@@ -28,9 +28,9 @@ class EvaluationRequest extends Request
         return [
             'nombre'            =>  'required|max:200',
             'descripcion'       =>  'required|max:500',
-            'tiempo'            =>  'required|numeric|max:200|min:1',
-            'fecha_inicio'      =>  'required|date|before:fecha_fin|after:yesterday',
-            'fecha_fin'         =>  'required|date|after:fecha_inicio',
+            'tiempo'            =>  'required|numeric|max:600|min:1',
+            'fecha_inicio'      =>  'required|date|after:yesterday',
+            'fecha_fin'         =>  'required|date|after:yesterday',
         ];
     }
 }

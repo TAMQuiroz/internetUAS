@@ -6,6 +6,7 @@ use Intranet\Http\Requests;
 use Intranet\Models\FreeHour;
 use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
+use Intranet\Models\PspStudent;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests\FreeHourRequest;
 
@@ -38,18 +39,21 @@ class FreeHourController extends Controller
     {
         //Primero hay que analizar si el supervisor puede crear mas disponibilidades
         //El maximo de disponibilidades es A/S, donde A = cantidad de alumnos en psp y S = cantidad de supervisores 
-        $a = Student::where('lleva_psp',1)->count();
-        $s = Supervisor::count();
+        $a = PspStudent::count();
+
+        if($a == 0){
+            return redirect()->route('freeHour.index')->with('warning','Para registrar una disponibilidad, ingrese previamente al sistema una lista de alumnos');
+        }        
 
         $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
         $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
 
-        $maximum = $a/$s;
+        $maxi = $this->maximum();
 
-        if($cantDisp < $maximum){
+        if($cantDisp < $maxi){
             return view('psp.freeHour.create');    
         }else{
-            return redirect()->route('freeHour.index')->with('warning','Ha llegado al maximo de disponibildades para registrar. Maximo: '.$maximum);
+            return redirect()->route('freeHour.index')->with('warning','Ha llegado al maximo de disponibildades a registrar. Maximo: '.$maxi);
         }
         
     }
@@ -64,6 +68,7 @@ class FreeHourController extends Controller
     {
         //
         try {
+
             $freeHour = new FreeHour;
             $freeHour->fecha = $request['fecha'];
             $freeHour->hora_ini = $request['hora_ini'];
@@ -71,7 +76,11 @@ class FreeHourController extends Controller
             $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();            
             $freeHour->idsupervisor = $supervisor->id;
             $freeHour->save();
-            return redirect()->route('freeHour.index')->with('success','La disponibilidad se ha registrado exitosamente');
+
+            $f = FreeHour::where('idsupervisor',$supervisor->id)->count();
+            $m = $this->maximum();
+
+            return redirect()->route('freeHour.index')->with('success','La disponibilidad se ha registrado exitosamente. Tiene registrado '.$f.'/'.$m.' disponibilidades');
 
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
@@ -152,6 +161,14 @@ class FreeHourController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }
+    }
+
+    private function maximum(){
+        $a = PspStudent::count();
+        $s = Supervisor::count();
+        $maximum = $a/$s;
+
+        return $maximum;
     }
 
 }

@@ -42,7 +42,7 @@ class StudentController extends BaseController {
 			}
 			$data['studentsExist'] = $studentsExist;				
 		} catch(\Exception $e) {
-			dd($e);
+			return redirect()->back()->with('warning', 'Ha ocurrido un error');
 		}
 		return view('students.load',$data);
 	}
@@ -90,26 +90,42 @@ class StudentController extends BaseController {
 							'ApellidoMaterno' => $value[4],
 							// other fields
 							'IdHorario' => $idTimeTable,
+							'lleva_psp' => 0,
 						];
+
 
 						// Para el curso PSP
 						if(isset($request['selectPsp'])){
+							$insert['lleva_psp'] = 1;
+
 							// Buscar alumno en la tabla de tutoria
 							$student = Tutstudent::where('codigo', $value_int)->first();
+
 							if($student != null) { //encontro alumno -> obtener su idusuario
 								$insert['IdUsuario'] = $student->IdUsuario;								 
 							}
-							else { // no encontro alumno en tutoria -> crear usuario
-								$user = $this->create_user_tutoria($insert['Codigo']);							
+							else { // no encontro alumno en tutoria -> crear alumno en tutoria y usuario
+
+								$alumnoTut['codigo'] = $insert['Codigo'];
+								$alumnoTut['nombre'] = $insert['Nombre'];
+								$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
+								$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
+
+								if($value[5] != null){
+									$alumnoTut['correo'] = $value[5];
+								}
+								else {
+									return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
+								}
+
+								$user = $this->create_user_tutoria($alumnoTut);		
+
 								if($user != null){
 									$insert['IdUsuario'] = $user->IdUsuario;
 								}								
-							}
-							$insert['lleva_psp'] = 1;
+							}							
 						}
-						else {
-							$insert['lleva_psp'] = 0;
-						}
+						
 						array_push($students, $insert);						
 					}else{
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
@@ -126,8 +142,9 @@ class StudentController extends BaseController {
 						$alumno->IdHorario = $student['IdHorario'];
 						
 						if($student['lleva_psp'] == 1){
-							$alumno->IdUsuario = $student['IdUsuario'];
+							$alumno->IdUsuario = $student['IdUsuario'];							
 						}
+						$alumno->lleva_psp = $student['lleva_psp'];																
 						$alumno->save();
 					}
 				}
@@ -144,26 +161,40 @@ class StudentController extends BaseController {
 		return back()->with('success', 'La carga de alumnos se ha realizado exitosamente');
 	}
 
-	public function create_user_tutoria($codigo){
+	public function create_user_tutoria($alumnoTut){
 
 		try {
             //se busca un alumno con el mismo codigo
-            $u = User::where('Usuario', $codigo)->first();
+            $u = User::where('Usuario', $alumnoTut['codigo'])->first();
             if($u!=null){
                 return $u;
             }            
 
             // se crea un usuario primero
             $usuario = new User;
-            $usuario->Usuario       = $codigo;            
+            $usuario->Usuario       = $alumnoTut['codigo'];            
             $usuario->Contrasena    = bcrypt(123);
             $usuario->IdPerfil      = 0; //perfil 0 para el alumno
             $usuario->save();
 
             //se envia el correo para resetear el password
             if ($usuario) {
-                //$this->passwordService->sendSetPasswordLink($usuario, $request['correo']);
+                $this->passwordService->sendSetPasswordLink($usuario, $alumnoTut['correo']);
             }
+
+            /*crear alumno en tutoria */
+
+            $student = new Tutstudent;
+            $student->codigo           = $alumnoTut['codigo'];
+            $student->nombre           = $alumnoTut['nombre'];
+            $student->ape_paterno      = $alumnoTut['ape_paterno'];
+            $student->ape_materno      = $alumnoTut['ape_materno'];
+            $student->correo           = $alumnoTut['correo'];
+            $student->id_especialidad  = null;
+            $student->id_usuario       = $usuario->IdUsuario;
+
+            //se guarda en la tabla Alumnos
+            $student->save();
             
             return $usuario;
 

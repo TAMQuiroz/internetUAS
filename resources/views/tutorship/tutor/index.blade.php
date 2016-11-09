@@ -16,8 +16,6 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="">
-            <div class="clearfix"></div>
-
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a href="#filter-tutors" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
@@ -31,13 +29,13 @@
             <table class="table table-striped responsive-utilities jambo_table bulk_action">
                 <thead>
                     <tr class="headings">
-                        <th class="column-title">Estado </th>
-                        <th class="column-title">Código </th>
+                        <th class="centered column-title">Estado </th>
+                        <th class="centered column-title">Código </th>
                         <th class="column-title">Apellidos y Nombres </th>                        
                         <th class="column-title">Correo </th>
-                        <th class="column-title">Horas Semanales </th>
-                        <th class="column-title">Alumnos </th>
-                        <th class="column-title last">Acciones</th>                            
+                        <th class="centered column-title">Horas Semanales </th>
+                        <th class="centered column-title">Alumnos </th>
+                        <th class="centered column-title last">Acciones</th>                            
                     </tr>
                 </thead>
                 <tbody>
@@ -46,26 +44,26 @@
                             <td hidden class="group-id">{{ $tutor->IdDocente }}</td>
 
                             @if ($tutor->rolTutoria == 1) 
-                                <td class=""><span class="label label-success"> Activo </span></td>
+                                <td class="centered"><span class="label label-success"> Activo </span></td>
                             @elseif ($tutor->rolTutoria == 3) 
-                                <td class=""><span class="label label-danger"> Inactivo </span></td>
+                                <td class="centered"><span class="label label-default"> Inactivo </span></td>
                             @endif
 
-                            <td class=" ">{{ $tutor->Codigo }}</td>
+                            <td class="centered ">{{ $tutor->Codigo }}</td>
                             <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
                             <td class=" ">{{ $tutor->Correo }}</td>
-                            <td class=" ">{{ $horas[$tutor->IdDocente] }}</td>                            
-                            <td class=" ">{{ $alumnos[$tutor->IdDocente] }}</td> 
-                            <td class=" ">
-                                <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Ver" class="btn btn-primary btn-xs view-group">
-                                    <i class="fa fa-search"></i>
+                            <td class="centered ">{{ $horas[$tutor->IdDocente] }}</td>                            
+                            <td class="centered ">{{ $alumnos[$tutor->IdDocente] }}</td> 
+                            <td class="centered ">
+                                <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Visualizar" class="btn btn-primary btn-xs view-group">
+                                    <i class="fa fa-eye"></i>
                                 </a>
                                 @if ($tutor->rolTutoria == 1)
                                     <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
                                         <i class="fa fa-remove"></i>
                                     </a>
                                 @elseif ($tutor->rolTutoria == 3) 
-                                    <a href="" class="btn btn-danger btn-xs delete-group" title="Activar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
+                                    <a href="" class="btn btn-primary btn-xs delete-group" title="Activar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
                                         <i class="fa fa-check"></i>
                                     </a>
                                 @endif

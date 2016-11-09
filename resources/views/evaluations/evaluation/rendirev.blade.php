@@ -24,6 +24,9 @@
 		right:0px;
 				
 	}
+	h4{
+		color: black;
+	}
 </style>
 <div class="row">
 	<div class="col-md-12">
@@ -51,14 +54,14 @@
 					@foreach($evaluation->preguntas as $key => $pregunta)
 					@if($pregunta->tipo == 2)
 					<div class="form-group">
-						<h4>Pregunta {{$key+1}}: ({{$pregunta->puntaje}} puntos)</h4>
+						<h4>Pregunta {{$key+1}}: ({{$pregunta->puntaje}} puntos - {{$pregunta->tiempo}} minutos)</h4>
 						<p>{{$pregunta->descripcion}}</p>
-						<h5>Respuesta:</h5>
+						<h5>Respuesta: (máximo 5000 caracteres)</h5>
 						<textarea class="form-control" name="arrQuestion[{{$pregunta->id}}]" rows="4" maxlength="5000"></textarea>						
 					</div><br>
 					@elseif($pregunta->tipo == 1)
 					<div class="form-group">
-						<h4>Pregunta {{$key+1}}: ({{$pregunta->puntaje}} puntos)</h4>
+						<h4>Pregunta {{$key+1}}: ({{$pregunta->puntaje}} puntos - {{$pregunta->tiempo}} minutos)</h4>
 						<p>{{$pregunta->descripcion}}</p>
 						<h5>Respuesta:</h5>
 						<ul>
@@ -79,7 +82,7 @@
 					</div><br>
 					@elseif($pregunta->tipo == 3)
 					<div class="form-group">
-						<h4>Pregunta {{$key+1}}: ({{$pregunta->puntaje}} puntos)</h4>
+						<h4>Pregunta {{$key+1}}: ({{$pregunta->puntaje}} puntos - {{$pregunta->tiempo}} minutos)</h4>
 						<p>{{$pregunta->descripcion}}</p>
 						<h5>Respuesta:</h5>	
 						<div class="col-md-2 col-xs-4">							

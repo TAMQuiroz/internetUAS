@@ -137,7 +137,7 @@
 										<td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvEvaluadores[{{$question->id}}]"></td>
 										<td class="centered oculto responsable" >{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
 
-										<td class="centered"><a href="#modal-editar-pregunta" class="editbtn btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></a></td>                    
+										<td class="centered"><a class="editbtn btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></a></td>                    
 									</tr>
 									@endforeach
 								</tbody>

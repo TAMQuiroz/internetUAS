@@ -69,8 +69,8 @@ $(document).ready(function($) {
 			$.get('/evaluaciones/preguntas/editQuestion',{id_competence:idCompetence,id_evaluator:idEvaluator},function(data){
 		    	$('#datosPregunta').empty();//vacio los datos
 		    	$('#datosPregunta').append(data);	 //mete un select con los evaluadores
-		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" maxlength="5" type="text" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');
-		    	// $('#modal-editar-pregunta').modal('show');//muestro el modal
+		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" maxlength="5" type="text" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');		    	
+		    	$('[data-remodal-id=modal-editar-pregunta]').remodal().open();//muestro el modal
 		    });
 
 		});
@@ -141,7 +141,7 @@ function selectQuestions(){
 				tr.prepend('<td class="centered order">'+cantidadPreguntas+'</td>');
 				tr.find('td:last').remove();//quito el checkbox
 				tr.find('.oculto').removeAttr( "hidden" );
-				tr.append('<td class="centered" ><a href="#modal-editar-pregunta" class="editbtn btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></a></td>');
+				tr.append('<td class="centered" ><a class="editbtn btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a class="btn btn-danger btn-xs delete-prof"><i class="fa fa-remove"></i></a></td>');
 
 				$('#actual-questions').find('tbody').append(tr);
 
@@ -160,8 +160,8 @@ function selectQuestions(){
 	}
 
 	function guardarCambios(){  
-		if(cambiosvalidos()){
-			$('#modal-editar-pregunta').modal('hide');//oculto el modal
+		if(cambiosvalidos()){			
+			$('[data-remodal-id=modal-editar-pregunta]').remodal().close();//oculto el modal
 			var id_evaluador = $("#select_evaluador").val();
 			var evaluador = $("#select_evaluador option:selected").html();
 			var puntaje = parseFloat($("#input_puntaje").val());

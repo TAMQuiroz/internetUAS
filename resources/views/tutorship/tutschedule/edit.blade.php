@@ -48,24 +48,24 @@
                         <table class="table table-striped responsive-utilities jambo_table bulk_action">
                             <thead>
                                 <tr class="headings">
-                                    <th class="column-title">&nbsp;&nbsp;&nbsp;&nbsp;Hora&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                    <th class="column-title">Lunes </th>
-                                    <th class="column-title">Martes</th> 
-                                    <th class="column-title">Miércoles </th>
-                                    <th class="column-title">Jueves</th>
-                                    <th class="column-title">Viernes</th>
-                                    <th class="column-title">Sábado</th>
+                                    <th class="centered column-title">Hora</th>
+                                    <th class="centered column-title">LUN </th>
+                                    <th class="centered column-title">MAR</th> 
+                                    <th class="centered column-title">MIE </th>
+                                    <th class="centered column-title">JUE</th>
+                                    <th class="centered column-title">VIE</th>
+                                    <th class="centered column-title">SAB</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for ($h=8; $h<22; $h++)
                                 <tr class="even pointer">                                                                     
-                                    <td class=" ">{{$h}}:00 hs</td>       
+                                    <td class="centered ">{{$h}}:00 hs</td>       
                                     @for ($d=1; $d<7; $d++)
                                     <?php if (encuentraHorario($tutSchedule, $d, $h)) { ?>
-                                        <td class=" "> {{Form::checkbox('check['.$d.$h.']',1 , true, array('class' => 'check'))}} </td>
+                                        <td class="centered "> {{Form::checkbox('check['.$d.$h.']',1 , true, array('class' => 'check'))}} </td>
                                     <?php } else { ?>
-                                        <td class=" "> {{Form::checkbox('check['.$d.$h.']',1 , false, array('class' => 'check'))}} </td>                                        
+                                        <td class="centered "> {{Form::checkbox('check['.$d.$h.']',1 , false, array('class' => 'check'))}} </td>                                        
                                     <?php } ?>
                                     @endfor                                                                       
                                 </tr>

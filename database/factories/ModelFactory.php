@@ -130,17 +130,6 @@ $factory->define(Intranet\Models\Project::class, function (Faker\Generator $fake
     ];
 });
 
-$factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker) {
-
-
-    return [
-        'numero'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
-        'descripcion'       =>  $faker->text,
-        'fecha_inicio'         =>  '2017-10-06',
-        'fecha_fin'         =>  '2018-10-06',
-    ];
-});
-
 $factory->define(Intranet\Models\Student::class, function (Faker\Generator $faker) {
 
     return [
@@ -148,22 +137,15 @@ $factory->define(Intranet\Models\Student::class, function (Faker\Generator $fake
     ];
 });
 
-$factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
-
-    $template =   factory(Intranet\Models\Template::class)->create();
+$factory->define(Intranet\Models\PspStudent::class, function (Faker\Generator $faker) {
     $student =   factory(Intranet\Models\Student::class)->create();
+    $psp =   factory(Intranet\Models\PspProcess::class)->create();
 
     return [
-        'es_obligatorio'       =>  't',
-        //'observaciones'       =>  'bien',
-        //'ruta'               =>  'uploads/pspdocuments/0.pdf',
-        'idStudent'         =>  1,
-        'idTemplate'         =>  $template->id,
-        'idTipoEstado'         =>  1,
-        'fecha_limite'         =>  '2018-10-06',
+        'idalumno'            =>  $student->IdAlumno,
+        'idpspprocess'        =>  $psp->id,
     ];
 });
-
 
 $factory->define(Intranet\Models\Competence::class, function (Faker\Generator $faker) {
     return [
@@ -198,9 +180,75 @@ $factory->define(Intranet\Models\FreeHour::class, function (Faker\Generator $fak
     ];
 });
 
-$factory->define(Intranet\Models\Schedule_meetings::class, function (Faker\Generator $faker) {
+$factory->define(Intranet\Models\PspProcess::class, function (Faker\Generator $faker) {
     return [
-        'id'            =>  $faker->randomNumber($nbDigits = 8,$strict = true),
+        'idespecialidad' => 1,
+        'idCiclo'       => 1,
+        'idcurso'        => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\PspProcessxTeacher::class, function (Faker\Generator $faker) {
+    return [
+        'idpspprocess' => 1,
+        'iddocente'       => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\Phase::class, function (Faker\Generator $faker) {
+
+    $psp =   factory(Intranet\Models\PspProcess::class)->create();
+
+    return [
+        'numero'            =>  $faker->randomNumber($nbDigits = 1,$strict = true),
+        'descripcion'       =>  $faker->text,
+        'fecha_inicio'      =>  '2017-10-06',
+        'fecha_fin'         =>  '2018-10-06',
+        'idpspprocess'      =>  $psp->id,
+    ];
+});
+
+$factory->define(Intranet\Models\Schedule_meetings::class, function (Faker\Generator $faker) {
+
+    $phase =   factory(Intranet\Models\Phase::class)->create();
+    
+    return [
+        'id'            =>  $faker->randomNumber($nbDigits = 6,$strict = true),
+        'idpspprocess' => 1,
         'tipo' => 'Jefe-Supervisor',
+        'idfase'  => $phase->id,
+        'idpspprocess'      =>  $phase->idpspprocess,
+    ];
+});
+
+$factory->define(Intranet\Models\Template::class, function (Faker\Generator $faker) {
+
+    $phase =   factory(Intranet\Models\Phase::class)->create();
+
+    return [
+        'idphase'          => $phase->id,
+        'titulo'          => $faker->text,
+        'numerofase'    =>  $phase->numero,
+        'idtipoestado'  => 1,
+    ];
+});
+
+$factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $faker) {
+
+    $template =   factory(Intranet\Models\Template::class)->create();
+    $student =   factory(Intranet\Models\Student::class)->create();
+
+    return [
+        'es_obligatorio'       =>  's',
+        //'observaciones'       =>  'bien',
+        //'ruta'               =>  'uploads/pspdocuments/0.pdf',
+        'idstudent'         =>  $student->IdAlumno,
+        //'idstudent'         =>  1,
+        'idtemplate'         =>  $template->id,
+        'titulo_plantilla'    =>   $template->titulo,
+        'ruta_plantilla'     =>   $template->ruta,
+        'idtipoestado'         =>  3,
+        'fecha_limite'         =>  '2018-10-06',
+        'numerofase'           =>  1,
     ];
 });

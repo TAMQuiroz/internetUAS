@@ -21,7 +21,7 @@
 								<select name="fase" id="fase" class="form-control" required="required">
                                     @foreach( $phases as $phase)
                                         @if($phase->PspProcess!=null)
-                                        <option value="{{$phase->id}}">{{$phase->numero.' - '.$phase->PspProcess->Course->Nombre}}</option>
+                                        <option value="{{$phase->id}}">{{'Fase '.$phase->numero.' de '.$phase->PspProcess->Course->Nombre}}</option>
                                         @endif
                                     @endforeach
                                 </select>                             

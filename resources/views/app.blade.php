@@ -75,7 +75,6 @@
   <script src="{{ URL::asset('js/remodal.js')}}"></script>
   <link href="{{ URL::asset('css/remodal.css')}}" rel="stylesheet">
   <link href="{{ URL::asset('css/remodal-default-theme.css')}}" rel="stylesheet">
-    <link href="{{ URL::asset('css/remodal/remodal-modify.css')}}" rel="stylesheet">
   <script type="text/javascript">
     var baseUrl = "{{ url('') }}";
   </script>
@@ -91,7 +90,9 @@
   <![endif]-->
 
   <!-- Datepicker -->
-  <link href="{{  URL::asset('css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css">  
+  <link href="{{  URL::asset('css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css"> 
+
+  <link href="{{ URL::asset('css/remodal/remodal-modify.css')}}" rel="stylesheet">
 
 </head>
 

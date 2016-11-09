@@ -75,9 +75,15 @@ class TutScheduleController extends Controller
         $teacher = Teacher::find($id);
         $tutSchedule = TutSchedule::where('id_docente',$id)->get();
         
+        $today = date('d-m-Y'); 
+        $futureDay = date('d-m-Y', strtotime($today . '+185 day'));
+        
         $data = [
             'teacher'    =>  $teacher,
             'tutSchedule' => $tutSchedule,
+            'startDate'     => $today,
+            'endDate'       => $today,
+            'futureDay'     => $futureDay,
         ];
         
         return view('tutorship.tutschedule.edit', $data);

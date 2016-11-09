@@ -52,11 +52,6 @@ class TutstudentController extends Controller
         return view('tutorship.tutstudent.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('tutorship.tutstudent.create');
@@ -67,52 +62,34 @@ class TutstudentController extends Controller
         return view('tutorship.tutstudent.createAll');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(TutstudentRequest $request)
     {
        
         try {
-            //se busca un alumno con el mismo codigo
-            $u = User::where('Usuario',$request['codigo'])->first();
-            if($u!=null){
+
+            $mayorId = Session::get('faculty-code');
+
+            $status = Tutstudent::createTutStudent($request, $mayorId);
+
+            $studentCode = Tutstudent::where('codigo', $request['codigo'])->first();
+
+            $studentEmail = Tutstudent::where('correo', $request['correo'])->first();
+
+            if ($status == 1) {
+                
                 return redirect()->route('alumno.create')->with('warning', 'El código de alumno que se intenta registrar ya existe.');
-            }            
-
-            // se crea un usuario primero
-            $usuario = new User;
-            $usuario->Usuario       = $request['codigo'];            
-            $usuario->Contrasena    = bcrypt(123);//se le pone 123 por defecto pero encriptado
-            $usuario->IdPerfil      = 0; //perfil 0 para el alumno
-            $usuario->save();
-
-            //se envia el correo para resetear el password
-            if ($usuario) {
-                $this->passwordService->sendSetPasswordLink($usuario, $request['correo']);
-            }
+            } else 
+            if ($status == 2) {
+                
+                return redirect()->route('alumno.create')->with('warning', 'El correo de alumno que se intenta registrar ya existe.');
+            } else 
+            if ($status == 3) {
             
-            //ahora se busca ese usuario
-            $usuarioCreado = User::where('Usuario',$request['codigo'])->first();
+                return redirect()->route('alumno.index')->with('success', 'El alumno se ha registrado exitosamente');
+            }
 
-            //ahora se crea el alumno
-            $student = new Tutstudent;
-            $student->codigo           = $request['codigo'];
-            $student->nombre           = $request['nombre'];
-            $student->ape_paterno      = $request['app'];
-            $student->ape_materno      = $request['apm'];
-            $student->correo           = $request['correo'];
-            $student->id_especialidad  = Session::get('faculty-code');
-            $student->id_usuario       = $usuarioCreado->IdUsuario;
-
-            //se guarda en la tabla Alumnos
-            $student->save();
-
-            //se regresa al indice de alumnos
             return redirect()->route('alumno.index')->with('success', 'El alumno se ha registrado exitosamente');
+
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
@@ -120,26 +97,29 @@ class TutstudentController extends Controller
 
     public function storeAll(Request $request)
     {
-        $csv_file = $request->file('csv_file');
-        
+        $csv_file = $request->file('csv_file'); 
         $mayor = Session::get('faculty-code');
 
         try {
 
-            Tutstudent::loadStudents($csv_file->path(), $mayor);
-            return redirect()->route('alumno.index')->with('success', 'El alumno se ha registrado exitosamente');
+            $status = Tutstudent::loadStudents($csv_file->path(), $mayor);
+
+            if ($status['code'] == 1) {
+                
+                return redirect()->route('alumno.createAll')->with('warning', $status['message']);
+            } else if ($status['code'] == 2) {
+                
+                return redirect()->route('alumno.index')->with('success', $status['message']);
+            } else if ($status['code'] == 3) {
+                
+                return redirect()->route('alumno.createAll')->with('warning', $status['message']);
+            }
 
         } catch (InvalidTutStudentException $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $student       = Tutstudent::find($id);

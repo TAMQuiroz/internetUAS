@@ -150,3 +150,7 @@ a.btn.btn-primary.tutorship-dates {
 	background-color: transparent;
 	color: #999999;
 }
+
+a.btn.btn-success.btn-xs.delete-group {
+	height: inherit;
+}

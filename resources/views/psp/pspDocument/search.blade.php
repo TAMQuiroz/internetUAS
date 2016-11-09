@@ -27,7 +27,7 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{route('pspDocument.create',$student->IdAlumno) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Documento Fisico</a>
+                        <a href="{{route('pspDocument.create',$student->idalumno) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Documento Fisico</a>
                     </div>
                 </div>
             

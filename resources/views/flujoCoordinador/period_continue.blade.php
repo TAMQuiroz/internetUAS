@@ -54,10 +54,20 @@
           <p>Aceptación %: {{$facultyAgreement}}</p>
           <br>
           <p>INSTRUMENTOS</p>
-          <p>Los instrumentos a usar son los siguientes:</p>
-          @if($studentResultAll!=null)
-          @foreach($studentResultAll as $strst)
-          <p> La relación de los resultados, aspectos y criterios de este periodo son los siguientes:</p>
+          <p>Los instrumentos seleccionados para este periodo son los siguientes:</p>
+          
+          <br>
+          <p> OBJETIVOS</p>
+          @if($educationalObjetivesAll!=null)
+          @foreach($educationalObjetivesAll as $obj)
+            @if (in_array($obj->IdObjetivoEducacional, $educationalObjetives)) 
+              <p>{{$obj->Descripcion}}</p>
+            @endif
+          @endforeach
+          @endif
+          <br>
+          <p>RESULTADOS-CRITERIOS-ASPECTOS</p>
+          <p> Los resultados, aspectos y criterios seleccionados para este periodo son los siguientes:</p>
           
           <ul id="menu_arbol"> 
           @if($studentResultAll!=null)

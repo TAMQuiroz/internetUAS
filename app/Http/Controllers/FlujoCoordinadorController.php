@@ -33,6 +33,7 @@ use Intranet\Http\Requests\CriterioStoreRequest;
 use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\User;
+use Intranet\Models\Course;
 use Intranet\Models\Teacher;
 use Intranet\Models\Criterion;
 use Intranet\Models\AcademicCycle;
@@ -356,9 +357,13 @@ class FlujoCoordinadorController extends Controller
             $data['criteriaLevel']=$request1['criteriaLevel'];
 
 
-
+            /*
+            $regular_professors = isset($request['regular_professors'])?$request['regular_professors']:[];
+            $course->regularProfessors()->sync($regular_professors);
+*/
 
             $measures = (array_key_exists('measures', $request1))?$request1['measures']: [];
+            //dd($measures);
             $educationalObjetives = (array_key_exists('objCheck', $request1))?$request1['objCheck']: [];
             $studentsResults = (array_key_exists('stRstCheck', $request1))?$request1['stRstCheck']: [];
             $aspects = (array_key_exists('aspCheck', $request1))?$request1['aspCheck']: [];
@@ -367,9 +372,13 @@ class FlujoCoordinadorController extends Controller
             
             $studentResultsAll = StudentsResult::where('IdEspecialidad', $id)
             ->where('deleted_at', null)->get();
-            //dd($studentsResults);
-            $data['studentResultAll']=$studentResultsAll;
+            $educationalObjetivesAll = EducationalObjetive::where('IdEspecialidad', $id)
+            ->where('deleted_at', null)->get();
+            
+            $data['educationalObjetivesAll']=$educationalObjetivesAll;
+            $data['educationalObjetives']=$educationalObjetives;
 
+            $data['studentResultAll']=$studentResultsAll;
             $data['studentsResults']=$studentsResults;
             $data['aspects']=$aspects;
             $data['criterions']=$criterions;
@@ -385,8 +394,7 @@ class FlujoCoordinadorController extends Controller
 
     public function storePeriod(Request $request,$id)
     {
-        try {
-                    
+        try {       
             $period = $this->facultyService->createConfFaculty($request->all());
 
             Session::put('period-code', $period->IdPeriodo);

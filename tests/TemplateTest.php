@@ -20,6 +20,7 @@ class TemplateTest extends TestCase
     public function test_psp_cr_tem_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $fase  = factory(Intranet\Models\Phase::class)->create();
 
         $this->actingAs($user)
@@ -29,6 +30,7 @@ class TemplateTest extends TestCase
             ])->visit('/psp/template/create')
             ->select($fase->id, 'fase')
             ->type('Plantilla','titulo')
+            ->attach(asset('images/1.png'),'ruta')
             ->press('Guardar')
             ->seePageIs('/psp/template')
             ->see('Documentos');           
@@ -37,6 +39,7 @@ class TemplateTest extends TestCase
     public function test_psp_cr_tem_02()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $fase  = factory(Intranet\Models\Phase::class)->create();
 
         $this->actingAs($user)
@@ -56,6 +59,7 @@ class TemplateTest extends TestCase
     public function test_psp_cr_tem_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $fase  = factory(Intranet\Models\Phase::class)->create();
 
     	$this->actingAs($user)
@@ -77,6 +81,7 @@ class TemplateTest extends TestCase
     public function test_psp_cr_tem_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $fase  = factory(Intranet\Models\Phase::class)->create();
 
         $this->actingAs($user)
@@ -112,6 +117,7 @@ class TemplateTest extends TestCase
         public function test_psp_ed_tem_01()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $template   = factory(Intranet\Models\Template::class)->create();
         $fase  = factory(Intranet\Models\Phase::class)->create();
 
@@ -133,6 +139,7 @@ class TemplateTest extends TestCase
         public function test_psp_ed_tem_02()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $template   = factory(Intranet\Models\Template::class)->create();
         $fase  = factory(Intranet\Models\Phase::class)->create();
 
@@ -152,6 +159,7 @@ class TemplateTest extends TestCase
             public function test_psp_ed_tem_03()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $template   = factory(Intranet\Models\Template::class)->create();
         $fase  = factory(Intranet\Models\Phase::class)->create();
 
@@ -171,6 +179,7 @@ class TemplateTest extends TestCase
             public function test_psp_ed_tem_04()
     {
         $user = factory(Intranet\Models\User::class)->make();
+        $user->IdPerfil=3;
         $template   = factory(Intranet\Models\Template::class)->create();
         $fase  = factory(Intranet\Models\Phase::class)->create();
 

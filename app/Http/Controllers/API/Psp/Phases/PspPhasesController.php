@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Phase;
 use Intranet\Models\Teacher;
 use Dingo\Api\Routing\Helpers;
+use Intranet\Models\PspProcessxTeacher;
 use Illuminate\Routing\Controller as BaseController;
 
 class PspPhasesController extends BaseController
@@ -53,7 +54,7 @@ class PspPhasesController extends BaseController
         return $this->response->array($user);*/
 
       
-        return $this->response->array($Phases->toArray());
+        return $this->response->array($Phases);
     }
     
 }   

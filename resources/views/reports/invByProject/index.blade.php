@@ -38,6 +38,15 @@
             </div>
 
             <div class="form-group">
+              {{Form::label('Área del proyecto',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+              <div class="col-xs-12 col-md-4">
+
+                {{Form::select('areaP',$comboAreasP, $idAreaP, ['class'=>'form-control'])}}
+              </div>
+            </div>
+
+
+            <div class="form-group">
               {{Form::label('Proyectos iniciados',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-12 col-md-1">
                 {{Form::date('fechaI',null,['id'=>'fecha_ini','class'=>'form-control'])}}
@@ -150,17 +159,19 @@
                     <tbody>
                       @foreach($investigador->projects as $proyecto)
                         @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                        <tr>
-                          <td>{{$proyecto->nombre}}</td> 
-                          <td>{{$proyecto->fecha_fin}}</td> 
-                          <td>{{$proyecto->area->nombre}}</td> 
-                          <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                          <td>
-                          @if($proyecto->status)
-                            {{$proyecto->status->nombre}}
+                          @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                          <tr>
+                            <td>{{$proyecto->nombre}}</td> 
+                            <td>{{$proyecto->fecha_fin}}</td> 
+                            <td>{{$proyecto->area->nombre}}</td> 
+                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                            <td>
+                            @if($proyecto->status)
+                              {{$proyecto->status->nombre}}
+                            @endif
+                            </td>
+                          </tr>
                           @endif
-                          </td>
-                        </tr>
                         @endif
                       @endforeach
                     </tbody>
@@ -235,17 +246,19 @@
                     <tbody>
                       @foreach($profesor->projects as $proyecto)
                         @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                        <tr>
-                          <td>{{$proyecto->nombre}}</td> 
-                          <td>{{$proyecto->fecha_fin}}</td> 
-                          <td>{{$proyecto->area->nombre}}</td> 
-                          <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                          <td>
-                          @if($proyecto->status)
-                            {{$proyecto->status->nombre}}
+                          @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                          <tr>
+                            <td>{{$proyecto->nombre}}</td> 
+                            <td>{{$proyecto->fecha_fin}}</td> 
+                            <td>{{$proyecto->area->nombre}}</td> 
+                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                            <td>
+                            @if($proyecto->status)
+                              {{$proyecto->status->nombre}}
+                            @endif
+                            </td>
+                          </tr>
                           @endif
-                          </td>
-                        </tr>
                         @endif
                       @endforeach
                     </tbody>

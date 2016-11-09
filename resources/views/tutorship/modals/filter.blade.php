@@ -10,7 +10,7 @@
 			<div class="col-md-6 col-sm-6 col-xs-6">
 				<select name="estado" class="form-control">					
 					<option value="1">Activo</option>
-					<option value="0">Inactivo</option>					                        
+					<option value="3">Inactivo</option>					                        
 				</select> 
 			</div>			
 		</div>

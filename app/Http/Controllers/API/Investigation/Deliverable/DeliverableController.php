@@ -5,26 +5,34 @@ namespace Intranet\Http\Controllers\API\Investigation\Deliverable;
 use Illuminate\Http\Request;
 
 use Intranet\Http\Requests;
-use Intranet\Http\Controllers\Controller;
+//use Intranet\Http\Controllers\Controller;
 
 use Intranet\Models\Deliverable;
 use Intranet\Models\Project;
+use Dingo\Api\Routing\Helpers;
 
 use Intranet\Http\Requests\DeliverableMobileRequest;
+use Illuminate\Routing\Controller as BaseController;
 
-class DeliverableController extends Controller
+class DeliverableController extends BaseController
 {
+    use Helpers;
+
     public function getById($id)
     {
-        $entregable = Deliverable::find($id);
-        return $entregable;
+        $entregable = Deliverable::find($id)->with('project')->get();
+        return $this->response->array($entregable->toArray());
+        //return $entregable;
     }
 
     public function getByProjectId($id)
     {
-        $proyecto = Project::find($id);
-        $entregables = $proyecto->deliverables;
-        return $entregables;
+        //$proyecto = Project::find($id);
+        //$entregables = $proyecto->deliverables;
+
+        $entregables = Deliverable::where('id_proyecto',$id)->with('project')->get();
+        return $this->response->array($entregables->toArray());
+        //return $entregables;
     }
 
     public function edit(DeliverableMobileRequest $request, $id){

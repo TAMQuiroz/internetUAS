@@ -3,6 +3,7 @@ $(document).ready(function() {
 
     //something is entered in search form
     $('#investigator-search').keyup( function() {
+        $('#radioSi').prop("checked", true);
        var that = this;
         // affect all table rows on in systems table
         var tableBody = $('.table-list-search-investigator tbody');
@@ -85,4 +86,8 @@ $(document).ready(function() {
             tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No se encontraron resultados.</td></tr>');
         }
     });
+
+    
+        
+
 });

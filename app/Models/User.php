@@ -74,4 +74,13 @@ class User extends Authenticatable
     public function pspStudent() {
         return $this->hasOne('Intranet\Models\Student', 'IdUsuario');
     }
+
+    public function supervisor(){
+        return $this->hasOne('Intranet\Models\Supervisor', 'iduser');    
+    }
+
+    public function tutStudent(){
+        return $this->hasOne('Intranet\Models\Tutstudent','id_usuario');
+    }
+
 }

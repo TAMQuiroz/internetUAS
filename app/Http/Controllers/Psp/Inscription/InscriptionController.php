@@ -87,11 +87,12 @@ class InscriptionController extends Controller
             $inscription->ubicacion_area            = $request['ubicacion_area'];
 
             $inscription->save();
-            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first();  
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+            $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
             if($student!=null){
                 $studentxinscription  = new Studentxinscriptionfiles;
                 $studentxinscription->idInscriptionFile =$inscription->id;
-                $studentxinscription->idStudent=$student->IdAlumno;
+                $studentxinscription->idStudent=$pspstudent->id;
                 $studentxinscription->acepta_terminos=1;
                 $studentxinscription->save();
             }

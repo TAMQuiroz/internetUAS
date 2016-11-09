@@ -25,6 +25,10 @@ class Project extends Model
     	return $this->belongsToMany('Intranet\Models\Investigator','investigatorxprojects','id_proyecto','id_investigador')->orderBy('nombre', 'asc')->withPivot('id');	
     }
 
+    public function students(){
+        return $this->belongsToMany('Intranet\Models\Tutstudent','studentxprojects','id_proyecto','id_estudiante')->orderBy('nombre', 'asc')->withPivot('id'); 
+    }
+
     public function teachers(){
         return $this->belongsToMany('Intranet\Models\Teacher','teacherxprojects','id_proyecto','id_profesor')->orderBy('Nombre', 'asc')->withPivot('id');    
     }

@@ -23,6 +23,17 @@ class TutMeeting extends Model
                             'id_tutstudent',
                             'id_docente'];
 
+    /*
+        Para los estados de citas:
+            Pendiente   => 1
+            Confirmada  => 2
+            Cancelada   => 3
+            Sugerida    => 4
+            Rechazada   => 5
+            Asistida    => 6
+            No asistida => 7
+    */
+
 
     static public function getNumberDay($dateString) 
     {

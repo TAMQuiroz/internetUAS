@@ -47,7 +47,7 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             ->check('terminos')
     		->press('Guardar')
-    		->seePageIs('/psp/inscription');
+    		->seePageIs('/psp/inscription')
             ->see('Inscripción de Empresa')
             ->see('La inscripción se ha registrado exitosamente');
     		
@@ -760,7 +760,7 @@ class InscriptionTest extends TestCase
             ->type('sala','ubicacion_area')
             ->check('terminos')
             ->press('Guardar')
-            ->seePageIs('/psp/inscription');
+            ->seePageIs('/psp/inscription')
             ->see('Editar Inscripción de Empresa')
             ->see('La inscripción se ha registrado exitosamente');
             

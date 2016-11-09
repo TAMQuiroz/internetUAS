@@ -37,20 +37,28 @@ class PspGroupController extends BaseController
         try{
         $user =  JWTAuth::parseToken()->authenticate();
         $alumno = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
-        $pspAlumno   = PspStudent::where('IdAlumno' , $alumno->idalumno)->get()->first();
+        $pspAlumno   = PspStudent::where('idalumno' , $alumno->IdAlumno)->get()->first();
 
-        $pspAlumno->idPspGroup = $id;
-        $alumno->save();
+        $pspAlumno->IdPspGroup = $id;
+        $pspAlumno->save();
 
+
+        
+
+        $array = array();
+
+        
         $mensaje = "Seleccion su grupo satisfactoriamente";
+        $array['message'] = $mensaje;
+        return $this->response->array($array);
 
-       return json_encode($mensaje);
+     //  return json_encode($mensaje);
 
         } catch (Exception $e) {
             
-            $message  = "No se pudo asignar grupo";
-
-            return json_encode($message);
+            $mensaje = "Hubo error";
+            $array['message'] = $mensaje;
+            return $this->response->array($array);
 
         }
 

@@ -273,9 +273,15 @@
 
     </div>
     </div>
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
 </div>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script>
 <script src="{{ URL::asset('js/intranetjs/report/index-reportISP.js')}}"></script>
+<script src="{{ URL::asset('js/intranetjs/report/graph.js')}}"></script>
 
 @endsection

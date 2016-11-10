@@ -9,7 +9,7 @@
 
 <div class="clearfix"></div>
 
-<form action="{{ route('period_store.flujoCoordinador',$idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
+<form action="{{ route('period_continue.flujoCoordinador',$idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
 
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <input type="text" id="validateIdentifier" name="validateIdentifier" hidden>
@@ -57,15 +57,6 @@
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nivel de Criterio <span class="error"> *</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input id="criteriaLevel" class="form-control col-md-7 col-xs-12" type="number" name="criteriaLevel" value="{{old('criteriaLevel')}}">
-                        </div>
-                    </div>
-                    </div>
-
-                     <div class="row" style="margin-top: 10px;">
-                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nivel de Aceptación <span class="error">*</span></label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="facultyAgreementLevel" class="form-control col-md-7 col-xs-12" type="number" name="facultyAgreementLevel" value="" >
                         </div>
                     </div>
                     </div>

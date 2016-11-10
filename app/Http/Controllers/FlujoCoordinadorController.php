@@ -384,15 +384,22 @@ class FlujoCoordinadorController extends Controller
 
 
             ///para usarlo en el guardado
-            $data['cycleStart']=$request1['cycleStart'];
-            $data['cycleEnd']=$request1['cycleEnd'];
+            //Session::forget('academic-cycle');
+            Session::put('facultyAgreementLevel',$request1['facultyAgreementLevel']);
+            Session::put('facultyAgreement',$request1['facultyAgreement']);
+            Session::put('criteriaLevel',$request1['criteriaLevel']);
+            Session::put('cycleStart',$request1['cycleStart']);
+            Session::put('cycleEnd',$request1['cycleEnd']);
 
-            $data['measures']=$request1['measures'];
-            $data['objCheck']=$request1['objCheck'];
-            $data['stRstCheck']=$request1['stRstCheck'];
-            $data['aspCheck']=$request1['aspCheck'];
-            $data['crtCheck']=$request1['crtCheck'];
+            Session::put('cycleStart',$request1['cycleStart']);
+            Session::put('cycleEnd',$request1['cycleEnd']);
+            Session::put('measures',$request1['measures']);
+            Session::put('objCheck',$request1['objCheck']);
+            Session::put('stRstCheck',$request1['stRstCheck']);
+            Session::put('aspCheck',$request1['aspCheck']);
+            Session::put('crtCheck',$request1['crtCheck']);
 
+            //dd(Session::get('facultyAgreementLevel'));
 
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
@@ -400,11 +407,13 @@ class FlujoCoordinadorController extends Controller
         return view('flujoCoordinador.period_continue', $data);
     }
 
-    public function storePeriod2(Request $request, $facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad)
+    public function storePeriod2(Request $request, $id)
     {
         try {       
-            dd("hola");
-            $period = $this->facultyService->createFaculty($facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad);
+            //dd("hola");
+
+            //dd(Session::get('measures'));
+            $period = $this->facultyService->createFaculty($id);
 
             //dd($facultyAgreementLevel);
             Session::put('period-code', $period->IdPeriodo);
@@ -654,10 +663,13 @@ class FlujoCoordinadorController extends Controller
 
     public function cursosCiclo_index($id){
 
+
+        Session::put('id-academic-cycle', 1); //eliminar esto cuando alex termine
+
         $data['title'] = "Asignar Cursos al Ciclo";
         $data['idEspecialidad'] = $id;
 
-        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
+        $idAcademicCycle = Session::get('id-academic-cycle');
 
         try {
             $data['courses'] = $this->dictatedCoursesService->getCoursesxCycleByCycleByFaculty($idAcademicCycle, $id);
@@ -669,7 +681,7 @@ class FlujoCoordinadorController extends Controller
     }
 
     public function cursosCiclo_edit($id){
-        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
+        $idAcademicCycle = Session::get('id-academic-cycle');
         //dd($idAcademicCycle);
         $data['title'] = 'Seleccionar Cursos';
         $data['idEspecialidad'] = $id;
@@ -685,12 +697,12 @@ class FlujoCoordinadorController extends Controller
     }
 
     public function cursosCiclo_update(Request $request, $id){
-        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
+        $idAcademicCycle = Session::get('id-academic-cycle');
 
         if(sizeof($request['check']) == 1){
             return redirect()->back()->with('warning','Debe haber al menos un curso dictado en el ciclo');
         }
-            
+        
         try {
             $code = $this->dictatedCoursesService->updateByNewCycle($request->all(), $idAcademicCycle);
             
@@ -705,7 +717,7 @@ class FlujoCoordinadorController extends Controller
     }
 
     public function cursosCicloHorario_index($id, $idCourse){
-        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
+        $idAcademicCycle = Session::get('id-academic-cycle');
         $data['title'] = 'Asignar Horario al Curso';
         $data['idEspecialidad'] = $id;
         try {
@@ -719,7 +731,7 @@ class FlujoCoordinadorController extends Controller
     }
 
     public function cursosCicloHorario_create($id,$idCourse){
-        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
+        $idAcademicCycle = Session::get('id-academic-cycle');
         $data['title'] = 'Nuevo Horario';
         $data['idEspecialidad'] = $id;
         try {
@@ -744,7 +756,7 @@ class FlujoCoordinadorController extends Controller
     }
 
     public function cursosCicloHorario_edit($id, $idCurso, $idHorario){
-        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
+        $idAcademicCycle = Session::get('id-academic-cycle');
 
         $data['idEspecialidad'] = $id;
         try {

@@ -14,68 +14,115 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="panel panel-default">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 		    	<h3 class="panel-title">Información</h3>
 			</div>
 		  	<div class="panel-body">
-		  		<div class="form-horizontal">
-		    		<div class="form-group">
-		    			{{Form::label('Nombre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4 col-xs-12">
-		    				{{Form::text('nombre',$investigador->nombre,['class'=>'form-control', 'readonly', 'maxlength' => 10])}}
-		    			</div>
-		    		</div>
+		  		<div class="col-md-6">
+			  		<div class="form-horizontal">
+			    		<div class="form-group">
+			    			{{Form::label('Nombre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+			    			<div class="col-md-8 col-xs-12">
+			    				@if(Auth::user())
+			    				{{Form::text('nombre',$investigador->nombre,['class'=>'form-control', 'readonly', 'maxlength' => 10])}}
+			    				@else
+			    				<div class="form-control no-border">
+			    					{{$investigador->nombre}}
+			    				</div>
+			    				@endif
+			    			</div>
+			    		</div>
 
-		    		<div class="form-group">
-		    			{{Form::label('Apellido Paterno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4 col-xs-12">
-		    				{{Form::text('apellido_paterno',$investigador->ape_paterno,['class'=>'form-control', 'readonly'])}}
-		    			</div>
-		    		</div>
+			    		<div class="form-group">
+			    			{{Form::label('Apellido Paterno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+			    			<div class="col-md-8 col-xs-12">
+			    				@if(Auth::user())
+			    				{{Form::text('apellido_paterno',$investigador->ape_paterno,['class'=>'form-control', 'readonly'])}}
+			    				@else
+			    				<div class="form-control no-border">
+			    					{{$investigador->ape_paterno}}
+			    				</div>
+			    				@endif
+			    			</div>
+			    		</div>
 
-		    		<div class="form-group">
-		    			{{Form::label('Apellido Materno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4 col-xs-12">
-		    				{{Form::text('apellido_materno',$investigador->ape_materno,['class'=>'form-control', 'readonly'])}}
-		    			</div>
-		    		</div>
+			    		<div class="form-group">
+			    			{{Form::label('Apellido Materno',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+			    			<div class="col-md-8 col-xs-12">
+			    				@if(Auth::user())
+			    				{{Form::text('apellido_materno',$investigador->ape_materno,['class'=>'form-control', 'readonly'])}}
+			    				@else
+			    				<div class="form-control no-border">
+			    					{{$investigador->ape_materno}}
+			    				</div>
+			    				@endif
+			    			</div>
+			    		</div>
 
-		    		<div class="form-group">
-		    			{{Form::label('Correo',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4 col-xs-12">
-		    				{{Form::email('correo',$investigador->correo,['class'=>'form-control', 'readonly'])}}
-		    			</div>
-		    		</div>
+			    		<div class="form-group">
+			    			{{Form::label('Correo',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+			    			<div class="col-md-8 col-xs-12">
+			    				@if(Auth::user())
+			    				{{Form::email('correo',$investigador->correo,['class'=>'form-control', 'readonly'])}}
+			    				@else
+			    				<div class="form-control no-border">
+			    					{{$investigador->correo}}
+			    				</div>
+			    				@endif
+			    			</div>
+			    		</div>
 
-		    		<div class="form-group">
-		    			{{Form::label('Celular',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4 col-xs-12">
-		    				{{Form::number('celular',$investigador->celular,['class'=>'form-control', 'readonly'])}}
-		    			</div>
-		    		</div>
+			    		<div class="form-group">
+			    			{{Form::label('Celular',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+			    			<div class="col-md-8 col-xs-12">
+			    				@if(Auth::user())
+			    				{{Form::number('celular',$investigador->celular,['class'=>'form-control', 'readonly'])}}
+			    				@else
+			    				<div class="form-control no-border">
+			    					{{$investigador->celular}}
+			    				</div>
+			    				@endif
+			    			</div>
+			    		</div>
 
-		    		<div class="form-group">
-		    			{{Form::label('Especialidad',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4 col-xs-12">
-		    				{{Form::text('especialidad', $investigador->faculty->Nombre, ['class' => 'form-control', 'readonly'])}}
-		    			</div>
-		    		</div>
+			    		<div class="form-group">
+			    			{{Form::label('Especialidad',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+			    			<div class="col-md-8 col-xs-12">
+			    				@if(Auth::user())
+			    				{{Form::text('especialidad', $investigador->faculty->Nombre, ['class' => 'form-control', 'readonly'])}}
+			    				@else
+			    				<div class="form-control no-border">
+			    					{{$investigador->faculty->Nombre}}
+			    				</div>
+			    				@endif		    				
+			    			</div>
+			    		</div>
 
-		    		<div class="form-group">
-		    			{{Form::label('Área',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-		    			<div class="col-md-4 col-xs-12">
-		    				{{Form::text('area', $investigador->area->nombre, ['class' => 'form-control', 'readonly'])}}
-		    			</div>
-		    		</div>
-		    		<div class="row">
-						<div class="col-md-8 col-sm-12 col-xs-12">
-							@if(Auth::user() && (Auth::user()->IdUsuario == $investigador->id_usuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
-							<a class="btn btn-success pull-right" href="{{ route('investigador.edit',$investigador->id) }}">Editar</a>
-							@endif
-							<a class="btn btn-default pull-right" href="{{ route('investigador.index') }}">Regresar</a>
+			    		<div class="form-group">
+			    			{{Form::label('Área',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+			    			<div class="col-md-8 col-xs-12">
+			    				@if(Auth::user())
+			    				{{Form::text('area', $investigador->area->nombre, ['class' => 'form-control', 'readonly'])}}
+			    				@else
+			    				<div class="form-control no-border">
+			    					{{$investigador->area->nombre}}
+			    				</div>
+			    				@endif
+			    			</div>
+			    		</div>
+			    		<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								@if(Auth::user() && (Auth::user()->IdUsuario == $investigador->id_usuario || Auth::user()->IdPerfil == Config::get('constants.admin')))
+								<a class="btn btn-success pull-right" href="{{ route('investigador.edit',$investigador->id) }}">Editar</a>
+								@endif
+								<a class="btn btn-default pull-right" href="{{ route('investigador.index') }}">Regresar</a>
+							</div>
 						</div>
 					</div>
+				</div>
+				<div class="col-md-6">
+					{{Html::image(asset('images/researcher.jpg'), null, ['class'=>'img-thumbnail'])}}
 				</div>
 		  	</div>
 

@@ -52,9 +52,10 @@
                             @endif                             
                             <td>
                                 <a href="{{route('meeting.edit',$meeting->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>                                                                
+                                <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$meeting->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
                             </td>                                                        
                         </tr>
-
+                        @include('modals.delete', ['id'=> $meeting->id, 'message' => '¿Esta seguro que desea cancelar esta reunion?', 'route' => route('meeting.delete', $meeting->id)])
                         @endforeach 
                     </tbody>
                 </table>

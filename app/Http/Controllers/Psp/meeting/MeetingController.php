@@ -9,15 +9,13 @@ use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\freeHour;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
+use Intranet\Models\User;
 use Auth;
 
 class MeetingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    //Vista alumno
     public function index()
     {
         $meeting = meeting::get();
@@ -29,11 +27,7 @@ class MeetingController extends Controller
         //return view('template.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Vista alumno
     public function create()
     {
         $arr = [];
@@ -50,12 +44,7 @@ class MeetingController extends Controller
         return view('psp.meeting.create',$data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //Vista supervisor
     public function store(MeetingRequest $request)
     {
         
@@ -89,12 +78,7 @@ class MeetingController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Vista supervisor y alumno
     public function show($id)
     {
         $meeting = meeting::find($id);
@@ -104,6 +88,9 @@ class MeetingController extends Controller
         ];
 
         $data['supervisor'] = supervisor::find($meeting->idSupervisor);
+
+        $data['user'] = User::find(Auth::User()->IdUsuario);
+        
         return view('psp.meeting.show',$data);
     }
 
@@ -113,6 +100,8 @@ class MeetingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Vista supervisor
     public function edit($id)
     {
         //
@@ -122,13 +111,7 @@ class MeetingController extends Controller
         return view('psp.meeting.edit',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Vista supervisor
     public function update(Request $request, $id)
     {
         //
@@ -145,17 +128,20 @@ class MeetingController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Vista supervisor (cancelar reunion)
     public function destroy($id)
     {
-        //
+        try {
+            $meeting = meeting::find($id);
+            $meeting->delete();
+
+            return redirect()->route('meeting.indexSup')->with('success','Se ha cancelado la reunion');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 
+    //Vista supervisor
     public function search($id)
     {
         
@@ -170,5 +156,16 @@ class MeetingController extends Controller
 
         return view('psp.meeting.search', $data);       
 
+    }
+
+    //Vista supervisor
+    public function indexSup()
+    {
+        $meetings = meeting::with('student')->get();
+
+        $data = [
+            'meetings'    =>  $meetings,
+        ];
+        return view('psp.meeting.indexSup', $data);
     }
 }

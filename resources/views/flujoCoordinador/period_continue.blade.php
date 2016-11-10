@@ -32,7 +32,7 @@
 <div class="clearfix"></div>
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
-    <form action="{{ route('period_store.flujoCoordinador',$facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
+    <form action="{{ route('period_store2.flujoCoordinador',$idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
 
     <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
 

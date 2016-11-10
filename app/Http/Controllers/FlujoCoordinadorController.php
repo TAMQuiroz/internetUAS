@@ -151,6 +151,7 @@ class FlujoCoordinadorController extends Controller
 
 		$especialidad = Faculty::findOrFail($id);
 		$objetivos = $especialidad->objectives;
+        $objetivos = EducationalObjetive::where('IdEspecialidad','=',$especialidad->IdEspecialidad)->orderby('Descripcion','ASC')->get();
 		return view('flujoCoordinador.objetivoEducacional_index', ['objetivos'=>$objetivos, 'idEspecialidad' =>$id]);
 
     }

@@ -95,13 +95,9 @@
         </div>
     </div>
     </div>
-    <script type="text/javascript">
-        $(document).on('ready',function(){
-            $('#divplan').show();    
-        });
-    </script>
-    <script type="text/javascript">
+     <script type="text/javascript">
         $( document ).ready(function(){
+            $('#divplan').show(); 
             $('#checkboelective').on('click',function(){
                 $('#divplan').toggle();
             });

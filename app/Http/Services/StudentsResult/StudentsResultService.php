@@ -277,6 +277,7 @@ class StudentsResultService {
 
     public function create($request) {
 
+
         $studentResult = StudentsResult::create([
             'IdEspecialidad' => Session::get('faculty-code'),
             'Identificador' => $request['identifier'],
@@ -294,6 +295,28 @@ class StudentsResultService {
             }
         }
         */
+
+        if ( array_key_exists('objsCheck', $request) ){
+            foreach($request['objsCheck'] as $idObj){
+                $resultxObjective = ResultxObjective::create([
+                    'IdResultadoEstudiantil' => $studentResult->IdResultadoEstudiantil,
+                    'IdObjetivoEducacional' => $idObj
+                ]);
+            }
+        }
+    }
+
+    public function createByFaculty($request, $IdEspecialidad) {
+
+        
+        $studentResult = StudentsResult::create([
+            'IdEspecialidad' => $IdEspecialidad,
+            'Identificador' => $request['identifier'],
+            'Descripcion' => $request['description'],
+            'Estado' => 0
+        ]);
+
+        //dd($studentResult);
 
         if ( array_key_exists('objsCheck', $request) ){
             foreach($request['objsCheck'] as $idObj){

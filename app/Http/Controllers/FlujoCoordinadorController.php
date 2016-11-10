@@ -200,7 +200,7 @@ class FlujoCoordinadorController extends Controller
 
     public function studentResult_store(StudentResultRequest $request, $id){
         try {
-            $studentsResult = $this->studentsResultService->create($request->all());
+            $studentsResult = $this->studentsResultService->createByFaculty($request->all(),$id);
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }

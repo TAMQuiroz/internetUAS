@@ -182,8 +182,7 @@ class FlujoCoordinadorController extends Controller
         $data['title'] = "Resultados Estudiantiles";
         $data['id'] = $id;
         try {
-            $data['studentsResults'] = $this->studentsResultService->retrieveAllByFaculty($id);
-            //dd($data['studentsResults']);
+            $data['studentsResults'] = $this->studentsResultService->retrieveByFaculty($id);
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un erroaar'); 
         }
@@ -629,6 +628,7 @@ class FlujoCoordinadorController extends Controller
 
     public function cursosCiclo_index($id){
 
+
         Session::put('id-academic-cycle', 1); //eliminar esto cuando alex termine
 
         $data['title'] = "Asignar Cursos al Ciclo";
@@ -637,9 +637,7 @@ class FlujoCoordinadorController extends Controller
         $idAcademicCycle = Session::get('id-academic-cycle');
 
         try {
-
-            $data['courses'] = $this->dictatedCoursesService->getCoursesxCycleByCycle($idAcademicCycle);
-
+            $data['courses'] = $this->dictatedCoursesService->getCoursesxCycleByCycleByFaculty($idAcademicCycle, $id);
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
@@ -669,11 +667,10 @@ class FlujoCoordinadorController extends Controller
         if(sizeof($request['check']) == 1){
             return redirect()->back()->with('warning','Debe haber al menos un curso dictado en el ciclo');
         }
-
+        
         try {
-
             $code = $this->dictatedCoursesService->updateByNewCycle($request->all(), $idAcademicCycle);
-
+            
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
         }

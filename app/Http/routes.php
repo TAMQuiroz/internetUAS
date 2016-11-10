@@ -604,6 +604,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
                 Route::get('search/{id}', ['as' => 'meeting.search', 'uses' => 'Psp\meeting\MeetingController@search']);    
                 Route::get('indexSup', ['as' => 'meeting.indexSup', 'uses' => 'Psp\meeting\MeetingController@indexSup']);
+                Route::get('createSup', ['as' => 'meeting.createSup', 'uses' => 'Psp\meeting\MeetingController@createSup']);
+                Route::post('createSup', ['as' => 'meeting.storeSup', 'uses' => 'Psp\meeting\MeetingController@storeSup']);
             });
 
             //MeetingTeacher

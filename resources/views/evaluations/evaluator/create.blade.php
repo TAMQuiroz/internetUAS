@@ -14,7 +14,9 @@
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
-			
+			<div class="panel-heading">
+				<h3 class="panel-title">Información</h3>
+			</div>
 			<div class="panel-body">
 				{{Form::open(['route' => 'evaluador.store', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 				<input type="text" id="idDocente" name="idDocente"  hidden>
@@ -24,7 +26,7 @@
 						{{Form::text('nombre',null,['class'=>'form-control','id'=>'nombre', 'required','readonly' ])}}
 					</div>
 					<div class="col-md-3 col-sm-3 col-xs-3">						
-						<a class="btn btn-default" data-toggle="modal" data-target="#modal-buscar-profesor">Buscar</a>
+						<a class="btn btn-primary" href="#modal-buscar-profesor">Buscar</a>
 					</div>
 				</div>
 
@@ -33,7 +35,7 @@
 					<div class="col-md-6">
 						@foreach($competences as $competence)
 						<div class="checkbox">
-							<label><input type="checkbox" name="arr_competencias[{{$competence->id}}]">{{$competence->nombre}}</label>
+							<label><input type="checkbox" name="arr_competencias[{{$competence->id}}]"> {{$competence->nombre}}</label>
 						</div>
 						@endforeach						
 					</div>

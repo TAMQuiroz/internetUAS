@@ -26,38 +26,38 @@
                     <col width="5%" >
                     <col width="10%">
                     <col width="10%">
-                    <col width="45%">
+                    <col width="40%">
                     <col width="10%">
                     <col width="10%">
-                    <col width="10%">
+                    <col width="15%">
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Código </th>                        
-                            <th class="column-title">Últ. modif. </th>    
-                            <th class="column-title">Responsable </th>    
+                            <th class="centered column-title">Código </th>                        
+                            <th class="centered column-title">Últ. modif. </th>    
+                            <th class="centered column-title">Responsable </th>    
                             <th class="column-title">Pregunta </th>    
-                            <th class="column-title">Tipo </th>  
-                            <th class="column-title">Competencia </th>  
-                            <th class="column-title last">Acciones</th>                                
+                            <th class="centered column-title">Tipo </th>  
+                            <th class="centered column-title">Competencia </th>  
+                            <th class="centered column-title last">Acciones</th>                                
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($questions as $question)
-                        <tr class="even pointer">                            
-                            <td class=" ">{{ $question->id }}</td>
-                            <td class=" ">{{ $question->updated_at->format('d/m/Y')}}</td>
-                            <td class=" ">{{ explode(' ',trim($question->responsable->Nombre))[0]    .' '.$question->responsable->ApellidoPaterno
+                        <tr  class="even pointer">                            
+                            <td class="centered">{{ $question->id }}</td>
+                            <td class="centered">{{ $question->updated_at->format('d/m/Y')}}</td>
+                            <td class="centered">{{ explode(' ',trim($question->responsable->Nombre))[0]    .' '.$question->responsable->ApellidoPaterno
                             }}</td>
-                            <td class=" ">{{ $question->descripcion }}</td>                            
+                            <td class="">{{ $question->descripcion }}</td>                            
                             @if($question->tipo == 1)
-                            <td class=""><i class="fa fa-list-ul fa-2x" title="Cerrada" aria-hidden="true"></i></td> 
+                            <td class="centered"><i class="fa fa-list-ul fa-2x" title="Cerrada" aria-hidden="true"></i></td> 
                             @elseif ($question->tipo == 2)
-                            <td class=""><i class="fa fa-pencil-square-o fa-2x" title="Abierta" aria-hidden="true"></i></td> 
+                            <td class="centered"><i class="fa fa-pencil-square-o fa-2x" title="Abierta" aria-hidden="true"></i></td> 
                             @else
-                            <td class=""><i class="fa fa-file fa-2x" title="Archivo" aria-hidden="true"></i></td> 
+                            <td class="centered"><i class="fa fa-file fa-2x" title="Archivo" aria-hidden="true"></i></td> 
                             @endif    
-                            <td class=" ">{{ $question->competencia->nombre }}</td>                         
-                            <td class="">
+                            <td class="centered">{{ $question->competencia->nombre }}</td>                         
+                            <td class="centered">
                                 <a href="{{route('pregunta.show',$question->id)}}" class="btn btn-primary btn-xs view-group" title="Visualizar">
                                 <i class="fa fa-eye"></i>
                                 </a>

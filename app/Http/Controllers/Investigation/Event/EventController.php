@@ -108,9 +108,11 @@ class EventController extends Controller
     public function show($id)
     {
         $evento     = Event::find($id);
+        $estados    = [0=>'Publico',1 =>'Privado'];
 
         $data = [
             'evento'    =>  $evento,
+            'estados'   =>  $estados,
         ];
 
         return view('investigation.event.show', $data);

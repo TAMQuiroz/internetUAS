@@ -314,6 +314,7 @@ class FlujoCoordinadorController extends Controller
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty2($id);
             
         } catch(\Exception $e) {
+            dd("hola");
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
         //dd("hola");
@@ -384,15 +385,20 @@ class FlujoCoordinadorController extends Controller
 
 
             ///para usarlo en el guardado
-            $data['cycleStart']=$request1['cycleStart'];
-            $data['cycleEnd']=$request1['cycleEnd'];
+            //Session::forget('academic-cycle');
+            Session::put('facultyAgreementLevel',$facultyAgreementLevel);
+            Session::put('facultyAgreement',$facultyAgreement);
+            Session::put('criteriaLevel',$criteriaLevel);
+            Session::put('cycleStart',$cycleStart);
+            Session::put('cycleEnd',$cycleEnd);
 
-            $data['measures']=$request1['measures'];
-            $data['objCheck']=$request1['objCheck'];
-            $data['stRstCheck']=$request1['stRstCheck'];
-            $data['aspCheck']=$request1['aspCheck'];
-            $data['crtCheck']=$request1['crtCheck'];
-
+            Session::put('cycleStart',$request1['cycleStart']);
+            Session::put('cycleEnd',$request1['cycleEnd']);
+            Session::put('measures',$request1['measures']);
+            Session::put('objCheck',$request1['objCheck']);
+            Session::put('stRstCheck',$request1['stRstCheck']);
+            Session::put('aspCheck',$request1['aspCheck']);
+            Session::put('crtCheck',$request1['crtCheck']);
 
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
@@ -400,11 +406,13 @@ class FlujoCoordinadorController extends Controller
         return view('flujoCoordinador.period_continue', $data);
     }
 
-    public function storePeriod2(Request $request, $facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad)
+    public function storePeriod2(Request $request, $id)
     {
         try {       
-            dd("hola");
-            $period = $this->facultyService->createFaculty($facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad);
+            //dd("hola");
+
+            dd(Session::get('cycleStart'));
+            $period = $this->facultyService->createFaculty($id);
 
             //dd($facultyAgreementLevel);
             Session::put('period-code', $period->IdPeriodo);

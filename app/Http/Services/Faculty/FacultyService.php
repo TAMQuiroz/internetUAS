@@ -448,9 +448,16 @@ class FacultyService {
 		return $period;
 	}
 
-	public function createFaculty($facultyAgreementLevel, $facultyAgreement, $criteriaLevel, $cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad) {
+	public function createFaculty($id) {
 
-		$id=$idEspecialidad;
+		$measures = Session::get('measures');
+		$educationalObjetives = Session::get('educationalObjetives');
+		$studentsResults = Session::get('studentsResults');
+		$aspects = Session::get('aspects');
+		$criterions = Session::get('criterions');
+
+		dd($educationalObjetives);
+
 
 		$period = Period::create(['IdEspecialidad' =>$id,
 					'Vigente'=>'1'
@@ -458,23 +465,22 @@ class FacultyService {
 
 
 
-	    $confFaculty = ConfFaculty::create(['NivelEsperado' => $facultyAgreementLevel,
-					'UmbralAceptacion' => $facultyAgreement,
-					'CantNivelCriterio' => $criteriaLevel	,
-					'IdCicloFin' => $cycleEnd	,
-					'IdCicloInicio' => $cycleStart	,
+	    $confFaculty = ConfFaculty::create(['NivelEsperado' => Session::get('facultyAgreementLevel'),
+					'UmbralAceptacion' => Session::get('facultyAgreement'),
+					'CantNivelCriterio' => Session::get('criteriaLevel')	,
+					'IdCicloFin' => Session::get('cycleEnd')	,
+					'IdCicloInicio' => Session::get('cycleStart')	,
 					'IdEspecialidad' =>  $id,
 					'IdPeriodo' => $period->IdPeriodo
 			]);
 
-		//$measures = (array_key_exists('measures', $request))?$request['measures']: [];
+		$measures = Session::get('measures');
+		$educationalObjetives = Session::get('educationalObjetives');
+		$studentsResults = Session::get('studentsResults');
+		$aspects = Session::get('aspects');
+		$criterions = Session::get('criterions');
+
 		$period->measures()->sync($measures);
-
-		$educationalObjetives = $objCheck;
-		$studentsResults = $stRstCheck;
-		$aspects = $aspCheck;
-		$criterions = $crtCheck;
-
 		$period->educationalObjetives()->sync($educationalObjetives);
 		$period->studentsResults()->sync($studentsResults);
 		$period->aspects()->sync($aspects);

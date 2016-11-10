@@ -103,7 +103,8 @@
 
     </script>
 
-    
+    <script src="{{ URL::asset('js/intranetjs/flujoCoordinador/delete-course.js')}}"></script>
+
     @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar el curso?', 'action' => '#', 'button' => 'Delete'])
     @include('courses.view-modal', ['title' => 'Course #'])
 @endsection

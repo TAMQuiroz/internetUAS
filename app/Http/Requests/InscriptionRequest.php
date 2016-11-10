@@ -27,7 +27,7 @@ class InscriptionRequest extends Request
             'activ_formativas'          =>'regex:/^[\pL\s\-]+$/u|required|max:1000',
             'actividad_economica'       =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
             'cond_seguridad_area'       =>'regex:/^[\pL\s\-]+$/u|required|max:200',
-            'correo_jefe_directo'       =>'regex:/^[\pL\s\-]+$/u|required|max:200',
+            'correo_jefe_directo'       =>'required|email',
             //'debe_modificarse'          =>'required|digits:1', 
             'direccion_empresa'         =>'regex:/^[\pL\s\-]+$/u|required|max:500', 
             'distrito_empresa'          =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
@@ -44,7 +44,7 @@ class InscriptionRequest extends Request
             'recomendaciones'           =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
             'telef_jefe_directo'        =>'required|digits:9', 
             'ubicacion_area'            =>'regex:/^[\pL\s\-]+$/u|required|max:200',
-            'terminos'                  =>'required',
+            //'terminos'                  =>'required',
             ];
     }
 

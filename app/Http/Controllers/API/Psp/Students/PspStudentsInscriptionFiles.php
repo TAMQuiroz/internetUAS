@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Intranet\Models\Student;
 use Intranet\Models\Inscription;
 use Dingo\Api\Routing\Helpers;
+use Intranet\Models\PspStudent;
+use Intranet\Models\meeting;
 use Illuminate\Routing\Controller as BaseController;
 
 class PspStudentsInscriptionFiles extends BaseController
@@ -27,8 +29,43 @@ class PspStudentsInscriptionFiles extends BaseController
     {
        
 
-   		$inscription = Inscription::get();
+        $inscription = Inscription::get();
         return $this->response->array($inscription->toArray());
+
+    }
+
+
+
+
+
+ 
+
+
+    public function getAllPspStudents()
+    {
+        $pspstudents = PspStudent::get();
+        $students = array();
+        foreach ($pspstudents as $pspstudent) {
+            $student = Student::where('IdAlumno',  $pspstudent->idalumno)->get()->first();
+            array_push($students, $student);
+            }
+        return $this->response->array($students);
+    }
+
+
+  public function getInscriptionsByStudent(Request $request, $id )
+    {
+       
+
+     foreach ($pspstudents as $pspstudent) {
+            $inscription = Inscription::where('IdAlumno',  $id )->get()->first();
+            array_push($inscriptions, $inscription);
+
+
+            }
+
+ return $this->response->array($inscriptions);
+
 
     }
 
@@ -62,6 +99,15 @@ class PspStudentsInscriptionFiles extends BaseController
 
 
 
+
+
+
+    public function postAppointmentSuperEmployer(Request $request)
+    {        
+        $pspstudents = meeting::get();
+
+        return "exito";    
+    }
 
 
 }

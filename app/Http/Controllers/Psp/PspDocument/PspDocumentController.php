@@ -7,6 +7,7 @@ use Intranet\Models\PspDocument;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests\pspDocumentRevRequest;
 use Intranet\Http\Requests\pspDocumentEditRequest;
+use Intranet\Http\Requests\pspDocumentRequest;
 use Intranet\Http\Requests;
 use Intranet\Models\Template;
 use Intranet\Models\PspStudent;
@@ -64,7 +65,7 @@ class PspDocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(pspDocumentRequest $request, $id)
     {
         try {
                 $PspDocument = new PspDocument;

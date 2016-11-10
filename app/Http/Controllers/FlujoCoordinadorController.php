@@ -371,22 +371,29 @@ class FlujoCoordinadorController extends Controller
             $aspects = (array_key_exists('aspCheck', $request1))?$request1['aspCheck']: [];
             $criterions = (array_key_exists('crtCheck', $request1))?$request1['crtCheck']: [];
 
-            
             $studentResultsAll = StudentsResult::where('IdEspecialidad', $id)
             ->where('deleted_at', null)->get();
             $educationalObjetivesAll = EducationalObjetive::where('IdEspecialidad', $id)
             ->where('deleted_at', null)->get();
-            
             $data['educationalObjetivesAll']=$educationalObjetivesAll;
             $data['educationalObjetives']=$educationalObjetives;
-
             $data['studentResultAll']=$studentResultsAll;
             $data['studentsResults']=$studentsResults;
             $data['aspects']=$aspects;
             $data['criterions']=$criterions;
-           // $data['aspCheck']=$request['aspCheck'];
-           // $data['crtCheck']=$request['crtCheck'];
-            
+
+
+
+            ///para usarlo en el guardado
+            $data['cycleStart']=$request1['cycleStart'];
+            $data['cycleEnd']=$request1['cycleEnd'];
+
+            $data['measures']=$request1['measures'];
+            $data['objCheck']=$request1['objCheck'];
+            $data['stRstCheck']=$request1['stRstCheck'];
+            $data['aspCheck']=$request1['aspCheck'];
+            $data['crtCheck']=$request1['crtCheck'];
+
 
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
@@ -394,10 +401,26 @@ class FlujoCoordinadorController extends Controller
         return view('flujoCoordinador.period_continue', $data);
     }
 
-    public function storePeriod(Request $request,$id)
+    public function storePeriod2(Request $request, $facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad)
     {
         try {       
-            $period = $this->facultyService->createConfFaculty($request->all());
+            dd("hola");
+            $period = $this->facultyService->createFaculty($facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad);
+
+            //dd($facultyAgreementLevel);
+            Session::put('period-code', $period->IdPeriodo);
+
+        } catch (Exception $e) { 
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+
+        return $this->initAcademicCycle($id);
+    }
+
+    public function storePeriod(Request $request, $id)
+    {
+        try {
+            $period = $this->facultyService->createConfFaculty($request->all(), $id);
 
             Session::put('period-code', $period->IdPeriodo);
 
@@ -407,6 +430,9 @@ class FlujoCoordinadorController extends Controller
 
         return $this->initAcademicCycle($id);
     }
+      
+
+
     
     public function createAcademicCycle($id) {
         $data['title'] = 'Información del Ciclo Actual';
@@ -849,7 +875,7 @@ class FlujoCoordinadorController extends Controller
             //dd($id);
             $data['idEspecialidad']=$id;
             $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle();
-            
+            //dd($data['currentStudentsResults']);
             $data['courses']= $this->courseService->retrieveByFacultyandCicle($id);
             //dd("hola");
         } catch (\Exception $e) {

@@ -12,6 +12,7 @@ use Intranet\Models\Tutstudent;
 use Intranet\Models\Tutorship;
 use Intranet\Models\User;
 use Intranet\Models\Teacher;
+use Intranet\Models\TutSchedule;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
 use Intranet\Http\Services\User\PasswordService;
 
@@ -25,28 +26,28 @@ class TutstudentController extends Controller
     }
 
     public function downLoadExample() {
-        return response()->download(public_path() . "/uploads/example.csv");
+        return response()->download(public_path() . "/uploads/alumnos.xlsx");
     }
     public function index(Request $request)
     {        
-        $mayorId = Session::get('faculty-code');
+        $mayorId    = Session::get('faculty-code');
 
-        $filters = [
-            "code" => $request->input('code'),
-            "name" => $request->input('name'),
-            "lastName" => $request->input('lastName'),
-            "secondLastName" => $request->input('secondLastName'),
+        $filters    = [
+            "code"              => $request->input('code'),
+            "name"              => $request->input('name'),
+            "lastName"          => $request->input('lastName'),
+            "secondLastName"    => $request->input('secondLastName'),
         ];
 
-        $tutorId = $request->input('tutorId', null);
+        $tutorId    = $request->input('tutorId', null);
 
-        $tutors = Teacher::getTutorsFiltered( [], $mayorId);
+        $tutors     = Teacher::getTutorsFiltered( [], $mayorId);
         
-        $students = Tutstudent::getFilteredStudents($filters, $tutorId, $mayorId);
+        $students   = Tutstudent::getFilteredStudents($filters, $tutorId, $mayorId);
 
-        $data = [
-            'students' =>  $students,
-            'tutors' => $tutors 
+        $data       = [
+            'students'  =>  $students,
+            'tutors'    => $tutors 
         ];
 
         return view('tutorship.tutstudent.index', $data);
@@ -67,13 +68,13 @@ class TutstudentController extends Controller
        
         try {
 
-            $mayorId = Session::get('faculty-code');
+            $mayorId        = Session::get('faculty-code');
 
-            $status = Tutstudent::createTutStudent($request, $mayorId);
+            $status         = Tutstudent::createTutStudent($request, $mayorId);
 
-            $studentCode = Tutstudent::where('codigo', $request['codigo'])->first();
+            $studentCode    = Tutstudent::where('codigo', $request['codigo'])->first();
 
-            $studentEmail = Tutstudent::where('correo', $request['correo'])->first();
+            $studentEmail   = Tutstudent::where('correo', $request['correo'])->first();
 
             if ($status == 1) {
                 
@@ -97,8 +98,8 @@ class TutstudentController extends Controller
 
     public function storeAll(Request $request)
     {
-        $csv_file = $request->file('csv_file'); 
-        $mayor = Session::get('faculty-code');
+        $csv_file   = $request->file('csv_file'); 
+        $mayor      = Session::get('faculty-code');
 
         try {
 
@@ -107,10 +108,12 @@ class TutstudentController extends Controller
             if ($status['code'] == 1) {
                 
                 return redirect()->route('alumno.createAll')->with('warning', $status['message']);
-            } else if ($status['code'] == 2) {
+            } else 
+            if ($status['code'] == 2) {
                 
                 return redirect()->route('alumno.index')->with('success', $status['message']);
-            } else if ($status['code'] == 3) {
+            } else 
+            if ($status['code'] == 3) {
                 
                 return redirect()->route('alumno.createAll')->with('warning', $status['message']);
             }
@@ -122,35 +125,22 @@ class TutstudentController extends Controller
 
     public function show($id)
     {
-        $student       = Tutstudent::find($id);
-        $data = [
+        $student    = Tutstudent::find($id);
+        $data       = [
             'student'      =>  $student,
         ];
         return view('tutorship.tutstudent.show', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $student       = Tutstudent::find($id);
         $data = [
-            'student'      =>  $student,
+            'student'   =>  $student,
         ];
         return view('tutorship.tutstudent.edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(TutstudentRequest $request, $id)
     {
         try {   
@@ -180,7 +170,7 @@ class TutstudentController extends Controller
 
             //si cambio el correo
             if($request['correo'] != $student->correo )   {
-                $student->correo       = $request['correo'];  
+                $student->correo    = $request['correo'];  
                 //envio correo a la nueva direccion
                 try{
                     $nombre = $request['nombre'];
@@ -240,22 +230,35 @@ class TutstudentController extends Controller
     } 
 
     public function assignTutor(){
-        $idEspecialidad = Session::get('faculty-code');
-        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria',null)->get(); 
-        $tutors = Teacher::where('IdEspecialidad',$idEspecialidad)->where('rolTutoria',1)->get();
+        $idEspecialidad     = Session::get('faculty-code');
 
-        //dd(count($tutors->tutorships));
+        $students           = Tutstudent::where('id_especialidad', $idEspecialidad)
+                                        ->where('id_tutoria',null)
+                                        ->get(); 
+        
 
-        $data = [
-            'students'    =>  $students,
-            'tutors'      => $tutors,            
+        $tutors             = Teacher::where('IdEspecialidad',$idEspecialidad)
+                                    ->where('rolTutoria',1)
+                                    ->orderBy('IdDocente')
+                                    ->get();
+
+        $quantityStudents   = $students->count();
+        $quantityTutors     = $tutors->count();
+
+        $allQuantity        = Tutstudent::getQuantityPerTutor($quantityTutors, $quantityStudents);
+
+        $data               = [
+            'students'      => $students,
+            'tutors'        => $tutors,
+            'quantities'    => $allQuantity,   
         ];
+
         return view('tutorship.tutstudent.assign',$data);
     }
 
     public function assignTutorDo(Request $request){
-               // dd($request['cant']);
         $sum=0;
+
         if($request['cant']!=null && $request['total']!=0){
             foreach($request['cant'] as $idTeacher => $value){                
                 $sum = $sum + $value;                

@@ -44,11 +44,11 @@ class Tutstudent extends Model
                 
                 if ($count) {
                     $register = [
-                        'codigo' => $row[1],
-                        'nombre' => $row[2],
-                        'app' => $row[3],
-                        'apm' => $row[4],
-                        'correo' => $row[5],
+                        'codigo'    => $row[1],
+                        'nombre'    => $row[2],
+                        'app'       => $row[3],
+                        'apm'       => $row[4],
+                        'correo'    => $row[5],
                     ];
 
                     $validator = Validator::make($register, [
@@ -61,9 +61,9 @@ class Tutstudent extends Model
 
 
                     if ($validator->fails()) {
-                        $status = [
-                            'code' => 1,
-                            'message' => 'El formato de los datos de la fila ' . $count . ' no es correcto',
+                        $status     = [
+                            'code'      => 1,
+                            'message'   => 'El formato de los datos de la fila ' . $count . ' no es correcto',
                         ];
 
                         return $status;
@@ -75,16 +75,16 @@ class Tutstudent extends Model
                 $count += 1;
             }
             
-            $status = [
-                'code' => 2,
-                'message' => 'Los alumnos se han registrado exitosamente',
+            $status     = [
+                'code'      => 2,
+                'message'   => 'Los alumnos se han registrado exitosamente',
             ];
             return $status;
         
         } else {
-            $status = [
-                'code' => 3,
-                'message' => 'El archivo esta vacío',
+            $status     = [
+                'code'      => 3,
+                'message'   => 'El archivo esta vacío',
             ];
             return $status;
         }
@@ -124,9 +124,9 @@ class Tutstudent extends Model
 
     static public function createTutStudent($data, $mayorId) {
 
-        $studentCode = Tutstudent::withTrashed()->where('codigo', $data['codigo'])->first();
+        $studentCode    = Tutstudent::withTrashed()->where('codigo', $data['codigo'])->first();
 
-        $studentEmail = Tutstudent::withTrashed()->where('correo', $data['correo'])->first();
+        $studentEmail   = Tutstudent::withTrashed()->where('correo', $data['correo'])->first();
 
         if ($studentCode && $studentCode->id_especialidad) {
             $studentCode->restore();
@@ -170,14 +170,51 @@ class Tutstudent extends Model
         
     }
 
+    static public function getQuantityPerTutor($quantityTutors, $quantityStudents) {
+        
+        $quantity = $quantityStudents / $quantityTutors;
+
+        $quantity = ceil($quantity);
+
+        $count = 0;
+
+        $numberStudent = 0;
+
+        $default = 0;
+
+        $allQuantity = array();
+
+        while ($numberStudent + $quantity <= $quantityStudents) {
+            array_push($allQuantity, $quantity);
+
+            $numberStudent += $quantity;
+
+            $count += 1;
+        }
+
+        if ($quantityStudents - $numberStudent) {
+            array_push($allQuantity, $quantityStudents - $numberStudent);
+
+            $count += 1;
+        }
+
+        while ($count != $quantityTutors) {
+            array_push($allQuantity, $default);
+
+            $count += 1;
+        }
+
+        return $allQuantity;
+    }
+
     static function createStudentUser($studentCode, $email) {
 
         $passwordService = new PasswordService;
 
         $user = User::create([
-                "Usuario" => $studentCode,
-                "Contrasena" => bcrypt(123),
-                "IdPerfil" => 0
+                "Usuario"       => $studentCode,
+                "Contrasena"    => bcrypt(123),
+                "IdPerfil"      => 0
             ]);
 
         if ($user) {

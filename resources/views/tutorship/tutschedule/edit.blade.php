@@ -82,18 +82,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {{Form::label('No Disponibilidad *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12">No disponibilidad *</label>
+                    
                     <div class="col-md-4">  
                         Desde
                         <div class="input-group date fechaDesde">
-                            <input type="text" class="form-control input-date" name="fechaDesde[1]" id="fecha_desde" placeholder="dd-mm-aaaa" maxlength="10" required/>
+                            <input type="text" class="form-control input-date" name="fechaDesde[1]" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>                        
                     </div>
                     <div class="col-md-4">  
                         Hasta
                         <div class="input-group date fechaHasta">
-                            <input type="text" class="form-control input-date" name="fechaHasta[1]" id="fecha_hasta" placeholder="dd-mm-aaaa" maxlength="10" required/>
+                            <input type="text" class="form-control input-date" name="fechaHasta[1]" id="fechaHasta" placeholder="dd-mm-aaaa" maxlength="10" required/>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>                        
                     </div>
@@ -133,7 +134,7 @@
             return;
         }
         n++;
-        $("#fechas").append('<div class="form-group fecha">heyyyyy</div>');
+        $("#fechas").append('<div class="form-group fecha"><label class="control-label col-md-4 col-sm-3 col-xs-12"></label><div class="col-md-4">Desde<div class="input-group date fechaDesde"><input type="text" class="form-control input-date" name="fechaDesde[1]" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div><div class="col-md-4">Hasta<div class="input-group date fechaHasta"><input type="text" class="form-control input-date" name="fechaHasta[1]" id="fechaHasta" placeholder="dd-mm-aaaa" maxlength="10" required/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div></div>');
     });
     
     $("#remove").click(function() {

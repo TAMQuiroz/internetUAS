@@ -3,6 +3,8 @@
 namespace Intranet\Models;
 
 use DB;
+use Validator;
+use Excel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------necesario para softdeletes
 use Intranet\Http\Services\User\PasswordService;
@@ -30,33 +32,65 @@ class Tutstudent extends Model
       return $this->hasMany('Intranet\Models\Tutstudentxevaluation','id_tutstudent');//bien
     }
 
+    public function tutmetings(){
+      return $this->hasMany('Intranet\Models\TutMeeitng','id_tutstudent');//bien
+    }    
+
     static public function loadStudents($csv_path, $mayor) {
 
-        if (($csv_file = fopen($csv_path, "r")) !== FALSE ) {
-            $headers = fgetcsv($csv_file);
+        $excel_file = Excel::load($csv_path, function($reader){})->get();
 
-            while (($row = fgetcsv($csv_file)) !== FALSE) {
-                $student = Tutstudent::withTrashed()->where("codigo", $row[0])->first();
+        if (!empty($excel_file) && $excel_file->count()) {
+            
+            $count = 0;
+
+            foreach ($excel_file as $row) {
                 
-                if($student) {
-                    $student->restore();
-                } else {
-                    $id_user = Tutstudent::createStudentUser($studentCode = $row[0], $email = $row[4]);
+                if ($count) {
+                    $register = [
+                        'codigo' => $row[1],
+                        'nombre' => $row[2],
+                        'app' => $row[3],
+                        'apm' => $row[4],
+                        'correo' => $row[5],
+                    ];
 
-                    Tutstudent::create([
-                        "codigo" => $row[0],
-                        "nombre" => $row[1],
-                        "ape_paterno" => $row[2],
-                        "ape_materno" => $row[3],
-                        "correo" => $row[4],
-                        "id_especialidad" => $mayor,
-                        "id_usuario" => $id_user,
+                    $validator = Validator::make($register, [
+                        'codigo'        => 'required|digits:8',
+                        'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+                        'app'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+                        'apm'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+                        'correo'        => 'required|email', 
                     ]);
-                }
-            }
 
-        }else {
-            throw new InvalidTutStudentException;
+
+                    if ($validator->fails()) {
+                        $status = [
+                            'code' => 1,
+                            'message' => 'El formato de los datos de la fila ' . $count . ' no es correcto',
+                        ];
+
+                        return $status;
+                    }
+
+                    Tutstudent::createTutStudent($register, $mayor);
+                }
+                
+                $count += 1;
+            }
+            
+            $status = [
+                'code' => 2,
+                'message' => 'Los alumnos se han registrado exitosamente',
+            ];
+            return $status;
+        
+        } else {
+            $status = [
+                'code' => 3,
+                'message' => 'El archivo esta vacío',
+            ];
+            return $status;
         }
     }
 
@@ -90,6 +124,54 @@ class Tutstudent extends Model
         }
 
         return $query->withTrashed()->paginate(10);
+    }
+
+    static public function createTutStudent($data, $mayorId) {
+
+        $studentCode = Tutstudent::withTrashed()->where('codigo', $data['codigo'])->first();
+
+        $studentEmail = Tutstudent::withTrashed()->where('correo', $data['correo'])->first();
+
+        if ($studentCode && $studentCode->id_especialidad) {
+            $studentCode->restore();
+            return 1; //code already exist
+        } else 
+        if ($studentEmail && $studentEmail->id_especialidad) {
+            $studentEmail->restore();
+            return 2; //email already exist
+        } else 
+        if (($studentCode && !$studentCode->id_especialidad) ||
+            ($studentEmail && !$studentEmail->id_especialidad)) {
+            if ($studentCode) {
+                $studentCode->restore();
+                $studentCode->id_especialidad = $mayorId;
+                $studentCode->save();
+            } else {
+                $studentEmail->restore();
+                $studentEmail->id_especialidad = $mayorId;
+                $studentEmail->save();
+            }
+
+            return 3; //id_especialidad were updated
+        }
+
+        $idUsuarioCreado = Tutstudent::createStudentUser($data['codigo'], $data['correo']);
+
+        //ahora se crea el alumno
+        $student = new Tutstudent;
+        $student->codigo           = $data['codigo'];
+        $student->nombre           = $data['nombre'];
+        $student->ape_paterno      = $data['app'];
+        $student->ape_materno      = $data['apm'];
+        $student->correo           = $data['correo'];
+        $student->id_especialidad  = $mayorId;
+        $student->id_usuario       = $idUsuarioCreado;
+
+        //se guarda en la tabla Alumnos
+        $student->save();
+
+        return 4;
+        
     }
 
     static function createStudentUser($studentCode, $email) {

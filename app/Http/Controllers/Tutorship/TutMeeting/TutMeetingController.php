@@ -59,9 +59,42 @@ class TutMeetingController extends Controller
         return view('tutorship.tutormystudents.show', $data);
     }
 
-    public function indexMyDates()
+    public function indexMyDates(Request $request)
     {
-        return view('tutorship.tutormydates.index');
+        $mayorId    = Session::get('faculty-code');
+
+        $user       = Session::get('user');
+        $id_docente = Session::get('user')->IdDocente;
+
+        $dateOriginalFormat = $request['beginDate'];            
+        if ( $dateOriginalFormat )
+            $beginDate = date("Y-m-d", strtotime($dateOriginalFormat));
+        else
+            $beginDate = "";        
+        $dateOriginalFormat = $request['endDate'];            
+        if ( $dateOriginalFormat )
+            $endDate = date("Y-m-d", strtotime($dateOriginalFormat));
+        else
+            $endDate = "";
+
+        $filters    = [
+            "code"           => $request->input('code'),
+            "name"           => $request->input('name'),
+            "lastName"       => $request->input('lastName'),
+            "secondLastName" => $request->input('secondLastName'),
+            "beginDate"      => $beginDate,
+            "endDate"        => $endDate,
+            "state"          => $request->input('state'),
+            "id_docente"     => $id_docente,
+        ];
+
+        $tutMeetings = TutMeeting::getFilteredTutMeetings($filters);
+
+        $data       = [
+            "tutMeetings" => $tutMeetings,
+        ];
+
+        return view('tutorship.tutormydates.index', $data);
     }
 
     public function createDate($id)
@@ -148,7 +181,7 @@ class TutMeetingController extends Controller
                 $newMeeting     = TutMeeting::create([
                     "inicio"        => $completedDate,
                     "duracion"      => $parameters->duracionCita,
-                    "estado"        => 1,
+                    "estado"        => 4,
                     "id_topic"      => $topic,
                     "id_docente"    => $user->IdDocente,
                     "id_tutstudent" => $idStudent

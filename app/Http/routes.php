@@ -603,6 +603,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('edit/{id}', ['as' => 'meeting.update', 'uses' => 'Psp\meeting\MeetingController@update']);
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
                 Route::get('search/{id}', ['as' => 'meeting.search', 'uses' => 'Psp\meeting\MeetingController@search']);    
+                Route::get('indexSup', ['as' => 'meeting.indexSup', 'uses' => 'Psp\meeting\MeetingController@indexSup']);
             });
 
             //MeetingTeacher
@@ -793,8 +794,10 @@ $api->version('v1', function ($api) {
                 $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
                 $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
 
+                $api->post('date/supervisor/employer', 'Students\PspStudentsInscriptionFiles@postAppointmentSuperEmployer');
+                $api->get('getInscriptions/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
                 $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
-           
+                $api->get('studentsPSP/all','Students\PspStudentsInscriptionFiles@getAllPspStudents');
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
@@ -842,7 +845,12 @@ $api->version('v1', function ($api) {
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
             $api->post('filterStudentAppointment', 'Tutoria\TutStudentController@filterStudentAppointment');
 
-
+            //EVALUACIONES
+             $api->group(['namespace' => 'Evaluation','prefix' => 'evaluation'], function($api){
+                $api->get('getAllEvaluations', 'EvaluationController@getAll');
+                $api->get('getEvaluation/{id}', 'EvaluationController@getById');
+                $api->get('getEvaluationsByFilter/{name}/{state}/{id}', 'EvaluationController@getEvaluationByFilter');
+            }); 
         });
     });
 
@@ -1295,6 +1303,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::post('/{id}/courses/store', ['as' => 'courses_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_store']);
         Route::get('/{id}/courses/{idCourse}/edit', ['as' => 'courses_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_edit']);
         Route::post('/{id}/courses/update', ['as' => 'courses_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_update']);
+        Route::get('/courses/{idCourse}/delete', ['as' => 'courses_delete.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_delete']);
 
 
         /* cursos en el ciclo */        
@@ -1324,8 +1333,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
         Route::get('/{id}/period/create', ['as' => 'period_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createPeriod']);
         Route::get('/{id}/period/view', ['as' => 'period_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewPeriod']);
+        Route::get('/{id}/period/continue', ['as' => 'period_continue.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@continuePeriod']);
         Route::post('/{id}/period/store', ['as' => 'period_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod']);
         
+
         Route::get('/{id}/academicCycle', ['as' => 'academicCycle_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initAcademicCycle']);
         Route::get('/{id}/academicCycle/create', ['as' => 'academicCycle_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createAcademicCycle']);
         Route::get('/{id}/academicCycle/view', ['as' => 'academicCycle_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewAcademicCycle']);

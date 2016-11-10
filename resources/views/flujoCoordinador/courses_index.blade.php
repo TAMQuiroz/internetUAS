@@ -44,7 +44,7 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="curso-fc-table">
                     @foreach($courses as $cours)
                         <tr class="even pointer">
                             <td hidden class="course-id">{{ $cours->IdCurso }}</td>
@@ -75,22 +75,32 @@
                     </tbody>
                 </table>
             </div>
+            
+            
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a id="curso-siguiente-btn" href="{{ route('end2.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
+                    <a  href="{{ route('profesor_index.flujoCoordinador',$idEspecialidad) }}" class="btn btn-default pull-left"> < Atras</a>
+                </div>
+            </div>
+
+            
         </div>
     </div>
 
-    <div class="row">
-      <div class="separator"></div>
-      <div class="row">
+    <script>
+    $(document).ready(function(){
+        var fila = $("#curso-fc-table").find("tr");
+            if (fila.length == 0) {
+                $('#curso-siguiente-btn').attr("disabled","true");
+                $('#curso-siguiente-btn').click(function(){return false;});
+            }
+    });
 
-          <div class="col-md-12 col-sm-12 col-xs-12">
-               <a  href="{{ route('end2.flujoCoordinador',$idEspecialidad) }}" class="btn btn-success pull-right">Siguiente ></a>
-               <a  href="{{ route('profesor_index.flujoCoordinador',$idEspecialidad) }}" class="btn btn-default pull-left"> < Atras</a>
-          </div>
-      </div>
+    </script>
 
-  </div>
-
-    <script src="{{ URL::asset('js/intranetjs/courses/index-script.js')}}"></script>
+    <script src="{{ URL::asset('js/intranetjs/flujoCoordinador/delete-course.js')}}"></script>
 
     @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar el curso?', 'action' => '#', 'button' => 'Delete'])
     @include('courses.view-modal', ['title' => 'Course #'])

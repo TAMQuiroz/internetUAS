@@ -54,7 +54,7 @@
                                     <div class="form-group" id="divplan" style="display:none;">
                                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nivel Academico <span class="error">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="course-academicLevel" class="form-control col-md-7 col-xs-12" type="number" min="0" max="10" name="course-academicLevel" @if($course->NivelAcademico!=-1) value="{{$course->NivelAcademico}}" @else value="1" @endif>
+                                            <input id="course-academicLevel" class="form-control col-md-7 col-xs-12" type="number" min="0" max="12" name="course-academicLevel" @if($course->NivelAcademico!=-1) value="{{$course->NivelAcademico}}" @else value="1" @endif>
                                         </div>
                                     </div>
                                 </div>

@@ -805,6 +805,11 @@ $api->version('v1', function ($api) {
 
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
                 $api->post('students/{id}/sendInscriptioFile', 'Students\PspStudentsInscriptionFiles@edit');
+                $api->get('meetings/student', 'Meeting\PspMeetingController@getMeetings');
+                $api->get('supervisor/students','Students\PspStudentsController@getSupStudents');
+                $api->get('meeting/student/{id}','Meeting\PspMeetingController@getMeetingByStudent');
+
+
             });
 
             //INVESTIGACION
@@ -843,11 +848,17 @@ $api->version('v1', function ($api) {
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
             $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
+            $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment');
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
             $api->post('filterStudentAppointment', 'Tutoria\TutStudentController@filterStudentAppointment');
 
-
+            //EVALUACIONES
+             $api->group(['namespace' => 'Evaluation','prefix' => 'evaluation'], function($api){
+                $api->get('getAllEvaluations', 'EvaluationController@getAll');
+                $api->get('getEvaluation/{id}', 'EvaluationController@getById');
+                $api->get('getEvaluationsByFilter/{name}/{state}/{id}', 'EvaluationController@getEvaluationByFilter');
+            }); 
         });
     });
 

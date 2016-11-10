@@ -59,10 +59,33 @@ class PspMeetingController extends BaseController
  		}
  	
 
+ 	}
+
+
+
+ 	public function getMeetingByStudent($id){
+
+ 			$user =  JWTAuth::parseToken()->authenticate();
+
+ 	
+
+ 			$student = Student::find($id);
+
+ 			$meeting = 	meeting::where('idstudent', $id)->get();
+
+
+
+ 		
+ 			$data = $meeting->toArray();
+ 			
+ 			return $this->response->array($data);
+
+
+
  	}	
 
 
- 	
+
 
 
 

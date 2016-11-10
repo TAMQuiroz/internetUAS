@@ -54,17 +54,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Especialidad <span class="error">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="facultycode" id="facultycode" class="form-control" required="required">
-                                    <option value="">-- Seleccione --</option>
-                                    @foreach( $faculties as $fac)
-                                        <option value="{{$fac->IdEspecialidad}}">{{$fac->Nombre}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        
 
                         <div class="separator"></div>
                         <div class="row">

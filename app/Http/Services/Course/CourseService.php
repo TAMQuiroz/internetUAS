@@ -120,7 +120,7 @@ class CourseService
             'Codigo' => $request['coursecode'],
             'NivelAcademico' => $courseacademiclevel,
             'IdEspecialidad' => $especialidad,
-            'Especialidad_p'=> $_POST['facultycode']
+            'Especialidad_p'=> null
         ]);
 
         $regular_professors = isset($request['regular_professors'])?$request['regular_professors']:[];

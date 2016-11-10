@@ -381,9 +381,10 @@ class FacultyService {
 					'Vigente'=>'1'
 			]);
 
-
-
-	    $confFaculty = ConfFaculty::create(['NivelEsperado' => $request['facultyAgreementLevel'],
+		// auto calcular el valor
+		$nivelEsperado = intval(round(($request['facultyAgreement'] * $request['criteriaLevel'])/100, 0, PHP_ROUND_HALF_UP));
+		
+	    $confFaculty = ConfFaculty::create(['NivelEsperado' => $nivelEsperado,
 					'UmbralAceptacion' => $request['facultyAgreement'],
 					'CantNivelCriterio' => $request['criteriaLevel']	,
 					'IdCicloFin' => $request['cycleEnd']	,

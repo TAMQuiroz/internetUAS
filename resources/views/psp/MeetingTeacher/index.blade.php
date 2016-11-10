@@ -41,6 +41,7 @@
                             <td>{{$student->correo}}</td> 
                             <td>
                                 <a href= "{{route('MeetingTeacher.create', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
+                                 <a class="btn btn-primary btn-xs" title="Email"><i class="fa fa-envelope"></i></a>
                             </td>               
                         </tr> 
                         @endforeach

@@ -119,8 +119,6 @@ class StudentController extends BaseController {
 										return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 									}
 
-									dd($alumnoTut);
-
 									$user = $this->create_user_tutoria($alumnoTut);		
 
 									if($user != null){
@@ -130,9 +128,7 @@ class StudentController extends BaseController {
 							}
 							else{
 								return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
-							}
-
-														
+							}								
 						}
 						
 						array_push($students, $insert);						
@@ -140,9 +136,6 @@ class StudentController extends BaseController {
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 					}
 				}
-
-
-				dd($students);
 
 				if(!empty($students)){
 					foreach ($students as $student) {
@@ -156,7 +149,7 @@ class StudentController extends BaseController {
 						if($student['lleva_psp'] == 1){
 							$alumno->IdUsuario = $student['IdUsuario'];							
 						}
-						$alumno->lleva_psp = $student['lleva_psp'];																
+						$alumno->lleva_psp = null;																
 						$alumno->save();
 					}
 				}

@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Intranet\Models\User;
 
 class FlujoCoordinadorTest extends TestCase
 {
@@ -17,23 +18,71 @@ class FlujoCoordinadorTest extends TestCase
     }
 
     public function test_acr_crear_curso_01(){
-    	$user = factory(Intranet\Models\User::class)->make();
+    	
+        $coord = factory(Intranet\Models\User::class,'coordinador_especialidad')->make();
 
-    	$this->actingAs($user)
+    	$this->actingAs($coord)
             ->withSession([
 	    		'actions' => [],
-	    		'user' => $user
+	    		'user' => $coord
     		])->visit('/flujoCoordinador/1/courses/create')
-    		->type('INF666','courseCode')
+    		->type('INF666','coursecode')
     		->type('Del diablo','coursename')
-    		->type('10','courseacademicLevel')
+    		->select('10','courseacademicLevel')
     		->select('1','facultycode')
     		->press('Guardar')
-    		->seePageIs('/flujoCoordinador/1/courses')
+    		->seePageIs('/flujoCoordinador/1/courses/')
     		->see('El curso se ha registrado exitosamente');
     }
 
+    public function test_acr_crear_curso_02(){
+        $coord = factory(Intranet\Models\User::class,'coordinador_especialidad')->make();
 
+        $this->actingAs($coord)
+            ->withSession([
+                'actions' => [],
+                'user' => $coord
+            ])->visit('/flujoCoordinador/1/courses/create')
+            ->type('','coursecode')
+            ->type('Del diablo','coursename')
+            ->select('13','courseacademicLevel')
+            ->select('1','facultycode')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/1/courses/create');
+    }
+
+    public function test_acr_crear_curso_03(){
+        $coord = factory(Intranet\Models\User::class,'coordinador_especialidad')->make();
+
+        $this->actingAs($coord)
+            ->withSession([
+                'actions' => [],
+                'user' => $coord
+            ])->visit('/flujoCoordinador/1/courses/create')
+            ->type('INF666','coursecode')
+            ->type('','coursename')
+            ->select('13','courseacademicLevel')
+            ->select('1','facultycode')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/1/courses/create');
+    }
+    /*
+    public function test_acr_crear_curso_04(){
+        $coord = factory(Intranet\Models\User::class,'coordinador_especialidad')->make();
+
+        $this->actingAs($coord)
+            ->withSession([
+                'actions' => [],
+                'user' => $coord
+            ])->visit('/flujoCoordinador/1/courses/create')
+            ->type('INF666','coursecode')
+            ->type('Del diablo','coursename')
+            ->select('13','courseacademicLevel')
+            ->select('','facultycode')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/1/courses/create');
+    }
+    */
     public function test_uas_crear_profesor2_01(){
 
         $user = factory(Intranet\Models\User::class)->make();

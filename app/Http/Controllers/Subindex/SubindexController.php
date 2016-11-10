@@ -57,8 +57,7 @@ class SubindexController extends BaseController {
 
                 }
             } else if ($user->user->IdPerfil == 5){ //Investigadores
-
-                array_push($data['faculties'], $this->facultyService->find($user->IdEspecialidad));
+                array_push($data['faculties'], $this->facultyService->find($user->id_especialidad));
                 $data['isEmpty'] = false;
 
             }else if ($user->user->IdPerfil== 6){ //Supervisores

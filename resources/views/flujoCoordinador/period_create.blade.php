@@ -63,15 +63,6 @@
 
                      <div class="row" style="margin-top: 10px;">
                      <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nivel de Aceptación <span class="error">*</span></label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="facultyAgreementLevel" class="form-control col-md-7 col-xs-12" type="number" name="facultyAgreementLevel" value="" >
-                        </div>
-                    </div>
-                    </div>
-
-                     <div class="row" style="margin-top: 10px;">
-                     <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Aceptación % <span class="error">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input id="facultyAgreement" class="form-control col-md-7 col-xs-12" type="number" name="facultyAgreement"  value="" >

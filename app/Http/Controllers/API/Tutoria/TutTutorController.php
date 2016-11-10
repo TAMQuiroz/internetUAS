@@ -53,7 +53,7 @@ class TutTutorController extends BaseController
     {
       
 
-        // ACA DEBERIAMOS OBTENER LOS DATOS DEL ALUMNO DEL TUTOR, ADEMAS DE OTRAS COSAS QUE SIRVAN DE INFORMACION PARA LAS CITAS (AUN NO LO HE HECHO XD)
+        // ACA DEBERIAMOS OBTENER LOS DATOS DEL ALUMNO DEL TUTOR, ADEMAS DE OTRAS COSAS QUE SIRVAN DE INFORMACION PARA LAS CITAS  COMO CALENDARIO(AUN NO LO HE HECHO XD)
 
          $docenteInfo = Teacher::where('idUsuario',$id)->get();
          $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
@@ -74,6 +74,75 @@ class TutTutorController extends BaseController
   
         
     }
+
+    public function postAppointment(Request $request)
+    {
+      
+ 
+
+ 
+ 
+        //------------BEGIN DATETIME------------------
+        $dateStringAux = $request->only('fecha');
+        $dateString = $dateStringAux['fecha']; //fecha reserva 
+        $horaAux1 =  $request->only('hora');  
+        $horaAux2 = $horaAux1['hora']; 
+        $hora =  $horaAux2.":00"; // hora reserva ejem 12:00:00
+        $dateHour = $dateString." ".$hora;
+        $format = "d/m/Y H:i:s";
+        $dateTimeBegin= DateTime::createFromFormat($format, $dateHour); //dateTime para registrar a la base de datos
+        //--------------END DATETIME------------------
+
+        //------------BEGIN MOTIVO--------------------
+        $motivoAux = $request->only('motivo');
+        $motivoString = $motivoAux['motivo'];
+        $motivoInfo =  Topic::where('nombre', $motivoString)->get();
+        //--------------END MOTIVO--------------------
+
+        //------INICIO OBTENIENDO ID DEL TUTOR--------
+        $idUserAux = $request->only('idUser');
+        $idUser = $idUserAux['idUser'];
+        $tutorInfo = Teacher::where('IdUsuario', $idUserAux['idUser'])->get();  // obtenemos la informacion para conseguir el IDDocente
+        $idDocente = $tutorInfo[0]['IdDocente'];
+        //------FIN OBTENIENDO ID DEL TUTOR-----------
+        //------INICIO OBTENIENDO ID DEL ALUMNO--------
+       
+        $fullNameAux = $request->only('studentFullName');
+        $fullName = $fullNameAux['studentFullName'];
+        $pos = strpos($fullName, " ");
+        $apePaterno = substr($fullName,0,$pos);
+        $nameAux1 =  substr($fullName,$pos+1);
+        $pos1 = strpos($nameAux1, " ");
+        $apeMaterno = substr($nameAux1,0,$pos1);
+        $nombre =  substr($nameAux1,$pos1+1);
+        //$studentInfo = Tutstudent::where('ape_paterno',$apePaterno)->where('ape_materno',$apeMaterno)->where('nombre',$nombre)->get();
+        $studentInfo = Tutstudent::where('ape_paterno',$apePaterno)->where('ape_materno',$apeMaterno)->where('nombre',$nombre)->get();
+
+        //------FIN OBTENIENDO ID DEL ALUMNO-----------
+    
+
+        //-------------BEGIN DATABASE INSERT ---------------
+        DB::table('tutmeetings')->insertGetId(
+            [
+                'id_tutstudent' => $studentInfo[0]['id'],
+                'inicio' => $dateTimeBegin,
+                //  'fin'  => $dateTimeFin,
+                // 'duracion' => $dateTimeEnd,
+                'id_docente' => $idDocente,
+                'id_topic' => $motivoInfo[0]['id'],
+                'creador' => 1,
+                'no_programada' => 0,
+                'estado' => 1
+            ]
+
+        );
+        //-------------END DATABASE INSERT ---------------
+
+        return "exito";    
+
+        
+    }
+
 
 
     public function updatePendienteAppointmentList(Request $request)

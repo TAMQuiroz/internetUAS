@@ -799,6 +799,8 @@ $api->version('v1', function ($api) {
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
                 $api->post('students/{id}/sendInscriptioFile', 'Students\PspStudentsInscriptionFiles@edit');
+                $api->get('meetings/student', 'Meeting\PspMeetingController@getMeetings');
+
             });
 
             //INVESTIGACION

@@ -29,7 +29,7 @@ class CourseService
                 $coursesxCycles = CoursexCycle::where('IdCicloAcademico', $IdCicloAcademico)
                     ->where('deleted_at', null)->get();
                 //dd("hola");
-                dd($coursesxCycles);
+                //dd($coursesxCycles);
                 if($coursesxCycles){
                     foreach ($coursesxCycles as $coursesxCycle){
                         if($coursesxCycle->course!=null){
@@ -39,7 +39,7 @@ class CourseService
                             }
                         }
                     }
-                    dd($courses);
+                    //dd($courses);
                     return $courses;
                 }else{
                     return $courses;

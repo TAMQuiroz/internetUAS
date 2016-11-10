@@ -10,25 +10,24 @@ use Intranet\Models\Teacher;
 use Intranet\Models\TutSchedule;
 use Illuminate\Support\Facades\Session;
 
-class TutScheduleController extends Controller
-{
+class TutScheduleController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $user = Session::get('user');     
+    public function index() {
+        $user = Session::get('user');
         $teacher = Teacher::find($user->IdDocente);
         $tutSchedule = TutSchedule::where('id_docente', $teacher->IdDocente)->get();
         $horas = $tutSchedule->count();
-        
+
         $data = [
-            'teacher'    =>  $teacher,
+            'teacher' => $teacher,
             'horas' => $horas,
         ];
-        
+
         return view('tutorship.tutschedule.index', $data);
     }
 
@@ -37,8 +36,7 @@ class TutScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -48,8 +46,7 @@ class TutScheduleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -59,8 +56,7 @@ class TutScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -70,22 +66,21 @@ class TutScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $teacher = Teacher::find($id);
-        $tutSchedule = TutSchedule::where('id_docente',$id)->get();
-        
-        $today = date('d-m-Y'); 
+        $tutSchedule = TutSchedule::where('id_docente', $id)->get();
+
+        $today = date('d-m-Y');
         $futureDay = date('d-m-Y', strtotime($today . '+185 day'));
-        
+
         $data = [
-            'teacher'    =>  $teacher,
+            'teacher' => $teacher,
             'tutSchedule' => $tutSchedule,
-            'startDate'     => $today,
-            'endDate'       => $today,
-            'futureDay'     => $futureDay,
+            'startDate' => $today,
+            'endDate' => $today,
+            'futureDay' => $futureDay,
         ];
-        
+
         return view('tutorship.tutschedule.edit', $data);
     }
 
@@ -96,8 +91,7 @@ class TutScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {        
+    public function update(Request $request, $id) {
         $teacher = Teacher::find($id);
         $teacher->telefono = $request['telefono'];
         $teacher->oficina = $request['oficina'];
@@ -106,24 +100,24 @@ class TutScheduleController extends Controller
 
         $checkedSchedules = $request->input("check", []);
 
-        $tutSchedule = TutSchedule::where('id_docente',$id)->get();
-        
-        if ($tutSchedule->count()!=0) { //si encuentra horarios del profe
-            foreach($tutSchedule as $t) {
+        $tutSchedule = TutSchedule::where('id_docente', $id)->get();
+
+        if ($tutSchedule->count() != 0) { //si encuentra horarios del profe
+            foreach ($tutSchedule as $t) {
                 $scheduleTrash = TutSchedule::find($t->id);
                 $scheduleTrash->forceDelete();
-            }                
-        }                           
-        
-        foreach($checkedSchedules as $diaHora => $value){
-            $schedule = new TutSchedule;
-            $schedule->dia = substr($diaHora,0,1);
-            $schedule->hora_inicio = substr($diaHora,1,2).":00:00";
-            $schedule->hora_fin = (intval(substr($diaHora,1,2))+1).":00:00";
-            $schedule->id_docente = $id;
-            $schedule->save();                    
+            }
         }
-                
+
+        foreach ($checkedSchedules as $diaHora => $value) {
+            $schedule = new TutSchedule;
+            $schedule->dia = substr($diaHora, 0, 1);
+            $schedule->hora_inicio = substr($diaHora, 1, 2) . ":00:00";
+            $schedule->hora_fin = (intval(substr($diaHora, 1, 2)) + 1) . ":00:00";
+            $schedule->id_docente = $id;
+            $schedule->save();
+        }
+
         return redirect()->route('miperfil.index')->with('success', 'Se guardaron los cambios exitosamente');
     }
 
@@ -133,8 +127,8 @@ class TutScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }

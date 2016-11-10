@@ -839,6 +839,16 @@ $api->version('v1', function ($api) {
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
 
+
+            //EVALUACIONES
+         $api->group(['namespace' => 'Evaluation','prefix' => 'evaluation'], function($api){
+
+            $api->get('getAllEvaluations', 'EvaluationController@getAll');
+            $api->get('getEvaluation/{id}', 'EvaluationController@getById');
+            $api->get('getEvaluationsByFilter/{name}/{state}/{id}', 'EvaluationController@getEvaluationByFilter');
+         });   
+
+
         });
     });
 

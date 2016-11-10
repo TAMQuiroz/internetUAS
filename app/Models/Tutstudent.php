@@ -32,6 +32,10 @@ class Tutstudent extends Model
       return $this->hasMany('Intranet\Models\Tutstudentxevaluation','id_tutstudent');//bien
     }
 
+    public function tutmetings(){
+      return $this->hasMany('Intranet\Models\TutMeeitng','id_tutstudent');//bien
+    }    
+
     static public function loadStudents($csv_path, $mayor) {
 
         $excel_file = Excel::load($csv_path, function($reader){})->get();

@@ -37,6 +37,7 @@
                     <thead>
                     <tr class="headings">
                         <th class="column-title">Código </th>
+                        <th class="column-title">Nivel Académico </th>
                         <th class="column-title">Nombre </th>
                         <th class="column-title last">Acciones</th>
                         <th class="bulk-actions" colspan="7">
@@ -49,7 +50,9 @@
                         <tr class="even pointer">
                             <td hidden class="course-id">{{ $cours->IdCurso }}</td>
                             <td class=" ">{{ $cours->Codigo }}</td>
+                            <td class=" ">{{ $cours->NivelAcademico }}</td>
                             <td class=" ">{{ $cours->Nombre }}</td>
+                            
                             <td class=" ">
                          
                                 @if(in_array(9,Session::get('actions')))
@@ -100,8 +103,7 @@
 
     </script>
 
-    <script src="{{ URL::asset('js/intranetjs/flujoCoordinador/delete-course.js')}}"></script>
-
+    
     @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar el curso?', 'action' => '#', 'button' => 'Delete'])
     @include('courses.view-modal', ['title' => 'Course #'])
 @endsection

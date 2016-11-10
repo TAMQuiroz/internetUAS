@@ -451,12 +451,12 @@ class FacultyService {
 	public function createFaculty($id) {
 
 		$measures = Session::get('measures');
-		$educationalObjetives = Session::get('educationalObjetives');
-		$studentsResults = Session::get('studentsResults');
-		$aspects = Session::get('aspects');
-		$criterions = Session::get('criterions');
+		$educationalObjetives = Session::get('objCheck');
+		$studentsResults = Session::get('stRstCheck');
+		$aspects = Session::get('aspCheck');
+		$criterions = Session::get('crtCheck');
 
-		dd($educationalObjetives);
+
 
 
 		$period = Period::create(['IdEspecialidad' =>$id,
@@ -473,6 +473,8 @@ class FacultyService {
 					'IdEspecialidad' =>  $id,
 					'IdPeriodo' => $period->IdPeriodo
 			]);
+
+	    dd($period);
 
 		$measures = Session::get('measures');
 		$educationalObjetives = Session::get('educationalObjetives');

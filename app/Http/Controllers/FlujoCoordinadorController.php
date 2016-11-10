@@ -24,6 +24,7 @@ use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Cicle\CicleService;
 use Intranet\Http\Services\DictatedCourses\DictatedCoursesService;
 use Intranet\Http\Services\User\PasswordService;
+use Intranet\Http\Services\AcademicCycle\AcademicCycleService;
 
 use Intranet\Http\Requests\AspectRequest;
 use Intranet\Http\Requests\CriterioResquest;
@@ -32,8 +33,10 @@ use Intranet\Http\Requests\CriterioStoreRequest;
 use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\User;
+use Intranet\Models\Course;
 use Intranet\Models\Teacher;
 use Intranet\Models\Criterion;
+use Intranet\Models\AcademicCycle;
 use Intranet\Models\StudentsResult;
 use Intranet\Models\MeasurementSource;
 use DB;
@@ -50,6 +53,8 @@ class FlujoCoordinadorController extends Controller
     protected $periodService;
     protected $dictatedCoursesService;
     protected $passwordService;
+    protected $academicCycleService;
+    protected $measurementSourceService;
 
 	public function __construct() {
 		$this->aspectService = new AspectService();
@@ -63,6 +68,8 @@ class FlujoCoordinadorController extends Controller
         $this->cicleService=new CicleService();
         $this->dictatedCoursesService = new DictatedCoursesService();
         $this->passwordService= new PasswordService();
+        $this->academicCycleService= new AcademicCycleService();
+        $this->measurementSourceService = new MeasurementSourceService();
 	}
 
     public function index()
@@ -303,7 +310,7 @@ class FlujoCoordinadorController extends Controller
         //dd("hola2");
         try {
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
-            $data['measures'] = $this->measureService->allByFaculty($id);
+            $data['measures'] = $this->measureService->allByFaculty2($id);
             $data['studentsResults'] = $this->studentsResultService->findByFaculty2($id);
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty2($id);
             
@@ -322,7 +329,7 @@ class FlujoCoordinadorController extends Controller
             $data['idEspecialidad']=$id;
             $data['period'] = $this->periodService->get(Session::get('period-code'));
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
-            $data['measures'] = $this->measureService->allByFaculty(Session::get('period-code'));
+            $data['measures'] = $this->measureService->allByFaculty2(Session::get('period-code'));
             $data['period_semesters'] = $this->cicleService->getCicleByPeriod(Session::get('period-code'));
             $data['studentsResults'] = $this->studentsResultService->findByFaculty();
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
@@ -335,22 +342,52 @@ class FlujoCoordinadorController extends Controller
     public function continuePeriod(Request $request,$id)
     {
         $data['title'] = 'Información del Periodo Actual';
-
+        $request1=$request->all();
         try {
             $data['idEspecialidad']=$id;
-/*
-            $data['a']=$request['facultyAgreementLevel'];
-            $data['b']=$request['facultyAgreement'];
-            $data['c']=$request['criteriaLevel'];
-            $data['d']=$request['cycleEnd'];
-            $data['e']=$request['cycleStart'];
-            $data['f']=$request['measures'];
-            $data['g']=$request['objCheck'];
-            $data['h']=$request['stRstCheck'];
-            $data['i']=$request['aspCheck'];
-            $data['j']=$request['crtCheck'];
-            
+
+            $faculty=$this->facultyService->getId($id);
+            $data['especialidad']=$faculty;
+
+            $cicloFin=$this->academicCycleService->getById($request1['cycleEnd']);
+            $data['fechaCicloFin']=$cicloFin->Descripcion;
+            $cicloInicio=$this->academicCycleService->getById($request1['cycleStart']);
+            $data['fechaCicloInicio']=$cicloInicio->Descripcion;
+
+            $data['facultyAgreementLevel']=$request1['facultyAgreementLevel'];
+            $data['facultyAgreement']=$request1['facultyAgreement'];
+            $data['criteriaLevel']=$request1['criteriaLevel'];
+
+
+            /*
+            $regular_professors = isset($request['regular_professors'])?$request['regular_professors']:[];
+            $course->regularProfessors()->sync($regular_professors);
 */
+
+            $measures = (array_key_exists('measures', $request1))?$request1['measures']: [];
+            //dd($measures);
+            $educationalObjetives = (array_key_exists('objCheck', $request1))?$request1['objCheck']: [];
+            $studentsResults = (array_key_exists('stRstCheck', $request1))?$request1['stRstCheck']: [];
+            $aspects = (array_key_exists('aspCheck', $request1))?$request1['aspCheck']: [];
+            $criterions = (array_key_exists('crtCheck', $request1))?$request1['crtCheck']: [];
+
+            
+            $studentResultsAll = StudentsResult::where('IdEspecialidad', $id)
+            ->where('deleted_at', null)->get();
+            $educationalObjetivesAll = EducationalObjetive::where('IdEspecialidad', $id)
+            ->where('deleted_at', null)->get();
+            
+            $data['educationalObjetivesAll']=$educationalObjetivesAll;
+            $data['educationalObjetives']=$educationalObjetives;
+
+            $data['studentResultAll']=$studentResultsAll;
+            $data['studentsResults']=$studentsResults;
+            $data['aspects']=$aspects;
+            $data['criterions']=$criterions;
+           // $data['aspCheck']=$request['aspCheck'];
+           // $data['crtCheck']=$request['crtCheck'];
+            
+
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
@@ -359,8 +396,7 @@ class FlujoCoordinadorController extends Controller
 
     public function storePeriod(Request $request,$id)
     {
-        try {
-                    
+        try {       
             $period = $this->facultyService->createConfFaculty($request->all());
 
             Session::put('period-code', $period->IdPeriodo);
@@ -755,6 +791,7 @@ class FlujoCoordinadorController extends Controller
             return redirect()->back()->with('warning', 'Ha ocurrido un error instrumentosDelCurso_index');
         }
         //return $cursosDelCicloyEspecialidad;
+
         return view('flujoCoordinador.instrumentosDelCurso_index', ['title'=> 'Cursos Dictados en el Ciclo',
                                                                     'facultad'=> $facultad,
                                                                     'cursos' => $cursosDelCicloyEspecialidad
@@ -764,15 +801,32 @@ class FlujoCoordinadorController extends Controller
     public function instrumentosDelCurso_edit($id, $idCurso){
 
         $curso= Course::findOrFail($idCurso);
-        
+        $index=0;
         try{
             $data['course'] = $curso;
-            $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
-            $studentsResults = $this->studentsResultService->findResultEvaluated();
-            $data['studentsResults'] = $this->courseService->findStudentsResultsByCourse($idCurso, $studentsResults);
-            $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
+            $index=1;
             $data['idEspecialidad']= $id;
+            $index=2;
+
+            $data['sources'] = $this->measurementSourceService->allMeasuringxPeriod();
+            $index=3;
+
+            $data['msrxcrt'] = $this->measurementSourceService->findMxCByCourse($idCurso);
+            $index=4;
+
+            $studentsResults = $this->studentsResultService->findResultEvaluated();
+            $index=5;
+
+            $data['studentsResults'] = $this->courseService->findStudentsResultsByCourse($idCurso, $studentsResults);
+            $index=6;
+
+            
+            
+
+
+
         } catch (\Exception $e) {
+        //    return $e ;
             return redirect()->back()->with('warning', 'Ha ocurrido un error en instrumentosDelCurso_edit');
         }
         
@@ -814,7 +868,7 @@ class FlujoCoordinadorController extends Controller
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error updateContributions'); 
         }
-        return redirect()->route('contributions.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
+        return redirect()->route('instrumentosDelCurso_index.flujoCoordinador',$id)->with('success', 'La matriz de aporte ha sido actualizada con exito.');
     }
 
 

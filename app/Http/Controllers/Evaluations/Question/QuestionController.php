@@ -1,7 +1,7 @@
 <?php
 
 namespace Intranet\Http\Controllers\Evaluations\Question;
-
+use Auth;
 use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests;
@@ -9,17 +9,32 @@ use Intranet\Models\Question;
 use Intranet\Models\Competence;
 use Intranet\Models\Alternative;
 use Illuminate\Support\Facades\Session;//<---------------------------------necesario para usar session
+use Illuminate\Support\Facades\DB;
 // use Illuminate\Routing\Controller as BaseController;
 
 class QuestionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->all();
+        $specialty = Session::get('faculty-code');
+        $questions = Question::getQuestionsFiltered($filters, $specialty);
+
+
+        $id = Auth::user()->professor->IdDocente;
         
-        $specialty = Session::get('faculty-code');        
-        $questions = Question::where('id_especialidad',$specialty)->get();
+        $comp = DB::table('teacherxcompetences')->select('id_competence')->where([['id_docente',$id],['id_especialidad',$specialty]])->get();
+        $arrcompetences = array();
+        foreach ($comp as $competence) {
+            array_push($arrcompetences, $competence->id_competence);
+        }
+               
+        // $questions = Question::where('id_especialidad',$specialty)->get();
+        $competences = Competence::where('id_especialidad',$specialty)->get();
         $data = [
-        'questions'    =>  $questions,
+        'questions'    =>  $questions->appends($filters),
+        'arrcompetences'    =>  $arrcompetences,
+        'competences'    =>  $competences,
         ];
         return view('evaluations.question.index', $data);
     }
@@ -31,10 +46,17 @@ class QuestionController extends Controller
      */
     public function create()
     {
+        $id = Auth::user()->professor->IdDocente;
         $specialty = Session::get('faculty-code');
+        $comp = DB::table('teacherxcompetences')->select('id_competence')->where([['id_docente',$id],['id_especialidad',$specialty]])->get();
+        $arrcompetences = array();
+        foreach ($comp as $competence) {
+            array_push($arrcompetences, $competence->id_competence);
+        }
         $competences = Competence::where('id_especialidad',$specialty)->get();
         $data = [
         'competences'    =>  $competences,
+        'arrcompetences'    =>  $arrcompetences,
         ];
         return view('evaluations.question.create',$data);
     }
@@ -95,7 +117,26 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $idEv = Auth::user()->professor->IdDocente;
+        $question       = Question::find($id);
+        $specialty = Session::get('faculty-code');
+        $competences = Competence::where('id_especialidad',$specialty)->get();
+        $canEdit = false;
+
+        $comp = DB::table('teacherxcompetences')->select('id_competence')->where([['id_docente',$idEv],['id_especialidad',$specialty]])->get();
+        $arrcompetences = array();
+        foreach ($comp as $competence) {
+            array_push($arrcompetences, $competence->id_competence);
+        }
+        if(in_array($question->competencia->id, $arrcompetences))
+            $canEdit = true;
+
+        $data = [
+        'question'      =>  $question,
+        'competences'   =>  $competences,
+        'canEdit'   =>  $canEdit,        
+        ];
+        return view('evaluations.question.show', $data);
     }
 
     /**
@@ -106,12 +147,21 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
+        $idEv = Auth::user()->professor->IdDocente;
         $question       = Question::find($id);
         $specialty = Session::get('faculty-code');
+        $comp = DB::table('teacherxcompetences')->select('id_competence')->where([['id_docente',$idEv],['id_especialidad',$specialty]])->get();
+        $arrcompetences = array();
+        foreach ($comp as $competence) {
+            array_push($arrcompetences, $competence->id_competence);
+        }
+
         $competences = Competence::where('id_especialidad',$specialty)->get();
+        
         $data = [
         'question'      =>  $question,
         'competences'   =>  $competences,
+        'arrcompetences'   =>  $arrcompetences,
         ];
         return view('evaluations.question.edit', $data);
     }
@@ -229,18 +279,19 @@ class QuestionController extends Controller
         
     }
 
-    public function editModalEv(Request $request)
+    public function editQuestionModalEv(Request $request)
     {    
-        
      try {
-         $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competencia', $request['competencia'])->get();
-       // dd($evaluators);
+         $evaluators = DB::table('teacherxcompetences')->join('Docente', 'teacherxcompetences.id_docente', '=', 'Docente.IdDocente')->select('IdDocente','Nombre','ApellidoPaterno','ApellidoMaterno')->where('id_competence', $request['id_competence'])->get();
 
-         return response()->view('evaluations.evaluation.modal-editar-pregunta', compact('evaluators'));
+         $data = [
+            'evaluators'      =>  $evaluators,
+            'id_evaluator'      =>  $request['id_evaluator'],
+        ];
+         return response()->view('evaluations.evaluation.datos-pregunta', $data);        
      } catch (Exception $e) {
          return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
      }
-
         
     }
 }

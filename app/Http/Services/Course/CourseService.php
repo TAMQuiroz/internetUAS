@@ -3,6 +3,7 @@
 use DB;
 use Session;
 use Intranet\Models\Cicle;
+use Intranet\Models\CoursexCycle;
 use Intranet\Models\Score;
 use Intranet\Models\Course;
 use Intranet\Models\Schedule;
@@ -16,6 +17,38 @@ class CourseService
     public function retrieveAll()
     {
         return Course::get();
+    }
+
+    public function retrieveByFacultyandCicle($faculty_id)
+    {
+        //dd("hola func");
+        $courses = [];
+        if(Session::get('academic-cycle') != null){
+            $IdCicloAcademico=Session::get('academic-cycle')->IdCicloAcademico;
+            if($IdCicloAcademico){
+                $coursesxCycles = CoursexCycle::where('IdCicloAcademico', $IdCicloAcademico)
+                    ->where('deleted_at', null)->get();
+                
+                if($coursesxCycles){
+                    foreach ($coursesxCycles as $coursesxCycle){
+                        if($coursesxCycle->course!=null){
+                            if($coursesxCycle->course->IdEspecialidad == $faculty_id &&
+                                    $coursesxCycle->course->deleted_at == null){
+                                array_push($courses, $coursesxCycle->course);
+                            }
+                        }
+                    }
+                    return $courses;
+                }else{
+                    return $courses;
+                }
+            }else{
+                return $courses;
+            }
+        }else{
+            return $courses;
+        }
+
     }
 
     public function retrieveByFaculty($faculty_id)
@@ -35,6 +68,11 @@ class CourseService
         return $course;
     }
 
+    public function findCourseByIdRegular($course_id)
+    {
+        $course = Course::where('IdCurso', $course_id)->with('regularProfessors.faculty')->first();
+        return $course;
+    }
     public function findCoursesByTeacher($teacher_id)
     {
         $coursesxTeacher = CoursexTeacher::where('IdDocente', $teacher_id)->get();
@@ -159,10 +197,13 @@ class CourseService
     }
 
     public function updateContributions($request){
-
+        //dd("hola2");
         $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
             ->where('deleted_at', null)->get();
-
+        //dd("hola3");
+        $cycle = Session::get('academic-cycle');
+        $idCicloAcademico=$cycle->IdCicloAcademico;
+        //dd("hola");
         foreach ($studentResults as $sr){
             foreach ($sr->contributions as $cnt){
                 $cnt->delete();
@@ -179,7 +220,8 @@ class CourseService
                 Contribution::create([
                     'IdCurso' => $idCurs,
                     'IdResultadoEstudiantil' => $idRes,
-                    'Valor' => 1
+                    'Valor' => 1,
+                    'IdCicloAcademico' => $idCicloAcademico
                 ]);
 
                 /*
@@ -302,6 +344,25 @@ class CourseService
         $perf_matrix['total']['total'] = ($criterions->count() == 0)?0:($total/$criterions->count());
 
         return $perf_matrix;
+    }
+
+
+    public function deleteCourseById($id) {
+        $course = Course::where('IdCurso', $id)->first();
+        $course->delete();
+
+        $coursexcycle = DictatedCourses::where('IdCurso', $id)->get();
+
+        foreach ($coursexcycle as $cxc) {
+            $cxc->delete();
+        }
+
+        $contribution = Contribution::where('IdCurso', $id)->get();
+
+        foreach ($contribution as $c) {
+            $c->delete();
+        }
+
     }
 
 }

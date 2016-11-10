@@ -16,7 +16,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{ route('create.template') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo Documento</a>
+                        <a href="{{ route('template.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo Documento</a>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -27,32 +27,36 @@
                         <th class="column-title">Titulo</th>
                         <th class="column-title">Plantilla</th>
                         <th class="column-title">Obligatorio</th>
-                        <th class="column-title">Fase</th>   
+                        <th class="column-title">Fase</th>  
+                        <th class="column-title">Curso</th> 
                         <th colspan="2">Acciones</th>                     
                     </tr>
                     </thead>
                     <tbody>
                         @foreach($templates as $template)
                         <tr> 
+                            @if($template->Phase->PspProcess!=null)
                             <td>{{$template->titulo}}</td> 
                             <td>{{$template->ruta}}</td> 
-                            @if($template->idTipoEstado==1)
+                            @if($template->idtipoestado==1)
                             <td>obligatorio</td> 
                             @else
-                            <td>no obligatorio</td> 
-                            @endif
-                            <td>{{$template->idPhase}}</td> 
+                            <td>opcional</td> 
+                            @endif 
+                            <td>{{$template->numerofase}}</td>
+                            <td>{{$template->Phase->PspProcess->Course->Nombre}}</td>
                             <td>
                                 <a href="{{route('template.edit', $template->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                 <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$template->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
                                 <a class="btn btn-primary btn-xs" href="{{route('getentry.template', $template->id)}}" title="Descargar Plantilla"><i class="fa fa-download"></i></a>
                             </td>
+                            @endif
                         </tr> 
-                        @include('modals.delete', ['id'=> $template->id, 'message' => '¿Esta seguro que desea eliminar esta plantilla?', 'route' => route('delete.template', $template->id)])
+                        @include('modals.delete', ['id'=> $template->id, 'message' => '¿Esta seguro que desea eliminar esta plantilla?', 'route' => route('template.delete', $template->id)])
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+            </div>            
         </div>
     </div>
 @endsection

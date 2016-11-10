@@ -113,6 +113,13 @@ jQuery(function(){
             num_entregables: {
                 required: "Debe ingresar una cantidad de entregables",
                 min: "Debe poner un numero mayor a 0",
+            },
+            porcen_avance: {
+                min: "Debe poner un numero mayor o igual a 0",
+                max: "Debe poner un numero menor o igual a 100",
+            },
+            archivo: {
+                required: "Debe ingresar un entregable",
             }
         }
     });
@@ -124,3 +131,44 @@ jQuery(function(){
     });
 
 });
+
+$(document).ready(function(){
+    test();
+
+    $('#padre').change(function(){
+        test();        
+    });
+});
+
+function test(){
+    var task_id             = $('#padre').val();
+    var url_entregable      = '/investigacion/entregable/getDeliverable';
+    var url_proyecto        = '/investigacion/proyecto/getProject';
+    var project_id          = $('#id_proyecto').val();
+
+    if(task_id == 0){
+        $.ajax({
+            type: "GET",
+            url: url_proyecto + '/' + project_id,
+            success: function (data) {
+                console.log(data);
+                $('#fecha_ini').attr('min',data.fecha_ini);               
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    }else{
+        $.ajax({
+            type: "GET",
+            url: url_entregable + '/' + task_id,
+            success: function (data) {
+                console.log(data);
+                $('#fecha_ini').attr('min',data.fecha_inicio);               
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    }   
+}

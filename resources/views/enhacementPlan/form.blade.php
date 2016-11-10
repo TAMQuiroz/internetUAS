@@ -81,11 +81,15 @@
                         <div class="clearfix"></div>
                         <h2>Actividades Planteadas</h2>
                         <div class="separator"></div>
-
+                        <div class="row title_right">
+                            @if(Auth::user() && ((Auth::user()->IdPerfil == 3) || (Auth::user()->IdPerfil == 1)))
+                                <a href="{{ route('add-cicle.enhacementPlan') }}" class="btn btn-success pull-right"> Nuevo Ciclo</a>
+                            @endif
+                       </div>
                         <table class="table table-bordered" id="address-table" name="address-table">
                             <thead>
                             <tr>
-                                <th class="col-sm-2">Fecha</th>
+                                <th class="col-sm-2">Ciclo</th>
                                 <th class="col-sm-5">Descripción</th>
                                 <th class="col-sm-3">Responsable</th>
                                 <th class="col-sm-1"></th>
@@ -96,18 +100,22 @@
                             <tr class="fila-base">
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="cicle[]" id="cicle">
+                                        @if($cicles!=null)
                                         @foreach($cicles as $cicle)
                                             <option value="{{$cicle->IdCicloAcademico}}">{{$cicle->Descripcion}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" required title="Debe ingresar la Descripción de la Acción" style="resize: vertical;"></textarea></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                         <option value="0">--Todos--</option>
+                                        @if($teachers!=null)
                                         @foreach($teachers as $teach)
                                             <option value="{{$teach->IdDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td class="text-center eliminar" style="vertical-align:middle">
@@ -119,18 +127,22 @@
                             <tr>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="cicle[]" id="cicle">
+                                        @if($cicles!=null)
                                         @foreach($cicles as $cicle)
                                             <option value="{{$cicle->IdCicloAcademico}}">{{$cicle->Descripcion}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" required title="Debe ingresar la Descripción de la Acción" style="resize: vertical;"></textarea></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                         <option value="0">--Todos--</option>
+                                        @if($teachers!=null)
                                         @foreach($teachers as $teach)
                                             <option value="{{$teach->IdDocente}}">{{$teach->Codigo}} - {{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td class="text-center eliminar" style="vertical-align:middle">
@@ -198,4 +210,5 @@
     </script>
     <script src="{{ URL::asset('js/intranetjs/improvementPlans/form-improvementPlans-script.js')}}"></script>
     <script src="{{ URL::asset('js/myvalidations/improvementPlan.js')}}"></script>
+
 @endsection

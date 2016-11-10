@@ -20,8 +20,16 @@
                     {{Form::open(['route' => ['template.update', $template->id], 'files'=>true, 'class'=>'form-horizontal col-md-8', 'id'=>'formSuggestion'])}}  
                     	<div class="form-group">
                             {{Form::label('Fase *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                {{Form::select('fase', [1=>'1',2=>'2'],$template->idPhase, ['class' => 'form-control', 'required'])}}                              
+                            <div class="col-md-6 col-sm-6 col-xs-12">                                
+                            <select name="fase" id="fase" class="form-control" required="required">
+                                @foreach( $phases as $phase)
+                                    @if($phase->id==$template->idphase)
+                                    <option value="{{$phase->id}}" selected="selected">{{$phase->numero}} </option>
+                                    @else
+                                    <option value="{{$phase->id}}" >{{$phase->numero}} </option>
+                                    @endif
+                                @endforeach
+                            </select>                              
                             </div>
                         </div>
                         <div class="form-group">
@@ -43,9 +51,9 @@
                             {{Form::label('Obligatorio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                             <div class="col-md-1 col-sm-1 col-xs-12">
                             <?php if($template->obligatorio==2) : ?>
-                            {{Form::checkbox('obligatorio',$template->idTipoEstado,false, ['class' => 'form-control'])}}
+                            {{Form::checkbox('obligatorio',$template->idtipoestado,false, ['class' => 'form-control'])}}
                             <?php else : ?>
-                            {{Form::checkbox('obligatorio',$template->idTipoEstado,true, ['class' => 'form-control'])}}
+                            {{Form::checkbox('obligatorio',$template->idtipoestado,true, ['class' => 'form-control'])}}
                             <?php endif; ?>
                             </div>                            
                         </div>     
@@ -55,7 +63,7 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                                <a href="{{ route('index.templates') }}" class="btn btn-default pull-right"> Cancelar</a>
+                                <a href="{{ route('template.index') }}" class="btn btn-default pull-right"> Cancelar</a>
                             </div>
                         </div>
                         {{Form::close()}}

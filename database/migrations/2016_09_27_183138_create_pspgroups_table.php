@@ -17,6 +17,8 @@ class CreatePspgroupsTable extends Migration
             //$table->integer('idTipoEstado')->unsigned();
             $table->char('numero');
             $table->string('descripcion');
+            $table->integer('idpspprocess')->unsigned()->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

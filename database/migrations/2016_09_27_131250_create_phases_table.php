@@ -16,8 +16,10 @@ class CreatePhasesTable extends Migration
             $table->increments('id');
             $table->integer('numero');
             $table->string('descripcion');
-            $table->date('fecha_ini');
+            $table->date('fecha_inicio');
             $table->date('fecha_fin');
+            $table->integer('idpspprocess')->unsigned()->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

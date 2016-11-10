@@ -52,17 +52,15 @@ class User extends Authenticatable
     }
 
     public function professor(){
-        return $this->hasOne('Intranet\Models\Teacher', 'IdDocente');
+        return $this->hasOne('Intranet\Models\Teacher', 'IdUsuario');//estaba mal, decia IdDocente
     }
 
-    /*Movil profesor*/
-    public function teacher(){
-        return $this->hasOne('Intranet\Models\Teacher', 'IdUsuario');
+    public function student() {
+        return $this->hasOne('Intranet\Models\Tutstudent', 'id_usuario');
     }
 
-    /*Movil investigador*/
     public function investigator(){
-        return $this->hasOne('Intranet\Models\Investigator','id_usuario');
+        return $this->hasOne('Intranet\Models\Investigator', 'id_usuario');
     }
 
     public function accreditor(){
@@ -73,5 +71,16 @@ class User extends Authenticatable
         return $this->belongsTo('Intranet\Models\Profile', 'IdPerfil');
     }
 
-}
+    public function pspStudent() {
+        return $this->hasOne('Intranet\Models\Student', 'IdUsuario');
+    }
 
+    public function supervisor(){
+        return $this->hasOne('Intranet\Models\Supervisor', 'iduser');    
+    }
+
+    public function tutStudent(){
+        return $this->hasOne('Intranet\Models\Tutstudent','id_usuario');
+    }
+
+}

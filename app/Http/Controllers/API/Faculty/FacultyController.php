@@ -3,7 +3,12 @@
 namespace Intranet\Http\Controllers\API\Faculty;
 
 use JWTAuth;
+use Response;
+use Intranet\Models\CoursexTeacher;
 use Intranet\Models\Course;
+use Intranet\Models\Schedule;
+use Intranet\Models\CoursexCycle;
+use Intranet\Models\ResultxObjective;
 use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
 use Intranet\Models\Aspect;
@@ -16,6 +21,7 @@ use Intranet\Models\StudentsResult;
 use Intranet\Models\ImprovementPlan;
 use Intranet\Models\EvaluatedCourses;
 use Intranet\Models\EducationalObjetive;
+use Intranet\Models\AcademicCycle;
 use Intranet\Http\Services\Course\CourseService;
 use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Faculty\FacultyService;
@@ -24,7 +30,7 @@ use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
-
+use Intranet\Models\Evaluation;
 class FacultyController extends BaseController
 {
     use Helpers;
@@ -38,6 +44,21 @@ class FacultyController extends BaseController
         $this->timeTableService = new TimeTableService();
     }
 
+    private function getUserSpecialtyId($user){
+      $idEspecialidad = 0;
+      if ($user->IdPerfil == 2 || $user->IdPerfil == 1){
+            $user->load('professor');
+            $idEspecialidad = $user->professor->IdEspecialidad;    
+        }else if ($user->IdPerfil == 4){
+            $user->load('accreditor');
+            $idEspecialidad = $user->accreditor->IdEspecialidad;    
+        }else if ($user->IdPerfil == 5){
+            $user->load('investigator');
+            $idEspecialidad = $user->investigator->IdEspecialidad;    
+        }
+        return $idEspecialidad;
+    }
+
     public function get(Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
@@ -45,37 +66,47 @@ class FacultyController extends BaseController
 
         $faculties = collect();
 
-        if ($user->isAdmin() || $user->isGeneralAcreditor())
+        if ($user->isAdmin()){
           $faculties = Faculty::lastUpdated($date)->get();
+        }else{
+          $idEspecialidad = $this->getUserSpecialtyId($user);
+          $faculties = Faculty::lastUpdated($date)->where('IdEspecialidad', $idEspecialidad)->get();
+        }
 
-        if ($user->isAcreditor())
-          $faculties = Faculty::lastUpdated($date)->where('IdEspecialidad', $user->accreditor->IdEspecialidad)->get();
-
-        $faculties->load('coordinator');
+        $faculties->load('teacher');
         return $this->response->array($faculties->toArray());
+    }
+
+    public function getSpecialty(Request $request){
+      $user = JWTAuth::parseToken()->authenticate();
+      $idEspecialidad = $this->getUserSpecialtyId($user);
+      $specialty = Faculty::where('IdEspecialidad',$idEspecialidad)->first();
+      $specialty->load('teacher');
+      return Response::json($specialty); 
     }
 
     public function getEducationalObjectives($faculty_id, Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $objectives = EducationalObjetive::lastUpdated($date)
-                                           ->with('studentsResults')
                                            ->where('idEspecialidad', $faculty_id)
                                            ->get();
 
         return $this->response->array($objectives->toArray());
     }
 
-    public function getStudentsResult($faculty_id, Request $request)
+    public function getStudentsResult($faculty_id, $eos_id, Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
+
         $results = StudentsResult::lastUpdated($date)
-                                   ->with('aspects')
-                                   ->with(['educationalObjectives' => function($q) {
-                                        return $q->whereNotNull('ResultadoxObjetivo.deleted_at');
-                                   }])
                                    ->where('idEspecialidad', $faculty_id)
+                                   ->whereHas('resultxObjective',function($query) use ($eos_id){
+                                      $query->where('ResultadoxObjetivo.IdObjetivoEducacional',$eos_id);
+                                   })
                                    ->get();
+        
+
 
         return $this->response->array($results->toArray());
     }
@@ -85,28 +116,73 @@ class FacultyController extends BaseController
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
 
         $academic_semester = Cicle::where('Vigente', 1)->first();
-
-        $courses = Course::lastUpdated($date)
-                           ->where('IdEspecialidad', $faculty_id)
-                           ->orderBy('NivelAcademico', 'asc')
-                           ->orderBy('IdCurso', 'asc')
-                           ->with('semesters')
-                           ->whereHas('semesters', function($query) use ($academic_semester) {
-                              $query->where('CursoxCiclo.IdCicloAcademico', $academic_semester->IdCicloAcademico);
-                              $query->whereNull('CursoxCiclo.deleted_at');
-                           })
-                           ->get();
-
+        $user = JWTAuth::parseToken()->authenticate();
+        if($user->IdPerfil == 3){
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->get();
+        } else {
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->with('semesters')
+                             ->whereHas('semesters', function($query) use ($academic_semester) {
+                                $query->where('CursoxCiclo.IdCicloAcademico', $academic_semester->IdCicloAcademico);
+                                $query->whereNull('CursoxCiclo.deleted_at');
+                             })
+                             ->get();
+        }
         return $this->response->array($courses->toArray());
+      }
+
+
+    public function getCourseSchedule($course_id,$academic_cycle_id){
+        $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_cycle_id)->first();
+        $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)->with('professors')->get();
+
+        return Response::json($schedules);
     }
 
-    public function getAspects($faculty_id, Request $request)
+    public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
+    {
+        $date = date('Y-m-d H:i:s', $request->get('since', 0));
+
+        $academic_semester = Cicle::where('IdCicloAcademico', $semester_id)
+                                            ->where('IdEspecialidad', $faculty_id)
+                                            ->first();
+
+
+        //$academic_semester = Cicle::where('Vigente', 1)->first();
+        $user = JWTAuth::parseToken()->authenticate();
+        if($user->IdPerfil == 3){
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->get();
+        } else {
+          $courses = Course::lastUpdated($date)
+                             ->where('IdEspecialidad', $faculty_id)
+                             ->orderBy('NivelAcademico', 'asc')
+                             ->orderBy('IdCurso', 'asc')
+                             ->with('semesters')
+                             ->whereHas('semesters', function($query) use ($academic_semester) {
+                                $query->where('CursoxCiclo.IdCicloAcademico', $academic_semester->IdCicloAcademico);
+                                $query->whereNull('CursoxCiclo.deleted_at');
+                             })
+                             ->get();
+        }
+        return $this->response->array($courses->toArray());
+      }
+
+    public function getAspects($sr_id,Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $aspects = Aspect::lastUpdated($date)
-                           ->whereHas('studentsResult', function($query) use ($faculty_id) {
-                              $query->where('IdEspecialidad', $faculty_id);
-                           })->with('criterion')
+                           ->where('IdResultadoEstudiantil',$sr_id)
                            ->get();
 
         return $this->response->array($aspects->toArray());
@@ -136,7 +212,7 @@ class FacultyController extends BaseController
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
         $improvement_plans = ImprovementPlan::lastUpdated($date)
                                             ->where('IdEspecialidad', $faculty_id)
-                                            ->with('typeImprovementPlan', 'teacher', 'actions', 'file')
+                                            ->with('typeImprovementPlan', 'teacher' , 'file')
                                             ->get();
 
         return $this->response->array($improvement_plans->toArray());
@@ -228,4 +304,13 @@ class FacultyController extends BaseController
       return view('consolidated.results.api', $data);
     }
 
+    public function getTeacherCourses($teacher_id){
+      $coursexteacher = CoursexTeacher::where('IdDocente',$teacher_id)->get();
+      $courses = [];
+      foreach ($coursexteacher as $key => $value) {
+        $course = Course::where('IdCurso',$value->IdCurso)->get();
+        array_push($courses, $course);
+      }
+      return $this->response->array($courses);
+    }
 }

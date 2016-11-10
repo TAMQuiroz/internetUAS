@@ -2,6 +2,8 @@
 
 
 use Intranet\Http\Services\TypeImprovementPlan\TypeImprovementPlanService;
+use Intranet\Http\Services\AcademicCycle\AcademicCycleService;
+use Intranet\Models\AcademicCycle;
 use View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,10 +21,12 @@ class EnhacementController extends BaseController {
 
     protected $improvementPlanService;
     protected $typeImprovementPlanService;
+    protected $academicCycleService;
 
     public function __construct() {
         $this->improvementPlanService = new ImprovementPlanService();
         $this->typeImprovementPlanService = new TypeImprovementPlanService();
+        $this->academicCycleService = new ImprovementPlanService();
     }
 
     public function index() {
@@ -30,7 +34,7 @@ class EnhacementController extends BaseController {
         try {
             $data['improvementPlans'] = $this->improvementPlanService->findByFaculty();
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.index', $data);
@@ -40,11 +44,12 @@ class EnhacementController extends BaseController {
         $data['title'] = 'Nuevo Plan de Mejora';
 
         try {
-            $data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.form', $data);
@@ -62,10 +67,86 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->create($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.enhacementPlan')->with('success', 'El plan de mejora se ha registrado exitosamente');
     }
+
+
+    public function addCicleNew() {
+        $data['title'] = 'Nuevo Ciclo Académico';
+        return view('enhacementPlan.add-cicle',$data);
+    } 
+    
+    public function addCicleEdit($id) {
+
+        $data['improvementPlanId']=$id;
+        $data['title'] = 'Editar Ciclo Académico';
+        return view('enhacementPlan.add-cicle-edit',$data);
+    } 
+
+    public function saveCicleNew(Request $request) {
+        try {
+            $anio = $request['anio'];
+            $numberC = $request['numberC'];
+ 
+            $numero = $anio. $numberC;
+            $descripcion = $anio."-".$numberC;
+
+            $academicCycle = AcademicCycle::create([
+                'Numero' => $numero,
+                'Descripcion' => $descripcion
+            ]);
+            
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        return redirect()->route('new.enhacementPlan')->with('success', 'El ciclo académico se ha registrado exitosamente');
+    } 
+    public function saveEditCicleNew(Request $request,$id) {
+
+        try {
+            $anio = $request['anio'];
+            $numberC = $request['numberC'];
+ 
+            $numero = $anio. $numberC;
+            $descripcion = $anio."-".$numberC;
+
+            $academicCycle = AcademicCycle::create([
+                'Numero' => $numero,
+                'Descripcion' => $descripcion
+            ]);
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        $data['title'] = 'Editar Plan de Mejora';
+        try {
+            $data['actionplan'] = ActionPlan::where('IdPlanMejora', $id)->get();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
+            $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
+            $data['improvementPlan'] = ImprovementPlan::where('IdPlanMejora', $id)->first();
+            $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        return view('enhacementPlan.edit', $data);
+    }
+    public function backEdit($id) {
+        $data['title'] = 'Editar Plan de Mejora';
+        try {
+            $data['actionplan'] = ActionPlan::where('IdPlanMejora', $id)->get();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
+            $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
+            $data['improvementPlan'] = ImprovementPlan::where('IdPlanMejora', $id)->first();
+            $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
+        } catch (\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+
+        return view('enhacementPlan.edit', $data);
+    }   
 
     public function edit(Request $request) {
         $data['title'] = 'Editar Plan de Mejora';
@@ -73,13 +154,14 @@ class EnhacementController extends BaseController {
         try {
 
             $data['actionplan'] = $this->improvementPlanService->retrieveAllActions($request->all());
-            $data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['improvementPlan'] = $this->improvementPlanService->findImprovementPlan(($request->all()));
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
 
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.edit', $data);
@@ -89,7 +171,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->update($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.enhacementPlan')->with('success', 'Las modificaciones se han guardado exitosamente');
     }
@@ -98,7 +180,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->comment($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('tracing.enhacementPlan', ['improvementPlanId' => $request['improvementPlanId']])->with('success', 'Las modificaciones se han guardado exitosamente');
     }
@@ -109,13 +191,14 @@ class EnhacementController extends BaseController {
         try {
 
             $data['actionplan'] = $this->improvementPlanService->retrieveAllActions($request->all());
-            $data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
+            $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['improvementPlan'] = $this->improvementPlanService->findImprovementPlan(($request->all()));
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
 
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
 
         return view('enhacementPlan.tracing', $data);
@@ -151,7 +234,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->add($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('uploadAction.enhacementPlan', ['actionPlanId' => $request['actionPlanId'], 'improvementPlanId' => $request['improvementPlanId']])->with('success', 'Se ha añadido el archivo exitosamente');
 
@@ -162,7 +245,7 @@ class EnhacementController extends BaseController {
         try {
             $this->improvementPlanService->addPlan($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('downloadAction.enhacementPlan', ['improvementPlanId' => $request['improvementPlanId']])->with('success', 'Se ha añadido el archivo exitosamente');
 
@@ -185,7 +268,7 @@ class EnhacementController extends BaseController {
         try{
             $data['improvementPlan'] = $this->improvementPlanService->getEnhacementPlan($improvementPlanId);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return json_encode($data);
     }
@@ -195,7 +278,7 @@ class EnhacementController extends BaseController {
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
             $data['info'] = $this->improvementPlanService->retrieveAllCicles();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return json_encode($data);
     }
@@ -206,7 +289,7 @@ class EnhacementController extends BaseController {
         try{
             $this->improvementPlanService->deleteImprovementPlan($request->all());
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.enhacementPlan')->with('success', 'El registro ha sido eliminado exitosamente');
     }
@@ -215,7 +298,7 @@ class EnhacementController extends BaseController {
         try {
             $data['improvementPlans'] = $this->improvementPlanService->search($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('enhacementPlan.index', $data);
     }

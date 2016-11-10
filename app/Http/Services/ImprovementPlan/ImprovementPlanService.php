@@ -59,6 +59,19 @@ class ImprovementPlanService {
         return $cicles;
     }
 
+    public function retrieveCicleAcademic(){
+        if(Session::get('academic-cycle')!=null){
+            $vigente = "1";
+            $cicle = AcademicCycle::where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();
+            $cyclesAcademic=AcademicCycle::where('Numero','>=',$cicle->Numero)->get();
+            return $cyclesAcademic;
+        }
+        else{
+            return null;
+        }
+        
+    }
+
     public function create($request) {
 
         if($_FILES['filefield']['name']!=""){
@@ -157,6 +170,7 @@ class ImprovementPlanService {
                 'IdPlanMejora' => $ImprovementPlan->IdPlanMejora,
                 'IdCicloAcademico' => $_REQUEST['cicle'][$i],
                 'IdDocente' => $respon,
+                'Porcentaje' => 0,
                 //'IdEspecialidad' => $data['specialty'] = Session::get('faculty-code'),
                 //'Comentario' => $request['dateI'],
                 'Descripcion' => $_REQUEST['desc'][$i]
@@ -233,6 +247,7 @@ class ImprovementPlanService {
                     'IdPlanMejora' => $request['improvementPlanId'],
                     'IdCicloAcademico' => $_REQUEST['cicle'][$i],
                     'IdDocente' => $respon,
+                    'Porcentaje' => 0,
                     //'IdEspecialidad' => $data['specialty'] = Session::get('faculty-code'),
                     //'Comentario' => $request['dateI'],
                     'Descripcion' => $_REQUEST['desc'][$i]

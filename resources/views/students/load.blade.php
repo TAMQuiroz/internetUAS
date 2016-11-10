@@ -24,6 +24,11 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="idTimeTable" value="{{ $timeTable->IdHorario }}">
 						<br>
+						PSP
+						<input type="checkbox" class="selectPsp" id="selectPsp" name="selectPsp" value="">
+						<br>
+						<br>
+						<br>						
 						<button class="btn btn-primary">Cargar alumnos</button>
 
 					</form>
@@ -32,14 +37,17 @@
 
 				<div class="col-md-6">
 					<div><b>Ejemplo de formato:</b></div>
+					<img id="img-formato-carga" src="http://internetuas/images/exampleExcel.png" class="img-responsive img-thumbnail">
+					<!--
 					{{ Html::image(asset('images/exampleExcel.png'), null ,['class' => 'img-responsive img-thumbnail'])}}
+					-->
 				</div>
      	 	</div>
 
 		</div>
 	</div>
 </div>
-			<div class="row">
+<div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			@if ($studentsExist)
@@ -61,31 +69,52 @@
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
-	//Code for showing error messages
-	@if( @Session::has('error') )
-	   toastr.error('{{ @Session::get('error') }}');
-	@endif
+	$( document ).ready(function() {
+		//Code for showing error messages
+		@if( @Session::has('error') )
+		   toastr.error('{{ @Session::get('error') }}');
+		@endif
 
-	//validate upload file
-	$("#errMsg").hide();
-	$('#stuFileForm').submit(function(){
-	    valid = true;
-	    $("#errMsg").hide();
-	    if($("#stuFile").val() == ''){
-		    $("#errMsg").show();
-	    	valid =  false;
-    	}
-    	return valid
+		//validate upload file
+		//console.log($('#selectPsp'));
+		$('#selectPsp').change( function(){
+			//console.log($('#selectPsp'));
+			//alert("asdasd");
+			
+
+			if(this.checked){
+				console.log("psp");
+				var src = $("#img-formato-carga").attr("src").replace("exampleExcel.png", "exampleExcel_usuario.png");
+            	$("#img-formato-carga").attr("src", src);
+			}
+			else {
+				console.log("no psp");
+				var src = $("#img-formato-carga").attr("src").replace("exampleExcel_usuario.png", "exampleExcel.png");
+            	$("#img-formato-carga").attr("src", src);
+			}
+		});
+
+
+		$("#errMsg").hide();
+		$('#stuFileForm').submit(function(){
+		    valid = true;
+		    $("#errMsg").hide();
+		    if($("#stuFile").val() == ''){
+			    $("#errMsg").show();
+		    	valid =  false;
+	    	}
+	    	return valid
+		});
+
+		//delete students list
+		$('.delete-students-list').on("click", function(event){
+			var classId = $('input[name=idTimeTable]').val();
+			console.log(classId);
+			$('#modal-button').attr("href", baseUrl + "/myCourses/students/delete?timeTableId=" + classId);
+		});
 	});
-
-	//delete students list
-	$('.delete-students-list').on("click", function(event){
-		var classId = $('input[name=idTimeTable]').val();
-		console.log(classId);
-		$('#modal-button').attr("href", baseUrl + "/myCourses/students/delete?timeTableId=" + classId);
-	});
-
 </script>
 @include('modals.delete-modal', ['message' => '¿Esta seguro que desea eliminar la lista de alumnos? (Solo podrá hacerlo si los alumnos aún no han recibido calificaciones).', 'action' => '#', 'button' => 'Delete'])
 @endsection

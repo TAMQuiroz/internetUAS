@@ -5,6 +5,8 @@ use Auth;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspGroup;
+use Intranet\Models\Student;
+use Intranet\Models\PspStudent;
 use Intranet\Http\Requests\PspGroupRequest;
 
 class PspGroupController extends Controller
@@ -122,7 +124,6 @@ class PspGroupController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    //Falta implementarlo
     public function destroy($id)
     {
         //
@@ -134,5 +135,39 @@ class PspGroupController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }
+    }
+
+    public function selectGroupStore(Request $request)
+    {        
+        try {            
+            $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();            
+            $pspGroup = PspGroup::find($request['id']);
+            $pspStudent = PspStudent::where('idalumno',$student->IdAlumno)->get()->first();            
+            $pspStudent->idPspGroup = $request['id'];            
+            $pspStudent->save();
+            return redirect()->route('index.ourFaculty',$pspStudent->idespecialidad)->with('success','Elegiste el grupo: '.$pspGroup->numero.' '.$pspGroup->descripcion);
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
+    }
+
+    public function selectGroupCreate(){
+
+        $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->get()->first();
+        $pspStudent = PspStudent::where('idalumno',$student->IdAlumno)->get()->first();
+        
+
+        if($pspStudent->idpspgroup==NULL){
+            $pspGroups = PspGroup::get();
+            $data = [
+                'pspGroups' => $pspGroups,
+                'idFaculty' => $pspStudent->idespecialidad,
+            ];            
+            return view('psp.pspGroup.selectGroup',$data);
+        }else{
+            $pspgroup = PspGroup::find($pspStudent->idpspgroup);
+            return redirect()->back()->with('warning','Ya selecciono el grupo: '.$pspgroup->numero.' '.$pspgroup->descripcion);
+        }
+        
     }
 }

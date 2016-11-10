@@ -14,14 +14,15 @@ class CreateTemplatesTable extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idPhase')->unsigned();
-            $table->integer('idTipoEstado')->unsigned();
-            $table->integer('idProfesor')->nullable();
-            $table->integer('idSupervisor')->nullable();
-            $table->integer('idAdmin')->nullable();
+            $table->integer('idphase')->unsigned();
+            $table->integer('idtipoestado')->unsigned();
+            $table->integer('idprofesor')->nullable();
+            $table->integer('idsupervisor')->unsigned()->nullable();
+            $table->integer('idadmin')->nullable();
             $table->string('titulo');
+            $table->integer('numerofase')->nullable();
             $table->string('ruta');
-            //$table->integer('obligatorio');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ class TutstudentRequest extends Request
     public function rules()
     {
         return [
-            'nombre'        => 'required|max:50',
-            'app'        => 'required|max:50',
-            'apm'        => 'required|max:50',
+            'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'app'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'apm'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',            
             'codigo'        => 'required|digits:8',
             'correo'        => 'required|email',            
         ];

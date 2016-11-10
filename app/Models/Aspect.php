@@ -21,4 +21,8 @@ class Aspect extends Model
     public function criterion(){
         return $this->hasMany('Intranet\Models\Criterion','IdAspecto');
     }
+
+    public function criterions(){
+        return $this->hasMany('Intranet\Models\Criterion','IdAspecto');
+    }
 }

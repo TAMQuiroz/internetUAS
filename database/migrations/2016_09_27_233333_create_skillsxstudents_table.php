@@ -13,10 +13,10 @@ class CreateSkillsxstudentsTable extends Migration
     public function up()
     {
         Schema::create('skillsxstudents', function (Blueprint $table) {
-            $table->integer('idStudent')->unsigned();
-            $table->foreign('idStudent')->references('id')->on('pspstudents');
-            $table->integer('idCriterio')->unsigned();
-            $table->foreign('idCriterio')->references('id')->on('skills');
+            $table->integer('idstudent');
+            $table->foreign('idstudent')->references('IdAlumno')->on('Alumno');
+            $table->integer('idcriterio')->unsigned();
+            $table->foreign('idcriterio')->references('id')->on('skills');
             $table->integer('nota');
             $table->timestamps();
         });

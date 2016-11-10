@@ -167,17 +167,18 @@ class TeacherController extends BaseController {
     public function searchModalEv(Request $request)
     {
         $teachers = collect(); //creo una coleccion vacia  
-        dd($teachers)     ;
+        // dd($teachers)     ;
         try {
             $teachers = $this->teacherService
                              ->searchByNameLastname(
                                 $request->only('nombre'));//busco los profesores por el filtro
+            //le paso todo a la vista donde esta la tabla
+            return response()->view('evaluations.evaluator.search-teachers-table', compact('teachers'));
         } catch (Exception $e) {
-            //
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 
-        //le paso todo a la vista donde esta la tabla
-        return response()->view('evaluations.evaluator.search-teachers-table', compact('teachers'));
+        
     }
 
 }

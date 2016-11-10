@@ -2,6 +2,7 @@
 
 namespace Intranet\Http\Controllers\Tutorship\Tutstudent;
 
+use Mail;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\TutstudentRequest;
@@ -39,7 +40,7 @@ class TutstudentController extends Controller
 
         $tutorId = $request->input('tutorId', null);
 
-        $tutors = Teacher::getTutorsFiltered($isTutor = true, [], $mayorId);
+        $tutors = Teacher::getTutorsFiltered( [], $mayorId);
         
         $students = Tutstudent::getFilteredStudents($filters, $tutorId, $mayorId);
 
@@ -170,16 +171,53 @@ class TutstudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TutstudentRequest $request, $id)
     {
-        try {
+        try {   
             $student = Tutstudent::find($id);
-            $student->codigo       = $request['codigo'];            
+
+            //si cambio el codigo del alumno
+            if($request['codigo'] != $student->codigo){
+                //se busca un alumno con el mismo codigo
+                $u = User::where('Usuario',$request['codigo'])->first();
+                if($u!=null){
+                    return redirect()->route('alumno.create')->with('warning', 'El código de alumno que se intenta registrar ya existe.');
+                }
+
+                $user = User::find($student->id_usuario);
+                //cambio el usuario del alumno
+                $user->Usuario = $request['codigo'];
+                $user->save();
+                $student->codigo       = $request['codigo'];            
+            }
+            
+            
+
+            //cambio el alumno    
             $student->nombre       = $request['nombre'];            
             $student->ape_paterno  = $request['app'];            
-            $student->ape_materno  = $request['apm'];            
-            $student->correo       = $request['correo'];
-            $student->save();
+            $student->ape_materno  = $request['apm'];  
+
+            //si cambio el correo
+            if($request['correo'] != $student->correo )   {
+                $student->correo       = $request['correo'];  
+                //envio correo a la nueva direccion
+                try{
+                    $nombre = $request['nombre'];
+                    $mail = $request['correo'];
+                    Mail::send('emails.changeEmail',compact('nombre'),  function($m) use($mail) {
+                        $m->subject('Correo modificado');
+                        $m->to($mail);
+                    });
+                }
+                catch (\Exception $e)
+                {
+                    return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+                }  
+            }       
+            
+            $student->save();         
+
             return redirect()->route('alumno.index', $id)->with('success', 'El alumno se ha actualizado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
@@ -195,17 +233,32 @@ class TutstudentController extends Controller
     public function destroy($id)
     {
         try {
-            $student   = Tutstudent::find($id);
-            $message = "";
-            // if(count($area->investigators)){
-            //     return redirect()->back()->with('warning', 'Esta area esta asignada a investigadores');
-            // }
+            $student   = Tutstudent::find($id);            
+            $student->id_tutoria = null;
+            $student->save();
+            
             $student->delete();
+            if($student->tutorship){
+                $student->tutorship->delete();    
+            }
+
             return redirect()->route('alumno.index')->with('success', 'El alumno se ha desactivado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
     }
+
+    public function restore($id) {
+        $student = Tutstudent::withTrashed()->find($id);
+
+        if($student) {
+            $student->restore();
+            return redirect()->route('alumno.index')->with('success', 'El alumno se ha activado exitosamente');
+        }
+
+        return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+    } 
+
     public function assignTutor(){
         $idEspecialidad = Session::get('faculty-code');
         $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria',null)->get(); 
@@ -248,6 +301,7 @@ class TutstudentController extends Controller
                         $tutoriaIngresada = DB::table('tutorships')->where([
                             ['id_tutor', '=', $idTeacher],
                             ['id_alumno', '=', $students[$n_al]->id],
+                            ['deleted_at', '=', null],//para que no asigne a una tutorship eliminada
                             ])->get()[0];
 
                         

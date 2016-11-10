@@ -32,7 +32,8 @@ class StudentsResult extends Model
         return $this->hasMany('Intranet\Models\CyclexResult', 'IdResultadoEstudiantil');
     }
 
-    public function aspect(){
+    public function aspect()
+    {
         return $this->hasMany('Intranet\Models\Aspect', 'IdResultadoEstudiantil');
     }
 

@@ -111,12 +111,15 @@ class CompetenceController extends Controller
     {
         try {
             $competence   = Competence::find($id);
-            $message = "";
-            // if(count($competence->)){
-            //     return redirect()->back()->with('warning', 'Esta competencia esta siendo usada');
-            // }
-            $competence->delete();
-            return redirect()->route('competencia.index')->with('success', 'La competencia se ha eliminado exitosamente');
+            
+            if(count($competence->questions) ==0){//solo si la competencia no se ha usado
+                $competence->delete();
+                return redirect()->route('competencia.index')->with('success', 'La competencia se ha eliminado exitosamente');
+            }
+            else{
+                return redirect()->back()->with('warning', 'La competencia ya ha sido usada.');
+            }            
+            
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

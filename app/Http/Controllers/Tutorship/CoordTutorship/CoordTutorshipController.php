@@ -13,13 +13,12 @@ class CoordTutorshipController extends Controller
 {
     
     public function index(Request $request)
-    {
-        $filters = $request->all();
+    {        
         $specialty = Session::get('faculty-code');
-        $coords = Teacher::getCoordsFiltered($is_coord = true, $filters, $specialty);
+        $coords = Teacher::where('rolTutoria',2)->where('IdEspecialidad',$specialty)->get();
 
         $data = [            
-            'tutors'    =>  $coords->appends($filters),
+            'tutors'    =>  $coords,
         ];
         return view('tutorship.coordtutor.index', $data);
     }
@@ -33,9 +32,9 @@ class CoordTutorshipController extends Controller
     {
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
-        $teachers = Teacher::getCoordsFiltered($is_coord = false, $filters, $specialty);        
+        $teachers = Teacher::getCoordsFiltered($filters, $specialty);        
         $data = [
-            'teachers'    =>  $teachers,            
+            'teachers'    =>  $teachers->appends($filters),            
         ];        
         return view('tutorship.coordtutor.create', $data);
     }

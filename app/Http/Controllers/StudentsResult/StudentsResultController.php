@@ -29,7 +29,7 @@ class StudentsResultController extends BaseController {
         try {
             $data['studentsResults'] = $this->studentsResultService->retrieveAllByFaculty();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('studentsResults.index', $data);
     }
@@ -41,7 +41,7 @@ class StudentsResultController extends BaseController {
         try {            
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('studentsResults.create', $data);
     }
@@ -51,7 +51,7 @@ class StudentsResultController extends BaseController {
         try {
             $studentsResult = $this->studentsResultService->create($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.studentsResult')->with('success', "El resultado estudiantil se ha registrado exitosamente");
     }
@@ -65,7 +65,7 @@ class StudentsResultController extends BaseController {
             $data['educationalObjetives'] = $this->studentsResultService->findEducationalObjetive($idStudentsResult);
 
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('studentsResults.view', $data);
     }
@@ -80,7 +80,7 @@ class StudentsResultController extends BaseController {
             $data['resultxObjective'] = $this->studentsResultService->getResultxObjective($idStudentsResult);
 
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('studentsResults.edit', $data);
     }
@@ -90,7 +90,7 @@ class StudentsResultController extends BaseController {
         try {
             $this->studentsResultService->update($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('index.studentsResult')->with('success', "Las modificaciones se han guardado exitosamente");
     }    
@@ -100,7 +100,7 @@ class StudentsResultController extends BaseController {
         try{
             $msg = $this->studentsResultService->delete($request->all());
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         if($msg == 1) {
             return redirect()->route('index.studentsResult')->with('success', 'El registro ha sido eliminado exitosamente');
@@ -119,7 +119,7 @@ class StudentsResultController extends BaseController {
             // buca por especialidad y por periodo
             $data['studentsResults'] = $this->studentsResultService->findResultEvaluated();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('studentsResults.indexEvaluated', $data);
     }
@@ -132,7 +132,7 @@ class StudentsResultController extends BaseController {
             $data['results'] = $this->studentsResultService->findResultEvaluated();
             $data['studentsResults'] = $this->studentsResultService->findByFaculty();
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('studentsResults.editEvaluated', $data);
     }
@@ -141,7 +141,7 @@ class StudentsResultController extends BaseController {
         try {
             $code = $this->studentsResultService->updateEvaluated($request->all());
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return $code == 0 ? redirect()->route('indexEvaluated.studentsResult')->with('success', "No se ha seleccionado ningún resultado estudiantil") : redirect()->route('indexEvaluated.studentsResult')->with('success', "Las modificaciones se han guardado exitosamente");
     }   
@@ -151,10 +151,10 @@ class StudentsResultController extends BaseController {
     public function contributions() {
         $data = [];
         try {
-            $data['currentStudentsResults'] = $this->studentsResultService->findByFaculty();
-            $data['courses']= $this->coursesService->retrieveByFaculty(Session::get('faculty-code'));
+            $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle();
+            $data['courses']= $this->coursesService->retrieveByFacultyandCicle(Session::get('faculty-code'));
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('studentsResults.contributions', $data);
     }
@@ -167,7 +167,7 @@ class StudentsResultController extends BaseController {
         try {
             $this->coursesService->updateContributions($request->all());
         } catch (\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return redirect()->route('contributions.studentsResult')->with('success', 'La matriz de aporte ha sido actualizada con exito.');
     }
@@ -179,7 +179,7 @@ class StudentsResultController extends BaseController {
         try{
             $res = $this->studentsResultService->getAspectById($studentResultCode);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return json_encode($res);
     }
@@ -188,7 +188,7 @@ class StudentsResultController extends BaseController {
         try{
             $data['studentsResults'] = $this->studentsResultService->getIdentifier($identifier);
         } catch(\Exception $e) {
-            dd($e);
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return json_encode($data);
     }

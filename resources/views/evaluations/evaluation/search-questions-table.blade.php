@@ -2,52 +2,52 @@
 <table class="table table-striped responsive-utilities jambo_table bulk_action" name="table-objs">
     <thead>
         <tr class="headings">                
-            <th class="column-title">Cód.</th>
-            <th class="column-title">Tipo</th>
-            <th class="column-title">Competencia</th>
+            <th class="centered column-title">Cód.</th>
+            <th class="centered column-title">Tipo</th>
+            <th class="centered column-title">Competencia</th>
             <th class="column-title">Pregunta</th>
-            <th class="column-title">Tiempo</th>
-            <th class="column-title">Dificultad</th>
-            <th class="column-title">Selecc.</th>
+            <th class="centered column-title">Tiempo</th>
+            <th class="centered column-title">Dificultad</th>
+            <th class="centered column-title">Seleccionar</th>
         </tr>
     </thead>
     <tbody>
         @foreach($questions as $question)
-        <tr>
+        <tr id="question_{{$question->id}}">
             <td hidden><input type="number" value="{{$question->id}}" name="arrIds[{{$question->id}}]"></td>
-            <td class="id" name="arrIds[{{$question->id}}]">{{ $question->id }}</td>
+            <td class="centered id">{{ $question->id }}</td>
 
             @if($question->tipo == 1)
-            <td>Cerrada</td>
+            <td class="centered ">Cerrada</td>
             @elseif ($question->tipo == 2)
-            <td>Abierta</td>
+            <td class="centered ">Abierta</td>
             @else
-            <td>Archivo</td>
+            <td class="centered ">Archivo</td>
             @endif
 
-            <td hidden ><input type="number" value="{{$question->competencia->id}}" name="competencia"></td>
-            <td >{{ $question->competencia->nombre }}</td>
+            <td hidden ><input class="id_competence" type="number" value="{{$question->competencia->id}}"></td>
+            <td class="centered " >{{ $question->competencia->nombre }}</td>
 
             <td>{{ $question->descripcion }}</td>
 
-            <td>{{ $question->tiempo }}</td>            
+            <td class="centered tiempo">{{ $question->tiempo }}</td>            
             
             @if($question->dificultad == 1)
-            <td>Baja</td>
+            <td class="centered ">Baja</td>
             @elseif ($question->dificultad == 2)
-            <td>Media</td>
+            <td class="centered ">Media</td>
             @else
-            <td>Alta</td>
+            <td class="centered ">Alta</td>
             @endif
 
-            <td hidden><input type="number" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
-            <td class="oculto puntaje" name="arrPuntajes[{{$question->puntaje}}]" hidden>{{ $question->puntaje }}</td>
+            <td hidden><input class="row_puntaje" type="text" value="{{$question->puntaje}}" name="arrPuntajes[{{$question->id}}]"></td>
+            <td class="centered oculto puntaje" hidden>{{ $question->puntaje }}</td>
 
-            <td hidden><input type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
-            <td class="oculto responsable" name="arrEvaluadores[{{$question->responsable->IdDocente}}]" value="1" hidden>{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
+            <td hidden><input class="row_evaluador" type="number" value="{{$question->responsable->IdDocente}}" name="arrEvaluadores[{{$question->id}}]"></td>
+            <td class="centered oculto responsable" hidden>{{ explode(' ',trim($question->responsable->Nombre))[0].' '.$question->responsable->ApellidoPaterno}}</td>
             
-            <td>
-                <input type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected btn btn-success">
+            <td class="centered">
+                <input style="position: relative;left: 0px;opacity: 1" type="checkbox" value="2" name="arr[{{$question->id}}]" class="questions_selected"> 
             </td>                    
         </tr>
         @endforeach
@@ -56,9 +56,8 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <center>
-            <a class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a evaluación</a>
+            <a data-remodal-action="cancel" class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a la evaluación</a>
         </center>
-
     </div>
 </div>
 @else

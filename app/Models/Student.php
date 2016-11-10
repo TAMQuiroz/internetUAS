@@ -10,5 +10,4 @@ class Student extends Model {
     protected $primaryKey = 'IdAlumno';
     protected $fillable = ['IdHorario', 'Codigo','Nombre', 'ApellidoPaterno', 'ApellidoMaterno'];
 
-
 }

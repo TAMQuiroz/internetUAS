@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Hallazgo <span class="error">* </span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea class="form-control col-md-7 col-xs-12" name="find" id="find" style="resize: vertical;">{{$improvementPlan->Hallazgo}}</textarea>
+                                <textarea class="form-control col-md-7 col-xs-12" name="find" id="find" style="resize: vertical;" value="{{old('find')}}">{{$improvementPlan->Hallazgo}}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -102,10 +102,16 @@
                         <h2>Actividades Planteadas</h2>
                         <div class="separator"></div>
 
+                        <div class="row title_right">
+                            @if(Auth::user() && ((Auth::user()->IdPerfil == 3) || (Auth::user()->IdPerfil == 1)))
+                                <a href="{{ route('add-cicle-edit.enhacementPlan',$improvementPlan->IdPlanMejora) }}" class="btn btn-success pull-right"> Nuevo Ciclo</a>
+                            @endif
+                       </div>
+
                         <table class="table table-bordered" id="address-table" name="address-table">
                             <thead>
                             <tr>
-                                <th class="col-sm-2">Fecha</th>
+                                <th class="col-sm-2">Ciclo</th>
                                 <th class="col-sm-5">Descripción</th>
                                 <th class="col-sm-3">Responsable</th>
                                 <th class="col-sm-1"></th>
@@ -118,18 +124,22 @@
                                 <td hidden="true"><input type="text" name="idAction[]" id="idAction"/></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="cicle[]" id="cicle">
+                                        @if($cicles!=null)
                                         @foreach($cicles as $cicle)
                                             <option value="{{$cicle->IdCicloAcademico}}">{{$cicle->Descripcion}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" title="Debe ingresar la Descripción de la Acción" required style="resize: vertical;"></textarea></td>
                                 <td style="vertical-align:middle">
                                     <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                         <option value="0">--Todos--</option>
+                                        @if($teachers!=null)
                                         @foreach($teachers as $teach)
                                             <option value="{{$teach->IdDocente}}">{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td class="text-center eliminar" style="vertical-align:middle">
@@ -144,22 +154,26 @@
                                     <td hidden="true"><input type="text" name="idAction[]" id="idAction" value="{{$act->IdPlanAccion}}"/></td>
                                     <td style="vertical-align:middle">
                                         <select class="form-control col-md-7 col-xs-12 " name="cicle[]" id="cicle">
+                                            @if($cicles!=null)
                                             @foreach($cicles as $cicle)
                                                 <option value="{{$cicle->IdCicloAcademico}}" <?php if ($act->IdCicloAcademico == $cicle->IdCicloAcademico): ?>
                                                 selected="true"
                                                 <?php endif ?>>{{$cicle->Descripcion}}</option>
                                             @endforeach
+                                            @endif
                                         </select>
                                     </td>
                                     <td style="vertical-align:middle"><textarea type="text" class="form-control" name="desc[]" id="desc" rows="2" title="Debe ingresar la Descripción de la Acción" required style="resize: vertical;">{{$act->Descripcion}}</textarea></td>
                                     <td style="vertical-align:middle">
                                         <select class="form-control col-md-7 col-xs-12" name="respon[]" id="respon" width="%50">
                                             <option value="0">--Todos--</option>
+                                            @if($teachers!=null)
                                             @foreach($teachers as $teach)
                                                 <option value="{{$teach->IdDocente}}" <?php if ($act->IdDocente== $teach->IdDocente): ?>
                                                 selected="true"
                                                 <?php endif ?>>{{$teach->Nombre}} {{$teach->ApellidoPaterno}} {{$teach->ApellidoMaterno}}</option>
                                             @endforeach
+                                            @endif
                                         </select>
                                     </td>
                                     <td class="text-center eliminar" style="vertical-align:middle">

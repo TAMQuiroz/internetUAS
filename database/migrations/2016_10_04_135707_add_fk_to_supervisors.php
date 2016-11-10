@@ -13,8 +13,9 @@ class AddFkToSupervisors extends Migration
     public function up()
     {
         Schema::table('supervisors', function (Blueprint $table) {
-             $table->foreign('idUser')->references('IdUsuario')->on('usuario');
-             $table->foreign('idFaculty')->references('IdEspecialidad')->on('especialidad');
+             $table->foreign('iduser')->references('IdUsuario')->on('Usuario');
+             $table->foreign('idfaculty')->references('IdEspecialidad')->on('Especialidad');
+             $table->foreign('idpspprocess')->references('id')->on('pspprocesses');
         });
     }
 
@@ -26,8 +27,9 @@ class AddFkToSupervisors extends Migration
     public function down()
     {
         Schema::table('supervisors', function (Blueprint $table) {
-            $table->dropForeign('supervisors_idUser_foreign');
-            $table->dropForeign('supervisors_idFaculty_foreign');
+            $table->dropForeign('supervisors_iduser_foreign');
+            $table->dropForeign('supervisors_idfaculty_foreign');
+            $table->dropForeign('supervisors_idpspprocess_foreign');
         });
     }
 }

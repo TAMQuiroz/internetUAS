@@ -14,10 +14,14 @@ class CreatePspprocessesTable extends Migration
     {
         Schema::create('pspprocesses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('numFases');
-            $table->integer('numPlantillas');
-            $table->integer('maxTamPlantilla');
+            $table->integer('numero_Fases');
+            $table->integer('numero_Plantillas');
+            $table->integer('max_tam_plantilla');
+            $table->integer('idespecialidad');
+            $table->integer('idcurso');
+            $table->integer('idCiclo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

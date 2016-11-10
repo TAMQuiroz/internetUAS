@@ -26,4 +26,48 @@ class ProjectService {
 
         return $investigators;
     }
+
+    public function getNotSelectedStudents($id)
+    {
+        $proyecto = Project::find($id);
+        $idsToDelete = [];
+        $indexOfIds = [];
+
+        foreach ($proyecto->students as $student) {
+            array_push($idsToDelete,$student->id);
+        }
+
+        $students = $proyecto->group->students;
+        foreach ($students as $key => $student) {
+            if(in_array($student->id, $idsToDelete)){
+                array_push($indexOfIds,$key);
+            }
+        }
+
+        $students->forget($indexOfIds);
+
+        return $students;
+    }
+
+    public function getNotSelectedTeachers($id)
+    {
+        $proyecto = Project::find($id);
+        $idsToDelete = [];
+        $indexOfIds = [];
+
+        foreach ($proyecto->teachers as $teacher) {
+            array_push($idsToDelete,$teacher->IdDocente);
+        }
+
+        $teachers = $proyecto->group->teachers;
+        foreach ($teachers as $key => $teacher) {
+            if(in_array($teacher->IdDocente, $idsToDelete)){
+                array_push($indexOfIds,$key);
+            }
+        }
+
+        $teachers->forget($indexOfIds);
+
+        return $teachers;
+    }
 }

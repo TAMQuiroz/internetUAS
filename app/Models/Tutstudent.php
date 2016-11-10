@@ -5,6 +5,7 @@ namespace Intranet\Models;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------necesario para softdeletes
+use Intranet\Http\Services\User\PasswordService;
 use Intranet\Exceptions\InvalidTutStudentException;
 
 class Tutstudent extends Model
@@ -25,6 +26,10 @@ class Tutstudent extends Model
   	  return $this->hasOne('Intranet\Models\Tutorship','id_alumno');//bien
     }
 
+    public function evaluations(){
+      return $this->hasMany('Intranet\Models\Tutstudentxevaluation','id_tutstudent');//bien
+    }
+
     static public function loadStudents($csv_path, $mayor) {
 
         if (($csv_file = fopen($csv_path, "r")) !== FALSE ) {
@@ -36,6 +41,8 @@ class Tutstudent extends Model
                 if($student) {
                     $student->restore();
                 } else {
+                    Tutstudent::createStudentUser($studentCode = $row[0], $email = $row[4]);
+
                     Tutstudent::create([
                         "codigo" => $row[0],
                         "nombre" => $row[1],
@@ -81,6 +88,23 @@ class Tutstudent extends Model
             });
         }
 
-        return $query->paginate(10);
+        return $query->withTrashed()->paginate(10);
+    }
+
+    static function createStudentUser($studentCode, $email) {
+
+        $passwordService = new PasswordService;
+
+        $user = User::create([
+                "Usuario" => $studentCode,
+                "Contrasena" => bcrypt(123),
+                "IdPerfil" => 0
+            ]);
+
+        if ($user) {
+            $passwordService->sendSetPasswordLink($user, $email);
+        }
+
+        return $user->IdUsuario;
     }
 }

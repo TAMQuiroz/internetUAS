@@ -7,5 +7,6 @@ Homestead.json
 .DS_Store
 composer
 .idea/
+/public/uploads/*
 /nbproject
 _ide_helper.php

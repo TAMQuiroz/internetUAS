@@ -791,7 +791,7 @@ class FlujoCoordinadorController extends Controller
 
         try {
             if(Session::get('academic-cycle')!=null){
-              
+                
                 $cursosDelCicloyEspecialidad =  DB::table('cursoxciclo')
                                         ->join('curso', 'curso.IdCurso', '=', 'cursoxciclo.IdCurso')
 
@@ -803,7 +803,7 @@ class FlujoCoordinadorController extends Controller
                                         //->orderBy('cliente.apellidoPaterno', 'asc')
                                         ->get(); 
                 $data['dictatedCourses']= $cursosDelCicloyEspecialidad;
-                //$data['dictatedCourses']= $this->courseService->retrieveByFacultyandCicle($id);
+                
 
                 //$data['dictatedCourses'] = $this->dictatedCoursesService->retrieveAllCoursesxCycle();
             }

@@ -28,6 +28,7 @@ class StudentScoreController extends Controller
         $students = PspStudent::where('idsupervisor',$supervisor->id)->get();
         $scores = $supervisor = Studentxinscriptionfiles::where('acepta_terminos',1)->get();  
 
+        /*Pendiente nota final*/
         $data = [
             'students'    =>  $students,
         ];

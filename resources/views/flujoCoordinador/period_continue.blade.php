@@ -32,6 +32,9 @@
 <div class="clearfix"></div>
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
+    <form action="{{ route('period_store.flujoCoordinador',$facultyAgreementLevel, $facultyAgreement, $criteriaLevel ,$cycleStart, $cycleEnd, $measures, $objCheck, $stRstCheck, $aspCheck, $crtCheck, $idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
+
+    <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
 
     <div class="x_title">
       <h2>Creación de un nuevo periodo en la especialidad con nombre {{$especialidad->Nombre}}</h2>
@@ -39,7 +42,7 @@
     </div>
 
     <div class="x_content">
-            
+           
       <div class="row" style="margin-top: 10px;">
         <div class="form-group">
           <div class="col-md-12 col-sm-12"></div>
@@ -115,13 +118,11 @@
     <div class="separator"></div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <a  href="{{ route('period_store.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">Continuar ></a>
+            <button class="btn btn-success pull-right submit" type="submit" >SIGUIENTE > </button>
             <a  href="{{ route('period_create.flujoCoordinador', $idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>
         </div>
     </div>
-
-    <br>
-
+    </form>
   </div>
 </div>
 @endsection

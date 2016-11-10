@@ -1323,6 +1323,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/period/create', ['as' => 'period_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createPeriod']);
         Route::get('/{id}/period/view', ['as' => 'period_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewPeriod']);
         Route::get('/{id}/period/continue', ['as' => 'period_continue.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@continuePeriod']);
+        Route::post('/{facultyAgreementLevel}/{facultyAgreement}/{criteriaLevel}/{cycleStart}/{cycleEnd}/{measures}/{objCheck}/{stRstCheck}/{aspCheck}/{crtCheck}/{idEspecialidad}/period/store', ['as' => 'period_store2.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod2']);
         Route::post('/{id}/period/store', ['as' => 'period_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod']);
         
 

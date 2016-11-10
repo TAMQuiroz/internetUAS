@@ -53,6 +53,7 @@ class StudentsResultService {
             if($IdCicloAcademico!=null){
                 $resultsxCycles = CyclexResult::where('IdCicloAcademico', $IdCicloAcademico)
                     ->where('deleted_at', null)->get();
+
                     //dd($resultsxCycles);
             /*    $resultsDirties=StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
                     ->where('deleted_at', null)->get();

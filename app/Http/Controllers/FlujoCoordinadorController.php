@@ -136,7 +136,7 @@ class FlujoCoordinadorController extends Controller
 
     	$criterio->IdAspecto= $request->idAspecto;
     	$criterio->Nombre= $request->nombre;
-    	$criterio->Estado= 1;
+    	$criterio->Estado= 0;
 
     	$criterio->save();
 

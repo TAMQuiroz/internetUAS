@@ -618,6 +618,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('edit/{id}', ['as' => 'MeetingTeacher.update', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@update']);
                 Route::get('delete/{id}', ['as' => 'MeetingTeacher.delete', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@destroy']);    
                 Route::get('search/{id}', ['as' => 'MeetingTeacher.search', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@search']);    
+                Route::get('mail/{id}', ['as' => 'MeetingTeacher.mail', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@mail']);
             });
 
             //Inscription File

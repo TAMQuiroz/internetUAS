@@ -9,7 +9,7 @@
 
 <div class="clearfix"></div>
 
-<form action="{{ route('period_store.flujoCoordinador',$idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
+<form action="{{ route('period_store.flujoCoordinador',$idEspecialidad) }}" method="GET" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
 
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <input type="text" id="validateIdentifier" name="validateIdentifier" hidden>
@@ -215,10 +215,12 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
                             <!--<a class="btn btn-default pull-left" href="{{ route('end2.flujoCoordinador',$idEspecialidad) }}"> < ATRAS</a>-->
-                            <!--<button class="btn btn-success pull-right submit" type="submit" >SIGUIENTE > </button>-->
+                            <button class="btn btn-success pull-right submit" type="submit" >SIGUIENTE > </button>
+                            
+                            <!--
                             <div class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-continue">
                                 <i class="fa fa-plus"></i> SIGUIENTE >
-                            </div>  
+                            </div>  -->
                                 
                         </div>
 
@@ -239,5 +241,4 @@
 <script src="{{ URL::asset('js/intranetjs/period/edit-script.js')}}"></script>
 
 @include('flujoCoordinador.period-modal-measures')
-@include('flujoCoordinador.period-modal-continue')
 @endsection

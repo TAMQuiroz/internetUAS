@@ -603,6 +603,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('edit/{id}', ['as' => 'meeting.update', 'uses' => 'Psp\meeting\MeetingController@update']);
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
                 Route::get('search/{id}', ['as' => 'meeting.search', 'uses' => 'Psp\meeting\MeetingController@search']);    
+                Route::get('indexSup', ['as' => 'meeting.indexSup', 'uses' => 'Psp\meeting\MeetingController@indexSup']);
             });
 
             //MeetingTeacher
@@ -884,6 +885,7 @@ Route::group(['prefix' => 'investigacion'], function(){
     Route::group(['prefix' => 'reporteISP'], function(){
         Route::get('/', ['as' => 'reporteISP.index', 'uses' => 'Report\ReportController@indexISP']);
         Route::post('/generateISP', ['as' => 'reporteISP.generateISP', 'uses' => 'Report\ReportController@generateISP']);
+        Route::get('/test/', ['as' => 'reporteISP.generarPDF', 'uses' => 'Report\ReportController@generarPDF']);
     });
 });
 
@@ -935,6 +937,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'grupo.afiliacion.store.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'grupo.afiliacion.delete.docente', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'grupo.afiliacion.store.estudiante', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'grupo.afiliacion.delete.estudiante', 'uses' => 'Investigation\Group\Affiliation\AffiliationController@destroyStudent']);
                 });
             });    
 
@@ -981,6 +986,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'proyecto.afiliacion.store.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'proyecto.afiliacion.delete.docente', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'proyecto.afiliacion.store.estudiante', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'proyecto.afiliacion.delete.estudiante', 'uses' => 'Investigation\Project\Affiliation\AffiliationController@destroyStudent']);
                 });
             });
 
@@ -1010,6 +1018,9 @@ Route::group(['middleware' => 'auth'], function(){
 
                     Route::post('createTeacher', ['as' => 'entregable.afiliacion.store.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeTeacher']);
                     Route::get('deleteTeacher/{id}', ['as' => 'entregable.afiliacion.delete.docente', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyTeacher']);
+
+                    Route::post('createStudent', ['as' => 'entregable.afiliacion.store.estudiante', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@storeStudent']);
+                    Route::get('deleteStudent/{id}', ['as' => 'entregable.afiliacion.delete.estudiante', 'uses' => 'Investigation\Deliverable\Affiliation\AffiliationController@destroyStudent']);
                 });
                 
             });
@@ -1281,6 +1292,7 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::post('/{id}/courses/store', ['as' => 'courses_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_store']);
         Route::get('/{id}/courses/{idCourse}/edit', ['as' => 'courses_edit.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_edit']);
         Route::post('/{id}/courses/update', ['as' => 'courses_update.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_update']);
+        Route::get('/courses/{idCourse}/delete', ['as' => 'courses_delete.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@courses_delete']);
 
 
         /* cursos en el ciclo */        
@@ -1310,8 +1322,10 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
         Route::get('/{id}/period/create', ['as' => 'period_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createPeriod']);
         Route::get('/{id}/period/view', ['as' => 'period_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewPeriod']);
+        Route::get('/{id}/period/continue', ['as' => 'period_continue.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@continuePeriod']);
         Route::post('/{id}/period/store', ['as' => 'period_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod']);
         
+
         Route::get('/{id}/academicCycle', ['as' => 'academicCycle_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initAcademicCycle']);
         Route::get('/{id}/academicCycle/create', ['as' => 'academicCycle_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createAcademicCycle']);
         Route::get('/{id}/academicCycle/view', ['as' => 'academicCycle_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewAcademicCycle']);

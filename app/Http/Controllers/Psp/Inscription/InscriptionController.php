@@ -16,6 +16,7 @@ use Intranet\Models\User;
 use Intranet\Models\Inscription;
 use Intranet\Models\Studentxinscriptionfiles;
 use Intranet\Models\Student;
+use Intranet\Models\PspStudent;
 use Intranet\Http\Requests\InscriptionRequest;
 
 use Auth;
@@ -91,8 +92,8 @@ class InscriptionController extends Controller
             $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
             if($student!=null){
                 $studentxinscription  = new Studentxinscriptionfiles;
-                $studentxinscription->idInscriptionFile =$inscription->id;
-                $studentxinscription->idStudent=$pspstudent->id;
+                $studentxinscription->idinscriptionfile =$inscription->id;
+                $studentxinscription->idpspstudents=$pspstudent->id;
                 $studentxinscription->acepta_terminos=1;
                 $studentxinscription->save();
             }

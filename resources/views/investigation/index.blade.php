@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<div class="panel panel-default">
+		<div class="panel panel-info">
 			<div class="panel-heading">
 				<h3 class="panel-title">Módulo de Investigación</h3>
 			</div>

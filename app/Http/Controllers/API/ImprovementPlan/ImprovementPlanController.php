@@ -8,6 +8,7 @@ use Intranet\Models\ImprovementPlan;
 use Intranet\Models\Suggestion;
 use Intranet\Models\ActionPlan;
 use Intranet\Models\Teacher;
+use Intranet\Models\FileCertificate;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -22,14 +23,23 @@ class ImprovementPlanController extends BaseController
 
 
     public function getipbyId($ip_id){
-      $ip = ImprovementPlan::where('IdPlanMejora',$ip_id)->with('teacher','typeImprovementPlan')->first();
+      $ip = ImprovementPlan::where('IdPlanMejora',$ip_id)->with('teacher','typeImprovementPlan', 'file')->first();
       //dd($ip);
       return response()->json($ip);
 
     }
 
     public function getActionsofIp($ip_id){
-      $actions = ActionPlan::where('IdPlanMejora',$ip_id)->with('teacher', 'cicle')->get();
+      $actions = ActionPlan::where('IdPlanMejora',$ip_id)->with('teacher', 'cicle')->get();      
+      
+      foreach ($actions as &$action){
+        $idarch = $action->IdArchivoEntrada;
+        $arch = FileCertificate::where('IdArchivoEntrada', $idarch)->first();
+        if ($arch != null) $action->file = $arch;
+
+      }
+      
+
       return response()->json($actions);
     }
 

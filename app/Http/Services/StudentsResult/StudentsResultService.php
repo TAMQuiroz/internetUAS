@@ -24,6 +24,12 @@ class StudentsResultService {
         return $studentResults;
     }
 
+    public function retrieveByFaculty($IdEspecialidad) {
+        $studentResults = StudentsResult::where('IdEspecialidad', $IdEspecialidad)->get();
+
+        return $studentResults;
+    }
+
     public function findByFaculty($faculty_id = null) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code', $faculty_id))

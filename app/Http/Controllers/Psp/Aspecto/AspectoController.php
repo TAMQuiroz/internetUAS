@@ -109,12 +109,6 @@ class AspectoController extends Controller
                         $pN->nota = $valorNota;
                         $pN->save();
                     }
-
-                    $pspstudentxcriterios  = new Pspstudentsxcriterios;
-                    $pspstudentxcriterios->idpspstudent = $idAlumno;
-                    $pspstudentxcriterios->idcriterio = $idCrit;
-                    $pspstudentxcriterios->nota = $valorNota;
-                    $pspstudentxcriterios->save();
                 }
                 return redirect()->route('student.index')->with('success', 'La información se ha registrado exitosamente');                
             }catch (Exception $e){

@@ -24,7 +24,7 @@
               {{Form::label('Especialidad',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-12 col-md-4">
 
-                {{Form::select('especialidad',$comboEspecialidades, $idEsp, ['class'=>'form-control'])}}
+                {{Form::select('especialidad',$comboEspecialidades, $idEsp, ['class'=>'form-control', 'id'=>'especialidad'])}}
 
               </div>
             </div>
@@ -33,7 +33,7 @@
               {{Form::label('Estado del proyecto',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-12 col-md-4">
 
-                {{Form::select('estadoP',$comboEstados, $idEstado, ['class'=>'form-control'])}}
+                {{Form::select('estadoP',$comboEstados, $idEstado, ['class'=>'form-control', 'id'=>'estadoP'])}}
               </div>
             </div>
 
@@ -124,7 +124,7 @@
         </div>
 
         <div class="table-responsive">
-          <table class="table table-list-search-investigator table-striped responsive-utilities jambo_table bulk_action"> 
+          <table id="tableI" class="table table-list-search-investigator table-striped responsive-utilities jambo_table bulk_action" > 
             <thead> 
               <tr> 
                 <th>Nombre</th> 
@@ -211,7 +211,7 @@
         </div>
 
         <div class="table-responsive">
-          <table class="table table-list-search-teacher table-striped responsive-utilities jambo_table bulk_action"> 
+          <table id="tableP" class="table table-list-search-teacher table-striped responsive-utilities jambo_table bulk_action" > 
             <thead> 
               <tr> 
                 <th>Nombre</th> 
@@ -273,9 +273,25 @@
 
     </div>
     </div>
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div>
+      <br><br>
+    </div>
+    <div id="pieI" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    <div>
+      <br><br>
+    </div>
+    <div id="pieP" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+
 </div>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script>
 <script src="{{ URL::asset('js/intranetjs/report/index-reportISP.js')}}"></script>
+<script src="{{ URL::asset('js/intranetjs/report/graph.js')}}"></script>
 
 @endsection

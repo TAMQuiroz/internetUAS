@@ -1,10 +1,11 @@
 <?php
 
 namespace Intranet\Http\Controllers\API\Psp\Students;
-
+use JWTAuth;
 use Illuminate\Http\Request;
 use Intranet\Models\Student;
 use Intranet\Models\PspDocument;
+use Intranet\Models\Supervisor;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspStudent;
 use Illuminate\Routing\Controller as BaseController;
@@ -32,6 +33,37 @@ class PspStudentsController extends BaseController
 
 
         return $this->response->array($students);
+    }
+
+    public function getSupStudents(){
+
+
+        $user =  JWTAuth::parseToken()->authenticate();
+
+        $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->first();
+
+
+                
+        $pspstudents = PspStudent::where('idsupervisor',$supervisor->id)->get();
+
+        $data = array();
+                foreach ($pspstudents as $pspstudent) {
+
+
+
+                        $student = Student::where('IdAlumno',$pspstudent->idalumno)->get()->first();
+
+
+
+
+                        $data[] = $student;
+                    
+                }
+
+
+        return $this->response->array($data );
+
+
     }
     
   

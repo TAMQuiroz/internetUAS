@@ -59,17 +59,6 @@
                     <div class="clearfix"></div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group row">
-                        <div class="col-md-8"></div>
-                        <div class="col-md-4 col-sm-12 col-xs-12">
-                            <div class="btn btn-success" data-toggle="modal" data-target="#modal-source">
-                                <i class="fa fa-plus"></i> Agregar Instrumentos de Medición 
-                            </div>
-                        </div>    
-                    </div>                
-                </div>        
-                </br> 
 
 
                 <div class="form-horizontal">

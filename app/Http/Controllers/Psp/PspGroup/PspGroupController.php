@@ -162,7 +162,8 @@ class PspGroupController extends Controller
             $data = [
                 'pspGroups' => $pspGroups,
                 'idFaculty' => $pspStudent->idespecialidad,
-            ];            
+            ];
+            //dd($data);
             return view('psp.pspGroup.selectGroup',$data);
         }else{
             $pspgroup = PspGroup::find($pspStudent->idpspgroup);

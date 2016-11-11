@@ -24,9 +24,10 @@ class CriterioResquest extends Request
     public function rules()
     {
         return [
-            'resultado' => 'required',
-            'aspecto' => 'required'
-
+            //'resultado' => 'required',
+            //'aspecto' => 'required',
+            'Nombre' => 'regex:/^[\pL\s\-]+$/u|required|max:200',
+            'Estado' => 'required|numeric',
         ];
     }
 }

@@ -29,9 +29,11 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::orderBy('nombre', 'asc')->get();
+        $filters = $request->all();
+
+        $events = Event::getFiltered($filters);
 
         $data = [
             'events'    =>  $events,

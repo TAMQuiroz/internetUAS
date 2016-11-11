@@ -75,6 +75,7 @@ class FreeHourController extends Controller
             $freeHour->cantidad = 1;
             $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();            
             $freeHour->idsupervisor = $supervisor->id;
+            $freeHour->idpspprocess = $supervisor->idpspprocess;
             $freeHour->save();
 
             $f = FreeHour::where('idsupervisor',$supervisor->id)->count();

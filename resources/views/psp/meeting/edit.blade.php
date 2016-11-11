@@ -30,6 +30,7 @@
                         @endif
                     </div>                    
                 </div>
+
                 <div class="form-group">
                     {{Form::label('Fecha',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
@@ -68,7 +69,7 @@
                 <div class="form-group">
                     {{Form::label('Lugar',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('lugar',$meeting->lugar,['class'=>'form-control'])}}    
+                        {{Form::text('lugar',$meeting->lugar,['class'=>'form-control', 'required'])}}    
                     </div>                    
                 </div>
 
@@ -86,10 +87,22 @@
                     </div>                    
                 </div>
 
+                <div class="form-group">
+                    {{Form::label('Estado',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-4">
+                        <select name="idtipoestado" id="idtipoestado" class="form-control" required="required">
+                            <option value="">-- Seleccione --</option>
+                            @foreach($statuses as $status)                                
+                                <option value="{{$status->id}}" @if($status->id==$meeting->status->id) selected @endif>{{$status->nombre}}</option>                                
+                            @endforeach
+                        </select>                             
+                    </div>                    
+                </div>
+
                 <div class="row">
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                        <a class="btn btn-default pull-right" href="{{route('student.index')}}">Cancelar</a>
+                        <a class="btn btn-default pull-right" href="{{route('meeting.indexSup')}}">Cancelar</a>
                     </div>
                 </div>
 

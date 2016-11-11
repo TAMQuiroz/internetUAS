@@ -438,7 +438,7 @@
                
 
               <!--Menu Evaluaciones-->
-              @if(Auth::user() && ( (Auth::user()->IdPerfil == 1)|| (Auth::user()->IdPerfil == 0) ||  (Auth::user()->professor->rolEvaluaciones != null )  ) )
+              @if(Auth::user() && ( (Auth::user()->IdPerfil == 1) || (Auth::user()->IdPerfil == 0) ||  (Auth::user()->professor && Auth::user()->professor->rolEvaluaciones != null )  ) )
 
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">receipt</i>Evaluaciones</a>

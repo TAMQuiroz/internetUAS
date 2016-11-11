@@ -17,7 +17,7 @@ class InvestigationMiddleware
     public function handle($request, Closure $next)
     {
 
-        if(Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5 || Auth::user()->IdPerfil == 3){
+        if(Auth::user()->IdPerfil == 2 || Auth::user()->IdPerfil == 5 || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 0){
             return $next($request);
         }
 

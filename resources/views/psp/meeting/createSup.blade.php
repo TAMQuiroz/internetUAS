@@ -25,8 +25,8 @@
                     <div class="col-md-4">
                         <select name="tiporeunion" id="tiporeunion" class="form-control" required="required">
                             <option value="" selected>-- Seleccione --</option>
-                            <option value="1">Alumno - Supervisor</option>
-                            <option value="2">Alumno - Jefe</option>                           
+                            <option value="1">Supervisor - Alumno</option>
+                            <option value="2">Supervisor - Jefe</option>                           
                         </select>  
                     </div>                                   
                 </div>
@@ -40,9 +40,10 @@
 
                 <div class="form-group">
                     {{Form::label('Hora inicio',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        {{Form::time('hora_inicio',null,['class'=>'form-control', 'required'])}}    
-                    </div>                    
+                    <div class="col-md-3">
+                        {{Form::number('hora_inicio',null,['class'=>'form-control', 'required', 'min' => 8, 'max' => 21])}}    
+                    </div>
+                    {{Form::label('horas',null,['class'=>'col-md-1'])}}                    
                 </div>
 
                 {{--Ir a la lista de alumnos--}}
@@ -61,7 +62,7 @@
                 <div class="form-group">
                     {{Form::label('Lugar',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('lugar',null,['class'=>'form-control'])}}    
+                        {{Form::text('lugar',$lugar,['class'=>'form-control'])}}    
                     </div>                    
                 </div>
 

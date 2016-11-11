@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\meeting;
 use Intranet\Models\Student;
+use Intranet\Models\Status;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\freeHour;
@@ -71,6 +72,7 @@ class MeetingController extends Controller
             $meeting->asistencia='o';
             $meeting->idfreeHour=$freeHour->id;
             $meeting->tiporeunion=1;
+            $meeting->lugar = $supervisor->direccion;
 
             $meeting->save();
 
@@ -111,9 +113,12 @@ class MeetingController extends Controller
     public function edit($id)
     {
         //
-        $meeting = meeting::with('supervisor','student')->find($id)->get()->first();
-        $data['meeting'] = $meeting;
+        $meeting = meeting::with('supervisor','student','status')->find($id)->get()->first();
         //dd($meeting);
+        $statuses = Status::where('tipo_estado',3)->get();        
+        $data['meeting'] = $meeting;
+        $data['statuses'] = $statuses;
+        //dd($data);
         return view('psp.meeting.edit',$data);
     }
 
@@ -126,6 +131,7 @@ class MeetingController extends Controller
             $meeting->lugar = $request['lugar'];
             $meeting->observaciones = $request['observaciones'];
             $meeting->retroalimentacion = $request['retroalimentacion'];
+            $meeting->idtipoestado = $request['idtipoestado'];
             $meeting->save();
 
             return redirect()->route('meeting.show',$id)->with('success','La reunion se ha actualizado exitosamente');
@@ -167,8 +173,8 @@ class MeetingController extends Controller
     //Vista supervisor
     public function indexSup()
     {
-        $meetings = meeting::with('student')->get();
-
+        $meetings = meeting::with('student','status')->get();
+        //dd($meetings);
         $data = [
             'meetings'    =>  $meetings,
         ];
@@ -179,9 +185,11 @@ class MeetingController extends Controller
     public function createSup()
     {
         $students = Student::get();
+        $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
         $data = [
             'students'    =>  $students,
         ];
+        $data['lugar'] = $supervisor->direccion;
         return view('psp.meeting.createSup',$data);
     }
 
@@ -206,16 +214,16 @@ class MeetingController extends Controller
                 $meeting->idfreehour = $freeHour->id;
             }
 
-            $meeting->idtipoestado = 1;
-            $meeting->hora_inicio = $request['hora_inicio'];
+            $meeting->idtipoestado = 12;
+            $timestamp = mktime($request['hora_inicio'],0,0, 0,0,0);
+            $time = date('H:i:s', $timestamp);
+            $meeting->hora_inicio=$time;            
             $timestamp = strtotime($request['hora_inicio']) + 60*60;
             $time = date('H:i:s', $timestamp);
             $meeting->hora_fin=$time;
             $meeting->fecha=$request['fecha'];
             $meeting->idstudent=$request['alumno'];
-
             $meeting->idsupervisor=$supervisor->id;
-
             $meeting->asistencia='o';
             $meeting->lugar=$request['lugar'];
             //dd($meeting);

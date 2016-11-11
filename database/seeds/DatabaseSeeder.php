@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         //psp
         //$this->call(CaseInscriptionFileSeeder::class);
         $this->call(PspGroupTableSeeder::class);
+        $this->call(PspProcessTableSeeder::class);
 
 
     }

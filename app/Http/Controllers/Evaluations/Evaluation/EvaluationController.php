@@ -477,7 +477,7 @@ public function sendresults(Request $request,$id)
 
         //se borran las respuestas anteriores, si hubiesen
         DB::table('evquestionxstudentxdocentes')->where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->delete();        
-        
+        $loop = 1;
         foreach ($request['arrQuestion'] as $idEvquestion => $answer) {
             $evquestion = EvQuestion::find($idEvquestion);            
             $ev = new Evquestionxstudentxdocente;
@@ -509,14 +509,14 @@ public function sendresults(Request $request,$id)
                 if($request->hasFile($idEvquestion)){
                     $destinationPath = 'uploads/respuestas/'; // upload path
                     $extension = $request->file($idEvquestion)->getClientOriginalExtension();
-                    $filename = 'Eval_'.$evquestion->evaluacion->id.'_Preg_'.$evquestion->id.'_'.$ev->id.'.'.$extension; 
+                    $filename = 'Eval_'.$tutstudentxevaluation->id.'_Preg'.$loop.'.'.$extension; 
                     $request->file($idEvquestion)->move($destinationPath, $filename);
 
                     $ev->path_archivo = $destinationPath.$filename;                    
                     $ev->save();                    
                 }
             }
-            
+            $loop++;
         }  
         //guardo la hora de la evaluacion        
         $tutstudentxevaluation->fecha_hora = date('Y-m-d H:i:s ', time());

@@ -184,10 +184,12 @@
 									<tr class="headings">										
 										<th class="centered column-title">Código </th>
 										<th class="column-title">Apellidos y Nombres </th>
-										<th class="centered column-title last">Seleccionar</th>           
+										<th class="centered column-title last"><div class="checkbox">
+												<label><input id="checkAll" type="checkbox" checked ></label>
+											</div></th>           
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="checkbody">
 									@foreach($students as $student)
 									<tr class="even pointer">
 										<td class="centered ">{{ $student->codigo }}</td>

@@ -78,8 +78,11 @@
                                     <i class="fa fa-remove"></i>
                                 </a>
                                 @endif
-                                @if($evaluation->estado == 0)  
-                                <a href="#activar_{{$evaluation->id}}" class="btn btn-primary btn-xs" title="Activar" >
+                                @if($evaluation->estado == 0)
+                                <a href="{{route('evaluacion.ver_evaluaciones_alumnos_coord',$evaluation->id)}}" class="btn btn-primary btn-xs" title="Visualizar" >
+                                    <i class="fa fa-eye"></i>
+                                </a>  
+                                <a href="#activar_{{$evaluation->id}}" class="btn btn-primary btn-xs" title="Reactivar" >
                                     <i class="fa fa-check"></i>
                                 </a>
                                 @endif

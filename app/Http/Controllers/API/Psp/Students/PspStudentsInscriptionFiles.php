@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Student;
 use Intranet\Models\Inscription;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\meeting;
 use Illuminate\Routing\Controller as BaseController;
 use Dingo\Api\Routing\Helpers;
@@ -118,7 +119,7 @@ $inscription = array();
 
         DB::table('pspmeetings')->insertGetId(
             [
-                'idtipoestado' => 12, //pendiente
+                'idtipoestado' => 12, //id del estado pendiente
                'hora_inicio' => $hora,
                'hora_fin' => $horaFin ,
                'fecha' => $fecha,
@@ -133,6 +134,26 @@ $inscription = array();
 
         );
 
+            //enviamos el correo al jefe
+
+
+
+
+    $recomendacion  = 'hola'  ; 
+        $mail = 'jemarroquin@pucp.edu.pe';
+        try
+        {
+            Mail::send('emails.notifyDateEmployer', compact('fecha','lugar','hora'), function($m) use($mail) {
+                $m->subject('Cita registrada - PSP');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
+        //Ret
+
         return "exito";    
 
     }
@@ -141,10 +162,32 @@ $inscription = array();
     public function getPspStudents($id)
     {
         $pspstudent = PspStudent::where('idalumno', $id )->get();
-       return $pspstudent;
-    //    return $id  ;
+        return  $this->response->array($pspstudent->toArray());
+
     }
 
+ public function getStudents($id)
+    {
+        $student = Student::where('IdAlumno', $id )->get();
+        return  $this->response->array($student->toArray());
 
+    }
+
+ public function getTutStudents($idAlumno)
+    {
+        $student = Student::where('IdAlumno', $idAlumno )->get()->first();
+        $tutstudent = Tutstudent::where('codigo', $student->Codigo )->get();
+
+
+        return  $this->response->array($tutstudent->toArray());
+   }
+
+
+  public function getDatesSuperEmployerAll()
+    {
+
+            $pspstudents = meeting::get();
+    return  $this->response->array($pspstudents->toArray());
+    }
 
 }

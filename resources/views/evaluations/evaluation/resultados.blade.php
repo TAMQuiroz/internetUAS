@@ -15,7 +15,7 @@
             <h4>Cantidad de alumnos objetivo: {{ $total_students  }}</h4>
             <h4>Cantidad de alumnos evaluados: {{ $compxtutxevs[0]->cantidad  }}</h4>
             <h4>Aceptación: {{round( ($compxtutxevs[0]->cantidad / $total_students)*100 ,2) }}%</h4>
-            <h4>Puntaje total de la evaluación: {{$total_puntaje}}</h4>                         
+            <h4>Puntaje total de la evaluación: {{round($total_puntaje,2)}}</h4>                         
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">                    
                     <col width="50%" >
@@ -38,10 +38,10 @@
                         @foreach($compxtutxevs as $compxtutxev)                        
                         <tr class="even pointer">                            
                             <td class=" ">{{$compxtutxev->nombre }}</td>                            
-                            <td class="centered ">{{$compxtutxev->maximo }}</td>                            
-                            <td class="centered ">{{$compxtutxev->min }}</td>
-                            <td class="centered ">{{$compxtutxev->max }}</td>
-                            <td class="centered ">{{round ($compxtutxev->prom_punt ,2)}}</td>
+                            <td class="centered ">{{round($compxtutxev->maximo,2)}}</td>                           
+                            <td class="centered ">{{round($compxtutxev->min,2)}}</td>
+                            <td class="centered ">{{round($compxtutxev->max,2) }}</td>
+                            <td class="centered ">{{round($compxtutxev->prom_punt ,2)}}</td>
                             <td class="centered ">{{round( ($compxtutxev->prom_punt / $compxtutxev->maximo)*100 ,2)}}%</td>
                         </tr>                                           
                         @endforeach

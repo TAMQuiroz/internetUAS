@@ -166,7 +166,7 @@ class FlujoCoordinadorController extends Controller
     public function objetivoEducacional_store (EducationalObjetiveRequest $request, $id){
 
         //crear un nuevo objetivo educacional
-        $numberOE = EducationalObjetive::where('IdEspecialidad',Session::get('faculty-code'))
+        $numberOE = EducationalObjetive::where('IdEspecialidad',$id)
 									   ->where('deleted_at',null)->count();
 		$numberOE = ($numberOE) + 1;
 		$educationalObjetive = EducationalObjetive::create([

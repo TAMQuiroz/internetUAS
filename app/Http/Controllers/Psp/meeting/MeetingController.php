@@ -78,7 +78,7 @@ class MeetingController extends Controller
             $meeting->asistencia='o';
             $meeting->idfreeHour=$freeHour->id;
             $meeting->tiporeunion=1;
-            $meeting->lugar = $supervisor->direccion;
+            $meeting->lugar = $freeHour->Supervisor->direccion;
 
             $meeting->save();
 

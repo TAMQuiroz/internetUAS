@@ -96,6 +96,7 @@ class StudentController extends BaseController {
 
 						// Para el curso PSP
 						if(isset($request['selectPsp'])){
+
 							if(!empty($value[5]) && $value[5] != null){
 								$insert['lleva_psp'] = 1;
 
@@ -103,7 +104,7 @@ class StudentController extends BaseController {
 								$student = Tutstudent::where('codigo', $value_int)->first();
 
 								if($student != null) { //encontro alumno -> obtener su idusuario
-									$insert['IdUsuario'] = $student->IdUsuario;								 
+									$insert['IdUsuario'] = $student->id_usuario;								 
 								}
 								else { // no encontro alumno en tutoria -> crear alumno en tutoria y usuario
 
@@ -127,12 +128,14 @@ class StudentController extends BaseController {
 								}
 							}
 							else{
+
 								return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 							}								
 						}
 						
 						array_push($students, $insert);						
 					}else{
+
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 					}
 				}

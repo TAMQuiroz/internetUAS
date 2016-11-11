@@ -102,7 +102,7 @@ class FlujoAdministradorController extends Controller
     public function profesor_index ($id){
 
 		$especialidad = Faculty::findOrFail($id);
-		$profesores = $especialidad->teachers;
+		$profesores = Teacher::where('IdEspecialidad','=',$especialidad->IdEspecialidad)->orderby('ApellidoPaterno','ASC')->get();
 		return view('flujoAdministrador.profesor_index', ['teachers'=>$profesores, 'idEspecialidad' =>$id]);
     	//return "profesor creado";
     }

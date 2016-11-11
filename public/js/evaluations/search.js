@@ -104,7 +104,14 @@ $(document).ready(function($) {
 		// 	}
 		// });
 
-
+		$('#checkAll').on('click', function() {
+			if( $('#checkAll').is(":checked")){
+				$('#checkbody input').prop('checked', true);
+			}
+			else{
+			$('#checkbody input').prop('checked', false);
+			}
+		});
 
 	});
 

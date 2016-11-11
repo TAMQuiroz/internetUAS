@@ -27,7 +27,7 @@ class CourseRequest extends Request
             'coursecode' => 'required',
             'coursename' => 'required',
             'courseacademicLevel' => 'required',
-            'facultycode' => 'required',
+            //'facultycode' => 'required',
         ];
     }
 }

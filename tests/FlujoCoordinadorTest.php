@@ -83,7 +83,9 @@ class FlujoCoordinadorTest extends TestCase
             ->seePageIs('/flujoCoordinador/1/courses/create');
     }
     */
-    public function test_uas_crear_profesor2_01(){
+
+    //De BlackFlyff
+    public function test_uas_crear_profesor2_01(){ //Correcto
 
         $user = factory(Intranet\Models\User::class)->make();
         //$facultad = factory(Intranet\Models\Faculty::class)->make();
@@ -97,14 +99,56 @@ class FlujoCoordinadorTest extends TestCase
             ->select('Nombre','teachername')
             ->select('Apellido1','teacherlastname')
             ->select('Apellido2','teachersecondlastname')
-            ->select('testo@correo.com','teacheremail')
+            ->select('test1@correo.com','teacheremail')
             ->select('Profesor Asociado','teacherposition')
             ->select('algo','teacherdescription')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/facultad/2/profesor')
+            ->seePageIs('/flujoCoordinador/1/profesor')
             ->see('El profesor se ha registrado exitosamente');
-    }
+    } //FUNCIONA BIEN
 
+    public function test_uas_crear_profesor2_02(){ //Codigo muy largo
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/1/profesor/create')
+            ->select('222222222222','teachercode')
+            ->select('Nombre','teachername')
+            ->select('Apellido1','teacherlastname')
+            ->select('Apellido2','teachersecondlastname')
+            ->select('test1@correo.com','teacheremail')
+            ->select('Profesor Asociado','teacherposition')
+            ->select('algo','teacherdescription')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/1/profesor/create');
+    } //FALLA, FALTA VALIDAR POR BACK LA CANT DE CARACTERES
+
+    public function test_uas_crear_profesor2_03(){ //Correo no tiene formato
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/1/profesor/create')
+            ->select('22222222','teachercode')
+            ->select('Nombre','teachername')
+            ->select('Apellido1','teacherlastname')
+            ->select('Apellido2','teachersecondlastname')
+            ->select('test1correocom','teacheremail')
+            ->select('Profesor Asociado','teacherposition')
+            ->select('algo','teacherdescription')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/1/profesor/create');
+    } //FALLA, FALTA VALIDAR POR BACK EL CORREO
+    
     public function test_uas_crear_objetivo_01(){
 
         $user = factory(Intranet\Models\User::class)->make();
@@ -118,7 +162,7 @@ class FlujoCoordinadorTest extends TestCase
             ->press('Guardar')
             ->seePageIs('/flujoCoordinador/1/objetivoEducacional')
             ->see('El objetivo educacional se ha registrado exitosamente');
-    }
+    } //FUNCIONA BIEN
 
     public function test_uas_crear_objetivo_02(){
         $user = factory(Intranet\Models\User::class)->make();
@@ -131,7 +175,8 @@ class FlujoCoordinadorTest extends TestCase
             ->select('','descripcion')
             ->press('Guardar')
             ->seePageIs('/flujoCoordinador/1/objetivoEducacional/create');
-    }
+    } //FUNCIONA BIEN
+    //De BlackFlyff
 
     ////de melgar01 flujo Coordinador ---no funciona todavia
 

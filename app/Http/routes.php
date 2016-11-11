@@ -604,6 +604,8 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'meeting.delete', 'uses' => 'Psp\meeting\MeetingController@destroy']);    
                 Route::get('search/{id}', ['as' => 'meeting.search', 'uses' => 'Psp\meeting\MeetingController@search']);    
                 Route::get('indexSup', ['as' => 'meeting.indexSup', 'uses' => 'Psp\meeting\MeetingController@indexSup']);
+                Route::get('createSup', ['as' => 'meeting.createSup', 'uses' => 'Psp\meeting\MeetingController@createSup']);
+                Route::post('createSup', ['as' => 'meeting.storeSup', 'uses' => 'Psp\meeting\MeetingController@storeSup']);
             });
 
             //MeetingTeacher
@@ -616,6 +618,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('edit/{id}', ['as' => 'MeetingTeacher.update', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@update']);
                 Route::get('delete/{id}', ['as' => 'MeetingTeacher.delete', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@destroy']);    
                 Route::get('search/{id}', ['as' => 'MeetingTeacher.search', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@search']);    
+                Route::get('mail/{id}', ['as' => 'MeetingTeacher.mail', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@mail']);
             });
 
             //Inscription File
@@ -644,7 +647,10 @@ Route::group(['middleware' => 'auth'], function(){
 
             //Aspecto
             Route::group(['prefix' => 'aspecto'], function() {
+                Route::get('create/{id}', ['as' => 'aspecto.create', 'uses' => 'Psp\Aspecto\AspectoController@create']);
                 Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
+                Route::post('edit/{id}', ['as' => 'aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
+                Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
             });
             
 
@@ -793,6 +799,8 @@ $api->version('v1', function ($api) {
                 $api->get('student','PspGroup\PspGroupController@getStudent');
                 $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
                 $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+                $api->get('date/super/employer/all','Students\PspStudentsInscriptionFiles@getDatesSuperEmployerAll');
+
 
                 $api->post('date/supervisor/employer', 'Students\PspStudentsInscriptionFiles@postAppointmentSuperEmployer');
                 $api->get('getInscriptions/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
@@ -1342,7 +1350,8 @@ Route::group(['prefix' => 'tutoria'], function(){
         Route::get('/{id}/period', ['as' => 'period_init.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@initPeriod']);
         Route::get('/{id}/period/create', ['as' => 'period_create.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@createPeriod']);
         Route::get('/{id}/period/view', ['as' => 'period_view.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@viewPeriod']);
-        Route::get('/{id}/period/continue', ['as' => 'period_continue.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@continuePeriod']);
+        Route::post('/{id}/period/continue', ['as' => 'period_continue.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@continuePeriod']);
+        Route::post('/{id}/period/store2', ['as' => 'period_store2.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod2']);
         Route::post('/{id}/period/store', ['as' => 'period_store.flujoCoordinador', 'uses' => 'FlujoCoordinadorController@storePeriod']);
         
 

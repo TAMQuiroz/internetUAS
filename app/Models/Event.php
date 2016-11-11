@@ -17,4 +17,13 @@ class Event extends Model
         return $this->belongsTo('Intranet\Models\Group', 'id_grupo');
     }
 
+    static public function getFiltered($filters){
+        $query = Event::orderBy('nombre', 'asc');
+
+        if(array_key_exists("nombre", $filters) && $filters["nombre"] != "") {
+            $query = $query->where('nombre', 'like', '%'.$filters['nombre'].'%');
+        }
+
+        return $query->paginate(10);
+    }
 }

@@ -36,4 +36,14 @@ class Project extends Model
     public function deliverables(){
         return $this->hasMany('Intranet\Models\Deliverable', 'id_proyecto');
     }
+
+    static public function getFiltered($filters){
+        $query = Project::orderBy('nombre', 'asc');
+
+        if(array_key_exists("nombre", $filters) && $filters["nombre"] != "") {
+            $query = $query->where('nombre', 'like', '%'.$filters['nombre'].'%');
+        }
+
+        return $query->paginate(10);
+    }
 }

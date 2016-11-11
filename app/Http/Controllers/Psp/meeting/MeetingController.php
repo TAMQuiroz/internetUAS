@@ -7,6 +7,7 @@ use Intranet\Models\Student;
 use Intranet\Models\Status;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
+use Intranet\Http\Requests\MeetingEditRequest;
 use Intranet\Models\freeHour;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
@@ -46,7 +47,7 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function store(MeetingRequest $request)
+    public function store(Request $request)
     {
         
         try {
@@ -123,7 +124,7 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function update(Request $request, $id)
+    public function update(MeetingEditRequest $request, $id)
     {
         //
         try {
@@ -194,7 +195,7 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function storeSup(Request $request)
+    public function storeSup(MeetingRequest $request)
     {
         try {
 

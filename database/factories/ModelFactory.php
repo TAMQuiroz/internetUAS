@@ -259,3 +259,16 @@ $factory->define(Intranet\Models\PspGroup::class, function (Faker\Generator $fak
         'descripcion' => $faker->text($maxNbChars = 100) ,
    ];
 });
+
+$factory->define(Intranet\Models\meeting::class, function (Faker\Generator $faker){
+   return[
+        'idtipoestado' => 12 ,
+        'hora_inicio' => '10:00:00' ,
+        'hora_inicio' => '11:00:00' ,
+        'fecha' => \Carbon\Carbon::yesterday(),
+        'lugar' => 'V202',
+        'idstudent' => 41,
+        'asistencia' => 'o',
+        'tiporeunion' => 2,
+   ];
+});

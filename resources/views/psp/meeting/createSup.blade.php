@@ -24,7 +24,7 @@
                     {{Form::label('Tipo de reunion',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
                         <select name="tiporeunion" id="tiporeunion" class="form-control" required="required">
-                            <option value="" selected>-- Seleccione --</option>
+                            <option value="">-- Seleccione --</option>
                             <option value="1">Supervisor - Alumno</option>
                             <option value="2">Supervisor - Jefe</option>                           
                         </select>  

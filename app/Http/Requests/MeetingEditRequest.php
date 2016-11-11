@@ -4,7 +4,7 @@ namespace Intranet\Http\Requests;
 
 use Intranet\Http\Requests\Request;
 
-class MeetingRequest extends Request
+class MeetingEditRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class MeetingRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,16 +24,10 @@ class MeetingRequest extends Request
     public function rules()
     {
         return [
-            'tiporeunion' => 'required',
-            'fecha' => 'required|date|after:'.\Carbon\Carbon::yesterday(),
-            'hora_inicio' => 'required|numeric|min:8|max:21',
-            'alumno' => 'required',
             'lugar' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
-        ];
-    }
-    public function messages()
-    {
-        return [
+            'observaciones' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
+            'retroalimentacion' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
+            'idtipoestado' => 'required',
         ];
     }
 }

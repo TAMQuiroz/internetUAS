@@ -29,9 +29,11 @@ class InvestigatorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $investigadores = Investigator::orderBy('nombre', 'asc')->get();
+        $filters = $request->all();
+
+        $investigadores = Investigator::getFiltered($filters);
 
         $data = [
             'investigadores'    =>  $investigadores,

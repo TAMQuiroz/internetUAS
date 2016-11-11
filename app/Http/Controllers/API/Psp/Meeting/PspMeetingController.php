@@ -3,6 +3,8 @@
 namespace Intranet\Http\Controllers\API\Psp\Meeting;
 use JWTAuth;
 use Response;
+use DB;
+use DateTime;
 use Illuminate\Http\Request;
 use Intranet\Models\FreeHour;
 use Intranet\Models\Supervisor;
@@ -79,18 +81,119 @@ class PspMeetingController extends BaseController
 
  			$student = Student::find($id);
 
- 			$meeting = 	meeting::where('idstudent', $id)->get();
+ 			$meetings = 	meeting::where('idstudent', $id)->get();
 
+
+
+ 			foreach($meetings as $meeting ){
+
+ 				$meeting['estado'] =  Status::find($meeting->idtipoestado)->first();
+
+
+
+ 			}
 
 
  		
- 			$data = $meeting->toArray();
+ 			//$data = $meeting->toArray();
  			
- 			return $this->response->array($data);
+ 			return $this->response->array($meetings->toArray());
 
 
 
  	}	
+
+ 	public function update(Request $request){
+
+ 		
+ 	 $observation = $request['observaciones'];
+ 	 $feedback = $request['retroalimentacion'];
+ 	 $place =  $request['lugar'];
+ 	 $id = $request['id'];
+
+
+
+ 	 try{
+
+ 	 $meeting = meeting::where('id' , $id)->get()->first();
+ 	 $meeting->observaciones = $observation;
+ 	 $meeting->lugar = $place;
+ 	 $meeting->retroalimentacion = $feedback;
+ 	 $meeting->save();
+ 	 $mensaje = "Actualizacion satisfactoria";
+        $array['message'] = $mensaje;
+        return $this->response->array($array);
+
+
+
+ 	 }catch(Exception $e){
+
+
+ 	 		$mensaje = "Hubo error";
+            $array['message'] = $mensaje;
+            return $this->response->array($array);
+
+
+ 	 }
+
+ 	
+ 	}
+
+
+ 	public function store(Request $request){
+
+ 		$user =  JWTAuth::parseToken()->authenticate();
+ 		if ($user->IdPerfil == 6){
+
+ 			$supervisor =	Supervisor::where('iduser',$user->IdUsuario)->first();
+
+ 		$idUser = $supervisor->id;
+ 		$lugar = $request['lugar'];
+ 		$idAlumno =  $request['idalumno'];
+ 		$horaAux = $request['hora'];
+ 		$hora  = $horaAux.":00";
+ 		$horaFin = $hora;
+ 		$horaFin[3] = '3';
+
+ 		$fecha = $request['fecha'];
+ 	
+
+ 		$format = "d/m/Y";
+        $date= DateTime::createFromFormat($format, $fecha);
+
+ 		DB::table('pspmeetings')->insertGetId(
+            [
+                'idtipoestado' => 12, //id del estado pendiente
+               'hora_inicio' => $hora,
+               'hora_fin' => $horaFin ,
+               'fecha' => $date,
+               'idstudent' => $idAlumno,
+               'idsupervisor' => $idUser  ,
+               'asistencia' =>  'No se ha registrado',
+               'lugar' => $lugar,
+               'observaciones' =>'',
+               'tiporeunion' =>   1, //Reunion tipo supervisor - jefe
+
+            ]
+
+        );
+		$mensaje = "Solicitud satisfactoria";
+        $array['message'] = $mensaje;
+        return $this->response->array($array);
+
+
+
+
+ 		}
+
+ 		 
+ 	
+
+
+
+
+
+ 	}
 
 
 

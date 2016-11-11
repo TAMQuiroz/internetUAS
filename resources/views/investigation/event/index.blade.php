@@ -22,7 +22,7 @@
 			  		<div class="col-md-6">
 			  			<a href="#filter" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
 			        </div>
-			        @if(Auth::user() && (Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin')))
+			        @if(Auth::user() && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.admin')))
 			        <div class="col-md-6">
 						<a href="{{route('evento.create')}}">
 							{{Form::button('<i class="fa fa-plus"></i> Crear Evento',['class'=>'btn btn-success pull-right'])}}

@@ -6,7 +6,7 @@
     </div>    
 </div>
 <div class="row">
-    <div class="col-sm-3 col-xs-12 view">
+    <div class="col-sm-3 col-xs-12">
         <div class="input-group date tutorship-tutor-mydates .prev .next" style="margin-left: auto; margin-right: auto">
         </div>         
     </div>
@@ -22,7 +22,7 @@
                 <a href="{{ route('mis_alumnos.index') }}" class="btn btn-submit pull-right"><i class="fa fa-plus"></i>  Nueva cita</a>
             </div>
         </div>
-        <div class="table-responsive view">
+        <div class="table-responsive">
             <table class="table table-striped table-bordered responsive-utilities jambo_table bulk_action">
                 <thead>
                     <tr class="headings">

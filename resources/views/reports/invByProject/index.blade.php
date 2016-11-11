@@ -41,7 +41,7 @@
               {{Form::label('Área del proyecto',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-12 col-md-4">
 
-                {{Form::select('areaP',$comboAreasP, $idAreaP, ['class'=>'form-control'])}}
+                {{Form::select('areaP',$comboAreasP, $idAreaP, ['class'=>'form-control', 'id'=> 'areaP'])}}
               </div>
             </div>
 
@@ -63,13 +63,13 @@
             <div class="form-group">
               {{Form::label('N° de proyectos asignados',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-4 col-md-1">
-                {{Form::select('minProyectos',$comboMinP, $minP, ['class'=>'form-control'])}}
+                {{Form::select('minProyectos',$comboMinP, $minP, ['class'=>'form-control', 'id'=>'minProyectos'])}}
               </div>
               <div class="col-xs-4 col-md-1 col-md-offset-1">
                 {{Form::label('entre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               </div>
               <div class="col-xs-4 col-md-1">
-                {{Form::select('maxProyectos',$comboMaxP, $maxP, ['class'=>'form-control'])}}
+                {{Form::select('maxProyectos',$comboMaxP, $maxP, ['class'=>'form-control', 'maxProyectos'])}}
 
               </div>
             </div>
@@ -79,11 +79,11 @@
 
               
               <div class="col-xs-4 col-md-1">
-                {{Form::radio('radio','Si', ($opcion=='Si'))}} Si
+                {{Form::radio('radio','Si', ($opcion=='Si'), ['id' => 'radioB'])}} Si
               </div>
 
               <div class="col-xs-4 col-md-1">
-                {{Form::radio('radio','No', ($opcion=='No'))}} No
+                {{Form::radio('radio','No', ($opcion=='No'), ['id' => 'radioB2'])}} No
               </div>
 
             </div>
@@ -92,7 +92,8 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
               {{Form::submit('Generar', ['class'=>'btn btn-success pull-right', 'id'=>'btnGenerar'])}}
               <a class="btn btn-default pull-right" href="{{ route('reporteISP.index') }}">Cancelar</a>
-              <a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>
+              <!--<a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>-->
+              <a class="btn btn-default pull-right" id="btnGraficos">Graficos</a>
             </div>
           </div>
           {{Form::close()}}
@@ -158,18 +159,28 @@
                     </thead>
                     <tbody>
                       @foreach($investigador->projects as $proyecto)
-                        @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
-                          @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                            @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
-                            <tr>
-                              <td>{{$proyecto->nombre}}</td> 
-                              <td>{{$proyecto->fecha_fin}}</td> 
-                              <td>{{$proyecto->area->nombre}}</td> 
-                              <td id="{{$proyecto->status->nombre}}">{{$proyecto->status->nombre}}</td>
-                              <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                            </tr>
+                        @if($opcion == 'No')
+                          @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                            @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                              @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                              <tr>
+                                <td>{{$proyecto->nombre}}</td> 
+                                <td>{{$proyecto->fecha_fin}}</td> 
+                                <td>{{$proyecto->area->nombre}}</td> 
+                                <td id="{{$proyecto->status->nombre}}">{{$proyecto->status->nombre}}</td>
+                                <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                              </tr>
+                              @endif
                             @endif
                           @endif
+                        @elseif($opcion == 'Si')
+                          <tr>
+                            <td>{{$proyecto->nombre}}</td> 
+                            <td>{{$proyecto->fecha_fin}}</td> 
+                            <td>{{$proyecto->area->nombre}}</td> 
+                            <td id="{{$proyecto->status->nombre}}">{{$proyecto->status->nombre}}</td>
+                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          </tr>
                         @endif
                       @endforeach
                     </tbody>
@@ -243,18 +254,28 @@
                     </thead>
                     <tbody>
                       @foreach($profesor->projects as $proyecto)
-                        @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
-                          @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                            @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
-                            <tr>
-                              <td>{{$proyecto->nombre}}</td> 
-                              <td>{{$proyecto->fecha_fin}}</td> 
-                              <td>{{$proyecto->area->nombre}}</td> 
-                              <td>{{$proyecto->status->nombre}}</td>
-                              <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                            </tr>
+                        @if($opcion == 'No')
+                          @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                            @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                              @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                              <tr>
+                                <td>{{$proyecto->nombre}}</td> 
+                                <td>{{$proyecto->fecha_fin}}</td> 
+                                <td>{{$proyecto->area->nombre}}</td> 
+                                <td>{{$proyecto->status->nombre}}</td>
+                                <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                              </tr>
+                              @endif
                             @endif
                           @endif
+                        @elseif($opcion == 'Si')
+                          <tr>
+                            <td>{{$proyecto->nombre}}</td> 
+                            <td>{{$proyecto->fecha_fin}}</td> 
+                            <td>{{$proyecto->area->nombre}}</td> 
+                            <td>{{$proyecto->status->nombre}}</td>
+                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          </tr>
                         @endif
                       @endforeach
                     </tbody>
@@ -279,6 +300,14 @@
       <br><br>
     </div>
     <div id="pieP" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    <div>
+      <br><br>
+    </div>
+    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div>
+      <br><br>
+    </div>
+    <div id="areaChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
 </div>
 

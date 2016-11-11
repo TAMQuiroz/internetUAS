@@ -150,7 +150,7 @@ class FlujoCoordinadorController extends Controller
     public function objetivoEducacional_index ($id){
 
 		$especialidad = Faculty::findOrFail($id);
-		$objetivos = $especialidad->objectives;
+        $objetivos = EducationalObjetive::where('IdEspecialidad','=',$especialidad->IdEspecialidad)->orderby('Descripcion','ASC')->get();
 		return view('flujoCoordinador.objetivoEducacional_index', ['objetivos'=>$objetivos, 'idEspecialidad' =>$id]);
 
     }
@@ -170,7 +170,7 @@ class FlujoCoordinadorController extends Controller
 			'IdEspecialidad' => $id,
 			'Numero' => $numberOE,
 			'Descripcion' => $request->input('descripcion'),
-			'Estado' => 1,
+			'Estado' => 0,
 		]);
 
         return redirect()->route('objetivoEducacional_index.flujoCoordinador', ['id' => $id])
@@ -803,7 +803,7 @@ class FlujoCoordinadorController extends Controller
 
         try {
             if(Session::get('academic-cycle')!=null){
-              
+                
                 $cursosDelCicloyEspecialidad =  DB::table('cursoxciclo')
                                         ->join('curso', 'curso.IdCurso', '=', 'cursoxciclo.IdCurso')
 
@@ -815,7 +815,7 @@ class FlujoCoordinadorController extends Controller
                                         //->orderBy('cliente.apellidoPaterno', 'asc')
                                         ->get(); 
                 $data['dictatedCourses']= $cursosDelCicloyEspecialidad;
-                //$data['dictatedCourses']= $this->courseService->retrieveByFacultyandCicle($id);
+                
 
                 //$data['dictatedCourses'] = $this->dictatedCoursesService->retrieveAllCoursesxCycle();
             }

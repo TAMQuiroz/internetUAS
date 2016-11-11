@@ -452,7 +452,8 @@ class FlujoCoordinadorController extends Controller
         $data['teachers'] = $this->teacherService->findTeacherByFaculty($id);
         $data['idEspecialidad']=$id;
         try {
-            $cycle = Session::get('academic-cycle');
+            //$cycle = Session::get('academic-cycle');
+            $cycle = Cicle::where('Vigente',1)->where('IdEspecialidad',$id)->first();
             $data['cycle'] = $cycle;
             if($cycle!=null){
                     $data['dateI'] = date('d/m/Y',strtotime($cycle->FechaInicio.''));
@@ -467,8 +468,8 @@ class FlujoCoordinadorController extends Controller
         $data['cicle'] = $this->facultyService->findCycle($id);
         $data['cycleAcademic'] = $this->facultyService->AllCyclesAcademics();
         $data['results'] = $this->facultyService->allResultsInPeriod();
-        if(Session::get('academic-cycle')!= null){
-            $data['cyclexresults'] = $this->facultyService->findResultsxCycle(Session::get('academic-cycle')->IdCicloAcademico);
+        if($cycle!= null){
+            $data['cyclexresults'] = $this->facultyService->findResultsxCycle($cycle->IdCicloAcademico);
         }else{
             $data['cyclexresults'] = null;
         }

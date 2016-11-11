@@ -19,15 +19,7 @@
 		  	<div class="panel-body">
 		  		<div class="row">
 			  		<div class="col-md-6">
-			            <form action="#" method="get">
-			                <div class="input-group">
-			                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
-			                    <input class="form-control" id="project-search" name="q" placeholder="Buscar" required>
-			                    <span class="input-group-btn">
-			                        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-			                    </span>
-			                </div>
-			            </form>
+			  			<a href="#filter" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
 			        </div>
 			        @if(Auth::user() && $esLider && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.admin')))
 					<div class="col-md-6">
@@ -76,12 +68,12 @@
 							
 						</tbody> 
 					</table>
+					{{$proyectos->links()}}
 				</div>
 		  	</div>
 		</div>
     </div>
 </div>
 
-<script src="{{ URL::asset('js/intranetjs/investigation/project/index-project.js')}}"></script>
-
+@include('investigation.modals.filter_project', ['title' => 'Filtrar', 'route' => 'proyecto.index'])
 @endsection

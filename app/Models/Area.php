@@ -18,4 +18,14 @@ class Area extends Model
     {
 		return $this->hasMany('Intranet\Models\Investigator', 'id_area');
     }
+
+    static public function getFiltered($filters){
+        $query = Area::orderBy('nombre', 'asc');
+
+        if(array_key_exists("nombre", $filters) && $filters["nombre"] != "") {
+            $query = $query->where('nombre', 'like', '%'.$filters['nombre'].'%');
+        }
+
+        return $query->paginate(10);
+    }
 }

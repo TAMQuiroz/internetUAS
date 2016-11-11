@@ -37,9 +37,11 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $proyectos  = Project::get();
+        $filters = $request->all();
+
+        $proyectos  = Project::getFiltered($filters);
         $usuario    = Auth::user();
         $profesor   = null;
         if($usuario){

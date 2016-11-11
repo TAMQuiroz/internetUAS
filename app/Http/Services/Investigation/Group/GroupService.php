@@ -17,9 +17,9 @@ use Session;
 class GroupService {
 
 
-	public function retrieveAll()
+	public function retrieveAll($filters)
     {
-        return Group::orderBy('nombre', 'asc')->get();
+        return Group::getFiltered($filters);
     }
 
 	public function createGroup($request) {

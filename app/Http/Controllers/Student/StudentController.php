@@ -80,14 +80,14 @@ class StudentController extends BaseController {
 
 				$students = [];
 				foreach ($data as $key => $value) {
-					$value_int = intval($value[1]);
+					$value_int = intval($value[0]);
 					if ($value_int != 0){ 
 
 						$insert = [
 							'Codigo' => $value_int, 
-							'Nombre' => $value[2],
-							'ApellidoPaterno' => $value[3],
-							'ApellidoMaterno' => $value[4],
+							'Nombre' => $value[1],
+							'ApellidoPaterno' => $value[2],
+							'ApellidoMaterno' => $value[3],
 							// other fields
 							'IdHorario' => $idTimeTable,
 							'lleva_psp' => 0,
@@ -97,7 +97,7 @@ class StudentController extends BaseController {
 						// Para el curso PSP
 						if(isset($request['selectPsp'])){
 
-							if(!empty($value[5]) && $value[5] != null){
+							if(!empty($value[4]) && $value[4] != null){
 								$insert['lleva_psp'] = 1;
 
 								// Buscar alumno en la tabla de tutoria
@@ -113,8 +113,8 @@ class StudentController extends BaseController {
 									$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
 									$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
 
-									if($value[5] != null){
-										$alumnoTut['correo'] = $value[5];
+									if($value[4] != null){
+										$alumnoTut['correo'] = $value[4];
 									}
 									else {
 										return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
@@ -127,15 +127,13 @@ class StudentController extends BaseController {
 									}								
 								}
 							}
-							else{
-
+							else{								
 								return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 							}								
 						}
 						
 						array_push($students, $insert);						
 					}else{
-
 						return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 					}
 				}

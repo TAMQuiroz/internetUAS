@@ -11,11 +11,15 @@ $(function () {
     var arrayEsp = [];
     var arrayProyXInvXEsp =[];
     var arrayProyXProfXEsp =[];
+    var arrayInvEstadoPXEsp = [];
+    var arrayProfEstadoPXEsp = [];
     //Creacion de arrray que contiene los porcentajes de inv por esp
     var arrayInvXEsp = [];
     var arrayProfXEsp = [];
     var totalInv = 0;
     var totalProf = 0;
+    var totalProyI = 0;
+    var totalProyP = 0;
     for (var i=1; i< numOptions; i++){
         arrayInvXEsp.push(0);
     }
@@ -35,6 +39,20 @@ $(function () {
         var text = estadoP[i].text;
         arrayEstado.push(text);
     }
+    for (var i=1; i < numOptions ; i ++){
+        var arrayEstadoPCant = [];
+        for (var j=1; j<numEstados; j++){
+            arrayEstadoPCant.push(0);
+        }
+        arrayInvEstadoPXEsp.push(arrayEstadoPCant);
+    }
+    for (var i=1; i < numOptions ; i ++){
+        var arrayEstadoPCant = [];
+        for (var j=1; j<numEstados; j++){
+            arrayEstadoPCant.push(0);
+        }
+        arrayProfEstadoPXEsp.push(arrayEstadoPCant);
+    }
     var tableI = document.getElementById('tableI');
 
     //var rowLengthI = tableI.tBodies.length;
@@ -53,18 +71,48 @@ $(function () {
 
       //Celda que contiene nombre de Especialidad = 4
       //var cellEsp = row.firstElementChild.cells[4];
-      var cellEsp = row.children[4];
+      var cellEsp = row.cells[4];
       //var cellNumP = row.firstElementChild.cells[5];
-      var cellNumP = row.children[5];
+      var cellNumP = row.cells[5];
       for(var esp=0; esp<arrayEsp.length; esp++){
-            if(arrayEsp[esp] == cellEsp.textContent){
+            var espNombre = cellEsp.textContent;
+            if(arrayEsp[esp] == espNombre){
                 //Es un investigador de la especialidad
                 //Celda que contiene el numero de proyectos = 5
                 arrayProyXInvXEsp[esp] = arrayProyXInvXEsp[esp] + parseInt(cellNumP.textContent);
                 arrayInvXEsp[esp] = arrayInvXEsp[esp] + 1;
                 totalInv = totalInv + 1;
+                break;
             }
       }
+
+      //sacar el index de la especialidad
+      var indexE=0;
+      for(var e=0; e<arrayEsp.length; e++){
+        var espNombre = cellEsp.textContent ;
+        if (espNombre == arrayEsp[e]){
+            indexE = e;
+            break;
+        }
+      }
+
+      indexRow = (i*2)+1;
+      var subRows = tableI.tBodies[0].children[indexRow].cells[0].children[0];
+      var numSubRows = (subRows.rows.length)-1;
+      for (var j=1; j<=numSubRows; j++){
+        //Nombre del proyecto cel = 0,
+        //Estado del proyecto cel = 4
+        var nombreP = subRows.rows[j].cells[0].textContent;
+        var estadoP = subRows.rows[j].cells[3].textContent;
+        for (var k=0; k < arrayEstado.length ; k ++){
+            var estado = arrayEstado[k];
+            if (estadoP == estado){
+                arrayInvEstadoPXEsp[indexE][k] = arrayInvEstadoPXEsp[indexE][k] + 1;
+                totalProyI = totalProyI + 1;
+            }
+        }
+      }
+
     }
 
     var tableP = document.getElementById('tableP');
@@ -85,16 +133,46 @@ $(function () {
 
       //Celda que contiene nombre de Especialidad = 4
       //var cellEsp = row.firstElementChild.cells[4];
-      var cellEsp = row.children[4];
+      var cellEsp = row.cells[4];
       //var cellNumP = row.firstElementChild.cells[5];
-      var cellNumP = row.children[5];
+      var cellNumP = row.cells[5];
+      //var cellNumP = row.children[5];
       for(var esp=0; esp<arrayEsp.length; esp++){
+            var espNombre = cellEsp.textContent;
             if(arrayEsp[esp] == cellEsp.textContent){
                 //Celda que contiene el numero de proyectos = 5
                 arrayProyXProfXEsp[esp] = arrayProyXProfXEsp[esp] + parseInt(cellNumP.textContent);
                 arrayProfXEsp[esp] = arrayProfXEsp[esp] + 1;
                 totalProf = totalProf + 1;
+                break;
             }
+      }
+
+      //sacar el index de la especialidad
+      var indexE=0;
+      for(var e=0; e<arrayEsp.length; e++){
+        var espNombre = cellEsp.textContent ;
+        if (espNombre == arrayEsp[e]){
+            indexE = e;
+            break;
+        }
+      }
+
+      indexRow = (i*2)+1;
+      var subRows = tableP.tBodies[0].children[indexRow].cells[0].children[0];
+      var numSubRows = (subRows.rows.length)-1;
+      for (var j=1; j<=numSubRows; j++){
+        //Nombre del proyecto cel = 0,
+        //Estado del proyecto cel = 4
+        var nombreP = subRows.rows[j].cells[0].textContent;
+        var estadoP = subRows.rows[j].cells[3].textContent;
+        for (var k=0; k < arrayEstado.length ; k ++){
+            var estado = arrayEstado[k];
+            if (estadoP == estado){
+                arrayProfEstadoPXEsp[indexE][k] = arrayProfEstadoPXEsp[indexE][k] + 1;
+                totalProyP = totalProyP + 1;
+            }
+        }
       }
     }
 
@@ -105,7 +183,7 @@ $(function () {
         },
 
         title: {
-            text: 'Total de proyectos asignados, agrupados por tipo de usuario'
+            text: 'Total de proyectos asignados, agrupados por especialidad'
         },
 
         xAxis: {
@@ -172,6 +250,16 @@ $(function () {
         pieI.push(data);
     }
 
+    var arrayInvXEstadoPXEsp = [];
+    for (var i=0; i < arrayEsp.length ; i ++){
+        var arrayEstadoPXEspPorc = [];
+        for (var j=0; j < numEstados; j++){
+            var porc = (arrayInvEstadoPXEsp[i][j]/totalProyI)*100;
+            arrayEstadoPXEspPorc.push(porc);
+        }
+        arrayInvXEstadoPXEsp.push(arrayEstadoPXEspPorc);
+    }
+
     //Array drilldown
 
     var arrayDrillI = new Array();
@@ -192,19 +280,23 @@ $(function () {
         drilldown_data_esp.id = arrayEspId[i];
         drilldown_data_esp.data = [];
         for(var j=0; j<arrayEstado.length; j++){
-            drilldown_data_esp.data.push([arrayEstado[i],24.13]);    
+            drilldown_data_esp.data.push([arrayEstado[j],arrayInvXEstadoPXEsp[i][j]]);    
         }
         drilldownI.push(drilldown_data_esp);
     }    
 
 
     // Create the chart
+    var fechaIni = document.getElementById("fecha_ini");
+    var fechaFin = document.getElementById("fecha_fin");
+    var textPieI = 'Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;
     Highcharts.chart('pieI', {
         chart: {
             type: 'pie'
         },
         title: {
-            text: 'Browser market shares. January, 2015 to May, 2015'
+            //text: 'Browser market shares. January, 2015 to May, 2015'
+            text: textPieI
         },
         subtitle: {
             text: 'Click the slices to view versions. Source: netmarketshare.com.'
@@ -246,6 +338,42 @@ $(function () {
         arrayDataPieP[i] = temp;
     }
 
+    var pieP = [];
+
+    for(var i=0; i<arrayEsp.length; i++){
+        var data = {};
+        data.name = arrayEsp[i];
+        data.y = arrayProfXEspPorc[i];
+        data.drilldown = arrayEspId[i];
+        pieP.push(data);
+    }
+
+    var arrayProfXEstadoPXEsp = [];
+    for (var i=0; i < arrayEsp.length ; i ++){
+        var arrayEstadoPXEspPorc = [];
+        for (var j=0; j < numEstados; j++){
+            var porc = (arrayProfEstadoPXEsp[i][j]/totalProyP)*100;
+            arrayEstadoPXEspPorc.push(porc);
+        }
+        arrayProfXEstadoPXEsp.push(arrayEstadoPXEspPorc);
+    }
+
+    //Array drilldown
+
+    var drilldownP = [];
+
+    for(var i=0; i<arrayEsp.length; i++){
+        //name, id, data
+        var drilldown_data_esp = {};
+        drilldown_data_esp.name = arrayEsp[i];
+        drilldown_data_esp.id = arrayEspId[i];
+        drilldown_data_esp.data = [];
+        for(var j=0; j<arrayEstado.length; j++){
+            drilldown_data_esp.data.push([arrayEstado[j],arrayProfXEstadoPXEsp[i][j]]);    
+        }
+        drilldownP.push(drilldown_data_esp);
+    }
+
     // Create the chart
     Highcharts.chart('pieP', {
         chart: {
@@ -273,98 +401,10 @@ $(function () {
         series: [{
             name: 'Brands',
             colorByPoint: true,
-            data: [{
-                name: 'Microsoft Internet Explorer',
-                y: 56.33,
-                drilldown: 'Microsoft Internet Explorer'
-            }, {
-                name: 'Chrome',
-                y: 24.03,
-                drilldown: 'Chrome'
-            }, {
-                name: 'Firefox',
-                y: 10.38,
-                drilldown: 'Firefox'
-            }, {
-                name: 'Safari',
-                y: 4.77,
-                drilldown: 'Safari'
-            }, {
-                name: 'Opera',
-                y: 0.91,
-                drilldown: 'Opera'
-            }, {
-                name: 'Proprietary or Undetectable',
-                y: 0.2,
-                drilldown: null
-            }]
+            data: pieP
         }],
         drilldown: {
-            series: [{
-                name: 'Microsoft Internet Explorer',
-                id: 'Microsoft Internet Explorer',
-                data: [
-                    ['v11.0', 24.13],
-                    ['v8.0', 17.2],
-                    ['v9.0', 8.11],
-                    ['v10.0', 5.33],
-                    ['v6.0', 1.06],
-                    ['v7.0', 0.5]
-                ]
-            }, {
-                name: 'Chrome',
-                id: 'Chrome',
-                data: [
-                    ['v40.0', 5],
-                    ['v41.0', 4.32],
-                    ['v42.0', 3.68],
-                    ['v39.0', 2.96],
-                    ['v36.0', 2.53],
-                    ['v43.0', 1.45],
-                    ['v31.0', 1.24],
-                    ['v35.0', 0.85],
-                    ['v38.0', 0.6],
-                    ['v32.0', 0.55],
-                    ['v37.0', 0.38],
-                    ['v33.0', 0.19],
-                    ['v34.0', 0.14],
-                    ['v30.0', 0.14]
-                ]
-            }, {
-                name: 'Firefox',
-                id: 'Firefox',
-                data: [
-                    ['v35', 2.76],
-                    ['v36', 2.32],
-                    ['v37', 2.31],
-                    ['v34', 1.27],
-                    ['v38', 1.02],
-                    ['v31', 0.33],
-                    ['v33', 0.22],
-                    ['v32', 0.15]
-                ]
-            }, {
-                name: 'Safari',
-                id: 'Safari',
-                data: [
-                    ['v8.0', 2.56],
-                    ['v7.1', 0.77],
-                    ['v5.1', 0.42],
-                    ['v5.0', 0.3],
-                    ['v6.1', 0.29],
-                    ['v7.0', 0.26],
-                    ['v6.2', 0.17]
-                ]
-            }, {
-                name: 'Opera',
-                id: 'Opera',
-                data: [
-                    ['v12.x', 0.34],
-                    ['v28', 0.24],
-                    ['v27', 0.17],
-                    ['v29', 0.16]
-                ]
-            }]
+            series: drilldownP
         }
     });
 

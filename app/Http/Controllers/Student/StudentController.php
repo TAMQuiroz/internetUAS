@@ -90,7 +90,7 @@ class StudentController extends BaseController {
 							'ApellidoMaterno' => $value[4],
 							// other fields
 							'IdHorario' => $idTimeTable,
-							'lleva_psp' => 0,
+							'lleva_psp' => null,
 						];
 
 
@@ -102,7 +102,7 @@ class StudentController extends BaseController {
 							$student = Tutstudent::where('codigo', $value_int)->first();
 
 							if($student != null) { //encontro alumno -> obtener su idusuario
-								$insert['IdUsuario'] = $student->IdUsuario;								 
+								$insert['IdUsuario'] = $student->id_usuario;								 
 							}
 							else { // no encontro alumno en tutoria -> crear alumno en tutoria y usuario
 
@@ -144,7 +144,7 @@ class StudentController extends BaseController {
 						if($student['lleva_psp'] == 1){
 							$alumno->IdUsuario = $student['IdUsuario'];							
 						}
-						$alumno->lleva_psp = $student['lleva_psp'];																
+						$alumno->lleva_psp = null;																
 						$alumno->save();
 					}
 				}

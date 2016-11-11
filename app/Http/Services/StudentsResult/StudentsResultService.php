@@ -25,7 +25,7 @@ class StudentsResultService {
     }
 
     public function retrieveByFaculty($IdEspecialidad) {
-        $studentResults = StudentsResult::where('IdEspecialidad', $IdEspecialidad)->get();
+        $studentResults = StudentsResult::where('IdEspecialidad', $IdEspecialidad)->orderby('Identificador','ASC')->get();
 
         return $studentResults;
     }
@@ -40,7 +40,7 @@ class StudentsResultService {
     public function findByFaculty2($faculty_id) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', $faculty_id)
-            ->where('deleted_at', null)->get();
+            ->where('deleted_at', null)->orderBy("Descripcion","ASC")->get();
 
         return $studentResults;
     }

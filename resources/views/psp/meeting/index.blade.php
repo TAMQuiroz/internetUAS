@@ -37,11 +37,7 @@
                             <td>{{$meeting->id}}</td> 
                             <td>{{$meeting->fecha}}</td> 
                             <td>{{$meeting->hora_inicio}}</td> 
-                            @if($meeting->idTipoEstado==1)
-                            <td>Pendiente</td> 
-                            @else
-                            <td>Realizada</td> 
-                            @endif
+                            <td>{{$meeting->status->nombre}}</td>
                             <td>
                                 <a href="{{route('meeting.show', $meeting->id)}}" class="btn btn-primary btn-xs" title="Mostrar"><i class="fa fa-search"></i></a>
                             </td>

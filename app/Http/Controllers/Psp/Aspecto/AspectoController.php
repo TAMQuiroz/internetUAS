@@ -51,16 +51,16 @@ class AspectoController extends Controller
         $user = Session::get('user');
 
         $supervisor = Supervisor::find($user->id);
-        //echo "userid ".$user->id;
-        //echo " supervisorid ".$supervisor->idpspprocess;
+        //echo "alumnoid".$idAlumno;
+        //echo " userid ".$user->id;
+        //echo " idpspprocess ".$supervisor->idpspprocess;
 
         $pspProceso = PspProcess::find($supervisor->idpspprocess);
         
         $cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
-        //echo $pspProceso->idcurso;
-        //echo $pspProceso->idcurso;
+        //echo " idcurso ".$pspProceso->idcurso;
         $criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
-        //echo "idcursoxciclo".$cursoxciclo->IdCursoxCiclo;
+        //echo " idcursoxciclo ".$cursoxciclo->IdCursoxCiclo;
 
         $registroNotas = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->get();
         
@@ -69,7 +69,7 @@ class AspectoController extends Controller
         foreach ($criterios as $c) {
             $criterio = Criterion::find($c->IdCriterio);
             $crit[$c->IdCriterio]=$criterio->Nombre;
-            echo $criterio->Nombre;
+            //echo $criterio->Nombre;
         }
 
         $data = [
@@ -97,8 +97,9 @@ class AspectoController extends Controller
                $listaNotas = $request->input("nota",[]);
                 foreach ($listaNotas as $idCrit => $valorNota) {
 
-                    $p = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->where('IdCriterio',$idCrit)->first();
-                    if ($p->count()==0){
+                    $p = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->where('idcriterio',$idCrit)->first();
+                    //dd($p);
+                    if ($p == null){
                         $pspstudentxcriterios  = new Pspstudentsxcriterios;
                         $pspstudentxcriterios->idpspstudent = $idAlumno;
                         $pspstudentxcriterios->idcriterio = $idCrit;

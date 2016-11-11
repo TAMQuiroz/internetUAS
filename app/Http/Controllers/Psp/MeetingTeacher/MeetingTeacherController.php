@@ -64,7 +64,7 @@ class MeetingTeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MeetingRequest $request, $id)
+    public function store(Request $request, $id)
     {
          try {
             $meeting = new meeting;   

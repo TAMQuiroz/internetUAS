@@ -501,6 +501,16 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
             Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
             Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
+
+            //Seleccion de integrantes de para un proceso de psp
+                Route::group(['prefix' => 'participant'], function(){
+                    Route::get('/{id}', ['as' => 'supervisor.index-participant', 'uses' => 'Psp\Supervisor\ParticipationController@index']);
+                    Route::post('createSupervisor', ['as' => 'supervisor.participant.store.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@storeSupervisor']);
+                    Route::get('deleteSupervisor/{id}', ['as' => 'supervisor.participant.delete.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@destroySupervisor']);
+
+                    Route::post('createTeacher', ['as' => 'supervisor.participant.store.docente', 'uses' => 'Psp\Supervisor\ParticipationController@storeTeacher']);
+                    Route::get('deleteTeacher/{id}', ['as' => 'supervisor.participant.delete.docente', 'uses' => 'Psp\Supervisor\ParticipationController@destroyTeacher']);
+                });
         });
 
         //PspGroups Luis Llanos
@@ -517,30 +527,7 @@ Route::group(['middleware' => 'auth'], function(){
             //Route::get('supervisor',['uses' => 'API\Psp\Supervisor\SupervisorController@getAll']);
         });
 
-        Route::group(['middleware' => 'teacherPsp'], function(){ //restringe el acceso solo a profesores de psp
 
-            Route::group(['prefix' => 'supervisor'], function() {
-
-                Route::get('/', ['as' => 'supervisor.index', 'uses' => 'Psp\Supervisor\SupervisorController@index']);                
-                Route::get('/create', ['as' => 'supervisor.create', 'uses' => 'Psp\Supervisor\SupervisorController@create']);
-                Route::post('/create', ['as' => 'supervisor.store', 'uses' => 'Psp\Supervisor\SupervisorController@store']);
-                Route::get('/show/{id}', ['as' => 'supervisor.show', 'uses' => 'Psp\Supervisor\SupervisorController@show']);
-                Route::get('/edit/{id}', ['as' => 'supervisor.edit', 'uses' => 'Psp\Supervisor\SupervisorController@edit']);
-                Route::post('/edit/{id}', ['as' => 'supervisor.update', 'uses' => 'Psp\Supervisor\SupervisorController@update']);
-                Route::get('/delete/{id}', ['as' => 'supervisor.delete', 'uses' => 'Psp\Supervisor\SupervisorController@destroy']);
-
-                //Seleccion de integrantes de para un proceso de psp
-                Route::group(['prefix' => 'participant'], function(){
-                    Route::get('/{id}', ['as' => 'supervisor.index-participant', 'uses' => 'Psp\Supervisor\ParticipationController@index']);
-                    Route::post('createSupervisor', ['as' => 'supervisor.participant.store.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@storeSupervisor']);
-                    Route::get('deleteSupervisor/{id}', ['as' => 'supervisor.participant.delete.supervisor', 'uses' => 'Psp\Supervisor\ParticipationController@destroySupervisor']);
-
-                    Route::post('createTeacher', ['as' => 'supervisor.participant.store.docente', 'uses' => 'Psp\Supervisor\ParticipationController@storeTeacher']);
-                    Route::get('deleteTeacher/{id}', ['as' => 'supervisor.participant.delete.docente', 'uses' => 'Psp\Supervisor\ParticipationController@destroyTeacher']);
-                });
-            });
-
-        });
             //Template
             Route::group(['prefix' => 'template'], function() {
                 Route::get('/', ['as' => 'template.index', 'uses' => 'Psp\Template\TemplateController@index']);
@@ -606,6 +593,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('indexSup', ['as' => 'meeting.indexSup', 'uses' => 'Psp\meeting\MeetingController@indexSup']);
                 Route::get('createSup', ['as' => 'meeting.createSup', 'uses' => 'Psp\meeting\MeetingController@createSup']);
                 Route::post('createSup', ['as' => 'meeting.storeSup', 'uses' => 'Psp\meeting\MeetingController@storeSup']);
+                Route::get('mail/{id}', ['as' => 'meeting.mail', 'uses' => 'Psp\meeting\MeetingController@mail']);
             });
 
             //MeetingTeacher

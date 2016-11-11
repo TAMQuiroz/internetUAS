@@ -37,7 +37,7 @@
 
 				<div class="col-md-6">
 					<div><b>Ejemplo de formato:</b></div>
-					<img id="img-formato-carga" src="http://internetuas/images/exampleExcel.png" class="img-responsive img-thumbnail">
+					<img id="img-formato-carga" src="/images/exampleExcel.png" class="img-responsive img-thumbnail">
 					<!--
 					{{ Html::image(asset('images/exampleExcel.png'), null ,['class' => 'img-responsive img-thumbnail'])}}
 					-->

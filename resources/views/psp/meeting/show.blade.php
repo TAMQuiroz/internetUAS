@@ -90,7 +90,7 @@
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         @if($user->IdPerfil==6)
                         <a class="btn btn-success pull-right" href="{{ route('meeting.edit', $meeting->id) }}">Editar</a>
-                        <a class="btn btn-default pull-right" href="{{ route('student.index') }}">Regresar</a>
+                        <a class="btn btn-default pull-right" href="{{ route('meeting.indexSup') }}">Regresar</a>
                         @elseif($user->IdPerfil==0)
                         <a class="btn btn-default pull-right" href="{{ route('meeting.index') }}">Regresar</a>
                         @endif 

@@ -47,6 +47,10 @@ class Teacher extends Model {
         return $this->hasMany('Intranet\Models\Tutorship','id_tutor');
     }
 
+    public function tutschedules() {
+        return $this->hasMany('Intranet\Models\TutSchedule', 'id_docente');
+    }
+
     
     public function projects(){
         return $this->belongsToMany('Intranet\Models\Project','teacherxprojects','id_profesor','id_proyecto')->withPivot('id');   

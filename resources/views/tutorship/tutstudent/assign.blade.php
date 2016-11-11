@@ -40,15 +40,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($tutors as $tutor)
+                    @foreach($tutors as $key => $tutor)
                     <tr class="even pointer">
                         <td hidden class="group-id">{{ $tutor->IdDocente }}</td>
                         <td class=" ">{{ $tutor->Codigo }}</td>
                         <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>                            
-                        <td class=" ">-</td>                            
-                        <td class=" ">{{count($tutor->tutorships)}}</td>    
+                        <td class=" ">{{ count($tutor->tutschedules) }}</td>                            
+                        <td class=" ">{{ count($tutor->tutorships) }}</td>    
                         <td class=" ">
-                            {{Form::number('cant['.$tutor->IdDocente.']',0,['class'=>'form-control', 'required','min'=>'0', 'maxlength' => 50])}}
+                            {{Form::number('cant['.$tutor->IdDocente.']', $quantities[$key] ,['class'=>'form-control', 'required','min'=>'0', 'maxlength' => 50])}}
                         </td>
                     </tr>                        
                     @endforeach

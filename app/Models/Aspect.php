@@ -19,10 +19,10 @@ class Aspect extends Model
 	}
 
     public function criterion(){
-        return $this->hasMany('Intranet\Models\Criterion','IdAspecto');
+        return $this->hasMany('Intranet\Models\Criterion','IdAspecto')->orderBy("Nombre","ASC");
     }
 
     public function criterions(){
-        return $this->hasMany('Intranet\Models\Criterion','IdAspecto');
+        return $this->hasMany('Intranet\Models\Criterion','IdAspecto')->orderBy("Nombre","ASC");
     }
 }

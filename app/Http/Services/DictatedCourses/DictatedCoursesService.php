@@ -30,6 +30,19 @@ class DictatedCoursesService {
 		return $coursesxcicle;
 	}
 
+	public function getCoursesxCycleByCycleByFaculty($idAcademicCycle, $idEspecialidad) {	
+		$courses = Course::where('IdEspecialidad',$idEspecialidad)->get()->pluck('IdCurso')->toArray();
+		$coursesxcycle = DictatedCourses::whereIn('IdCurso', $courses)->get();
+		$cxc = [];
+		foreach ($coursesxcycle as $cxcycle) {
+			if($cxcycle->IdCicloAcademico == $idAcademicCycle){
+				array_push($cxc, $cxcycle);
+			}
+		}
+		
+		return $cxc;
+	}
+
 	public function retrieveAllCourses(){
 		return Course::where('IdEspecialidad', Session::get('faculty-code'))->orderby('NivelAcademico','DESC')->get();
 	}

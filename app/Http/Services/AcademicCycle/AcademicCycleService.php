@@ -38,5 +38,10 @@ class AcademicCycleService {
 		$data['academicCycle'] = $retVal;
 		return $data;
 	}
+
+	public function getById($id){
+		$cycle = AcademicCycle::where('IdCicloAcademico', $id)->first();
+		return $cycle;
+	}
 	
 }

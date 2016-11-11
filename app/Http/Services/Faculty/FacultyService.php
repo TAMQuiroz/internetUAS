@@ -381,10 +381,9 @@ class FacultyService {
 					'Vigente'=>'1'
 			]);
 
-		// auto calcular el valor
-		$nivelEsperado = intval(round(($request['facultyAgreement'] * $request['criteriaLevel'])/100, 0, PHP_ROUND_HALF_UP));
-		
-	    $confFaculty = ConfFaculty::create(['NivelEsperado' => $nivelEsperado,
+
+
+	    $confFaculty = ConfFaculty::create(['NivelEsperado' => $request['facultyAgreementLevel'],
 					'UmbralAceptacion' => $request['facultyAgreement'],
 					'CantNivelCriterio' => $request['criteriaLevel']	,
 					'IdCicloFin' => $request['cycleEnd']	,
@@ -457,7 +456,7 @@ class FacultyService {
 		$aspects = Session::get('aspCheck');
 		$criterions = Session::get('crtCheck');
 
-
+		$nivelEsperado = intval(round((Session::get('facultyAgreement') * Session::get('criteriaLevel'))/100, 0, PHP_ROUND_HALF_UP));
 
 
 		$period = Period::create(['IdEspecialidad' =>$id,
@@ -466,7 +465,7 @@ class FacultyService {
 
 
 
-	    $confFaculty = ConfFaculty::create(['NivelEsperado' => Session::get('facultyAgreementLevel'),
+	    $confFaculty = ConfFaculty::create(['NivelEsperado' => $nivelEsperado,
 					'UmbralAceptacion' => Session::get('facultyAgreement'),
 					'CantNivelCriterio' => Session::get('criteriaLevel')	,
 					'IdCicloFin' => Session::get('cycleEnd')	,
@@ -475,15 +474,14 @@ class FacultyService {
 					'IdPeriodo' => $period->IdPeriodo
 			]);
 
-	    dd($period);
-
 		$measures = Session::get('measures');
-		$educationalObjetives = Session::get('educationalObjetives');
-		$studentsResults = Session::get('studentsResults');
-		$aspects = Session::get('aspects');
-		$criterions = Session::get('criterions');
+		$educationalObjetives = Session::get('objCheck');
+		$studentsResults = Session::get('stRstCheck');
+		$aspects = Session::get('aspCheck');
+		$criterions = Session::get('crtCheck');
 
 		$period->measures()->sync($measures);
+		//dd($educationalObjetives);
 		$period->educationalObjetives()->sync($educationalObjetives);
 		$period->studentsResults()->sync($studentsResults);
 		$period->aspects()->sync($aspects);

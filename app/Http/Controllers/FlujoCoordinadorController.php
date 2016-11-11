@@ -353,7 +353,6 @@ class FlujoCoordinadorController extends Controller
             $cicloInicio=$this->academicCycleService->getById($request1['cycleStart']);
             $data['fechaCicloInicio']=$cicloInicio->Descripcion;
 
-            $data['facultyAgreementLevel']=$request1['facultyAgreementLevel'];
             $data['facultyAgreement']=$request1['facultyAgreement'];
             $data['criteriaLevel']=$request1['criteriaLevel'];
 
@@ -385,7 +384,6 @@ class FlujoCoordinadorController extends Controller
 
             ///para usarlo en el guardado
             //Session::forget('academic-cycle');
-            Session::put('facultyAgreementLevel',$request1['facultyAgreementLevel']);
             Session::put('facultyAgreement',$request1['facultyAgreement']);
             Session::put('criteriaLevel',$request1['criteriaLevel']);
             Session::put('cycleStart',$request1['cycleStart']);

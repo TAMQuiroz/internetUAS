@@ -53,7 +53,6 @@
           <br>
           <p>CARACTERISTICAS DEL PERIODO</p>
           <p>Nivel de criterio: {{$criteriaLevel}}</p>
-          <p>Nivel de aceptación: {{$facultyAgreementLevel}}</p>
           <p>Aceptación %: {{$facultyAgreement}}</p>
           <br>
           <p>INSTRUMENTOS</p>

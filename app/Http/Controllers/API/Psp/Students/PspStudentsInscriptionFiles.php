@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Intranet\Models\Student;
 use Intranet\Models\Inscription;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\meeting;
 use Illuminate\Routing\Controller as BaseController;
 use Dingo\Api\Routing\Helpers;
@@ -118,7 +119,7 @@ $inscription = array();
 
         DB::table('pspmeetings')->insertGetId(
             [
-                'idtipoestado' => 12, //pendiente
+                'idtipoestado' => 12, //id del estado pendiente
                'hora_inicio' => $hora,
                'hora_fin' => $horaFin ,
                'fecha' => $fecha,
@@ -141,10 +142,30 @@ $inscription = array();
     public function getPspStudents($id)
     {
         $pspstudent = PspStudent::where('idalumno', $id )->get();
-       return $pspstudent;
-    //    return $id  ;
+        return  $this->response->array($pspstudent->toArray());
+
     }
 
+ public function getStudents($id)
+    {
+        $pspstudent = Student::where('IdAlumno', $id )->get();
+        return  $this->response->array($pspstudent->toArray());
 
+    }
+
+ //public function getTutStudents($id)
+  //  {
+  //      $pspstudent = Tutstudent::where('idalumno', $id )->get();
+   //     return  $this->response->array($pspstudent->toArray());
+//
+ //   }
+
+
+  public function getDatesSuperEmployerAll()
+    {
+
+            $pspstudents = meeting::get();
+    return  $this->response->array($pspstudents->toArray());
+    }
 
 }

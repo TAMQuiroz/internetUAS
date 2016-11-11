@@ -793,6 +793,8 @@ $api->version('v1', function ($api) {
                 $api->get('student','PspGroup\PspGroupController@getStudent');
                 $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
                 $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
+                $api->get('date/super/employer/all','Students\PspStudentsInscriptionFiles@getDatesSuperEmployerAll');
+
 
                 $api->post('date/supervisor/employer', 'Students\PspStudentsInscriptionFiles@postAppointmentSuperEmployer');
                 $api->get('getInscriptions/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');

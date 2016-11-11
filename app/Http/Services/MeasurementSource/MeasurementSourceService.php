@@ -23,6 +23,11 @@ class MeasurementSourceService {
 			->where('deleted_at', null)->get();
 		return $sources;
 	}
+	public function allByFaculty2($id) {
+		$sources = MeasurementSource::where('IdEspecialidad', $id)
+			->where('deleted_at', null)->get();
+		return $sources;
+	}
 
 	public function allMeasuringxPeriod() {
 		$sources = PeriodxMeasurement::where('IdPeriodo', Session::get('period-code'))->get();

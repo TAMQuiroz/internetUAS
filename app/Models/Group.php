@@ -37,4 +37,14 @@ class Group extends Model
     public function events(){
         return $this->HasMany('Intranet\Models\Event', 'id_grupo');
     }
+
+    static public function getFiltered($filters){
+        $query = Group::orderBy('nombre', 'asc');
+
+        if(array_key_exists("nombre", $filters) && $filters["nombre"] != "") {
+            $query = $query->where('nombre', 'like', '%'.$filters['nombre'].'%');
+        }
+
+        return $query->paginate(10);
+    }
 }

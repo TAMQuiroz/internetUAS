@@ -24,6 +24,12 @@ class StudentsResultService {
         return $studentResults;
     }
 
+    public function retrieveByFaculty($IdEspecialidad) {
+        $studentResults = StudentsResult::where('IdEspecialidad', $IdEspecialidad)->orderby('Identificador','ASC')->get();
+
+        return $studentResults;
+    }
+
     public function findByFaculty($faculty_id = null) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code', $faculty_id))
@@ -34,7 +40,7 @@ class StudentsResultService {
     public function findByFaculty2($faculty_id) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', $faculty_id)
-            ->where('deleted_at', null)->get();
+            ->where('deleted_at', null)->orderBy("Descripcion","ASC")->get();
 
         return $studentResults;
     }
@@ -47,6 +53,7 @@ class StudentsResultService {
             if($IdCicloAcademico!=null){
                 $resultsxCycles = CyclexResult::where('IdCicloAcademico', $IdCicloAcademico)
                     ->where('deleted_at', null)->get();
+
                     //dd($resultsxCycles);
             /*    $resultsDirties=StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
                     ->where('deleted_at', null)->get();
@@ -277,6 +284,7 @@ class StudentsResultService {
 
     public function create($request) {
 
+
         $studentResult = StudentsResult::create([
             'IdEspecialidad' => Session::get('faculty-code'),
             'Identificador' => $request['identifier'],
@@ -294,6 +302,28 @@ class StudentsResultService {
             }
         }
         */
+
+        if ( array_key_exists('objsCheck', $request) ){
+            foreach($request['objsCheck'] as $idObj){
+                $resultxObjective = ResultxObjective::create([
+                    'IdResultadoEstudiantil' => $studentResult->IdResultadoEstudiantil,
+                    'IdObjetivoEducacional' => $idObj
+                ]);
+            }
+        }
+    }
+
+    public function createByFaculty($request, $IdEspecialidad) {
+
+        
+        $studentResult = StudentsResult::create([
+            'IdEspecialidad' => $IdEspecialidad,
+            'Identificador' => $request['identifier'],
+            'Descripcion' => $request['description'],
+            'Estado' => 0
+        ]);
+
+        //dd($studentResult);
 
         if ( array_key_exists('objsCheck', $request) ){
             foreach($request['objsCheck'] as $idObj){

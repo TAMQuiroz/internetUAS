@@ -808,6 +808,7 @@ $api->version('v1', function ($api) {
                 $api->get('meetings/student', 'Meeting\PspMeetingController@getMeetings');
                 $api->get('supervisor/students','Students\PspStudentsController@getSupStudents');
                 $api->get('meeting/student/{id}','Meeting\PspMeetingController@getMeetingByStudent');
+                $api->post('update/meeting', 'Meeting\PspMeetingController@update');
 
 
             });

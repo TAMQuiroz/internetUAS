@@ -80,14 +80,14 @@ class StudentController extends BaseController {
 
 				$students = [];
 				foreach ($data as $key => $value) {
-					$value_int = intval($value[1]);
+					$value_int = intval($value[0]);
 					if ($value_int != 0){ 
 
 						$insert = [
 							'Codigo' => $value_int, 
-							'Nombre' => $value[2],
-							'ApellidoPaterno' => $value[3],
-							'ApellidoMaterno' => $value[4],
+							'Nombre' => $value[1],
+							'ApellidoPaterno' => $value[2],
+							'ApellidoMaterno' => $value[3],
 							// other fields
 							'IdHorario' => $idTimeTable,
 							'lleva_psp' => 0,
@@ -96,34 +96,40 @@ class StudentController extends BaseController {
 
 						// Para el curso PSP
 						if(isset($request['selectPsp'])){
-							$insert['lleva_psp'] = 1;
 
-							// Buscar alumno en la tabla de tutoria
-							$student = Tutstudent::where('codigo', $value_int)->first();
+							if(!empty($value[4]) && $value[4] != null){
+								$insert['lleva_psp'] = 1;
 
-							if($student != null) { //encontro alumno -> obtener su idusuario
-								$insert['IdUsuario'] = $student->IdUsuario;								 
+								// Buscar alumno en la tabla de tutoria
+								$student = Tutstudent::where('codigo', $value_int)->first();
+
+								if($student != null) { //encontro alumno -> obtener su idusuario
+									$insert['IdUsuario'] = $student->id_usuario;								 
+								}
+								else { // no encontro alumno en tutoria -> crear alumno en tutoria y usuario
+
+									$alumnoTut['codigo'] = $insert['Codigo'];
+									$alumnoTut['nombre'] = $insert['Nombre'];
+									$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
+									$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
+
+									if($value[4] != null){
+										$alumnoTut['correo'] = $value[4];
+									}
+									else {
+										return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
+									}
+
+									$user = $this->create_user_tutoria($alumnoTut);		
+
+									if($user != null){
+										$insert['IdUsuario'] = $user->IdUsuario;
+									}								
+								}
 							}
-							else { // no encontro alumno en tutoria -> crear alumno en tutoria y usuario
-
-								$alumnoTut['codigo'] = $insert['Codigo'];
-								$alumnoTut['nombre'] = $insert['Nombre'];
-								$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
-								$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
-
-								if($value[5] != null){
-									$alumnoTut['correo'] = $value[5];
-								}
-								else {
-									return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
-								}
-
-								$user = $this->create_user_tutoria($alumnoTut);		
-
-								if($user != null){
-									$insert['IdUsuario'] = $user->IdUsuario;
-								}								
-							}							
+							else{								
+								return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
+							}								
 						}
 						
 						array_push($students, $insert);						
@@ -144,7 +150,7 @@ class StudentController extends BaseController {
 						if($student['lleva_psp'] == 1){
 							$alumno->IdUsuario = $student['IdUsuario'];							
 						}
-						$alumno->lleva_psp = $student['lleva_psp'];																
+						$alumno->lleva_psp = null;																
 						$alumno->save();
 					}
 				}

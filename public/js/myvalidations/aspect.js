@@ -6,7 +6,7 @@ jQuery(function(){
    
   //Validación
 
-  $('#formModalAspectNew').validate({
+  $('#formAcademic').validate({
     rules: {
       studentsResult_new_code:{
         required: true,

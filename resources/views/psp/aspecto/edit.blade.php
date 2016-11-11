@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="page-title">
             <div class="title_left">
-                <h3>Asignar notas segun aspecto</h3>
+                <h3>Asignación de notas por criterio al alumno</h3>
             </div>
         </div>
     </div>
@@ -14,15 +14,19 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Aspectos</h3>
+                <h3 class="panel-title">Criterios*</h3>
             </div>
             <div class="panel-body">
-            {{Form::open(['route' => ['phase.update', ''], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
-
-                <div class="form-group">
-                    {{Form::label('Aspecto *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        
+            {{Form::open(['route' => ['aspecto.update',''], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                <div class="form-group">  
+                <br>                  
+                    @foreach($crit as $id => $nombre)
+                    <div class="col-md-2"> 
+                    </div>
+                    <div class="col-md-6">
+                    {{$nombre}}
+                    </div>
+                    <div class="col-md-1">                        
                         <select name="nota" class="form-control">
                           <option value="0">0</option>
                           <option value="1">1</option>
@@ -47,14 +51,17 @@
                           <option value="20">20</option>
                         </select>
                     </div>
+
+                    <br><br><br><br><br>
+                    @endforeach                    
                 </div>
 
-                  
+                
 
                 <div class="row">
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                        <a class="btn btn-default pull-right" href="{{ route('phase.index') }}">Cancelar</a>
+                        <a class="btn btn-default pull-right" href="{{ route('student.index') }}">Cancelar</a>
                     </div>
                 </div>
                 {{Form::close()}}

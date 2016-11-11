@@ -81,7 +81,7 @@ $factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $f
         'codigo_trabajador'  => $faker->randomNumber($nbDigits = 8,$strict = true),
         'idFaculty'         => 1,
         'idUser'            => 3,
-        'Vigente'            => 1,
+        'vigente'            => 1,
     ];
 });
 

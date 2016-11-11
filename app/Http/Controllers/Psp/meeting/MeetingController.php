@@ -7,7 +7,7 @@ use Intranet\Models\Student;
 use Intranet\Models\Status;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
-use Intranet\Http\Requests\MeetingEditRequest;
+//use Intranet\Http\Requests\MeetingEditRequest;
 use Intranet\Models\freeHour;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
@@ -51,7 +51,7 @@ class MeetingController extends Controller
         return view('psp.meeting.create',$data);
     }
 
-    //Vista supervisor
+    //Vista alumno
     public function store(Request $request)
     {
         
@@ -62,7 +62,7 @@ class MeetingController extends Controller
             $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
             $pspstudent =PspStudent::where('IdAlumno',$student->IdAlumno)->first(); 
 
-            $meeting->idtipoestado = 1;
+            $meeting->idtipoestado = 12;
             $meeting->fecha=$freeHour->fecha;
             $meeting->idsupervisor=$freeHour->idsupervisor;
             $meeting->idstudent=$student->IdAlumno;
@@ -83,6 +83,7 @@ class MeetingController extends Controller
             $meeting->save();
 
             $pspstudent->idsupervisor=$freeHour->idsupervisor;
+            //dd($pspstudent);
             $pspstudent->save();            
 
             return redirect()->route('meeting.index')->with('success','La cita se ha registrado exitosamente');
@@ -119,10 +120,12 @@ class MeetingController extends Controller
     public function edit($id)
     {
         //
-        $meeting = meeting::with('supervisor','student','status')->find($id)->get()->first();
+        $meeting = meeting::where('id',$id)->with('supervisor','student','status')->get()->first();
         //dd($meeting);
         $statuses = Status::where('tipo_estado',3)->get();        
-        $data['meeting'] = $meeting;
+        $data = [
+            'meeting' => $meeting,
+        ];
         $data['statuses'] = $statuses;
         //dd($data);
         return view('psp.meeting.edit',$data);
@@ -148,7 +151,7 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function update(MeetingEditRequest $request, $id)
+    public function update(Request $request, $id)
     {
         //
         try {
@@ -184,7 +187,7 @@ class MeetingController extends Controller
         
         $student = Student::find($id);
         
-        $meetings = meeting::where('idstudent',$id)->get();
+        $meetings = meeting::where('idstudent',$id)->with('status')->get();
 
         $data = [
             'meetings'    =>  $meetings,

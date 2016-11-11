@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\API\Tutoria;
 
 use DB;
 use DateTime;
+Use Mail;
 use Illuminate\Http\Request;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
@@ -40,6 +41,7 @@ class TutStudentController extends BaseController
 
          $studentInfo = Tutstudent::where('id_usuario', $id)->get();
          $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+
          $i = 0;
 
          
@@ -83,18 +85,18 @@ class TutStudentController extends BaseController
         //------------BEGIN MOTIVO--------------------
         $motivoAux = $request->only('motivo');
         $motivoString = $motivoAux['motivo'];
-        $motivoInfo =  Topic::where('nombre', $motivoString)->get();
+        $motivoInfo =  Topic::where('nombre',   $motivoString)->get();
 
         //--------------END MOTIVO--------------------
 
         //------INICIO OBTENIENDO ID DEL TUTOR--------
          $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
-
-        // $idDocente = $tutorshipInfo[0]['id_profesor'];  ARREGLAR ESTOOO URGENTE CUANDO SE PUEDA
-         $idDocente = 4;                                    // Por el momento
+         $idDocente = $tutorshipInfo[0]['id_profesor'];  
         //------FIN OBTENIENDO ID DEL TUTOR-----------
 
-    
+         $teacherInfo = Teacher::where('IdDocente',$idDocente)->get();
+
+
         //-------------BEGIN DATABASE INSERT ---------------
         DB::table('tutmeetings')->insertGetId(
             [
@@ -112,7 +114,27 @@ class TutStudentController extends BaseController
         );
         //-------------END DATABASE INSERT ---------------
 
+   
+
+        $fecha =  $dateString;
+        $hora = $horaAux2;
+        $mail = $studentInfo[0]['correo'];
+
+        try
+        {
+            Mail::send('emails.notifyTutorAppointment', compact('fecha','hora'), function($m) use($mail) {
+                $m->subject('Su alumno   desea tener una reunión contigo - UASTUTORIA');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
+
         return "exito";    
+
+
 
         
     }

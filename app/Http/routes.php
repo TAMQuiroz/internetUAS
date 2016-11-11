@@ -606,6 +606,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('indexSup', ['as' => 'meeting.indexSup', 'uses' => 'Psp\meeting\MeetingController@indexSup']);
                 Route::get('createSup', ['as' => 'meeting.createSup', 'uses' => 'Psp\meeting\MeetingController@createSup']);
                 Route::post('createSup', ['as' => 'meeting.storeSup', 'uses' => 'Psp\meeting\MeetingController@storeSup']);
+                Route::get('mail/{id}', ['as' => 'meeting.mail', 'uses' => 'Psp\meeting\MeetingController@mail']);
             });
 
             //MeetingTeacher

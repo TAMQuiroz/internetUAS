@@ -78,6 +78,8 @@ class FlujoCoordinadorController extends Controller
     {
 
     	$data['idEspecialidad']=$this->facultyService->getFacultyxDocente();
+        $faculty = Faculty::where('IdDocente', Session::get('user')->IdDocente)->first();
+        Session::put('faculty-code',$faculty->IdEspecialidad);
 
       	return view('flujoCoordinador.index',$data);
     }

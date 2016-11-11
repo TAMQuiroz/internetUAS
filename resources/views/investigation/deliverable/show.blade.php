@@ -159,8 +159,10 @@
                                     <td>
                                         @if($version->user->IdPerfil == 2)
                                             {{$version->user->professor->Nombre}} {{$version->user->professor->ApellidoPaterno}}
-                                        @else
+                                        @elseif($version->user->IdPerfil == 5)
                                             {{$version->user->investigator->nombre}} {{$version->user->investigator->ape_paterno}}
+                                        @else
+                                            {{$version->user->student->nombre}} {{$version->user->student->ape_paterno}}
                                         @endif
                                     </td>
                                     @if($version->observacion != null)

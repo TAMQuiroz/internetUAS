@@ -92,7 +92,7 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
               {{Form::submit('Generar', ['class'=>'btn btn-success pull-right', 'id'=>'btnGenerar'])}}
               <a class="btn btn-default pull-right" href="{{ route('reporteISP.index') }}">Cancelar</a>
-              <a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>
+              <!--<a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>-->
               <a class="btn btn-default pull-right" id="btnGraficos">Graficos</a>
             </div>
           </div>

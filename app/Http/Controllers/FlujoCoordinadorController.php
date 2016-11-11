@@ -547,6 +547,18 @@ class FlujoCoordinadorController extends Controller
         try {
             $data['idEspecialidad']=$id;
             
+            Session::forget('facultyAgreement');
+            Session::forget('criteriaLevel');
+            Session::forget('cycleStart');
+            Session::forget('cycleEnd');
+
+            Session::forget('cycleStart');
+            Session::forget('cycleEnd');
+            Session::forget('measures');
+            Session::forget('objCheck');
+            Session::forget('stRstCheck');
+            Session::forget('aspCheck');
+            Session::forget('crtCheck');
             if(Session::get('academic-cycle')!=null){
                 return $this->viewAcademicCycle($id);
             }else{

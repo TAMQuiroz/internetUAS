@@ -454,7 +454,6 @@ class FlujoCoordinadorController extends Controller
         try {
             //$cycle = Session::get('academic-cycle');
             $cycle = Cicle::where('Vigente',1)->where('IdEspecialidad',$id)->first();
-            $data['cycle'] = $cycle;
             if($cycle!=null){
                     $data['dateI'] = date('d/m/Y',strtotime($cycle->FechaInicio.''));
                     $data['dateF'] = date('d/m/Y',strtotime($cycle->FechaFin.''));
@@ -466,6 +465,7 @@ class FlujoCoordinadorController extends Controller
             }
 
         $data['cicle'] = $this->facultyService->findCycle($id);
+        //dd($data['cicle'] );
         $data['cycleAcademic'] = $this->facultyService->AllCyclesAcademics();
         $data['results'] = $this->facultyService->allResultsInPeriod();
         if($cycle!= null){
@@ -517,10 +517,10 @@ class FlujoCoordinadorController extends Controller
             $data['idEspecialidad'] = $id;
             $data['title'] = 'Crear Profesor';
             $data['idEspecialidad']=$id;
-            $cycle = $this->facultyService->createCycle($request->all());
+            $cycle = $this->facultyService->createCycle2($request->all(),$id);
             $info = 1;
             
-            $this->facultyService->activateCycle($request->all());
+            $this->facultyService->activateCycle2($request->all(),$id);
             $cycle = $this->facultyService->findCycle($id);
             Session::forget('academic-cycle');
             Session::set('academic-cycle',$cycle);
@@ -904,9 +904,10 @@ class FlujoCoordinadorController extends Controller
     public function contributions($id) {
         $data = [];
         try {
-            //dd($id);
+            
+            //dd(Session::get('faculty-code'));
             $data['idEspecialidad']=$id;
-            $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle();
+            $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle2($id);
             //dd($data['currentStudentsResults']);
             $data['courses']= $this->courseService->retrieveByFacultyandCicle($id);
             //dd("hola");
@@ -922,7 +923,7 @@ class FlujoCoordinadorController extends Controller
         }
 
         try {
-            $this->courseService->updateContributions($request->all());
+            $this->courseService->updateContributions2($request->all(),$id);
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error updateContributions'); 
         }

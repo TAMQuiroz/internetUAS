@@ -158,18 +158,28 @@
                     </thead>
                     <tbody>
                       @foreach($investigador->projects as $proyecto)
-                        @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
-                          @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                            @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
-                            <tr>
-                              <td>{{$proyecto->nombre}}</td> 
-                              <td>{{$proyecto->fecha_fin}}</td> 
-                              <td>{{$proyecto->area->nombre}}</td> 
-                              <td id="{{$proyecto->status->nombre}}">{{$proyecto->status->nombre}}</td>
-                              <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                            </tr>
+                        @if($opcion == 'No')
+                          @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                            @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                              @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                              <tr>
+                                <td>{{$proyecto->nombre}}</td> 
+                                <td>{{$proyecto->fecha_fin}}</td> 
+                                <td>{{$proyecto->area->nombre}}</td> 
+                                <td id="{{$proyecto->status->nombre}}">{{$proyecto->status->nombre}}</td>
+                                <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                              </tr>
+                              @endif
                             @endif
                           @endif
+                        @elseif($opcion == 'Si')
+                          <tr>
+                            <td>{{$proyecto->nombre}}</td> 
+                            <td>{{$proyecto->fecha_fin}}</td> 
+                            <td>{{$proyecto->area->nombre}}</td> 
+                            <td id="{{$proyecto->status->nombre}}">{{$proyecto->status->nombre}}</td>
+                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          </tr>
                         @endif
                       @endforeach
                     </tbody>
@@ -243,18 +253,28 @@
                     </thead>
                     <tbody>
                       @foreach($profesor->projects as $proyecto)
-                        @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
-                          @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                            @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
-                            <tr>
-                              <td>{{$proyecto->nombre}}</td> 
-                              <td>{{$proyecto->fecha_fin}}</td> 
-                              <td>{{$proyecto->area->nombre}}</td> 
-                              <td>{{$proyecto->status->nombre}}</td>
-                              <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                            </tr>
+                        @if($opcion == 'No')
+                          @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                            @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                              @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                              <tr>
+                                <td>{{$proyecto->nombre}}</td> 
+                                <td>{{$proyecto->fecha_fin}}</td> 
+                                <td>{{$proyecto->area->nombre}}</td> 
+                                <td>{{$proyecto->status->nombre}}</td>
+                                <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                              </tr>
+                              @endif
                             @endif
                           @endif
+                        @elseif($opcion == 'Si')
+                          <tr>
+                            <td>{{$proyecto->nombre}}</td> 
+                            <td>{{$proyecto->fecha_fin}}</td> 
+                            <td>{{$proyecto->area->nombre}}</td> 
+                            <td>{{$proyecto->status->nombre}}</td>
+                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                          </tr>
                         @endif
                       @endforeach
                     </tbody>
@@ -279,6 +299,14 @@
       <br><br>
     </div>
     <div id="pieP" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    <div>
+      <br><br>
+    </div>
+    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div>
+      <br><br>
+    </div>
+    <div id="areaChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
 </div>
 

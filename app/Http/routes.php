@@ -800,6 +800,9 @@ $api->version('v1', function ($api) {
                 $api->get('studentsPSP/all','Students\PspStudentsInscriptionFiles@getAllPspStudents');
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
+
+                $api->get('pspstudent/{id}/detail','Students\PspStudentsInscriptionFiles@getPspStudents');
+
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
                 $api->post('students/{id}/sendInscriptioFile', 'Students\PspStudentsInscriptionFiles@edit');
                 $api->get('meetings/student', 'Meeting\PspMeetingController@getMeetings');

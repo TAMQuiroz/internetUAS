@@ -41,7 +41,7 @@
               {{Form::label('Área del proyecto',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-12 col-md-4">
 
-                {{Form::select('areaP',$comboAreasP, $idAreaP, ['class'=>'form-control'])}}
+                {{Form::select('areaP',$comboAreasP, $idAreaP, ['class'=>'form-control', 'id'=> 'areaP'])}}
               </div>
             </div>
 
@@ -63,13 +63,13 @@
             <div class="form-group">
               {{Form::label('N° de proyectos asignados',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-4 col-md-1">
-                {{Form::select('minProyectos',$comboMinP, $minP, ['class'=>'form-control'])}}
+                {{Form::select('minProyectos',$comboMinP, $minP, ['class'=>'form-control', 'id'=>'minProyectos'])}}
               </div>
               <div class="col-xs-4 col-md-1 col-md-offset-1">
                 {{Form::label('entre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               </div>
               <div class="col-xs-4 col-md-1">
-                {{Form::select('maxProyectos',$comboMaxP, $maxP, ['class'=>'form-control'])}}
+                {{Form::select('maxProyectos',$comboMaxP, $maxP, ['class'=>'form-control', 'maxProyectos'])}}
 
               </div>
             </div>
@@ -79,11 +79,11 @@
 
               
               <div class="col-xs-4 col-md-1">
-                {{Form::radio('radio','Si', ($opcion=='Si'))}} Si
+                {{Form::radio('radio','Si', ($opcion=='Si'), ['id' => 'radioB'])}} Si
               </div>
 
               <div class="col-xs-4 col-md-1">
-                {{Form::radio('radio','No', ($opcion=='No'))}} No
+                {{Form::radio('radio','No', ($opcion=='No'), ['id' => 'radioB2'])}} No
               </div>
 
             </div>
@@ -92,7 +92,8 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
               {{Form::submit('Generar', ['class'=>'btn btn-success pull-right', 'id'=>'btnGenerar'])}}
               <a class="btn btn-default pull-right" href="{{ route('reporteISP.index') }}">Cancelar</a>
-              <a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>
+              <!--<a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>-->
+              <a class="btn btn-default pull-right" id="btnGraficos">Graficos</a>
             </div>
           </div>
           {{Form::close()}}

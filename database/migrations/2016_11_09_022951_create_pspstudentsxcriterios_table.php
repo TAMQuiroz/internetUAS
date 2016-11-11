@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePspstudentsxaspectsTable extends Migration
+class CreatePspstudentsxcriteriosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreatePspstudentsxaspectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pspstudentsxaspects', function (Blueprint $table) {
+        Schema::create('pspstudentsxcriterios', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idalumno');
-            $table->integer('idaspecto');
+            $table->integer('idpspstudent')->unsigned();
+            $table->integer('idcriterio');
             $table->integer('nota')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreatePspstudentsxaspectsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pspstudentsxaspects');
+        Schema::drop('pspstudentsxcriterios');
     }
 }

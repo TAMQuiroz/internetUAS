@@ -28,25 +28,26 @@
 
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                    <col width="10%" >
+                    <col width="45%" >
+                    <col width="30%">
+                    <col width="15%">
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Código </th>
+                            <th class="centered column-title">Código </th>
                             <th class="column-title">Apellidos y Nombres </th> 
-                            <th class="column-title">Especialidad </th>
-                            <th class="column-title last">Acciones</th>
-                            <th class="bulk-actions" colspan="7">
-                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>
+                            <th class="centered column-title">Especialidad </th>
+                            <th class="centered column-title last">Acciones</th>                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($tutors as $tutor)
                         <tr class="even pointer">                            
                             
-                            <td class=" ">{{ $tutor->Codigo }}</td>
+                            <td class="centered ">{{ $tutor->Codigo }}</td>
                             <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
-                            <td class="">{{ $tutor->faculty->Nombre }}</td>
-                            <td class=" ">                                
+                            <td class="centered">{{ $tutor->faculty->Nombre }}</td>
+                            <td class="centered ">                                
                                 <a href="" title="Desactivar" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
                                     <i class="fa fa-remove"></i>
                                 </a>

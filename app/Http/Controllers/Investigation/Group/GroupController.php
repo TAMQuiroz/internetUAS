@@ -37,15 +37,16 @@ class GroupController extends Controller
         $this->groupService = new GroupService();
     }
 
-    public function index()
+    public function index(Request $request)
     {
 
+        $filters = $request->all();
         $faculty_id = Session::get('faculty-code');
         //$data['title'] = "Courses";
 
         try {
             $data['faculty'] = $this->facultyService->find($faculty_id);
-            $data['groups'] = $this->groupService->retrieveAll();
+            $data['groups'] = $this->groupService->retrieveAll($filters);
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

@@ -328,8 +328,7 @@
                         @endif
                         @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Disponibilidades</a></li>
-                        <li><a href="{{route('meeting.indexSup')}}"> Horario de reuniones</a></li>
-                        <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
+                        <li><a href="{{route('meeting.indexSup')}}"> Reuniones</a></li>
                         <li><a href="{{route('studentScore.index')}}"> Notas Finales</a></li>
                         @endif
                         @if(Auth::user()->IdPerfil == 3) <!--si es admin-->

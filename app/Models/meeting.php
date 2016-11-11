@@ -18,5 +18,9 @@ class meeting extends Model
     public function student(){
     	return $this->belongsTo('Intranet\Models\Student','idstudent');
     }
+
+    public function status(){
+    	return $this->belongsTo('Intranet\Models\Status','idtipoestado');
+    }
     
 }

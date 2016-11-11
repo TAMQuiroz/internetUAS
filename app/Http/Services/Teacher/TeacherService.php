@@ -165,7 +165,7 @@ class TeacherService {
 
 	function searchByNameCodeFaculty($request, $except)
 	{
-		$teachers_query = Teacher::with('faculty')->where('Vigente', 1);
+		$teachers_query = Teacher::with('faculty')->where('Vigente', 1)->orderBy('IdEspecialidad','ASC')->orderBy('ApellidoPaterno','ASC');
 
 		if(trim($request['professor_name']) != "") {
 			$teachers_query->where(DB::raw('CONCAT(Nombre, " ", ApellidoPaterno)'), 'like', "%{$request['professor_name']}%");

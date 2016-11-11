@@ -142,7 +142,7 @@ jQuery(function(){
         autoclose: true,
         todayHighlight: true,
         minDate: 0,
-        onClose: function() {
+        onChange: function() {
             //fecha_ini = this.val();
             console.log('hola');
             //$('#fecha_fin').datepicker('option', 'minDate', fecha_ini);
@@ -195,7 +195,7 @@ function getProjectDates(){
             type: "GET",
             url: url_entregable + '/' + task_id,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('#fecha_ini').attr('min',data.fecha_inicio);               
             },
             error: function (data) {

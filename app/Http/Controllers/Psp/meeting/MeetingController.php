@@ -12,7 +12,12 @@ use Intranet\Models\freeHour;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
 use Intranet\Models\User;
+use Intranet\Models\Tutstudent;
 use Auth;
+use Carbon\Carbon;
+use Mail;
+use DateTime;
+
 
 class MeetingController extends Controller
 {
@@ -121,6 +126,25 @@ class MeetingController extends Controller
         $data['statuses'] = $statuses;
         //dd($data);
         return view('psp.meeting.edit',$data);
+    }
+
+    public function mail($id)
+    {        
+        try {
+            $stud = Student::find($id);
+            $student = Tutstudent::where('id_usuario',$stud->IdUsuario)->first();
+
+            
+                $mail = $student->correo;
+                Mail::send('emails.notifyNearMeeting',['user' => $mail], function($m) use($mail){
+                    $m->subject('Notificacion de Reunión con Supervisor');
+                    $m->to($mail);
+                });
+            
+             return redirect()->back()->with('success', 'Notificacon Enviada');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        } 
     }
 
     //Vista supervisor

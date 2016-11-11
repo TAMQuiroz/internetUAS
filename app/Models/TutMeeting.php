@@ -22,5 +22,109 @@ class TutMeeting extends Model
                             'id_reason',
                             'id_tutstudent',
                             'id_docente'];
-  
+
+    /*
+        Para los estados de citas:
+            Pendiente   => 1
+            Confirmada  => 2
+            Cancelada   => 3
+            Sugerida    => 4
+            Rechazada   => 5
+            Asistida    => 6
+            No asistida => 7
+    */
+
+
+    static public function getNumberDay($dateString) 
+    {
+        $timestamp  = strtotime($dateString);
+        $day        = date('w', $timestamp);
+        return $day;
+    }
+
+    static public function getStringDisableDays($daysCollection)
+    {    
+        $listDays           = [];   
+        
+        foreach($daysCollection as $day) {
+
+            array_push($listDays, $day->dia);
+
+        }
+
+        $diffDays           = array_diff(array(1,2,3,4,5,6), $listDays);
+
+        $stringDiffDays     = '0';
+
+        foreach ($diffDays as $value) {
+
+            $stringDiffDays = $stringDiffDays . ',' . $value;
+
+        }
+
+        return $stringDiffDays;
+    }
+
+    static public function getFilteredTutMeetings($filters) {
+        $query = Tutstudent::query(); 
+        $queryTutMeeting = TutMeeting::query();        
+        $stateFalse = 100;
+
+        if($filters["code"] != "") {
+            $query  = $query->where("codigo", $filters["code"]);
+        }
+
+        if($filters["name"] != "") {
+            $query = $query->where("nombre", "like", "%" . $filters["name"] . "%");
+        } 
+
+        if($filters["lastName"] != "") {
+            $query = $query->where("ape_paterno", "like", "%" . $filters["lastName"] . "%");
+        }
+
+        if($filters["secondLastName"] != "") {
+            $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
+        }               
+        
+        $students = $query->get();
+
+        if( $query->first() ) {
+            if($filters["state"] != "") {
+                $queryTutMeeting  = $queryTutMeeting->where("estado", $filters["state"]);
+            }
+            if($filters["id_docente"] != "") {
+                $queryTutMeeting  = $queryTutMeeting->where("id_docente", $filters["id_docente"]);
+            }            
+            if($filters["beginDate"] != "" && $filters["endDate"] != "") {
+                $queryTutMeeting  = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]) );                
+            }              
+        }
+        else{
+                //Como no encontró alumno luego de buscar, no debe regresar ninguna cita. Buscamos una cita que devuelva null
+                $queryTutMeeting  = $queryTutMeeting->where("estado", $stateFalse);
+                return $queryTutMeeting->get();
+        }        
+            
+
+
+
+
+        $id_list = array();
+        foreach ($students as $student) {
+            if ($student) {
+                array_push($id_list, $student->id);
+            }
+        }        
+        
+     
+        $queryTutMeeting = $queryTutMeeting->whereIn("id_tutstudent", $id_list);                
+       
+         
+        return $queryTutMeeting->orderBy("inicio", 'asc')->get();
+
+    }
+
+    public function tutstudent(){
+      return $this->belongsTo('Intranet\Models\Tutstudent','id_tutstudent');//bien
+    }
 }

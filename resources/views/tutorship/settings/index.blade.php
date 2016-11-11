@@ -27,7 +27,7 @@
                     <div class="form-group">
                         {{ Form::label('Duración de cita *',null, ['class' => 'control-label col-sm-5 col-xs-12']) }}
                         <div class="col-sm-2 col-xs-5">
- 	                       {{ Form::select('duration', array('0' => '00', '5' => '05', '10' => '10', '15' => '15', '20' => '20', '30' => '30', '60' => '60', '120' => '120'), $duration, ['class' => 'form-control']) }}                    	
+ 	                       {{ Form::select('duration', array('0' => '00', '5' => '05', '10' => '10', '15' => '15', '20' => '20', '30' => '30', '60' => '60'), $duration, ['class' => 'form-control']) }}                    	
                         </div>
                         <div class="col-sm-5 col-xs-7 text-left">
                         	{{Form::label('minutos.',null,['class'=>'control-label'])}}
@@ -83,7 +83,7 @@
 
         startDateTutorship.datepicker({
             format: "dd-mm-yyyy",
-            startDate: "today",
+            startDate: "{{$startDate}}",
             endDate: "{{$futureDay}}",
             language: "es",
             autoclose: true,
@@ -106,7 +106,6 @@
         inputStartDateTutorship.change(function() {
 
             var valueInputStart = $(this).val();
-            console.log(valueInputStart + "");
             endDateTutorship.datepicker('setStartDate', valueInputStart);
         });
 

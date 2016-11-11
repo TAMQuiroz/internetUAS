@@ -1,4 +1,4 @@
-<div class="remodal" data-remodal-id="filter-tutors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+<div class="remodal" data-remodal-id="filter-tutors-mydates" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
   <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
   <div class="text-left">
     <p style="font-size: 18px"><strong>Filtros de búsqueda</strong></p>

@@ -12,13 +12,15 @@
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <col width="10%" >
-                    <col width="15%">
-                    <col width="15%">                    
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">                    
                     <col width="50%">
                     <col width="10%">
                     <thead>
                         <tr class="headings">                            
                             <th class="centered column-title">N° referencia</th>
+                            <th class="centered column-title">Fecha registro </th>                            
                             <th class="centered column-title">Inicio </th>                            
                             <th class="centered column-title">Fin </th>                            
                             <th class="column-title">Código - Alumno </th>
@@ -26,19 +28,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($tutstudentxevaluations as $tutstudentxevaluation)
-                        
+                        @foreach($tutstudentxevaluations as $tutstudentxevaluation)                        
                         <tr class="even pointer">                                                   
                             <td class="centered ">{{$tutstudentxevaluation->id }}</td>
-                            <td class="centered ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->inicio))}}</td>
-                            @if($tutstudentxevaluation->fecha_hora != null)                                                                  
-                            <td class="centered ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->fecha_hora))}}</td>
+                            <td class="centered ">{{ date("d/m/Y", strtotime($tutstudentxevaluation->inicio))}}</td>
+                            <td class="centered ">{{ date("g:i a", strtotime($tutstudentxevaluation->inicio))}}</td>
+                            
+                            @if($tutstudentxevaluation->fecha_hora != null) 
+                            <td class="centered ">{{ date("g:i a", strtotime($tutstudentxevaluation->fecha_hora))}}</td>
                             @else
                             <td class="centered ">-</td>
-                            @endif                                                          
+                            @endif
+
                             <td class=" ">{{ $tutstudentxevaluation->alumno->codigo.' - '.$tutstudentxevaluation->alumno->ape_paterno.' '.$tutstudentxevaluation->alumno->ape_materno.', '.$tutstudentxevaluation->alumno->nombre  }}</td>                                                                                    
                             <td class="centered">  
-                            @if(! is_null($tutstudentxevaluation->fecha_hora)  )               
+                                @if(! is_null($tutstudentxevaluation->fecha_hora)  )               
                                 <a href="{{route('evaluacion_corregida.show',$tutstudentxevaluation->id)}}" title="Visualizar evaluación" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-eye"></i>
                                 </a>                               

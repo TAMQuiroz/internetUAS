@@ -3,12 +3,14 @@
 namespace Intranet\Http\Controllers\API\Tutoria;
 use Response;
 use DB;
+use Mail;
 use DateTime;
 use Illuminate\Http\Request;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
 use Intranet\Models\Tutorship;
 use Intranet\Models\TutMeeting;
+use Intranet\Models\Parameter;
 use Intranet\Models\Topic;
 use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
@@ -57,6 +59,8 @@ class TutTutorController extends BaseController
 
          $docenteInfo = Teacher::where('idUsuario',$id)->get();
          $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
+         $parametersInfo = Parameter::where('id_especialidad',1)->get();
+
          $i=0;
          $LovingTheAlien;
          foreach ($tutorshipInfo as $ttshipInfo) {
@@ -65,6 +69,8 @@ class TutTutorController extends BaseController
             $infoStudent = Tutstudent::where('id', $idAlumno)->get();
             $LovingTheAlien[$i] = $infoStudent[0];
             $LovingTheAlien[$i]['fullName'] = $infoStudent[0]['ape_paterno']." ".$infoStudent[0]['ape_materno']." ".$infoStudent[0]['nombre'];
+            $LovingTheAlien[$i]['duracionCita'] = $parametersInfo[0]['duracionCita'];
+            $LovingTheAlien[$i]['numberDays'] = $parametersInfo[0]['number_days'];
 
             $i++;
          } 
@@ -137,6 +143,24 @@ class TutTutorController extends BaseController
 
         );
         //-------------END DATABASE INSERT ---------------
+
+
+
+        $fecha =  $dateString;
+        $hora = $horaAux2;
+        $mail = $studentInfo[0]['correo'];
+
+        try
+        {
+            Mail::send('emails.notifyStudentSuggestion', compact('fecha','hora'), function($m) use($mail) {
+                $m->subject('Su tutor desea tener una reunión contigo - UASTUTORIA');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
 
         return "exito";    
 

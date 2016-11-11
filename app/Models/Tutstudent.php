@@ -36,62 +36,74 @@ class Tutstudent extends Model
       return $this->hasMany('Intranet\Models\TutMeeitng','id_tutstudent');//bien
     }    
 
-    static public function loadStudents($csv_path, $mayor) {
+    static public function loadStudents($csv_file, $mayor) {
 
-        $excel_file = Excel::load($csv_path, function($reader){})->get();
+        if ($csv_file) {
+           
+            $csv_path = $csv_file->path();
 
-        if (!empty($excel_file) && $excel_file->count()) {
-            
-            $count = 0;
+            $excel_file = Excel::load($csv_path, function($reader){})->get();
 
-            foreach ($excel_file as $row) {
+            if (!empty($excel_file) && $excel_file->count()) {
                 
-                if ($count) {
-                    $register = [
-                        'codigo'    => $row[1],
-                        'nombre'    => $row[2],
-                        'app'       => $row[3],
-                        'apm'       => $row[4],
-                        'correo'    => $row[5],
-                    ];
+                $count = 0;
 
-                    $validator = Validator::make($register, [
-                        'codigo'        => 'required|digits:8',
-                        'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-                        'app'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-                        'apm'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-                        'correo'        => 'required|email', 
-                    ]);
-
-
-                    if ($validator->fails()) {
-                        $status     = [
-                            'code'      => 1,
-                            'message'   => 'El formato de los datos de la fila ' . $count . ' no es correcto',
+                foreach ($excel_file as $row) {
+                    
+                    if ($count) {
+                        $register = [
+                            'codigo'    => $row[1],
+                            'nombre'    => $row[2],
+                            'app'       => $row[3],
+                            'apm'       => $row[4],
+                            'correo'    => $row[5],
                         ];
 
-                        return $status;
-                    }
+                        $validator = Validator::make($register, [
+                            'codigo'        => 'required|digits:8',
+                            'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+                            'app'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+                            'apm'           => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+                            'correo'        => 'required|email', 
+                        ]);
 
-                    Tutstudent::createTutStudent($register, $mayor);
+
+                        if ($validator->fails()) {
+                            $status     = [
+                                'code'      => 1,
+                                'message'   => 'El formato de los datos de la fila ' . $count . ' no es correcto',
+                            ];
+
+                            return $status;
+                        }
+
+                        Tutstudent::createTutStudent($register, $mayor);
+                    }
+                    
+                    $count += 1;
                 }
                 
-                $count += 1;
-            }
+                $status     = [
+                    'code'      => 2,
+                    'message'   => 'Los alumnos se han registrado exitosamente',
+                ];
+                return $status;
             
-            $status     = [
-                'code'      => 2,
-                'message'   => 'Los alumnos se han registrado exitosamente',
-            ];
-            return $status;
-        
+            } else {
+                $status     = [
+                    'code'      => 3,
+                    'message'   => 'El archivo esta vacío',
+                ];
+                return $status;
+            }
         } else {
             $status     = [
                 'code'      => 3,
-                'message'   => 'El archivo esta vacío',
+                'message'   => 'No se ha seleccionado archivo',
             ];
             return $status;
         }
+
     }
 
     static public function getFilteredStudents($filters, $tutor = null, $mayor = null) {

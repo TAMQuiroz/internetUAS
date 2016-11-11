@@ -20,7 +20,7 @@
 					@foreach($evs as $key => $ev)
 										
 					<div class="pregunta form-group">
-						<h4>Pregunta:{{$key+1}} ({{$ev->pregunta->puntaje}} puntos)</h4>
+						<h4>Pregunta {{$key+1}}: ({{$ev->pregunta->puntaje}} puntos)</h4>
 						<p>{{$ev->pregunta->descripcion}}</p>
 						<h5>Respuesta del alumno:</h5>
 

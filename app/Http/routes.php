@@ -810,6 +810,8 @@ $api->version('v1', function ($api) {
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
 
                 $api->get('pspstudent/{id}/detail','Students\PspStudentsInscriptionFiles@getPspStudents');
+                $api->get('student/{id}/detail','Students\PspStudentsInscriptionFiles@getStudents');
+                $api->get('tutstudent/{id}/detail','Students\PspStudentsInscriptionFiles@getTutStudents');
 
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
                 $api->post('students/{id}/sendInscriptioFile', 'Students\PspStudentsInscriptionFiles@edit');

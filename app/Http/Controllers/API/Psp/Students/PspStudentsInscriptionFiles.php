@@ -136,6 +136,24 @@ $inscription = array();
 
             //enviamos el correo al jefe
 
+
+
+
+    $recomendacion  = 'hola'  ; 
+        $mail = 'jemarroquin@pucp.edu.pe';
+        try
+        {
+            Mail::send('emails.notifyDateEmployer', compact('fecha','lugar','hora'), function($m) use($mail) {
+                $m->subject('Cita registrada - PSP');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
+        //Ret
+
         return "exito";    
 
     }

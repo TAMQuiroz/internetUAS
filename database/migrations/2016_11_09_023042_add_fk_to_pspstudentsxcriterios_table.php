@@ -29,7 +29,7 @@ class AddFkToPspstudentsxcriteriosTable extends Migration
         Schema::table('pspstudentsxcriterios', function (Blueprint $table) {
             //
             $table->dropForeign('pspstudentsxcriterios_idpspstudent_foreign');
-            $table->dropForeign('pspstudentsxcriterios_idpspstudent_foreign');
+            $table->dropForeign('pspstudentsxcriterios_idcriterio_foreign');
         });
     }
 }

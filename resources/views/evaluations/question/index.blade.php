@@ -15,7 +15,7 @@
                         <i class="fa fa-filter"></i> Filtrar
                     </a>
                     @if(Auth::user()->professor->rolEvaluaciones == 2)
-                    <a href="{{ route('pregunta.create') }}" class="btn btn-success pull-right">
+                    <a href="{{ route('pregunta.create') }}" class="btn btn-submit pull-right">
                         <i class="fa fa-plus"></i> Nueva pregunta
                     </a>
                     @endif

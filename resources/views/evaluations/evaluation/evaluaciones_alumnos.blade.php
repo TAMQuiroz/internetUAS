@@ -11,25 +11,25 @@
         <div class="x_title">                            
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                    <col width="20%" >
+                    <col width="15%" >
                     <col width="80%">
-                    <col width="10%">
+                    <col width="15%">
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Código de evaluación </th>
-                            <th class="column-title">Fecha de registro </th>                            
-                            <th class="column-title last">Acciones</th>                                
+                            <th class="centered column-title">N° de referencia</th>
+                            <th class="centered column-title">Fecha de registro </th>                           
+                            <th class="centered column-title last">Acciones</th>                                
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($tutstudentxevaluations as $tutstudentxevaluation)
                         @if(! in_array($tutstudentxevaluation->id,  $arr_no_include ))
                         <tr class="even pointer">                                                   
-                            <td class=" ">{{$tutstudentxevaluation->id }}</td>
-                            <td class=" ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->fecha_hora))}}</td>                                                                                    
-                            <td class="">                                
-                                <a href="{{route('evaluacion.corregir',[$tutstudentxevaluation->id_tutstudent,$tutstudentxevaluation->id_evaluation])}}" title="Corregir" class="btn btn-primary btn-xs view-group"">
-                                    <i class="fa fa-pencil"></i>
+                            <td class="centered">{{$tutstudentxevaluation->id }}</td>
+                            <td class="centered ">{{ date("d/m/Y g:i a", strtotime($tutstudentxevaluation->fecha_hora))}}</td>                                                                                    
+                            <td class="centered ">                                
+                                <a href="{{route('evaluacion.corregir',[$tutstudentxevaluation->id_tutstudent,$tutstudentxevaluation->id_evaluation])}}" title="Corregir evaluación" class="btn btn-primary btn-xs view-group"">
+                                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                 </a>                               
                             </td>
                         </tr>   

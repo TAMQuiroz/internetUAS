@@ -14,36 +14,35 @@
             <h4>Cantidad de competencias evaluadas: {{ count($compxtutxevs) }}</h4>            
             <h4>Cantidad de alumnos objetivo: {{ $total_students  }}</h4>
             <h4>Cantidad de alumnos evaluados: {{ $compxtutxevs[0]->cantidad  }}</h4>
-            <h4>Aceptación: {{ ($compxtutxevs[0]->cantidad / $total_students)*100  }}%</h4>
+            <h4>Aceptación: {{round( ($compxtutxevs[0]->cantidad / $total_students)*100 ,2) }}%</h4>
             <h4>Puntaje total de la evaluación: {{$total_puntaje}}</h4>                         
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">                    
-                    <col width="40%" >
+                    <col width="50%" >
                     <col width="10%">
                     <col width="10%">
                     <col width="10%">
                     <col width="10%">
-                    <col width="20%">                    
+                    <col width="10%">                    
                     <thead>
                         <tr class="headings">                                                        
                             <th class="column-title">Competencia</th>             
-                            <th class="column-title">Puntaje base</th>                            
-                            <th class="column-title">Mínimo</th>
-                            <th class="column-title">Máximo</th>
-                            <th class="column-title">Promedio</th>
-                            <th class="column-title">Promedio(%)</th>                            
+                            <th class="centered column-title">Puntaje base</th>                            
+                            <th class="centered column-title">Mínimo</th>
+                            <th class="centered column-title">Máximo</th>
+                            <th class="centered column-title">Promedio</th>
+                            <th class="centered column-title">Promedio(%)</th>                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($compxtutxevs as $compxtutxev)                        
-                        <tr class="even pointer">                                                   
-                            <!-- <td class=" ">{{$compxtutxev->id_competence }}</td> -->
+                        <tr class="even pointer">                            
                             <td class=" ">{{$compxtutxev->nombre }}</td>                            
-                            <td class=" ">{{$compxtutxev->maximo }}</td>                            
-                            <td class=" ">{{$compxtutxev->min }}</td>
-                            <td class=" ">{{$compxtutxev->max }}</td>
-                            <td class=" ">{{$compxtutxev->prom_punt }}</td>
-                            <td class=" ">{{ ($compxtutxev->prom_punt / $compxtutxev->maximo)*100 }}%</td>
+                            <td class="centered ">{{$compxtutxev->maximo }}</td>                            
+                            <td class="centered ">{{$compxtutxev->min }}</td>
+                            <td class="centered ">{{$compxtutxev->max }}</td>
+                            <td class="centered ">{{round ($compxtutxev->prom_punt ,2)}}</td>
+                            <td class="centered ">{{round( ($compxtutxev->prom_punt / $compxtutxev->maximo)*100 ,2)}}%</td>
                         </tr>                                           
                         @endforeach
                     </tbody>

@@ -18,23 +18,26 @@
                 </div>               
                 
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                    <col width="10%" >
+                    <col width="45%" >
+                    <col width="30%">
+                    <col width="15%">
                     <thead>
                         <tr class="headings">                            
-                            <th class="column-title">Código </th>
+                            <th class="centered column-title">Código </th>
                             <th class="column-title">Profesor</th>                            
-                            <th class="column-title">Especialidad</th> 
-                            <th class="column-title last">Seleccionar</th>                            
+                            <th class="centered column-title">Especialidad</th> 
+                            <th class="centered column-title last">Seleccionar</th>                            
                         </tr>
                     </thead>
                     <tbody>                    
                         @foreach($teachers as $index=>$teacher)  
                         
                         <tr class="even pointer">
-                            <td hidden class="group-id">{{ $teacher->IdDocente }}</td> 
-                            <td class="">{{ $teacher->Codigo }}</td>
+                            <td class="centered">{{ $teacher->Codigo }}</td>
                             <td class="">{{ $teacher->ApellidoPaterno.' '.$teacher->ApellidoMaterno.', '.$teacher->Nombre }}</td>                            
-                            <td class="">{{ $teacher->faculty->Nombre }}</td>
-                            <td class="">                                
+                            <td class="centered">{{ $teacher->faculty->Nombre }}</td>
+                            <td class="centered">                                
 
                                 {{Form::checkbox('check['.$teacher->IdDocente.']',1 , false, array('class' => 'check'))}}
                             </td>

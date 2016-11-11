@@ -55,7 +55,7 @@ class CourseService
 
     public function retrieveByFaculty($faculty_id)
     {
-        return Course::where('IdEspecialidad', $faculty_id)->get();
+        return Course::where('IdEspecialidad', $faculty_id)->orderBy("NivelAcademico","DESC")->orderBy("Nombre","ASC")->get();
     }
 
     public function findCourse($request)

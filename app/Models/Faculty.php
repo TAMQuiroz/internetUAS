@@ -34,7 +34,7 @@ class Faculty extends Model {
     }
 
     public function teachers(){
-        return $this->hasMany('Intranet\Models\Teacher', 'IdEspecialidad');
+        return $this->hasMany('Intranet\Models\Teacher', 'IdEspecialidad')->orderBy("ApellidoPaterno","ASC");
     }
 
     public function specialty(){

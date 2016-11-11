@@ -315,7 +315,7 @@ $(function () {
             pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
         },
         series: [{
-            name: 'Brands',
+            name: 'Especialidades',
             colorByPoint: true,
             data: pieI
         }],
@@ -399,7 +399,7 @@ $(function () {
             pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
         },
         series: [{
-            name: 'Brands',
+            name: 'Especialidades',
             colorByPoint: true,
             data: pieP
         }],

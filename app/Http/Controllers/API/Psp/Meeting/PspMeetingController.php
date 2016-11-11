@@ -79,18 +79,63 @@ class PspMeetingController extends BaseController
 
  			$student = Student::find($id);
 
- 			$meeting = 	meeting::where('idstudent', $id)->get();
+ 			$meetings = 	meeting::where('idstudent', $id)->get();
 
+
+
+ 			foreach($meetings as $meeting ){
+
+ 				$meeting['estado'] =  Status::find($meeting->idtipoestado)->first();
+
+
+
+ 			}
 
 
  		
- 			$data = $meeting->toArray();
+ 			//$data = $meeting->toArray();
  			
- 			return $this->response->array($data);
+ 			return $this->response->array($meetings->toArray());
 
 
 
  	}	
+
+ 	public function update(Request $request){
+
+ 		
+ 	 $observation = $request['observaciones'];
+ 	 $feedback = $request['retroalimentacion'];
+ 	 $place =  $request['lugar'];
+ 	 $id = $request['id'];
+
+
+
+ 	 try{
+
+ 	 $meeting = meeting::where('id' , $id)->get()->first();
+ 	 $meeting->observaciones = $observation;
+ 	 $meeting->lugar = $place;
+ 	 $meeting->retroalimentacion = $feedback;
+ 	 $meeting->save();
+ 	 $mensaje = "Actualizacion satisfactoria";
+        $array['message'] = $mensaje;
+        return $this->response->array($array);
+
+
+
+ 	 }catch(Exception $e){
+
+
+ 	 		$mensaje = "Hubo error";
+            $array['message'] = $mensaje;
+            return $this->response->array($array);
+
+
+ 	 }
+
+ 	
+ 	}
 
 
 

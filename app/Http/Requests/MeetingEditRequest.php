@@ -13,7 +13,7 @@ class MeetingEditRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +23,17 @@ class MeetingEditRequest extends Request
      */
     public function rules()
     {
-        return [
+        return [            
             'lugar' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
             'observaciones' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
             'retroalimentacion' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
             'idtipoestado' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
         ];
     }
 }

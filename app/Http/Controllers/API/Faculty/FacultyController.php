@@ -305,12 +305,26 @@ class FacultyController extends BaseController
     }
 
     public function getTeacherCourses($teacher_id){
-      $coursexteacher = CoursexTeacher::where('IdDocente',$teacher_id)->get();
+      $user = JWTAuth::parseToken()->authenticate();
+      //especialidad
+      $idEspecialidad = $this->getUserSpecialtyId($user);
+      //ciclo actual de la especialidad
+      $cicloxespecialidad = Cicle::where('IdEspecialidad',$idEspecialidad)
+                                 ->where('Vigente', 1)->first();
       $courses = [];
-      foreach ($coursexteacher as $key => $value) {
-        $course = Course::where('IdCurso',$value->IdCurso)->get();
-        array_push($courses, $course);
+      if($cicloxespecialidad){
+        //cursos de ese ciclo academico
+        $coursexcycle = CoursexCycle::where('IdCicloAcademico',$cicloxespecialidad->IdCicloAcademico)->get();
+        //para esos cursos tengo que ver que sean los cursos del profe
+        foreach ($coursexcycle as $key => $value) {
+          $coursexteacer = CoursexTeacher::where('IdCurso',$value->IdCurso)
+                          ->where('IdDocente',$teacher_id)->first();
+          if($coursexteacer){
+            $course = Course::where('IdCurso',$coursexteacer->IdCurso)->first();
+            array_push($courses, $course);
+          }
+        }
       }
-      return $this->response->array($courses);
+      return Response::json($courses);
     }
 }

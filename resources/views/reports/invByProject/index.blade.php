@@ -49,13 +49,13 @@
             <div class="form-group">
               {{Form::label('Proyectos iniciados',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               <div class="col-xs-12 col-md-1">
-                {{Form::date('fechaI',null,['id'=>'fecha_ini','class'=>'form-control'])}}
+                {{Form::date('fechaI',$fechaIni,['id'=>'fecha_ini','class'=>'form-control'])}}
               </div>
               <div class="col-xs-4 col-md-1 col-md-offset-1">
                 {{Form::label('entre',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
               </div>
               <div class="col-xs-12 col-md-1">
-                {{Form::date('fechaF',null,['id'=>'fecha_fin','class'=>'form-control'])}}
+                {{Form::date('fechaF',$fechaFin,['id'=>'fecha_fin','class'=>'form-control'])}}
               </div>
             </div>
 
@@ -90,7 +90,7 @@
 
             <div class="row">
             <div class="col-md-8 col-sm-12 col-xs-12">
-              {{Form::submit('Generar', ['class'=>'btn btn-success pull-right'])}}
+              {{Form::submit('Generar', ['class'=>'btn btn-success pull-right', 'id'=>'btnGenerar'])}}
               <a class="btn btn-default pull-right" href="{{ route('reporteISP.index') }}">Cancelar</a>
               <a class="btn btn-default pull-right" href="{{ route('reporteISP.generarPDF') }}">PDF</a>
             </div>
@@ -153,24 +153,22 @@
                       <th>Proyecto</th>
                       <th>Fecha final</th> 
                       <th>Area</th> 
-                      <th>Cantidad de integrantes</th> 
                       <th>Estado</th>
+                      <th>Cantidad de integrantes</th> 
                     </thead>
                     <tbody>
                       @foreach($investigador->projects as $proyecto)
-                        @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                          @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
-                          <tr>
-                            <td>{{$proyecto->nombre}}</td> 
-                            <td>{{$proyecto->fecha_fin}}</td> 
-                            <td>{{$proyecto->area->nombre}}</td> 
-                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                            <td>
-                            @if($proyecto->status)
-                              {{$proyecto->status->nombre}}
+                        @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                          @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                            @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                            <tr>
+                              <td>{{$proyecto->nombre}}</td> 
+                              <td>{{$proyecto->fecha_fin}}</td> 
+                              <td>{{$proyecto->area->nombre}}</td> 
+                              <td id="{{$proyecto->status->nombre}}">{{$proyecto->status->nombre}}</td>
+                              <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                            </tr>
                             @endif
-                            </td>
-                          </tr>
                           @endif
                         @endif
                       @endforeach
@@ -240,24 +238,22 @@
                       <th>Proyecto</th>
                       <th>Fecha final</th> 
                       <th>Area</th> 
-                      <th>Cantidad de integrantes</th> 
                       <th>Estado</th>
+                      <th>Cantidad de integrantes</th> 
                     </thead>
                     <tbody>
                       @foreach($profesor->projects as $proyecto)
-                        @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
-                          @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
-                          <tr>
-                            <td>{{$proyecto->nombre}}</td> 
-                            <td>{{$proyecto->fecha_fin}}</td> 
-                            <td>{{$proyecto->area->nombre}}</td> 
-                            <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
-                            <td>
-                            @if($proyecto->status)
-                              {{$proyecto->status->nombre}}
+                        @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                          @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
+                            @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
+                            <tr>
+                              <td>{{$proyecto->nombre}}</td> 
+                              <td>{{$proyecto->fecha_fin}}</td> 
+                              <td>{{$proyecto->area->nombre}}</td> 
+                              <td>{{$proyecto->status->nombre}}</td>
+                              <td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+                            </tr>
                             @endif
-                            </td>
-                          </tr>
                           @endif
                         @endif
                       @endforeach

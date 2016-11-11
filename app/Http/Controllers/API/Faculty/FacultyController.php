@@ -44,6 +44,21 @@ class FacultyController extends BaseController
         $this->timeTableService = new TimeTableService();
     }
 
+    private function getUserSpecialtyId($user){
+      $idEspecialidad = 0;
+      if ($user->IdPerfil == 2 || $user->IdPerfil == 1){
+            $user->load('professor');
+            $idEspecialidad = $user->professor->IdEspecialidad;    
+        }else if ($user->IdPerfil == 4){
+            $user->load('accreditor');
+            $idEspecialidad = $user->accreditor->IdEspecialidad;    
+        }else if ($user->IdPerfil == 5){
+            $user->load('investigator');
+            $idEspecialidad = $user->investigator->IdEspecialidad;    
+        }
+        return $idEspecialidad;
+    }
+
     public function get(Request $request)
     {
         $date = date('Y-m-d H:i:s', $request->get('since', 0));
@@ -51,21 +66,22 @@ class FacultyController extends BaseController
 
         $faculties = collect();
 
-        if ($user->isAdmin() || $user->isGeneralAcreditor())
+        if ($user->isAdmin()){
           $faculties = Faculty::lastUpdated($date)->get();
+        }else{
+          $idEspecialidad = $this->getUserSpecialtyId($user);
+          $faculties = Faculty::lastUpdated($date)->where('IdEspecialidad', $idEspecialidad)->get();
+        }
 
-        if ($user->isAcreditor())
-          $faculties = Faculty::lastUpdated($date)->where('IdEspecialidad', $user->accreditor->IdEspecialidad)->get();
-
-        //$faculties->load('coordinator');
         $faculties->load('teacher');
         return $this->response->array($faculties->toArray());
     }
 
     public function getSpecialty(Request $request){
       $user = JWTAuth::parseToken()->authenticate();
-      $specialty = Faculty::where('IdEspecialidad',$user->accreditor->IdEspecialidad)->first();
-      $specialty->load('coordinator');
+      $idEspecialidad = $this->getUserSpecialtyId($user);
+      $specialty = Faculty::where('IdEspecialidad',$idEspecialidad)->first();
+      $specialty->load('teacher');
       return Response::json($specialty); 
     }
 
@@ -289,12 +305,26 @@ class FacultyController extends BaseController
     }
 
     public function getTeacherCourses($teacher_id){
-      $coursexteacher = CoursexTeacher::where('IdDocente',$teacher_id)->get();
+      $user = JWTAuth::parseToken()->authenticate();
+      //especialidad
+      $idEspecialidad = $this->getUserSpecialtyId($user);
+      //ciclo actual de la especialidad
+      $cicloxespecialidad = Cicle::where('IdEspecialidad',$idEspecialidad)
+                                 ->where('Vigente', 1)->first();
       $courses = [];
-      foreach ($coursexteacher as $key => $value) {
-        $course = Course::where('IdCurso',$value->IdCurso)->get();
-        array_push($courses, $course);
+      if($cicloxespecialidad){
+        //cursos de ese ciclo academico
+        $coursexcycle = CoursexCycle::where('IdCicloAcademico',$cicloxespecialidad->IdCicloAcademico)->get();
+        //para esos cursos tengo que ver que sean los cursos del profe
+        foreach ($coursexcycle as $key => $value) {
+          $coursexteacer = CoursexTeacher::where('IdCurso',$value->IdCurso)
+                          ->where('IdDocente',$teacher_id)->first();
+          if($coursexteacer){
+            $course = Course::where('IdCurso',$coursexteacer->IdCurso)->first();
+            array_push($courses, $course);
+          }
+        }
       }
-      return $this->response->array($courses);
+      return Response::json($courses);
     }
 }

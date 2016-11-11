@@ -34,9 +34,12 @@
 
 		    		<div class="form-group">
 		    			{{Form::label('Fecha *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
-		    			<div class="col-xs-12 col-md-6">
-		    				{{Form::date('fecha',null,['class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString()])}}
-		    			</div>
+		    			<div class="col-xs-12 col-md-6">                        
+					        <div class="input-group date">
+					            <input type="text" class="form-control input-date" name="fecha" id="fecha" placeholder="dd/mm/aaaa" required/>
+					            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+					        </div>
+					    </div>
 		    		</div>
 
 		    		<div class="form-group">

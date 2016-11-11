@@ -98,22 +98,18 @@ class TutstudentController extends Controller
 
     public function storeAll(Request $request)
     {
-        $csv_file   = $request->file('csv_file'); 
+        $csv_file   = $request->file('csv_file');
+
         $mayor      = Session::get('faculty-code');
 
         try {
 
-            $status = Tutstudent::loadStudents($csv_file->path(), $mayor);
+            $status = Tutstudent::loadStudents($csv_file, $mayor);
 
-            if ($status['code'] == 1) {
-                
-                return redirect()->route('alumno.createAll')->with('warning', $status['message']);
-            } else 
             if ($status['code'] == 2) {
                 
                 return redirect()->route('alumno.index')->with('success', $status['message']);
-            } else 
-            if ($status['code'] == 3) {
+            } else {
                 
                 return redirect()->route('alumno.createAll')->with('warning', $status['message']);
             }

@@ -800,12 +800,22 @@ $api->version('v1', function ($api) {
                 $api->get('students/{idStudent}/documents','Students\PspStudentsController@getDocumentsById');
                 $api->get('students/documents','Students\PspStudentsController@getDocumentsAll');
 
+                $api->post('date/supervisor/employer', 'Students\PspStudentsInscriptionFiles@postAppointmentSuperEmployer');
+                $api->get('getInscriptions/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
                 $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
-           
+                $api->get('studentsPSP/all','Students\PspStudentsInscriptionFiles@getAllPspStudents');
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
                 $api->post('groups/selectGroup/{id}','PspGroup\PspGroupController@selectGroup');
+
+                $api->get('pspstudent/{id}/detail','Students\PspStudentsInscriptionFiles@getPspStudents');
+
                 $api->get('phases/all','Phases\PspPhasesController@getAll');
                 $api->post('students/{id}/sendInscriptioFile', 'Students\PspStudentsInscriptionFiles@edit');
+                $api->get('meetings/student', 'Meeting\PspMeetingController@getMeetings');
+                $api->get('supervisor/students','Students\PspStudentsController@getSupStudents');
+                $api->get('meeting/student/{id}','Meeting\PspMeetingController@getMeetingByStudent');
+
+
             });
 
             //INVESTIGACION
@@ -842,10 +852,19 @@ $api->version('v1', function ($api) {
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
+            $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
+            $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment');
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
+            $api->post('filterStudentAppointment', 'Tutoria\TutStudentController@filterStudentAppointment');
 
+            //EVALUACIONES
+             $api->group(['namespace' => 'Evaluation','prefix' => 'evaluation'], function($api){
+                $api->get('getAllEvaluations', 'EvaluationController@getAll');
+                $api->get('getEvaluation/{id}', 'EvaluationController@getById');
+                $api->get('getEvaluationsByFilter/{name}/{state}/{id}', 'EvaluationController@getEvaluationByFilter');
+            }); 
         });
     });
 

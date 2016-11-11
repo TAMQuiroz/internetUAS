@@ -15,6 +15,7 @@ class TopicController extends BaseController
     {
         $topics = Topic::get();
         return $this->response->array($topics->toArray());
+
     }
     
     public function getById($id)

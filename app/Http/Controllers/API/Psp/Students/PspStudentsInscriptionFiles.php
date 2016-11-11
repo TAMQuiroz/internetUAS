@@ -134,6 +134,26 @@ $inscription = array();
 
         );
 
+            //enviamos el correo al jefe
+
+
+
+
+    $recomendacion  = 'hola'  ; 
+        $mail = 'jemarroquin@pucp.edu.pe';
+        try
+        {
+            Mail::send('emails.notifyDateEmployer', compact('fecha','lugar','hora'), function($m) use($mail) {
+                $m->subject('Cita registrada - PSP');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
+        //Ret
+
         return "exito";    
 
     }
@@ -148,17 +168,19 @@ $inscription = array();
 
  public function getStudents($id)
     {
-        $pspstudent = Student::where('IdAlumno', $id )->get();
-        return  $this->response->array($pspstudent->toArray());
+        $student = Student::where('IdAlumno', $id )->get();
+        return  $this->response->array($student->toArray());
 
     }
 
- //public function getTutStudents($id)
-  //  {
-  //      $pspstudent = Tutstudent::where('idalumno', $id )->get();
-   //     return  $this->response->array($pspstudent->toArray());
-//
- //   }
+ public function getTutStudents($idAlumno)
+    {
+        $student = Student::where('IdAlumno', $idAlumno )->get()->first();
+        $tutstudent = Tutstudent::where('codigo', $student->Codigo )->get();
+
+
+        return  $this->response->array($tutstudent->toArray());
+   }
 
 
   public function getDatesSuperEmployerAll()

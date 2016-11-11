@@ -28,4 +28,22 @@ class Investigator extends Model
     public function projects(){
         return $this->belongsToMany('Intranet\Models\Project','investigatorxprojects','id_investigador','id_proyecto')->withPivot('id');   
     }
+
+    static public function getFiltered($filters){
+        $query = Investigator::orderBy('nombre', 'asc');
+
+        if(array_key_exists("nombre", $filters) && $filters["nombre"] != "") {
+            $query = $query->where('nombre', 'like', '%'.$filters['nombre'].'%');
+        }
+
+        if(array_key_exists("ape_materno", $filters) && $filters["ape_materno"] != "") {
+            $query = $query->where('ape_materno', 'like', '%'.$filters['ape_materno'].'%');
+        }
+
+        if(array_key_exists("ape_paterno", $filters) && $filters["ape_paterno"] != "") {
+            $query = $query->where('ape_paterno', 'like', '%'.$filters['ape_paterno'].'%');
+        }
+
+        return $query->paginate(10);
+    }
 }

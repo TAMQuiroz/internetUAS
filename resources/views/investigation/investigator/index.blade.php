@@ -19,15 +19,7 @@
 		  	<div class="panel-body">
 			  	<div class="row">
 			  		<div class="col-md-6">
-			            <form action="#" method="get">
-			                <div class="input-group">
-			                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
-			                    <input class="form-control" id="investigator-search" name="q" placeholder="Buscar" required>
-			                    <span class="input-group-btn">
-			                        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-			                    </span>
-			                </div>
-			            </form>
+						<a href="#filter" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
 			        </div>
 
 			        @if(Auth::user() && (Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin')))
@@ -68,15 +60,15 @@
 
 							@include('modals.delete', ['id'=> $investigador->id, 'message' => '¿Esta seguro que desea eliminar este investigador?', 'route' => route('investigador.delete', $investigador->id)])
 							@endforeach
-							
 						</tbody> 
 					</table>
+					{{$investigadores->links()}}
 				</div>
+				
 		  	</div>
 		</div>
     </div>
 </div>
 
-<script src="{{ URL::asset('js/intranetjs/investigation/investigator/index-investigator.js')}}"></script>
-
+@include('investigation.modals.filter_investigator', ['title' => 'Filtrar', 'route' => 'investigador.index'])
 @endsection

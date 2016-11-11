@@ -30,14 +30,13 @@
 						</tr>
 					</thead>
 					<tbody>
-
-						<tr class="even pointer" hidden="true">
-							<td class="a-center">
-								<input value="0" type="checkbox" id="check" name="check[]" checked="true" onchange="c(this)" onclick="c(this)"></input>
-							</td>
-						</tr>
 						@if($courses!=null)
 							@if(!empty($dictatedCourses))
+								<tr class="even pointer" hidden="true">
+									<td class="a-center">
+										<input value="0" type="checkbox" id="check" name="check[]" checked="true" onchange="c(this)" onclick="c(this)"></input>
+									</td>
+								</tr>						
 								@foreach($courses as $course)
 
 									<?php $temp = ""; ?>

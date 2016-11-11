@@ -298,10 +298,9 @@ class FacultyService {
 
 		$dateF = date('Y-m-d',$time1);
 
-		$periodo = Period::where('Vigente',1)->first();
+		$periodo = Period::where('Vigente',1)->where('IdEspecialidad',Session::get('faculty-code'))->first();
 		$confEspecialidad = ConfFaculty::where('IdPeriodo', $periodo->IdPeriodo)->first();
 
-		if($request['cycleId'] >= $confEspecialidad->IdCicloInicio && $request['cycleId']<= $confEspecialidad->IdCicloFin ){
 
 			$cycleA = Cicle::create(['IdEspecialidad' =>Session::get('faculty-code'),
 					'IdCiclo' => $request['cycleId'],
@@ -311,15 +310,6 @@ class FacultyService {
 					'FechaFin'=>$dateF
 
 			]);
-		}
-		else{
-			$cycleA = Cicle::create(['IdEspecialidad' =>Session::get('faculty-code'),
-					'IdCiclo' => $request['cycleId'],
-					'Vigente' =>'0',
-					'FechaInicio'=>$dateI,
-					'FechaFin'=>$dateF
-			]);
-		}
 
 		for($i=1;$i<count($request['check']);$i++) {
 			$cyclexresults = CyclexResult::create([
@@ -428,6 +418,88 @@ class FacultyService {
 		}
 
 		$studentResultsAll = StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
+			->where('deleted_at', null)->get();
+
+		foreach ($studentResultsAll as $stRst){
+			$statusStRst = 0;
+			if(in_array($stRst->IdResultadoEstudiantil, $studentsResults)){
+				$statusStRst = 1;
+			}
+			StudentsResult::where('IdResultadoEstudiantil', $stRst->IdResultadoEstudiantil)
+				->update(array('Estado' => $statusStRst,));
+			foreach ($stRst->aspects as $asp){
+				$statusAsp = 0;
+				if(in_array($asp->IdAspecto, $aspects)){
+					$statusAsp = 1;
+				}
+				Aspect::where('IdAspecto', $asp->IdAspecto)
+					->update(array('Estado' => $statusAsp,));
+				foreach ($asp->criterion as $crt){
+					$statusCrt = 0;
+					if(in_array($crt->IdCriterio, $criterions)){
+						$statusCrt = 1;
+					}
+					Criterion::where('IdCriterio', $crt->IdCriterio)
+						->update(array('Estado' => $statusCrt,));
+				}
+			}
+		}
+
+		return $period;
+	}
+
+	public function createFaculty($id) {
+
+		$measures = Session::get('measures');
+		$educationalObjetives = Session::get('objCheck');
+		$studentsResults = Session::get('stRstCheck');
+		$aspects = Session::get('aspCheck');
+		$criterions = Session::get('crtCheck');
+
+		$nivelEsperado = intval(round((Session::get('facultyAgreement') * Session::get('criteriaLevel'))/100, 0, PHP_ROUND_HALF_UP));
+
+
+		$period = Period::create(['IdEspecialidad' =>$id,
+					'Vigente'=>'1'
+			]);
+
+
+
+	    $confFaculty = ConfFaculty::create(['NivelEsperado' => $nivelEsperado,
+					'UmbralAceptacion' => Session::get('facultyAgreement'),
+					'CantNivelCriterio' => Session::get('criteriaLevel')	,
+					'IdCicloFin' => Session::get('cycleEnd')	,
+					'IdCicloInicio' => Session::get('cycleStart')	,
+					'IdEspecialidad' =>  $id,
+					'IdPeriodo' => $period->IdPeriodo
+			]);
+
+		$measures = Session::get('measures');
+		$educationalObjetives = Session::get('objCheck');
+		$studentsResults = Session::get('stRstCheck');
+		$aspects = Session::get('aspCheck');
+		$criterions = Session::get('crtCheck');
+
+		$period->measures()->sync($measures);
+		//dd($educationalObjetives);
+		$period->educationalObjetives()->sync($educationalObjetives);
+		$period->studentsResults()->sync($studentsResults);
+		$period->aspects()->sync($aspects);
+		$period->criterions()->sync($criterions);
+
+		$educationalObjetivesAll = EducationalObjetive::where('IdEspecialidad', $id)
+			->where('deleted_at', null)->get();
+
+		foreach ($educationalObjetivesAll as $obj) {
+			$statusObj = 0;
+			if (in_array($obj->IdObjetivoEducacional, $educationalObjetives)) {
+				$statusObj = 1;
+			}
+			EducationalObjetive::where('IdObjetivoEducacional', $obj->IdObjetivoEducacional)
+				->update(array('Estado' => $statusObj,));
+		}
+
+		$studentResultsAll = StudentsResult::where('IdEspecialidad', $id)
 			->where('deleted_at', null)->get();
 
 		foreach ($studentResultsAll as $stRst){

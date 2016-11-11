@@ -80,24 +80,24 @@ class StudentController extends BaseController {
 
 				$students = [];
 				foreach ($data as $key => $value) {
-					$value_int = intval($value[0]);
+					$value_int = intval($value[1]);
 					if ($value_int != 0){ 
 
 						$insert = [
 							'Codigo' => $value_int, 
-							'Nombre' => $value[1],
-							'ApellidoPaterno' => $value[2],
-							'ApellidoMaterno' => $value[3],
+							'Nombre' => $value[2],
+							'ApellidoPaterno' => $value[3],
+							'ApellidoMaterno' => $value[4],
 							// other fields
 							'IdHorario' => $idTimeTable,
-							'lleva_psp' => null,
+							'lleva_psp' => 0,
 						];
 
 
 						// Para el curso PSP
 						if(isset($request['selectPsp'])){
 
-							if(!empty($value[4]) && $value[4] != null){
+							if(!empty($value[5]) && $value[5] != null){
 								$insert['lleva_psp'] = 1;
 
 								// Buscar alumno en la tabla de tutoria
@@ -113,14 +113,14 @@ class StudentController extends BaseController {
 									$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
 									$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
 
-									if($value[4] != null){
-										$alumnoTut['correo'] = $value[4];
+									if($value[5] != null){
+										$alumnoTut['correo'] = $value[5];
 									}
 									else {
 										return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
 									}
 
-									$user = $this->create_user_tutoria($alumnoTut);		
+									$user = $this->create_user_tutoria($alumnoTut);	
 
 									if($user != null){
 										$insert['IdUsuario'] = $user->IdUsuario;
@@ -174,7 +174,7 @@ class StudentController extends BaseController {
             $u = User::where('Usuario', $alumnoTut['codigo'])->first();
             if($u!=null){
                 return $u;
-            }            
+            }     
 
             // se crea un usuario primero
             $usuario = new User;

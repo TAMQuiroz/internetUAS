@@ -10,6 +10,7 @@ use Intranet\Models\Student;
 use Intranet\Models\User;
 use Intranet\Models\meeting;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspProcessxTeacher;
 use Illuminate\Routing\Controller as BaseController;
@@ -45,12 +46,19 @@ class PspMeetingController extends BaseController
  		}else if($user->IdPerfil == 6){
 
  			$supervisor =	Supervisor::where('iduser',$user->IdUsuario)->first();
- 			$meeting = 	meeting::where('idsupervisor', $supervisor->id)->get();
+ 			$meetings = 	meeting::where('idsupervisor', $supervisor->id)->get();
 
- 			$data = [ 
- 			'meetings' => $meeting ];
+ 			foreach($meetings as $meeting ){
 
- 			return $this->response->array($data);
+ 				$meeting['estado'] =  Status::find($meeting->idtipoestado)->first();
+
+
+
+ 			}
+
+ 			
+
+ 			return $this->response->array($meetings->toArray());
 
 
 

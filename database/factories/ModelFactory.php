@@ -252,3 +252,10 @@ $factory->define(Intranet\Models\PspDocument::class, function (Faker\Generator $
         'numerofase'           =>  1,
     ];
 });
+
+$factory->define(Intranet\Models\PspGroup::class, function (Faker\Generator $faker){
+   return[
+        'numero' => $faker->numberBetween($min = 1, $max = 9),
+        'descripcion' => $faker->text($maxNbChars = 100) ,
+   ];
+});

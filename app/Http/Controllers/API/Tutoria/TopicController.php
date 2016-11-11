@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\API\Tutoria;
 
 use Illuminate\Http\Request;
 use Intranet\Models\Topic;
+use Mail;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
 //Tested
@@ -16,6 +17,7 @@ class TopicController extends BaseController
         $topics = Topic::get();
         return $this->response->array($topics->toArray());
 
+
     }
     
     public function getById($id)
@@ -24,4 +26,4 @@ class TopicController extends BaseController
         return $this->response->array($topic->toArray());
     }
 
-}  
+}  ;

@@ -1,6 +1,27 @@
 
+$("#radioB").click(function() {      
+        $('#especialidad').prop('disabled', 'true');
+        $('#estadoP').prop('disabled', 'true');
+        $('#areaP').prop('disabled', 'true');
+        $('#fecha_ini').prop('disabled', 'true');
+        $('#fecha_fin').prop('disabled', 'true');
+        $('#minProyectos').prop('disabled', 'true');
+        $('#maxProyectos').prop('disabled', 'true');
+});
 
-$(function () {
+
+$("#radioB2").click(function() {      
+        $('#especialidad').removeAttr('disabled');
+        $('#estadoP').removeAttr('disabled');
+        $('#areaP').removeAttr('disabled');
+        $('#fecha_ini').removeAttr('disabled');
+        $('#fecha_fin').removeAttr('disabled');
+        $('#minProyectos').removeAttr('disabled');
+        $('#maxProyectos').removeAttr('disabled');
+});
+
+
+$("#btnGraficos").click(function () {
     //Datos para Bar Chart
     var especialidades = document.getElementById("especialidad");
     var estadoP = document.getElementById("estadoP");

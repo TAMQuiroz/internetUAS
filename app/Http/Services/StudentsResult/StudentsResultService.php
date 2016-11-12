@@ -89,6 +89,50 @@ class StudentsResultService {
         
     }
 
+    public function findByFacultyAndCicle2($id)
+    {
+        $studentResults = [];
+        if(Session::get('academic-cycle') != null){
+            $IdCicloAcademico=Session::get('academic-cycle')->IdCicloAcademico;
+            if($IdCicloAcademico!=null){
+                $resultsxCycles = CyclexResult::where('IdCicloAcademico', $IdCicloAcademico)
+                    ->where('deleted_at', null)->get();
+
+                    //dd($resultsxCycles);
+            /*    $resultsDirties=StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
+                    ->where('deleted_at', null)->get();
+
+                foreach ($resultsxCycles as $resultsxCycle){
+                    foreach ($resultsDirties as $resultsDirty){
+                        if($resultsxCycle->IdResultadoEstudiantil == $resultsDirty->IdResultadoEstudiantil){
+                            array_push($studentResults, $resultsDirty);
+                            break;
+                        }
+                    }
+                }*/
+                
+                if($resultsxCycles){      
+                    foreach ($resultsxCycles as $resultsxCycle){
+                        if($resultsxCycle->studentsResult!=null){
+                            if($resultsxCycle->studentsResult->IdEspecialidad == $id &&
+                                    $resultsxCycle->studentsResult->deleted_at == null){
+                                array_push($studentResults, $resultsxCycle->studentsResult);
+                            }
+                        }
+                    }
+                    return $studentResults;
+                }else{
+                    return $studentResults;
+                }
+            }else{
+                return $studentResults;
+            }
+        }else{
+            return $studentResults;
+        }
+        
+    }
+
     public function findByFacultyAndCurrentPeriod()
     {
         $studentResults = [];

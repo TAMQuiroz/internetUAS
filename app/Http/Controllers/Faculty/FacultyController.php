@@ -449,4 +449,95 @@ class FacultyController extends BaseController
 
         return redirect()->route('viewPeriod.faculty')->with('success', 'El periodo se ha iniciado satisfactoriamente');
     }
+
+    public function continuePeriod(Request $request)
+    {
+        $id=Session::get('faculty-code');
+        $data['title'] = 'Información del Periodo Actual';
+        $request1=$request->all();
+        try {
+            $data['idEspecialidad']=$id;
+
+            $faculty=$this->facultyService->getId($id);
+            $data['especialidad']=$faculty;
+
+            
+            $cicloFin=$this->academicCycleService->getById($request1['cycleEnd']);
+            dd($cicloFin);
+            $data['fechaCicloFin']=$cicloFin->Descripcion;
+            $cicloInicio=$this->academicCycleService->getById($request1['cycleStart']);
+            $data['fechaCicloInicio']=$cicloInicio->Descripcion;
+
+            $data['facultyAgreement']=$request1['facultyAgreement'];
+            $data['criteriaLevel']=$request1['criteriaLevel'];
+
+
+            /*
+            $regular_professors = isset($request['regular_professors'])?$request['regular_professors']:[];
+            $course->regularProfessors()->sync($regular_professors);
+*/
+
+            $measuresAll=$this->measurementSourceService->allByFaculty2($id);
+            $measures = (array_key_exists('measures', $request1))?$request1['measures']: [];
+            //dd($measures);
+            $educationalObjetives = (array_key_exists('objCheck', $request1))?$request1['objCheck']: [];
+            $studentsResults = (array_key_exists('stRstCheck', $request1))?$request1['stRstCheck']: [];
+            $aspects = (array_key_exists('aspCheck', $request1))?$request1['aspCheck']: [];
+            $criterions = (array_key_exists('crtCheck', $request1))?$request1['crtCheck']: [];
+
+            $studentResultsAll = StudentsResult::where('IdEspecialidad', $id)
+            ->where('deleted_at', null)->get();
+            $educationalObjetivesAll = EducationalObjetive::where('IdEspecialidad', $id)
+            ->where('deleted_at', null)->get();
+            $data['measuresAll']=$measuresAll;
+            $data['measures']=$measures;
+            $data['educationalObjetivesAll']=$educationalObjetivesAll;
+            $data['educationalObjetives']=$educationalObjetives;
+            $data['studentResultAll']=$studentResultsAll;
+            $data['studentsResults']=$studentsResults;
+            $data['aspects']=$aspects;
+            $data['criterions']=$criterions;
+
+
+
+            ///para usarlo en el guardado
+            //Session::forget('academic-cycle');
+            Session::put('facultyAgreement',$request1['facultyAgreement']);
+            Session::put('criteriaLevel',$request1['criteriaLevel']);
+            Session::put('cycleStart',$request1['cycleStart']);
+            Session::put('cycleEnd',$request1['cycleEnd']);
+
+            Session::put('cycleStart',$request1['cycleStart']);
+            Session::put('cycleEnd',$request1['cycleEnd']);
+            Session::put('measures',$request1['measures']);
+            Session::put('objCheck',$request1['objCheck']);
+            Session::put('stRstCheck',$request1['stRstCheck']);
+            Session::put('aspCheck',$request1['aspCheck']);
+            Session::put('crtCheck',$request1['crtCheck']);
+
+            //dd(Session::get('facultyAgreementLevel'));
+
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+        return view('periods.continue', $data);
+    }
+
+    public function storePeriod2(Request $request, $id)
+    {
+        try {       
+            //dd("hola");
+
+            //dd(Session::get('measures'));
+            $period = $this->facultyService->createFaculty($id);
+
+            //dd($facultyAgreementLevel);
+            Session::put('period-code', $period->IdPeriodo);
+
+        } catch (Exception $e) { 
+            redirect()->back()->with('warning','Ha ocurrido un error');
+        }
+
+        return $this->index();
+    }
 }

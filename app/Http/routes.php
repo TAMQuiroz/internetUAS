@@ -190,7 +190,9 @@ Route::group(['middleware' => 'auth'], function(){
 
         // assign faculty
         Route::get('/periods', ['as' => 'viewPeriod.faculty', 'uses' => 'Faculty\FacultyController@getPeriods']);
+        Route::post('/periods/continue', ['as' => 'continuePeriod.faculty', 'uses' => 'Faculty\FacultyController@continuePeriod']);
         Route::get('/periods/create', ['as' => 'createPeriod.faculty', 'uses' => 'Faculty\FacultyController@createPeriod']);
+        Route::post('/periods/store/{id}', ['as' => 'storePeriod2.faculty', 'uses' => 'Faculty\FacultyController@storePeriod2']);
         Route::post('/periods/create', ['as' => 'storePeriod.faculty', 'uses' => 'Faculty\FacultyController@storePeriod']);
         Route::get('/periods/{period_id}', ['as' => 'editPeriod.faculty', 'uses' => 'Faculty\FacultyController@editPeriod']);
         Route::get('/editPeriod', ['as' => 'editPeriod.faculty', 'uses' => 'Faculty\FacultyController@editPeriod']);

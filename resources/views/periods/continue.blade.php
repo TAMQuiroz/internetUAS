@@ -32,7 +32,7 @@
 <div class="clearfix"></div>
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
-    <form action="{{ route('period_store2.flujoCoordinador',$idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
+    <form action="{{ route('storePeriod2.faculty',$idEspecialidad) }}" method="POST" id="formEditPeriod"  name="formEditPeriod" novalidate="true" class="form-horizontal">
 
     <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
 
@@ -124,7 +124,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <button class="btn btn-success pull-right submit" type="submit" >SIGUIENTE > </button>
-            <a  href="{{ route('period_create.flujoCoordinador', $idEspecialidad) }}"  class="btn btn-default pull-left">< Atras</a>
+            <a  href="{{ route('createPeriod.faculty') }}"  class="btn btn-default pull-left">< Atras</a>
         </div>
     </div>
     </form>

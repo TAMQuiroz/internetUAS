@@ -50,9 +50,9 @@
       <table class="table table-striped responsive-utilities jambo_table bulk_action" id="aspect-table">
         <thead>
           <tr class="headings">
+            <th class="col-sm-3  column-title">Resultado Estudiantil</th>
+            <th class="col-sm-5 column-title">Nombre del Aspecto</th>
             <th class="col-sm-2 column-title">Estado</th>
-            <th class="col-sm-1  column-title">RE</th>
-            <th class="col-sm-7 column-title">Nombre del Aspecto</th>
             <th class="col-sm-2 column-title last">Acciones</th>
           </tr>
         </thead>
@@ -63,15 +63,14 @@
           <tr class="even pointer aspect {{ $asp->studentsResult->IdResultadoEstudiantil }}">
             <td class="aspect_code" hidden="true">{{ $asp->IdAspecto}}</td>
             <td class="aspect_studentsResult" hidden="true">{{ $asp->studentsResult->IdResultadoEstudiantil}}</td>
-            <td class="aspect_studentsResultName" hidden="true">{{$asp->studentsResult->Identificador}} - {{$asp->studentsResult->Descripcion}}</td>
+            <td class="aspect_studentsResultName" hidden="true">{{$asp->studentsResult->Identificador}} - {{$asp->studentsResult->Descripcion}}</td>        
+            <td class="aspect_re">{{$asp->studentsResult->Identificador}}</td>
+            <td class="aspect_name">{{ str_limit($asp->Nombre,40)}}</td>
             @if($asp->Estado == 1)
             <td class=""><span class="label label-success"> Activo </span></td>
             @else
             <td class=""><span class="label label-danger"> Inactivo </span></td>
             @endif
-            <td class="aspect_re">{{$asp->studentsResult->Identificador}}</td>
-            <td class="aspect_name">{{ str_limit($asp->Nombre,40)}}</td>
-
             <td class="aspect-actions">
               <a href="{{ route('view.aspects', ['aspect-code' => $asp->IdAspecto]) }}" class="btn btn-primary btn-xs" ><i class="fa fa-search"></i></a>
               <a class="btn btn-primary btn-xs edit-aspect" data-toggle="modal" data-target="#aspect-edit"><i class="fa fa-pencil"></i></a>

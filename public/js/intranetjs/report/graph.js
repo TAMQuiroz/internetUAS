@@ -34,6 +34,8 @@ $("#btnGraficos").click(function () {
     var arrayProyXProfXEsp =[];
     var arrayInvEstadoPXEsp = [];
     var arrayProfEstadoPXEsp = [];
+    var arrayTotalProyXEspXInv = [];
+    var arrayTotalProyXEspXProf = [];
     //Creacion de arrray que contiene los porcentajes de inv por esp
     var arrayInvXEsp = [];
     var arrayProfXEsp = [];
@@ -87,6 +89,12 @@ $("#btnGraficos").click(function () {
     for (var i=1; i< numOptions; i++){
         arrayTotalProyXEsp.push(0);
     }
+
+    for (var i=1; i< numOptions; i++){
+        arrayTotalProyXEspXInv.push(0);
+        arrayTotalProyXEspXProf.push(0);
+    }
+
 
     var tableI = document.getElementById('tableI');
 
@@ -251,11 +259,11 @@ $("#btnGraficos").click(function () {
         },
 
         series: [{
-            name: 'Investigador',
+            name: 'Investigadores',
             data: arrayProyXInvXEsp,
             stack: 'male'
         }, {
-            name: 'Profesor',
+            name: 'Profesores',
             data: arrayProyXProfXEsp,
             stack: 'male'
         }]
@@ -289,7 +297,8 @@ $("#btnGraficos").click(function () {
     for (var i=0; i < arrayEsp.length ; i ++){
         var arrayEstadoPXEspPorc = [];
         for (var j=0; j < numEstados; j++){
-            var porc = (arrayInvEstadoPXEsp[i][j]/totalProyI)*100;
+            //var porc = (arrayInvEstadoPXEsp[i][j]/totalProyI)*100;
+            var porc = (arrayInvEstadoPXEsp[i][j]/arrayProyXInvXEsp[i])*100;
             arrayEstadoPXEspPorc.push(porc);
         }
         arrayInvXEstadoPXEsp.push(arrayEstadoPXEspPorc);
@@ -326,10 +335,10 @@ $("#btnGraficos").click(function () {
     var fechaFin = document.getElementById("fecha_fin");
     var textPieI;
     if (fechaIni.value != "" && fechaFin.value != ""){
-        textPieI = 'Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;    
+        textPieI = 'Investigadores: Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;    
     }
     else{
-        textPieI = 'Estado de los proyectos';
+        textPieI = 'Investigadores: Estado de los proyectos';
     }
     
     
@@ -342,7 +351,7 @@ $("#btnGraficos").click(function () {
             text: textPieI
         },
         subtitle: {
-            text: 'Click en los slices para ver el estado de los proyectos.'
+            text: 'Click en los slices para ver el estado de los proyectos por especialidad.'
         },
         plotOptions: {
             series: {
@@ -395,7 +404,8 @@ $("#btnGraficos").click(function () {
     for (var i=0; i < arrayEsp.length ; i ++){
         var arrayEstadoPXEspPorc = [];
         for (var j=0; j < numEstados; j++){
-            var porc = (arrayProfEstadoPXEsp[i][j]/totalProyP)*100;
+            //var porc = (arrayProfEstadoPXEsp[i][j]/totalProyP)*100;
+            var porc = (arrayProfEstadoPXEsp[i][j]/arrayProyXProfXEsp[i])*100;
             arrayEstadoPXEspPorc.push(porc);
         }
         arrayProfXEstadoPXEsp.push(arrayEstadoPXEspPorc);
@@ -420,10 +430,10 @@ $("#btnGraficos").click(function () {
     // Create the chart
     var textPieP;
     if (fechaIni.value != "" && fechaFin.value != ""){
-        textPieP = 'Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;    
+        textPieP = 'Profesores: Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;    
     }
     else{
-        textPieP = 'Estado de los proyectos';
+        textPieP = 'Profesores: Estado de los proyectos';
     }
     Highcharts.chart('pieP', {
         chart: {
@@ -433,7 +443,7 @@ $("#btnGraficos").click(function () {
             text: textPieP
         },
         subtitle: {
-            text: 'Click en los slices para ver el estado de los proyectos.'
+            text: 'Click en los slices para ver el estado de los proyectos por especialidad.'
         },
         plotOptions: {
             series: {
@@ -564,7 +574,7 @@ $("#btnGraficos").click(function () {
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'top',
-            x: -20,
+            x: -50,
             y: 100,
             floating: false,
             borderWidth: 1,

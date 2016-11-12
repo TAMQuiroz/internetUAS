@@ -21,7 +21,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="page-title">
-		        <div class="title_left">
+		        <div class="">
 		            <h3>Edición de Tema</h3>
 		        </div>
 		    </div>
@@ -37,8 +37,8 @@
 			  	<div class="panel-body">
 			    	{{Form::open(['route' => ['tema.update', $topic->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 			    		<div class="form-group">
-			    			{{Form::label('Nombre: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
-			    			<div class="col-md-4 col-sm-4 col-xs-6">
+			    			{{Form::label('Nombre: *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+			    			<div class="col-md-4 col-sm-4 col-xs-12">
 			    				{{Form::text('nombre',$topic->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
 			    			</div>
 			    		</div>		    		

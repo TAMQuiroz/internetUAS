@@ -24,29 +24,62 @@ use Illuminate\Support\Facades\Session;//<---------------------------------neces
 
 class EvaluationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function students_index(Request $request){
+        $mayorId    = Session::get('faculty-code');
+
+        $filters    = [
+            "code"              => $request->input('code'),
+            "name"              => $request->input('name'),
+            "lastName"          => $request->input('lastName'),
+            "secondLastName"    => $request->input('secondLastName'),
+        ];
+        
+        $students   = Tutstudent::getFilteredStudents($filters, null, $mayorId);
+
+        $data       = [
+            'students'  =>  $students,            
+        ];
+
+        return view('evaluations.students.index', $data);
+    }
+
+    public function student_show ($id){
+        $specialty = Session::get('faculty-code');
+        $student = Tutstudent::find($id);
+        // dd($student);
+        $data       = [
+            'student'  =>  $student,            
+        ];
+
+        return view('evaluations.students.show', $data);
+    }
     public function index(Request $request)
     {
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
-        $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
+        // $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
+        $evals = Evaluation::getEvaluationsFiltered($filters, $specialty);
         //cambiar de estado a las expiradas
         $date = date("Y-m-d", time());  
-        
-        foreach ($evaluations as $evaluation) {            
+        $arr_avance1 = array();
+        $arr_avance2 = array();
+        foreach ($evals as $evaluation) { 
+
             if(($evaluation->fecha_fin <  $date) && ($evaluation->estado!=3) ){                
                 $evaluation->estado=3;
                 $evaluation->save();
             }
+
+            //ver el avance de cada una
+            array_push($arr_avance1,count(Tutstudentxevaluation::where('inicio','<>',null)->where('id_evaluation',$evaluation->id)->get()) );
+            array_push($arr_avance2,count(Tutstudentxevaluation::where('id_evaluation',$evaluation->id)->get()) );
         }
 
-        $evals = Evaluation::getEvaluationsFiltered($filters, $specialty);
+        
         $data = [
         'evaluations'    =>  $evals->appends($filters),
+        'arr_avance1'    =>  $arr_avance1,
+        'arr_avance2'    =>  $arr_avance2,
         ];
         return view('evaluations.evaluation.index', $data);
     }
@@ -109,13 +142,20 @@ public function indexevalcoord(Request $request,$id)
     $evaluation = Evaluation::find($id);
     $tutstudentxevaluations = Tutstudentxevaluation::where('inicio','<>',null)->where('id_evaluation',$id)->get();
     $evs = Evquestionxstudentxdocente::where('id_evaluation',$id)->get();
+    
     $completo = true;
-    foreach ($evs as $ev) {
-        if(is_null($ev->puntaje) ){
-            $completo = false;
-            break;
+    if(count ($evs) > 0){
+        foreach ($evs as $ev) {
+            if(is_null($ev->puntaje) ){
+                $completo = false;
+                break;
+            }
         }
     }
+    else{
+        $completo=false;
+    }
+    
 
     $data = [
     'evaluation'               =>  $evaluation, 

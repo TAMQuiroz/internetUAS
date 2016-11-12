@@ -1242,7 +1242,7 @@ Route::group(['prefix' => 'uas'], function(){
         });
         
 
-        //Evaluaciones de adminstrador
+        //Evaluaciones de administrador
         Route::group(['middleware' => 'auth'], function(){
             //Competencias
             Route::group(['prefix' => 'competencias'], function(){    
@@ -1259,13 +1259,12 @@ Route::group(['prefix' => 'uas'], function(){
             Route::group(['prefix' => 'evaluadores'], function(){    
                 Route::get('/', ['as' => 'evaluador.index', 'uses' => 'Evaluations\Evaluator\EvaluatorController@index']);
                 Route::get('create', ['as' => 'evaluador.create', 'uses' => 'Evaluations\Evaluator\EvaluatorController@create']);
-                Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);
-                // Route::get('show/{id}', ['as' => 'evaluador.show', 'uses' => 'Evaluations\Evaluator\EvaluatorController@show']);
+                Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);                
                 Route::get('edit/{id}', ['as' => 'evaluador.edit', 'uses' => 'Evaluations\Evaluator\EvaluatorController@edit']);
                 Route::post('edit/{id}', ['as' => 'evaluador.update', 'uses' => 'Evaluations\Evaluator\EvaluatorController@update']);
                 Route::get('delete/{id}', ['as' => 'evaluador.delete', 'uses' => 'Evaluations\Evaluator\EvaluatorController@destroy']);
             });
-
+            //Evaluaciones
             Route::group(['prefix' => 'evaluaciones'], function(){    
                 Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);                
                 Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
@@ -1280,7 +1279,13 @@ Route::group(['prefix' => 'uas'], function(){
                 Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
                 Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
                 Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
-            });    
+            });   
+
+            //Alumnos
+            Route::group(['prefix' => 'alumnos'], function(){
+                Route::get('/', ['as' => 'evstudent.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@students_index']); 
+                Route::get('show/{id}', ['as' => 'evstudent.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@student_show']);                
+            }); 
         });
         
 

@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\API\Tutoria;
 
 use DB;
 use DateTime;
+Use Mail;
 use Illuminate\Http\Request;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
@@ -37,8 +38,10 @@ class TutStudentController extends BaseController
     {
 
 
+
          $studentInfo = Tutstudent::where('id_usuario', $id)->get();
          $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+
          $i = 0;
 
          
@@ -59,8 +62,7 @@ class TutStudentController extends BaseController
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());
-         
-         
+
     }
 
 
@@ -69,7 +71,6 @@ class TutStudentController extends BaseController
        
 
         $studentInfo = Tutstudent::where('id_usuario', $request->only('idUser'))->get(); // permite registrar el id del studiante  
-
         //------------BEGIN DATETIME------------------
         $dateStringAux = $request->only('fecha');
         $dateString = $dateStringAux['fecha']; //fecha reserva 
@@ -84,15 +85,16 @@ class TutStudentController extends BaseController
         //------------BEGIN MOTIVO--------------------
         $motivoAux = $request->only('motivo');
         $motivoString = $motivoAux['motivo'];
-        $motivoInfo =  Topic::where('nombre', $motivoString)->get();
+        $motivoInfo =  Topic::where('nombre',   $motivoString)->get();
 
         //--------------END MOTIVO--------------------
 
         //------INICIO OBTENIENDO ID DEL TUTOR--------
          $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
-         $idDocente = $tutorshipInfo[0]['id_profesor']; 
-        // $idDocente = 4;                                    // Por el momento
+         $idDocente = $tutorshipInfo[0]['id_profesor'];  
         //------FIN OBTENIENDO ID DEL TUTOR-----------
+
+         $teacherInfo = Teacher::where('IdDocente',$idDocente)->get();
 
 
         //-------------BEGIN DATABASE INSERT ---------------
@@ -112,7 +114,186 @@ class TutStudentController extends BaseController
         );
         //-------------END DATABASE INSERT ---------------
 
+   
+
+        $fecha =  $dateString;
+        $hora = $horaAux2;
+        $mail = $studentInfo[0]['correo'];
+
+        try
+        {
+            Mail::send('emails.notifyTutorAppointment', compact('fecha','hora'), function($m) use($mail) {
+                $m->subject('Su alumno   desea tener una reunión contigo - UASTUTORIA');
+                $m->to($mail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
+
         return "exito";    
+
+
+
+        
+    }
+
+
+    public function filterStudentAppointment(Request $request)
+    {        
+       
+        $fechaInicioAux =  $request->only('fechaI');
+        $fechaFinAux =  $request->only('fechaF');
+        $motivoAux = $request->only('motivo');
+        $idAux = $request->only('idUser');
+        $id = $idAux['idUser'];
+        $fechaInicioChangeFormat =  $fechaInicioAux['fechaI'];
+        $fechaFinChangeFormat =  $fechaFinAux['fechaF'];
+        $motivo =  $motivoAux['motivo'];
+
+        $fechaInicio = $fechaInicioAux['fechaI'];
+        $fechaFin = $fechaFinAux['fechaF'];
+        $rest = substr($fechaInicio, -3, 1); // returns "d"
+
+
+        $fechaInicio1 = date("Y/m/d ", strtotime(str_replace("/","-",$fechaInicioChangeFormat)));
+        $fechaFin1 = date("Y/m/d", strtotime(str_replace("/","-",$fechaFinChangeFormat)));
+
+
+        if (empty($fechaInicio) && empty($fechaFin) && empty($motivo)){
+
+
+            $studentInfo = Tutstudent::where('id_usuario', $id)->get();
+            $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+            $i = 0;
+
+            foreach ($appointmentInfo as $appointInfo) {
+                $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
+                //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
+                $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
+                if (1 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
+                }
+                else if  (2 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
+                }
+                else if  (3 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+                }
+                $i++;
+            }
+            return $this->response->array($appointmentInfo->toArray());
+
+        }
+
+        else if (empty($fechaInicio) && empty($fechaFin) && !empty($motivo)) {
+
+
+            $studentInfo = Tutstudent::where('id_usuario', $id)->get();
+            //$motivoInformation =  Topic::where('nombre', $motivo)->get();
+            if ("Pendiente" == $motivo){
+                $idMotivo  = 1;
+            }
+            else if  ("Confirmada" == $motivo){
+                $idMotivo  = 2;
+            }
+            else if  ("Cancelada" == $motivo){
+                $idMotivo  = 3;
+            }
+            $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->where('estado',$idMotivo)->get();
+            $i = 0;
+
+            foreach ($appointmentInfo as $appointInfo) {
+                $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
+                $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
+                if (1 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
+                }
+                else if  (2 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
+                }
+                else if  (3 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+                }
+                $i++;
+            }
+            return $this->response->array($appointmentInfo->toArray());
+
+        }
+
+
+        else if (!empty($fechaInicio) && !empty($fechaFin) && empty($motivo)) {
+
+            $fechaInicioUsar = $fechaInicio1." "."00:00:00";
+            $fechaFinUsar = $fechaFin1." "."23:59:00";
+
+            $studentInfo = Tutstudent::where('id_usuario', $id)->get();
+            $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->where('inicio','>=',$fechaInicioUsar)->where('inicio','<=',$fechaFinUsar)->get();
+           // $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+            $i = 0;
+
+            foreach ($appointmentInfo as $appointInfo) {
+                $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
+                //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
+                $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
+                if (1 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
+                }
+                else if  (2 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
+                }
+                else if  (3 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+                }
+                $i++;
+            }
+            return $this->response->array($appointmentInfo->toArray());
+        }
+
+
+        else if (!empty($fechaInicio) && !empty($fechaFin) && !empty($motivo)) {
+
+            $fechaInicioUsar = $fechaInicio1." "."00:00:00";
+            $fechaFinUsar = $fechaFin1." "."23:59:00";
+
+
+            $studentInfo = Tutstudent::where('id_usuario', $id)->get();
+
+
+            if ("Pendiente" == $motivo){
+                $idMotivo  = 1;
+            }
+            else if  ("Confirmada" == $motivo){
+                $idMotivo  = 2;
+            }
+            else if  ("Cancelada" == $motivo){
+                $idMotivo  = 3;
+            }
+
+            $appointmentInfo = TutMeeting::where('estado',$idMotivo)->where('id_tutstudent',$studentInfo[0]['id'])->where('inicio','>=',$fechaInicioUsar)->where('inicio','<=',$fechaFinUsar)->get();
+           // $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+            $i = 0;
+
+            foreach ($appointmentInfo as $appointInfo) {
+                $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
+                //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
+                $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
+                if (1 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
+                }
+                else if  (2 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
+                }
+                else if  (3 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+                }
+                $i++;
+            }
+            return $this->response->array($appointmentInfo->toArray());
+
+        }
+
     }
 
     public function getTutorById($id_usuario)

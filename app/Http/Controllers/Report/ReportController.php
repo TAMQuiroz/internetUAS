@@ -85,9 +85,12 @@ class ReportController extends Controller
         $minP = -1;
         $maxP = -1;
         $idAreaP = 0;
-        $comboMinP = $this->minProyectos();
+        //$comboMinP = $this->minProyectos();
+        $comboMinP = $this->maxProyectos();
         $comboMaxP = $this->maxProyectos();
         $opcion = "No";
+        $fechaI = null;
+        $fechaF = null;
     	$data = ['comboEspecialidades' => $comboEspecialidades,
                  'proyectos' => $proyectos,
                  'investigadores' => $investigadores,
@@ -101,7 +104,9 @@ class ReportController extends Controller
                  'maxP' => $maxP,
                  'opcion' => $opcion,
                  'idAreaP' => $idAreaP,
-                 'comboAreasP' => $comboAreasP];
+                 'comboAreasP' => $comboAreasP,
+                 'fechaIni' => $fechaI,
+                 'fechaFin' => $fechaF];
 
     	return view('reports.invByProject.index', $data);
     }
@@ -112,7 +117,8 @@ class ReportController extends Controller
         $especialidades = Faculty::orderBy('Nombre', 'asc')->lists('Nombre', 'IdEspecialidad')->toArray();
         $comboEspecialidades = array(0 => "Seleccione ... ") + $especialidades;
         $proyectos = Project::get();
-        $comboMinP = $this->minProyectos();
+        //$comboMinP = $this->minProyectos();
+        $comboMinP = $this->maxProyectos();
         $comboMaxP = $this->maxProyectos();
         $idEstado = $request['estadoP'];
         $estadosProyecto = Status::where('tipo_estado',0)->orderBy('Nombre', 'asc')->lists('nombre', 'id')->toArray();
@@ -123,42 +129,67 @@ class ReportController extends Controller
         $idAreaP = $request['areaP'];
         $areas = Area::orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
         $comboAreasP = array(0 => "Seleccione ... ") + $areas;
+        $fechaI = $request['fechaI'];
+        $fechaF = $request['fechaF'];
 
         if ($opcion == "Si"){
             $investigadores = Investigator::orderBy('nombre', 'asc')->get();
             $profesores = Teacher::orderBy('nombre', 'asc')->get();
+            $idEsp = 0;
+            $idEstado = 0;
+            $minP = -1;
+            $maxP = -1;
+            $idAreaP = 0;
+            //$comboMinP = $this->minProyectos();
+            $opcion = "Si";
+            $fechaI = null;
+            $fechaF = null;
         }
-        else{
-            if($idEsp == 0){
-            $investigadores = Investigator::orderBy('nombre', 'asc')->get();
-            $profesores = Teacher::orderBy('nombre', 'asc')->get();
-            }
             else{
-                if($minP == -1 || $maxP == -1){
-                    $investigadores = Investigator::where('id_especialidad', $idEsp)->orderBy('nombre', 'asc')->get();
-                    $profesores = Teacher::where('IdEspecialidad', $idEsp)->orderBy('nombre', 'asc')->get();
+                if($minP == -1 && $maxP == -1){
+                    if($idEsp == 0){
+                        $investigadores = Investigator::orderBy('nombre', 'asc')->get();
+                        $profesores = Teacher::orderBy('nombre', 'asc')->get();
+                    }else{
+                        $investigadores = Investigator::where('id_especialidad', $idEsp)->orderBy('nombre', 'asc')->get();
+                        $profesores = Teacher::where('IdEspecialidad', $idEsp)->orderBy('nombre', 'asc')->get();    
+                    }
+                    
                 }
                 elseif($minP != -1 && $maxP != -1){
-                    $investigadorList = Investigator::get();
-                    $profesorList = Teacher::get();
-                    $investigadores = new Collection;
-                    $profesores = new Collection;
-                    foreach($investigadorList as $investigador){
-                        $numP = count($investigador->projects);
-                        if($numP >= $minP && $numP <= $maxP){
-                            $investigadores->add($investigador);
+                    if($minP<=$maxP){
+                        if($idEsp == 0){
+                            $investigadorList = Investigator::get();
+                            $profesorList = Teacher::get();
+                        }else{
+                            $investigadorList = Investigator::where('id_especialidad', $idEsp)->oget();
+                            $profesorList = Teacher::where('id_especialidad', $idEsp)->oget();
                         }
-                    }
-                    foreach($profesorList as $profesor){
-                        $numP = count($profesor->projects);
-                        if($numP >= $minP && $numP <= $maxP){
-                            $profesores->add($profesor);
+                        $investigadores = new Collection;
+                        $profesores = new Collection;
+                        foreach($investigadorList as $investigador){
+                            $numP = count($investigador->projects);
+                            if($numP >= $minP && $numP <= $maxP){
+                                $investigadores->add($investigador);
+                            }
                         }
+                        foreach($profesorList as $profesor){
+                            $numP = count($profesor->projects);
+                            if($numP >= $minP && $numP <= $maxP){
+                                $profesores->add($profesor);
+                            }
+                        }    
                     }
+                    else{
+                        return redirect()->back()->with('warning', 'Debe seleccionar un rango adecuado');    
+                    }
+                    
+                }
+                elseif (($minP==-1 && $maxP!=-1) || ($minP!=-1 && $maxP==-1)) {
+                    return redirect()->back()->with('warning', 'Debe seleccionar un rango completo de numero de proyectos');
                 }
                 
             }
-        }
 
         $data = ['comboEspecialidades' => $comboEspecialidades,
                  'proyectos' => $proyectos,
@@ -173,7 +204,9 @@ class ReportController extends Controller
                  'maxP' => $maxP,
                  'opcion' => $opcion,
                  'idAreaP' => $idAreaP,
-                 'comboAreasP' => $comboAreasP];
+                 'comboAreasP' => $comboAreasP,
+                 'fechaIni' => $fechaI,
+                 'fechaFin' => $fechaF];
 
         return view('reports.invByProject.index', $data);
     }

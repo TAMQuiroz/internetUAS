@@ -22,8 +22,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    @if(Session::get('academic-cycle')!=null)
-                        @if(count($courses) !=0 )
+                    @if(Session::get('academic-cycle')!=null)                        
                             <table class="table table-striped responsive-utilities jambo_table bulk_action" name="table-objs">
                                 <thead>
                                 <tr class="headings">
@@ -36,27 +35,30 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                @if(!empty($courses))
+                                    @if(count($courses) !=0 )
+                                    <tbody>
 
-                                @foreach($courses as $dic)
-                                    <tr class="even pointer">
-                                        <td class=" ">{{$dic->course->Codigo}}</td>
-                                        <td class=" ">{{$dic->course->Nombre}}</td>
-                                        @if($dic->course->NivelAcademico == -1)
-                                            <td class=" ">Electivo</td>
-                                        @else
-                                            <td class=" ">{{$dic->course->NivelAcademico}}</td>
-                                        @endif
-                                        <td class=" ">
-                                            @if(in_array(35,Session::get('actions')))
-                                                <a href="{{ route('cursosCicloHorario_index.flujoCoordinador',  ['id' => $idEspecialidad,'idCourse' => $dic->course->IdCurso]) }}" class="btn btn-primary btn-xs" title="Asignar Horarios"><i class="fa fa-cogs"></i></a>
+                                    @foreach($courses as $dic)
+                                        <tr class="even pointer">
+                                            <td class=" ">{{$dic->course->Codigo}}</td>
+                                            <td class=" ">{{$dic->course->Nombre}}</td>
+                                            @if($dic->course->NivelAcademico == -1)
+                                                <td class=" ">Electivo</td>
+                                            @else
+                                                <td class=" ">{{$dic->course->NivelAcademico}}</td>
                                             @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        @else
+                                            <td class=" ">
+                                                @if(in_array(35,Session::get('actions')))
+                                                    <a href="{{ route('cursosCicloHorario_index.flujoCoordinador',  ['id' => $idEspecialidad,'idCourse' => $dic->course->IdCurso]) }}" class="btn btn-primary btn-xs" title="Asignar Horarios"><i class="fa fa-cogs"></i></a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    @endif
+                                @endif
+                            </table>                        
                             <!--
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -65,8 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            -->
-                        @endif
+                            -->                        
                         <div class="separator"></div>
 
                     @else

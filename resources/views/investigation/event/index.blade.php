@@ -20,17 +20,9 @@
 
 		  		<div class="row">
 			  		<div class="col-md-6">
-			            <form action="#" method="get">
-			                <div class="input-group">
-			                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
-			                    <input class="form-control" id="event-search" name="q" placeholder="Buscar" required>
-			                    <span class="input-group-btn">
-			                        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-			                    </span>
-			                </div>
-			            </form>
+			  			<a href="#filter" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
 			        </div>
-			        @if(Auth::user() && (Auth::user()->IdPerfil != 5 || Auth::user()->IdPerfil == Config::get('constants.admin')))
+			        @if(Auth::user() && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.admin')))
 			        <div class="col-md-6">
 						<a href="{{route('evento.create')}}">
 							{{Form::button('<i class="fa fa-plus"></i> Crear Evento',['class'=>'btn btn-success pull-right'])}}
@@ -76,12 +68,12 @@
 							
 						</tbody> 
 					</table>
+					{{$events->links()}}
 				</div>
 		  	</div>
 		</div>
     </div>
 </div>
 
-<script src="{{ URL::asset('js/intranetjs/investigation/event/index-event.js')}}"></script>
-
+@include('investigation.modals.filter_event', ['title' => 'Filtrar', 'route' => 'evento.index'])
 @endsection

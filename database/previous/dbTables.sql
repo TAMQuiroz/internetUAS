@@ -246,6 +246,15 @@ CREATE TABLE `Aspecto` (
 LOCK TABLES `Aspecto` WRITE;
 /*!40000 ALTER TABLE `Aspecto` DISABLE KEYS */;
 INSERT INTO `Aspecto` VALUES (1,1,'Matemáticas',NULL,'2016-06-18 20:03:28','2016-06-24 20:25:49',1),(2,1,'Ing. Informática',NULL,'2016-06-18 20:03:42','2016-06-24 20:25:49',1),(3,2,'Diseña',NULL,'2016-06-18 20:04:04','2016-06-24 20:25:49',1),(4,2,'Conduce e interpreta resultados',NULL,'2016-06-18 20:04:18','2016-06-24 20:25:49',1),(5,3,'Procesos',NULL,'2016-06-18 20:04:37','2016-06-24 20:25:49',1),(6,3,'Sistemas Informáticos',NULL,'2016-06-18 20:04:51','2016-06-24 20:25:49',1),(7,3,'Componentes',NULL,'2016-06-18 20:05:04','2016-06-24 20:25:49',1),(8,4,'Trabajo en equipo',NULL,'2016-06-18 20:05:40','2016-06-24 20:25:49',1),(9,5,'Problemas de ingeniería',NULL,'2016-06-18 20:05:56','2016-06-24 20:25:49',1),(10,6,'Responsabilidad profesional y Ética',NULL,'2016-06-18 20:06:19','2016-06-24 20:25:49',1),(11,7,'Comunicación en español',NULL,'2016-06-18 20:06:33','2016-06-24 20:25:50',1),(12,8,'Sociedad',NULL,'2016-06-18 20:06:49','2016-06-24 20:25:50',1),(13,9,'Aprendizaje',NULL,'2016-06-18 20:07:00','2016-06-24 20:25:50',1),(14,10,'Temas de Actualidad',NULL,'2016-06-18 20:07:14','2016-06-24 20:25:50',1),(15,11,'Técnicas, estrategias y herramientas',NULL,'2016-06-18 20:07:27','2016-06-24 20:25:50',1),(16,12,'Economía',NULL,'2016-06-18 20:07:38','2016-06-24 20:25:50',1),(17,12,'Gestión de Proyectos',NULL,'2016-06-18 20:07:49','2016-06-24 20:25:50',1);
+
+-- inserts aspectos de psp
+
+INSERT INTO `aspecto` (`IdAspecto`, `IdResultadoEstudiantil`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) 
+VALUES (NULL, '4', 'Expresión oral', NULL, NULL, NULL, NULL), 
+(NULL, '16', 'Plan de Capacitación', NULL, NULL, NULL, NULL),
+(NULL, '16', 'Asistencia y puntualidad', NULL, NULL, NULL, NULL),
+(NULL, '1', 'Apreciación del supervisor', NULL, NULL, NULL, NULL);
+
 /*!40000 ALTER TABLE `Aspecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -531,6 +540,15 @@ CREATE TABLE `Criterio` (
 LOCK TABLES `Criterio` WRITE;
 /*!40000 ALTER TABLE `Criterio` DISABLE KEYS */;
 INSERT INTO `Criterio` VALUES (1,1,'Aplica conceptos lógicos para la resolucion de problemas',NULL,'2016-06-18 20:29:37','2016-06-24 20:25:49',1),(4,2,'Diseña algoritmos para la resolución de un problema identificado',NULL,'2016-06-18 20:33:21','2016-06-24 20:25:49',1),(5,2,'Utiliza lenguajes de programación para implementar algoritmos sean diseñados por él o por cualquier otra persona',NULL,'2016-06-18 20:33:32','2016-06-24 20:25:49',1),(6,3,'Realiza el diseño de un experimento',NULL,'2016-06-18 20:36:44','2016-06-24 20:25:49',1),(7,4,'Ejecuta el experimento e interpreta sus resultados',NULL,'2016-06-18 20:37:01','2016-06-24 20:25:49',1),(8,5,'Identifica el contexto o el entorno empresarial donde se lleva a cabo un proceso de negocio',NULL,'2016-06-18 20:37:34','2016-06-24 20:25:49',1),(9,5,'Diseño de Soluciones',NULL,'2016-06-18 20:37:48','2016-06-24 20:25:49',1),(10,6,'Diseña una solución informática a partir de los requerimientos de negocio  identificados',NULL,'2016-06-18 20:38:08','2016-06-24 20:25:49',1),(11,7,'Diseña componentes que interaccionen con otras soluciones informáticas',NULL,'2016-06-18 20:38:29','2016-06-24 20:25:49',1),(12,8,' Participa en el equipo de trabajo aportando en el logro del objetivo',NULL,'2016-06-18 20:38:49','2016-06-24 20:25:49',1),(13,8,'Gestiona los problemas presentados durante el trabajo del equipo con la finalidad de resolverlos',NULL,'2016-06-18 20:39:04','2016-06-24 20:25:49',1),(14,8,'Da y recibe críticas constructivas utilizando un lenguaje adecuado',NULL,'2016-06-18 20:39:14','2016-06-24 20:25:49',1),(15,8,'Realiza su trabajo en el equipo de una forma efectiva y eficiente',NULL,'2016-06-18 20:39:24','2016-06-24 20:25:49',1),(16,9,'Plantea e implementa la solución del problema',NULL,'2016-06-18 20:39:48','2016-06-24 20:25:49',1),(17,10,'Reconoce la responsabilidad ética con la sociedad en relación a la seguridad en el trabajo (1).',NULL,'2016-06-18 20:40:10','2016-06-24 20:25:49',1),(18,10,'Reconoce la responsabilidad ética con la sociedad en relación con la satisfacción del cliente (2).',NULL,'2016-06-18 20:40:32','2016-06-24 20:25:49',1),(19,10,'Reconoce la responsabilidad ética con la sociedad en relación al respeto a sus compañeros de trabajo.',NULL,'2016-06-18 20:40:48','2016-06-24 20:25:50',1),(20,10,'Reconoce a través de su comportamiento la responsabilidad ética en su profesión',NULL,'2016-06-18 20:40:58','2016-06-24 20:25:50',1),(21,11,'Redacta textos utilizando estructuras sintácticas adecuadas',NULL,'2016-06-18 20:41:20','2016-06-24 20:25:50',1),(22,11,'Expone adecuadamente utilizando un vocabulario adecuado',NULL,'2016-06-18 20:41:30','2016-06-24 20:25:50',1),(23,11,'Comprende la idea principal plasmada en un texto',NULL,'2016-06-18 20:41:42','2016-06-24 20:25:50',1),(24,12,'Comprende el impacto de la tecnología en la solución de problemas',NULL,'2016-06-18 20:42:09','2016-06-24 20:25:50',1),(25,13,'Define un plan de capacitación una vez terminado sus estudios universitarios',NULL,'2016-06-18 20:42:36','2016-06-24 20:25:50',1),(26,14,'Conoce temas sociales y culturales de actualidad ',NULL,'2016-06-18 20:42:52','2016-06-24 20:25:50',1),(27,15,'Aplica las Técnicas, Herramientas y Estrategias.',NULL,'2016-06-18 20:43:09','2016-06-24 20:25:50',1),(28,16,'Realiza la evaluación económica de un proyecto',NULL,'2016-06-18 20:43:27','2016-06-24 20:25:50',1),(29,17,'Realiza la planificación y seguimiento de un proyecto',NULL,'2016-06-18 20:43:43','2016-06-24 20:25:50',1);
+
+-- inserts criterios de psp
+
+INSERT INTO `criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES (NULL, NULL, 'Participación', NULL, NULL, NULL, NULL), (NULL, NULL, 'Manejo de Conflictos', NULL, NULL, NULL, NULL);
+INSERT INTO `criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES (NULL, NULL, 'Feedback', NULL, NULL, NULL, NULL), (NULL, NULL, 'Productividad', NULL, NULL, NULL, NULL);
+INSERT INTO `criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES (NULL, NULL, 'Tecnología', NULL, NULL, NULL, NULL), (NULL, NULL, 'Define', NULL, NULL, NULL, NULL);
+INSERT INTO `criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES (NULL, NULL, 'Conoce', NULL, NULL, NULL, NULL);
+
+
 /*!40000 ALTER TABLE `Criterio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -597,7 +615,27 @@ CREATE TABLE `CursoxCiclo` (
 
 LOCK TABLES `CursoxCiclo` WRITE;
 /*!40000 ALTER TABLE `CursoxCiclo` DISABLE KEYS */;
-INSERT INTO `CursoxCiclo` VALUES (1,28,1,NULL,'1',NULL,'2016-06-19 06:01:11','2016-06-26 10:45:05'),(2,29,1,NULL,'1',NULL,'2016-06-19 06:01:11','2016-06-26 10:45:05'),(3,30,1,NULL,'1',NULL,'2016-06-19 06:01:12','2016-06-26 10:45:06'),(4,31,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(5,32,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(6,33,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(7,34,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(8,35,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(9,36,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(10,37,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(11,38,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(12,39,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(13,40,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(14,41,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(15,42,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(16,43,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(17,44,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(18,45,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(19,46,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),(20,47,1,NULL,'1',NULL,'2016-06-19 06:01:12','2016-06-26 10:45:06'),(21,48,1,NULL,NULL,NULL,'2016-06-19 06:01:13','2016-06-24 18:58:27');
+INSERT INTO `CursoxCiclo` VALUES (1,28,1,NULL,'1',NULL,'2016-06-19 06:01:11','2016-06-26 10:45:05'),
+(2,29,1,NULL,'1',NULL,'2016-06-19 06:01:11','2016-06-26 10:45:05'),
+(3,30,1,NULL,'1',NULL,'2016-06-19 06:01:12','2016-06-26 10:45:06'),
+(4,31,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(5,32,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(6,33,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(7,34,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(8,35,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(9,36,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(10,37,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(11,38,1,NULL,'1',NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(12,39,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(13,40,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(14,41,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(15,42,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(16,43,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(17,44,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(18,45,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(19,46,1,NULL,NULL,NULL,'2016-06-19 06:01:12','2016-06-24 18:58:27'),
+(20,47,1,NULL,'1',NULL,'2016-06-19 06:01:12','2016-06-26 10:45:06'),
+(21,48,1,NULL,NULL,NULL,'2016-06-19 06:01:13','2016-06-24 18:58:27');
 /*!40000 ALTER TABLE `CursoxCiclo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1761,6 +1799,28 @@ LOCK TABLES `Usuario` WRITE;
 INSERT INTO `Usuario` VALUES (1,3,'admin','$2y$10$Lr3YPtN8NaNBVNHtrK0MBO5Yf6ZiyMJicGTYDASKXrSrnnBWgFz/.',NULL,'2016-05-28 02:56:00','2016-06-07 10:30:17'),(2,1,'19960275','$2y$10$QRu0wVz9R97NcMbXjO4gHejd7BgmfZkSuAphqHUs.uOq/XRfBsoX2',NULL,'2016-06-18 17:24:00','2016-06-18 17:29:10'),(3,1,'19911254','$2y$10$2yl/Y4ssBmtaE.pAiZwvTeyzoWBKTS73qtFYeCYubxYQXf5E3.vy.',NULL,'2016-06-18 17:52:40','2016-06-18 17:57:10'),(4,1,'19941253','$2y$10$SHiLJjdmjB8cdOCtuMfIv.OtPTdQ6Mn1UhHt8rj/HM3j68vZnXEX6',NULL,'2016-06-18 17:55:02','2016-06-18 17:57:18'),(5,2,'00009299','$2y$10$OofZ78Tl.2q5L8GExfLfZuDBizQFNPytxaw/IOvni1hroWC/JGr2C',NULL,'2016-06-19 06:07:14','2016-06-19 06:07:39'),(6,5,'jsmith','$2y$10$AEsbDkYpZqxBlrtOXZgNK.JBbqCWLZ4p82Jcz3CJjDXFoIw9p5oI6',NULL,'2016-06-19 15:36:04','2016-06-19 15:36:46'),(7,4,'psanchez','$2y$10$DR/epPHs997jbrGW1uNe2OxL7t7GWFfx9mREMWntbfJbAYU7c1EiG',NULL,'2016-06-19 15:47:10','2016-06-19 15:52:11'),(8,4,'randerson','$2y$10$ccrjw9054mLzkpG3evrkdOiNMe/aThjWDB2VxUMkmmUCDY1sGDCRO',NULL,'2016-06-19 16:22:40','2016-06-19 16:23:08'),(12,4,'jocapereyra','$2y$10$LUOkWo11fCu7SC9q8q/4BOzx8a3s2VAip7Asv.XVkDe15xVNr3p4O',NULL,'2016-06-20 21:37:04','2016-06-20 21:37:28'),(13,4,'acredijoca','$2y$10$DnwKIpFtq1QbAwSA/bjomO7FLAyMsugQ23eQaN2XABG2ccEutgk3e',NULL,'2016-06-23 18:54:30','2016-06-23 19:03:28');
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- Agregados para poder visualizar el flujo de psp (sprint 2)
+LOCK TABLES `cursoxdocente`  WRITE;
+/*!40000 ALTER TABLE `cursoxdocente`  DISABLE KEYS */;
+INSERT INTO `cursoxdocente` (`IdCursoxDocente`, `IdDocente`, `IdCurso`, `deleted_at`, `created_at`, `updated_at`) VALUES (NULL, '4', '38', NULL, NULL, NULL);
+/*!40000 ALTER TABLE `cursoxdocente`  ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `horario`  WRITE;
+/*!40000 ALTER TABLE `horario`  DISABLE KEYS */;
+INSERT INTO `horario` (`IdHorario`, `IdCursoxCiclo`, `Codigo`, `TotalAlumnos`, `deleted_at`, `created_at`, `updated_at`, `idPspProcess`) VALUES (NULL, '11', 'H1081', NULL, NULL, NULL, NULL, NULL);
+/*!40000 ALTER TABLE `horario`  ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `horarioxdocente`  WRITE;
+/*!40000 ALTER TABLE `horarioxdocente`  DISABLE KEYS */;
+INSERT INTO `horarioxdocente` (`IdHorarioxDocente`, `IdDocente`, `IdHorario`, `deleted_at`, `created_at`, `updated_at`) VALUES (NULL, '4', '6', NULL, NULL, NULL);
+/*!40000 ALTER TABLE `horarioxdocente`  ENABLE KEYS */;
+UNLOCK TABLES;
+-- Fin de Agregados para poder visualizar el flujo de psp (sprint 2)
+
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

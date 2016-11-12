@@ -181,7 +181,7 @@ class TutMeetingController extends Controller
                 $newMeeting     = TutMeeting::create([
                     "inicio"        => $completedDate,
                     "duracion"      => $parameters->duracionCita,
-                    "estado"        => 4,
+                    "estado"        => 1,
                     "id_topic"      => $topic,
                     "id_docente"    => $user->IdDocente,
                     "id_tutstudent" => $idStudent

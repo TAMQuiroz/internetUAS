@@ -4,13 +4,20 @@ use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\meeting;
 use Intranet\Models\Student;
+use Intranet\Models\Status;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
+use Intranet\Http\Requests\MeetingEditRequest;
 use Intranet\Models\freeHour;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
 use Intranet\Models\User;
+use Intranet\Models\Tutstudent;
 use Auth;
+use Carbon\Carbon;
+use Mail;
+use DateTime;
+
 
 class MeetingController extends Controller
 {
@@ -44,17 +51,18 @@ class MeetingController extends Controller
         return view('psp.meeting.create',$data);
     }
 
-    //Vista supervisor
-    public function store(MeetingRequest $request)
+    //Vista alumno
+    public function store(Request $request)
     {
         
         try {
+
             $meeting = new meeting;
             $freeHour = FreeHour::find($request['disponibilidad']);
             $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
             $pspstudent =PspStudent::where('IdAlumno',$student->IdAlumno)->first(); 
 
-            $meeting->idtipoestado = 1;
+            $meeting->idtipoestado = 12;
             $meeting->fecha=$freeHour->fecha;
             $meeting->idsupervisor=$freeHour->idsupervisor;
             $meeting->idstudent=$student->IdAlumno;
@@ -62,13 +70,20 @@ class MeetingController extends Controller
             $timestamp = mktime($freeHour->hora_ini,0,0, 0,0,0);
             $time = date('H:i:s', $timestamp);
             $meeting->hora_inicio=$time;
+
+            $timestamp = mktime($freeHour->hora_ini+1,0,0, 0,0,0);
+            $time = date('H:i:s', $timestamp);
+            $meeting->hora_fin=$time;
+
             $meeting->asistencia='o';
             $meeting->idfreeHour=$freeHour->id;
             $meeting->tiporeunion=1;
+            $meeting->lugar = $freeHour->Supervisor->direccion;
 
             $meeting->save();
 
             $pspstudent->idsupervisor=$freeHour->idsupervisor;
+            //dd($pspstudent);
             $pspstudent->save();            
 
             return redirect()->route('meeting.index')->with('success','La cita se ha registrado exitosamente');
@@ -105,14 +120,38 @@ class MeetingController extends Controller
     public function edit($id)
     {
         //
-        $meeting = meeting::with('supervisor','student')->find($id)->get()->first();
-        $data['meeting'] = $meeting;
+        $meeting = meeting::where('id',$id)->with('supervisor','student','status')->get()->first();
         //dd($meeting);
+        $statuses = Status::where('tipo_estado',3)->get();        
+        $data = [
+            'meeting' => $meeting,
+        ];
+        $data['statuses'] = $statuses;
+        //dd($data);
         return view('psp.meeting.edit',$data);
     }
 
+    public function mail($id)
+    {        
+        try {
+            $stud = Student::find($id);
+            $student = Tutstudent::where('id_usuario',$stud->IdUsuario)->first();
+
+            
+                $mail = $student->correo;
+                Mail::send('emails.notifyNearMeeting',['user' => $mail], function($m) use($mail){
+                    $m->subject('Notificacion de Reunión con Supervisor');
+                    $m->to($mail);
+                });
+            
+             return redirect()->back()->with('success', 'Notificacon Enviada');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        } 
+    }
+
     //Vista supervisor
-    public function update(Request $request, $id)
+    public function update(MeetingEditRequest $request, $id)
     {
         //
         try {
@@ -120,6 +159,7 @@ class MeetingController extends Controller
             $meeting->lugar = $request['lugar'];
             $meeting->observaciones = $request['observaciones'];
             $meeting->retroalimentacion = $request['retroalimentacion'];
+            $meeting->idtipoestado = $request['idtipoestado'];
             $meeting->save();
 
             return redirect()->route('meeting.show',$id)->with('success','La reunion se ha actualizado exitosamente');
@@ -147,7 +187,7 @@ class MeetingController extends Controller
         
         $student = Student::find($id);
         
-        $meetings = meeting::where('idstudent',$id)->get();
+        $meetings = meeting::where('idstudent',$id)->with('status')->get();
 
         $data = [
             'meetings'    =>  $meetings,
@@ -161,11 +201,67 @@ class MeetingController extends Controller
     //Vista supervisor
     public function indexSup()
     {
-        $meetings = meeting::with('student')->get();
-
+        $meetings = meeting::with('student','status')->get();
+        //dd($meetings);
         $data = [
             'meetings'    =>  $meetings,
         ];
         return view('psp.meeting.indexSup', $data);
+    }
+
+    //Vista supervisor
+    public function createSup()
+    {
+        $students = Student::get();
+        $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
+        $data = [
+            'students'    =>  $students,
+        ];
+        $data['lugar'] = $supervisor->direccion;
+        return view('psp.meeting.createSup',$data);
+    }
+
+    //Vista supervisor
+    public function storeSup(MeetingRequest $request)
+    {
+        try {
+
+            //Iniciacion
+            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();                        
+            $pspstudent =PspStudent::where('IdAlumno',$request['alumno'])->first(); 
+            $meeting = new meeting;
+            $freeHour = new FreeHour;
+            //Crear freehour si la reunion es con supervisor
+            //Se pueden crear disponibilidades excepcionales solo en esta pantalla (sin contar el maximo posible)
+            if($request['tiporeunion']==1){
+                $freeHour->fecha = $request['fecha'];
+                $freeHour->hora_ini = $request['hora_inicio'];
+                $freeHour->cantidad = 1;            
+                $freeHour->idsupervisor = $supervisor->id;
+                $freeHour->save();
+                $meeting->idfreehour = $freeHour->id;
+            }
+
+            $meeting->idtipoestado = 12;
+            $timestamp = mktime($request['hora_inicio'],0,0, 0,0,0);
+            $time = date('H:i:s', $timestamp);
+            $meeting->hora_inicio=$time;            
+            $timestamp = strtotime($request['hora_inicio']) + 60*60;
+            $time = date('H:i:s', $timestamp);
+            $meeting->hora_fin=$time;
+            $meeting->fecha=$request['fecha'];
+            $meeting->idstudent=$request['alumno'];
+            $meeting->idsupervisor=$supervisor->id;
+            $meeting->asistencia='o';
+            $meeting->lugar=$request['lugar'];
+            //dd($meeting);
+            $meeting->save();
+
+            $pspstudent->idsupervisor=$freeHour->idsupervisor;
+            $pspstudent->save();            
+            return redirect()->route('meeting.indexSup')->with('success','La cita se ha registrado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
+        }
     }
 }

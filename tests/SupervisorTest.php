@@ -4,6 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Intranet\Models\User;
+use Intranet\Models\PspProcess;
+
 class SupervisorTest extends TestCase
 {
     use DatabaseMigrations;
@@ -19,12 +22,12 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_01()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
 	    		'actions' => [],
-	    		'user' => factory(Intranet\Models\Teacher::class)->make()
+	    		'user' => $user
     		])->visit('/psp/supervisor/create')
     		->type(''.rand(pow(10, 7), pow(10, 8)-1),'codigo')
     		->type('Laura','nombres')
@@ -42,7 +45,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_02()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
     		->withSession([
@@ -64,7 +67,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_03()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -87,7 +90,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_04()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -110,7 +113,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_05()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -132,7 +135,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_06()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -154,7 +157,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_07()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -176,7 +179,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_08()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -198,7 +201,7 @@ class SupervisorTest extends TestCase
 
 	public function test_psp_cr_sup_09()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -220,7 +223,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_10()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -242,7 +245,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_11()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -264,7 +267,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_12()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -286,7 +289,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_13()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -308,7 +311,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_14()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -330,7 +333,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_15()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -352,7 +355,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_16()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -374,7 +377,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_17()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -396,7 +399,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_18()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -418,7 +421,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_19()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -440,7 +443,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_20()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -462,7 +465,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_21()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -484,7 +487,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_22()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -506,7 +509,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_23()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -528,7 +531,7 @@ class SupervisorTest extends TestCase
 
         public function test_psp_cr_sup_24()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -550,7 +553,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_25()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -572,7 +575,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_26()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -594,7 +597,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_cr_sup_27()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
 
     	$this->actingAs($user)
             ->withSession([
@@ -619,7 +622,7 @@ class SupervisorTest extends TestCase
 
         public function test_psp_ed_sup_01()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -643,7 +646,7 @@ class SupervisorTest extends TestCase
 
         public function test_psp_ed_sup_02()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -666,7 +669,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_03()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -690,7 +693,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_04()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -714,7 +717,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_05()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -737,7 +740,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_06()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -760,7 +763,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_07()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -783,7 +786,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_08()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -806,7 +809,7 @@ class SupervisorTest extends TestCase
 
 	public function test_psp_ed_sup_09()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -829,7 +832,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_10()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -852,7 +855,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_11()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -875,7 +878,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_12()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -898,7 +901,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_13()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -921,7 +924,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_14()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -944,7 +947,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_15()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -967,7 +970,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_16()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -990,7 +993,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_17()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1013,7 +1016,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_18()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1036,7 +1039,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_19()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1059,7 +1062,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_20()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1082,7 +1085,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_21()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1105,7 +1108,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_22()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1128,7 +1131,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_23()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1151,7 +1154,7 @@ class SupervisorTest extends TestCase
 
         public function test_psp_ed_sup_24()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1174,7 +1177,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_25()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1197,7 +1200,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_26()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)
@@ -1220,7 +1223,7 @@ class SupervisorTest extends TestCase
 
     public function test_psp_ed_sup_27()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(5);
         $supervisor   = factory(Intranet\Models\Supervisor::class)->create();
 
     	$this->actingAs($user)

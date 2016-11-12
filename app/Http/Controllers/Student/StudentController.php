@@ -96,34 +96,40 @@ class StudentController extends BaseController {
 
 						// Para el curso PSP
 						if(isset($request['selectPsp'])){
-							$insert['lleva_psp'] = 1;
 
-							// Buscar alumno en la tabla de tutoria
-							$student = Tutstudent::where('codigo', $value_int)->first();
+							if(!empty($value[5]) && $value[5] != null){
+								$insert['lleva_psp'] = 1;
 
-							if($student != null) { //encontro alumno -> obtener su idusuario
-								$insert['IdUsuario'] = $student->IdUsuario;								 
+								// Buscar alumno en la tabla de tutoria
+								$student = Tutstudent::where('codigo', $value_int)->first();
+
+								if($student != null) { //encontro alumno -> obtener su idusuario
+									$insert['IdUsuario'] = $student->id_usuario;								 
+								}
+								else { // no encontro alumno en tutoria -> crear alumno en tutoria y usuario
+
+									$alumnoTut['codigo'] = $insert['Codigo'];
+									$alumnoTut['nombre'] = $insert['Nombre'];
+									$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
+									$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
+
+									if($value[5] != null){
+										$alumnoTut['correo'] = $value[5];
+									}
+									else {
+										return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
+									}
+
+									$user = $this->create_user_tutoria($alumnoTut);	
+
+									if($user != null){
+										$insert['IdUsuario'] = $user->IdUsuario;
+									}								
+								}
 							}
-							else { // no encontro alumno en tutoria -> crear alumno en tutoria y usuario
-
-								$alumnoTut['codigo'] = $insert['Codigo'];
-								$alumnoTut['nombre'] = $insert['Nombre'];
-								$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
-								$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
-
-								if($value[5] != null){
-									$alumnoTut['correo'] = $value[5];
-								}
-								else {
-									return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
-								}
-
-								$user = $this->create_user_tutoria($alumnoTut);		
-
-								if($user != null){
-									$insert['IdUsuario'] = $user->IdUsuario;
-								}								
-							}							
+							else{								
+								return redirect()->back()->with('warning', 'El formato interno del archivo es incorrecto');
+							}								
 						}
 						
 						array_push($students, $insert);						
@@ -144,7 +150,7 @@ class StudentController extends BaseController {
 						if($student['lleva_psp'] == 1){
 							$alumno->IdUsuario = $student['IdUsuario'];							
 						}
-						$alumno->lleva_psp = $student['lleva_psp'];																
+						$alumno->lleva_psp = null;																
 						$alumno->save();
 					}
 				}
@@ -168,7 +174,7 @@ class StudentController extends BaseController {
             $u = User::where('Usuario', $alumnoTut['codigo'])->first();
             if($u!=null){
                 return $u;
-            }            
+            }     
 
             // se crea un usuario primero
             $usuario = new User;

@@ -30,6 +30,7 @@ use Intranet\Http\Requests\AspectRequest;
 use Intranet\Http\Requests\CriterioResquest;
 use Intranet\Http\Requests\StudentResultRequest;
 use Intranet\Http\Requests\CriterioStoreRequest;
+use Intranet\Http\Requests\CriterioFlujoCoordinadorRequest;
 use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\User;
@@ -126,7 +127,7 @@ class FlujoCoordinadorController extends Controller
     	//return "profesor creado";
     }
 
-    public function criterio_create (CriterioResquest $request, $id){
+    public function criterio_create (CriterioFlujoCoordinadorRequest $request, $id){
     	//$idResultado = $request->get('resultado');
     	//$resultado= StudentsResult::findOrFail($idResultado);
 

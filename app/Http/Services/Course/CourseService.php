@@ -259,6 +259,37 @@ class CourseService
             }
         }
     }
+    public function updateContributions2($request,$id){
+        //dd("hola2");
+        $studentResults = StudentsResult::where('IdEspecialidad', $id)
+            ->where('deleted_at', null)->get();
+        //dd("hola3");
+        $cycle = Session::get('academic-cycle');
+        $idCicloAcademico=$cycle->IdCicloAcademico;
+        //dd("hola");
+        foreach ($studentResults as $sr){
+            foreach ($sr->contributions as $cnt){
+                $cnt->delete();
+            }
+        }
+
+        if ( array_key_exists('selectorContVal', $request) ){
+
+            foreach($request['selectorContVal'] as $item){
+                $pos = strrpos($item, '-');
+                $idRes = substr($item, 0, $pos);
+                $idCurs = substr($item, $pos + 1);
+
+                Contribution::create([
+                    'IdCurso' => $idCurs,
+                    'IdResultadoEstudiantil' => $idRes,
+                    'Valor' => 1,
+                    'IdCicloAcademico' => $idCicloAcademico
+                ]);
+
+            }
+        }
+    }
 
     public function getCode($code) {
         $course = Course::where('Codigo', $code)->first();

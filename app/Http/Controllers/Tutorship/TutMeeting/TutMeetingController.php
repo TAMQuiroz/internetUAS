@@ -43,7 +43,7 @@ class TutMeetingController extends Controller
         $myStudents = Tutstudent::getFilteredStudents($filters, $user->IdDocente, $mayorId);
 
         $data       = [
-            'students'          =>  $myStudents,
+            'students'    =>  $myStudents,
         ];
 
         return view('tutorship.tutormystudents.index', $data);
@@ -89,10 +89,37 @@ class TutMeetingController extends Controller
         ];
 
         $tutMeetings = TutMeeting::getFilteredTutMeetings($filters);
+        $fecha = array();
+        $hora_inicio = array();        
+        $hora = array();        
+        $hora_fin = array();        
+
+        foreach ($tutMeetings as $tutMeeting) {
+            if ($tutMeeting) {
+                $string    = explode(' ', $tutMeeting->inicio);
+                $dia       = explode('-', $string[0]);
+                $horaI     = explode(':', $string[1]);        
+                $today     = date('Y-m-d H:i:s', strtotime($tutMeeting->inicio)); 
+                $fecha_fin = date('Y-m-d H:i:s', strtotime($today . '+' . $tutMeeting->duracion . ' minutes'));                                
+                $stringF   = explode(' ', $fecha_fin);                
+                $horaF     = explode(':', $stringF[1]);        
+                $dateDay   = date('w', strtotime($tutMeeting->inicio));                 
+                array_push($hora, intval( $horaI[0]) );
+                array_push($fecha, intval($dateDay) );                
+                array_push($hora_inicio, $horaI[0] . ':' . $horaI[1]);
+                array_push($hora_fin, $horaF[0] . ':' . $horaF[1]);
+            }
+        } 
+        
 
         $data       = [
-            "tutMeetings" => $tutMeetings,
+            'tutMeetings' =>  $tutMeetings,
+            'fecha'       =>  $fecha,
+            'hora'        =>  $hora,
+            'hora_inicio' =>  $hora_inicio,
+            'hora_fin'    =>  $hora_fin,
         ];
+        
 
         return view('tutorship.tutormydates.index', $data);
     }

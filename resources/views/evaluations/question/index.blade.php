@@ -74,9 +74,9 @@
                         @include('modals.delete', ['id'=> $question->id, 'message' => '¿Está seguro que desea eliminar esta pregunta?', 'route' => route('pregunta.delete', $question->id)])
                         @endforeach
                     </tbody>                    
-                </table>
-                {{ $questions->links() }}
+                </table>                
             </div>
+            {{ $questions->links() }}
         </div>
     </div>
 </div>

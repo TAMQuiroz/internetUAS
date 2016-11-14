@@ -638,9 +638,9 @@ Route::group(['middleware' => 'auth'], function(){
             //Aspecto
             Route::group(['prefix' => 'aspecto'], function() {
                 Route::get('create/{id}', ['as' => 'aspecto.create', 'uses' => 'Psp\Aspecto\AspectoController@create']);
+                Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
                 Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
                 Route::post('edit/{id}', ['as' => 'aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
-                Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
             });
             
 
@@ -710,9 +710,12 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'skill.delete', 'uses' => 'Psp\Skill\SkillController@destroy']);    
             });
 
-          
+            //Administracion de criterios de PSP
+            Route::group(['prefix' => 'pspCriterio'], function() {
+                Route::get('/', ['as' => 'pspCriterio.index', 'uses' => 'Psp\PspCriterio\PspCriterioController@index']);
+            });
 
-});   
+    });   
 
 
 });

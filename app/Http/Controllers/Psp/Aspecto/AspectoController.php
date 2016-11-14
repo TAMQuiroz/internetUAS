@@ -45,16 +45,8 @@ class AspectoController extends Controller
      */
     public function create($idAlumno)
     {
-        //
-        //
-
         $user = Session::get('user');
-
         $supervisor = Supervisor::find($user->id);
-        //echo "alumnoid".$idAlumno;
-        //echo " userid ".$user->id;
-        //echo " idpspprocess ".$supervisor->idpspprocess;
-
         $pspProceso = PspProcess::find($supervisor->idpspprocess);
         
         $cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();

@@ -809,7 +809,16 @@ $api->version('v1', function ($api) {
                 $api->post('update/meeting', 'Meeting\PspMeetingController@update');
                 $api->post('meeting/supervisor/student/store', "Meeting\PspMeetingController@store");
 
-
+                $api->get('sup/getMetting','Ps\PsController@getAll');
+                $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');
+                $api->get('a/gm','Ps\PsController@getAllSutudentMetting');
+                $api->post('al/setM/{id}/sendNr', 'Ps\PsController@nuevaReunionAL');
+                //$api->get('h', 'Ps\PsController@nuevaReunionP');
+                $api->get('al/getfh', 'Ps\PsController@getAllFreeHours');
+                $api->get('pr/getN', 'Ps\NotasDelnscriptionFile@getAll');
+                $api->get('sup/getficha', 'Ps\NotasDelnscriptionFile@enviarRecomendaciones');
+                $api->post('sup/detf/{id}', 'Ps\NotasDelnscriptionFile@modificarFi');
+                $api->get('al/getD', 'Ps\DocumentosController@getAll');
             });
 
             //INVESTIGACION

@@ -190,7 +190,9 @@ Route::group(['middleware' => 'auth'], function(){
 
         // assign faculty
         Route::get('/periods', ['as' => 'viewPeriod.faculty', 'uses' => 'Faculty\FacultyController@getPeriods']);
+        Route::post('/periods/continue', ['as' => 'continuePeriod.faculty', 'uses' => 'Faculty\FacultyController@continuePeriod']);
         Route::get('/periods/create', ['as' => 'createPeriod.faculty', 'uses' => 'Faculty\FacultyController@createPeriod']);
+        Route::post('/periods/store/{id}', ['as' => 'storePeriod2.faculty', 'uses' => 'Faculty\FacultyController@storePeriod2']);
         Route::post('/periods/create', ['as' => 'storePeriod.faculty', 'uses' => 'Faculty\FacultyController@storePeriod']);
         Route::get('/periods/{period_id}', ['as' => 'editPeriod.faculty', 'uses' => 'Faculty\FacultyController@editPeriod']);
         Route::get('/editPeriod', ['as' => 'editPeriod.faculty', 'uses' => 'Faculty\FacultyController@editPeriod']);
@@ -636,9 +638,9 @@ Route::group(['middleware' => 'auth'], function(){
             //Aspecto
             Route::group(['prefix' => 'aspecto'], function() {
                 Route::get('create/{id}', ['as' => 'aspecto.create', 'uses' => 'Psp\Aspecto\AspectoController@create']);
+                Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
                 Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
                 Route::post('edit/{id}', ['as' => 'aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
-                Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
             });
             
 
@@ -708,9 +710,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'skill.delete', 'uses' => 'Psp\Skill\SkillController@destroy']);    
             });
 
-          
+            //Administracion de criterios de PSP
+            Route::group(['prefix' => 'pspCriterio'], function() {
+                Route::get('/', ['as' => 'pspCriterio.index', 'uses' => 'Psp\PspCriterio\PspCriterioController@index']);
+                Route::get('create', ['as' => 'pspCriterio.create', 'uses' => 'Psp\PspCriterio\PspCriterioController@create']);
+                Route::post('create', ['as' => 'pspCriterio.store', 'uses' => 'Psp\PspCriterio\PspCriterioController@store']);
+                Route::get('edit/{id}', ['as' => 'pspCriterio.edit', 'uses' => 'Psp\PspCriterio\PspCriterioController@edit']);
+                Route::post('update/{id}', ['as' => 'pspCriterio.update', 'uses' => 'Psp\PspCriterio\PspCriterioController@update']);
+                Route::get('delete/{id}', ['as' => 'pspCriterio.delete', 'uses' => 'Psp\PspCriterio\PspCriterioController@destroy']);
+            });
 
-});   
+    });   
 
 
 });

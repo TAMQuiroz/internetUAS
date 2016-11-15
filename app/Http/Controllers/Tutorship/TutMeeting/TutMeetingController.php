@@ -73,7 +73,7 @@ class TutMeetingController extends Controller
             $beginDate = "";        
         $dateOriginalFormat = $request['endDate'];            
         if ( $dateOriginalFormat )
-            $endDate = date("Y-m-d", strtotime($dateOriginalFormat));
+            $endDate = date("Y-m-d", strtotime($dateOriginalFormat. '+1 day'));        
         else
             $endDate = "";
 
@@ -181,7 +181,7 @@ class TutMeetingController extends Controller
                 $newMeeting     = TutMeeting::create([
                     "inicio"        => $completedDate,
                     "duracion"      => $parameters->duracionCita,
-                    "estado"        => 4,
+                    "estado"        => 1,
                     "id_topic"      => $topic,
                     "id_docente"    => $user->IdDocente,
                     "id_tutstudent" => $idStudent

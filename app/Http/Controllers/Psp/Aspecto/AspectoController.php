@@ -45,35 +45,21 @@ class AspectoController extends Controller
      */
     public function create($idAlumno)
     {
-        //
-        //
-
         $user = Session::get('user');
-
         $supervisor = Supervisor::find($user->id);
-        //echo "alumnoid".$idAlumno;
-        //echo " userid ".$user->id;
-        //echo " idpspprocess ".$supervisor->idpspprocess;
-
         $pspProceso = PspProcess::find($supervisor->idpspprocess);
-        
-        $cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
+        $criterios  = $pspProceso->criterios;
+        //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
         //echo " idcurso ".$pspProceso->idcurso;
-        $criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
+        //$criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
         //echo " idcursoxciclo ".$cursoxciclo->IdCursoxCiclo;
 
         $registroNotas = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->get();
         
         //$crit_aux       = Criterion::find($id);
-        $crit = [];
-        foreach ($criterios as $c) {
-            $criterio = Criterion::find($c->IdCriterio);
-            $crit[$c->IdCriterio]=$criterio->Nombre;
-            //echo $criterio->Nombre;
-        }
-
+        
         $data = [
-            'crit'    =>  $crit,
+            'crit'    =>  $criterios,
             'idAlumno' => $idAlumno,
             'registroNotas' => $registroNotas,
             //'crit_aux' => $crit_aux,

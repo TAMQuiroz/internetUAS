@@ -91,10 +91,11 @@ class PspProcessTableSeeder extends Seeder
             ]);
         }
 
-        $alumnoUAS = DB::table('alumno')->where('IdAlumno',41)->first();
+        
+        $alumnoUAS = DB::table('Alumno')->where('IdAlumno',41)->first();
 
         if(!$alumnoUAS){
-            DB::table('alumno')->insert([
+            DB::table('Alumno')->insert([
                 'IdAlumno'         => 41,
                 'Codigo'           => 45674567,
                 'Nombre'            =>  'Juan',
@@ -116,5 +117,6 @@ class PspProcessTableSeeder extends Seeder
                 'idpspprocess'  =>  1,
             ]);
         }
+        
     }
 }

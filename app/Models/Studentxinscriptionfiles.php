@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Studentxinscriptionfiles extends Model
 {
 	use SoftDeletes;
-	protected $table = 'Pspstudentsxinscriptionfiles';
+	protected $table = 'pspstudentsxinscriptionfiles';
     //
     public function inscription(){
         return $this->belongsTo('Intranet\Models\Inscription', 'id');

@@ -320,8 +320,51 @@ class FacultyService {
 		}
 	}
 
+	public function createCycle2($request,$id) {
+		$s = $request['cycleDateI'];
+		$submitdate = str_replace( "/" , "-" , $s);
+		$time = strtotime($submitdate);
+		$dateI = date('Y-m-d',$time);
+
+
+
+		$s1 = $request['cycleDateF'];
+		$submitdate1 = str_replace( "/" , "-" , $s1);
+		$time1 = strtotime($submitdate1);
+
+		$dateF = date('Y-m-d',$time1);
+
+		$periodo = Period::where('Vigente',1)->where('IdEspecialidad',$id)->first();
+		$confEspecialidad = ConfFaculty::where('IdPeriodo', $periodo->IdPeriodo)->first();
+
+
+			$cycleA = Cicle::create(['IdEspecialidad' =>$id,
+					'IdCiclo' => $request['cycleId'],
+					'Vigente' =>'0',
+					'IdPeriodo' =>$periodo->IdPeriodo,
+					'FechaInicio'=>$dateI,
+					'FechaFin'=>$dateF
+
+			]);
+
+		for($i=1;$i<count($request['check']);$i++) {
+			$cyclexresults = CyclexResult::create([
+						'IdResultadoEstudiantil' => $request['check'][$i],
+						'IdCicloAcademico' => $cycleA->IdCicloAcademico
+
+			]);
+		}
+	}
+
 	public function activateCycle($request) {
 		$activate = Cicle::where('IdEspecialidad', Session::get('faculty-code'))->orderby('IdCicloAcademico','DESC')->take(1)
+			->update(array(
+					'Vigente' =>'1'
+		));
+
+	}
+	public function activateCycle2($request,$id) {
+		$activate = Cicle::where('IdEspecialidad', $id)->orderby('IdCicloAcademico','DESC')->take(1)
 			->update(array(
 					'Vigente' =>'1'
 		));

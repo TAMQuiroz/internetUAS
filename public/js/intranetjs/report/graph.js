@@ -1,6 +1,27 @@
 
+$("#radioB").click(function() {      
+        $('#especialidad').prop('disabled', 'true');
+        $('#estadoP').prop('disabled', 'true');
+        $('#areaP').prop('disabled', 'true');
+        $('#fecha_ini').prop('disabled', 'true');
+        $('#fecha_fin').prop('disabled', 'true');
+        $('#minProyectos').prop('disabled', 'true');
+        $('#maxProyectos').prop('disabled', 'true');
+});
 
-$(function () {
+
+$("#radioB2").click(function() {      
+        $('#especialidad').removeAttr('disabled');
+        $('#estadoP').removeAttr('disabled');
+        $('#areaP').removeAttr('disabled');
+        $('#fecha_ini').removeAttr('disabled');
+        $('#fecha_fin').removeAttr('disabled');
+        $('#minProyectos').removeAttr('disabled');
+        $('#maxProyectos').removeAttr('disabled');
+});
+
+
+$("#btnGraficos").click(function () {
     //Datos para Bar Chart
     var especialidades = document.getElementById("especialidad");
     var estadoP = document.getElementById("estadoP");
@@ -13,6 +34,8 @@ $(function () {
     var arrayProyXProfXEsp =[];
     var arrayInvEstadoPXEsp = [];
     var arrayProfEstadoPXEsp = [];
+    var arrayTotalProyXEspXInv = [];
+    var arrayTotalProyXEspXProf = [];
     //Creacion de arrray que contiene los porcentajes de inv por esp
     var arrayInvXEsp = [];
     var arrayProfXEsp = [];
@@ -20,6 +43,11 @@ $(function () {
     var totalProf = 0;
     var totalProyI = 0;
     var totalProyP = 0;
+
+    //Dual axes
+    var arrayTotalInvProfXEsp = [];
+    var arrayTotalProyXEsp = [];
+
     for (var i=1; i< numOptions; i++){
         arrayInvXEsp.push(0);
     }
@@ -53,6 +81,21 @@ $(function () {
         }
         arrayProfEstadoPXEsp.push(arrayEstadoPCant);
     }
+
+    for (var i=1; i< numOptions; i++){
+        arrayTotalInvProfXEsp.push(0);
+    }
+
+    for (var i=1; i< numOptions; i++){
+        arrayTotalProyXEsp.push(0);
+    }
+
+    for (var i=1; i< numOptions; i++){
+        arrayTotalProyXEspXInv.push(0);
+        arrayTotalProyXEspXProf.push(0);
+    }
+
+
     var tableI = document.getElementById('tableI');
 
     //var rowLengthI = tableI.tBodies.length;
@@ -216,11 +259,11 @@ $(function () {
         },
 
         series: [{
-            name: 'Investigador',
+            name: 'Investigadores',
             data: arrayProyXInvXEsp,
             stack: 'male'
         }, {
-            name: 'Profesor',
+            name: 'Profesores',
             data: arrayProyXProfXEsp,
             stack: 'male'
         }]
@@ -254,7 +297,8 @@ $(function () {
     for (var i=0; i < arrayEsp.length ; i ++){
         var arrayEstadoPXEspPorc = [];
         for (var j=0; j < numEstados; j++){
-            var porc = (arrayInvEstadoPXEsp[i][j]/totalProyI)*100;
+            //var porc = (arrayInvEstadoPXEsp[i][j]/totalProyI)*100;
+            var porc = (arrayInvEstadoPXEsp[i][j]/arrayProyXInvXEsp[i])*100;
             arrayEstadoPXEspPorc.push(porc);
         }
         arrayInvXEstadoPXEsp.push(arrayEstadoPXEspPorc);
@@ -289,7 +333,15 @@ $(function () {
     // Create the chart
     var fechaIni = document.getElementById("fecha_ini");
     var fechaFin = document.getElementById("fecha_fin");
-    var textPieI = 'Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;
+    var textPieI;
+    if (fechaIni.value != "" && fechaFin.value != ""){
+        textPieI = 'Investigadores: Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;    
+    }
+    else{
+        textPieI = 'Investigadores: Estado de los proyectos';
+    }
+    
+    
     Highcharts.chart('pieI', {
         chart: {
             type: 'pie'
@@ -299,7 +351,7 @@ $(function () {
             text: textPieI
         },
         subtitle: {
-            text: 'Click the slices to view versions. Source: netmarketshare.com.'
+            text: 'Click en los slices para ver el estado de los proyectos por especialidad.'
         },
         plotOptions: {
             series: {
@@ -352,7 +404,8 @@ $(function () {
     for (var i=0; i < arrayEsp.length ; i ++){
         var arrayEstadoPXEspPorc = [];
         for (var j=0; j < numEstados; j++){
-            var porc = (arrayProfEstadoPXEsp[i][j]/totalProyP)*100;
+            //var porc = (arrayProfEstadoPXEsp[i][j]/totalProyP)*100;
+            var porc = (arrayProfEstadoPXEsp[i][j]/arrayProyXProfXEsp[i])*100;
             arrayEstadoPXEspPorc.push(porc);
         }
         arrayProfXEstadoPXEsp.push(arrayEstadoPXEspPorc);
@@ -375,15 +428,22 @@ $(function () {
     }
 
     // Create the chart
+    var textPieP;
+    if (fechaIni.value != "" && fechaFin.value != ""){
+        textPieP = 'Profesores: Estado de los proyectos. Del ' + fechaIni.value + ' al ' + fechaFin.value;    
+    }
+    else{
+        textPieP = 'Profesores: Estado de los proyectos';
+    }
     Highcharts.chart('pieP', {
         chart: {
             type: 'pie'
         },
         title: {
-            text: 'Browser market shares. January, 2015 to May, 2015'
+            text: textPieP
         },
         subtitle: {
-            text: 'Click the slices to view versions. Source: netmarketshare.com.'
+            text: 'Click en los slices para ver el estado de los proyectos por especialidad.'
         },
         plotOptions: {
             series: {
@@ -406,6 +466,147 @@ $(function () {
         drilldown: {
             series: drilldownP
         }
+    });
+
+    //Dual axes
+
+    for(var i=0; i<arrayEsp.length; i++){
+        arrayTotalInvProfXEsp[i] = arrayInvXEsp[i] + arrayProfXEsp[i];
+    }
+
+    for(var i=0; i<arrayEsp.length; i++){
+        arrayTotalProyXEsp[i] = arrayProyXInvXEsp[i] + arrayProyXProfXEsp[i];
+    }
+
+    var textC;
+    if (fechaIni.value != "" && fechaFin.value != ""){
+        textC = 'Numero de Proyectos de acuerdo a la especialidad. Del ' + fechaIni.value + ' al ' + fechaFin.value;    
+    }
+    else{
+        textC = 'Numero de Proyectos de acuerdo a la especialidad';
+    }
+
+    Highcharts.chart('container2', {
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: textC
+        },
+        subtitle: {
+            text: 'Agrupados Investigadores y Profesores'
+        },
+        xAxis: [{
+            categories: arrayEsp,
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Investigadores y Profesores',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: 'Numero de Proyectos Asignados',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+            name: 'Numero de Proyectos Asignados',
+            type: 'column',
+            yAxis: 1,
+            data: arrayTotalProyXEsp,
+
+        }, {
+            name: 'Investigadores y Profesores',
+            type: 'spline',
+            data: arrayTotalInvProfXEsp ,
+        }]
+    });
+
+    //Area chart
+
+    Highcharts.chart('areaChart', {
+        chart: {
+            type: 'area',
+            inverted: true
+        },
+        title: {
+            text: 'Proyectos por especialidad'
+        },
+        subtitle: {
+            style: {
+                position: 'absolute',
+                right: '0px',
+                bottom: '10px'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -50,
+            y: 100,
+            floating: false,
+            borderWidth: 1,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        xAxis: {
+            categories: arrayEsp,
+
+        },
+        yAxis: {
+            title: {
+                text: 'Numero de proyectos'
+            },
+            labels: {
+                formatter: function () {
+                    return this.value;
+                }
+            },
+            min: 0
+        },
+        plotOptions: {
+            area: {
+                fillOpacity: 0.5
+            }
+        },
+        series: [{
+            name: 'Investigadores',
+            data:  arrayProyXInvXEsp
+        }, {
+            name: 'Profesores',
+            data: arrayProyXProfXEsp
+        }]
     });
 
 });

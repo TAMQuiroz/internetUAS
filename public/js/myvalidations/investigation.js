@@ -120,6 +120,9 @@ jQuery(function(){
             },
             archivo: {
                 required: "Debe ingresar un entregable",
+            },
+            peso: {
+                required: "Debe ingresar un peso",
             }
         }
     });
@@ -135,33 +138,11 @@ jQuery(function(){
         minDate: 0,
      });
 
-    $("#fecha_ini").datepicker({
-        format: "yyyy-mm-dd",
-        startDate: "today", 
-        language: "es",
-        autoclose: true,
-        todayHighlight: true,
-        minDate: 0,
-        onChange: function() {
-            //fecha_ini = this.val();
-            console.log('hola');
-            //$('#fecha_fin').datepicker('option', 'minDate', fecha_ini);
-        },
-     });
-
-    $("#fecha_fin").datepicker({
-        format: "yyyy-mm-dd",
-        startDate: "today", 
-        language: "es",
-        autoclose: true,
-        todayHighlight: true,
-        minDate: 0,
-     });
-
-    $("#fecha_ini").datepicker({
-
+    $('#fecha_ini').change(function(){
+        fecha_ini = $(this).val();
+        $('#fecha_fin').attr('min',fecha_ini);
     });
-    
+
 });
 
 $(document).ready(function(){

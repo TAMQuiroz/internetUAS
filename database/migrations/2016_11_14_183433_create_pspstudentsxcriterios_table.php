@@ -15,7 +15,7 @@ class CreatePspstudentsxcriteriosTable extends Migration
         Schema::create('pspstudentsxcriterios', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idpspstudent')->unsigned();
-            $table->integer('idcriterio');
+            $table->integer('idcriterio')->unsigned();
             $table->integer('nota')->nullable();
             $table->softDeletes();
             $table->timestamps();

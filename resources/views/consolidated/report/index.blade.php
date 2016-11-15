@@ -160,7 +160,7 @@
                         $('#resultado').empty();
 
                         $.each(data, function(key, element) {
-                            $('#resultado').append("<option value='" + key + "'>" + element + "</option>");
+                            $('#resultado').append("<option value='" +  element['IdResultadoEstudiantil'] + "'>" + element['Descripcion'] + "</option>");
                         });
                        
                     },

@@ -551,15 +551,14 @@ class StudentsResultService {
     }
 
     public function retrieveAllByFacultyByPeriod($idPeriod){
-
+        
         //obtenemos los resultados de ese periodo.
-        $idResultadosEstudiantiles = DB::table('periodoxresultado')->where('IdPeriodo', '=', $idPeriod )->get();
+        $idResultadosEstudiantiles = PeriodxResult::where('IdPeriodo', '=', $idPeriod )->get()->pluck('IdResultadoEstudiantil')->toArray();
 
         //obtengo toda la dta de los resultados:
         $resultadosEstudiantiles = StudentsResult::whereIn('IdResultadoEstudiantil', $idResultadosEstudiantiles)->get();
 
         return $resultadosEstudiantiles;
-
     }
 
 }

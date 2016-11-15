@@ -10,7 +10,6 @@ use Intranet\Models\StudentsResult;
 use Intranet\Models\PeriodxResult;
 use Intranet\Models\Contribution;
 use DB;
-use BD;
 
 class StudentsResultService {
     // obtener todos los resultados estudiantiles
@@ -554,7 +553,7 @@ class StudentsResultService {
     public function retrieveAllByFacultyByPeriod($idPeriod){
 
         //obtenemos los resultados de ese periodo.
-        $idResultadosEstudiantiles = BD::table('periodoxresultado')->where('IdPeriodo', '=', $idPeriod )->get();
+        $idResultadosEstudiantiles = DB::table('periodoxresultado')->where('IdPeriodo', '=', $idPeriod )->get();
 
         //obtengo toda la dta de los resultados:
         $resultadosEstudiantiles = StudentResult::whereIn('IdResultadoEstudiantil', $idResultadosEstudiantiles)->get();

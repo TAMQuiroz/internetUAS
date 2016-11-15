@@ -91,6 +91,7 @@ class PspProcessTableSeeder extends Seeder
             ]);
         }
 
+        /*
         $alumnoUAS = DB::table('Alumno')->where('IdAlumno',41)->first();
 
         if(!$alumnoUAS){
@@ -116,5 +117,6 @@ class PspProcessTableSeeder extends Seeder
                 'idpspprocess'  =>  1,
             ]);
         }
+        */
     }
 }

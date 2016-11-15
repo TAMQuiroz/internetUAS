@@ -713,6 +713,11 @@ Route::group(['middleware' => 'auth'], function(){
             //Administracion de criterios de PSP
             Route::group(['prefix' => 'pspCriterio'], function() {
                 Route::get('/', ['as' => 'pspCriterio.index', 'uses' => 'Psp\PspCriterio\PspCriterioController@index']);
+                Route::get('create', ['as' => 'pspCriterio.create', 'uses' => 'Psp\PspCriterio\PspCriterioController@create']);
+                Route::post('create', ['as' => 'pspCriterio.store', 'uses' => 'Psp\PspCriterio\PspCriterioController@store']);
+                Route::get('edit/{id}', ['as' => 'pspCriterio.edit', 'uses' => 'Psp\PspCriterio\PspCriterioController@edit']);
+                Route::post('update/{id}', ['as' => 'pspCriterio.update', 'uses' => 'Psp\PspCriterio\PspCriterioController@update']);
+                Route::get('delete/{id}', ['as' => 'pspCriterio.delete', 'uses' => 'Psp\PspCriterio\PspCriterioController@destroy']);
             });
 
     });   

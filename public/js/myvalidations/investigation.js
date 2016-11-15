@@ -120,6 +120,9 @@ jQuery(function(){
             },
             archivo: {
                 required: "Debe ingresar un entregable",
+            },
+            peso: {
+                required: "Debe ingresar un peso",
             }
         }
     });

@@ -15,7 +15,7 @@ class CreatePspcriteriosTable extends Migration
         Schema::create('pspcriterios', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->integer('id_pspprocess');
+            $table->integer('id_pspprocess')->unsigned();
             $table->integer('peso');
             $table->softDeletes();
             $table->timestamps();

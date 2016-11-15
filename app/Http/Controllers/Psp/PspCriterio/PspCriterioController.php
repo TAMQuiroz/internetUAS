@@ -23,9 +23,11 @@ class PspCriterioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $criterios = Pspcriterio::paginate(10);
+        $filters = $request->all();
+
+        $criterios = Pspcriterio::getFiltered($filters);
 
         $data = [
             'criterios'    =>  $criterios,

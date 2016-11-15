@@ -65,5 +65,5 @@
     </div>
 </div>
 
-@include('investigation.modals.filter_area', ['title' => 'Filtrar', 'route' => 'area.index'])
+@include('psp.pspCriterio.filter_pspcriterio', ['title' => 'Filtrar', 'route' => 'pspCriterio.index'])
 @endsection

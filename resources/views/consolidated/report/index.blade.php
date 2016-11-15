@@ -13,7 +13,10 @@
             <div class="x_content">
 
                 <form action="" method="GET" id="formTeacher" name="formTeacher" novalidate="true" class="">
+                    <!--
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    -->
+                    <meta name="csrf-token" content="{{ csrf_token() }}">
 
                     <div class="form-group">
                         <div class="row">
@@ -23,7 +26,7 @@
                                 <select  required="true" name="periodo" id="periodo" class="form-control">
                                     <option value="">--Seleccione--</option>
                                     @foreach($periodos as $periodo)
-                                        <option value= "{{$periodo->IdResultadoEstudiantil}}">
+                                        <option value= "{{$periodo->IdPeriodo}}">
                                             {{ $periodo->configuration->cycleAcademicStart->Descripcion }} - {{ $periodo->configuration->cycleAcademicEnd->Descripcion }}
                                         </option>
                                     @endforeach
@@ -36,7 +39,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Resultado Estudiantil<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="aspecto" id="aspecto" class="form-control">
+                                <select  required="true" name="resultado" id="resultado" class="form-control">
                                     <option value="">--Seleccione--</option>
                                 </select>
                             </div>
@@ -58,7 +61,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Criterio<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="aspecto" id="aspecto" class="form-control">
+                                <select  required="true" name="criterio" id="criterio" class="form-control">
                                     <option value="">--Seleccione--</option>
                                 </select>
                             </div>
@@ -69,7 +72,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Curso<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="aspecto" id="aspecto" class="form-control">
+                                <select  required="true" name="curso" id="curso" class="form-control">
                                     <option value="">--Seleccione--</option>
                                 </select>
                             </div>
@@ -133,15 +136,41 @@
 
         //para el combobox se refresque solo
         $(document).ready(function(){
-            $('#resultado').change(function(){
-                $.get("{{ route('aspectosDelResultado.flujoCoordinador') }}",
-                { resultado: $(this).val() },
-                function(data) {
-                    $('#aspecto').empty();
-                    $.each(data, function(key, element) {
-                        $('#aspecto').append("<option value='" + key + "'>" + element + "</option>");
-                    });
+            $('#periodo').change(function(){
+
+                var miUrl=  "{{ url('consolidated/consultarResultados') }}";
+                var idPeriodo = $('#periodo').val();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                alert(miUrl);
+                alert(idPeriodo);
+                alert(CSRF_TOKEN);
+
+                $.ajax({        
+                    type: "GET",   
+                    url: miUrl,
+                    dataType : "JSON",
+                    data: {
+                        idPeriodo: idPeriodo,
+                        _token: CSRF_TOKEN
+                    },
+                    success: function(data){
+
+                        console.log(data);  // for testing only
+                        $('#resultado').empty();
+
+                        $.each(data, function(key, element) {
+                            $('#resultado').append("<option value='" + key + "'>" + element + "</option>");
+                        });
+                       
+                    },
+                    error: function (e) {
+                        console.log('holi');
+                      console.log(e.responseText);
+                    },
+
                 });
+
             });
         });     
 

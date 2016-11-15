@@ -549,4 +549,17 @@ class StudentsResultService {
         $data['info']= $studentsResult;
         return $data;
     }
+
+    public function retrieveAllByFacultyByPeriod($idPeriod){
+
+        //obtenemos los resultados de ese periodo.
+        $idResultadosEstudiantiles = BD::table('periodoxresultado')->where('IdPeriodo', '=', $idPeriod )->get();
+
+        //obtengo toda la dta de los resultados:
+        $resultadosEstudiantiles = StudentResult::whereIn('IdResultadoEstudiantil', $idResultadosEstudiantiles)->get();
+
+        return $resultadosEstudiantiles;
+
+    }
+
 }

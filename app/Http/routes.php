@@ -459,6 +459,10 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
 
         Route::get('/report', ['as' => 'report.index', 'uses' => 'ReportController@index']);
+
+
+        //AJAX
+        Route::get ('/{idPeriodo}/consultarResultados', ['as' =>'consultarResultados.consolidated', 'uses' => 'ReportController@consultarResultados']);
         /*
         Route::group(['middleware' => 'action_permission'], function() {
             Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);

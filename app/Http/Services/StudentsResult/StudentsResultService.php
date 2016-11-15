@@ -182,22 +182,6 @@ class StudentsResultService {
         if ($period == null){
             return $ar;
         }
-        /*
-        $periodxresults = PeriodxResult::where('IdPeriodo', $period->IdPeriodo)
-            ->where('deleted_at', null)->get();
-
-        $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
-            ->where('deleted_at', null)->get();
-
-        foreach($periodxresults as $pxsr){
-            foreach($studentResults as $sr){
-                if($pxsr->IdResultadoEstudiantil == $sr->IdResultadoEstudiantil){
-                    array_push($ar, $sr);
-                }
-            }
-        }
-        return $ar;
-        */
         return $period->studentsResults;
     }
 

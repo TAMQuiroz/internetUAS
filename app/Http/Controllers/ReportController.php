@@ -25,4 +25,17 @@ class ReportController extends Controller
 			return view('consolidated.report.index', $data);
 		}
 
+		//AJAX
+		public function consultarResultados (Request $request){ //le envío el idPeriodo
+			$idPeriodo = $request->get('idPeriodo');
+
+			//obtenemos los resultados de ese periodo.
+			$idResultadosEstudiantiles = BD::('periodoxresultado')->where ('IdPeriodo', '=', $idPeriodo )->get();
+
+			//obtengo toda la dta de los resultados:
+			$resultadosEstudiantiles = StudentResult::whereIn('IdResultadoEstudiantil', $idResultadosEstudiantiles)->get();
+
+			return $resultadosEstudiantiles->toJson();
+		}
+
 }

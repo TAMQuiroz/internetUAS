@@ -10,6 +10,7 @@ use Intranet\Models\StudentsResult;
 use Intranet\Models\PeriodxResult;
 use Intranet\Models\Contribution;
 use DB;
+use BD;
 
 class StudentsResultService {
     // obtener todos los resultados estudiantiles

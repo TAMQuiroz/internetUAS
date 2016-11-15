@@ -22,7 +22,6 @@ class ReportController extends Controller
 			$data['title'] = 'Reporte zukulento';
 			$data['periodos'] = $this->periodService->getAll(Session::get('faculty-code'));
 
-
 			return view('consolidated.report.index', $data);
 		}
 

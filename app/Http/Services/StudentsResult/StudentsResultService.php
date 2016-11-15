@@ -556,7 +556,7 @@ class StudentsResultService {
         $idResultadosEstudiantiles = DB::table('periodoxresultado')->where('IdPeriodo', '=', $idPeriod )->get();
 
         //obtengo toda la dta de los resultados:
-        $resultadosEstudiantiles = StudentResult::whereIn('IdResultadoEstudiantil', $idResultadosEstudiantiles)->get();
+        $resultadosEstudiantiles = StudentsResult::whereIn('IdResultadoEstudiantil', $idResultadosEstudiantiles)->get();
 
         return $resultadosEstudiantiles;
 

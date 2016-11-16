@@ -210,8 +210,8 @@ class InscriptionController extends Controller
         foreach ($idinscrip as $ins) {
                 $inscriptiones[]=Inscription::find($ins->idinscriptionfile);
         }
-        $r = count($inscriptiones); 
-        if($r==0)$inscriptiones=null;
+        //$r = count($inscriptiones); 
+        //if($r==0)$inscriptiones=null;
 
         $data = [
             'inscriptiones'    =>  $inscriptiones,

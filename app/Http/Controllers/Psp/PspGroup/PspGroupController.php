@@ -7,6 +7,9 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspGroup;
 use Intranet\Models\Student;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Teacher;
+use Intranet\Models\PspProcessxTeacher;
+use Intranet\Models\PspProcess;
 use Intranet\Http\Requests\PspGroupRequest;
 
 class PspGroupController extends Controller
@@ -18,7 +21,7 @@ class PspGroupController extends Controller
      */
     public function index()
     {
-        $pspGroups = PspGroup::get();
+        $pspGroups = PspGroup::orderBy('numero','asc')->get();
 
         $data = [
             'pspGroups' => $pspGroups,
@@ -34,8 +37,11 @@ class PspGroupController extends Controller
      */
     public function create()
     {
-        //        
-        return view('psp.pspGroup.create');
+        //   
+        $groupNum = pspGroup::count() + 1;
+        $data['groupNum']  = $groupNum;        
+        //dd($procesos);
+        return view('psp.pspGroup.create',$data);
     }
 
     /**
@@ -47,8 +53,16 @@ class PspGroupController extends Controller
     public function store(PspGroupRequest $request)
     {
         //
-        try {
-            $pspGroup = new pspGroup;
+        try {            
+            $pspGroup = new pspGroup; 
+                       
+            if(Auth::User()->IdPerfil==2){
+                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();                
+                $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get()->first(); 
+                //dd($procxt);
+                $pspGroup->idpspprocess = $procxt->idpspprocess;
+            }
+            
             $pspGroup->numero = $request['numero'];
             $pspGroup->descripcion = $request['descripcion'];
             $pspGroup->save();

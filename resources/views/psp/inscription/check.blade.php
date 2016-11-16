@@ -4,11 +4,11 @@
     <div class="col-md-12">
         <div class="page-title">
             <div class="title_left">
-                <h3>Inscripción de información de Empresa</h3>
+                <h3>Registrar Recomendaciones a Ficha de Inscripcion</h3>
             </div>
         </div>
     </div>
-</div>        
+</div>    
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -17,33 +17,33 @@
                 <h3 class="panel-title">Información</h3>
             </div>
             <div class="panel-body">
-            {{Form::open(['route' => 'inscription.store','class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+                {{Form::open(['route' => ['inscription.updateC',$inscription->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}          
 
                 <div class="form-group">
                     {{Form::label('Actividades formativas *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('activ_formativas',null,['class'=>'form-control', 'required','maxlength' => 1000])}}
+                        {{Form::text('activ_formativas',$inscription->activ_formativas,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Actividad económica *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('actividad_economica',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('actividad_economica',$inscription->actividad_economica,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Condiciones de seguridad area *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('cond_seguridad_area',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('cond_seguridad_area',$inscription->cond_seguridad_area,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Correo jefe directo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('correo_jefe_directo',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('correo_jefe_directo',$inscription->Correo_jefe_directo,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
@@ -51,132 +51,122 @@
                 <div class="form-group">
                     {{Form::label('debe_modificarse *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('debe_modificarse',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('debe_modificarse',$inscription->debe_modificarse,['class'=>'form-control', 'required','maxlength' => 200])}}
                     </div>
                 </div>
                 -->
 
                 <div class="form-group">
-                    {{Form::label('Distrito de la empresa *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        {{Form::text('distrito_empresa',null,['class'=>'form-control', 'required','maxlength' => 500])}}
-                    </div>
-                </div>
-
-
-                <div class="form-group">
                     {{Form::label('Direccion empresa *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('direccion_empresa',null,['class'=>'form-control', 'required','maxlength' => 500])}}
+                        {{Form::text('direccion_empresa',$inscription->direccion_empresa,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Equipo del practicante *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('equi_del_practicante',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('equi_del_practicante',$inscription->equi_del_practicante,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Equipamiento area *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('equipamiento_area',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('equipamiento_area',$inscription->equipamiento_area,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Fecha inicio *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::date('fecha_inicio',null,['class'=>'form-control', 'required'])}}
+                        {{Form::date('fecha_inicio',$inscription->fecha_inicio,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Fecha recepción convenio *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::date('fecha_recep_convenio',null,['class'=>'form-control', 'required'])}}
+                        {{Form::date('fecha_recep_convenio',$inscription->fecha_recep_convenio,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Fecha de termino *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::date('fecha_termino',null,['class'=>'form-control', 'required'])}}
+                        {{Form::date('fecha_termino',$inscription->fecha_termino,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Jefe directo auxiliar *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('jefe_directo_aux',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('jefe_directo_aux',$inscription->jefe_directo_aux,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Nombre de area *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('nombre_area',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('nombre_area',$inscription->nombre_area,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Personal de area *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('personal_area',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('personal_area',$inscription->personal_area,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Puesto *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('puesto',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('puesto',$inscription->puesto,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Razon social *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('razon_social',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('razon_social',$inscription->razon_social,['class'=>'form-control', 'readonly'])}}
                     </div>
+                </div>
+
+                <div class="form-group">
+                        {{Form::label('Recomendaciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-4">
+                        {{Form::textArea('recomendaciones',$inscription->recomendaciones,['class'=>'form-control','required','maxlength' => 64])}}
+                    </div>                            
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Teléfono jefe directo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('telef_jefe_directo',null,['class'=>'form-control', 'required'])}}
+                        {{Form::text('telef_jefe_directo',$inscription->telef_jefe_directo,['class'=>'form-control','readonly'])}}
                     </div>
                 </div>
 
                  <div class="form-group">
                     {{Form::label('Ubicacion área *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('ubicacion_area',null,['class'=>'form-control', 'required','maxlength' => 200])}}
+                        {{Form::text('ubicacion_area',$inscription->ubicacion_area,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
-
-                <div class="form-group">
-                    {{Form::label('Acepta terminos y condiciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                    <a href="http://inform.pucp.edu.pe/~inf008/" target="_blank">Ir a la pagina donde se contiene los terminos y condiciones</a>
-                    </div>  
-                    </br>
-                    <div class="col-md-4">
-                        {{Form::checkbox('terminos',1,false, ['class' => 'form-control', 'required'])}}(Debes aceptar los terminos para registrar la ficha)
-                    </div>                            
-                </div>                 
                 
 
-                <div class="row">
-                    <div class="col-md-8 col-sm-12 col-xs-12">
-                        {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                        <a class="btn btn-default pull-right" href="{{ route('inscription.index') }}">Cancelar</a>
+                    
+
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12 col-xs-12">
+                            {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
+                            <a href="" onclick="javascript:history.back()" class="btn btn-default pull-right"> Regresar</a>
+                        </div>
                     </div>
                 </div>
-                {{Form::close()}}
-
             </div>
         </div>
     </div>
 </div>
+
 @endsection

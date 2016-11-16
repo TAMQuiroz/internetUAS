@@ -43,7 +43,7 @@
                 <div class="form-group">
                     {{Form::label('Correo jefe directo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('correo_jefe_directo',$inscription->correo_jefe_directo,['class'=>'form-control', 'readonly'])}}
+                        {{Form::text('correo_jefe_directo',$inscription->Correo_jefe_directo,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 

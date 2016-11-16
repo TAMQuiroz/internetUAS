@@ -18,6 +18,7 @@ use Intranet\Models\Studentxinscriptionfiles;
 use Intranet\Models\Student;
 use Intranet\Models\PspStudent;
 use Intranet\Http\Requests\InscriptionRequest;
+use Intranet\Http\Requests\InscriptionEditRequest;
 
 use Auth;
 
@@ -83,7 +84,7 @@ class InscriptionController extends Controller
             $inscription->personal_area             = $request['personal_area'];
             $inscription->puesto                    = $request['puesto'];
             $inscription->razon_social              = $request['razon_social'];
-            $inscription->recomendaciones           = $request['recomendaciones'];
+            //$inscription->recomendaciones           = $request['recomendaciones'];
             $inscription->telef_jefe_directo        = $request['telef_jefe_directo'];
             $inscription->ubicacion_area            = $request['ubicacion_area'];
 
@@ -164,7 +165,7 @@ class InscriptionController extends Controller
             $inscription->personal_area             = $request['personal_area'];
             $inscription->puesto                    = $request['puesto'];
             $inscription->razon_social              = $request['razon_social'];
-            $inscription->recomendaciones           = $request['recomendaciones'];
+            //$inscription->recomendaciones           = $request['recomendaciones'];
             $inscription->telef_jefe_directo        = $request['telef_jefe_directo'];
             $inscription->ubicacion_area            = $request['ubicacion_area'];
             
@@ -196,4 +197,54 @@ class InscriptionController extends Controller
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }  
     }
+
+
+    public function search($id)
+    {
+        //$students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
+        //$student  =$students->first();
+        $student = Student::find($id);
+        $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
+        $idinscrip = Studentxinscriptionfiles::where('idpspstudents',$pspstudent->id)->get();
+        $inscriptiones = array();
+        foreach ($idinscrip as $ins) {
+                $inscriptiones[]=Inscription::find($ins->idinscriptionfile);
+        }
+        $r = count($inscriptiones); 
+        if($r==0)$inscriptionesn=null;
+
+        $data = [
+            'inscriptiones'    =>  $inscriptiones,
+        ];
+        $data['student'] = $pspstudent;
+
+        return view('psp.Inscription.search', $data); 
+    }
+
+    public function check($id)
+    {
+        $inscription       = Inscription::find($id);
+
+        $data = [
+            'inscription'      =>  $inscription,
+        ];
+        return view('psp.inscription.check',$data);
+    }
+
+        public function updateC(InscriptionEditRequest $request, $id)
+    {
+        try {
+            //Crear 
+            $inscription                   = Inscription::find($id);
+            $inscription->recomendaciones           = $request['recomendaciones'];            
+            $inscription->save();
+            $ixs=Studentxinscriptionfiles::where('idinscriptionfile',$inscription->id)->first();
+            $psp=PspStudent::find($ixs->idpspstudents);           
+
+            return redirect()->route('inscription.search',$psp->idalumno)->with('success', 'La información se ha actualizado exitosamente');
+        } catch (Exception $e){
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
+
 }

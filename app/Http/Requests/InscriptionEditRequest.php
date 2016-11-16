@@ -24,7 +24,7 @@ class InscriptionEditRequest extends Request
     public function rules()
     {
         return [
-           'recomendaciones'           =>'regex:/^[\pL\s\-]+$/u|required|max:200',
+           'recomendaciones'           =>'required|max:100',
         ];
     }
 }

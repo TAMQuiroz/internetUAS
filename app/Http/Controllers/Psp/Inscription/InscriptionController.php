@@ -211,7 +211,7 @@ class InscriptionController extends Controller
                 $inscriptiones[]=Inscription::find($ins->idinscriptionfile);
         }
         $r = count($inscriptiones); 
-        if($r==0)$inscriptionesn=null;
+        if($r==0)$inscriptiones=null;
 
         $data = [
             'inscriptiones'    =>  $inscriptiones,

@@ -48,7 +48,7 @@
                         <table class="table table-striped responsive-utilities jambo_table bulk_action">
                             <thead>
                                 <tr class="headings">
-                                    <th class="centered column-title">Hora</th>
+                                    <th class="centered column-title">HORA</th>
                                     <th class="centered column-title">LUN </th>
                                     <th class="centered column-title">MAR</th> 
                                     <th class="centered column-title">MIE </th>
@@ -80,30 +80,9 @@
                         <a id="add" class="btn btn-warning tCerr"><i class="fa fa-plus" aria-hidden="true"></i></a>
                         <a id="remove" class="btn btn-danger tCerr"><i class="fa fa-minus" aria-hidden="true"></i></a>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-4 col-sm-3 col-xs-12">No disponibilidad *</label>
-                    
-                    <div class="col-md-4">  
-                        Desde
-                        <div class="input-group date fechaDesde">
-                            <input type="text" class="form-control input-date" name="fechaDesde[1]" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/>
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>                        
-                    </div>
-                    <div class="col-md-4">  
-                        Hasta
-                        <div class="input-group date fechaHasta">
-                            <input type="text" class="form-control input-date" name="fechaHasta[1]" id="fechaHasta" placeholder="dd-mm-aaaa" maxlength="10" required/>
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>                        
-                    </div>
-                </div>
+                </div>                
 
-                <div id="fechas">
-                    
-                    
-                    
+                <div id="fechas">                                                            
                 </div>
 
                 <div class="row">
@@ -120,10 +99,10 @@
         </div>
     </div>
 </div>
-
+{{$numFechas = 1}}
 <!-- <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script> -->
 <script type="text/javascript">
-    var n = 1;
+    var n = {{$numFechas}};
 
     $("#add").click(function() {
         var x = $("#add").attr('disabled');
@@ -134,9 +113,113 @@
             return;
         }
         n++;
-        $("#fechas").append('<div class="form-group fecha"><label class="control-label col-md-4 col-sm-3 col-xs-12"></label><div class="col-md-4">Desde<div class="input-group date fechaDesde"><input type="text" class="form-control input-date" name="fechaDesde[1]" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div><div class="col-md-4">Hasta<div class="input-group date fechaHasta"><input type="text" class="form-control input-date" name="fechaHasta[1]" id="fechaHasta" placeholder="dd-mm-aaaa" maxlength="10" required/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div></div>');
+        if (n == 2) {
+            $("#fechas").append('<div class="form-group fecha">\n\
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">No disponibilidad *</label>\n\
+                                    <div class="col-md-4">Desde\n\
+                                        <div class="input-group date fechaDesde">\n\
+                                            <input type="text" class="form-control input-date" name="fechaDesde['+(n-1)+']" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/>\n\
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>\n\
+                                        </div>\n\
+                                    </div>\n\
+                                    <div class="col-md-4">Hasta\n\
+                                        <div class="input-group date fechaHasta">\n\
+                                            <input type="text" class="form-control input-date" name="fechaHasta['+(n-1)+']" id="fechaHasta" placeholder="dd-mm-aaaa" maxlength="10" required/>\n\
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>\n\
+                                        </div>\n\
+                                    </div>\n\
+                                </div>');
+
+            $(function() {
+                var startDate = $(".input-group.date.fechaDesde");
+                var endDate = $(".input-group.date.fechaHasta");
+
+                startDate.datepicker({
+                    format: "dd-mm-yyyy",
+                    startDate: "today",
+                    endDate: "{{$futureDay}}",
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true,
+                });
+
+                startDate.datepicker('setDate', '{{$startDate}}');
+
+                endDate.datepicker({
+                    format: "dd-mm-yyyy",
+                    startDate: "{{$startDate}}",
+                    endDate: "{{$futureDay}}",
+                    language: "es",
+                    autoclose: true,
+                });
+
+                endDate.datepicker('setDate', '{{$endDate}}');
+
+                var inputStartDate = startDate.children(".input-date");
+
+                inputStartDate.change(function() {
+                    var valueInputStart = $(this).val();
+                    console.log(valueInputStart + "");
+                    endDate.datepicker('setStartDate', valueInputStart);
+                });
+
+            });
+
+        } else {
+            $("#fechas").append('<div class="form-group fecha">\n\
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12"></label>\n\
+                                    <div class="col-md-4">Desde\n\
+                                        <div class="input-group date fechaDesde">\n\
+                                            <input type="text" class="form-control input-date" name="fechaDesde['+(n-1)+']" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/>\n\
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>\n\
+                                        </div>\n\
+                                    </div>\n\
+                                    <div class="col-md-4">Hasta\n\
+                                        <div class="input-group date fechaHasta">\n\
+                                            <input type="text" class="form-control input-date" name="fechaHasta['+(n-1)+']" id="fechaHasta" placeholder="dd-mm-aaaa" maxlength="10" required/>\n\
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>\n\
+                                        </div>\n\
+                                    </div>\n\
+                                </div>');
+
+            $(function() {
+                var startDate = $(".input-group.date.fechaDesde");
+                var endDate = $(".input-group.date.fechaHasta");
+
+                startDate.datepicker({
+                    format: "dd-mm-yyyy",
+                    startDate: "today",
+                    endDate: "{{$futureDay}}",
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true,
+                });
+
+                startDate.datepicker('setDate', '{{$startDate}}');
+
+                endDate.datepicker({
+                    format: "dd-mm-yyyy",
+                    startDate: "{{$startDate}}",
+                    endDate: "{{$futureDay}}",
+                    language: "es",
+                    autoclose: true,
+                });
+
+                endDate.datepicker('setDate', '{{$endDate}}');
+
+                var inputStartDate = startDate.children(".input-date");
+
+                inputStartDate.change(function() {
+                    var valueInputStart = $(this).val();
+                    console.log(valueInputStart + "");
+                    endDate.datepicker('setStartDate', valueInputStart);
+                });
+
+            });
+
+        }
     });
-    
+
     $("#remove").click(function() {
         var x = $("#remove").attr('disabled');
         if (typeof x !== typeof undefined && x !== false) {
@@ -148,44 +231,8 @@
         $(".fecha:last-child").remove();
         n--;
     });
-    
-    
-    $(function() {
-        var today = new Date();
 
-        var startDate = $(".input-group.date.fechaDesde");
-        var endDate = $(".input-group.date.fechaHasta");
 
-        startDate.datepicker({
-            format: "dd-mm-yyyy",
-            startDate: "today",
-            endDate: "{{$futureDay}}",
-            language: "es",
-            autoclose: true,
-            todayHighlight: true,
-        });
-
-        startDate.datepicker('setDate', '{{$startDate}}');
-
-        endDate.datepicker({
-            format: "dd-mm-yyyy",
-            startDate: "{{$startDate}}",
-            endDate: "{{$futureDay}}",
-            language: "es",
-            autoclose: true,
-        });
-
-        endDate.datepicker('setDate', '{{$endDate}}');
-
-        var inputStartDate = startDate.children(".input-date");
-
-        inputStartDate.change(function() {
-            var valueInputStart = $(this).val();
-            console.log(valueInputStart + "");
-            endDate.datepicker('setStartDate', valueInputStart);
-        });
-
-    });
 </script>
 @endsection
 

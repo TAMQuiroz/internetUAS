@@ -23,7 +23,7 @@
                         <li class="tab-page">Citas por tutor</li>
                     </div>
                 </a>
-                <a href="">
+                <a href="{{route('reporte.tutstudentDate')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por alumno</li>
                     </div>
@@ -68,9 +68,6 @@
                                 {{Form::close()}}
 
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -78,6 +75,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

@@ -134,13 +134,6 @@
                 </div>
 
                 <div class="form-group">
-                        {{Form::label('Recomendaciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        {{Form::textArea('recomendaciones',$inscription->recomendaciones,['class'=>'form-control','required','maxlength' => 64])}}
-                    </div>                            
-                </div>
-
-                <div class="form-group">
                     {{Form::label('Teléfono jefe directo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
                         {{Form::text('telef_jefe_directo',$inscription->telef_jefe_directo,['class'=>'form-control','readonly'])}}
@@ -154,8 +147,12 @@
                     </div>
                 </div>
                 
-
-                    
+                <div class="form-group">
+                        {{Form::label('Recomendaciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    <div class="col-md-4">
+                        {{Form::textArea('recomendaciones',$inscription->recomendaciones,['class'=>'form-control','required','maxlength' => 64])}}
+                    </div>                            
+                </div>                    
 
                     <div class="row">
                         <div class="col-md-8 col-sm-12 col-xs-12">

@@ -67,7 +67,7 @@
                             </div>
                             <div  class="col-sm-2"></div>
                         </div>
-
+                        <div class="row"></div>
                         <div class="row">
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Curso<span class="error">*</span></label>
@@ -142,9 +142,9 @@
                 var idPeriodo = $('#periodo').val();
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-                alert(miUrl);
-                alert(idPeriodo);
-                alert(CSRF_TOKEN);
+                //alert(miUrl);
+                //alert(idPeriodo);
+                //alert(CSRF_TOKEN);
 
                 $.ajax({        
                     type: "GET",   
@@ -159,8 +159,10 @@
                         console.log(data);  // for testing only
                         $('#resultado').empty();
 
+                        $('#resultado').append('<option value="">--Seleccione--</option>');
+
                         $.each(data, function(key, element) {
-                            $('#resultado').append("<option value='" +  element['IdResultadoEstudiantil'] + "'>" + element['Descripcion'] + "</option>");
+                            $('#resultado').append("<option value='" +  element['IdResultadoEstudiantil'] + "'>" + element['Identificador'] + " - " + element['Descripcion'] + "</option>");
                         });
                        
                     },
@@ -174,6 +176,133 @@
             });
         });     
 
+
+        //para el combobox se refresque solo
+        $(document).ready(function(){
+            $('#resultado').change(function(){
+
+                var miUrl=  "{{ url('consolidated/consultarAspectos') }}";
+                var idResultadoEstudiantil = $('#resultado').val();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                //alert(miUrl);
+                //alert(idResultadoEstudiantil);
+                //alert(CSRF_TOKEN);
+
+                $.ajax({        
+                    type: "GET",   
+                    url: miUrl,
+                    dataType : "JSON",
+                    data: {
+                        idResultadoEstudiantil: idResultadoEstudiantil,
+                        _token: CSRF_TOKEN
+                    },
+                    success: function(data){
+
+                        console.log(data);  // for testing only
+                        $('#aspecto').empty();
+
+                        $('#aspecto').append('<option value="">--Seleccione--</option>');
+
+                        $.each(data, function(key, element) {
+
+                            $('#aspecto').append("<option value='" +  element['IdAspecto'] + "'>" + element['Nombre'] + "</option>");
+                        });
+                       
+                    },
+                    error: function (e) {
+                        console.log('holi');
+                      console.log(e.responseText);
+                    },
+
+                });
+
+            });
+        });    
+
+         //para el combobox se refresque solo
+        $(document).ready(function(){
+            $('#aspecto').change(function(){
+
+                var miUrl=  "{{ url('consolidated/consultarCriterios') }}";
+                var idAspecto = $('#aspecto').val();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                //alert(miUrl);
+                //alert(idResultadoEstudiantil);
+                //alert(CSRF_TOKEN);
+
+                $.ajax({        
+                    type: "GET",   
+                    url: miUrl,
+                    dataType : "JSON",
+                    data: {
+                        idAspecto: idAspecto,
+                        _token: CSRF_TOKEN
+                    },
+                    success: function(data){
+
+                        console.log(data);  // for testing only
+                        $('#criterio').empty();
+
+                        $('#criterio').append('<option value="">--Seleccione--</option>');
+
+                        $.each(data, function(key, element) {
+                            $('#criterio').append("<option value='" +  element['IdCriterio'] + "'>" + element['Nombre'] + "</option>");
+                        });
+                       
+                    },
+                    error: function (e) {
+                        console.log('holi');
+                      console.log(e.responseText);
+                    },
+
+                });
+
+            });
+        }); 
+
+        //para el combobox se refresque solo
+        $(document).ready(function(){
+            $('#periodo').change(function(){
+
+                var miUrl=  "{{ url('consolidated/consultarCursos') }}";
+                var idPeriodo = $('#periodo').val();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                //alert(miUrl);
+                //alert(idPeriodo);
+                //alert(CSRF_TOKEN);
+
+                $.ajax({        
+                    type: "GET",   
+                    url: miUrl,
+                    dataType : "JSON",
+                    data: {
+                        idPeriodo: idPeriodo,
+                        _token: CSRF_TOKEN
+                    },
+                    success: function(data){
+
+                        console.log(data);  // for testing only
+                        $('#curso').empty();
+
+                        $('#curso').append('<option value="">--Seleccione--</option>');
+
+                        $.each(data, function(key, element) {
+                            $('#curso').append("<option value='" +  element['IdCurso'] + "'>" + element['Codigo'] + " - " + element['Nombre'] + "</option>");
+                        });
+                       
+                    },
+                    error: function (e) {
+                        console.log('holi');
+                      console.log(e.responseText);
+                    },
+
+                });
+
+            });
+        }); 
 
     </script>
     <script src="{{ URL::asset('js/intranetjs/teachers/index-teacher-script.js')}}">

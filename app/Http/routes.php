@@ -463,6 +463,12 @@ Route::group(['middleware' => 'auth'], function(){
 
         //AJAX
         Route::get ('/consultarResultados', ['as' =>'consultarResultados.consolidated', 'uses' => 'ReportController@consultarResultados']);
+
+        Route::get ('/consultarAspectos', ['as' =>'consultarAspectos.consolidated', 'uses' => 'ReportController@consultarAspectos']);
+
+        Route::get ('/consultarCriterios', ['as' =>'consultarCriterios.consolidated', 'uses' => 'ReportController@consultarCriterios']);
+
+        Route::get ('/consultarCursos', ['as' =>'consultarCursos.consolidated', 'uses' => 'ReportController@consultarCursos']);
         /*
         Route::group(['middleware' => 'action_permission'], function() {
             Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);

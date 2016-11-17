@@ -98,4 +98,5 @@
             </div>
         </div>
     </div>
+    <a class="btn btn-default pull-right" href="{{ route('student.index') }}">Regresar</a>
 @endsection

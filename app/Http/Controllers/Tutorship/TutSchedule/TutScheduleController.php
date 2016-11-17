@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
 use Intranet\Models\TutSchedule;
+use Intranet\Models\NoAvailability;
 use Illuminate\Support\Facades\Session;
 
 class TutScheduleController extends Controller {
@@ -97,11 +98,8 @@ class TutScheduleController extends Controller {
         $teacher->oficina = $request['oficina'];
         $teacher->anexo = $request['anexo'];
         $teacher->save();
-
-        $checkedSchedules = $request->input("check", []);
-
+       
         $tutSchedule = TutSchedule::where('id_docente', $id)->get();
-
         if ($tutSchedule->count() != 0) { //si encuentra horarios del profe
             foreach ($tutSchedule as $t) {
                 $scheduleTrash = TutSchedule::find($t->id);
@@ -109,6 +107,7 @@ class TutScheduleController extends Controller {
             }
         }
 
+        $checkedSchedules = $request->input("check", []);
         foreach ($checkedSchedules as $diaHora => $value) {
             $schedule = new TutSchedule;
             $schedule->dia = substr($diaHora, 0, 1);
@@ -118,6 +117,16 @@ class TutScheduleController extends Controller {
             $schedule->save();
         }
 
+        $fechasHasta = $request->input("fechaHasta", []);
+        $fechasDesde = $request->input("fechaDesde", []);
+        foreach ($fechasDesde as $num => $fechaDesde) {
+            $noDisp = new NoAvailability;
+            $noDisp->fecha_inicio = substr($fechaDesde, 6, 4).substr($fechaDesde, 3, 2).substr($fechaDesde, 0, 2);
+            $noDisp->fecha_fin = substr($fechasHasta[$num], 6, 4).substr($fechasHasta[$num], 3, 2).substr($fechasHasta[$num], 0, 2);
+            $noDisp->id_docente = $id;
+            $noDisp->save();                                    
+        }
+                                
         return redirect()->route('miperfil.index')->with('success', 'Se guardaron los cambios exitosamente');
     }
 

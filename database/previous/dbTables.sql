@@ -1801,21 +1801,21 @@ INSERT INTO `Usuario` VALUES (1,3,'admin','$2y$10$Lr3YPtN8NaNBVNHtrK0MBO5Yf6ZiyM
 UNLOCK TABLES;
 
 -- Agregados para poder visualizar el flujo de psp (sprint 2)
-LOCK TABLES `cursoxdocente`  WRITE;
+LOCK TABLES `CursoxDocente`  WRITE;
 /*!40000 ALTER TABLE `cursoxdocente`  DISABLE KEYS */;
-INSERT INTO `cursoxdocente` (`IdCursoxDocente`, `IdDocente`, `IdCurso`, `deleted_at`, `created_at`, `updated_at`) VALUES (NULL, '4', '38', NULL, NULL, NULL);
+INSERT INTO `CursoxDocente` (`IdCursoxDocente`, `IdDocente`, `IdCurso`, `deleted_at`, `created_at`, `updated_at`) VALUES (NULL, '4', '38', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `cursoxdocente`  ENABLE KEYS */;
 UNLOCK TABLES;
 
-LOCK TABLES `horario`  WRITE;
+LOCK TABLES `Horario`  WRITE;
 /*!40000 ALTER TABLE `horario`  DISABLE KEYS */;
-INSERT INTO `horario` (`IdHorario`, `IdCursoxCiclo`, `Codigo`, `TotalAlumnos`, `deleted_at`, `created_at`, `updated_at`, `idPspProcess`) VALUES (NULL, '11', 'H1081', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Horario` (`IdHorario`, `IdCursoxCiclo`, `Codigo`, `TotalAlumnos`, `deleted_at`, `created_at`, `updated_at`, `idPspProcess`) VALUES (NULL, '11', 'H1081', NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `horario`  ENABLE KEYS */;
 UNLOCK TABLES;
 
-LOCK TABLES `horarioxdocente`  WRITE;
+LOCK TABLES `HorarioxDocente`  WRITE;
 /*!40000 ALTER TABLE `horarioxdocente`  DISABLE KEYS */;
-INSERT INTO `horarioxdocente` (`IdHorarioxDocente`, `IdDocente`, `IdHorario`, `deleted_at`, `created_at`, `updated_at`) VALUES (NULL, '4', '6', NULL, NULL, NULL);
+INSERT INTO `HorarioxDocente` (`IdHorarioxDocente`, `IdDocente`, `IdHorario`, `deleted_at`, `created_at`, `updated_at`) VALUES (NULL, '4', '6', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `horarioxdocente`  ENABLE KEYS */;
 UNLOCK TABLES;
 -- Fin de Agregados para poder visualizar el flujo de psp (sprint 2)

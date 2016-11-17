@@ -24,12 +24,12 @@
                     </div>
                 </a>
                 <a href="{{route('reporte.tutstudentDate')}}">
-                    <div class="tab-page-wrapper active">
+                    <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por alumno</li>
                     </div>
                 </a>
                 <a href="{{route('reporte.cancelledMeeting')}}">
-                    <div class="tab-page-wrapper">
+                    <div class="tab-page-wrapper active">
                         <li class="tab-page">Citas canceladas</li>
                     </div>
                 </a>
@@ -45,7 +45,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default">                            
                             <div class="panel-body">
-                                <form method="GET" action="{{route('reporte.tutstudentDate')}}">
+                                <form method="GET" action="{{route('reporte.cancelledMeeting')}}">
                                     <div class="form-group">
                                         {{Form::label('Fecha inicio: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
                                         <div class="col-md-3 col-sm-3 col-xs-8">                        
@@ -80,37 +80,33 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">Estado </th>
-                            <th class="column-title">Código </th>
-                            <th class="column-title">Hora inicio </th>                    
+                            <th class="column-title">Razón </th>
+                            <th class="column-title">Cantidad </th>
+                            <th class="column-title">Porcentaje respecto de las canceladas</th>                    
+                            <th class="column-title">Porcentaje respecto del total </th>                    
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($tutMeetings as  $key => $tutMeeting)
+                        @foreach($cancelledtutMeetings as  $key => $cancelledtutMeeting)
                         <tr class="even pointer">
-                            <td hidden class="group-id">{{$tutMeeting->id}} </td>
+                            <td hidden class="group-id">{{$cancelledtutMeeting->id}} </td>
 
-                            <td class=""><span class="label label-success"> {{ $tutMeeting->estado }}</span></td>
+                            <td class="">{{$reasons_name_list[$key] }}</span></td>
                             
-                            <td class=" ">{{ $tutMeeting->tutstudent->nombre }}</td>                                      
+                            <td class=" ">{{ $reasons_amount_list[$key] }}</td>                                      
+                            
+                            <td class=" ">{{ round($reasons_amount_list[$key]/$cancelledTotal*100,2) }}</td>      
 
-                            <td class=" ">{{ $tutMeeting->inicio }}</td>      
+                            <td class=" ">{{ round($reasons_percentage_list[$key],2) }}</td>      
                             
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            {{ $tutMeetings->links() }}
-            <div id="pendientes" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$pendientes}}"></div>
-            <div id="canceladas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$canceladas}}"></div>
-            <div id="sugeridas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$sugeridas}}"></div>
-            <div id="rechazadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$rechazadas}}"></div>
-            <div id="asistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$asistidas}}"></div>
-            <div id="noasistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$no_asistidas}}"></div>
-            <div id="confirmadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$confirmadas}}"></div>
-            <div id="citas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$citas}}"></div>
-            <div id="graphics" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            {{ $cancelledtutMeetings->links() }}            
+            <div id="canceladas_report" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$canceladas}}"></div>            
+            <div id="graphic_cancelled" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
             
         </div>
     </div>
@@ -118,5 +114,5 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="{{ URL::asset('js/tutorship/reportDatesByTutstudent.js')}}"></script>
+<script src="{{ URL::asset('js/tutorship/reportDatesByCancelledMeeting.js')}}"></script>
 @endsection

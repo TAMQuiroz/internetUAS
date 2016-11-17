@@ -163,11 +163,42 @@ class TutMeeting extends Model
         */
         return $queryTutMeeting->orderBy("id_tutstudent", 'asc')->paginate(10);
 
-    }  
+    }
+
+    static public function getCancelledTutMeetings($filters) {
+        $query = Tutstudent::query(); 
+        $queryTutMeeting = TutMeeting::query();        
+
+               
+        if($filters["beginDate"] != "" && $filters["endDate"] != "") {
+            $queryTutMeeting  = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]) );                
+        }                                    
+
+        $queryTutMeeting->where('no_programada', '=', null)
+                        ->where('estado', '=', 3)
+                        ->groupBy('id_reason');
+        //                ->groupBy('id_tutstudent');
+        /*
+        $pendientes_raw   = DB::raw('count(estado) as pendientes');
+        $confirmadas_raw  = DB::raw('count(estado) as confirmadas');
+        $canceladas_raw   = DB::raw('count(estado) as canceladas');
+        $sugeridas_raw    = DB::raw('count(estado) as sugeridas');
+        $rechazadas_raw   = DB::raw('count(estado) as rechazadas');
+        $asistidas_raw    = DB::raw('count(estado) as asistidas');
+        $noasisitidas_raw = DB::raw('count(estado) as noasistidas');
+        $citas_raw        = DB::raw('count(estado) as citas');
+        $queryTutMeeting->select('estado', $pendientes_raw)                                         
+                        ->groupBy('id_tutstudent');                        
+        */
+        return $queryTutMeeting->orderBy("id_reason", 'asc')->paginate(10);
+
+    }    
 
     public function tutstudent(){
       return $this->belongsTo('Intranet\Models\Tutstudent','id_tutstudent');//bien
     }
-
+    public function reason(){
+      return $this->belongsTo('Intranet\Models\Reason','id_reason');
+    }
 
 }

@@ -33,7 +33,7 @@ class Tutstudent extends Model
     }
 
     public function tutmetings(){
-      return $this->hasMany('Intranet\Models\TutMeeitng','id_tutstudent');//bien
+      return $this->hasMany('Intranet\Models\TutMeeting','id_tutstudent');//bien
     }    
 
     static public function loadStudents($csv_file, $mayor) {

@@ -55,12 +55,15 @@ class PspGroupController extends Controller
         //
         try {            
             $pspGroup = new pspGroup; 
-                       
+            //dd(Auth::User()->IdPerfil);           
             if(Auth::User()->IdPerfil==2){
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();                
                 $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get()->first(); 
                 //dd($procxt);
-                $pspGroup->idpspprocess = $procxt->idpspprocess;
+                if($procxt!=null){
+                    $pspGroup->idpspprocess = $procxt->idpspprocess;    
+                }
+                
             }
             
             $pspGroup->numero = $request['numero'];

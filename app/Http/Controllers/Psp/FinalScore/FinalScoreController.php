@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\Http\Controllers\Psp\Aspecto;
+namespace Intranet\Http\Controllers\Psp\FinalScore;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -41,25 +41,33 @@ class FinalScoreController extends Controller
         $supervisor = Supervisor::find($user->id);
         $pspProceso = PspProcess::find($supervisor->idpspprocess);
         $criterios  = $pspProceso->criterios;
-        $inscriptiofile= Studentxinscriptionfiles::where('idpspstudent',$idAlumno);
+        $psp=PspStudent::where('idalumno',$idAlumno)->first(); 
+        
         //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
         //echo " idcurso ".$pspProceso->idcurso;
         //$criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
         //echo " idcursoxciclo ".$cursoxciclo->IdCursoxCiclo;
-        $criteriosAlumnos = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)
-               $finalScore=0; $finalWeight=0;
-                foreach ($criteriosAlumnos as $crit) {
-                    $weightCriterio=Pspcriterio::find($pN->idcriterio);
-                    //dd($p);
-                        $finalScore=$criteriosAlumnos->nota*$weightCriterio->peso + $finalScore;
-                        $finalWeight=$weightCriterio->peso + $finalWeight;            
-                }
+        $criteriosAlumnos = Pspstudentsxcriterios::where('idpspstudent',$psp->id)->get();
+        $finalScore=0;
+        $finalWeight=0;
+        //dd($inscriptiofile);
+        //dd($criteriosAlumnos);
+        foreach ($criteriosAlumnos as $crit) {
+            $weightCriterio=Pspcriterio::find($crit->idcriterio);
+                    //dd($weightCriterio);
+            $finalScore=$crit->nota*$weightCriterio->peso + $finalScore;
+            $finalWeight=$weightCriterio->peso + $finalWeight;            
+        }
            $finalScore = $finalScore/$finalWeight;
-           $inscriptiofile->nota=$finalScore;
-        //$crit_aux       = Criterion::find($id);
+           $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$psp->id)->first();
+           //dd($inscriptiofile->id);
+           $inscriptiofile->nota_final=$finalScore;
+           //dd($inscriptiofile);
            $inscriptiofile->save();
-
-        return view('psp.finalscorestudent.index', $finalScore);
+           $data = [
+                    'finalScore'    => $finalScore,
+                ];
+        return view('psp.finalscorestudent.index', $data);
     }
 
     /**

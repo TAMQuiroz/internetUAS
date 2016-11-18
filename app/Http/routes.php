@@ -649,7 +649,7 @@ Route::group(['middleware' => 'auth'], function(){
 
             //Final score
              Route::group(['prefix' => 'finalscore'], function() {
-                Route::get('index/{id}', ['as' => 'finalscore.index', 'uses' => 'Psp\FinalScore\FinalScoreController@create']);
+                Route::get('index/{id}', ['as' => 'finalscore.index', 'uses' => 'Psp\FinalScore\FinalScoreController@index']);
             });
             
 

@@ -26,7 +26,7 @@ class MeetingTeacherController extends Controller
     public function index()
     {
         $MeetingTeacher = MeetingTeacher::get();
-        $students = PspStudent::get();
+        $students = PspStudent::where('idsupervisor',NULL)->get();
 
         $data = [
             'MeetingTeacher'    =>  $MeetingTeacher,
@@ -48,11 +48,17 @@ class MeetingTeacherController extends Controller
     public function create($id)
     {
 
-        $arr = [];
+        $arr = array(); 
         $horas = freeHour::get();
-        $student = Student::find($id);
-        $data['freeHours'] = $horas;
-
+        $student = Student::find($id);        
+        foreach ($horas as $hora) {
+            $m=null;            
+            $m=MeetingTeacher::where('idfreehour',$hora->id)->get();
+            if(count($m)==0){
+                $arr[]=$hora;
+            }
+        }
+        $data['freeHours'] = $arr;
         $data['MeetingTeacher'] = MeetingTeacher::get();
         $data['student'] = $student;
         return view('psp.MeetingTeacher.create',$data);

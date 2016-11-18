@@ -37,16 +37,19 @@ class MeetingController extends Controller
     //Vista alumno
     public function create()
     {
-        $arr = [];
+        $arr = array(); 
+        $meet=meeting::get();
         $horas = freeHour::get();
-        /*foreach ($horas as $hora) {
-            $cadena = $hora->fecha.' - '.$hora->hora_ini.' - '.$hora->supervisor->nombres.' '.$hora->supervisor->apellido_paterno;
-            array_push($arr, $cadena);
-        }*/
-
+        foreach ($horas as $hora) {
+            $m=null;            
+            $m=meeting::where('idfreehour',$hora->id)->get();
+            if(count($m)==0){
+                $arr[]=$hora;
+            }
+        }
         //$data['freeHours'] = $arr;
-        $data['freeHours'] = $horas;
-        $data['meeting'] = meeting::get();
+        $data['freeHours'] = $arr;
+        $data['meeting'] = $meet;
      
         return view('psp.meeting.create',$data);
     }

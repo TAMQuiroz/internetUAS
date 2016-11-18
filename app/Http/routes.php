@@ -646,6 +646,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
                 Route::post('edit/{id}', ['as' => 'aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
             });
+
+            //Final score
+             Route::group(['prefix' => 'finalscore'], function() {
+                Route::get('index/{id}', ['as' => 'finalscore.index', 'uses' => 'Psp\FinalScore\FinalScoreController@create']);
+            });
             
 
             //Schedule Meeting

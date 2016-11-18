@@ -76,6 +76,7 @@ class AspectoController extends Controller
     public function store(Request $request, $idAlumno)
     {
         $listaNotas = $request->input("nota",[]);
+        
         foreach ($listaNotas as $idCrit => $valorNota) {
             //echo "$idCrit"." ".$valorNota."<br>";
         }

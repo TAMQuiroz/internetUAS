@@ -141,13 +141,6 @@
                     </div>
                 </div>
 
-                 <div class="form-group">
-                    {{Form::label('Recomendaciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        {{Form::text('recomendaciones',null,['class'=>'form-control', 'required','maxlength' => 200])}}
-                    </div>
-                </div>
-
                 <div class="form-group">
                     {{Form::label('Teléfono jefe directo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">

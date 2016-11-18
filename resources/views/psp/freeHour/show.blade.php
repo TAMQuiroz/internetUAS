@@ -22,14 +22,14 @@
                 <div class="form-group">
                     {{Form::label('Fecha',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::date('fecha', $freeHour->fecha,['class'=>'form-control','required'])}}
+                        {{Form::text('fecha', $freeHour->fecha,['class'=>'form-control','required','readonly'])}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {{Form::label('Hora',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::number('hora_ini',$freeHour->hora_ini,['class'=>'form-control', 'required', 'min' => 8, 'max' => 21,'readonly'])}}    
+                        {{Form::text('hora_ini',$freeHour->hora_ini,['class'=>'form-control', 'required','readonly'])}}    
                     </div>                    
                 </div>
 

@@ -48,7 +48,7 @@
 
                     <div class="form-group">
                         {{Form::label('Curso de PSP*',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-4">
                             <select name="Proceso_de_Psp" id="Proceso_de_Psp" class="form-control" disabled="">
                                 <option value="">{{$Phase->PspProcess->Course->Nombre}}</option>
                             </select>                             

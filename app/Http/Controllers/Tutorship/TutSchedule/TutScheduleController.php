@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
 use Intranet\Models\TutSchedule;
+use Intranet\Models\TutMeeting;
 use Intranet\Models\NoAvailability;
 use Illuminate\Support\Facades\Session;
 
@@ -70,6 +71,7 @@ class TutScheduleController extends Controller {
     public function edit($id) {
         $teacher = Teacher::find($id);
         $tutSchedule = TutSchedule::where('id_docente', $id)->get();
+        $noDisponibilidades = NoAvailability::where('id_docente', $id)->get();
 
         $today = date('d-m-Y');
         $futureDay = date('d-m-Y', strtotime($today . '+185 day'));
@@ -80,6 +82,7 @@ class TutScheduleController extends Controller {
             'startDate' => $today,
             'endDate' => $today,
             'futureDay' => $futureDay,
+            'noDisponibilidades' => $noDisponibilidades,
         ];
 
         return view('tutorship.tutschedule.edit', $data);
@@ -98,7 +101,7 @@ class TutScheduleController extends Controller {
         $teacher->oficina = $request['oficina'];
         $teacher->anexo = $request['anexo'];
         $teacher->save();
-       
+
         $tutSchedule = TutSchedule::where('id_docente', $id)->get();
         if ($tutSchedule->count() != 0) { //si encuentra horarios del profe
             foreach ($tutSchedule as $t) {
@@ -117,16 +120,38 @@ class TutScheduleController extends Controller {
             $schedule->save();
         }
 
+        $noDispAnt = NoAvailability::where('id_docente', $id)->get();
+        foreach ($noDispAnt as $n) {
+            $noDispTrash = NoAvailability::find($n->id);
+            $noDispTrash->delete();
+        }
+        
+        $citas = TutMeeting::where('id_docente', $id)->where('estado', 2)->get();
         $fechasHasta = $request->input("fechaHasta", []);
         $fechasDesde = $request->input("fechaDesde", []);
         foreach ($fechasDesde as $num => $fechaDesde) {
             $noDisp = new NoAvailability;
-            $noDisp->fecha_inicio = substr($fechaDesde, 6, 4).substr($fechaDesde, 3, 2).substr($fechaDesde, 0, 2);
-            $noDisp->fecha_fin = substr($fechasHasta[$num], 6, 4).substr($fechasHasta[$num], 3, 2).substr($fechasHasta[$num], 0, 2);
+            $noDisp->fecha_inicio = substr($fechaDesde, 6, 4) . substr($fechaDesde, 3, 2) . substr($fechaDesde, 0, 2);
+            $noDisp->fecha_fin = substr($fechasHasta[$num], 6, 4) . substr($fechasHasta[$num], 3, 2) . substr($fechasHasta[$num], 0, 2);
             $noDisp->id_docente = $id;
-            $noDisp->save();                                    
+            $noDisp->save();
+            
+            $fDesde = intval(substr($fechaDesde, 6, 4))*10000 + intval(substr($fechaDesde, 3, 2))*100 + intval(substr($fechaDesde, 0, 2));
+            $fHasta = intval(substr($fechasHasta[$num], 6, 4))*10000 + intval(substr($fechasHasta[$num], 3, 2))*100 + intval(substr($fechasHasta[$num], 0, 2));
+            //2016-03-28
+            foreach($citas as $c) {
+                $fCita = intval(substr($c->inicio,0,4))*10000 + intval(substr($c->inicio,5,2))*100 + intval(substr($c->inicio,8,2));
+                
+                if ($fCita>$fDesde && $fCita<$fHasta && $c->estado==2) {
+                    $cita = TutMeeting::find($c->id);
+                    $cita->estado=3;
+                    $cita->id_reason=2;
+                    $cita->save();
+                }
+            }
+                        
         }
-                                
+
         return redirect()->route('miperfil.index')->with('success', 'Se guardaron los cambios exitosamente');
     }
 

@@ -76,15 +76,34 @@
                 </div>
                 
                 <div class="form-group">
-                    {{Form::label('',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
+                    {{Form::label('No Disponibilidad *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4 col-sm-4 col-xs-4">
                         <a id="add" class="btn btn-warning tCerr"><i class="fa fa-plus" aria-hidden="true"></i></a>
                         <a id="remove" class="btn btn-danger tCerr"><i class="fa fa-minus" aria-hidden="true"></i></a>
                     </div>
                 </div>                
-
-                <div id="fechas">                                                            
-                </div>
+                
+                <?php $n = 0;?>
+                @foreach($noDisponibilidades as $noDisp)
+                <?php $n++;?>
+                <div class="form-group fecha">
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12"> </label>
+                    <div class="col-md-4">Desde
+                        <div class="input-group date fechaDesdePrevia">
+                            <input type="text" class="form-control input-date" value="{{substr($noDisp->fecha_inicio, 8, 2).'-'.substr($noDisp->fecha_inicio, 5, 2).'-'.substr($noDisp->fecha_inicio, 0, 4)}}" name="{{'fechaDesde['.$n.']'}}" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">Hasta
+                        <div class="input-group date fechaHastaPrevia">
+                            <input type="text" class="form-control input-date" value="{{substr($noDisp->fecha_fin, 8, 2).'-'.substr($noDisp->fecha_fin, 5, 2).'-'.substr($noDisp->fecha_fin, 0, 4)}}" name="{{'fechaHasta['.$n.']'}}" id="fechaHasta" placeholder="dd-mm-aaaa" maxlength="10" required/>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>                
+                @endforeach                               
+                
+                <div id="fechas"></div>
 
                 <div class="row">
                     <div class="col-md-8 col-sm-12 col-xs-12">
@@ -99,10 +118,10 @@
         </div>
     </div>
 </div>
-<?php $numFechas = 1; ?>
+<?php $n++; ?>
 <!-- <script src="{{ URL::asset('js/myvalidations/investigation.js')}}"></script> -->
 <script type="text/javascript">
-    var n = {{$numFechas}};
+    var n = {{$n}};
 
     $("#add").click(function() {
         var x = $("#add").attr('disabled');
@@ -110,17 +129,13 @@
         if (typeof x !== typeof undefined && x !== false) {
             return;
         }
-        if (n == 5) {
+        if (n == 6) {
             return;
         }
         n++;
-        if (n == 2) {
-            disp = 'No disponibilidad *';
-        } else {
-            disp = '';
-        }
+        
         $("#fechas").append('<div class="form-group fecha">\n\
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12">'+disp+'</label>\n\
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12"></label>\n\
                                 <div class="col-md-4">Desde\n\
                                     <div class="input-group date fechaDesde">\n\
                                         <input type="text" class="form-control input-date" name="fechaDesde['+(n-1)+']" id="fechaDesde" placeholder="dd-mm-aaaa" maxlength="10" required/>\n\
@@ -182,6 +197,37 @@
         }
         $(".fecha:last-child").remove();
         n--;
+    });
+    
+    $(function() {
+        var startDate = $(".input-group.date.fechaDesdePrevia");
+        var endDate = $(".input-group.date.fechaHastaPrevia");
+
+        startDate.datepicker({
+            format: "dd-mm-yyyy",
+            startDate: "today",
+            endDate: "{{$futureDay}}",
+            language: "es",
+            autoclose: true,
+            todayHighlight: true,
+        });
+       
+        endDate.datepicker({
+            format: "dd-mm-yyyy",
+            startDate: "{{$startDate}}",
+            endDate: "{{$futureDay}}",
+            language: "es",
+            autoclose: true,
+        });        
+
+        var inputStartDate = startDate.children(".input-date");
+
+        inputStartDate.change(function() {
+            var valueInputStart = $(this).val();
+            console.log(valueInputStart + "");
+            endDate.datepicker('setStartDate', valueInputStart);
+        });
+
     });
 </script>
 @endsection

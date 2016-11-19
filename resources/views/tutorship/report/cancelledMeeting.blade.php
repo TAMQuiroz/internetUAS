@@ -103,8 +103,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-            {{ $cancelledtutMeetings->links() }}            
+            </div>            
             <div id="canceladas_report" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$canceladas}}"></div>            
             <div id="graphic_cancelled" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
             

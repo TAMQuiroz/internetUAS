@@ -125,8 +125,18 @@ class ReportController extends Controller
             "endDate"        => $endDate,            
         ];
 
-        $tutMeetings = TutMeeting::getTutMeetingsByDates($filters);        
-        $tutMeetingsByTutstudents = TutMeeting::getTutMeetingsByDatesByTutstudents($filters);        
+        $tutMeetings = TutMeeting::getTutMeetingsByDates($filters)->get();        
+        $tutMeetingsByTutstudents = TutMeeting::getTutMeetingsByDates($filters)->groupBy('id_tutstudent')->get();
+        
+        $pendientes_list   = array();        
+        $confirmadas_list  = array();        
+        $canceladas_list   = array();   
+        $sugeridas_list    = array();   
+        $rechazadas_list   = array();   
+        $asistidas_list    = array();   
+        $no_asistidas_list = array();   
+        $total_list        = array();   
+
         /*
         Para los estados de citas:
             Pendiente   => 1
@@ -137,6 +147,27 @@ class ReportController extends Controller
             Asistida    => 6
             No asistida => 7
         */
+        foreach ($tutMeetingsByTutstudents as $tutMeetingsByTutstudent) {            
+            $pendientes   = $tutMeetings->where('estado', 1)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();   
+            $confirmadas  = $tutMeetings->where('estado', 2)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();   
+            $canceladas   = $tutMeetings->where('estado', 3)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();   
+            $sugeridas    = $tutMeetings->where('estado', 4)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();   
+            $rechazadas   = $tutMeetings->where('estado', 5)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();   
+            $asistidas    = $tutMeetings->where('estado', 6)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();   
+            $no_asistidas = $tutMeetings->where('estado', 7)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();   
+            $total        = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas;
+            if ( $total > 0){                
+                array_push($pendientes_list, $pendientes );                             
+                array_push($confirmadas_list, $confirmadas );                             
+                array_push($canceladas_list, $canceladas );                             
+                array_push($sugeridas_list, $sugeridas );                             
+                array_push($rechazadas_list, $rechazadas );                             
+                array_push($asistidas_list, $asistidas );                                             
+                array_push($no_asistidas_list, $no_asistidas );                                             
+                array_push($total_list, $total );                             
+            }
+        }    
+
         $pendientes   = $tutMeetings->where('estado', 1)->count();
         $confirmadas  = $tutMeetings->where('estado', 2)->count();
         $canceladas   = $tutMeetings->where('estado', 3)->count();
@@ -148,15 +179,23 @@ class ReportController extends Controller
         
 
         $data       = [
-            'tutMeetings'  => $tutMeetingsByTutstudents,  
-            'pendientes'   => $pendientes,
-            'confirmadas'  => $confirmadas,
-            'canceladas'   => $canceladas,
-            'sugeridas'    => $sugeridas,
-            'rechazadas'   => $rechazadas,
-            'asistidas'    => $asistidas,
-            'no_asistidas' => $no_asistidas,
-            'citas'        => $citas,
+            'tutMeetingsByTutstudents' => $tutMeetingsByTutstudents,
+            'tutstudentPendientes'     => $pendientes_list,
+            'tutstudentConfirmadas'    => $confirmadas_list,
+            'tutstudentCanceladas'     => $canceladas_list,
+            'tutstudentSugeridas'      => $sugeridas_list,
+            'tutstudentRechazadas'     => $rechazadas_list,
+            'tutstudentAsistidas'      => $asistidas_list,
+            'tutstudentNoAsistidas'    => $no_asistidas_list,
+            'tutstudentTotal'          => $total_list,
+            'pendientes'               => $pendientes,
+            'confirmadas'              => $confirmadas,
+            'canceladas'               => $canceladas,
+            'sugeridas'                => $sugeridas,
+            'rechazadas'               => $rechazadas,
+            'asistidas'                => $asistidas,
+            'no_asistidas'             => $no_asistidas,
+            'citas'                    => $citas,
         ];
         
 
@@ -187,7 +226,7 @@ class ReportController extends Controller
             "endDate"        => $endDate,            
         ];
 
-        $tutMeetings = TutMeeting::getTutMeetingsByDates($filters);        
+        $tutMeetings = TutMeeting::getTutMeetingsByDates($filters)->get();        
         $cancelledtutMeetings = TutMeeting::getCancelledTutMeetings($filters);        
         $reasons = Reason::get();        
         /*

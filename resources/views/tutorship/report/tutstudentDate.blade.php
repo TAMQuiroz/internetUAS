@@ -80,28 +80,40 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">Estado </th>
-                            <th class="column-title">Código </th>
-                            <th class="column-title">Hora inicio </th>                    
+                            <th class="column-title">Alumno </th>
+                            <th class="column-title">Citas pendientes </th>
+                            <th class="column-title">Citas canceladas </th>
+                            <th class="column-title">Citas sugeridas </th>
+                            <th class="column-title">Citas rechazadas </th>
+                            <th class="column-title">Citas asistidas </th>
+                            <th class="column-title">Citas noasistidas </th>
+                            <th class="column-title">Citas confirmadas </th>
+                            <th class="column-title">Citas total </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($tutMeetings as  $key => $tutMeeting)
+                        @foreach($tutMeetingsByTutstudents as  $key => $tutMeetingsByTutstudent)
                         <tr class="even pointer">
-                            <td hidden class="group-id">{{$tutMeeting->id}} </td>
+                            <td hidden class="group-id">{{$tutMeetingsByTutstudent->id}} </td>
 
-                            <td class=""><span class="label label-success"> {{ $tutMeeting->estado }}</span></td>
+                            <td class=""> {{ $tutMeetingsByTutstudent->tutstudent->nombre }} {{ $tutMeetingsByTutstudent->tutstudent->ape_paterno }} {{ $tutMeetingsByTutstudent->tutstudent->ape_materno }}</span></td>
                             
-                            <td class=" ">{{ $tutMeeting->tutstudent->nombre }}</td>                                      
-
-                            <td class=" ">{{ $tutMeeting->inicio }}</td>      
+                            <td class=" ">{{ $tutstudentPendientes[$key] }}</td>
+                            <td class=" ">{{ $tutstudentCanceladas[$key] }}</td>
+                            <td class=" ">{{ $tutstudentSugeridas[$key] }}</td>
+                            <td class=" ">{{ $tutstudentRechazadas[$key] }}</td>
+                            <td class=" ">{{ $tutstudentAsistidas[$key] }}</td>
+                            <td class=" ">{{ $tutstudentNoAsistidas[$key] }}</td>
+                            <td class=" ">{{ $tutstudentConfirmadas[$key] }}</td>                                      
+                            <td class=" ">{{ $tutstudentTotal[$key] }}</td>                                      
+                            
                             
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            {{ $tutMeetings->links() }}
+            
             <div id="pendientes" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$pendientes}}"></div>
             <div id="canceladas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$canceladas}}"></div>
             <div id="sugeridas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$sugeridas}}"></div>

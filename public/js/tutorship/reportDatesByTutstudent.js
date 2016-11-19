@@ -1,4 +1,4 @@
-$(function () {
+$(function () {    
 
     $(document).ready(function () {
 
@@ -38,6 +38,7 @@ $(function () {
     var asistidas   = $("#asistidas").attr("value");
     var noasistidas = $("#noasistidas").attr("value");
     var citas       = $("#citas").attr("value");    
+    
 
     $('#graphics').highcharts({    
         chart: {

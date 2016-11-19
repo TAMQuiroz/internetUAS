@@ -154,7 +154,7 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function update(MeetingEditRequest $request, $id)
+    public function update(Request $request, $id)
     {
         //
         try {
@@ -225,34 +225,40 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function storeSup(MeetingRequest $request)
+    public function storeSup(Request $request)
     {
         try {
 
             //Iniciacion
-            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();                        
+            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
+            //dd($supervisor);
             $pspstudent =PspStudent::where('IdAlumno',$request['alumno'])->first(); 
             $meeting = new meeting;
             $freeHour = new FreeHour;
             //Crear freehour si la reunion es con supervisor
             //Se pueden crear disponibilidades excepcionales solo en esta pantalla (sin contar el maximo posible)
             if($request['tiporeunion']==1){
-                $freeHour->fecha = $request['fecha'];
+                $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
                 $freeHour->hora_ini = $request['hora_inicio'];
                 $freeHour->cantidad = 1;            
                 $freeHour->idsupervisor = $supervisor->id;
+                $freeHour->idpspprocess = $supervisor->idpspprocess;
                 $freeHour->save();
                 $meeting->idfreehour = $freeHour->id;
             }
-
+            $meeting->tiporeunion = $request['tiporeunion'];
             $meeting->idtipoestado = 12;
+            $meeting->hora_inicio = Carbon::createFromFormat('H',$request['hora_inicio']);
+            $meeting->hora_fin = Carbon::createFromFormat('H',$request['hora_inicio'] + 1);
+            /*
             $timestamp = mktime($request['hora_inicio'],0,0, 0,0,0);
             $time = date('H:i:s', $timestamp);
             $meeting->hora_inicio=$time;            
             $timestamp = strtotime($request['hora_inicio']) + 60*60;
             $time = date('H:i:s', $timestamp);
             $meeting->hora_fin=$time;
-            $meeting->fecha=$request['fecha'];
+            */
+            $meeting->fecha=Carbon::createFromFormat('d/m/Y',$request['fecha']);
             $meeting->idstudent=$request['alumno'];
             $meeting->idsupervisor=$supervisor->id;
             $meeting->asistencia='o';

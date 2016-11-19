@@ -54,7 +54,7 @@
                             <td>{{$meeting->status->nombre}}</td>                    
                             <td>
                                 <a href="{{route('meeting.edit',$meeting->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>                                                                
-                                <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$meeting->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
+                                {{--<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$meeting->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>--}}
                                 <a href= "{{route('meeting.mail', $meeting->Student->IdAlumno)}}" class="btn btn-primary btn-xs" title="Email"><i class="fa fa-envelope"></i></a>
                             </td>                                                        
                         </tr>

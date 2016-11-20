@@ -761,6 +761,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{f_id}/semester/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
                 $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
                 $api->get('/schedule/{schedule_id}/students','FacultyController@getStudentsbySchedule');
+                $api->get('/effort_table/cycle/{academic_cycle_id}/course/{course_id}/schedule/{schedule_id}/student/{student_id}','FacultyController@getEffortTable');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){

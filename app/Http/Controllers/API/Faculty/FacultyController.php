@@ -14,6 +14,7 @@ use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
 use Intranet\Models\Aspect;
 use Intranet\Models\Teacher;
+use Intranet\Models\Score;
 use Illuminate\Http\Request;
 use Intranet\Models\Faculty;
 use Dingo\Api\Routing\Helpers;
@@ -31,7 +32,7 @@ use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
-use Intranet\Models\Evaluation;
+
 class FacultyController extends BaseController
 {
     use Helpers;
@@ -333,4 +334,21 @@ class FacultyController extends BaseController
       $students = Student::where('IdHorario',$schedule_id)->get();
       return Response::json($students);
     }
+
+    public function getEffortTable($academic_cycle_id, $course_id, $schedule_id, $student_id){
+      //sacamos el cursoxciclo del curso que queremos ver sus resultados
+      $coursexteachers = CoursexCycle::where('IdCicloAcademico',$academic_cycle_id)
+                                     ->where('IdCurso',$course_id)
+                                     ->first();
+      //sacamos los horarios del curso en el ciclo                                     
+      
+      $schedules = Schedule::where('IdCursoxCiclo',$coursexteachers->IdCursoxCiclo)->get();
+
+      $scores = Score::where('IdHorario', $schedule_id)
+                     ->where('IdAlumno', $student_id)
+                     ->get();
+      $scores->load('criterion');
+      return Response::json($scores);
+    }
+
 }

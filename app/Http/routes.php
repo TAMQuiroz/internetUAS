@@ -859,6 +859,11 @@ $api->version('v1', function ($api) {
                 $api->post('/{id}/deliverable', 'Deliverable\DeliverableController@edit');
                 $api->get('/{id}/deliverables', 'Deliverable\DeliverableController@getByProjectId');
 
+                $api->get('/{id}/versions', 'Deliverable\DeliverableController@getAllVersions');
+                $api->get('/{id}/responsibles', 'Deliverable\DeliverableController@getResponsibles');
+                $api->get('/{id}/observation', 'Deliverable\DeliverableController@getObservation');
+                $api->post('/{id}/observation', 'Deliverable\DeliverableController@registerObservation');
+
                 $api->get('/{id}/event', 'Event\EventController@getById');
                 $api->post('/{id}/event', 'Event\EventController@edit');
                 $api->get('/{id}/events', 'Event\EventController@getByGroupId');

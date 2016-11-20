@@ -105,7 +105,8 @@ class FlujoCoordinadorController extends Controller
     public function criterio_index ($id){
 
 		$especialidad = Faculty::findOrFail($id);
-		$resultados = $this->studentsResultService->findByFaculty2($id);
+		$resultados = $especialidad->studentsResults;
+        //$resultados = $this->studentsResultService->findByFaculty2($id);
 		return view('flujoCoordinador.criterio_index', ['resultados'=>$resultados, 'idEspecialidad' =>$id]);
     	//return "profesor creado";
     }

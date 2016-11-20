@@ -398,4 +398,25 @@ class CourseService
 
     }
 
+    public function findCoursesByPeriod($idPeriod) {
+        $idsCiclos = DB::table("cicloxespecialidad")->where("IdPeriodo", $idPeriod)->pluck('IdCiclo');
+
+        $idCursos = DB::table("cursoxciclo")->whereIn("IdCicloAcademico", $idsCiclos)->pluck('IdCurso');
+         //dd($idCursos);
+        $cursos = Course::whereIn('IdCurso',$idCursos)->get();
+
+        return $cursos;
+
+    }
+
+    public function findCourseByStudentResult($idResultadoEstudiantil){
+
+        $idCourses = DB::table("aporte")->where("IdResultadoEstudiantil", $idResultadoEstudiantil)->pluck('IdCurso');
+
+        $courses = Course::whereIn('IdCurso', $idCourses)->get();
+
+        return $courses;
+
+    }
+
 }

@@ -519,8 +519,7 @@ class FacultyService {
 		$aspects = Session::get('aspCheck');
 		$criterions = Session::get('crtCheck');
 
-		$nivelEsperado = intval(round((Session::get('facultyAgreement') * Session::get('criteriaLevel'))/100, 0, PHP_ROUND_HALF_UP));
-
+		$nivelEsperado = intval(ceil((Session::get('facultyAgreement') * Session::get('criteriaLevel'))/100));
 
 		$period = Period::create(['IdEspecialidad' =>$id,
 					'Vigente'=>'1'

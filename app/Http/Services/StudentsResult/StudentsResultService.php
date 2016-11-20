@@ -201,22 +201,6 @@ class StudentsResultService {
         if ($period == null){
             return $ar;
         }
-        /*
-        $periodxresults = PeriodxResult::where('IdPeriodo', $period->IdPeriodo)
-            ->where('deleted_at', null)->get();
-
-        $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
-            ->where('deleted_at', null)->get();
-
-        foreach($periodxresults as $pxsr){
-            foreach($studentResults as $sr){
-                if($pxsr->IdResultadoEstudiantil == $sr->IdResultadoEstudiantil){
-                    array_push($ar, $sr);
-                }
-            }
-        }
-        return $ar;
-        */
         return $period->studentsResults;
     }
 
@@ -584,4 +568,16 @@ class StudentsResultService {
         $data['info']= $studentsResult;
         return $data;
     }
+
+    public function retrieveAllByFacultyByPeriod($idPeriod){
+        
+        //obtenemos los resultados de ese periodo.
+        $idResultadosEstudiantiles = PeriodxResult::where('IdPeriodo', '=', $idPeriod )->get()->pluck('IdResultadoEstudiantil')->toArray();
+
+        //obtengo toda la dta de los resultados:
+        $resultadosEstudiantiles = StudentsResult::whereIn('IdResultadoEstudiantil', $idResultadosEstudiantiles)->get();
+
+        return $resultadosEstudiantiles;
+    }
+
 }

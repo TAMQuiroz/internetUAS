@@ -861,6 +861,7 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/versions', 'Deliverable\DeliverableController@getAllVersions');
                 $api->get('/{id}/responsibles', 'Deliverable\DeliverableController@getResponsibles');
                 $api->get('/{id}/observation', 'Deliverable\DeliverableController@getObservation');
+                $api->post('/{id}/observation', 'Deliverable\DeliverableController@registerObservation');
 
                 $api->get('/{id}/event', 'Event\EventController@getById');
                 $api->post('/{id}/event', 'Event\EventController@edit');

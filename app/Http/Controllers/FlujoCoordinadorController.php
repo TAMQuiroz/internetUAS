@@ -293,7 +293,7 @@ class FlujoCoordinadorController extends Controller
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
             $data['measures'] = $this->measureService->allByFaculty2($codigo_Periodo);
             $data['period_semesters'] = $this->cicleService->getCicleByPeriod($codigo_Periodo);
-            $data['studentsResults'] = $this->studentsResultService->findByFaculty();
+            $data['studentsResults'] = $this->studentsResultService->findByFaculty2($id);
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');

@@ -11,6 +11,7 @@ use Intranet\Models\Teacher;
 use Intranet\Models\PspProcessxTeacher;
 use Intranet\Models\PspProcess;
 use Intranet\Http\Requests\PspGroupRequest;
+use Intranet\Http\Requests\PspGroupEditRequest;
 
 use Illuminate\Support\Facades\DB;
 
@@ -72,7 +73,7 @@ class PspGroupController extends Controller
             //'groupNum' => $groupNum,
             'pspproc'    =>  $proc,
             ];        
-        //dd($procesos);
+        //dd($data);
         return view('psp.pspGroup.create',$data);
     }
 
@@ -150,12 +151,12 @@ class PspGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PspGroupRequest $request, $id)
+    public function update(PspGroupEditRequest $request, $id)
     {
         //
         try {
             $pspGroup = PspGroup::find($id);
-            $pspGroup->numero = $request['numero'];
+            //$pspGroup->numero = $request['numero'];
             $pspGroup->descripcion = $request['descripcion'];
             $pspGroup->save();
 

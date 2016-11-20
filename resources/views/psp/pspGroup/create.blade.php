@@ -39,6 +39,7 @@
                             <select name="Proceso_de_Psp" id="Proceso_de_Psp" class="form-control" required="required">
 	                            @if($pspproc!=null)
 	                                @foreach( $pspproc as $psp)
+	                                	<option value="">-- Seleccione --</option>
 	                                    @if($psp!=null)
 	                                    <option value="{{$psp->id}}">{{$psp->Course->Nombre}}</option>
 	                                    @endif

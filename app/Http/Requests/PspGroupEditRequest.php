@@ -4,7 +4,7 @@ namespace Intranet\Http\Requests;
 
 use Intranet\Http\Requests\Request;
 
-class PspGroupRequest extends Request
+class PspGroupEditRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class PspGroupRequest extends Request
     public function rules()
     {
         return [
-            'numero' => 'required|numeric|min:1|max:9',
             'descripcion' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
-            'Proceso_de_Psp' => 'required',
-            //
         ];
     }
 

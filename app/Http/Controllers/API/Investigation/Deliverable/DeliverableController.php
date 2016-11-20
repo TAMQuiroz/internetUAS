@@ -53,7 +53,7 @@ class DeliverableController extends BaseController
         //Retornar mensaje
         $mensaje = 'Se modifico correctamente';
 
-        return $mensaje;
+       return response()->json($mensaje);
     }
 
     public function getAllVersions($idDeliv){

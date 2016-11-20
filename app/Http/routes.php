@@ -631,7 +631,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('show/{id}', ['as' => 'inscription.show', 'uses' => 'Psp\Inscription\InscriptionController@show']);
                 Route::get('edit/{id}', ['as' => 'inscription.edit', 'uses' => 'Psp\Inscription\InscriptionController@edit']);
                 Route::post('edit/{id}', ['as' => 'inscription.update', 'uses' => 'Psp\Inscription\InscriptionController@update']);
-                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);    
+                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);   
+                Route::get('search/{id}', ['as' => 'inscription.search', 'uses' => 'Psp\Inscription\InscriptionController@search']);
+                Route::get('check/{id}', ['as' => 'inscription.check', 'uses' => 'Psp\Inscription\InscriptionController@check']);
+                Route::post('check/{id}', ['as' => 'inscription.updateC', 'uses' => 'Psp\Inscription\InscriptionController@updateC']);
+
             });
 
             //Phase

@@ -864,6 +864,7 @@ $api->version('v1', function ($api) {
             //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
             $api->get('getAppointments', 'Tutoria\TopicController@getAppointments');
+            $api->get('getCoordinatorStudent','Tutoria\TopicController@getCoordinatorStudent');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');

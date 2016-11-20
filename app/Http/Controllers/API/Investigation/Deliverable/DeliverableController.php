@@ -9,6 +9,10 @@ use Intranet\Http\Requests;
 
 use Intranet\Models\Deliverable;
 use Intranet\Models\Project;
+use Intranet\Models\Invdocument;
+use Intranet\Models\Investigatorxdeliverable;
+use Intranet\Models\Investigator;
+
 use Dingo\Api\Routing\Helpers;
 
 use Intranet\Http\Requests\DeliverableMobileRequest;
@@ -50,5 +54,20 @@ class DeliverableController extends BaseController
         $mensaje = 'Se modifico correctamente';
 
         return $mensaje;
+    }
+
+    public function getAllVersions($idDeliv){
+        $invDoc = Invdocument::where('id_entregable', $idDeliv)->get();
+        return $this->response->array($invDoc->toArray());
+    }
+
+    public function getResponsibles($idDeliv){
+        $responsibles = Investigatorxdeliverable::where('id_entregable',$idDeliv)->get()->investigator;
+        return $this->response->array($responsibles->toArray());    
+    }
+
+    public function getObservation($idInvDoc){
+        $invDoc = Invdocument::find($idInvDoc);
+        return $this->response->array($invDoc->toArray());        
     }
 }

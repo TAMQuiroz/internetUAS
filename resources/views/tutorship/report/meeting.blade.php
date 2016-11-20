@@ -18,6 +18,7 @@
                 <div class="tab-page-wrapper active">
                     <li class="tab-page">Citas</li>
                 </div>    
+
                 <a href="">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por tutor</li>
@@ -46,7 +47,7 @@
                         <div class="panel panel-default">
 
 
-                            
+
                             <div class="panel-body">
                                 {{Form::open(['route' => ['motivo.update', ''], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 

@@ -28,11 +28,11 @@
                         <li class="tab-page">Citas por alumno</li>
                     </div>
                 </a>
-                <a href="{{route('reporte.cancelledMeeting')}}">
+                
                     <div class="tab-page-wrapper active">
                         <li class="tab-page">Citas canceladas</li>
                     </div>
-                </a>
+                
                 <a href="">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Reasignación de tutores</li>

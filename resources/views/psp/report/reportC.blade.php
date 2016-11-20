@@ -42,6 +42,7 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                     <tr class="headings">
+                        <th class="column-title">Codigo</th>
                         <th class="column-title">Alumno</th>
                         <th class="column-title">Criterio</th>
                         <th class="column-title">Nota de Criterio</th>          
@@ -50,7 +51,8 @@
                     <tbody>
                     @foreach($reporte as $rep)
                         <tr> 
-                            <td>{{$rep->PspStudent->Student->Nombre}}</td> 
+                            <td>{{$rep->PspStudent->Student->Codigo}}</td>
+                            <td>{{$rep->PspStudent->Student->Nombre.' '.$rep->PspStudent->Student->ApellidoPaterno.' '.$rep->PspStudent->Student->ApellidoMaterno}}</td> 
                             <td>{{$rep->Pspcriterio->nombre}}</td> 
                             <td>{{$rep->nota}}
                         </tr> 

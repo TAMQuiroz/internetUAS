@@ -142,7 +142,11 @@ class PspMeetingController extends BaseController
 
  	public function store(Request $request){
 
- 		$user =  JWTAuth::parseToken()->authenticate();
+ 		try{
+
+
+
+		$user =  JWTAuth::parseToken()->authenticate();
  		if ($user->IdPerfil == 6){
 
  			$supervisor =	Supervisor::where('iduser',$user->IdUsuario)->first();
@@ -161,6 +165,23 @@ class PspMeetingController extends BaseController
  		$format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
 
+        $meeting =  new meeting;
+        $meeting->idtipoestado = 12;
+        $meeting->hora_inicio = $hora;
+        $meeting->hora_fin = $horaFin;
+        $meeting->fecha = $date;
+        $meeting->idstudent = $idAlumno;
+        $meeting->idsupervisor = $idUser;
+        $meeting->asistencia = 'o';
+        $meeting->lugar = $lugar;
+        $meeting->observaciones = '';
+        $meeting->tiporeunion = 1;
+
+        $meeting->save();
+
+/*
+
+
  		DB::table('pspmeetings')->insertGetId(
             [
                 'idtipoestado' => 12, //id del estado pendiente
@@ -169,14 +190,14 @@ class PspMeetingController extends BaseController
                'fecha' => $date,
                'idstudent' => $idAlumno,
                'idsupervisor' => $idUser  ,
-               'asistencia' =>  'No se ha registrado',
+               'asistencia' =>  'o',
                'lugar' => $lugar,
                'observaciones' =>'',
                'tiporeunion' =>   1, //Reunion tipo supervisor - jefe
 
             ]
 
-        );
+        );*/
 		$mensaje = "Solicitud satisfactoria";
         $array['message'] = $mensaje;
         return $this->response->array($array);
@@ -186,6 +207,24 @@ class PspMeetingController extends BaseController
 
  		}
 
+
+
+
+
+
+
+ 		}catch(Exception $ex){
+
+
+ 		$mensaje = "Solicitud Fallida";
+        $array['message'] = $mensaje;
+        return $this->response->array($array);
+
+
+
+ 		}
+
+ 		
  		 
  	
 

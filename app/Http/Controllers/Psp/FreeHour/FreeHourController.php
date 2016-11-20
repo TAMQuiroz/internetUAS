@@ -9,6 +9,7 @@ use Intranet\Models\Student;
 use Intranet\Models\PspStudent;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests\FreeHourRequest;
+use Carbon\Carbon;
 
 class FreeHourController extends Controller
 {
@@ -64,16 +65,19 @@ class FreeHourController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(FreeHourRequest $request)
+    public function store(Request $request)
     {
         //
         try {
 
+            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
+            
             $freeHour = new FreeHour;
-            $freeHour->fecha = $request['fecha'];
+            //dd($request['fecha_inicio']);
+            $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
+            //dd($freeHour->fecha);
             $freeHour->hora_ini = $request['hora_ini'];
             $freeHour->cantidad = 1;
-            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();            
             $freeHour->idsupervisor = $supervisor->id;
             $freeHour->idpspprocess = $supervisor->idpspprocess;
             $freeHour->save();
@@ -98,7 +102,9 @@ class FreeHourController extends Controller
     {
         //
         $freeHour = FreeHour::find($id);
-
+        $dt = new Carbon($freeHour->fecha);        
+        $freeHour->fecha = $dt->format('d/m/Y');
+        
         $data = [
             'freeHour' => $freeHour,
         ];
@@ -116,6 +122,10 @@ class FreeHourController extends Controller
     {
         $freeHour = FreeHour::find($id);
 
+        $dt = new Carbon($freeHour->fecha);        
+        $freeHour->fecha = $dt->format('d/m/Y');
+        //dd($freeHour->fecha);
+
         $data = [
             'freeHour' => $freeHour,
         ];
@@ -130,12 +140,12 @@ class FreeHourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(FreeHourRequest $request, $id)
+    public function update(Request $request, $id)
     {
         //
         try {
             $freeHour = FreeHour::find($id);
-            $freeHour->fecha = $request['fecha'];
+            $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
             $freeHour->hora_ini = $request['hora_ini'];
             $freeHour->save();
 

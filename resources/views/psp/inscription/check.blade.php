@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="page-title">
             <div class="title_left">
-                <h3>Mostrar información de EMpresa</h3>
+                <h3>Registrar Recomendaciones a Ficha de Inscripcion</h3>
             </div>
         </div>
     </div>
@@ -17,9 +17,9 @@
                 <h3 class="panel-title">Información</h3>
             </div>
             <div class="panel-body">
-                <div class="form-horizontal">            
+                {{Form::open(['route' => ['inscription.updateC',$inscription->id], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}          
 
-                     <div class="form-group">
+                <div class="form-group">
                     {{Form::label('Actividades formativas *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
                         {{Form::text('activ_formativas',$inscription->activ_formativas,['class'=>'form-control', 'readonly'])}}
@@ -147,17 +147,17 @@
                     </div>
                 </div>
                 
-                 <div class="form-group">
-                    <label for="tcomentariol" class="control-label col-md-4 col-sm-3 col-xs-12">Recomendaciones</label>
+                <div class="form-group">
+                        {{Form::label('Recomendaciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                    <textarea id=recomendaciones type="text" class="form-control" disabled name="" value=""><?php echo htmlspecialchars($inscription->recomendaciones); ?></textarea>
-                    </div>
-                </div>
-                    
+                        {{Form::textArea('recomendaciones',$inscription->recomendaciones,['class'=>'form-control','required','maxlength' => 64])}}
+                    </div>                            
+                </div>                    
 
                     <div class="row">
                         <div class="col-md-8 col-sm-12 col-xs-12">
-                            <a class="btn btn-default pull-right" href="{{ route('inscription.index') }}">Regresar</a>
+                            {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
+                            <a href="" onclick="javascript:history.back()" class="btn btn-default pull-right"> Regresar</a>
                         </div>
                     </div>
                 </div>

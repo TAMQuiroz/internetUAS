@@ -14,10 +14,12 @@ class PspGroupTableSeeder extends Seeder
         DB::table('pspgroups')->insert([
         	'numero' => 1, 
         	'descripcion' => 'Para los alumnos que ya realizaron su práctica supervisada',
+            'idpspprocess' => 1,
     	]);
     	DB::table('pspgroups')->insert([
         	'numero' => 2, 
         	'descripcion' => 'Para los alumnos que para la semana cuatro aún no cumplen las 270 horas necesarias de prácticas',
+            'idpspprocess' => 1,
     	]);
         
     }

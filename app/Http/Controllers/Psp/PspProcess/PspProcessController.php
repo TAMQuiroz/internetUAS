@@ -320,10 +320,11 @@ class PspProcessController extends Controller
     public function indexconf()
     {
         $academicCycle = Session::get('academic-cycle');
+        $proc=null;
         if($academicCycle!=null){
             if(Auth::User()->IdPerfil==3){  
                 $proc = PspProcess::get();
-            } else if (Auth::User()->IdPerfil==2){
+            } else {
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
                 $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
                 $proc = array(); 

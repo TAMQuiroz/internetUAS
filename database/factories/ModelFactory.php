@@ -272,3 +272,13 @@ $factory->define(Intranet\Models\meeting::class, function (Faker\Generator $fake
         'tiporeunion' => 2,
    ];
 });
+
+$factory->define(Intranet\Models\Inscription::class, function (Faker\Generator $faker){
+   return[
+        //'id'            =>  $faker->randomNumber($nbDigits = 6,$strict = true),
+        'nombre_area'   => 'Area',
+        'puesto'        => 'puesto',
+        'razon_social'  => 'razon_social',
+        //'recomendaciones' => 'bien',
+   ];
+});

@@ -27,9 +27,9 @@
                     {{$criterio->nombre}}
                     </div>
                     <div class="col-md-1">                        
-                        <select name="nota[{{$idcriterio}}]" class="form-control">
+                        <select name="nota[{{$criterio->id}}]" class="form-control">
                             <?php for ($i=0; $i<=20; $i++) { 
-                                if (encuentra($registroNotas, $i, $idcriterio)) {?>
+                                if (encuentra($registroNotas, $i, $criterio->id)) {?>
                                     <option value="{{$i}}" selected>{{$i}}</option>
                                 <?php } else {?>
                                     <option value="{{$i}}">{{$i}}</option>                            

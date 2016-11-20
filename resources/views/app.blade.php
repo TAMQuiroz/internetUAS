@@ -339,6 +339,7 @@
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
+                        <li><a href="{{route('pspCriterio.index')}}"> Administrar Criterios</a></li>
                         <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
                         @endif
                         @if(Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp) <!--si es alumno y lleva psp-->

@@ -539,6 +539,14 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
                 Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
                 Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
+            });
+
+            //Template
+            Route::group(['prefix' => 'report'], function() {
+                Route::get('/', ['as' => 'reportC.index', 'uses' => 'Psp\Report\reportPspController@index']);
+                Route::get('create', ['as' => 'reportC.create', 'uses' => 'Psp\Report\reportPspController@create']);
+                Route::post('create', ['as' => 'reportC.generate', 'uses' => 'Psp\Report\reportPspController@generate']);
+                Route::get('show/{id}', ['as' => 'reportC.show', 'uses' => 'Psp\Report\reportPspController@show']);
             });                    
 
             //PspGroups Luis Llanos

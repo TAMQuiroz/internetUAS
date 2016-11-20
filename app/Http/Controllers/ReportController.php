@@ -5,6 +5,9 @@ namespace Intranet\Http\Controllers;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Intranet\Models\Course;
+use Intranet\Models\DictatedCourses;
+use Intranet\Models\TimeTable;
+use Intranet\Models\Score;
 
 use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Aspect\AspectService;
@@ -59,23 +62,28 @@ class ReportController extends Controller
 				if($request['resultado'] != 0){
 
 					if($request['aspecto'] != 0){
-
-
 						if($request['criterio'] != 0){ //halla cursos del resultado
 
+							if($request['curso']){ //obtener valores de la tabla de desempeño (para los horarios del curso)
 
+								$idCursosxciclo = DictatedCourses::where('IdCurso', $request['curso'])->get()->pluck('IdCursoxCiclo');
+								$horarios = TimeTable::whereIn('IdCursoxCiclo', $idCursosxciclo)->get()->pluck('IdHorario');
+								$calif = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $request['criterio'])->get();
+
+								dd($calif); 
+							}
 
 						}
-						else{
+						else{ // todos los criterios y cursos
 
 						}
 					}	
-					else {
+					else { // a partir de aspecto -> todo
 
 					}
 
 				}
-				else{
+				else{ // a partir de resultado -> todo
 
 				}
 			}

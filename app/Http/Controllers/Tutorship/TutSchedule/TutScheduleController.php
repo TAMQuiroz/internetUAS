@@ -138,11 +138,11 @@ class TutScheduleController extends Controller {
             
             $fDesde = intval(substr($fechaDesde, 6, 4))*10000 + intval(substr($fechaDesde, 3, 2))*100 + intval(substr($fechaDesde, 0, 2));
             $fHasta = intval(substr($fechasHasta[$num], 6, 4))*10000 + intval(substr($fechasHasta[$num], 3, 2))*100 + intval(substr($fechasHasta[$num], 0, 2));
-            //2016-03-28
+            
             foreach($citas as $c) {
                 $fCita = intval(substr($c->inicio,0,4))*10000 + intval(substr($c->inicio,5,2))*100 + intval(substr($c->inicio,8,2));
                 
-                if ($fCita>$fDesde && $fCita<$fHasta && $c->estado==2) {
+                if ($fCita>=$fDesde && $fCita<=$fHasta && $c->estado==2) {
                     $cita = TutMeeting::find($c->id);
                     $cita->estado=3;
                     $cita->id_reason=2;

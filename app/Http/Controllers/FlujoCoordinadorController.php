@@ -81,7 +81,6 @@ class FlujoCoordinadorController extends Controller
     	$data['idEspecialidad']=$this->facultyService->getFacultyxDocente();
         $faculty = Faculty::where('IdDocente', Session::get('user')->IdDocente)->first();
         Session::put('faculty-code',$faculty->IdEspecialidad);
-
       	return view('flujoCoordinador.index',$data);
     }
 
@@ -121,8 +120,7 @@ class FlujoCoordinadorController extends Controller
     public function criterio_index ($id){
 
 		$especialidad = Faculty::findOrFail($id);
-
-		$resultados = $especialidad->studentsResults;
+		$resultados = $this->studentsResultService->findByFaculty2($id);
 		return view('flujoCoordinador.criterio_index', ['resultados'=>$resultados, 'idEspecialidad' =>$id]);
     	//return "profesor creado";
     }
@@ -156,7 +154,7 @@ class FlujoCoordinadorController extends Controller
     public function objetivoEducacional_index ($id){
 
 		$especialidad = Faculty::findOrFail($id);
-        $objetivos = EducationalObjetive::where('IdEspecialidad','=',$especialidad->IdEspecialidad)->orderby('Descripcion','ASC')->get();
+        $objetivos = EducationalObjetive::where('IdEspecialidad','=',$especialidad->IdEspecialidad)->where('deleted_at',null)->orderby('Descripcion','ASC')->get();
 		return view('flujoCoordinador.objetivoEducacional_index', ['objetivos'=>$objetivos, 'idEspecialidad' =>$id]);
 
     }
@@ -170,7 +168,7 @@ class FlujoCoordinadorController extends Controller
 
         //crear un nuevo objetivo educacional
         $numberOE = EducationalObjetive::where('IdEspecialidad',$id)
-									   ->where('deleted_at',null)->count();
+									   ->where('deleted_at',null)->where('Estado',0)->count();
 		$numberOE = ($numberOE) + 1;
 		$educationalObjetive = EducationalObjetive::create([
 			'IdEspecialidad' => $id,
@@ -202,7 +200,7 @@ class FlujoCoordinadorController extends Controller
 
         try {               
             $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', $id)
-                                            ->where('deleted_at', null)->get();       
+                                            ->where('deleted_at', null)->where('Estado',0)->get();       
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
@@ -317,6 +315,7 @@ class FlujoCoordinadorController extends Controller
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
             $data['measures'] = $this->measureService->allByFaculty2($id);
             $data['studentsResults'] = $this->studentsResultService->findByFaculty2($id);
+            //dd($data['studentsResults']);
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty2($id);
             
         } catch(\Exception $e) {

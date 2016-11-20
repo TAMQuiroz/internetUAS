@@ -311,7 +311,7 @@ class CourseService
                 }
             }
         }
-
+        
         return $ar;
     }
 

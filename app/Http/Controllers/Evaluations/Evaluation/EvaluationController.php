@@ -72,8 +72,8 @@ class EvaluationController extends Controller
    public function indexev(Request $request)
    {
     $id = Session::get('user')->IdDocente;    
-    $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->join('Especialidad', 'id_especialidad', '=', 'IdEspecialidad')->select('Especialidad.Nombre','evaluations.id','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->get();
-
+    $evquestionxstudentxdocentes = DB::table('evquestionxstudentxdocentes')->join('evaluations', 'id_evaluation', '=', 'evaluations.id')->join('Especialidad', 'id_especialidad', '=', 'IdEspecialidad')->select('Especialidad.Nombre','evaluations.id','evaluations.fecha_fin','evaluations.nombre')->distinct()->where('evquestionxstudentxdocentes.id_docente',$id)->orderBy('evaluations.id', 'desc')->get();
+    
     $data = [
     'evaluations'               =>  $evquestionxstudentxdocentes,     
     ];
@@ -360,10 +360,10 @@ public function sendresults(Request $request,$id)
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    // public function show($id)
+    // {
+    //     //
+    // }
 
     
     public function vercorregida($id)
@@ -477,7 +477,7 @@ public function sendresults(Request $request,$id)
 
         //se borran las respuestas anteriores, si hubiesen
         DB::table('evquestionxstudentxdocentes')->where('id_tutstudent',Session::get('user')->id)->where('id_evaluation',$id)->delete();        
-        
+        $loop = 1;
         foreach ($request['arrQuestion'] as $idEvquestion => $answer) {
             $evquestion = EvQuestion::find($idEvquestion);            
             $ev = new Evquestionxstudentxdocente;
@@ -509,14 +509,14 @@ public function sendresults(Request $request,$id)
                 if($request->hasFile($idEvquestion)){
                     $destinationPath = 'uploads/respuestas/'; // upload path
                     $extension = $request->file($idEvquestion)->getClientOriginalExtension();
-                    $filename = 'Eval_'.$evquestion->evaluacion->id.'_Preg_'.$evquestion->id.'_'.$ev->id.'.'.$extension; 
+                    $filename = 'Eval_'.$tutstudentxevaluation->id.'_Preg'.$loop.'.'.$extension; 
                     $request->file($idEvquestion)->move($destinationPath, $filename);
 
                     $ev->path_archivo = $destinationPath.$filename;                    
                     $ev->save();                    
                 }
             }
-            
+            $loop++;
         }  
         //guardo la hora de la evaluacion        
         $tutstudentxevaluation->fecha_hora = date('Y-m-d H:i:s ', time());

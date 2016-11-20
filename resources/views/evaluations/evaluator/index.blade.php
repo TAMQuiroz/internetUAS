@@ -39,10 +39,7 @@
                             <td class=" ">{{ $evaluator->app.' '.$evaluator->apm.', '.$evaluator->nombre }}</td>
                             <td class=" ">{{ $evaluator->correo }}</td>                            
                             <td class="centered">{{ $evaluator->nombre_esp }}</td>                            
-                            <td class="centered">
-                                <!-- <a href="{{route('evaluador.show',$evaluator->id)}}" title="Ver" class="btn btn-primary btn-xs view-group"">
-                                    <i class="fa fa-search"></i>
-                                </a> -->
+                            <td class="centered">                                
                                 <a href="{{route('evaluador.edit',$evaluator->id)}}" title="Editar" class="btn btn-primary btn-xs view-group"">
                                     <i class="fa fa-pencil"></i>
                                 </a>

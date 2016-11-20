@@ -6,6 +6,7 @@ use JWTAuth;
 use Response;
 use Intranet\Models\CoursexTeacher;
 use Intranet\Models\Course;
+use Intranet\Models\Student;
 use Intranet\Models\Schedule;
 use Intranet\Models\CoursexCycle;
 use Intranet\Models\ResultxObjective;
@@ -326,5 +327,10 @@ class FacultyController extends BaseController
         }
       }
       return Response::json($courses);
+    }
+
+    public function getStudentsbySchedule($schedule_id){
+      $students = Student::where('IdHorario',$schedule_id)->get();
+      return Response::json($students);
     }
 }

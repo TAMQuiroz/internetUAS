@@ -28,31 +28,34 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                     <tr class="headings">
-                        <th class="column-title">Codigo</th>
-                        <th class="column-title">Alumno</th>
-                        <th class="column-title">Tipo</th>
+                        <th class="column-title">Tipo</th>                        
+                        <th class="column-title">Alumno involucrado</th>
+                        <th class="column-title">Lugar</th>
                         <th class="column-title">Fecha</th>
-                        <th class="column-title">Hora Inicio</th>                        
-                        <th class="column-title">Hora Fin</th>                                                     
+                        <th class="column-title">Hora</th>
+                        <th class="column-title">Estado</th>
                         <th colspan="2">Acciones</th>                     
                     </tr>
                     </thead>
                     <tbody>
                         @foreach($meetings as $key => $meeting)
-                        <tr>                             
-                            <td>{{$meeting->student->Codigo}}</td> 
-                            <td>{{$meeting->student->Nombre.' '.$meeting->student->ApellidoPaterno}}</td> 
+                        <tr>
+                                                        
                             @if($meeting->tiporeunion==1)
-                            <td>Alumno - Supervisor</td>
+                            <td>Supervisor - Alumno</td>
                             @else
-                            <td>Alumno - Jefe</td>
+                            <td>Supervisor - Jefe</td>
                             @endif
+                            {{--Aqui ira el nombre del jefe en caso reservarlo--}} 
+                            <td>{{$meeting->student->Nombre.' '.$meeting->student->ApellidoPaterno}}</td>
+                            <td>{{$meeting->lugar}}</td>
                             <td>{{$meeting->fecha}}</td>
-                            <td>{{$meeting->hora_inicio}}</td>
-                            <td>{{$meeting->hora_fin}}</td>                                                      
+                            <td>{{$meeting->hora_inicio}} - {{$meeting->hora_fin}}</td>
+                            <td>{{$meeting->status->nombre}}</td>                    
                             <td>
                                 <a href="{{route('meeting.edit',$meeting->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>                                                                
                                 <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$meeting->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
+                                <a href= "{{route('meeting.mail', $meeting->Student->IdAlumno)}}" class="btn btn-primary btn-xs" title="Email"><i class="fa fa-envelope"></i></a>
                             </td>                                                        
                         </tr>
                         @include('modals.delete', ['id'=> $meeting->id, 'message' => '¿Esta seguro que desea cancelar esta reunion?', 'route' => route('meeting.delete', $meeting->id)])

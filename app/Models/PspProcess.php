@@ -34,5 +34,10 @@ class PspProcess extends Model{
     {
 
         return $this->belongsTo('Intranet\Models\AcademicCycle', 'idCiclo');
-    }      
+    }
+
+    public function criterios()
+    {
+        return $this->hasMany('Intranet\Models\Pspcriterio', 'id_pspprocess');
+    }
 }

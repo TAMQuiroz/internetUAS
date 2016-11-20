@@ -81,7 +81,7 @@ $factory->define(Intranet\Models\Supervisor::class, function (Faker\Generator $f
         'codigo_trabajador'  => $faker->randomNumber($nbDigits = 8,$strict = true),
         'idFaculty'         => 1,
         'idUser'            => 3,
-        'Vigente'            => 1,
+        'vigente'            => 1,
     ];
 });
 
@@ -257,5 +257,18 @@ $factory->define(Intranet\Models\PspGroup::class, function (Faker\Generator $fak
    return[
         'numero' => $faker->numberBetween($min = 1, $max = 9),
         'descripcion' => $faker->text($maxNbChars = 100) ,
+   ];
+});
+
+$factory->define(Intranet\Models\meeting::class, function (Faker\Generator $faker){
+   return[
+        'idtipoestado' => 12 ,
+        'hora_inicio' => '10:00:00' ,
+        'hora_inicio' => '11:00:00' ,
+        'fecha' => \Carbon\Carbon::yesterday(),
+        'lugar' => 'V202',
+        'idstudent' => 41,
+        'asistencia' => 'o',
+        'tiporeunion' => 2,
    ];
 });

@@ -29,6 +29,7 @@
                     <thead>
                     <tr class="headings">
                         <th class="column-title">Reunion</th>
+                        <th class="column-title">Tipo</th>
                         <th class="column-title">Fecha</th>
                         <th class="column-title">Hora Inicio</th>
                         <th class="column-title">Hora Fin</th>                        
@@ -39,17 +40,16 @@
                     <tbody>
                         @foreach($meetings as $key => $meeting)
                         <tr> 
-                            <td>{{$key+1}}</td> 
+                            <td>{{$key+1}}</td>
+                            @if($meeting->tiporeunion==1)
+                            <td>Supervisor - Alumno</td>
+                            @else
+                            <td>Supervisor - Jefe</td>
+                            @endif 
                             <td>{{$meeting->fecha}}</td> 
                             <td>{{$meeting->hora_inicio}}</td> 
                             <td>{{$meeting->hora_fin}}</td>
-                            @if($meeting->idtipoestado==1)
-                            <td>Pendiente</td>
-                            @elseif($meeting->idtipoestado==2)
-                            <td>Realizada</td>    
-                            @else
-                            <td>Cancelada</td>
-                            @endif                             
+                            <td>{{$meeting->status->nombre}}</td>              
                             <td>
                                 <a href="{{route('meeting.edit',$meeting->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>                                                                
                                 <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$meeting->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>

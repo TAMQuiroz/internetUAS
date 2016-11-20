@@ -75,7 +75,6 @@
   <script src="{{ URL::asset('js/remodal.js')}}"></script>
   <link href="{{ URL::asset('css/remodal.css')}}" rel="stylesheet">
   <link href="{{ URL::asset('css/remodal-default-theme.css')}}" rel="stylesheet">
-    <link href="{{ URL::asset('css/remodal/remodal-modify.css')}}" rel="stylesheet">
   <script type="text/javascript">
     var baseUrl = "{{ url('') }}";
   </script>
@@ -91,7 +90,9 @@
   <![endif]-->
 
   <!-- Datepicker -->
-  <link href="{{  URL::asset('css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css">  
+  <link href="{{  URL::asset('css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css"> 
+
+  <link href="{{ URL::asset('css/remodal/remodal-modify.css')}}" rel="stylesheet">
 
 </head>
 
@@ -324,11 +325,12 @@
                         <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         <li><a href="{{route('MeetingTeacher.index')}}">Reservar Reunión</a></li>
                         <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
+                        <li><a href="{{route('pspCriterio.index')}}"> Administrar Criterios</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
                         @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Disponibilidades</a></li>
-                        <li><a href="{{route('meeting.indexSup')}}"> Horario de reuniones</a></li>
+                        <li><a href="{{route('meeting.indexSup')}}"> Reuniones</a></li>
                         <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
                         <li><a href="{{route('studentScore.index')}}"> Notas Finales</a></li>
                         @endif
@@ -350,12 +352,12 @@
                 </li>  
               @endif
 
-              @if(Auth::user() && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin')))
+              @if(Auth::user() && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin') || Auth::user()->IdPerfil == Config::get('constants.alumno')))
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Investigación</a>
                 <div class="collapsible-body">
                   <ul>
-                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin') || Auth::user()->IdPerfil == Config::get('constants.alumno'))
                       <li><a href="{{route('investigador.index')}}">Administrar Investigadores</a></li>
                       <li><a href="{{route('grupo.index')}}">Administrar Grupos de Investigación</a></li>
                     @endif
@@ -364,7 +366,7 @@
                     <li><a href="{{route('area.index')}}">Administrar Áreas</a></li>
                     @endif
 
-                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin'))
+                    @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin') || Auth::user()->IdPerfil == Config::get('constants.alumno'))
                       <li><a href="{{route('evento.index')}}">Administrar Eventos</a></li>
                       <li><a href="{{route('proyecto.index')}}">Administrar Proyectos</a></li>
                     @endif
@@ -437,7 +439,7 @@
                
 
               <!--Menu Evaluaciones-->
-              @if(Auth::user() && ((Auth::user()->IdPerfil <= 2)  ) )
+              @if(Auth::user() && ( (Auth::user()->IdPerfil == 1) || (Auth::user()->IdPerfil == 0) ||  (Auth::user()->professor && Auth::user()->professor->rolEvaluaciones != null )  ) )
 
               <li class="bold">
                 <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">receipt</i>Evaluaciones</a>
@@ -811,7 +813,7 @@
   @endif
 </script>
 
- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+ 
  <script type="text/javascript" src="{{ asset('js/materialize.min.js')}}"></script>
       
       

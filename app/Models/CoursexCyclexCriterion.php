@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;//<-------------------------------n
 class CoursexCyclexCriterion extends Model
 {
     use SoftDeletes;//delete logico
-    protected $table = 'cursoxcicloxcriterio';
+    protected $table = 'CursoxCicloxCriterio';
     protected $primaryKey = 'IdCursoxCicloxCriterio';
     protected $fillable = ['IdCursoxCiclo',
                             'IdCriterio',

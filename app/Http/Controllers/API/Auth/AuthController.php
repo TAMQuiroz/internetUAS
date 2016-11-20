@@ -53,9 +53,11 @@ class AuthController extends BaseController
         }else if ($user->IdPerfil == 0){
             $user->load('pspStudent');//devuelve de la tabla alumno
             //veamos si lleva psp
-            if ($user->pspStudent->lleva_psp == '1'){
-                $psp = PspStudent::where('idalumno',$user->pspStudent->IdAlumno)->first();
-                $user['psp'] = $psp;
+            if ($user->pspStudent){
+                if($user->pspStudent->lleva_psp == '1'){
+                    $psp = PspStudent::where('idalumno',$user->pspStudent->IdAlumno)->first();
+                    $user['psp'] = $psp;
+                }
             }   
             $user->load('tutStudent');
         }

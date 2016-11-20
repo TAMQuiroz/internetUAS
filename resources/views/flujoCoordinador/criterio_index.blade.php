@@ -64,9 +64,9 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                     <tr class="headings">
-                        <th class="column-title">Criterio</th>
-                        <th class="column-title">Aspecto</th>
                         <th class="column-title">Resultado Estudiantil</th>
+                        <th class="column-title">Aspecto</th>
+                        <th class="column-title">Criterio</th>
                         <th class="column-title">Estado</th>
                         
                     </tr>
@@ -82,9 +82,9 @@
                             @foreach ($aspecto->criterions as $criterio)
                                 <tr>
                                     <td class="" hidden="true">{{$criterio->IdCriterio}}</td>
-                                    <td class="">{{$criterio->Nombre}}</td>
-                                    <td class="">{{$aspecto->Nombre}}</td>
                                     <td class="">{{$resultado->Descripcion}}</td>
+                                    <td class="">{{$aspecto->Nombre}}</td>
+                                    <td class="">{{$criterio->Nombre}}</td>
                                     <td class="a-center" >
                                         <?php if ($criterio->Estado==1): ?>
                                         <span class="label label-success">Activo</span>

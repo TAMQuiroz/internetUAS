@@ -14,8 +14,8 @@ class AddFkToPspstudentsxcriteriosTable extends Migration
     {
         Schema::table('pspstudentsxcriterios', function (Blueprint $table) {
             //
-            $table->foreign('idpspstudent')->references('idpspstudent')->on('pspstudents');
-            $table->foreign('idcriterio')->references('IdCriterio')->on('Criterio');
+            $table->foreign('idpspstudent')->references('id')->on('pspstudents');
+            $table->foreign('idcriterio')->references('id')->on('pspcriterios');
         });
     }
 
@@ -29,7 +29,7 @@ class AddFkToPspstudentsxcriteriosTable extends Migration
         Schema::table('pspstudentsxcriterios', function (Blueprint $table) {
             //
             $table->dropForeign('pspstudentsxcriterios_idpspstudent_foreign');
-            $table->dropForeign('pspstudentsxcriterios_idpspstudent_foreign');
+            $table->dropForeign('pspstudentsxcriterios_idcriterio_foreign');
         });
     }
 }

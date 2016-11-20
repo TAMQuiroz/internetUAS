@@ -45,35 +45,21 @@ class AspectoController extends Controller
      */
     public function create($idAlumno)
     {
-        //
-        //
-
         $user = Session::get('user');
-
         $supervisor = Supervisor::find($user->id);
-        //echo "userid ".$user->id;
-        //echo " supervisorid ".$supervisor->idpspprocess;
-
         $pspProceso = PspProcess::find($supervisor->idpspprocess);
-        
-        $cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
-        //echo $pspProceso->idcurso;
-        //echo $pspProceso->idcurso;
-        $criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
-        //echo "idcursoxciclo".$cursoxciclo->IdCursoxCiclo;
+        $criterios  = $pspProceso->criterios;
+        //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
+        //echo " idcurso ".$pspProceso->idcurso;
+        //$criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
+        //echo " idcursoxciclo ".$cursoxciclo->IdCursoxCiclo;
 
         $registroNotas = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->get();
         
         //$crit_aux       = Criterion::find($id);
-        $crit = [];
-        foreach ($criterios as $c) {
-            $criterio = Criterion::find($c->IdCriterio);
-            $crit[$c->IdCriterio]=$criterio->Nombre;
-            echo $criterio->Nombre;
-        }
-
+        
         $data = [
-            'crit'    =>  $crit,
+            'crit'    =>  $criterios,
             'idAlumno' => $idAlumno,
             'registroNotas' => $registroNotas,
             //'crit_aux' => $crit_aux,
@@ -97,8 +83,9 @@ class AspectoController extends Controller
                $listaNotas = $request->input("nota",[]);
                 foreach ($listaNotas as $idCrit => $valorNota) {
 
-                    $p = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->where('IdCriterio',$idCrit)->first();
-                    if ($p->count()==0){
+                    $p = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->where('idcriterio',$idCrit)->first();
+                    //dd($p);
+                    if ($p == null){
                         $pspstudentxcriterios  = new Pspstudentsxcriterios;
                         $pspstudentxcriterios->idpspstudent = $idAlumno;
                         $pspstudentxcriterios->idcriterio = $idCrit;

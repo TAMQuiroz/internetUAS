@@ -293,6 +293,16 @@ class DeliverableController extends Controller
                 }
             }
 
+            //Busca en alumnos
+            if(!$habilitado && $entregable->students){
+                foreach ($entregable->students as $student) {
+                    if($student->id_usuario == $request['id_usuario']){
+                        $habilitado = true;
+                        break;
+                    }
+                }
+            }
+
             //Jefe de investigacion
             if($entregable->project->group->leader->IdUsuario == $request['id_usuario']){
                 $habilitado = true;

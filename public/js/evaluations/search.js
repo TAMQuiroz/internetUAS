@@ -69,8 +69,8 @@ $(document).ready(function($) {
 			$.get('/evaluaciones/preguntas/editQuestion',{id_competence:idCompetence,id_evaluator:idEvaluator},function(data){
 		    	$('#datosPregunta').empty();//vacio los datos
 		    	$('#datosPregunta').append(data);	 //mete un select con los evaluadores
-		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" maxlength="5" type="text" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');
-		    	$('#modal-editar-pregunta').modal('show');//muestro el modal
+		    	$('#datosPregunta').append('<div class="form-group"><label class="control-label col-md-4">Puntaje: </label><div class="col-md-6"> <input id="input_puntaje" class="form-control" onkeypress="return validateFloatKeyPress(this,event);" maxlength="5" type="text" name="puntaje" value="'+tempPuntaje+'">   </div>    </div>');		    	
+		    	$('[data-remodal-id=modal-editar-pregunta]').remodal().open();//muestro el modal
 		    });
 
 		});
@@ -104,7 +104,14 @@ $(document).ready(function($) {
 		// 	}
 		// });
 
-
+		$('#checkAll').on('click', function() {
+			if( $('#checkAll').is(":checked")){
+				$('#checkbody input').prop('checked', true);
+			}
+			else{
+			$('#checkbody input').prop('checked', false);
+			}
+		});
 
 	});
 
@@ -160,8 +167,8 @@ function selectQuestions(){
 	}
 
 	function guardarCambios(){  
-		if(cambiosvalidos()){
-			$('#modal-editar-pregunta').modal('hide');//oculto el modal
+		if(cambiosvalidos()){			
+			$('[data-remodal-id=modal-editar-pregunta]').remodal().close();//oculto el modal
 			var id_evaluador = $("#select_evaluador").val();
 			var evaluador = $("#select_evaluador option:selected").html();
 			var puntaje = parseFloat($("#input_puntaje").val());

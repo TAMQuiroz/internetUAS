@@ -120,11 +120,24 @@ jQuery(function(){
             },
             archivo: {
                 required: "Debe ingresar un entregable",
+            },
+            peso: {
+                required: "Debe ingresar un peso",
             }
         }
     });
 
     //Fechas
+
+    $(".input-group.date").datepicker({
+        format: "yyyy-mm-dd",
+        startDate: "today", 
+        language: "es",
+        autoclose: true,
+        todayHighlight: true,
+        minDate: 0,
+     });
+
     $('#fecha_ini').change(function(){
         fecha_ini = $(this).val();
         $('#fecha_fin').attr('min',fecha_ini);
@@ -133,14 +146,14 @@ jQuery(function(){
 });
 
 $(document).ready(function(){
-    test();
+    getProjectDates();
 
     $('#padre').change(function(){
-        test();        
+        getProjectDates();        
     });
 });
 
-function test(){
+function getProjectDates(){
     var task_id             = $('#padre').val();
     var url_entregable      = '/investigacion/entregable/getDeliverable';
     var url_proyecto        = '/investigacion/proyecto/getProject';
@@ -163,7 +176,7 @@ function test(){
             type: "GET",
             url: url_entregable + '/' + task_id,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('#fecha_ini').attr('min',data.fecha_inicio);               
             },
             error: function (data) {

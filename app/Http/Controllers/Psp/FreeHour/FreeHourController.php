@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Auth;
 use Intranet\Http\Requests;
-use Intranet\Models\FreeHour;
+use Intranet\Models\freeHour;
 use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
 use Intranet\Models\PspStudent;
@@ -75,6 +75,7 @@ class FreeHourController extends Controller
             $freeHour->cantidad = 1;
             $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();            
             $freeHour->idsupervisor = $supervisor->id;
+            $freeHour->idpspprocess = $supervisor->idpspprocess;
             $freeHour->save();
 
             $f = FreeHour::where('idsupervisor',$supervisor->id)->count();

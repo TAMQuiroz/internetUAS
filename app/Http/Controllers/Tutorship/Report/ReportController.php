@@ -25,9 +25,8 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function meetingReport()
-    {
-        
+    public function meetingReport(Request $request)
+    {        
         $teacher = null;
         $data = [
             'teacher'    =>  $teacher,
@@ -35,70 +34,18 @@ class ReportController extends Controller
         return view('tutorship.report.meeting', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function reassingReport()
+    public function reassingReport(Request $request)
     {
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function topicReport(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $teacher = null;
+        $data = [
+            'teacher'    =>  $teacher,
+        ];
+        return view('tutorship.report.topic', $data);
     }
 
     public function tutstudentDateReport(Request $request)

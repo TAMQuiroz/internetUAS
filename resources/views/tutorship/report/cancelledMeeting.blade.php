@@ -30,11 +30,14 @@
                         <li class="tab-page">Citas por alumno</li>
                     </div>
                 </a>
-                
-                    <div class="tab-page-wrapper active">
-                        <li class="tab-page">Citas canceladas</li>
+                <a href="{{route('reporte.topic')}}">
+                    <div class="tab-page-wrapper">
+                        <li class="tab-page">Citas por tema</li>
                     </div>
-                
+                </a>                                
+                <div class="tab-page-wrapper active">
+                    <li class="tab-page">Citas canceladas</li>
+                </div>                
                 <a href="">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Reasignación de tutores</li>

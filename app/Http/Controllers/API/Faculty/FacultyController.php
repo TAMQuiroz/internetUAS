@@ -32,7 +32,8 @@ use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
-
+use Intranet\Models\Evaluation;
+use Intranet\Models\Contribution;
 class FacultyController extends BaseController
 {
     use Helpers;
@@ -147,6 +148,18 @@ class FacultyController extends BaseController
 
         return Response::json($schedules);
     }
+
+    public function getCourseContribution($course_id, $cycle_id){
+      $conts = Contribution::where('IdCurso',$course_id)->where('IdCicloAcademico', $cycle_id)->with('studentsResult')->get();
+      $res = collect();
+
+      foreach($conts as $cont){
+        $res->push($cont->studentsResult);
+
+      }
+      return $res;
+    }
+
 
     public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
     {

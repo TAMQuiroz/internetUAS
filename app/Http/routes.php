@@ -762,6 +762,7 @@ $api->version('v1', function ($api) {
                 $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
                 $api->get('/schedule/{schedule_id}/students','FacultyController@getStudentsbySchedule');
                 $api->get('/effort_table/cycle/{academic_cycle_id}/course/{course_id}/schedule/{schedule_id}/student/{student_id}','FacultyController@getEffortTable');
+                $api->get('/course/{c_id}/{s_id}/contributions', 'FacultyController@getCourseContribution');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
@@ -858,6 +859,11 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/deliverable', 'Deliverable\DeliverableController@getById');
                 $api->post('/{id}/deliverable', 'Deliverable\DeliverableController@edit');
                 $api->get('/{id}/deliverables', 'Deliverable\DeliverableController@getByProjectId');
+
+                $api->get('/{id}/versions', 'Deliverable\DeliverableController@getAllVersions');
+                $api->get('/{id}/responsibles', 'Deliverable\DeliverableController@getResponsibles');
+                $api->get('/{id}/observation', 'Deliverable\DeliverableController@getObservation');
+                $api->post('/{id}/observation', 'Deliverable\DeliverableController@registerObservation');
 
                 $api->get('/{id}/event', 'Event\EventController@getById');
                 $api->post('/{id}/event', 'Event\EventController@edit');

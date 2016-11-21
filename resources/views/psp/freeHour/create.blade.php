@@ -29,7 +29,7 @@
             <div class="form-group">
                 {{Form::label('Fecha',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                 <div class="col-md-4">
-                    <input class="form-control" type="text" name="fecha" id="fecha" placeholder="dd/mm/aaaa" minlength="10" maxlength="10" value="" required/>
+                    <input class="form-control" type="text" name="fecha" id="fecha" placeholder="dd-mm-aaaa" minlength="10" maxlength="10" value="" required/>
                 </div>
             </div>
                 {{--
@@ -82,7 +82,7 @@
             var today = new Date();
 
             $("#fecha").datepicker({
-                format: "dd/mm/yyyy",                                                                
+                format: "dd-mm-yyyy",                                                                
                 startDate: "today",
                 language: "es",                
                 todayHighlight: true,

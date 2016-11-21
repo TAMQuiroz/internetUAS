@@ -22,7 +22,10 @@ class FreeHourController extends Controller
     {
         $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
 
-        $freeHours = FreeHour::where('idsupervisor',$supervisor->id)->get();
+        $freeHours = FreeHour::where([
+            ['idsupervisor',$supervisor->id],
+            ['idpspprocess',$supervisor->idpspprocess],
+            ])->get();
 
         $data = [
             'freeHours'    =>  $freeHours,
@@ -65,7 +68,7 @@ class FreeHourController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FreeHourRequest $request)
     {
         //
         try {
@@ -74,7 +77,7 @@ class FreeHourController extends Controller
             
             $freeHour = new FreeHour;
             //dd($request['fecha_inicio']);
-            $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
+            $freeHour->fecha = Carbon::createFromFormat('d-m-Y',$request['fecha']);
             //dd($freeHour->fecha);
             $freeHour->hora_ini = $request['hora_ini'];
             $freeHour->cantidad = 1;
@@ -103,7 +106,7 @@ class FreeHourController extends Controller
         //
         $freeHour = FreeHour::find($id);
         $dt = new Carbon($freeHour->fecha);        
-        $freeHour->fecha = $dt->format('d/m/Y');
+        $freeHour->fecha = $dt->format('d-m-Y');
         
         $data = [
             'freeHour' => $freeHour,
@@ -123,13 +126,13 @@ class FreeHourController extends Controller
         $freeHour = FreeHour::find($id);
 
         $dt = new Carbon($freeHour->fecha);        
-        $freeHour->fecha = $dt->format('d/m/Y');
+        $freeHour->fecha = $dt->format('d-m-Y');
         //dd($freeHour->fecha);
 
         $data = [
             'freeHour' => $freeHour,
         ];
-
+        //dd($data);
         return view('psp.freeHour.edit',$data);
     }
 
@@ -140,12 +143,12 @@ class FreeHourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FreeHourRequest $request, $id)
     {
         //
         try {
             $freeHour = FreeHour::find($id);
-            $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
+            $freeHour->fecha = Carbon::createFromFormat('d-m-Y',$request['fecha']);
             $freeHour->hora_ini = $request['hora_ini'];
             $freeHour->save();
 

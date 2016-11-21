@@ -858,7 +858,7 @@ $api->version('v1', function ($api) {
                 $api->post('/{id}/event', 'Event\EventController@edit');
                 $api->get('/{id}/events', 'Event\EventController@getByGroupId');
 
-            });
+            }); 
 
             
             //TUTORIA

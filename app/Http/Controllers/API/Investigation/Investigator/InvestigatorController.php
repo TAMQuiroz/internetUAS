@@ -42,9 +42,11 @@ class InvestigatorController extends BaseController
         $investigator->save();
 
         //Retornar mensaje
-        $mensaje = 'Se modifico correctamente';
+        //$mensaje = 'Se modifico correctamente';
+        $mensaje = ['mensaje' => 'Se modifico correctamente'];
+        return response()->json($mensaje);
 
-        return $mensaje;
+        //return $mensaje;
     }
 
    

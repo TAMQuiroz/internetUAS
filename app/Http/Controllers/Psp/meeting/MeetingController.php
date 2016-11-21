@@ -154,7 +154,7 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function update(Request $request, $id)
+    public function update(MeetingEditRequest $request, $id)
     {
         //
         try {
@@ -225,7 +225,7 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function storeSup(Request $request)
+    public function storeSup(MeetingRequest $request)
     {
         try {
 
@@ -238,7 +238,7 @@ class MeetingController extends Controller
             //Crear freehour si la reunion es con supervisor
             //Se pueden crear disponibilidades excepcionales solo en esta pantalla (sin contar el maximo posible)
             if($request['tiporeunion']==1){
-                $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
+                $freeHour->fecha = Carbon::createFromFormat('d-m-Y',$request['fecha']);
                 $freeHour->hora_ini = $request['hora_inicio'];
                 $freeHour->cantidad = 1;            
                 $freeHour->idsupervisor = $supervisor->id;
@@ -258,7 +258,7 @@ class MeetingController extends Controller
             $time = date('H:i:s', $timestamp);
             $meeting->hora_fin=$time;
             */
-            $meeting->fecha=Carbon::createFromFormat('d/m/Y',$request['fecha']);
+            $meeting->fecha=Carbon::createFromFormat('d-m-Y',$request['fecha']);
             $meeting->idstudent=$request['alumno'];
             $meeting->idsupervisor=$supervisor->id;
             $meeting->asistencia='o';

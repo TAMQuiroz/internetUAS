@@ -22,7 +22,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Numero *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
 		    			<div class="col-md-4">
-		    				{{Form::number('numero',null,['class'=>'form-control', 'required', 'min' => 1, 'max' => 9])}}
+		    				{{Form::number('numero',$groupNum,['class'=>'form-control', 'required', 'min' => 1, 'max' => 9])}}
 		    			</div>
 		    		</div>
 

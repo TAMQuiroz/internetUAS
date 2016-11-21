@@ -46,12 +46,15 @@ class ParticipationController extends Controller
 
         $profActivos =DB::table('pspprocesses')->join('pspprocessesxdocente','pspprocesses.id','=','pspprocessesxdocente.idpspprocess')->join('Docente','pspprocessesxdocente.iddocente','=','Docente.IdDocente')->select('Docente.IdDocente','Codigo','Nombre','ApellidoPaterno','pspprocessesxdocente.id')->where('Docente.es_supervisorpsp',1)->where('pspprocesses.id',$id)->where('Docente.IdEspecialidad',$user->IdEspecialidad)->where('pspprocessesxdocente.deleted_at',null)->get();
 
+        $profPsp =DB::table('pspprocesses')->join('pspprocessesxdocente','pspprocesses.id','=','pspprocessesxdocente.idpspprocess')->join('Docente','pspprocessesxdocente.iddocente','=','Docente.IdDocente')->select('Docente.IdDocente','Codigo','Nombre','ApellidoPaterno','pspprocessesxdocente.id')->where('Docente.es_supervisorpsp',null)->where('Docente.IdEspecialidad',$user->IdEspecialidad)->where('pspprocessesxdocente.deleted_at',null)->get();
         $prof = [];
-        array_push($prof, $user->IdDocente);
+        //array_push($prof, $user->IdDocente);
         foreach ($profActivos as $profA) {
             array_push($prof, $profA->IdDocente);
         }
-        
+        foreach ($profPsp as $profB) {
+            array_push($prof, $profB->IdDocente);
+        }
         $profesores = Teacher::where('IdEspecialidad',$user->IdEspecialidad)->whereNotIn('IdDocente',$prof)->get();
 
         $curso = Course::find($primerProc->idcurso);

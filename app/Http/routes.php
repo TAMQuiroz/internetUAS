@@ -619,7 +619,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('show/{id}', ['as' => 'inscription.show', 'uses' => 'Psp\Inscription\InscriptionController@show']);
                 Route::get('edit/{id}', ['as' => 'inscription.edit', 'uses' => 'Psp\Inscription\InscriptionController@edit']);
                 Route::post('edit/{id}', ['as' => 'inscription.update', 'uses' => 'Psp\Inscription\InscriptionController@update']);
-                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);    
+                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);   
+                Route::get('search/{id}', ['as' => 'inscription.search', 'uses' => 'Psp\Inscription\InscriptionController@search']);
+                Route::get('check/{id}', ['as' => 'inscription.check', 'uses' => 'Psp\Inscription\InscriptionController@check']);
+                Route::post('check/{id}', ['as' => 'inscription.updateC', 'uses' => 'Psp\Inscription\InscriptionController@updateC']);
+
             });
 
             //Phase
@@ -757,6 +761,8 @@ $api->version('v1', function ($api) {
                 $api->get('/{f_id}/semester/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
                 $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
                 $api->get('/schedule/{schedule_id}/students','FacultyController@getStudentsbySchedule');
+                $api->get('/effort_table/cycle/{academic_cycle_id}/course/{course_id}/schedule/{schedule_id}/student/{student_id}','FacultyController@getEffortTable');
+                $api->get('/course/{c_id}/{s_id}/contributions', 'FacultyController@getCourseContribution');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
@@ -853,6 +859,11 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/deliverable', 'Deliverable\DeliverableController@getById');
                 $api->post('/{id}/deliverable', 'Deliverable\DeliverableController@edit');
                 $api->get('/{id}/deliverables', 'Deliverable\DeliverableController@getByProjectId');
+
+                $api->get('/{id}/versions', 'Deliverable\DeliverableController@getAllVersions');
+                $api->get('/{id}/responsibles', 'Deliverable\DeliverableController@getResponsibles');
+                $api->get('/{id}/observation', 'Deliverable\DeliverableController@getObservation');
+                $api->post('/{id}/observation', 'Deliverable\DeliverableController@registerObservation');
 
                 $api->get('/{id}/event', 'Event\EventController@getById');
                 $api->post('/{id}/event', 'Event\EventController@edit');

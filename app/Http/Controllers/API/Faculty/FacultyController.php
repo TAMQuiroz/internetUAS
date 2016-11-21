@@ -14,6 +14,7 @@ use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
 use Intranet\Models\Aspect;
 use Intranet\Models\Teacher;
+use Intranet\Models\Score;
 use Illuminate\Http\Request;
 use Intranet\Models\Faculty;
 use Dingo\Api\Routing\Helpers;
@@ -32,6 +33,7 @@ use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
 use Intranet\Models\Evaluation;
+use Intranet\Models\Contribution;
 class FacultyController extends BaseController
 {
     use Helpers;
@@ -146,6 +148,18 @@ class FacultyController extends BaseController
 
         return Response::json($schedules);
     }
+
+    public function getCourseContribution($course_id, $cycle_id){
+      $conts = Contribution::where('IdCurso',$course_id)->where('IdCicloAcademico', $cycle_id)->where("deleted_at", null)->with('studentsResult')->get();
+      $res = collect();
+
+      foreach($conts as $cont){
+        $res->push($cont->studentsResult);
+
+      }
+      return $res;
+    }
+
 
     public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
     {
@@ -333,4 +347,21 @@ class FacultyController extends BaseController
       $students = Student::where('IdHorario',$schedule_id)->get();
       return Response::json($students);
     }
+
+    public function getEffortTable($academic_cycle_id, $course_id, $schedule_id, $student_id){
+      //sacamos el cursoxciclo del curso que queremos ver sus resultados
+      $coursexteachers = CoursexCycle::where('IdCicloAcademico',$academic_cycle_id)
+                                     ->where('IdCurso',$course_id)
+                                     ->first();
+      //sacamos los horarios del curso en el ciclo                                     
+      
+      $schedules = Schedule::where('IdCursoxCiclo',$coursexteachers->IdCursoxCiclo)->get();
+
+      $scores = Score::where('IdHorario', $schedule_id)
+                     ->where('IdAlumno', $student_id)
+                     ->get();
+      $scores->load('criterion');
+      return Response::json($scores);
+    }
+
 }

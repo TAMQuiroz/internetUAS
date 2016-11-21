@@ -30,11 +30,14 @@ use Intranet\Http\Requests\AspectRequest;
 use Intranet\Http\Requests\CriterioResquest;
 use Intranet\Http\Requests\StudentResultRequest;
 use Intranet\Http\Requests\CriterioStoreRequest;
+use Intranet\Http\Requests\CriterioFlujoCoordinadorRequest;
 use Intranet\Http\Requests\CourseRequest;
 use Intranet\Models\Aspect;
 use Intranet\Models\User;
 use Intranet\Models\Course;
 use Intranet\Models\Teacher;
+use Intranet\Models\Period;
+use Intranet\Models\Cicle;
 use Intranet\Models\Criterion;
 use Intranet\Models\AcademicCycle;
 use Intranet\Models\StudentsResult;
@@ -76,6 +79,8 @@ class FlujoCoordinadorController extends Controller
     {
 
     	$data['idEspecialidad']=$this->facultyService->getFacultyxDocente();
+        $faculty = Faculty::where('IdDocente', Session::get('user')->IdDocente)->first();
+        Session::put('faculty-code',$faculty->IdEspecialidad);
 
       	return view('flujoCoordinador.index',$data);
     }
@@ -122,7 +127,7 @@ class FlujoCoordinadorController extends Controller
     	//return "profesor creado";
     }
 
-    public function criterio_create (CriterioResquest $request, $id){
+    public function criterio_create (CriterioFlujoCoordinadorRequest $request, $id){
     	//$idResultado = $request->get('resultado');
     	//$resultado= StudentsResult::findOrFail($idResultado);
 
@@ -164,7 +169,7 @@ class FlujoCoordinadorController extends Controller
     public function objetivoEducacional_store (EducationalObjetiveRequest $request, $id){
 
         //crear un nuevo objetivo educacional
-        $numberOE = EducationalObjetive::where('IdEspecialidad',Session::get('faculty-code'))
+        $numberOE = EducationalObjetive::where('IdEspecialidad',$id)
 									   ->where('deleted_at',null)->count();
 		$numberOE = ($numberOE) + 1;
 		$educationalObjetive = EducationalObjetive::create([
@@ -326,11 +331,13 @@ class FlujoCoordinadorController extends Controller
         $data['title'] = 'Información del Periodo Actual';
 
         try {
+            $periodo = Period::where('Vigente',1)->where('IdEspecialidad',$id)->first();
+            $codigo_Periodo=$periodo->IdPeriodo;
             $data['idEspecialidad']=$id;
-            $data['period'] = $this->periodService->get(Session::get('period-code'));
+            $data['period'] = $this->periodService->get($codigo_Periodo);
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
-            $data['measures'] = $this->measureService->allByFaculty2(Session::get('period-code'));
-            $data['period_semesters'] = $this->cicleService->getCicleByPeriod(Session::get('period-code'));
+            $data['measures'] = $this->measureService->allByFaculty2($codigo_Periodo);
+            $data['period_semesters'] = $this->cicleService->getCicleByPeriod($codigo_Periodo);
             $data['studentsResults'] = $this->studentsResultService->findByFaculty();
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
         } catch(\Exception $e) {
@@ -362,7 +369,7 @@ class FlujoCoordinadorController extends Controller
             $regular_professors = isset($request['regular_professors'])?$request['regular_professors']:[];
             $course->regularProfessors()->sync($regular_professors);
 */
-
+            $measuresAll=$this->measurementSourceService->allByFaculty2($id);
             $measures = (array_key_exists('measures', $request1))?$request1['measures']: [];
             //dd($measures);
             $educationalObjetives = (array_key_exists('objCheck', $request1))?$request1['objCheck']: [];
@@ -374,6 +381,8 @@ class FlujoCoordinadorController extends Controller
             ->where('deleted_at', null)->get();
             $educationalObjetivesAll = EducationalObjetive::where('IdEspecialidad', $id)
             ->where('deleted_at', null)->get();
+            $data['measuresAll']=$measuresAll;
+            $data['measures']=$measures;
             $data['educationalObjetivesAll']=$educationalObjetivesAll;
             $data['educationalObjetives']=$educationalObjetives;
             $data['studentResultAll']=$studentResultsAll;
@@ -446,8 +455,8 @@ class FlujoCoordinadorController extends Controller
         $data['teachers'] = $this->teacherService->findTeacherByFaculty($id);
         $data['idEspecialidad']=$id;
         try {
-            $cycle = Session::get('academic-cycle');
-            $data['cycle'] = $cycle;
+            //$cycle = Session::get('academic-cycle');
+            $cycle = Cicle::where('Vigente',1)->where('IdEspecialidad',$id)->first();
             if($cycle!=null){
                     $data['dateI'] = date('d/m/Y',strtotime($cycle->FechaInicio.''));
                     $data['dateF'] = date('d/m/Y',strtotime($cycle->FechaFin.''));
@@ -459,10 +468,11 @@ class FlujoCoordinadorController extends Controller
             }
 
         $data['cicle'] = $this->facultyService->findCycle($id);
+        //dd($data['cicle'] );
         $data['cycleAcademic'] = $this->facultyService->AllCyclesAcademics();
         $data['results'] = $this->facultyService->allResultsInPeriod();
-        if(Session::get('academic-cycle')!= null){
-            $data['cyclexresults'] = $this->facultyService->findResultsxCycle(Session::get('academic-cycle')->IdCicloAcademico);
+        if($cycle!= null){
+            $data['cyclexresults'] = $this->facultyService->findResultsxCycle($cycle->IdCicloAcademico);
         }else{
             $data['cyclexresults'] = null;
         }
@@ -476,10 +486,11 @@ class FlujoCoordinadorController extends Controller
 
     public function viewAcademicCycle($id) {
         $data['title'] = 'Información del Ciclo Actual';
-        $data['teachers'] = $this->teacherService->findTeacherByFaculty( Session::get('faculty-code'));
+        $data['teachers'] = $this->teacherService->findTeacherByFaculty($id);
         $data['idEspecialidad'] = $id;
         try {
-            $cycle = Session::get('academic-cycle');
+            //$cycle = Session::get('academic-cycle');
+            $cycle = Cicle::where('Vigente',1)->where('IdEspecialidad',$id)->first();
             $data['cycle'] = $cycle;
             if($cycle!=null){
                     $data['dateI'] = date('d/m/Y',strtotime($cycle->FechaInicio.''));
@@ -490,10 +501,10 @@ class FlujoCoordinadorController extends Controller
                     $data['dateF'] = null;
 
             }
-        $data['cicle'] = $this->facultyService->findCycle(Session::get('faculty-code'));
-        $data['period'] = $this->facultyService->findPeriod(Session::get('faculty-code'));
-        if(Session::get('academic-cycle')!= null){
-            $data['cyclexresults'] = $this->facultyService->findResultsxCycle(Session::get('academic-cycle')->IdCicloAcademico);
+        $data['cicle'] = $this->facultyService->findCycle($id);
+        $data['period'] = $this->facultyService->findPeriod($id);
+        if($cycle!= null){
+            $data['cyclexresults'] = $this->facultyService->findResultsxCycle($cycle->IdCicloAcademico);
         }
 
 
@@ -509,13 +520,16 @@ class FlujoCoordinadorController extends Controller
             $data['idEspecialidad'] = $id;
             $data['title'] = 'Crear Profesor';
             $data['idEspecialidad']=$id;
-            $cycle = $this->facultyService->createCycle($request->all());
+            $cycle = $this->facultyService->createCycle2($request->all(),$id);
             $info = 1;
             
-            $this->facultyService->activateCycle($request->all());
-            $cycle = $this->facultyService->findCycle(Session::get('faculty-code'));
+            $this->facultyService->activateCycle2($request->all(),$id);
+            $cycle = $this->facultyService->findCycle($id);
             Session::forget('academic-cycle');
             Session::set('academic-cycle',$cycle);
+            Session::forget('id-academic-cycle');
+            Session::set('id-academic-cycle',$cycle->IdCicloAcademico);
+            
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
@@ -529,9 +543,10 @@ class FlujoCoordinadorController extends Controller
     public function initPeriod($id)
     {
         try {
-            $data['idEspecialidad']=$id;
-            //dd(Session::get('period-code'));
-            if(Session::get('period-code')!=null){
+            $data['idEspecialidad']=$id; 
+            $periodo = Period::where('Vigente',1)->where('IdEspecialidad',$id)->first();
+            //dd($periodo);
+            if($periodo!=null){
                 return $this->viewPeriod($id);
             }else{
                 return $this->createPeriod($id);
@@ -559,7 +574,10 @@ class FlujoCoordinadorController extends Controller
             Session::forget('stRstCheck');
             Session::forget('aspCheck');
             Session::forget('crtCheck');
-            if(Session::get('academic-cycle')!=null){
+
+            $cycle = Cicle::where('Vigente',1)->where('IdEspecialidad',$id)->first();
+            //dd($cycle);
+            if($cycle!=null){
                 return $this->viewAcademicCycle($id);
             }else{
                 return $this->createAcademicCycle($id);
@@ -675,12 +693,12 @@ class FlujoCoordinadorController extends Controller
     public function cursosCiclo_index($id){
 
 
-        Session::put('id-academic-cycle', 1); //eliminar esto cuando alex termine
+        //Session::put('id-academic-cycle', 1); //eliminar esto cuando alex termine
 
         $data['title'] = "Asignar Cursos al Ciclo";
         $data['idEspecialidad'] = $id;
-
-        $idAcademicCycle = Session::get('id-academic-cycle');
+        //dd(Session::get('academic-cycle'));
+        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
 
         try {
             $data['courses'] = $this->dictatedCoursesService->getCoursesxCycleByCycleByFaculty($idAcademicCycle, $id);
@@ -889,9 +907,10 @@ class FlujoCoordinadorController extends Controller
     public function contributions($id) {
         $data = [];
         try {
-            //dd($id);
+            
+            //dd(Session::get('faculty-code'));
             $data['idEspecialidad']=$id;
-            $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle();
+            $data['currentStudentsResults'] = $this->studentsResultService->findByFacultyAndCicle2($id);
             //dd($data['currentStudentsResults']);
             $data['courses']= $this->courseService->retrieveByFacultyandCicle($id);
             //dd("hola");
@@ -907,7 +926,7 @@ class FlujoCoordinadorController extends Controller
         }
 
         try {
-            $this->courseService->updateContributions($request->all());
+            $this->courseService->updateContributions2($request->all(),$id);
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error updateContributions'); 
         }

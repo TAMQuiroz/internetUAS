@@ -38,30 +38,32 @@
                 
                 <div class="table-responsive">
                     <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                        <col width="10%" >
+                        <col width="35%" >
+                        <col width="40%" >
+                        <col width="15%">
                         <thead>
                             <tr class="headings">
-                                <th class="column-title">Código </th>
-                                <th class="column-title">Tipo </th>                        
+                                <th class="centered column-title">Código </th>
+                                <th class="centered column-title">Tipo </th>
                                 <th class="column-title">Nombre </th>  
-                                <th class="column-title last">Acciones</th>
-                                <th class="bulk-actions" colspan="7">
-                                    <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                                </th>                       
+                                <th class="centered column-title last">Acciones</th>
+                                                      
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($reasons as $reason)
                             <tr class="even pointer">
                                 <td hidden class="group-id">{{ $reason->id }}</td>
-                                <td class=" ">{{ $reason->id }}</td>
-                                <td class=" "> @if ($reason->tipo == 1) De cancelación/rechazo de cita @else De desactivación de tutor @endif </td>
+                                <td class="centered">{{ $reason->id }}</td>
+                                <td class="centered "> @if ($reason->tipo == 1) De cancelación/rechazo de cita @else De desactivación de tutor @endif </td>
                                 <td class=" ">{{ $reason->nombre }}</td>                            
-                                <td class=" ">
+                                <td class="centered ">
                                     @if($reason->id != 1 && $reason->id != 2 )
-                                    <a href="{{route('motivo.edit',$reason->id)}}" class="btn btn-primary btn-xs view-group"">
+                                    <a title="Editar" href="{{route('motivo.edit',$reason->id)}}" class="btn btn-primary btn-xs view-group"">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$reason->id}}">
+                                    <a title="Eliminar" href="" class="btn btn-danger btn-xs delete-group" data-toggle="modal" data-target="#{{$reason->id}}">
                                         <i class="fa fa-remove"></i>
                                     </a>
                                     @endif

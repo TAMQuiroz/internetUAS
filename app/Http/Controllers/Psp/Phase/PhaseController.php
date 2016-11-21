@@ -39,7 +39,7 @@ class PhaseController extends Controller
         //$Phaseses = Phase::get();
         if(Auth::User()->IdPerfil==3){  
                 $Phaseses = Phase::get();
-            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
+            } else {
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
                 //if($teacher!=null){
                     $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
@@ -75,10 +75,10 @@ class PhaseController extends Controller
      */
     public function create()
     {
-        
+        $proc=null;
         if(Auth::User()->IdPerfil==3){  
                 $proc = PspProcess::get();
-            } else if (Auth::User()->IdPerfil==2 || Auth::User()->IdPerfil==1){
+            } else {
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
                 $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
                 $proc = array(); 
@@ -89,8 +89,6 @@ class PhaseController extends Controller
                 }
             }
             //dd($proc);
-        }else{
-            $proc=null;
         }
         $data = [
             'pspproc'    =>  $proc,
@@ -168,7 +166,7 @@ class PhaseController extends Controller
         ];
         if(Auth::User()->IdPerfil==3){  
                 $proc = PspProcess::get();
-            } else if (Auth::User()->IdPerfil==2|| Auth::User()->IdPerfil==1){
+            } else {
                 $proc = array();                     
                 $proc[]=PspProcess::find($phase->idpspprocess);           
         }

@@ -190,7 +190,9 @@ Route::group(['middleware' => 'auth'], function(){
 
         // assign faculty
         Route::get('/periods', ['as' => 'viewPeriod.faculty', 'uses' => 'Faculty\FacultyController@getPeriods']);
+        Route::post('/periods/continue', ['as' => 'continuePeriod.faculty', 'uses' => 'Faculty\FacultyController@continuePeriod']);
         Route::get('/periods/create', ['as' => 'createPeriod.faculty', 'uses' => 'Faculty\FacultyController@createPeriod']);
+        Route::post('/periods/store/{id}', ['as' => 'storePeriod2.faculty', 'uses' => 'Faculty\FacultyController@storePeriod2']);
         Route::post('/periods/create', ['as' => 'storePeriod.faculty', 'uses' => 'Faculty\FacultyController@storePeriod']);
         Route::get('/periods/{period_id}', ['as' => 'editPeriod.faculty', 'uses' => 'Faculty\FacultyController@editPeriod']);
         Route::get('/editPeriod', ['as' => 'editPeriod.faculty', 'uses' => 'Faculty\FacultyController@editPeriod']);
@@ -617,7 +619,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('show/{id}', ['as' => 'inscription.show', 'uses' => 'Psp\Inscription\InscriptionController@show']);
                 Route::get('edit/{id}', ['as' => 'inscription.edit', 'uses' => 'Psp\Inscription\InscriptionController@edit']);
                 Route::post('edit/{id}', ['as' => 'inscription.update', 'uses' => 'Psp\Inscription\InscriptionController@update']);
-                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);    
+                Route::get('delete/{id}', ['as' => 'inscription.delete', 'uses' => 'Psp\Inscription\InscriptionController@destroy']);   
+                Route::get('search/{id}', ['as' => 'inscription.search', 'uses' => 'Psp\Inscription\InscriptionController@search']);
+                Route::get('check/{id}', ['as' => 'inscription.check', 'uses' => 'Psp\Inscription\InscriptionController@check']);
+                Route::post('check/{id}', ['as' => 'inscription.updateC', 'uses' => 'Psp\Inscription\InscriptionController@updateC']);
+
             });
 
             //Phase
@@ -636,9 +642,9 @@ Route::group(['middleware' => 'auth'], function(){
             //Aspecto
             Route::group(['prefix' => 'aspecto'], function() {
                 Route::get('create/{id}', ['as' => 'aspecto.create', 'uses' => 'Psp\Aspecto\AspectoController@create']);
+                Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
                 Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
                 Route::post('edit/{id}', ['as' => 'aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
-                Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
             });
             
 
@@ -708,9 +714,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('delete/{id}', ['as' => 'skill.delete', 'uses' => 'Psp\Skill\SkillController@destroy']);    
             });
 
-          
+            //Administracion de criterios de PSP
+            Route::group(['prefix' => 'pspCriterio'], function() {
+                Route::get('/', ['as' => 'pspCriterio.index', 'uses' => 'Psp\PspCriterio\PspCriterioController@index']);
+                Route::get('create', ['as' => 'pspCriterio.create', 'uses' => 'Psp\PspCriterio\PspCriterioController@create']);
+                Route::post('create', ['as' => 'pspCriterio.store', 'uses' => 'Psp\PspCriterio\PspCriterioController@store']);
+                Route::get('edit/{id}', ['as' => 'pspCriterio.edit', 'uses' => 'Psp\PspCriterio\PspCriterioController@edit']);
+                Route::post('update/{id}', ['as' => 'pspCriterio.update', 'uses' => 'Psp\PspCriterio\PspCriterioController@update']);
+                Route::get('delete/{id}', ['as' => 'pspCriterio.delete', 'uses' => 'Psp\PspCriterio\PspCriterioController@destroy']);
+            });
 
-});   
+    });   
 
 
 });
@@ -1144,6 +1158,9 @@ Route::group(['prefix' => 'uas'], function(){
         Route::group(['prefix' => 'reporte'], function(){    
             Route::get('/meeting', ['as' => 'reporte.meeting', 'uses' => 'Tutorship\Report\ReportController@meetingReport']);                    
             Route::get('/reassign', ['as' => 'reporte.reassign', 'uses' => 'Tutorship\Report\ReportController@reassignReport']);
+            Route::get('/citas-alumnos', ['as' => 'reporte.tutstudentDate', 'uses' => 'Tutorship\Report\ReportController@tutstudentDateReport']);
+            Route::get('/citas-canceladas', ['as' => 'reporte.cancelledMeeting', 'uses' => 'Tutorship\Report\ReportController@cancelledMeetingReport']);
+            Route::get('/topic', ['as' => 'reporte.topic', 'uses' => 'Tutorship\Report\ReportController@topicReport']);
         });
 
         /***   PARA EL ALUMNO DE TUTORÍA   ***/
@@ -1240,7 +1257,7 @@ Route::group(['prefix' => 'uas'], function(){
         });
         
 
-        //Evaluaciones de adminstrador
+        //Evaluaciones de administrador
         Route::group(['middleware' => 'auth'], function(){
             //Competencias
             Route::group(['prefix' => 'competencias'], function(){    
@@ -1257,13 +1274,12 @@ Route::group(['prefix' => 'uas'], function(){
             Route::group(['prefix' => 'evaluadores'], function(){    
                 Route::get('/', ['as' => 'evaluador.index', 'uses' => 'Evaluations\Evaluator\EvaluatorController@index']);
                 Route::get('create', ['as' => 'evaluador.create', 'uses' => 'Evaluations\Evaluator\EvaluatorController@create']);
-                Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);
-                // Route::get('show/{id}', ['as' => 'evaluador.show', 'uses' => 'Evaluations\Evaluator\EvaluatorController@show']);
+                Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);                
                 Route::get('edit/{id}', ['as' => 'evaluador.edit', 'uses' => 'Evaluations\Evaluator\EvaluatorController@edit']);
                 Route::post('edit/{id}', ['as' => 'evaluador.update', 'uses' => 'Evaluations\Evaluator\EvaluatorController@update']);
                 Route::get('delete/{id}', ['as' => 'evaluador.delete', 'uses' => 'Evaluations\Evaluator\EvaluatorController@destroy']);
             });
-
+            //Evaluaciones
             Route::group(['prefix' => 'evaluaciones'], function(){    
                 Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);                
                 Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
@@ -1278,7 +1294,13 @@ Route::group(['prefix' => 'uas'], function(){
                 Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
                 Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
                 Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
-            });    
+            });   
+
+            //Alumnos
+            Route::group(['prefix' => 'alumnos'], function(){
+                Route::get('/', ['as' => 'evstudent.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@students_index']); 
+                Route::get('show/{id}', ['as' => 'evstudent.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@student_show']);                
+            }); 
         });
         
 

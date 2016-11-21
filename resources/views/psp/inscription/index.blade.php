@@ -43,7 +43,23 @@
                                 <a href="{{ route('inscription.edit', $inscription->id) }}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>
                                 <!--<a class="btn btn-danger btn-xs delete-teacher" data-toggle="modal" data-target=".bs-example-modal-sm" title="Eliminar"><i class="fa fa-remove"></i></a>-->
                                 <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$inscription->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
+                                @if($inscription->recomendaciones!=null)
+                                <a class="btn btn-primary btn-xs" href="" title="recomendaciones" data-toggle="modal" data-target="#obsModal{{$inscription->id}}"><i class="fa fa-info"></i></a>
+                                @endif
                             </td>
+                            <div class="modal fade"  id="obsModal{{$inscription->id}}">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Recomendaciones</h4>
+                                  </div>
+                                  <div class="modal-footer">
+                                     <h4 class="col-md-12 col-sm-12 col-xs-12" align="left">{{$inscription->recomendaciones}}</h4>
+                                  </div>
+                                </div><!-- /.modal-content -->
+                              </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                         </tr>
                         @include('modals.delete', ['id'=> $inscription->id, 'message' => '¿Esta seguro que desea eliminar esta información?', 'route' => route('inscription.delete', $inscription->id)])
                         @endforeach

@@ -66,11 +66,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($tutMeetings as $tutMeeting)
+                @foreach($tutMeetings as  $key => $tutMeeting)
                 <tr class="even pointer">
-                    <td hidden class="group-id">{{ $tutMeeting->id }}</td>
+                    <td hidden class="group-id">{{$tutMeeting->id}}</td>
 
-                    <td class=""><span class="label label-success"> {{ $tutMeeting->estado }} </span></td>
+                    <td class=""><span class="label label-success"> {{ $tutMeeting->estado }} {{$fecha[$key]}} {{$hora[$key]}} {{$hora_inicio[$key]}} {{$hora_fin[$key]}}</span></td>
                     
                     <td class=" ">{{ $tutMeeting->tutstudent->codigo }}</td>                                      
 

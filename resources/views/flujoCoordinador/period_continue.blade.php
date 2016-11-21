@@ -57,7 +57,13 @@
           <br>
           <p>INSTRUMENTOS</p>
           <p>Los instrumentos seleccionados para este periodo son los siguientes:</p>
-          
+          @if($measuresAll!=null)
+          @foreach($measuresAll as $mes)
+            @if (in_array($mes->IdFuenteMedicion, $measures))
+            <p>{{$mes->Nombre}}</p>
+            @endif
+          @endforeach
+          @endif
           <br>
           <p> OBJETIVOS</p>
           @if($educationalObjetivesAll!=null)

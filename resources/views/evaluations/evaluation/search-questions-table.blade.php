@@ -56,8 +56,8 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <center>
-            <a data-remodal-action="cancel" class="btn btn-success" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar a la evaluación</a>
-        </center>
+            <a title="Agregar preguntas a la evaluación" data-remodal-action="cancel" class="btn btn-primary" onclick="selectQuestions()" id="select-questions"><i class="fa fa-plus"></i> Agregar</a>
+        </center>        
     </div>
 </div>
 @else

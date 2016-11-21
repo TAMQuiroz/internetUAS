@@ -12,13 +12,13 @@
     </div>
     <div class="col-sm-9 col-xs-12">
         <div class="row">
-            <div class="col-sm-4 col-xs-4">
+            <div class="col-sm-4 col-xs-5">
                 <a href="#filter-tutorDates" class="btn btn-warning"><i class="fa fa-filter"></i> Filtrar</a>                
             </div>            
-            <div class="col-sm-4 col-xs-4">
+            <div class="col-sm-4 col-xs-7">
                 <button class="btn btn-warning pull-right"><i class="fa fa-eye"></i>  Cambiar vista</button>
             </div>
-            <div class="col-sm-4 col-xs-4">
+            <div class="col-sm-4 col-xs-12">
                 <a href="{{ route('mis_alumnos.index') }}" class="btn btn-submit pull-right"><i class="fa fa-plus"></i>  Nueva cita</a>
             </div>
         </div>

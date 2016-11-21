@@ -33,28 +33,17 @@ class StudentsResultService {
     public function findByFaculty($faculty_id = null) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code', $faculty_id))
-            ->where('deleted_at', null)->where('Estado',0)->orderBy("Descripcion","ASC")->get();
+            ->where('deleted_at', null)->where('Estado',1)->orderBy("Descripcion","ASC")->get();
 
         return $studentResults;
     }
     public function findByFaculty2($faculty_id= null) {
 
-        $ar=[];
         $studentResults = StudentsResult::where('IdEspecialidad', $faculty_id)
-            ->where('deleted_at', null)->where('Estado',0)->orderBy("Descripcion","ASC")->get();
+            ->where('deleted_at', null)->orderBy("Descripcion","ASC")->get();
 
-        foreach ($studentResults as $res){
-            array_push($ar, $res);
-        }
 
-        $studentResults2 = StudentsResult::where('IdEspecialidad', $faculty_id)
-            ->where('deleted_at', null)->where('Estado',1)->orderBy("Descripcion","ASC")->get();
-
-        foreach ($studentResults2 as $res){
-            array_push($ar, $res);
-        }
-
-        return $ar;
+        return $studentResults;
     }
     public function findByFaculty3($faculty_id= null) {
 
@@ -211,7 +200,7 @@ class StudentsResultService {
             return null;
         }
 
-        $studentResults = $this->findByFaculty3(Session::get('academic-cycle', $academic_cycle)->IdEspecialidad);
+        $studentResults = $this->findByFaculty2(Session::get('academic-cycle', $academic_cycle)->IdEspecialidad);
         //dd(Session::get('academic-cycle')->IdEspecialidad);
         if ($studentResults == null)
             return null;

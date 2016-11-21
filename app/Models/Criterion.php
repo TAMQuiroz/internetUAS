@@ -16,7 +16,7 @@ class Criterion extends Model
     protected $fillable = ['IdAspecto','Nombre','Estado'];
 
 	public function aspect(){
-		return $this->belongsTo('Intranet\Models\Aspect', 'IdAspecto')->where('deleted_at',null)->whereIn('Estado',[0,1]);
+		return $this->belongsTo('Intranet\Models\Aspect', 'IdAspecto')->where('deleted_at',null);
 	}
 
 	public function criterionLevel(){

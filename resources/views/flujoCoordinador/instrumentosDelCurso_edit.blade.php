@@ -99,9 +99,9 @@
         @foreach($studentsResults as $stdRslt)
 
             @foreach($stdRslt->relatedAspects as $aspt)
-                @if($aspt->Estado == 1)
+                @if($aspt->Estado == 1 || $aspt->Estado == 2)
                     @foreach($aspt->relatedCriterion as $crt)
-                        @if($crt->Estado == 1)
+                        @if($crt->Estado == 1 || $crt->Estado == 2)
                          <tr class="even pointer table-mxc" name="{{$stdRslt->IdResultadoEstudiantil}}" hidden="true"> 
                             <td value="{{ $aspt->IdAspecto }}" style="vertical-align: middle">{{ $aspt->Nombre }} </td> 
                             <td value="{{ $crt->IdCriterio }}" style="vertical-align: middle">{{ $crt->Nombre }} </td> 

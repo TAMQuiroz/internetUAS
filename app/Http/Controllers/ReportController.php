@@ -8,6 +8,11 @@ use Intranet\Models\Course;
 use Intranet\Models\DictatedCourses;
 use Intranet\Models\TimeTable;
 use Intranet\Models\Score;
+use Intranet\Models\AcademicCycle;
+use Intranet\Models\FacultyxCycle;
+use Intranet\Models\Contribution;
+use Intranet\Models\Criterion;
+use Intranet\Models\Aspect;
 
 use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Aspect\AspectService;
@@ -55,60 +60,257 @@ class ReportController extends Controller
 			$data['title'] = 'Reporte detallado';
 			$data['period'] = $conf = $this->facultyService->findConfFaculty(Session::get('faculty-code'), $request['periodo']);
 
-			if($request['periodo'] != 0){
-				$idPeriodo = $request['periodo'];
-				$resultados = $this->studentResultService->retrieveAllByFacultyByPeriod($idPeriodo);
-				//dd($resultados);
+			if($request['periodo'] != 0){	
+				// obtener ciclos del periodo
+				$idCiclos = FacultyxCycle::where('IdPeriodo', $request['periodo'])->get()->pluck('IdCicloAcademico');
+				$ciclos = AcademicCycle::whereIn('IdCicloAcademico',$idCiclos)->get();
+				$data['ciclos'] = $ciclos;
+
 				if($request['resultado'] != 0){
 
 					if($request['aspecto'] != 0){
+
 						if($request['criterio'] != 0){ //halla cursos del resultado
 
-							if($request['curso']){ //obtener valores de la tabla de desempeño (para los horarios del curso)
+							if($request['curso'] !=0 ){ //obtener valores de la tabla de desempeño (para los horarios del curso)
 
-								$idCursosxciclo = DictatedCourses::where('IdCurso', $request['curso'])->get()->pluck('IdCursoxCiclo');
-								$horarios = TimeTable::whereIn('IdCursoxCiclo', $idCursosxciclo)->get()->pluck('IdHorario');
-								$calif = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $request['criterio'])->get();
+								// resultados de medicion del curso en el ciclo
+								$resultadosMedicion = [];
+								foreach ($ciclos as $ciclo) {							
+									$idCursosxciclo = DictatedCourses::where('IdCurso', $request['curso'])->where('IdCicloAcademico', $ciclo->IdCicloAcademico)
+																											->get()->pluck('IdCursoxCiclo');
+									
+									$horarios = TimeTable::whereIn('IdCursoxCiclo', $idCursosxciclo)->get()->pluck('IdHorario');
+									$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $request['criterio'])->get();
+									
+									$umbralAceptacion = $conf->UmbralAceptacion;
+									$nivelEsperado = $conf->NivelEsperado;
+									
+									$cantAprobados = 0;
+									$cantTotal = 0;
+									foreach ($calificiones as $calif) {
+										if($calif->Nota >= $nivelEsperado){
+											$cantAprobados++;
+										}
+										$cantTotal++;
+									}
+									
+									$resultado =($cantAprobados*1.0/$cantTotal)*100;
+									array_push($resultadosMedicion, $resultado);
+								}	
+								//dd($resultadosMedicion);
+								$data['tipoFiltro'] = 1;
+								$data['resultadosMedicion'] = $resultadosMedicion;
+							}
+							else {					
 
-								dd($calif); 
+								// obtener ciclos del periodo
+								$resultadosMedicionTotal = [];
+								foreach ($ciclos as $ciclo) {
+									$idsCurso = Contribution::where('IdResultadoEstudiantil', $request['resultado'])->get()->pluck('IdCurso');
+									$cursosxCiclo = DictatedCourses::whereIn('IdCurso', $idsCurso)->where('IdCicloAcademico', $ciclo->IdCicloAcademico)->get();
+
+									$resultadosMedicion = [];
+									foreach ($cursosxCiclo as $cxc) {
+										$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
+										$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $request['criterio'])->get();
+
+										$umbralAceptacion = $conf->UmbralAceptacion;
+										$nivelEsperado = $conf->NivelEsperado;
+										
+										$cantAprobados = 0;
+										$cantTotal = 0;
+										foreach ($calificiones as $calif) {
+											if($calif->Nota >= $nivelEsperado){
+												$cantAprobados++;
+											}
+											$cantTotal++;
+										}
+										if($cantTotal > 0){
+											$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+										}
+										else{
+											$resultado = 'No se midio';
+										}										
+										array_push($resultadosMedicion, $resultado);										
+									}
+									array_push($resultadosMedicionTotal, $resultadosMedicion);
+								}
+								//dd($resultadosMedicion);
+								$data['tipoFiltro'] = 2;
+								$data['resultadosMedicion'] = $resultadosMedicionTotal;
 							}
 
 						}
 						else{ // todos los criterios y cursos
 
+							//criterios del aspecto seleccionado
+							$criterios = Criterion::where('IdAspecto', $request['aspecto'])->get();
+			
+							$resultadosxCriterio = [];
+							foreach ($criterios as $criterio) {
+
+								$resultadosMedicionTotal = [];
+								foreach ($ciclos as $ciclo) {
+									$idsCurso = Contribution::where('IdResultadoEstudiantil', $request['resultado'])->get()->pluck('IdCurso');
+									$cursosxCiclo = DictatedCourses::whereIn('IdCurso', $idsCurso)->where('IdCicloAcademico', $ciclo->IdCicloAcademico)->get();
+
+									$resultadosMedicion = [];
+									foreach ($cursosxCiclo as $cxc) {
+										$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
+										$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
+
+										$umbralAceptacion = $conf->UmbralAceptacion;
+										$nivelEsperado = $conf->NivelEsperado;
+										
+										$cantAprobados = 0;
+										$cantTotal = 0;
+										foreach ($calificiones as $calif) {
+											if($calif->Nota >= $nivelEsperado){
+												$cantAprobados++;
+											}
+											$cantTotal++;
+										}
+										if($cantTotal > 0){
+											$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+										}
+										else{
+											$resultado = 'No se midio';
+										}										
+										array_push($resultadosMedicion, $resultado);										
+									}
+									array_push($resultadosMedicionTotal, $resultadosMedicion);
+								}
+								array_push($resultadosxCriterio, $resultadosMedicionTotal);
+							}
+							//dd($resultadosxCriterio);			
+							$data['tipoFiltro'] = 3;
+							$data['resultadosMedicion'] = $resultadosxCriterio;				
 						}
 					}	
 					else { // a partir de aspecto -> todo
+						
+						//aspectos del resultado
+						$aspectos = Aspect::where('IdResultadoEstudiantil', $request['resultado'])->get();
+						$resultadosxRE = [];
+						foreach ($aspectos as $aspecto) {
+							//criterios del aspecto seleccionado
+							$criterios = Criterion::where('IdAspecto', $aspecto->IdAspecto)->get();
 
+							$resultadosxCriterio = [];
+							foreach ($criterios as $criterio) {
+								
+								$resultadosMedicionTotal = [];
+								foreach ($ciclos as $ciclo) {
+									$idsCurso = Contribution::where('IdResultadoEstudiantil', $request['resultado'])->get()->pluck('IdCurso');
+									$cursosxCiclo = DictatedCourses::whereIn('IdCurso', $idsCurso)->where('IdCicloAcademico', $ciclo->IdCicloAcademico)->get();
+
+									$resultadosMedicion = [];
+									foreach ($cursosxCiclo as $cxc) {
+										$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
+										$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
+
+										$umbralAceptacion = $conf->UmbralAceptacion;
+										$nivelEsperado = $conf->NivelEsperado;
+										
+										$cantAprobados = 0;
+										$cantTotal = 0;
+										foreach ($calificiones as $calif) {
+											if($calif->Nota >= $nivelEsperado){
+												$cantAprobados++;
+											}
+											$cantTotal++;
+										}
+										if($cantTotal > 0){
+											$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+										}
+										else{
+											$resultado = 'No se midio';
+										}										
+										array_push($resultadosMedicion, $resultado);										
+									}
+									array_push($resultadosMedicionTotal, $resultadosMedicion);
+								}
+								array_push($resultadosxCriterio, $resultadosMedicionTotal);
+							}
+							array_push($resultadosxRE, $resultadosxCriterio);
+						}
+						//dd($resultadosxRE);	
+						$data['tipoFiltro'] = 4;
+						$data['resultadosMedicion'] = $resultadosxRE;	
 					}
 
 				}
-				else{ // a partir de resultado -> todo
+				else{ // no selecciona resultado, a partir de resultado -> todo
+					//resultados del periodo
+					$resultados = $this->studentResultService->retrieveAllByFacultyByPeriod($request['periodo']);
+					$names = [];
+					foreach ($resultados as $r) {
+						array_push($names, $r->IdResultadoEstudiantil);
+					}
 
+					$resultadosGlobales = [];
+					foreach ($resultados as $res) {
+						//aspectos del resultado
+						$aspectos = Aspect::where('IdResultadoEstudiantil', $res->IdResultadoEstudiantil)->get();
+						$resultadosxRE = [];
+						foreach ($aspectos as $aspecto) {
+							//criterios del aspecto seleccionado
+							$criterios = Criterion::where('IdAspecto', $aspecto->IdAspecto)->get();
+
+							$resultadosxCriterio = [];
+							foreach ($criterios as $criterio) {
+								$idCiclos = FacultyxCycle::where('IdPeriodo', $request['periodo'])->get()->pluck('IdCicloAcademico');
+								$ciclos = AcademicCycle::whereIn('IdCicloAcademico',$idCiclos)->get();
+
+								$resultadosMedicionTotal = [];
+								foreach ($ciclos as $ciclo) {
+									$idsCurso = Contribution::where('IdResultadoEstudiantil', $res->IdResultadoEstudiantil)->get()->pluck('IdCurso');
+									$cursosxCiclo = DictatedCourses::whereIn('IdCurso', $idsCurso)->where('IdCicloAcademico', $ciclo->IdCicloAcademico)->get();
+
+									$resultadosMedicion = [];
+									foreach ($cursosxCiclo as $cxc) {
+										$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
+										$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
+
+										$umbralAceptacion = $conf->UmbralAceptacion;
+										$nivelEsperado = $conf->NivelEsperado;
+										
+										$cantAprobados = 0;
+										$cantTotal = 0;
+										foreach ($calificiones as $calif) {
+											if($calif->Nota >= $nivelEsperado){
+												$cantAprobados++;
+											}
+											$cantTotal++;
+										}
+										if($cantTotal > 0){
+											$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+										}
+										else{
+											$resultado = 'No se midio';
+										}										
+										array_push($resultadosMedicion, $resultado);										
+									}
+									array_push($resultadosMedicionTotal, $resultadosMedicion);
+								}
+								array_push($resultadosxCriterio, $resultadosMedicionTotal);
+							}
+							array_push($resultadosxRE, $resultadosxCriterio);
+						}						
+						array_push($resultadosGlobales, $resultadosxRE);						
+					}
+					//dd($resultadosGlobales);
+					$data['tipoFiltro'] = 5;
+					$data['resultadosMedicion'] = $resultadosGlobales;
 				}
 			}
 			else {
-				//redirect back
-				//return redirect()->route('')->with('success', '')
+				return redirect()->route('report.index')->with('warning', 'El campo período es obligatorio');
 			}
+			//dd($data);
 			return view('consolidated.report.view', $data);
 		}
-
-		/*
-
-		- nada seleccionado: no avanzar
-		- solo periodo: hallar resultado del periodo (incluido hijos) y cursos
-
-
-		- solo resultado: hallar los hijos del resultado seleccionado y cursos
-
-
-		- solo aspecto: hallar los hijos del aspecto seleccionado y cursos
-
-
-		- solo criterio:  hallar cursos
-
-		*/
 
 		
 		//AJAX

@@ -20,6 +20,15 @@ use Intranet\Models\TutSchedule;
 use Illuminate\Support\Facades\Session;
 use Intranet\Http\Services\User\PasswordService;
 
+
+use Illuminate\Support\Facades\DB;
+use Intranet\Models\Evaluation;
+use Intranet\Models\Competence;
+use Intranet\Models\Evquestion;
+use Intranet\Models\Tutstudentxevaluation; 
+use Intranet\Models\Evquestionxstudentxdocente;
+use Intranet\Models\Competencextutstudentxevaluation;
+
 class TutMeetingController extends Controller
 {
     /**
@@ -53,9 +62,117 @@ class TutMeetingController extends Controller
     public function showMyStudent($id)
     {
         $student    = Tutstudent::find($id);
+
+        $competenceResults = DB::table('competences');
+        //Obtengo todas las evaluaciones corregidas para un alumno
+        $tutstudentxevaluations = Tutstudentxevaluation::where('corregida','<>',null)
+                                    ->where('id_tutstudent',$id)->orderBy('inicio', 'desc')->take(6)->get();
+        
+        $tutstudentxevaluations = $tutstudentxevaluations->sortBy('inicio');
+        
+        if( !$tutstudentxevaluations->isEmpty() ){
+            $tutstudentxevaluationsAux = Tutstudentxevaluation::where('corregida','<>',null)
+                                        ->where('id_tutstudent',$id)->orderBy('inicio', 'desc')
+                                        ->leftJoin('competencextutstudentxevaluations', 'tutstudentxevaluations.id', '=', 'id_tutev');
+                                        //->get();        
+            $id_tutstudentxevaluations = array();        
+            $id_competences = array();                
+            $auxCompetences = DB::table('competences')
+                                ->leftJoin('competencextutstudentxevaluations', 'competencextutstudentxevaluations.id_competence', '=', 'competences.id')
+                                ->leftJoin( 'tutstudentxevaluations', 'tutstudentxevaluations.id', '=', 'competencextutstudentxevaluations.id_tutev')
+                                ->where('corregida','<>',null)           
+                                ->where('id_tutstudent',$id)->orderBy('inicio', 'desc')                            
+                                ->groupBy('id_competence')->get();
+            
+            foreach ($auxCompetences as $auxCompetence) {
+                array_push($id_competences, $auxCompetence->id_competence);
+            }
+
+            
+            foreach ($tutstudentxevaluations as $tutstudentxevaluation) {
+                array_push($id_tutstudentxevaluations, $tutstudentxevaluation->id);
+            }
+
+            //the beast
+            $competenceResults = DB::table('competences')
+                ->select('nombre','Aux.*')
+                ->join(DB::raw('(SELECT C.id_competence,
+                    D.puntaje AS puntajeEva1, D.puntaje_maximo AS puntajeMaxEva1,
+                    E.puntaje AS puntajeEva2, E.puntaje_maximo AS puntajeMaxEva2,
+                    F.puntaje as puntajeEva3, F.puntaje_maximo AS puntajeMaxEva3,
+                    G.puntaje as puntajeEva4, G.puntaje_maximo AS puntajeMaxEva4,
+                    H.puntaje as puntajeEva5, H.puntaje_maximo AS puntajeMaxEva5,
+                    I.puntaje as puntajeEva6, I.puntaje_maximo AS puntajeMaxEva6
+                    FROM (
+
+                    SELECT DISTINCT A.id_competence
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    )C
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[0]->id_evaluation .'
+                    )D ON C.id_competence = D.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[1]->id_evaluation .'
+                    )E ON C.id_competence = E.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[2]->id_evaluation .'
+                    )F ON C.id_competence = F.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[3]->id_evaluation .'
+                    )G ON C.id_competence = G.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[4]->id_evaluation .'
+                    )H ON C.id_competence = H.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[5]->id_evaluation .' 
+                    )I ON C.id_competence = I.id_competence) Aux'), function($join)
+                {
+                    $join->on('competences.id', '=', 'Aux.id_competence');
+                })->get();  
+        } else{
+            $competenceResults = array();            
+        }         
+        
+        //end the beast            
         $data       = [
-            'student'   =>  $student,
+            'student'                => $student, 
+            'competenceResults'      => $competenceResults, 
+            'tutstudentxevaluations' => $tutstudentxevaluations,            
         ];
+
+
         return view('tutorship.tutormystudents.show', $data);
     }
 

@@ -51,39 +51,46 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default">
-
-
-
                             <div class="panel-body">
-                                {{Form::open(['route' => ['motivo.update', ''], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
-
-                                <div class="form-group">
-                                    {{Form::label('Desde:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
-                                    <div class="col-md-4 col-sm-4 col-xs-6">
-                                        {{Form::select('desde', [null=>'Seleccione',1=>'De cancelación/rechazo de cita',2=>'De desactivación de tutor'], '', ['class' => 'form-control', 'required'])}}
+                                
+                                <form method="GET" action="{{route('reporte.tutstudentDate')}}">
+                                    
+                                    <div class="form-group">
+                                        {{Form::label('Desde: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
+                                        <div class="col-md-3 col-sm-3 col-xs-8">                        
+                                            <div class="input-group date" id="fecha_inicio_reporte">
+                                                <input type="text" class="form-control input-date" name="beginDate" id="fecha_inicio" placeholder="aaaa-mm-dd" required/>
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>                      
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    {{Form::label('Hasta:',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-6'])}}
-                                    <div class="col-md-4 col-sm-4 col-xs-6">
-                                        {{Form::text('hasta','',['class'=>'form-control', 'required', 'maxlength' => 50])}}
+                                    
+                                    <div class="form-group">
+                                        {{Form::label('Hasta: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
+                                        <div class="col-md-3 col-sm-3 col-xs-8">                        
+                                            <div class="input-group date" id="fecha_fin_reporte">
+                                                <input type="text" class="form-control input-date" name="endDate" id="fecha_fin" placeholder="aaaa-mm-dd" required/>
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>                      
+                                        </div>
                                     </div>
-                                </div>		    		
-
-                                <div class="row">
-                                    <div class="col-md-8 col-sm-12 col-xs-12">
-                                        {{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-                                        <a class="btn btn-default pull-right" href="{{ route('motivo.index','') }}">Cancelar</a>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12">                                        
+                                             <button class="btn btn-submit pull-right" type="submit"><i class="fa fa-search"></i> Buscar</button>
+                                        </div>
                                     </div>
-                                </div>
-                                {{Form::close()}}
+                                    
+                                </form>
 
-                            </div>
+                            </div>                                                                                    
                         </div>
                     </div>
                 </div>
             </div>
+            
+            
+            
         </div>
     </div>
 </div>

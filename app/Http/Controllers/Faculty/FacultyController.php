@@ -13,7 +13,7 @@ use Intranet\Http\Services\EducationalObjetive\EducationalObjetiveService;
 
 use Illuminate\Routing\Controller as BaseController;
 use Intranet\Http\Services\MeasurementSource\MeasurementSourceService;
-
+use Intranet\Models\Faculty;
 class FacultyController extends BaseController
 {
 
@@ -426,10 +426,12 @@ class FacultyController extends BaseController
         $data['title'] = 'Iniciar Nuevo Periodo';
 
         try {
+            $faculty = Faculty::findOrFail( Session::get('faculty-code') );
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
             $data['measures'] = $this->measureService->allByFaculty(Session::get('faculty-code'));
-            $data['studentsResults'] = $this->studentsResultService->findByFaculty();
+            $data['studentsResults'] = $faculty->studentsResults;
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
+            //dd($data['studentsResults']);
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
         }

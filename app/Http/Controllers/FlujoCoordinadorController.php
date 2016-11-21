@@ -706,11 +706,11 @@ class FlujoCoordinadorController extends Controller
         try {
             if(Session::get('academic-cycle')!=null){
                 
-                $cursosDelCicloyEspecialidad =  DB::table('cursoxciclo')
-                                        ->join('curso', 'curso.IdCurso', '=', 'cursoxciclo.IdCurso')
-                                        ->select('curso.*')
-                                        ->where ('curso.IdEspecialidad', '=', $id)
-                                        ->where ('cursoxciclo.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico)
+                $cursosDelCicloyEspecialidad =  DB::table('CursoxCiclo')
+                                        ->join('Curso', 'Curso.IdCurso', '=', 'CursoxCiclo.IdCurso')
+                                        ->select('Curso.*')
+                                        ->where ('Curso.IdEspecialidad', '=', $id)
+                                        ->where ('CursoxCiclo.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico)
                                         //->orderBy('cliente.apellidoPaterno', 'asc')
                                         ->get(); 
                 $data['dictatedCourses']= $cursosDelCicloyEspecialidad;

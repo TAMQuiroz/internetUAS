@@ -20,16 +20,16 @@
             {{Form::open(['route' => ['aspecto.store',$idAlumno], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
                 <div class="form-group">  
                 <br>                  
-                    @foreach($crit as $idcriterio => $nombre)
+                    @foreach($crit as $idcriterio => $criterio)
                     <div class="col-md-2"> 
                     </div>
                     <div class="col-md-6">
-                    {{$nombre}}
+                    {{$criterio->nombre}}
                     </div>
                     <div class="col-md-1">                        
-                        <select name="nota[{{$idcriterio}}]" class="form-control">
+                        <select name="nota[{{$criterio->id}}]" class="form-control">
                             <?php for ($i=0; $i<=20; $i++) { 
-                                if (encuentra($registroNotas, $i, $idcriterio)) {?>
+                                if (encuentra($registroNotas, $i, $criterio->id)) {?>
                                     <option value="{{$i}}" selected>{{$i}}</option>
                                 <?php } else {?>
                                     <option value="{{$i}}">{{$i}}</option>                            

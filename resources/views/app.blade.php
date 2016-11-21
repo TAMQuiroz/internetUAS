@@ -325,6 +325,7 @@
                         <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         <li><a href="{{route('MeetingTeacher.index')}}">Reservar Reunión</a></li>
                         <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
+                        <li><a href="{{route('pspCriterio.index')}}"> Administrar Criterios</a></li>
                         {{--<li><a href=""> Ver alumnos</a></li>--}}
                         @endif
                         @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->

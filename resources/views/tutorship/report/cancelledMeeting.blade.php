@@ -14,10 +14,12 @@
 
             <div class="clearfix"></div>
 
-            <ul class="tabs-page">    
+            <ul class="tabs-page">                    
+                <a href="{{route('reporte.meeting')}}">
                 <div class="tab-page-wrapper">
                     <li class="tab-page">Citas</li>
                 </div>    
+                </a>                
                 <a href="">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por tutor</li>
@@ -28,11 +30,14 @@
                         <li class="tab-page">Citas por alumno</li>
                     </div>
                 </a>
-                
-                    <div class="tab-page-wrapper active">
-                        <li class="tab-page">Citas canceladas</li>
+                <a href="{{route('reporte.topic')}}">
+                    <div class="tab-page-wrapper">
+                        <li class="tab-page">Citas por tema</li>
                     </div>
-                
+                </a>                                
+                <div class="tab-page-wrapper active">
+                    <li class="tab-page">Citas canceladas</li>
+                </div>                
                 <a href="">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Reasignación de tutores</li>
@@ -47,7 +52,7 @@
                             <div class="panel-body">
                                 <form method="GET" action="{{route('reporte.cancelledMeeting')}}">
                                     <div class="form-group">
-                                        {{Form::label('Fecha inicio: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
+                                        {{Form::label('Desde: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
                                         <div class="col-md-3 col-sm-3 col-xs-8">                        
                                             <div class="input-group date" id="fecha_inicio_reporte">
                                                 <input type="text" class="form-control input-date" name="beginDate" id="fecha_inicio" placeholder="aaaa-mm-dd" required/>
@@ -56,7 +61,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('Fecha fin: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
+                                        {{Form::label('Hasta: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
                                         <div class="col-md-3 col-sm-3 col-xs-8">                        
                                             <div class="input-group date" id="fecha_fin_reporte">
                                                 <input type="text" class="form-control input-date" name="endDate" id="fecha_fin" placeholder="aaaa-mm-dd" required/>

@@ -18,7 +18,6 @@
                 <div class="tab-page-wrapper active">
                     <li class="tab-page">Citas</li>
                 </div>    
-
                 <a href="">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por tutor</li>
@@ -29,6 +28,11 @@
                         <li class="tab-page">Citas por alumno</li>
                     </div>
                 </a>
+                <a href="{{route('reporte.topic')}}">
+                    <div class="tab-page-wrapper">
+                        <li class="tab-page">Citas por tema</li>
+                    </div>
+                </a>                
                 <a href="{{route('reporte.cancelledMeeting')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas canceladas</li>

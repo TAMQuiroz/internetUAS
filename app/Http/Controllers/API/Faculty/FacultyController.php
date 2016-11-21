@@ -155,7 +155,7 @@ class FacultyController extends BaseController
     }
 
     public function getCourseContribution($course_id, $cycle_id){
-      $conts = Contribution::where('IdCurso',$course_id)->where('IdCicloAcademico', $cycle_id)->with('studentsResult')->get();
+      $conts = Contribution::where('IdCurso',$course_id)->where('IdCicloAcademico', $cycle_id)->where("deleted_at", null)->with('studentsResult')->get();
       $res = collect();
 
       foreach($conts as $cont){

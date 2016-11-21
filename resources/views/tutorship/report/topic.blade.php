@@ -29,12 +29,10 @@
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por alumno</li>
                     </div>
-                </a>
-                
-                    <div class="tab-page-wrapper active">
-                        <li class="tab-page">Citas por tema</li>
-                    </div>
-                
+                </a>                
+                <div class="tab-page-wrapper active">
+                    <li class="tab-page">Citas por tema</li>
+                </div>                
                 <a href="{{route('reporte.cancelledMeeting')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas canceladas</li>
@@ -53,7 +51,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 
-                                <form method="GET" action="{{route('reporte.tutstudentDate')}}">
+                                <form method="GET" action="{{route('reporte.topic')}}">                                    
                                     
                                     <div class="form-group">
                                         {{Form::label('Desde: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
@@ -89,9 +87,33 @@
                 </div>
             </div>
             
-            
+            <div class="table-responsive">
+                <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Tema </th>
+                            <th class="column-title">Total citas asistidas</th>
+                            <th class="column-title">Porcentaje del total</th>                                                
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr class="even pointer">
+                            <td hidden class="group-id"> </td>
+                            <td class=""></span></td>                            
+                            <td class=" "></td>                                                                  
+                            <td class=" "></td>                                                              
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
             
         </div>
     </div>
 </div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="{{ URL::asset('js/tutorship/reportDatesByCancelledMeeting.js')}}"></script>
 @endsection

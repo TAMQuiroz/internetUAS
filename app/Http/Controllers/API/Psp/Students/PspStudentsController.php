@@ -55,7 +55,6 @@ class PspStudentsController extends BaseController
 
 
 
-
                         $data[] = $student;
                     
                 }
@@ -81,4 +80,7 @@ class PspStudentsController extends BaseController
         $documentsById = PspDocument::where('idStudent',$id)->get();
         return $this->response->array($documentsById->toArray());
     }
+
+
+    
 }

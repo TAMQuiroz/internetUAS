@@ -819,6 +819,12 @@ $api->version('v1', function ($api) {
                 $api->get('meeting/student/{id}','Meeting\PspMeetingController@getMeetingByStudent');
                 $api->post('update/meeting', 'Meeting\PspMeetingController@update');
                 $api->post('meeting/supervisor/student/store', "Meeting\PspMeetingController@store");
+                $api->post('supervisor/freehour/store',"FreeHour\PspFreeHourController@store");
+                $api->get('supervisor/freehour',"FreeHour\PspFreeHourController@showFreeHourForStudent");
+                $api->post('meetings/student/store',"Meeting\PspMeetingController@storeByStudent");
+                $api->post('meetings/notification/student/{id}',"Meeting\PspMeetingController@mail");           
+
+
 
                 $api->get('sup/getMetting','Ps\PsController@getAll');
                 $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');

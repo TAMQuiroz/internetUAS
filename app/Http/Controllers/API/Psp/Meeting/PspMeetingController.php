@@ -84,7 +84,8 @@ class PspMeetingController extends BaseController
 
  			$student = Student::find($id);
 
- 			$meetings = 	meeting::where('idstudent', $id)->get();
+ 			$meetings = 	meeting::where('idstudent', $id)->
+                      where('tiporeunion', 1)->get();
 
 
 
@@ -172,7 +173,7 @@ public function storeByStudent(Request $request){
 
     $meeting->asistencia='o';
     $meeting->idfreeHour=$freeHour->id;
-    $meeting->tiporeunion=1;
+    $meeting->tiporeunion=1; //TIPO reunion supervisor - alumno
     $meeting->lugar = $freeHour->Supervisor->direccion;
 
     $meeting->save();
@@ -218,20 +219,41 @@ public function storeByStudent(Request $request){
  		$lugar = $request['lugar'];
  		$idAlumno =  $request['idalumno'];
  		$horaAux = $request['hora'];
+
  		$hora  = $horaAux.":00";
- 		$horaFin = $hora;
- 		$horaFin[3] = '3';
+ 		
 
  		$fecha = $request['fecha'];
- 	
 
- 		$format = "d/m/Y";
+      $format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
 
-        $meeting =  new meeting;
+    //POR SER DE TIPO REUNION  == 1
+
+
+     $pspstudent =PspStudent::where('IdAlumno',$idAlumno)->first(); 
+
+     $freeHour = new FreeHour;
+      $meeting =  new meeting;
+
+      $freeHour->fecha = $date;
+      $freeHour->hora_ini = $hora;
+      $freeHour->cantidad = 1;            
+      $freeHour->idsupervisor = $supervisor->id;
+      $freeHour->save();
+      $meeting->idfreehour = $freeHour->id;
+
+ 
+       
+       $timestamp = strtotime($hora) + 60*60;
+       $time = date('H:i:s', $timestamp);
+
+
+
+       
         $meeting->idtipoestado = 12;
         $meeting->hora_inicio = $hora;
-        $meeting->hora_fin = $horaFin;
+        $meeting->hora_fin = $time;
         $meeting->fecha = $date;
         $meeting->idstudent = $idAlumno;
         $meeting->idsupervisor = $idUser;
@@ -241,6 +263,11 @@ public function storeByStudent(Request $request){
         $meeting->tiporeunion = 1;
 
         $meeting->save();
+
+
+
+            $pspstudent->idsupervisor=$freeHour->idsupervisor;
+            $pspstudent->save();   
 
 /*
 

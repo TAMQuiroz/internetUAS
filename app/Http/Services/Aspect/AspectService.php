@@ -20,8 +20,12 @@ class AspectService {
 
 		$ar =  array();
 		foreach($studentResults as $sr){ 
-			$aspects = Aspect::where('IdResultadoEstudiantil', $sr->IdResultadoEstudiantil)->where('deleted_at', null)->orderBy("Nombre","ASC")->get();
+			$aspects = Aspect::where('IdResultadoEstudiantil', $sr->IdResultadoEstudiantil)->where('deleted_at', null)->where('Estado',0)->orderBy("Nombre","ASC")->get();
 			foreach($aspects as $aspect){
+				array_push($ar, $aspect);
+			}
+			$aspects2 = Aspect::where('IdResultadoEstudiantil', $sr->IdResultadoEstudiantil)->where('deleted_at', null)->where('Estado',1)->orderBy("Nombre","ASC")->get();
+			foreach($aspects2 as $aspect){
 				array_push($ar, $aspect);
 			}
 		}

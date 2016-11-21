@@ -47,11 +47,11 @@ class Faculty extends Model {
 
 
     public function objectives(){
-        return $this->hasMany('Intranet\Models\EducationalObjetive', 'IdEspecialidad');
+        return $this->hasMany('Intranet\Models\EducationalObjetive', 'IdEspecialidad')->where('deleted_at',null)->whereIn('Estado',[0,1]);
     }
 
     public function studentsResults(){
-        return $this->hasMany('Intranet\Models\StudentsResult', 'IdEspecialidad');
+        return $this->hasMany('Intranet\Models\StudentsResult', 'IdEspecialidad')->where('deleted_at',null)->whereIn('Estado',[0,1]);
     }
 
     public function instruments(){

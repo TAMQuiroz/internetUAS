@@ -19,10 +19,14 @@ class Aspect extends Model
 	}
 
     public function criterion(){
-        return $this->hasMany('Intranet\Models\Criterion','IdAspecto')->orderBy("Nombre","ASC");
+        return $this->hasMany('Intranet\Models\Criterion','IdAspecto')->where('deleted_at',null)->whereIn('Estado',[0,1])->orderBy("Nombre","ASC");
+    }
+
+    public function relatedCriterion(){
+        return $this->hasMany('Intranet\Models\Criterion','IdAspecto')->where('deleted_at',null)->where('Estado',1)->orderBy("Nombre","ASC");
     }
 
     public function criterions(){
-        return $this->hasMany('Intranet\Models\Criterion','IdAspecto')->orderBy("Nombre","ASC");
+        return $this->hasMany('Intranet\Models\Criterion','IdAspecto')->where('deleted_at',null)->whereIn('Estado',[0,1])->orderBy("Nombre","ASC");
     }
 }

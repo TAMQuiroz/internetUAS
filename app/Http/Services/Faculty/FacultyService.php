@@ -379,20 +379,40 @@ class FacultyService {
 					'Vigente' =>'2'
 		));
 
-		//Desactivando Periodo,si el ciclo que se cierra es el último del periodo.
-		$periodo = Period::where('Vigente',1)->first();
-		if($periodo != null){
-			$confEspecialidad = ConfFaculty::where('IdPeriodo', $periodo->IdPeriodo)->first();
 
-			if($ciclo->academicCycle->IdCicloAcademico == $confEspecialidad->IdCicloFin){
-				$desactivate = Period::where('IdEspecialidad', Session::get('faculty-code'))->where('Vigente', 1)->first()
-				->update(array(
-					'Vigente' =>'0'
-				));
-				Session::forget('period-code');
-			}
-			
+		$educationalObjetivesAll=EducationalObjetive::where('IdEspecialidad', Session::get('faculty-code'))
+			->where('deleted_at', null)->where('Estado',1)->get();
+		foreach ($educationalObjetivesAll as $eduObj){
+			EducationalObjetive::where('IdObjetivoEducacional', $eduObj->IdObjetivoEducacional)
+				->update(array('Estado' => '2'));
+
 		}
+
+
+		$studentResultsAll = StudentsResult::where('IdEspecialidad', Session::get('faculty-code'))
+			->where('deleted_at', null)->where('Estado',1)->get();
+		//dd($studentResultsAll);
+		foreach ($studentResultsAll as $stRst){
+			StudentsResult::where('IdResultadoEstudiantil', $stRst->IdResultadoEstudiantil)
+				->update(array('Estado' => '2'));
+
+			$aspectsAll=Aspect::where('IdResultadoEstudiantil', $stRst->IdResultadoEstudiantil)
+				->where('deleted_at', null)->where('Estado',1)->get();
+			foreach ($aspectsAll as $aspect){
+				Aspect::where('IdAspecto', $aspect->IdAspecto)
+					->update(array('Estado' => '2'));
+
+				$criterionAll=Criterion::where('IdAspecto', $aspect->IdAspecto)
+					->where('deleted_at', null)->where('Estado',1)->get();
+				foreach ($criterionAll as $criter){
+					Criterion::where('IdCriterio', $criter->IdCriterio)
+						->update(array('Estado' => '2'));
+				}
+			}
+		}
+
+			
+		
 	}
 
 	public function desactivatePeriod($period_id, $faculty_id) {

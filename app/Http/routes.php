@@ -760,6 +760,9 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');
                 $api->get('/{f_id}/semester/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
                 $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
+                $api->get('/schedule/{schedule_id}/students','FacultyController@getStudentsbySchedule');
+                $api->get('/effort_table/cycle/{academic_cycle_id}/course/{course_id}/schedule/{schedule_id}/student/{student_id}','FacultyController@getEffortTable');
+                $api->get('/course/{c_id}/{s_id}/contributions', 'FacultyController@getCourseContribution');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
@@ -822,8 +825,25 @@ $api->version('v1', function ($api) {
                 $api->get('meeting/student/{id}','Meeting\PspMeetingController@getMeetingByStudent');
                 $api->post('update/meeting', 'Meeting\PspMeetingController@update');
                 $api->post('meeting/supervisor/student/store', "Meeting\PspMeetingController@store");
+                $api->post('supervisor/freehour/store',"FreeHour\PspFreeHourController@store");
+                $api->get('supervisor/freehour',"FreeHour\PspFreeHourController@showFreeHourForStudent");
+                $api->post('meetings/student/store',"Meeting\PspMeetingController@storeByStudent");
+                $api->post('meetings/notification/student/{id}',"Meeting\PspMeetingController@mail");      
+                 $api->get('student',"Students\PspStudentsController@getStudent");
+                 $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");      
 
 
+
+                $api->get('sup/getMetting','Ps\PsController@getAll');
+                $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');
+                $api->get('a/gm','Ps\PsController@getAllSutudentMetting');
+                $api->post('al/setM/{id}/sendNr', 'Ps\PsController@nuevaReunionAL');
+                //$api->get('h', 'Ps\PsController@nuevaReunionP');
+                $api->get('al/getfh', 'Ps\PsController@getAllFreeHours');
+                $api->get('pr/getN', 'Ps\NotasDelnscriptionFile@getAll');
+                $api->get('sup/getficha', 'Ps\NotasDelnscriptionFile@enviarRecomendaciones');
+                $api->post('sup/detf/{id}', 'Ps\NotasDelnscriptionFile@modificarFi');
+                $api->get('al/getD', 'Ps\DocumentosController@getAll');
             });
 
             //INVESTIGACION
@@ -848,16 +868,22 @@ $api->version('v1', function ($api) {
                 $api->post('/{id}/deliverable', 'Deliverable\DeliverableController@edit');
                 $api->get('/{id}/deliverables', 'Deliverable\DeliverableController@getByProjectId');
 
+                $api->get('/{id}/versions', 'Deliverable\DeliverableController@getAllVersions');
+                $api->get('/{id}/responsibles', 'Deliverable\DeliverableController@getResponsibles');
+                $api->get('/{id}/observation', 'Deliverable\DeliverableController@getObservation');
+                $api->post('/{id}/observation', 'Deliverable\DeliverableController@registerObservation');
+
                 $api->get('/{id}/event', 'Event\EventController@getById');
                 $api->post('/{id}/event', 'Event\EventController@edit');
                 $api->get('/{id}/events', 'Event\EventController@getByGroupId');
 
-            });
+            }); 
 
             
             //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
             $api->get('getAppointments', 'Tutoria\TopicController@getAppointments');
+            $api->get('getCoordinatorStudent','Tutoria\TopicController@getCoordinatorStudent');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');

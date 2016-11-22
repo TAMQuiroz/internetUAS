@@ -24,7 +24,9 @@ class DeliverableController extends BaseController
 
     public function getById($id)
     {
-        $entregable = Deliverable::find($id)->with('project')->get();
+        
+        $entregable = Deliverable::find($id)->with('project')->with('versions')->with('investigators')->get();
+
         return $this->response->array($entregable->toArray());
         //return $entregable;
     }
@@ -39,15 +41,15 @@ class DeliverableController extends BaseController
         //return $entregables;
     }
 
-    public function edit(DeliverableMobileRequest $request, $id){
+    public function edit(Request $request, $id){
         	
-        $fecha_ini           = $request->only('fecha_ini');
-        $fecha_fin           = $request->only('fecha_fin');
+        $fecha_ini           = $request->only('fecha_inicio');
+        $fecha_fin           = $request->only('fecha_limite');
         
         //Guardar
         $entregable = Deliverable::find($id);
-        $entregable->fecha_inicio          = $fecha_ini['fecha_ini'];
-        $entregable->fecha_limite          = $fecha_fin['fecha_fin'];
+        $entregable->fecha_inicio          = $fecha_ini['fecha_inicio'];
+        $entregable->fecha_limite          = $fecha_fin['fecha_limite'];
         $entregable->save();
 
         //Retornar mensaje

@@ -32,4 +32,55 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Resumen de Resultados de Medición</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    @if( $tipoFiltro == 1)
+                                        <thead>
+                                        <tr class="success">
+                                            <th rowspan="2" class="text-center col-md-2">Resultado</th>
+                                            <th rowspan="2" class="text-center col-md-2">Aspecto</th>
+                                            <th rowspan="2" class="text-center col-md-2">Criterio</th>
+                                            <th rowspan="2" class="text-center col-md-2">Curso</th>
+                                            @foreach($ciclos as $ciclo)
+                                                <th rowspan="1" class="text-center col-md-2"> {{ $ciclo->Descripcion }}</th>
+                                            @endforeach
+                                        </tr>
+                                        </thead>
+                                        <tbody>                                 
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                @foreach($resultadosMedicion as $res)
+                                                    <th rowspan="1" class="text-center col-md-2"> {{ $res }}</th>
+                                                @endforeach
+                                            </tr>
+                                    
+                                        </tbody>
+                                    @endif
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection

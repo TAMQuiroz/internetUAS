@@ -70,7 +70,8 @@ class FlujoCoordinadorController extends Controller
         $data['idEspecialidad']=$this->facultyService->getFacultyxDocente();
         $faculty = Faculty::where('IdDocente', Session::get('user')->IdDocente)->first();
         Session::put('faculty-code',$faculty->IdEspecialidad);
-        return view('flujoCoordinador.index',$data);
+
+      	return view('flujoCoordinador.index',$data);
     }
     public function aspect_index($id) {
         $data['title'] = 'Aspectos';
@@ -102,11 +103,14 @@ class FlujoCoordinadorController extends Controller
     }
     //Criterios
     public function criterio_index ($id){
-        $especialidad = Faculty::findOrFail($id);
-        $resultados = $especialidad->studentsResults;
-        return view('flujoCoordinador.criterio_index', ['resultados'=>$resultados, 'idEspecialidad' =>$id]);
-        //return "profesor creado";
+
+		$especialidad = Faculty::findOrFail($id);
+		$resultados = $especialidad->studentsResults;
+        //$resultados = $this->studentsResultService->findByFaculty2($id);
+		return view('flujoCoordinador.criterio_index', ['resultados'=>$resultados, 'idEspecialidad' =>$id]);
+    	//return "profesor creado";
     }
+
     public function criterio_create (CriterioFlujoCoordinadorRequest $request, $id){
         //$idResultado = $request->get('resultado');
         //$resultado= StudentsResult::findOrFail($idResultado);
@@ -127,9 +131,11 @@ class FlujoCoordinadorController extends Controller
     
     //objetivos educacionales
     public function objetivoEducacional_index ($id){
-        $especialidad = Faculty::findOrFail($id);
-        $objetivos = EducationalObjetive::where('IdEspecialidad','=',$especialidad->IdEspecialidad)->orderby('Descripcion','ASC')->get();
-        return view('flujoCoordinador.objetivoEducacional_index', ['objetivos'=>$objetivos, 'idEspecialidad' =>$id]);
+
+		$especialidad = Faculty::findOrFail($id);
+        $objetivos = EducationalObjetive::where('IdEspecialidad','=',$especialidad->IdEspecialidad)->where('deleted_at',null)->orderby('Descripcion','ASC')->get();
+		return view('flujoCoordinador.objetivoEducacional_index', ['objetivos'=>$objetivos, 'idEspecialidad' =>$id]);
+
     }
     public function objetivoEducacional_create ($id){
         //return 'crear objetivo de la especialidad '.$id;
@@ -139,14 +145,15 @@ class FlujoCoordinadorController extends Controller
     public function objetivoEducacional_store (EducationalObjetiveRequest $request, $id){
         //crear un nuevo objetivo educacional
         $numberOE = EducationalObjetive::where('IdEspecialidad',$id)
-                                       ->where('deleted_at',null)->count();
-        $numberOE = ($numberOE) + 1;
-        $educationalObjetive = EducationalObjetive::create([
-            'IdEspecialidad' => $id,
-            'Numero' => $numberOE,
-            'Descripcion' => $request->input('descripcion'),
-            'Estado' => 0,
-        ]);
+									   ->where('deleted_at',null)->where('Estado',0)->count();
+		$numberOE = ($numberOE) + 1;
+		$educationalObjetive = EducationalObjetive::create([
+			'IdEspecialidad' => $id,
+			'Numero' => $numberOE,
+			'Descripcion' => $request->input('descripcion'),
+			'Estado' => 0,
+		]);
+
         return redirect()->route('objetivoEducacional_index.flujoCoordinador', ['id' => $id])
                             ->with('success', 'El objetivo educacional se ha registrado exitosamente');
     }
@@ -166,7 +173,7 @@ class FlujoCoordinadorController extends Controller
         $data['id'] = $id;
         try {               
             $data['educationalObjetives'] = EducationalObjetive::where('IdEspecialidad', $id)
-                                            ->where('deleted_at', null)->get();       
+                                            ->where('deleted_at', null)->where('Estado',0)->get();       
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
@@ -267,6 +274,7 @@ class FlujoCoordinadorController extends Controller
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
             $data['measures'] = $this->measureService->allByFaculty2($id);
             $data['studentsResults'] = $this->studentsResultService->findByFaculty2($id);
+            //dd($data['studentsResults']);
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty2($id);
             
         } catch(\Exception $e) {
@@ -286,7 +294,7 @@ class FlujoCoordinadorController extends Controller
             $data['semesters'] = $this->facultyService->AllCycleAcademic();
             $data['measures'] = $this->measureService->allByFaculty2($codigo_Periodo);
             $data['period_semesters'] = $this->cicleService->getCicleByPeriod($codigo_Periodo);
-            $data['studentsResults'] = $this->studentsResultService->findByFaculty();
+            $data['studentsResults'] = $this->studentsResultService->findByFaculty2($id);
             $data['educationalObjetives'] = $this->educationalObjetiveService->findByFaculty();
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
@@ -698,11 +706,11 @@ class FlujoCoordinadorController extends Controller
         try {
             if(Session::get('academic-cycle')!=null){
                 
-                $cursosDelCicloyEspecialidad =  DB::table('cursoxciclo')
-                                        ->join('curso', 'curso.IdCurso', '=', 'cursoxciclo.IdCurso')
-                                        ->select('curso.*')
-                                        ->where ('curso.IdEspecialidad', '=', $id)
-                                        ->where ('cursoxciclo.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico)
+                $cursosDelCicloyEspecialidad =  DB::table('CursoxCiclo')
+                                        ->join('Curso', 'Curso.IdCurso', '=', 'CursoxCiclo.IdCurso')
+                                        ->select('Curso.*')
+                                        ->where ('Curso.IdEspecialidad', '=', $id)
+                                        ->where ('CursoxCiclo.IdCicloAcademico', '=', Session::get('academic-cycle')->IdCicloAcademico)
                                         //->orderBy('cliente.apellidoPaterno', 'asc')
                                         ->get(); 
                 $data['dictatedCourses']= $cursosDelCicloyEspecialidad;

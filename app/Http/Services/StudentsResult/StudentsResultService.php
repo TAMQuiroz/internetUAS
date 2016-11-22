@@ -25,7 +25,7 @@ class StudentsResultService {
     }
 
     public function retrieveByFaculty($IdEspecialidad) {
-        $studentResults = StudentsResult::where('IdEspecialidad', $IdEspecialidad)->orderby('Identificador','ASC')->get();
+        $studentResults = StudentsResult::where('IdEspecialidad', $IdEspecialidad)->where('deleted_at',null)->orderby('Identificador','ASC')->get();
 
         return $studentResults;
     }
@@ -33,14 +33,22 @@ class StudentsResultService {
     public function findByFaculty($faculty_id = null) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', Session::get('faculty-code', $faculty_id))
-            ->where('deleted_at', null)->get();
+            ->where('deleted_at', null)->where('Estado',1)->orderBy("Descripcion","ASC")->get();
 
         return $studentResults;
     }
-    public function findByFaculty2($faculty_id) {
+    public function findByFaculty2($faculty_id= null) {
 
         $studentResults = StudentsResult::where('IdEspecialidad', $faculty_id)
             ->where('deleted_at', null)->orderBy("Descripcion","ASC")->get();
+
+
+        return $studentResults;
+    }
+    public function findByFaculty3($faculty_id= null) {
+
+        $studentResults = StudentsResult::where('IdEspecialidad', $faculty_id)
+            ->where('deleted_at', null)->where('Estado',1)->orderBy("Descripcion","ASC")->get();
 
         return $studentResults;
     }
@@ -67,7 +75,7 @@ class StudentsResultService {
                     }
                 }*/
                 
-                if($resultsxCycles){      
+                if($resultsxCycles){     
                     foreach ($resultsxCycles as $resultsxCycle){
                         if($resultsxCycle->studentsResult!=null){
                             if($resultsxCycle->studentsResult->IdEspecialidad == Session::get('faculty-code') &&
@@ -75,7 +83,7 @@ class StudentsResultService {
                                 array_push($studentResults, $resultsxCycle->studentsResult);
                             }
                         }
-                    }
+                    } 
                     return $studentResults;
                 }else{
                     return $studentResults;
@@ -192,8 +200,8 @@ class StudentsResultService {
             return null;
         }
 
-        $studentResults = $this->findByFaculty(Session::get('academic-cycle', $academic_cycle)->IdEspecialidad);
-
+        $studentResults = $this->findByFaculty2(Session::get('academic-cycle', $academic_cycle)->IdEspecialidad);
+        //dd(Session::get('academic-cycle')->IdEspecialidad);
         if ($studentResults == null)
             return null;
 

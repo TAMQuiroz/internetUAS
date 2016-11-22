@@ -808,7 +808,7 @@ $api->version('v1', function ($api) {
 
 
                 $api->post('date/supervisor/employer', 'Students\PspStudentsInscriptionFiles@postAppointmentSuperEmployer');
-                $api->get('getInscriptions/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
+                $api->get('getInscriptions/{id}/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
                 $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
                 $api->get('studentsPSP/all','Students\PspStudentsInscriptionFiles@getAllPspStudents');
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
@@ -825,6 +825,17 @@ $api->version('v1', function ($api) {
                 $api->get('meeting/student/{id}','Meeting\PspMeetingController@getMeetingByStudent');
                 $api->post('update/meeting', 'Meeting\PspMeetingController@update');
                 $api->post('meeting/supervisor/student/store', "Meeting\PspMeetingController@store");
+                $api->post('supervisor/freehour/store',"FreeHour\PspFreeHourController@store");
+                $api->get('supervisor/freehour',"FreeHour\PspFreeHourController@showFreeHourForStudent");
+                $api->post('meetings/student/store',"Meeting\PspMeetingController@storeByStudent");
+                $api->post('meetings/notification/student/{id}',"Meeting\PspMeetingController@mail");      
+                 $api->get('student',"Students\PspStudentsController@getStudent");
+                 $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");      
+
+
+
+                $api->get('student/{id}/getDocumentsAll', "Students\PspStudentsInscriptionFiles@getPspDocumentsByStudent");
+                $api->get('getDocument/{id}/full', "Students\PspStudentsInscriptionFiles@getDocumentFullByStudent");
 
                 $api->get('sup/getMetting','Ps\PsController@getAll');
                 $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');

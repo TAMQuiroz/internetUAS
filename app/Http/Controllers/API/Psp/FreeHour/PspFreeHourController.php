@@ -185,6 +185,22 @@ class PspFreeHourController extends BaseController
 	}
 
 
+	public function showFreeHourForSupervisor(){
+		
+
+		$user =  JWTAuth::parseToken()->authenticate();
+
+
+
+		$supervisor = Supervisor::where('iduser',$user->IdUsuario)->get()->first();
+
+        $freeHours = FreeHour::where('idsupervisor',$supervisor->id)->get();
+
+        return $this->response->array($freeHours->toArray());
+
+	}
+
+
 
 
 

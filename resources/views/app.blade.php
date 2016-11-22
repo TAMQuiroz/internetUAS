@@ -457,6 +457,7 @@
                       <li><a href="{{route('pregunta.index')}}"> Preguntas</a></li>
                       <li><a href="{{route('evaluador.index')}}"> Evaluadores</a></li>
                       <li><a href="{{route('evaluacion.index')}}"> Evaluaciones</a></li>
+                      <li><a href="{{route('evstudent.index')}}"> Alumnos</a></li>
                       @endif
                     @endif
 

@@ -1189,6 +1189,7 @@ Route::group(['prefix' => 'uas'], function(){
         //Mis Citas
         Route::group(['prefix' => 'miscitas'], function(){    
             Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDates']);
+            Route::get('/tabla', ['as' => 'cita_alumno.index_table', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesTable']);
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
             Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);

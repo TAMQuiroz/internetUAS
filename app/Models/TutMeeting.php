@@ -34,7 +34,6 @@ class TutMeeting extends Model
             No asistida => 7
     */
 
-
     static public function getNumberDay($dateString) 
     {
         $timestamp  = strtotime($dateString);
@@ -95,9 +94,12 @@ class TutMeeting extends Model
             if($filters["id_docente"] != "") {
                 $queryTutMeeting  = $queryTutMeeting->where("id_docente", $filters["id_docente"]);
             }            
-            if($filters["beginDate"] != "" && $filters["endDate"] != "") {
-                $queryTutMeeting  = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]) );                
-            }              
+            if($filters["beginDate"] != "") { 
+                $queryTutMeeting  = $queryTutMeeting->where("inicio", ">=", $filters["beginDate"]);        
+            }
+            if ($filters["endDate"] != "") {
+                $queryTutMeeting  = $queryTutMeeting->where("inicio", "<=", $filters["endDate"]); 
+            }             
         }
         else{
                 //Como no encontró alumno luego de buscar, no debe regresar ninguna cita. Buscamos una cita que devuelva null

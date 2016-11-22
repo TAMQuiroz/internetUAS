@@ -184,15 +184,27 @@ class TutMeetingController extends Controller
         $id_docente = Session::get('user')->IdDocente;
 
         $dateOriginalFormat = $request['beginDate'];            
-        if ( $dateOriginalFormat )
+        if ( $dateOriginalFormat ) {
             $beginDate = date("Y-m-d", strtotime($dateOriginalFormat));
-        else
+        }
+        else {
             $beginDate = "";        
+        }
+        
         $dateOriginalFormat = $request['endDate'];            
-        if ( $dateOriginalFormat )
+        if ( $dateOriginalFormat ) {
             $endDate = date("Y-m-d", strtotime($dateOriginalFormat. '+1 day'));        
-        else
+        }
+        else {
             $endDate = "";
+        }
+
+        if ($beginDate == '') {
+            $beginDate = date("Y-m-d");   
+        }
+
+        $day = date('w', strtotime($beginDate));
+        $endDate = date('Y-m-d', strtotime($beginDate .'+'.(6-$day).' days'));
 
         $filters    = [
             "code"           => $request->input('code'),
@@ -205,11 +217,12 @@ class TutMeetingController extends Controller
             "id_docente"     => $id_docente,
         ];
 
-        $tutMeetings = TutMeeting::getFilteredTutMeetings($filters);
-        $fecha = array();
-        $hora_inicio = array();        
-        $hora = array();        
-        $hora_fin = array();        
+        $tutMeetings    = TutMeeting::getFilteredTutMeetings($filters);
+        $fecha          = array();
+        $hora_inicio    = array();        
+        $hora           = array();        
+        $hora_fin       = array();
+        $students       = array();     
 
         foreach ($tutMeetings as $tutMeeting) {
             if ($tutMeeting) {
@@ -220,14 +233,32 @@ class TutMeetingController extends Controller
                 $fecha_fin = date('Y-m-d H:i:s', strtotime($today . '+' . $tutMeeting->duracion . ' minutes'));                                
                 $stringF   = explode(' ', $fecha_fin);                
                 $horaF     = explode(':', $stringF[1]);        
-                $dateDay   = date('w', strtotime($tutMeeting->inicio));                 
+                $dateDay   = date('w', strtotime($tutMeeting->inicio));
+
+                $student   = Tutstudent::where('id', $tutMeeting->id_tutstudent)->first();
+
+                $tutMeeting->estado = $tutMeeting->estado == 4 && 
+                                        $tutMeeting->creador == 1 ? 
+                                        1: $tutMeeting->estado;
+
                 array_push($hora, intval( $horaI[0]) );
                 array_push($fecha, intval($dateDay) );                
                 array_push($hora_inicio, $horaI[0] . ':' . $horaI[1]);
                 array_push($hora_fin, $horaF[0] . ':' . $horaF[1]);
+                array_push($students, $student->ape_paterno . ' ' . 
+                                        $student->ape_materno . ', ' . 
+                                        $student->nombre);
             }
         } 
-        
+
+        $schedule = TutSchedule::getMatrixSchedule($id_docente);
+
+        $parameters = Parameter::where('id_especialidad', $mayorId)->first();
+        $today      = date('d-m-Y'); 
+        $startDay   = date('d-m-Y', strtotime($parameters->start_date));
+        $endDay     = date('d-m-Y', strtotime($today . '+' . $parameters->number_days . ' day'));
+
+        $currentDay = date("d-m-Y", strtotime($beginDate));
 
         $data       = [
             'tutMeetings' =>  $tutMeetings,
@@ -235,10 +266,104 @@ class TutMeetingController extends Controller
             'hora'        =>  $hora,
             'hora_inicio' =>  $hora_inicio,
             'hora_fin'    =>  $hora_fin,
+            'students'    =>  $students,
+            'schedule'    =>  $schedule,
+            'startDay'    =>  $startDay,
+            'currentDay'  =>  $currentDay,
+            'endDay'      =>  $endDay,
         ];
         
-
         return view('tutorship.tutormydates.index', $data);
+    }
+
+    public function indexMyDatesTable(Request $request)
+    {
+        $mayorId    = Session::get('faculty-code');
+
+        $user       = Session::get('user');
+        $id_docente = Session::get('user')->IdDocente;
+
+        $dateOriginalFormat = $request['beginDate'];            
+        if ( $dateOriginalFormat ) {
+            $beginDate = date("Y-m-d", strtotime($dateOriginalFormat));
+        }
+        else {
+            $beginDate = "";        
+        }
+        
+        $dateOriginalFormat = $request['endDate'];            
+        if ( $dateOriginalFormat ) {
+            $endDate = date("Y-m-d", strtotime($dateOriginalFormat. '+1 day'));        
+        }
+        else {
+            $endDate = "";
+        }
+
+        $filters    = [
+            "code"           => $request->input('code'),
+            "name"           => $request->input('name'),
+            "lastName"       => $request->input('lastName'),
+            "secondLastName" => $request->input('secondLastName'),
+            "beginDate"      => $beginDate,
+            "endDate"        => $endDate,
+            "state"          => $request->input('state'),
+            "id_docente"     => $id_docente,
+        ];
+
+        $tutMeetings    = TutMeeting::getFilteredTutMeetings($filters);
+        $fecha          = array();
+        $hora_inicio    = array();      
+        $hora_fin       = array();
+        $students       = array();
+        $topics         = array();
+
+        foreach ($tutMeetings as $tutMeeting) {
+            if ($tutMeeting) {
+                $string    = explode(' ', $tutMeeting->inicio);
+                $dia       = explode('-', $string[0]);
+                $horaI     = explode(':', $string[1]);        
+                $today     = date('Y-m-d H:i:s', strtotime($tutMeeting->inicio)); 
+                $fecha_fin = date('Y-m-d H:i:s', strtotime($today . '+' . $tutMeeting->duracion . ' minutes'));                                
+                $stringF   = explode(' ', $fecha_fin);                
+                $horaF     = explode(':', $stringF[1]);        
+                $dateDay   = date('d-m-Y', strtotime($tutMeeting->inicio));
+
+                $student   = Tutstudent::where('id', $tutMeeting->id_tutstudent)->first();
+                $topic     = Topic::where('id', $tutMeeting->id_topic)->first();
+
+                $tutMeeting->estado = $tutMeeting->estado == 4 && 
+                                        $tutMeeting->creador == 1 ? 
+                                        1: $tutMeeting->estado;
+
+                array_push($fecha, $dateDay);                
+                array_push($hora_inicio, $horaI[0] . ':' . $horaI[1]);
+                array_push($hora_fin, $horaF[0] . ':' . $horaF[1]);
+                array_push($students, $student);
+                array_push($topics, $topic);
+            }
+        }
+
+        $status = array();
+
+        array_push($status, '');
+        array_push($status, 'Pendiente');
+        array_push($status, 'Confirmada');
+        array_push($status, 'Cancelada');
+        array_push($status, 'Sugerida');
+        array_push($status, 'Rechazada');
+        array_push($status, 'Asistida');
+        array_push($status, 'No asistida');
+
+        $data       = [
+            'tutMeetings' =>  $tutMeetings,
+            'fecha'       =>  $fecha,
+            'hora_inicio' =>  $hora_inicio,
+            'hora_fin'    =>  $hora_fin,
+            'students'    =>  $students,
+            'status'      =>  $status,
+            'topics'      =>  $topics,
+        ];
+        return view('tutorship.tutormydates.indextable', $data);
     }
 
     public function createDate($id)
@@ -325,10 +450,11 @@ class TutMeetingController extends Controller
                 $newMeeting     = TutMeeting::create([
                     "inicio"        => $completedDate,
                     "duracion"      => $parameters->duracionCita,
-                    "estado"        => 1,
+                    "estado"        => 4,
                     "id_topic"      => $topic,
                     "id_docente"    => $user->IdDocente,
-                    "id_tutstudent" => $idStudent
+                    "id_tutstudent" => $idStudent,
+                    "creador"       => 1,
                 ]);
 
                 try {

@@ -8,6 +8,7 @@ use Intranet\Models\PspDocument;
 use Intranet\Models\Supervisor;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Studentxinscriptionfiles;
 use Illuminate\Routing\Controller as BaseController;
 //Tested
 class PspStudentsController extends BaseController
@@ -55,7 +56,6 @@ class PspStudentsController extends BaseController
 
 
 
-
                         $data[] = $student;
                     
                 }
@@ -81,4 +81,40 @@ class PspStudentsController extends BaseController
         $documentsById = PspDocument::where('idStudent',$id)->get();
         return $this->response->array($documentsById->toArray());
     }
+
+
+
+    public function getStudentScore(){
+
+        $user =  JWTAuth::parseToken()->authenticate();
+
+        $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->first();
+
+        $students = PspStudent::where('idsupervisor',
+            $supervisor->id)->get();
+
+
+        $scores = Studentxinscriptionfiles::where('acepta_terminos',1)->get();  
+
+
+
+
+
+
+
+
+    }
+
+    public function getStudent(){
+
+         $user =  JWTAuth::parseToken()->authenticate();
+         $student = Student::where('IdUsuario', $user->IdUsuario)->first();
+
+
+         return $this->response->array($student->toArray());
+
+
+
+    }
+    
 }

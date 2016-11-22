@@ -44,19 +44,13 @@ class TutMeeting extends Model {
         $listDays = [];
 
         foreach ($daysCollection as $day) {
-
             array_push($listDays, $day->dia);
         }
-
         $diffDays = array_diff(array(1, 2, 3, 4, 5, 6), $listDays);
-
         $stringDiffDays = '0';
-
         foreach ($diffDays as $value) {
-
             $stringDiffDays = $stringDiffDays . ',' . $value;
         }
-
         return $stringDiffDays;
     }
 
@@ -64,25 +58,20 @@ class TutMeeting extends Model {
         $query = Tutstudent::query();
         $queryTutMeeting = TutMeeting::query();
         $stateFalse = 100;
-
         if ($filters["code"] != "") {
             $query = $query->where("codigo", $filters["code"]);
         }
-
         if ($filters["name"] != "") {
             $query = $query->where("nombre", "like", "%" . $filters["name"] . "%");
         }
-
         if ($filters["lastName"] != "") {
             $query = $query->where("ape_paterno", "like", "%" . $filters["lastName"] . "%");
         }
-
         if ($filters["secondLastName"] != "") {
             $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
         }
 
         $students = $query->get();
-
         if ($query->first()) {
             if ($filters["state"] != "") {
                 $queryTutMeeting = $queryTutMeeting->where("estado", $filters["state"]);
@@ -98,7 +87,6 @@ class TutMeeting extends Model {
             $queryTutMeeting = $queryTutMeeting->where("estado", $stateFalse);
             return $queryTutMeeting->get();
         }
-
 
         $id_list = array();
         foreach ($students as $student) {
@@ -121,11 +109,22 @@ class TutMeeting extends Model {
         if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
             $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
         }
-
         $queryTutMeeting->where('no_programada', '=', null);
         //               ->groupBy('estado')
         //                ->groupBy('id_tutstudent');
         return $queryTutMeeting->orderBy("id_tutstudent", 'asc');
+    }
+
+    static public function getTutMeetingsByTopicAttended($filters) {
+        $queryTutMeeting = TutMeeting::query();
+
+        if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
+            $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
+        }
+
+        $queryTutMeeting->where('estado', '=', 6)->groupBy('id_topic');
+
+        return $queryTutMeeting->orderBy("id_topic", 'asc');
     }
 
     static public function getCancelledTutMeetings($filters) {
@@ -135,7 +134,6 @@ class TutMeeting extends Model {
         if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
             $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
         }
-
         $queryTutMeeting->where('no_programada', '=', null)
                 ->where('estado', '=', 3)
                 ->groupBy('id_reason');
@@ -155,24 +153,20 @@ class TutMeeting extends Model {
         return $queryTutMeeting->orderBy("id_reason", 'asc')->get();
     }
 
-    static public function getTutMeetingsByTopicAttended($filters) {
-        $queryTutMeeting = TutMeeting::query();
-        
-        if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
-            $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
-        }
-        
-        $queryTutMeeting->where('estado', '=', 6)->groupBy('id_topic');
-        
-        return $queryTutMeeting->orderBy("id_topic", 'asc');
-    }
-
     public function tutstudent() {
         return $this->belongsTo('Intranet\Models\Tutstudent', 'id_tutstudent'); //bien
     }
 
     public function reason() {
         return $this->belongsTo('Intranet\Models\Reason', 'id_reason');
+    }
+
+    public function topic() {
+        return $this->belongsTo('Intranet\Models\Topic', 'id_topic');
+    }
+
+    public function teacher() {
+        return $this->belongsTo('Intranet\Models\Teacher', 'id_docente');
     }
 
 }

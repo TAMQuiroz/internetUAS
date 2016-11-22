@@ -53,15 +53,20 @@ class ProjectController extends BaseController
                 $proyecto->fecha_fin        = $fecha_fin['fecha_fin'];
                 $proyecto->save();
                 
-                $mensaje = 'Se modifico correctamente';
+                $mensaje = ['mensaje' => 'Se modifico correctamente'];
+                //$mensaje = 'Se modifico correctamente';
             }else{
-                $mensaje = 'No existe el estado En Progreso, agregelo en el mantenimiento';
+                $mensaje = ['mensaje' => 'No existe el estado En Progreso, agregelo en el mantenimiento'];
+                //$mensaje = 'No existe el estado En Progreso, agregelo en el mantenimiento';
             }
         }else{
-            $mensaje = 'No puede reducir la cantidad de entregables ya que existe una cantidad mayor creada';
+            $mensaje = ['mensaje' => 'No puede reducir la cantidad de entregables ya que existe una cantidad mayor creada'];
+            //$mensaje = 'No puede reducir la cantidad de entregables ya que existe una cantidad mayor creada';
         }
+        
+        return response()->json($mensaje);
 
-        return $mensaje;
+        //return $mensaje;
     }
 
 

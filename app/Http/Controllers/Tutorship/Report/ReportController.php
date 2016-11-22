@@ -12,6 +12,7 @@ use Intranet\Models\Tutorship;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\TutMeeting;
 use Intranet\Models\Reason;
+use Intranet\Models\Topic;
 use Intranet\Http\Requests;
 
 class ReportController extends Controller {
@@ -40,24 +41,46 @@ class ReportController extends Controller {
         } else {
             $beginDate = "";
         }
-        
+
         $dateOriginalFormat = $request['endDate'];
         if ($dateOriginalFormat) {
             $endDate = date("Y-m-d", strtotime($dateOriginalFormat . '+1 day'));
         } else {
             $endDate = "";
         }
-        
+
         $filters = [
             "beginDate" => $beginDate,
             "endDate" => $endDate,
         ];
 
         $tutMeetings = TutMeeting::getTutMeetingsByDates($filters)->get();
+        $topicTutMeetings = TutMeeting::getTutMeetingsByTopicAttended($filters)->get();
+        $topics = Topic::get();
 
-        $teacher = null;
+        $topics_amount_list = array();
+        $topics_name_list = array();
+        $topics_percentage_list = array();
+        $topicTotalAsistidas = 0;
+        foreach ($topics as $t) {
+            if ($t) {
+                $tAux = $tutMeetings->where('id_topic', $t->id)->where('estado',6)->count();
+                if ($tAux > 0) {
+                    $topicTotalAsistidas += $tAux;
+                    array_push($topics_name_list, $t->nombre);
+                    array_push($topics_amount_list, $tAux);
+                    array_push($topics_percentage_list, $tAux / $tutMeetings->count() * 100);
+                }
+            }
+        }
+
         $data = [
-            'teacher' => $teacher,
+            'topicTutMeetings' => $topicTutMeetings,
+            'topicTotalAsistidas' => $topicTotalAsistidas,
+            'totalCitas' => $tutMeetings->count(),
+            'topics_amount_list' => $topics_amount_list,
+            'topics_name_list' => $topics_name_list,
+            'topics_percentage_list' => $topics_percentage_list,
         ];
         return view('tutorship.report.topic', $data);
     }

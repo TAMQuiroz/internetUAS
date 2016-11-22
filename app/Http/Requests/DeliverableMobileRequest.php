@@ -28,8 +28,8 @@ class DeliverableMobileRequest extends Request
         $proyecto = Project::find($this->only('id_proyecto'))->first();
         
         return [
-            'fecha_ini'         =>  'required|date|after:'.$proyecto->fecha_ini.'|before:fecha_fin',
-            'fecha_fin'         =>  'required|date|after:fecha_ini|before:'.$proyecto->fecha_fin,
+            'fecha_inicio'         =>  'required|date|after:'.$proyecto->fecha_ini.'|before:fecha_fin',
+            'fecha_limite'         =>  'required|date|after:fecha_ini|before:'.$proyecto->fecha_fin,
         ];
     }
 }

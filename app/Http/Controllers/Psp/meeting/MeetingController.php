@@ -25,7 +25,7 @@ class MeetingController extends Controller
     //Vista alumno
     public function index()
     {
-        $meetings = meeting::paginate(10);
+        $meetings = meeting::orderby('fecha','asc')->paginate(10);
 
         $data = [
             'meetings'    =>  $meetings,
@@ -204,7 +204,7 @@ class MeetingController extends Controller
     //Vista supervisor
     public function indexSup()
     {
-        $meetings = meeting::with('student','status')->paginate(10);
+        $meetings = meeting::with('student','status')->orderBy('fecha','asc')->paginate(10);
 
         foreach ($meetings as $meeting) {
             $dt = new Carbon($meeting->fecha);        

@@ -25,7 +25,7 @@ class FreeHourController extends Controller
         $freeHours = FreeHour::where([
             ['idsupervisor',$supervisor->id],
             ['idpspprocess',$supervisor->idpspprocess],
-            ])->paginate(10);
+            ])->orderBy('fecha','asc')->orderBy('hora_ini','asc')->paginate(10);
 
         foreach ($freeHours as $freeHour) {
             $dt = new Carbon($freeHour->fecha);        

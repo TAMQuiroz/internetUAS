@@ -28,12 +28,14 @@ class TemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $filters = $request->all();
+
         $templates = null;
         if(Auth::User()->IdPerfil==3){  
-                $templates = Template::get();
+                $templates = Template::getFiltered($filters);
             } else{
                 $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
                 $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
@@ -47,7 +49,9 @@ class TemplateController extends Controller
                     if($proc2!=null && $r2>0){
                         foreach($proc2 as $p2){ 
                             if($p2!=null){
-                                $proc3=Template::where('idphase',$p2->id)->get();
+                                //$proc3=Template::where('idphase',$p2->id)->get();
+                                $proc3=Template::getFiltered2($filters,$p2->id);
+                                //dd($proc3);
                                 foreach($proc3 as $p3){ 
                                     if($p3!=null){
                                         $proc[]=Template::find($p3->id);

@@ -35,11 +35,13 @@
             <hr>
         </div>
         <div class="x_content">
-
+            
             <div class="clearfix"></div>
             <h4>Crear supervisores</h4>
             <div class="row">
+                
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <a href="#filter" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
                     <a href="{{ route('supervisor.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo Supervisor</a>
                 </div>
             </div>
@@ -73,12 +75,12 @@
                     @endforeach
                 </tbody>
             </table>
-
+            {{$supervisores->links()}}
         </div>
 
     </div>
 </div>
 
 <script src="{{ URL::asset('js/myvalidations/pspParticipant.js')}}"></script>
-    
+@include('psp.supervisor.filter_supervisor', ['title' => 'Filtrar', 'route' => 'supervisor.index'])    
 @endsection

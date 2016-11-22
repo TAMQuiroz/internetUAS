@@ -28,12 +28,12 @@ class PspGroupController extends Controller
         
         if(Auth::User()->IdPerfil==3){  
                 $pspGroups = PspGroup::orderBy('numero','asc')->get();
-                $pspGroups = DB::table('pspgroups')->join('pspprocesses','pspgroups.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('pspgroups.id', 'pspgroups.idpspprocess','pspgroups.numero','pspgroups.descripcion','Curso.Nombre')->where('pspgroups.deleted_at',null)->orderBy('Curso.Nombre','asc')->orderBy('numero','asc')->get();
+                $pspGroups = DB::table('pspgroups')->join('pspprocesses','pspgroups.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('pspgroups.id', 'pspgroups.idpspprocess','pspgroups.numero','pspgroups.descripcion','Curso.Nombre')->where('pspgroups.deleted_at',null)->orderBy('Curso.Nombre','asc')->orderBy('numero','asc')->paginate(10);
             } 
         else {
             $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
 
-            $pspGroups = DB::table('pspgroups')->join('pspprocessesxdocente','pspprocessesxdocente.idpspprocess','=','pspgroups.idpspprocess')->join('pspprocesses','pspprocessesxdocente.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('pspgroups.id', 'pspgroups.idpspprocess','pspgroups.numero','pspgroups.descripcion','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$teacher->IdDocente)->where('pspgroups.deleted_at',null)->orderBy('numero','asc')->get();
+            $pspGroups = DB::table('pspgroups')->join('pspprocessesxdocente','pspprocessesxdocente.idpspprocess','=','pspgroups.idpspprocess')->join('pspprocesses','pspprocessesxdocente.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('pspgroups.id', 'pspgroups.idpspprocess','pspgroups.numero','pspgroups.descripcion','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$teacher->IdDocente)->where('pspgroups.deleted_at',null)->orderBy('numero','asc')->paginate(10);
 
 
         }

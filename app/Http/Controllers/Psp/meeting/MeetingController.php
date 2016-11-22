@@ -25,10 +25,10 @@ class MeetingController extends Controller
     //Vista alumno
     public function index()
     {
-        $meeting = meeting::get();
+        $meetings = meeting::paginate(10);
 
         $data = [
-            'meeting'    =>  $meeting,
+            'meetings'    =>  $meetings,
         ];
         return view('psp.meeting.index', $data);
         //return view('template.index');
@@ -171,7 +171,7 @@ class MeetingController extends Controller
         }
     }
 
-    //Vista supervisor (cancelar reunion)
+    //Vista supervisor (eliminar reunion)
     public function destroy($id)
     {
         try {
@@ -204,7 +204,12 @@ class MeetingController extends Controller
     //Vista supervisor
     public function indexSup()
     {
-        $meetings = meeting::with('student','status')->get();
+        $meetings = meeting::with('student','status')->paginate(10);
+
+        foreach ($meetings as $meeting) {
+            $dt = new Carbon($meeting->fecha);        
+            $meeting->fecha = $dt->format('d-m-Y');
+        }
         //dd($meetings);
         $data = [
             'meetings'    =>  $meetings,

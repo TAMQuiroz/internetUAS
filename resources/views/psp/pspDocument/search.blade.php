@@ -95,6 +95,7 @@
                         @endforeach 
                     </tbody>
                 </table>
+                {{$pspdocuments->links()}}
             </div>
         </div>
     </div>

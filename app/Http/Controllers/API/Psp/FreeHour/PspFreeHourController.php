@@ -17,54 +17,54 @@ use Illuminate\Routing\Controller as BaseController;
 
 class PspFreeHourController extends BaseController
 {
-	use Helpers;
+    use Helpers;
 
 
 
-	public function create(){
+    public function create(){
 
- 		$user =  JWTAuth::parseToken()->authenticate();
-		$nStudent =		PspStudent::count();
+        $user =  JWTAuth::parseToken()->authenticate();
+        $nStudent =     PspStudent::count();
 
-		if($nStudent == 0){
+        if($nStudent == 0){
 
-			$array = array();
-			$mensaje = "Registrar lista de alumnos";
+            $array = array();
+            $mensaje = "Registrar lista de alumnos";
 
-			$array['message'] = $mensaje;
-			return $this->Response->array($array);
-
-
-
-
-		}
-
-
-		$supervisor =  Supervisor::where('iduser', $user->IdUsuario)->get()->first();
-		$cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
-		$maxi =  $this->maximum();
-
-		if($cantDisp < $maxi){
-
-
-		}
-
-
-
-	}
-
-	public function store(Request $request){
-
-
-		
-
-		try{
+            $array['message'] = $mensaje;
+            return $this->Response->array($array);
 
 
 
 
-		$user =  JWTAuth::parseToken()->authenticate();
- 		
+        }
+
+
+        $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->get()->first();
+        $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
+        $maxi =  $this->maximum();
+
+        if($cantDisp < $maxi){
+
+
+        }
+
+
+
+    }
+
+    public function store(Request $request){
+
+
+        
+
+        try{
+
+
+
+
+        $user =  JWTAuth::parseToken()->authenticate();
+        
 
 
 
@@ -72,36 +72,36 @@ class PspFreeHourController extends BaseController
 
         if($a == 0){
 
-        	 $mensaje = 'ingrese previamente al sistema una lista de alumnos';
+             $mensaje = 'ingrese previamente al sistema una lista de alumnos';
 
-       		 $array['message'] = $mensaje;
-        	return $this->response->array($array);
-		}
+             $array['message'] = $mensaje;
+            return $this->response->array($array);
+        }
         
 
- 		$supervisor =	Supervisor::where('iduser',$user->IdUsuario)->first();
+        $supervisor =   Supervisor::where('iduser',$user->IdUsuario)->first();
 
 
-		$cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
+        $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
 
         $maxi = $this->maximum();
         if($cantDisp >= $maxi){
 
-        	 $mensaje = 'Ha llegado al maximo de disponibildades a registrar';
+             $mensaje = 'Ha llegado al maximo de disponibildades a registrar';
 
-       		 $array['message'] = $mensaje;
-        	return $this->response->array($array);
+             $array['message'] = $mensaje;
+            return $this->response->array($array);
 
 
         }
 
- 		$idUser = $supervisor->id;
- 		$horaAux = $request['hora_ini'];
- 		
- 		$fecha = $request['fecha'];
- 	
+        $idUser = $supervisor->id;
+        $horaAux = $request['hora_ini'];
+        
+        $fecha = $request['fecha'];
+    
 
- 		$format = "d/m/Y";
+        $format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
 
         $freeHour =  new FreeHour;
@@ -114,7 +114,7 @@ class PspFreeHourController extends BaseController
 
 
 
-  		$f = FreeHour::where('idsupervisor',$supervisor->id)->count();
+        $f = FreeHour::where('idsupervisor',$supervisor->id)->count();
         $m = $this->maximum();
 
 
@@ -127,54 +127,54 @@ class PspFreeHourController extends BaseController
 
 
 
-		}catch(Exception $e){
+        }catch(Exception $e){
 
 
-			$mensaje = "Solicitud Fallida";
-       		 $array['message'] = $mensaje;
-        		return $this->response->array($array);
+            $mensaje = "Solicitud Fallida";
+             $array['message'] = $mensaje;
+                return $this->response->array($array);
 
-		}
-		
-
-
-		
+        }
+        
 
 
+        
 
 
-	}
-
-	public function showFreeHourForStudent(){
 
 
-		$user =  JWTAuth::parseToken()->authenticate();
- 		
+    }
+
+    public function showFreeHourForStudent(){
+
+
+        $user =  JWTAuth::parseToken()->authenticate();
+        
 
 
         $student = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
         $pspStudent  = PspStudent::where('idalumno', $student->IdAlumno)->get()->first();
         $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->
-        				where('idpspprocess', $pspStudent->idpspprocess)->get();	
+                        where('idpspprocess', $pspStudent->idpspprocess)->get();    
       
-    	foreach ($freeHours as $hour) {
+        foreach ($freeHours as $hour) {
 
-      		$hour->supervisor;
+            $hour->supervisor;
 
-      	}
-       // ->where('idpspprocess', $pspStudent->idpspprocess);	
+        }
+       // ->where('idpspprocess', $pspStudent->idpspprocess);   
 
 
-      	//return  $this->response->$message;
+        //return  $this->response->$message;
 
        return  $this->response->array($freeHours->toArray());
 /*
         $array= array();
 
-       	foreach ($freeHours as $freeHour) {
-       		if($freeHour->idpspprocess ==  )
+        foreach ($freeHours as $freeHour) {
+            if($freeHour->idpspprocess ==  )
 
-       	 } 			
+         }          
 */
 
 
@@ -182,29 +182,29 @@ class PspFreeHourController extends BaseController
 
 
 
-	}
+    }
 
 
-	public function showFreeHourForSupervisor(){
-		
+    public function showFreeHourForSupervisor(){
+        
 
-		$user =  JWTAuth::parseToken()->authenticate();
+        $user =  JWTAuth::parseToken()->authenticate();
 
 
 
-		$supervisor = Supervisor::where('iduser',$user->IdUsuario)->get()->first();
+        $supervisor = Supervisor::where('iduser',$user->IdUsuario)->get()->first();
 
         $freeHours = FreeHour::where('idsupervisor',$supervisor->id)->get();
 
         return $this->response->array($freeHours->toArray());
 
-	}
+    }
 
 
 
 
 
-	private function maximum(){
+    private function maximum(){
         $a = PspStudent::count();
         $s = Supervisor::count();
         $maximum = $a/$s;

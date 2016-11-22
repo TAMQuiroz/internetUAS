@@ -1184,6 +1184,9 @@ Route::group(['prefix' => 'uas'], function(){
         Route::group(['prefix' => 'reporte'], function(){    
             Route::get('/meeting', ['as' => 'reporte.meeting', 'uses' => 'Tutorship\Report\ReportController@meetingReport']);                    
             Route::get('/reassign', ['as' => 'reporte.reassign', 'uses' => 'Tutorship\Report\ReportController@reassignReport']);
+            Route::get('/citas-alumnos', ['as' => 'reporte.tutstudentDate', 'uses' => 'Tutorship\Report\ReportController@tutstudentDateReport']);
+            Route::get('/citas-canceladas', ['as' => 'reporte.cancelledMeeting', 'uses' => 'Tutorship\Report\ReportController@cancelledMeetingReport']);
+            Route::get('/topic', ['as' => 'reporte.topic', 'uses' => 'Tutorship\Report\ReportController@topicReport']);
         });
 
         /***   PARA EL ALUMNO DE TUTORÍA   ***/
@@ -1215,6 +1218,10 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
             Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);
+
+            Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
+            Route::post('/delete/{id}', ['as' => 'mis_citas.delete', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDate']);
+
         });
     });
     //MODULO DE TUTORIA - Fin de rutas
@@ -1280,7 +1287,7 @@ Route::group(['prefix' => 'uas'], function(){
         });
         
 
-        //Evaluaciones de adminstrador
+        //Evaluaciones de administrador
         Route::group(['middleware' => 'auth'], function(){
             //Competencias
             Route::group(['prefix' => 'competencias'], function(){    
@@ -1297,13 +1304,12 @@ Route::group(['prefix' => 'uas'], function(){
             Route::group(['prefix' => 'evaluadores'], function(){    
                 Route::get('/', ['as' => 'evaluador.index', 'uses' => 'Evaluations\Evaluator\EvaluatorController@index']);
                 Route::get('create', ['as' => 'evaluador.create', 'uses' => 'Evaluations\Evaluator\EvaluatorController@create']);
-                Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);
-                // Route::get('show/{id}', ['as' => 'evaluador.show', 'uses' => 'Evaluations\Evaluator\EvaluatorController@show']);
+                Route::post('create', ['as' => 'evaluador.store', 'uses' => 'Evaluations\Evaluator\EvaluatorController@store']);                
                 Route::get('edit/{id}', ['as' => 'evaluador.edit', 'uses' => 'Evaluations\Evaluator\EvaluatorController@edit']);
                 Route::post('edit/{id}', ['as' => 'evaluador.update', 'uses' => 'Evaluations\Evaluator\EvaluatorController@update']);
                 Route::get('delete/{id}', ['as' => 'evaluador.delete', 'uses' => 'Evaluations\Evaluator\EvaluatorController@destroy']);
             });
-
+            //Evaluaciones
             Route::group(['prefix' => 'evaluaciones'], function(){    
                 Route::get('/', ['as' => 'evaluacion.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@index']);                
                 Route::get('evaluaciones_alumnos_coord/{id}', ['as' => 'evaluacion.ver_evaluaciones_alumnos_coord', 'uses' => 'Evaluations\Evaluation\EvaluationController@indexevalcoord']);
@@ -1318,7 +1324,13 @@ Route::group(['prefix' => 'uas'], function(){
                 Route::get('delete/{id}', ['as' => 'evaluacion.delete', 'uses' => 'Evaluations\Evaluation\EvaluationController@destroy']);
                 Route::get('cancel/{id}', ['as' => 'evaluacion.cancel', 'uses' => 'Evaluations\Evaluation\EvaluationController@cancel']);
                 Route::get('activate/{id}', ['as' => 'evaluacion.activate', 'uses' => 'Evaluations\Evaluation\EvaluationController@activate']);
-            });    
+            });   
+
+            //Alumnos
+            Route::group(['prefix' => 'alumnos'], function(){
+                Route::get('/', ['as' => 'evstudent.index', 'uses' => 'Evaluations\Evaluation\EvaluationController@students_index']); 
+                Route::get('show/{id}', ['as' => 'evstudent.show', 'uses' => 'Evaluations\Evaluation\EvaluationController@student_show']);                
+            }); 
         });
         
 
@@ -1430,4 +1442,8 @@ Route::group(['prefix' => 'uas'], function(){
     });
 
 
+});
+
+Route::get('dormammu', function (){
+    return 'He venido a negociar';
 });

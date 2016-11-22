@@ -7,6 +7,7 @@ use Mail;
 use DateTime;
 use Illuminate\Http\Request;
 use Intranet\Models\Tutstudent;
+use Intranet\Models\TutSchedule;
 use Intranet\Models\Teacher;
 use Intranet\Models\Tutorship;
 use Intranet\Models\TutMeeting;
@@ -48,7 +49,10 @@ class TutTutorController extends BaseController
 
            $i++;
         }
+
          return $this->response->array($appointmentInfo->toArray());
+    
+
     }
 
     public function getAppointInformationTuto($id)
@@ -61,16 +65,22 @@ class TutTutorController extends BaseController
          $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
          $parametersInfo = Parameter::where('id_especialidad',1)->get();
 
+       
+
          $i=0;
          $LovingTheAlien;
          foreach ($tutorshipInfo as $ttshipInfo) {
 
             $idAlumno = $ttshipInfo['id_alumno'];
             $infoStudent = Tutstudent::where('id', $idAlumno)->get();
+            $scheduleInfo = TutSchedule::where('id_docente',$tutorshipInfo[0]['id_profesor'])->get();
+            $scheduleMeeting = TutMeeting::where('id_docente',$docenteInfo[0]['IdDocente'])->get();
             $LovingTheAlien[$i] = $infoStudent[0];
             $LovingTheAlien[$i]['fullName'] = $infoStudent[0]['ape_paterno']." ".$infoStudent[0]['ape_materno']." ".$infoStudent[0]['nombre'];
             $LovingTheAlien[$i]['duracionCita'] = $parametersInfo[0]['duracionCita'];
             $LovingTheAlien[$i]['numberDays'] = $parametersInfo[0]['number_days'];
+            $LovingTheAlien[$i]->scheduleInfo = $scheduleInfo;
+            $LovingTheAlien[$i]->scheduleMeeting= $scheduleMeeting;
 
             $i++;
          } 
@@ -78,7 +88,8 @@ class TutTutorController extends BaseController
 
          return $this->response->array($LovingTheAlien);
   
-        
+
+  
     }
 
     public function postAppointment(Request $request)

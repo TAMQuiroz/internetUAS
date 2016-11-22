@@ -16,6 +16,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <a href="#filter" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
                         <a href="{{ route('template.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nuevo Documento</a>
                     </div>
                 </div>
@@ -56,7 +57,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                
             </div>            
         </div>
     </div>
+@include('psp.template.filter_template', ['title' => 'Filtrar', 'route' => 'template.index'])   
 @endsection

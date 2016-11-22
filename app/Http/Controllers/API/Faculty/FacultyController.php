@@ -14,6 +14,7 @@ use Intranet\Models\Cicle;
 use Intranet\Models\Rubric;
 use Intranet\Models\Aspect;
 use Intranet\Models\Teacher;
+use Intranet\Models\Score;
 use Illuminate\Http\Request;
 use Intranet\Models\Faculty;
 use Dingo\Api\Routing\Helpers;
@@ -22,7 +23,9 @@ use Intranet\Models\StudentsResult;
 use Intranet\Models\ImprovementPlan;
 use Intranet\Models\EvaluatedCourses;
 use Intranet\Models\EducationalObjetive;
+use Intranet\Models\CourseEvidence;
 use Intranet\Models\AcademicCycle;
+use Intranet\Models\FileCertificate;
 use Intranet\Http\Services\Course\CourseService;
 use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Faculty\FacultyService;
@@ -32,6 +35,7 @@ use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLine;
 use Intranet\Http\Services\StudentsResult\StudentsResultService;
 use Intranet\Models\Wrappers\EvaluatedPerformanceMatrixLineDetail;
 use Intranet\Models\Evaluation;
+use Intranet\Models\Contribution;
 class FacultyController extends BaseController
 {
     use Helpers;
@@ -142,42 +146,47 @@ class FacultyController extends BaseController
 
     public function getCourseSchedule($course_id,$academic_cycle_id){
         $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_cycle_id)->first();
-        $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)->with('professors')->get();
+        $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)
+                             ->with('professors')
+                             ->with('courseEvidences')
+                             ->get();
 
         return Response::json($schedules);
     }
 
-    public function getEvaluatedCoursesBySemester($faculty_id, $semester_id, Request $request)
-    {
-        $date = date('Y-m-d H:i:s', $request->get('since', 0));
+    public function getCourseContribution($course_id, $cycle_id){
+      $conts = Contribution::where('IdCurso',$course_id)->where('IdCicloAcademico', $cycle_id)->where("deleted_at", null)->with('studentsResult')->get();
+      $res = collect();
 
-        $academic_semester = Cicle::where('IdCicloAcademico', $semester_id)
-                                            ->where('IdEspecialidad', $faculty_id)
-                                            ->first();
+      foreach($conts as $cont){
+        $res->push($cont->studentsResult);
 
-
-        //$academic_semester = Cicle::where('Vigente', 1)->first();
-        $user = JWTAuth::parseToken()->authenticate();
-        if($user->IdPerfil == 3){
-          $courses = Course::lastUpdated($date)
-                             ->where('IdEspecialidad', $faculty_id)
-                             ->orderBy('NivelAcademico', 'asc')
-                             ->orderBy('IdCurso', 'asc')
-                             ->get();
-        } else {
-          $courses = Course::lastUpdated($date)
-                             ->where('IdEspecialidad', $faculty_id)
-                             ->orderBy('NivelAcademico', 'asc')
-                             ->orderBy('IdCurso', 'asc')
-                             ->with('semesters')
-                             ->whereHas('semesters', function($query) use ($academic_semester) {
-                                $query->where('CursoxCiclo.IdCicloAcademico', $academic_semester->IdCicloAcademico);
-                                $query->whereNull('CursoxCiclo.deleted_at');
-                             })
-                             ->get();
-        }
-        return $this->response->array($courses->toArray());
       }
+      return $res;
+    }
+
+
+    public function getEvaluatedCoursesBySemester($faculty_id, $semester_id)
+    {
+      $academic_semester = Cicle::where('IdCicloAcademico',$semester_id)
+                                ->where('IdEspecialidad',$faculty_id)
+                                ->first();
+      $courses = [];
+      if ($academic_semester) {
+        $coursexteachers = CoursexCycle::where('IdCicloAcademico',$academic_semester->IdCicloAcademico)
+                                       ->get();
+        
+        foreach ($coursexteachers as $key => $value) {
+          $course = Course::where('IdCurso',$value->IdCurso)->first();
+          $schedules = Schedule::where('IdCursoxCiclo',$value->IdCursoxCiclo)->get();
+          $schedules->load('professors');
+          $schedules->load('courseEvidences');
+          $course['schedule'] = $schedules;
+          array_push($courses, $course);
+        }
+      }
+      return $this->response->array($courses);
+    }
 
     public function getAspects($sr_id,Request $request)
     {
@@ -333,4 +342,21 @@ class FacultyController extends BaseController
       $students = Student::where('IdHorario',$schedule_id)->get();
       return Response::json($students);
     }
+
+    public function getEffortTable($academic_cycle_id, $course_id, $schedule_id, $student_id){
+      //sacamos el cursoxciclo del curso que queremos ver sus resultados
+      $coursexteachers = CoursexCycle::where('IdCicloAcademico',$academic_cycle_id)
+                                     ->where('IdCurso',$course_id)
+                                     ->first();
+      //sacamos los horarios del curso en el ciclo                                     
+      
+      $schedules = Schedule::where('IdCursoxCiclo',$coursexteachers->IdCursoxCiclo)->get();
+
+      $scores = Score::where('IdHorario', $schedule_id)
+                     ->where('IdAlumno', $student_id)
+                     ->get();
+      $scores->load('criterion');
+      return Response::json($scores);
+    }
+
 }

@@ -22,6 +22,13 @@ $(document).ready(function($) {
 	
 	$('#tut-date-end').datepicker('setDate', '');
 	$('#tut-date-end').children('div').css({ display: 'block'});
+
+    var inputStartDate = $('#tut-date-begin').children(".input-date");
+    inputStartDate.change(function() {        
+        var valueInputStart = $(this).val();
+        $('#tut-date-begin').datepicker('setStartDate', valueInputStart);
+        $('#tut-date-begin').datepicker('setDate', valueInputStart);
+    });
 			
 });
 

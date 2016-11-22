@@ -108,8 +108,8 @@ class TutorController extends Controller {
 
     public function activate($id) {
         try {
-            $tutorships = Tutorship::where('id_profesor', $id)->get();                        
-            
+            $tutorships = Tutorship::where('id_profesor', $id)->get();
+
             foreach ($tutorships as $t) {
                 $tutorshipTrash = Tutorship::find($t->id);
 
@@ -122,8 +122,8 @@ class TutorController extends Controller {
 
                 $tutorshipTrash->delete();
             }
-            
-            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 1]);            
+
+            DB::table('Docente')->where('IdDocente', $id)->update(['rolTutoria' => 1]);
             return redirect()->route('tutor.index')->with('success', 'Se activó al tutor y se reasignaron los alumnos del tutor suplente al tutor original, en caso hubiera.');
         } catch (Exception $e) {
             return redirect()->route('tutor.index')->with('warning', 'No se puede hacer la reasignación.');
@@ -186,7 +186,7 @@ class TutorController extends Controller {
                             if ($citas->count() != 0) {
                                 foreach ($citas as $c) {
                                     $cita = TutMeeting::find($c->id);
-                                    $cita->estado = 'Cancelada';
+                                    $cita->estado = 3;
                                     $cita->id_reason = $request['motivo'];
                                     $cita->save();
                                 }

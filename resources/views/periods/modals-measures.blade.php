@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="row" style="margin-top: 10px;" id="professors_table">
-                    <table class="table table-striped responsive-utilities jambo_table bulk_action" name="table-objs">
+                    <table class="table table-striped responsive-utilities jambo_table bulk_action" name="table-objs" id="tblIntrumentosModal">
                         <thead>
                             <tr class="headings">
                                 <th class="column-title">Seleccionar</th>
@@ -18,7 +18,10 @@
                         <tbody>
                             @foreach($measures as $m)
                                 <tr>
-                                    <input type="hidden" name="measures[]" value="{{ $m->IdFuenteMedicion }}">
+                                    <td hidden>
+                                        <input type="hidden" value="{{ $m->IdFuenteMedicion }}">
+                                    </td>
+                                    
                                     <td>
                                         <input class="measures_input" type="checkbox" value="1">
                                     </td>

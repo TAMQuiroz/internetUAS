@@ -75,8 +75,8 @@
           </tr>
         </thead>
         <tbody >
-          @if($aspect->criterion!=null)
-          @foreach($aspect->criterion as $crit)
+          @if($aspect->relatedCriterion!=null)
+          @foreach($aspect->relatedCriterion as $crit)
           <tr class="even pointer">
             <input type="hidden" class="criteriaItem" name="criteriaItem[]" value="{{ $crit->IdCriterio }}-{{ $crit->Nombre }}" />
             <td class="criteriaCode" hidden="true">{{$crit->IdCriterio }}</td>

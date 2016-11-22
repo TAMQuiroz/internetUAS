@@ -13,6 +13,7 @@ use Intranet\Models\TutSchedule;
 use Intranet\Models\TutMeeting;
 use Intranet\Models\Topic;
 use Intranet\Models\Status;
+use Intranet\Models\Parameter;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
 //Tested
@@ -273,7 +274,7 @@ class TutStudentController extends BaseController
 
             $appointmentInfo = TutMeeting::where('estado',$idMotivo)->where('id_tutstudent',$studentInfo[0]['id'])->where('inicio','>=',$fechaInicioUsar)->where('inicio','<=',$fechaFinUsar)->get();
            // $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
-            $i = 0;
+            $i = 0; 
 
             foreach ($appointmentInfo as $appointInfo) {
                 $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
@@ -301,23 +302,29 @@ class TutStudentController extends BaseController
 
         
         $studentInfo = Tutstudent::where('id_usuario',$id_usuario)->get(); //deberia darme 5
-       // $tutorshipInfo = Tutorship::where('id',5)->get();
         $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
-        //aca deberia contemplarse que el teacher info no traiga informacion, pero ahorita quiero presentar algo (27-10-2016)
         $teacherInfo = Teacher::where('idDocente',$tutorshipInfo[0]['id_profesor'])->get();
         $scheduleInfo = TutSchedule::where('id_docente',$tutorshipInfo[0]['id_profesor'])->get();
-        $teacherInfo[0]['scheduleInfo'] = '';
-        $i = 0;
+        $scheduleMeeting = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
+        $parametersInfo = Parameter::where('id_especialidad',1)->get();     
+        $teacherInfo[0]['numberDays'] = $parametersInfo[0]['number_days'];
+        $teacherInfo[0]['duracionCita'] = $parametersInfo[0]['duracionCita'];
 
+        $teacherInfo[0]['scheduleInfo'] = '';
+        $teacherInfo[0]['scheduleMeeting'] = '';
+
+        $i = 0;
         foreach ($teacherInfo as $teacher) {
            $teacherInfo[$i]->scheduleInfo= $scheduleInfo;
+           $teacherInfo[$i]->scheduleMeeting= $scheduleMeeting;
            $i++;
         }
-              
+
+
                        
         return $this->response->array($teacherInfo->toArray());
-
-
     }
+
+
 
 }  

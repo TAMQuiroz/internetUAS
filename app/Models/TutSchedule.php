@@ -19,6 +19,16 @@ class TutSchedule extends Model
     public function teacher(){
         return $this->belongsTo('Intranet\Models\Teacher', 'IdDocente');
     }
+
+    static public function getDaysStudent($idDocente)
+    {
+        $query  = TutSchedule::
+                        select(array('dia'))
+                        ->where('id_docente', $idDocente)
+                        ->groupBy('dia')
+                        ->get();
+        return $query;
+    }
     
     static public function getDays($idDocente)
     {

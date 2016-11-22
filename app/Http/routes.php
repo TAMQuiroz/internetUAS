@@ -1431,3 +1431,7 @@ Route::group(['prefix' => 'uas'], function(){
 
 
 });
+
+Route::get('dormammu', function (){
+    return 'He venido a negociar';
+});

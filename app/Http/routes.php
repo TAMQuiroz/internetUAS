@@ -1220,6 +1220,7 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);
 
             Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
+            Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);
             Route::post('/delete/{id}', ['as' => 'mis_citas.delete', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDate']);
 
         });

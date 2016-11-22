@@ -94,7 +94,7 @@
                     <tbody>
                         @foreach($cancelledtutMeetings as  $key => $cancelledtutMeeting)
                         <tr class="even pointer">
-                            <td  class="group-id">{{$cancelledtutMeeting->id}} </td>
+                            <td hidden class="group-id">{{$cancelledtutMeeting->id}} </td>
 
                             <td class="">{{$reasons_name_list[$key] }}</span></td>
                             

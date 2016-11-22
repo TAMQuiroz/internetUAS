@@ -49,7 +49,8 @@
                             @include('modals.delete', ['id'=> $freeHour->id, 'message' => '¿Esta seguro que desea eliminar esta disponibilidad?', 'route' => route('freeHour.delete', $freeHour->id)])
                             @endforeach
                             </tbody> 
-                    </table>                    
+                    </table>
+                    {{$freeHours->links()}}                    
                 </div>
             </div>
         </div>

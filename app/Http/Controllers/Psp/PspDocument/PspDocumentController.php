@@ -32,7 +32,7 @@ class PspDocumentController extends Controller
         $students = Student::where('IdUsuario',Auth::User()->IdUsuario)->get();
         $student  =$students->first();
         $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
-        $pspdocuments = PspDocument::where('idstudent',$student->IdAlumno)->get();
+        $pspdocuments = PspDocument::where('idstudent',$student->IdAlumno)->paginate(10);
         //$templates = Template::get();
         $data = [
             'pspdocuments'    =>  $pspdocuments,
@@ -212,7 +212,7 @@ class PspDocumentController extends Controller
         //$student  =$students->first();
         $student = Student::find($id);
         $pspstudent = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
-        $pspdocuments = PspDocument::where('idstudent',$id)->get();
+        $pspdocuments = PspDocument::where('idstudent',$id)->paginate(10);
 
         $data = [
             'pspdocuments'    =>  $pspdocuments,

@@ -275,13 +275,9 @@
                     <li><a href="{{ route('index.evaluation') }}">De evaluación</a></li>
                     @endif
 
-                    @if(in_array(56,Session::get('actions')))
-                    <li><a href="{{ route('index.results') }}">De resultados de medición</a></li>
-                    @endif
-
-                    @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
+                    
                     <li><a href="{{ route('pending.index')}}">De evaluación pendiente</a></li>
-                    @endif
+                    
 
                     @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 4))
                     <li><a href="{{ route('evidences.index')}}">Evidencias por especialidad</a></li>

@@ -45,8 +45,9 @@ class GroupController extends BaseController
         $group->save();
 
         //Retornar mensaje
-        $mensaje = 'Se modifico correctamente';
-
-        return $mensaje;
+        //$mensaje = 'Se modifico correctamente';
+        $mensaje = ['mensaje' => 'Se modifico correctamente'];
+        return response()->json($mensaje);
+        //return $mensaje;
     }
 }   

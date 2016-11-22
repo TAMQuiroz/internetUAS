@@ -400,7 +400,20 @@ class TutMeetingController extends Controller
         $meeting->estado = Config::get('constants.confirmada');
         $meeting->save();
 
+        //Enviar correo a alumno
+
         return redirect()->back()->with('success', 'Se confirmo esta cita');
+    }
+
+    public function refuseDate($id)
+    {
+        $meeting = TutMeeting::find($id);
+        $meeting->estado = Config::get('constants.rechazada');
+        $meeting->save();
+
+        //Enviar correo a alumno
+
+        return redirect()->back()->with('success', 'Se rechazó esta cita');
     }
 
     public function deleteDate($id)
@@ -408,6 +421,8 @@ class TutMeetingController extends Controller
         $meeting = TutMeeting::find($id);
         $meeting->estado = Config::get('constants.cancelada');
         $meeting->save();
+
+        //Enviar correo a alumno
 
         return redirect()->back()->with('success', 'Se canceló esta cita');
     }

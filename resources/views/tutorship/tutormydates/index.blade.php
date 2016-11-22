@@ -38,7 +38,7 @@
                     <td hidden class="group-id">{{$tutMeeting->id}}</td>
 
                     <td class="">
-                        @if($tutMeeting->estado == Config::get('constants.cancelada'))
+                        @if($tutMeeting->estado == Config::get('constants.cancelada') || $tutMeeting->estado == Config::get('constants.rechazada') )
                         <span class="label label-danger"> 
                         @else
                         <span class="label label-success"> 
@@ -68,17 +68,19 @@
                     <td class=" ">{{ $tutMeeting->topic->nombre }}</td>
 
                     <td class=" ">
-                        @if($tutMeeting->estado == 1)
-                        <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#confirmar{{$tutMeeting->id}}" title="Confirmar"><i class="fa fa-check"></i></a>
-                        <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#eliminar{{$tutMeeting->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
-                        @else
                         <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ver{{$tutMeeting->id}}" title="Ver"><i class="fa fa-eye"></i></a>
+                        @if($tutMeeting->estado == Config::get('constants.pendiente') && Auth::user()->IdPerfil != Config::get('alumno'))
+                        <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#confirmar{{$tutMeeting->id}}" title="Confirmar"><i class="fa fa-check"></i></a>
+                        <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#rechazar{{$tutMeeting->id}}" title="Rechazar"><i class="fa fa-remove"></i></a>
+                        @elseif($tutMeeting->estado == Config::get('constants.confirmada') && Auth::user()->IdPerfil != Config::get('alumno'))
+                        <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelar{{$tutMeeting->id}}" title="Cancelar"><i class="fa fa-remove"></i></a>
                         @endif
                     </td>                    
                 </tr>
 
                 @include('tutorship.tutormydates.accept-cita', ['id'=> "confirmar".$tutMeeting->id, 'message' => 'Esta a punto de confirmar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.accept', $tutMeeting->id)])
-                @include('tutorship.tutormydates.delete-cita', ['id'=> "eliminar".$tutMeeting->id, 'message' => 'Si va a cancelar esta cita, indique el motivo', 'route' => route('mis_citas.delete', $tutMeeting->id)])
+                @include('tutorship.tutormydates.refuse-cita', ['id'=> "rechazar".$tutMeeting->id, 'message' => 'Esta a punto de rechazar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.refuse', $tutMeeting->id)])
+                @include('tutorship.tutormydates.cancel-cita', ['id'=> "cancelar".$tutMeeting->id, 'message' => 'Si va a cancelar esta cita, indique el motivo', 'route' => route('mis_citas.delete', $tutMeeting->id)])
                 @include('tutorship.tutormydates.ver-cita', ['id'=> "ver".$tutMeeting->id, 'message' => 'Ver cita', 'cita' => $tutMeeting])
                 @endforeach
             </tbody>

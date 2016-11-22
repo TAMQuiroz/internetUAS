@@ -173,4 +173,12 @@ class TutMeeting extends Model
       return $this->belongsTo('Intranet\Models\Reason','id_reason');
     }
 
+    public function topic(){
+        return $this->belongsTo('Intranet\Models\Topic','id_topic');
+    }
+
+    public function teacher(){
+        return $this->belongsTo('Intranet\Models\Teacher','id_docente');
+    }
+
 }

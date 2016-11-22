@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\Tutorship\TutMeeting;
 
 use Auth;
 use Mail;
+use Config;
 use Illuminate\Http\Request;
 use Illuminate\Filesystem\Filesystem;
 use Intranet\Http\Controllers\Controller;
@@ -16,6 +17,7 @@ use Intranet\Models\Tutstudent;
 use Intranet\Models\Teacher;
 use Intranet\Models\Topic;
 use Intranet\Models\TutMeeting;
+use Intranet\Models\Reason;
 use Intranet\Models\TutSchedule;
 use Illuminate\Support\Facades\Session;
 use Intranet\Http\Services\User\PasswordService;
@@ -111,6 +113,7 @@ class TutMeetingController extends Controller
             }
         } 
         
+        $motivos = Reason::where('tipo',1)->get();
 
         $data       = [
             'tutMeetings' =>  $tutMeetings,
@@ -118,6 +121,7 @@ class TutMeetingController extends Controller
             'hora'        =>  $hora,
             'hora_inicio' =>  $hora_inicio,
             'hora_fin'    =>  $hora_fin,
+            'motivos'     =>  $motivos,
         ];
         
 
@@ -136,22 +140,32 @@ class TutMeetingController extends Controller
 
         $parameters = Parameter::where('id_especialidad', $mayorId)->first();
 
-        $today      = date('d-m-Y'); 
-        $endDate    = date('d-m-Y', strtotime($today . '+' . $parameters->number_days . ' day'));
+        if($parameters){
 
-        $queryDays  = Tutschedule::getDays($user->IdDocente);
-        
-        $stringDisabledDays 
-                    = TutMeeting::getStringDisableDays($queryDays);
+            $today      = date('d-m-Y'); 
+            $endDate    = date('d-m-Y', strtotime($today . '+' . $parameters->number_days . ' day'));
 
-        $data = [
-            'student'       => $student,
-            'topics'        => $topics,
-            'endDate'       => $endDate,
-            'disabledDays'  => $stringDisabledDays,
-        ];
+            if(Auth::user()->IdPerfil == 0){
+                $iddocente  = $user->tutorship->id_tutor;
+                $queryDays  = Tutschedule::getDays($iddocente);    
+            }else{
+                $queryDays  = Tutschedule::getDays($user->IdDocente);    
+            }
+            
+            $stringDisabledDays 
+                        = TutMeeting::getStringDisableDays($queryDays);
 
-        return view('tutorship.tutormydates.create', $data);
+            $data = [
+                'student'       => $student,
+                'topics'        => $topics,
+                'endDate'       => $endDate,
+                'disabledDays'  => $stringDisabledDays,
+            ];
+
+            return view('tutorship.tutormydates.create', $data);
+        }else{
+            return redirect()->back()->with('warning', 'No hay ningun parametro definido');
+        }
     }
 
     public function showSchedule(Request $request)
@@ -164,10 +178,12 @@ class TutMeetingController extends Controller
 
         $date           = $request['date'];
 
-        $schedule       = Tutschedule::getSchedule(
-                                        $user->IdDocente, 
-                                        $date, 
-                                        $parameters);
+        if(Auth::user()->IdPerfil == 0){
+            $iddocente  = $user->tutorship->id_tutor;
+            $schedule       = Tutschedule::getSchedule($iddocente, $date, $parameters);
+        }else{
+            $schedule       = Tutschedule::getSchedule($user->IdDocente, $date, $parameters);
+        }
 
         $htmlOptions    = Tutschedule::getHtmlSchedule($schedule);
 
@@ -205,14 +221,27 @@ class TutMeetingController extends Controller
 
             if (!$meeting) {
 
-                $newMeeting     = TutMeeting::create([
-                    "inicio"        => $completedDate,
-                    "duracion"      => $parameters->duracionCita,
-                    "estado"        => 1,
-                    "id_topic"      => $topic,
-                    "id_docente"    => $user->IdDocente,
-                    "id_tutstudent" => $idStudent
-                ]);
+                if(Auth::user()->IdPerfil == 0){
+                    $iddocente  = $user->tutorship->id_tutor;
+
+                    $newMeeting     = TutMeeting::create([
+                        "inicio"        => $completedDate,
+                        "duracion"      => $parameters->duracionCita,
+                        "estado"        => 1,
+                        "id_topic"      => $topic,
+                        "id_docente"    => $iddocente,
+                        "id_tutstudent" => $idStudent
+                    ]);
+                }else{
+                    $newMeeting     = TutMeeting::create([
+                        "inicio"        => $completedDate,
+                        "duracion"      => $parameters->duracionCita,
+                        "estado"        => 1,
+                        "id_topic"      => $topic,
+                        "id_docente"    => $user->IdDocente,
+                        "id_tutstudent" => $idStudent
+                    ]);
+                }
 
                 try {
                     $nombre     = $student->nombre . ' ' . $student->ape_paterno . ' ' . $student->ape_materno;
@@ -246,6 +275,24 @@ class TutMeetingController extends Controller
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 
+    }
+
+    public function acceptDate($id)
+    {
+        $meeting = TutMeeting::find($id);
+        $meeting->estado = Config::get('constants.confirmada');
+        $meeting->save();
+
+        return redirect()->back()->with('success', 'Se confirmo esta cita');
+    }
+
+    public function deleteDate($id)
+    {
+        $meeting = TutMeeting::find($id);
+        $meeting->estado = Config::get('constants.cancelada');
+        $meeting->save();
+
+        return redirect()->back()->with('success', 'Se canceló esta cita');
     }
 
 }

@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
 <div class="page-title">
-    <div class="title_left">
+    <div class="">
         <h3>Evaluaciones</h3>
     </div>    
 </div>
@@ -10,11 +10,14 @@
     <div class="x_panel">
         <div class="">                
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-xs-6">
                     <a href="#filter-evaluations"  class="btn btn-warning pull-left">
                         <i class="fa fa-filter"></i> Filtrar
                     </a>
-                    <a href="{{ route('evaluacion.create') }}" class="btn btn-success pull-right">
+                    
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <a title="Nueva evaluación" href="{{ route('evaluacion.create') }}" class="btn btn-submit pull-right">
                         <i class="fa fa-plus"></i> Nueva evaluación
                     </a>
                 </div>
@@ -23,10 +26,11 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <col width="10%" >
                     <col width="10%">
-                    <col width="30%">
+                    <col width="20%">
                     <col width="10%">                    
-                    <col width="10%">                    
+                    <col width="10%">                                           
                     <col width="15%">
+                    <col width="10%">
                     <col width="15%">
                     <thead>
                         <tr class="headings">                            
@@ -36,12 +40,12 @@
                             <th class="centered column-title">Desde </th>    
                             <th class="centered column-title">Hasta </th>    
                             <th class="centered column-title">Cant. preguntas</th>    
-                            <!-- <th class="column-title">Avance </th>                             -->
+                            <th class="centered column-title">Avance </th>
                             <th class="centered column-title last">Acciones</th>                                
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($evaluations as $evaluation)
+                        @foreach($evaluations as $key => $evaluation)
                         <tr class="even pointer">                        
                             @if($evaluation->estado == 1)
                             <td class="centered"><span class="label label-primary"> Registrada </span></td>
@@ -57,6 +61,7 @@
                             <td class="centered ">{{date("d/m/Y", strtotime($evaluation->fecha_inicio)) }}</td>
                             <td class="centered ">{{date("d/m/Y", strtotime($evaluation->fecha_fin)) }}</td>
                             <td class="centered ">{{ count($evaluation->preguntas) }}</td>              
+                            <td class="centered ">{{ $arr_avance1[$key] }}/{{ $arr_avance2[$key] }}</td>              
                             
                             <td class="centered">
                                 @if($evaluation->estado == 1)

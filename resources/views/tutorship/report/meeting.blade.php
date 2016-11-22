@@ -23,9 +23,19 @@
                         <li class="tab-page">Citas por tutor</li>
                     </div>
                 </a>
-                <a href="">
+                <a href="{{route('reporte.tutstudentDate')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por alumno</li>
+                    </div>
+                </a>
+                <a href="{{route('reporte.topic')}}">
+                    <div class="tab-page-wrapper">
+                        <li class="tab-page">Citas por tema</li>
+                    </div>
+                </a>                
+                <a href="{{route('reporte.cancelledMeeting')}}">
+                    <div class="tab-page-wrapper">
+                        <li class="tab-page">Citas canceladas</li>
                     </div>
                 </a>
                 <a href="">
@@ -41,7 +51,7 @@
                         <div class="panel panel-default">
 
 
-                            
+
                             <div class="panel-body">
                                 {{Form::open(['route' => ['motivo.update', ''], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 
@@ -68,9 +78,6 @@
                                 {{Form::close()}}
 
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -78,6 +85,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

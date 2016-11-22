@@ -547,7 +547,13 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('create', ['as' => 'reportC.create', 'uses' => 'Psp\Report\reportPspController@create']);
                 Route::post('create', ['as' => 'reportC.generate', 'uses' => 'Psp\Report\reportPspController@generate']);
                 Route::get('show/{id}', ['as' => 'reportC.show', 'uses' => 'Psp\Report\reportPspController@show']);
+
             });                    
+
+            Route::group(['prefix' => 'attendanceReport'], function() {
+                Route::get('create',['as' => 'attendanceRate.create', 'uses' => 'Psp\Report\AttendanceRateController@create']);
+                Route::post('create',['as' => 'attendanceRate.generate', 'uses' => 'Psp\Report\AttendanceRateController@generate']);
+            });
 
             //PspGroups Luis Llanos
 

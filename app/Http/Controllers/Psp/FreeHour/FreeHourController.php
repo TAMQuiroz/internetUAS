@@ -27,6 +27,11 @@ class FreeHourController extends Controller
             ['idpspprocess',$supervisor->idpspprocess],
             ])->get();
 
+        foreach ($freeHours as $freeHour) {
+            $dt = new Carbon($freeHour->fecha);        
+            $freeHour->fecha = $dt->format('d-m-Y');
+        }
+        
         $data = [
             'freeHours'    =>  $freeHours,
         ];

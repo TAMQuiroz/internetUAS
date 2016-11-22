@@ -205,6 +205,11 @@ class MeetingController extends Controller
     public function indexSup()
     {
         $meetings = meeting::with('student','status')->get();
+
+        foreach ($meetings as $meeting) {
+            $dt = new Carbon($meeting->fecha);        
+            $meeting->fecha = $dt->format('d-m-Y');
+        }
         //dd($meetings);
         $data = [
             'meetings'    =>  $meetings,

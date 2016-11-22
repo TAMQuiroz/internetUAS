@@ -74,7 +74,7 @@ class TutTutorController extends BaseController
             $idAlumno = $ttshipInfo['id_alumno'];
             $infoStudent = Tutstudent::where('id', $idAlumno)->get();
             $scheduleInfo = TutSchedule::where('id_docente',$tutorshipInfo[0]['id_profesor'])->get();
-            $scheduleMeeting = TutMeeting::where('id_docentec',$docenteInfo[0]['IdDocente'])->get();
+            $scheduleMeeting = TutMeeting::where('id_docente',$docenteInfo[0]['IdDocente'])->get();
             $LovingTheAlien[$i] = $infoStudent[0];
             $LovingTheAlien[$i]['fullName'] = $infoStudent[0]['ape_paterno']." ".$infoStudent[0]['ape_materno']." ".$infoStudent[0]['nombre'];
             $LovingTheAlien[$i]['duracionCita'] = $parametersInfo[0]['duracionCita'];

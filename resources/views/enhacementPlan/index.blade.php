@@ -55,7 +55,11 @@
                                                     <?php if ($iplan->Estado=="En Ejecución"): ?>
                                                     class="label label-success"
                                                     <?php else: ?>
+                                                    <?php if ($iplan->Estado=="Terminado"): ?>
+                                                    class="label label-success"
+                                                    <?php else: ?>
                                                     class="label label-danger"
+                                <?php endif ?>
                                 <?php endif ?>
                                         <?php endif ?> >{{$iplan->Estado}}</span></td>
                             <td class=" ">

@@ -75,7 +75,7 @@ class StudentsResultService {
                     }
                 }*/
                 
-                if($resultsxCycles){      
+                if($resultsxCycles){     
                     foreach ($resultsxCycles as $resultsxCycle){
                         if($resultsxCycle->studentsResult!=null){
                             if($resultsxCycle->studentsResult->IdEspecialidad == Session::get('faculty-code') &&
@@ -83,7 +83,7 @@ class StudentsResultService {
                                 array_push($studentResults, $resultsxCycle->studentsResult);
                             }
                         }
-                    }
+                    } 
                     return $studentResults;
                 }else{
                     return $studentResults;

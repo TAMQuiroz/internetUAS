@@ -5,6 +5,7 @@ use View;
 use Session;
 use Illuminate\Http\Request;
 use Intranet\Http\Services\Cicle\CicleService;
+use Intranet\Http\Services\AcademicCycle\AcademicCycleService;
 use Intranet\Http\Services\Period\PeriodService;
 use Intranet\Http\Services\Faculty\FacultyService;
 use Intranet\Http\Services\Teacher\TeacherService;
@@ -20,6 +21,9 @@ class FacultyController extends BaseController
     protected $facultyService;
     protected $educationalObjetiveService;
     protected $studentsResultService;
+    protected $academicCycleService;
+    protected $measureService;
+    protected $teacherService;
 
     public function __construct(){
         $this->facultyService= new FacultyService();
@@ -29,6 +33,8 @@ class FacultyController extends BaseController
         $this->measureService= new MeasurementSourceService();
         $this->studentsResultService = new StudentsResultService();
         $this->educationalObjetiveService = new EducationalObjetiveService();
+
+        $this->academicCycleService=new AcademicCycleService();
     }
     public function index() {
         $data['title'] = "Faculties";
@@ -462,12 +468,12 @@ class FacultyController extends BaseController
 
             $faculty=$this->facultyService->getId($id);
             $data['especialidad']=$faculty;
-
-            
+            //dd($request1['cycleEnd']);
             $cicloFin=$this->academicCycleService->getById($request1['cycleEnd']);
-            dd($cicloFin);
+
             $data['fechaCicloFin']=$cicloFin->Descripcion;
             $cicloInicio=$this->academicCycleService->getById($request1['cycleStart']);
+
             $data['fechaCicloInicio']=$cicloInicio->Descripcion;
 
             $data['facultyAgreement']=$request1['facultyAgreement'];
@@ -478,8 +484,7 @@ class FacultyController extends BaseController
             $regular_professors = isset($request['regular_professors'])?$request['regular_professors']:[];
             $course->regularProfessors()->sync($regular_professors);
 */
-
-            $measuresAll=$this->measurementSourceService->allByFaculty2($id);
+            $measuresAll=$this->measureService->allByFaculty2($id);
             $measures = (array_key_exists('measures', $request1))?$request1['measures']: [];
             //dd($measures);
             $educationalObjetives = (array_key_exists('objCheck', $request1))?$request1['objCheck']: [];
@@ -487,10 +492,9 @@ class FacultyController extends BaseController
             $aspects = (array_key_exists('aspCheck', $request1))?$request1['aspCheck']: [];
             $criterions = (array_key_exists('crtCheck', $request1))?$request1['crtCheck']: [];
 
-            $studentResultsAll = StudentsResult::where('IdEspecialidad', $id)
-            ->where('deleted_at', null)->get();
-            $educationalObjetivesAll = EducationalObjetive::where('IdEspecialidad', $id)
-            ->where('deleted_at', null)->get();
+            $studentResultsAll = $this->studentsResultService->findByFaculty2($id);
+            $educationalObjetivesAll = $this->educationalObjetiveService->findByFaculty2($id);
+
             $data['measuresAll']=$measuresAll;
             $data['measures']=$measures;
             $data['educationalObjetivesAll']=$educationalObjetivesAll;
@@ -540,6 +544,6 @@ class FacultyController extends BaseController
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
 
-        return $this->index();
+        return $this->getPeriods();
     }
 }

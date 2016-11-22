@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 //use Intranet\Http\Controllers\Controller;
 use Mail;
+use DB;
+use DateTime;
 use Intranet\Models\Deliverable;
 use Intranet\Models\Project;
 use Intranet\Models\Invdocument;
@@ -89,15 +91,20 @@ class DeliverableController extends BaseController
 
         $deliverable = $invDoc->deliverable;
         //dd($deliverable);
-        $responsibles = Investigatorxdeliverable::where('id_entregable',$idDeliv)->get();
+        $responsibles = $deliverable->investigators;
         try
         { 
             $nombreEntregable = $deliverable->nombre;
             $numVersion = $invDoc->version;
             $observacion = $invDoc->observacion;
+            /*$mail = 'cdongo@pucp.edu.pe';
+            Mail::send('emails.notifyObservation', compact('nombreEntregable', 'numVersion', 'observacion'), function($m) use($mail){
+                    $m->subject('Registro de observación');
+                    $m->to($mail);
+                });*/
             foreach ($responsibles as $key => $value) {
-                $inv = $value->investigator;
-                $mail = $inv->correo;
+                //$inv = $value->investigator;
+                $mail = $value->correo;
                 Mail::send('emails.notifyObservation', compact('nombreEntregable', 'numVersion', 'observacion'), function($m) use($mail){
                     $m->subject('Registro de observación');
                     $m->to($mail);

@@ -821,7 +821,7 @@ $api->version('v1', function ($api) {
 
 
                 $api->post('date/supervisor/employer', 'Students\PspStudentsInscriptionFiles@postAppointmentSuperEmployer');
-                $api->get('getInscriptions/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
+                $api->get('getInscriptions/{id}/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
                 $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
                 $api->get('studentsPSP/all','Students\PspStudentsInscriptionFiles@getAllPspStudents');
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
@@ -847,16 +847,31 @@ $api->version('v1', function ($api) {
 
 
 
+                $api->get('student/{id}/getDocumentsAll', "Students\PspStudentsInscriptionFiles@getPspDocumentsByStudent");
+                $api->get('getDocument/{id}/full', "Students\PspStudentsInscriptionFiles@getDocumentFullByStudent");
+
+                //iOS
                 $api->get('sup/getMetting','Ps\PsController@getAll');
                 $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');
                 $api->get('a/gm','Ps\PsController@getAllSutudentMetting');
+                
                 $api->post('al/setM/{id}/sendNr', 'Ps\PsController@nuevaReunionAL');
+
                 //$api->get('h', 'Ps\PsController@nuevaReunionP');
                 $api->get('al/getfh', 'Ps\PsController@getAllFreeHours');
                 $api->get('pr/getN', 'Ps\NotasDelnscriptionFile@getAll');
                 $api->get('sup/getficha', 'Ps\NotasDelnscriptionFile@enviarRecomendaciones');
                 $api->post('sup/detf/{id}', 'Ps\NotasDelnscriptionFile@modificarFi');
                 $api->get('al/getD', 'Ps\DocumentosController@getAll');
+                $api->get('sup/getStude','Ps\PsController@getAllStudentSuper');
+                $api->post('sup/newMet', 'Ps\PsController@nuevaReunionS');
+                $api->get('al/getIF', 'Ps\NotasDelnscriptionFile@getAllInscriById');
+                $api->get('getSS', 'Ps\DocumentosController@getAllStudentSuper');
+                $api->get('getDBI/{id}', 'Ps\DocumentosController@getDbyId');
+                $api->get('getINota/{id}', 'Ps\NotasDelnscriptionFile@getINota');
+                $api->get('autStud', 'Ps\Autenticar@authStudent');
+                $api->get('autSup', 'Ps\Autenticar@authSuper');
+                $api->get('autTea', 'Ps\Autenticar@authTeach');
             });
 
             //INVESTIGACION
@@ -898,13 +913,20 @@ $api->version('v1', function ($api) {
             $api->get('getAppointments', 'Tutoria\TopicController@getAppointments');
             $api->get('getCoordinatorStudent','Tutoria\TopicController@getCoordinatorStudent');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
+            $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
-            $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
+            $api->get('obtenerDatosCitaConfirmada/{id_usuario}', 'Tutoria\TutTutorController@obtenerDatosCitaConfirmada');
+            $api->get('obtenerInformacionNoCita/{id_usuario}', 'Tutoria\TutTutorController@obtenerInformacionNoCita');
+
+
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
             $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment'); 
+
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
+            $api->post('refuseStudentAppointment', 'Tutoria\TutTutorController@refuseAppointmentList');
+            $api->post('atenderCita', 'Tutoria\TutTutorController@atenderCita');
             $api->post('filterStudentAppointment', 'Tutoria\TutStudentController@filterStudentAppointment');
 
 

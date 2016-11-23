@@ -3,7 +3,7 @@
 
 <div class="page-title">
 	<div class="title_left">
-		<h3>Reporte de Alumnos por criterios de psp por nota </h3>
+		<h3>Reporte de Alumnos por Criterios de PSP</h3>
 	</div>
 </div>
 
@@ -19,7 +19,7 @@
 
                 <div class="form-group">
                         {{Form::label('Curso de PSP*',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
                             <select name="Proceso_de_Psp" id="Proceso_de_Psp" class="form-control" required="required">
                             @if($pspproc!=null)
                                 @foreach( $pspproc as $psp)
@@ -30,9 +30,14 @@
                             @endif
                         </select>                             
                     </div>
-                    {{Form::submit('Generar Reporte', ['class'=>'btn btn-success pull-right'])}}
-                </div>
 
+                    <a href="{{route('reportC.genPDF')}}">
+                     {{Form::button('<i class="fa fa-pdf"></i> Exportar a PDF',['class'=>'btn btn-success pull-right'])}}
+                    </a>
+
+                     {{Form::submit('Generar Reporte', ['class'=>'btn btn-success pull-right'])}}
+                </div>
+ 
                 {{Form::close()}}
 
             </div>

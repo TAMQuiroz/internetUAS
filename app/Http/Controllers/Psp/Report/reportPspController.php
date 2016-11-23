@@ -15,6 +15,7 @@ use Intranet\Models\Student;
 use Intranet\Models\PspStudent;
 use Intranet\Models\User;
 use Auth;
+use PDF;
 
 class reportPspController extends Controller
 {
@@ -109,6 +110,11 @@ class reportPspController extends Controller
         ];
         $data['reporte'] = $rep;
         return view('psp.report.reportC',$data);
+    }
+    public function genPDF()
+    {
+        $pdf = PDF::loadView('psp.report.reportC');
+        return $pdf->download('pruebitas.pdf');
     }
 
     /**

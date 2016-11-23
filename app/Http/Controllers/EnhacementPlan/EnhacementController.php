@@ -304,4 +304,13 @@ class EnhacementController extends BaseController {
         }
         return view('enhacementPlan.index', $data);
     }
+
+    public function report() {
+        try {
+            $data['improvementPlans'] = $this->improvementPlanService->findByFaculty();
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        return view('enhacementPlan.report', $data);
+    }
 }

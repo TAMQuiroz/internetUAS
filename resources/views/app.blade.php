@@ -277,6 +277,8 @@
 
                     
                     <li><a href="{{ route('pending.index')}}">De evaluación pendiente</a></li>
+
+                    <li><a href="{{ route('report.enhacementPlan')}}">De plan de mejora</a></li>
                     
 
                     @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 4))

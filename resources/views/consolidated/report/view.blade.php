@@ -49,7 +49,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="table-responsive">
                                 <table class="table table-bordered">
-                                    @if( $tipoFiltro == 5) <!-- caso mas general-->
+                                   
                                         <thead>
                                             <tr class="success">
                                                 <th class="text-center col-md-2">Resultado</th>
@@ -100,7 +100,7 @@
                                                     @endforeach                                                    
                                             @endforeach  
                                         </tbody>
-                                    @endif
+                                    
                                 </table>
                             </div>
                         </div>

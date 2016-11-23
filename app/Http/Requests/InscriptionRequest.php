@@ -29,7 +29,7 @@ class InscriptionRequest extends Request
             'cond_seguridad_area'       =>'regex:/^[\pL\s\-]+$/u|required|max:200',
             'correo_jefe_directo'       =>'required|email',
             //'debe_modificarse'          =>'required|digits:1', 
-            'direccion_empresa'         =>'regex:/^[\pL\s\-]+$/u|required|max:500', 
+            'direccion_empresa'         =>'required|max:500', 
             'distrito_empresa'          =>'regex:/^[\pL\s\-]+$/u|required|max:200', 
             'equi_del_practicante'      =>'regex:/^[\pL\s\-]+$/u|required|max:200',
             'equipamiento_area'         =>'regex:/^[\pL\s\-]+$/u|required|max:200', 

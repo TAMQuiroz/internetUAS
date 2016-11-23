@@ -24,29 +24,167 @@ use Illuminate\Support\Facades\Session;//<---------------------------------neces
 
 class EvaluationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function students_index(Request $request){
+        $mayorId    = Session::get('faculty-code');
+
+        $filters    = [
+            "code"              => $request->input('code'),
+            "name"              => $request->input('name'),
+            "lastName"          => $request->input('lastName'),
+            "secondLastName"    => $request->input('secondLastName'),
+        ];
+        
+        $students   = Tutstudent::getFilteredStudents($filters, null, $mayorId);
+
+        $data       = [
+            'students'  =>  $students,            
+        ];
+
+        return view('evaluations.students.index', $data);
+    }
+
+    public function student_show ($id){
+        $specialty = Session::get('faculty-code');
+        $student = Tutstudent::find($id);
+        $competenceResults = DB::table('competences');
+        //Obtengo todas las evaluaciones corregidas para un alumno
+        $tutstudentxevaluations = Tutstudentxevaluation::where('corregida','<>',null)
+                                    ->where('id_tutstudent',$id)->orderBy('inicio', 'desc')->take(6)->get();
+        
+        $tutstudentxevaluations = $tutstudentxevaluations->sortBy('inicio');
+        
+        if( !$tutstudentxevaluations->isEmpty() ){
+            $tutstudentxevaluationsAux = Tutstudentxevaluation::where('corregida','<>',null)
+                                        ->where('id_tutstudent',$id)->orderBy('inicio', 'desc')
+                                        ->leftJoin('competencextutstudentxevaluations', 'tutstudentxevaluations.id', '=', 'id_tutev');
+                                        //->get();        
+            $id_tutstudentxevaluations = array();        
+            $id_competences = array();                
+            $auxCompetences = DB::table('competences')
+                                ->leftJoin('competencextutstudentxevaluations', 'competencextutstudentxevaluations.id_competence', '=', 'competences.id')
+                                ->leftJoin( 'tutstudentxevaluations', 'tutstudentxevaluations.id', '=', 'competencextutstudentxevaluations.id_tutev')
+                                ->where('corregida','<>',null)           
+                                ->where('id_tutstudent',$id)->orderBy('inicio', 'desc')                            
+                                ->groupBy('id_competence')->get();
+            
+            foreach ($auxCompetences as $auxCompetence) {
+                array_push($id_competences, $auxCompetence->id_competence);
+            }
+
+            
+            foreach ($tutstudentxevaluations as $tutstudentxevaluation) {
+                array_push($id_tutstudentxevaluations, $tutstudentxevaluation->id);
+            }
+
+            //the beast
+            $competenceResults = DB::table('competences')
+                ->select('nombre','Aux.*')
+                ->join(DB::raw('(SELECT C.id_competence,
+                    D.puntaje AS puntajeEva1, D.puntaje_maximo AS puntajeMaxEva1,
+                    E.puntaje AS puntajeEva2, E.puntaje_maximo AS puntajeMaxEva2,
+                    F.puntaje as puntajeEva3, F.puntaje_maximo AS puntajeMaxEva3,
+                    G.puntaje as puntajeEva4, G.puntaje_maximo AS puntajeMaxEva4,
+                    H.puntaje as puntajeEva5, H.puntaje_maximo AS puntajeMaxEva5,
+                    I.puntaje as puntajeEva6, I.puntaje_maximo AS puntajeMaxEva6
+                    FROM (
+
+                    SELECT DISTINCT A.id_competence
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    )C
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[0]->id_evaluation .'
+                    )D ON C.id_competence = D.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[1]->id_evaluation .'
+                    )E ON C.id_competence = E.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[2]->id_evaluation .'
+                    )F ON C.id_competence = F.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[3]->id_evaluation .'
+                    )G ON C.id_competence = G.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[4]->id_evaluation .'
+                    )H ON C.id_competence = H.id_competence
+                    LEFT JOIN (
+
+                    SELECT id_evaluation, id_competence, puntaje, puntaje_maximo
+                    FROM  `competencextutstudentxevaluations` A
+                    LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
+                    WHERE id_tutstudent =' . $id .'
+                    AND id_evaluation =' . $tutstudentxevaluations[5]->id_evaluation .' 
+                    )I ON C.id_competence = I.id_competence) Aux'), function($join)
+                {
+                    $join->on('competences.id', '=', 'Aux.id_competence');
+                })->get();  
+        } else{
+            $competenceResults = array();            
+        }         
+
+        //end the beast            
+        $data       = [
+            'student'                => $student, 
+            'competenceResults'      => $competenceResults, 
+            'tutstudentxevaluations' => $tutstudentxevaluations,            
+        ];
+
+        return view('evaluations.students.show', $data);
+    }
+
     public function index(Request $request)
     {
         $filters = $request->all();
         $specialty = Session::get('faculty-code');
-        $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
+        // $evaluations = Evaluation::where('id_especialidad',$specialty)->get();
+        $evals = Evaluation::getEvaluationsFiltered($filters, $specialty);
         //cambiar de estado a las expiradas
         $date = date("Y-m-d", time());  
-        
-        foreach ($evaluations as $evaluation) {            
+        $arr_avance1 = array();
+        $arr_avance2 = array();
+        foreach ($evals as $evaluation) { 
+
             if(($evaluation->fecha_fin <  $date) && ($evaluation->estado!=3) ){                
                 $evaluation->estado=3;
                 $evaluation->save();
             }
+
+            //ver el avance de cada una
+            array_push($arr_avance1,count(Tutstudentxevaluation::where('inicio','<>',null)->where('id_evaluation',$evaluation->id)->get()) );
+            array_push($arr_avance2,count(Tutstudentxevaluation::where('id_evaluation',$evaluation->id)->get()) );
         }
 
-        $evals = Evaluation::getEvaluationsFiltered($filters, $specialty);
+        
         $data = [
         'evaluations'    =>  $evals->appends($filters),
+        'arr_avance1'    =>  $arr_avance1,
+        'arr_avance2'    =>  $arr_avance2,
         ];
         return view('evaluations.evaluation.index', $data);
     }
@@ -109,13 +247,20 @@ public function indexevalcoord(Request $request,$id)
     $evaluation = Evaluation::find($id);
     $tutstudentxevaluations = Tutstudentxevaluation::where('inicio','<>',null)->where('id_evaluation',$id)->get();
     $evs = Evquestionxstudentxdocente::where('id_evaluation',$id)->get();
+    
     $completo = true;
-    foreach ($evs as $ev) {
-        if(is_null($ev->puntaje) ){
-            $completo = false;
-            break;
+    if(count ($evs) > 0){
+        foreach ($evs as $ev) {
+            if(is_null($ev->puntaje) ){
+                $completo = false;
+                break;
+            }
         }
     }
+    else{
+        $completo=false;
+    }
+    
 
     $data = [
     'evaluation'               =>  $evaluation, 

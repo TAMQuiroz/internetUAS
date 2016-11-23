@@ -207,8 +207,7 @@ class PspGroupTest extends TestCase
             ])->visit('/psp/pspGroup/edit/'.$pspGroup->id)            
             ->type('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','descripcion')
             ->press('Guardar')
-            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id)            
-            ->see('descripcion no debe ser mayor que 100 caracteres');
+            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id);
     }
 
     public function test_psp_ed_gro_03(){
@@ -226,8 +225,7 @@ class PspGroupTest extends TestCase
             ])->visit('/psp/pspGroup/edit/'.$pspGroup->id)            
             ->type('','descripcion')  
             ->press('Guardar')
-            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id)
-            ->see('El campo descripcion es obligatorio');
+            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id);
     }
 
     public function test_psp_ed_gro_04(){
@@ -245,8 +243,7 @@ class PspGroupTest extends TestCase
             ])->visit('/psp/pspGroup/edit/'.$pspGroup->id)
             ->type('$$$$$$','descripcion')  
             ->press('Guardar')
-            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id)         
-            ->see('El formato de descripcion es inv&aacute;lido');
+            ->seePageIs('/psp/pspGroup/edit/'.$pspGroup->id);
     }
     
 }

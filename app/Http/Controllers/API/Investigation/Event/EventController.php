@@ -22,7 +22,7 @@ class EventController extends BaseController
 
     public function getById($id)
     {
-        $event = Event::find($id)->with('group')->get();
+        $event = Event::where('id',$id)->with('group')->get();
         return $this->response->array($event->toArray());
         //return $event;
     }
@@ -54,8 +54,10 @@ class EventController extends BaseController
         $evento->save();
 
         //Retornar mensaje
-        $mensaje = 'Se modifico correctamente';
+        //$mensaje = 'Se modifico correctamente';
 
-        return $mensaje;
+        $mensaje = ['mensaje' => 'Se modifico correctamente'];
+        return response()->json($mensaje);
+        //return $mensaje;
     }
 }

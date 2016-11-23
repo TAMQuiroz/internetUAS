@@ -98,29 +98,29 @@
         @if($studentsResults != null)
         @foreach($studentsResults as $stdRslt)
 
-            @foreach($stdRslt->aspects as $aspt)
-                @if($aspt->Estado == 1)
-                    @foreach($aspt->criterion as $crt)
-                        @if($crt->Estado == 1)
-             <tr class="even pointer table-mxc" name="{{$stdRslt->IdResultadoEstudiantil}}" hidden="true"> 
-                <td value="{{ $aspt->IdAspecto }}" style="vertical-align: middle">{{ $aspt->Nombre }} </td> 
-                <td value="{{ $crt->IdCriterio }}" style="vertical-align: middle">{{ $crt->Nombre }} </td> 
-                @if($sources!=null)
-                @foreach($sources as $src) 
-                    <?php $temp = ''; ?>
-                    @if($msrxcrt!=null)
-                    @foreach($msrxcrt as $mxc) 
-                        @if($mxc->IdFuenteMedicion ==  $src->IdFuenteMedicion AND $mxc->IdCriterio ==  $crt->IdCriterio)
-                            <?php $temp = "checked"; ?>    
-                        @endif
-                    @endforeach
-                    @endif  
-                    <td value="{{ $src->IdFuenteMedicion }}" class="{{$src->IdFuenteMedicion}}" style="vertical-align: middle">
-                        <input value="{{$crt->IdCriterio}}-{{$src->IdFuenteMedicion}}" type="checkbox" class="checkFlat" id="stRstCheck" name="stRstCheck[]"  {{ $temp }}>
-                    </td>   
-                @endforeach
-                @endif  
-            </tr>
+            @foreach($stdRslt->relatedAspects as $aspt)
+                @if($aspt->Estado == 1 || $aspt->Estado == 2)
+                    @foreach($aspt->relatedCriterion as $crt)
+                        @if($crt->Estado == 1 || $crt->Estado == 2)
+                         <tr class="even pointer table-mxc" name="{{$stdRslt->IdResultadoEstudiantil}}" hidden="true"> 
+                            <td value="{{ $aspt->IdAspecto }}" style="vertical-align: middle">{{ $aspt->Nombre }} </td> 
+                            <td value="{{ $crt->IdCriterio }}" style="vertical-align: middle">{{ $crt->Nombre }} </td> 
+                            @if($sources!=null)
+                            @foreach($sources as $src) 
+                                <?php $temp = ''; ?>
+                                @if($msrxcrt!=null)
+                                @foreach($msrxcrt as $mxc) 
+                                    @if($mxc->IdFuenteMedicion ==  $src->IdFuenteMedicion AND $mxc->IdCriterio ==  $crt->IdCriterio)
+                                        <?php $temp = "checked"; ?>    
+                                    @endif
+                                @endforeach
+                                @endif  
+                                <td value="{{ $src->IdFuenteMedicion }}" class="{{$src->IdFuenteMedicion}}" style="vertical-align: middle">
+                                    <input value="{{$crt->IdCriterio}}-{{$src->IdFuenteMedicion}}" type="checkbox" class="checkFlat" id="stRstCheck" name="stRstCheck[]"  {{ $temp }}>
+                                </td>   
+                            @endforeach
+                            @endif  
+                        </tr>
                         @endif
                     @endforeach
                 @endif

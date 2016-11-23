@@ -11,7 +11,7 @@ class FacultyxCycle extends Model
     use SoftDeletes;
     use LastUpdatedTrait;
 
-    protected $table = 'cicloxespecialidad';
+    protected $table = 'CicloxEspecialidad';
     protected $primaryKey = "IdCicloAcademico";
 
 }

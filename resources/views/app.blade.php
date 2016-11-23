@@ -275,13 +275,9 @@
                     <li><a href="{{ route('index.evaluation') }}">De evaluación</a></li>
                     @endif
 
-                    @if(in_array(56,Session::get('actions')))
-                    <li><a href="{{ route('index.results') }}">De resultados de medición</a></li>
-                    @endif
-
-                    @if(Auth::user() && (Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 4))
+                    
                     <li><a href="{{ route('pending.index')}}">De evaluación pendiente</a></li>
-                    @endif
+                    
 
                     @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 4))
                     <li><a href="{{ route('evidences.index')}}">Evidencias por especialidad</a></li>
@@ -327,7 +323,7 @@
                         <li><a href="{{route('reportC.create')}}">Reporte de Criterios</a></li>
                         <li><a href="{{route('attendanceRate.create')}}">Reporte de Asistencias</a></li>
                         <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
-                        {{--<li><a href=""> Ver alumnos</a></li>--}}
+                        <li><a href="{{route('TeacherFinalScore.index')}}"> Visualizar Notas</a></li>
                         @endif
                         @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Disponibilidades</a></li>
@@ -431,7 +427,7 @@
                     <!-- alumno  -->
                     @if(Auth::user()->IdPerfil == 0)
                     <li><a href="{{route('mitutor.index')}}"> Mi tutor</a></li>
-                    <li><a href="{{route('cita_alumno.index')}}"> Mis citas</a></li>
+                    <li><a href="{{route('miscitas.index')}}"> Mis citas</a></li>
                     @endif
                   </ul>
                 </div>
@@ -457,6 +453,7 @@
                       <li><a href="{{route('pregunta.index')}}"> Preguntas</a></li>
                       <li><a href="{{route('evaluador.index')}}"> Evaluadores</a></li>
                       <li><a href="{{route('evaluacion.index')}}"> Evaluaciones</a></li>
+                      <li><a href="{{route('evstudent.index')}}"> Alumnos</a></li>
                       @endif
                     @endif
 

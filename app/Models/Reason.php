@@ -12,4 +12,7 @@ class Reason extends Model{
     protected $fillable = ['tipo', 
                             'nombre'];
     
+    public function tutmeetings(){
+        return $this->hasMany('Intranet\Models\TutMeeting','id_reason');//bien
+    }
 }

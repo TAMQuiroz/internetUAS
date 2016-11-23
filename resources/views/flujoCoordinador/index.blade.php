@@ -21,7 +21,7 @@
         <div class="form-group">
           <div class="col-md-12 col-sm-12"></div>
           <p>
-            Durante el transcurso de este flujo se le guiará por 3 funcionalidades importantes para la acreditación de una especialidad. Las funcionalidades mencionadas son:
+            Durante el transcurso de este primer flujo se le guiará por 5 funcionalidades importantes para la acreditación de una especialidad. Las funcionalidades mencionadas son:
           </p>
           <p>- Creación de objetivos educacionales</p>
           <p>- Creación de resultados estudiantiles</p>

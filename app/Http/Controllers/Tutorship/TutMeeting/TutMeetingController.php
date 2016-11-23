@@ -10,6 +10,7 @@ use Illuminate\Filesystem\Filesystem;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\DateTutorRequest;
+use Intranet\Http\Requests\AttentionRequest;
 use Intranet\Models\Files\ICS;
 use Intranet\Models\Parameter;
 use Intranet\Models\Tutorship;
@@ -590,6 +591,53 @@ class TutMeetingController extends Controller
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
 
+    }
+
+    public function createAttention()
+    {
+        $topics     = Topic::get();
+        $data = [
+            'topics' => $topics,
+        ];
+        return view('tutorship.tutormydates.attend-date', $data);
+    }
+
+    public function storeAttention(AttentionRequest $request)
+    {
+        try {
+            $user = Session::get('user');
+
+            $tutor = Teacher::where('IdDocente', $user->IdDocente)->first();
+
+            $startHour = $request['startHour'];
+            $topicId = $request['tema'];
+
+            $nowFormat = date('Y-m-d H:i:s');
+            $nowSec = strtotime($nowFormat);
+            $startSec = strtotime($startHour);
+            $seconds = $nowSec - $startSec;
+            $startFormat = date('Y-m-d H:i:s', $startSec);
+           
+            $duration = number_format($seconds/60, 0);
+
+            $newMeeting = TutMeeting::create([
+                    "inicio"        => $startFormat,
+                    "fin"           => $nowFormat,
+                    "duracion"      => $duration,
+                    "no_programada" => 1,
+                    "observacion"   => $request['observations'],
+                    "lugar"         => $tutor->oficina,
+                    "creador"       => 0,
+                    "estado"        => 6,
+                    "id_topic"      => $request['tema'],
+                    "id_tutstudent" => $request['alumno'],
+                    "id_docente"    => $tutor->IdDocente,
+                ]);
+
+            return redirect()->route('cita_alumno.index')->with('success', 'La cita se ha registrado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
     }
 
     public function acceptDate($id)

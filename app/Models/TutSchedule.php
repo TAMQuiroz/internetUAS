@@ -19,6 +19,16 @@ class TutSchedule extends Model
     public function teacher(){
         return $this->belongsTo('Intranet\Models\Teacher', 'IdDocente');
     }
+
+    static public function getDaysStudent($idDocente)
+    {
+        $query  = TutSchedule::
+                        select(array('dia'))
+                        ->where('id_docente', $idDocente)
+                        ->groupBy('dia')
+                        ->get();
+        return $query;
+    }
     
     static public function getDays($idDocente)
     {
@@ -112,4 +122,25 @@ class TutSchedule extends Model
         return $html;
     }
 
+    static public function getMatrixSchedule($idDocente)
+    {
+        $scheduleQuery  = TutSchedule::
+                        where('id_docente', $idDocente)
+                        ->get();
+        
+        $schedule = array();
+
+        for ($i=0; $i < 22; $i++) { 
+            array_push($schedule, array(0,0,0,0,0,0,0));
+        }
+
+        foreach ($scheduleQuery as $sched) {
+            $h  = intval(date("H", strtotime($sched->hora_inicio)));
+            $d  = $sched->dia;
+            $schedule[$h][$d] = 1;
+        }
+
+        return $schedule;
+
+    }
 }

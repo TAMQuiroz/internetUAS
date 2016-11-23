@@ -8,7 +8,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-			<div class="title_left">
+			<div class="">
 				<h3>Ver pregunta</h3>
 			</div>	        
 		</div>
@@ -41,7 +41,7 @@
 					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
 							<input name="tiempo" readonly type="text" class="form-control" aria-describedby="basic-addon1" value="{{$question->tiempo}}">
-							<span class="input-group-addon" id="basic-addon1">minutos</span>
+							<span class="input-group-addon" id="basic-addon1">minuto(s)</span>
 						</div>
 					</div>
 
@@ -49,7 +49,7 @@
 					<div class="col-md-2 col-sm-3 col-xs-6">
 						<div class="input-group">							
 							<input name="puntaje" readonly type="text" class="form-control" aria-describedby="basic-addon1" value="{{$question->puntaje}}">
-							<span class="input-group-addon" id="basic-addon1">puntos</span>
+							<span class="input-group-addon" id="basic-addon1">punto(s)</span>
 						</div>						
 					</div>
 

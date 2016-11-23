@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-	        <div class="title_left">
+	        <div class="">
 	            <h3>Cargar alumnos</h3>
 	        </div>
 	    </div>
@@ -21,17 +21,17 @@
 
 				{{Form::open(['route' => 'alumno.storeAll', 'class'=>'form-horizontal', 'id'=>'formSuggestion', 'files' => true])}}
 				<div class="form-group">
-					{{Form::label('Especialidad *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Especialidad *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-4 col-sm-6 col-xs-12">
 						{{Form::text('codigo',Session::get('faculty-name'),['class'=>'form-control', 'readonly', 'maxlength' => 50])}}
 					</div>
 				</div>
 
 				<div class="form-group">
-					{{Form::label('Archivo Excel *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-					<div class="col-md-4">
+					{{Form::label('Archivo Excel *',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-4 col-sm-6 col-xs-12">
 						{{Form::file('csv_file',null,['class'=>'form-control', 'required', 'maxlength' => 50])}}
-						<a style="text-decoration: underline" href="{{route('alumno.example')}}">Click para descargar Archivo Ejemplo</a>
+						<a style="text-decoration: underline" href="{{route('alumno.example')}}">Descargar Plantilla</a>
 					</div>
 				</div>
 

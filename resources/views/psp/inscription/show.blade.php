@@ -43,7 +43,7 @@
                 <div class="form-group">
                     {{Form::label('Correo jefe directo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
-                        {{Form::text('correo_jefe_directo',$inscription->correo_jefe_directo,['class'=>'form-control', 'readonly'])}}
+                        {{Form::text('correo_jefe_directo',$inscription->Correo_jefe_directo,['class'=>'form-control', 'readonly'])}}
                     </div>
                 </div>
 
@@ -133,13 +133,6 @@
                     </div>
                 </div>
 
-                 <div class="form-group">
-                    {{Form::label('Recomendaciones *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-4">
-                        {{Form::text('recomendaciones',$inscription->recomendaciones,['class'=>'form-control', 'readonly'])}}
-                    </div>
-                </div>
-
                 <div class="form-group">
                     {{Form::label('Teléfono jefe directo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
@@ -154,7 +147,12 @@
                     </div>
                 </div>
                 
-
+                 <div class="form-group">
+                    <label for="tcomentariol" class="control-label col-md-4 col-sm-3 col-xs-12">Recomendaciones</label>
+                    <div class="col-md-4">
+                    <textarea id=recomendaciones type="text" class="form-control" disabled name="" value=""><?php echo htmlspecialchars($inscription->recomendaciones); ?></textarea>
+                    </div>
+                </div>
                     
 
                     <div class="row">

@@ -61,11 +61,15 @@ class TutStudentController extends BaseController
           $fechaCitaEntero =  strtotime($fechaCita);
           $fechaActualEntero =  strtotime($fechaActual);
 
-           if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0){
+           if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero <= $fechaCitaEntero)) {
                 $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
            }
+           else if  (4 == $appointInfo['estado'] and  $appointInfo['creador'] == 0 and ($fechaActualEntero > $fechaCitaEntero)  ){
+                $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+           }
+
            else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
-                $appointmentInfo[$i]['nombreEstado']  = "Cancelada ";
+                $appointmentInfo[$i]['nombreEstado']  = "No asistida";
            }
            else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
                 $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
@@ -73,10 +77,10 @@ class TutStudentController extends BaseController
            else if  (3 == $appointInfo['estado']){
                 $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
            }
-           else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero >= $fechaCitaEntero) ){
+           else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero > $fechaCitaEntero) ){
               $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
            }
-            else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero < $fechaCitaEntero) ) {
+            else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero <= $fechaCitaEntero) ) {
               $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
             }
            else if  (5 == $appointInfo['estado'] ){

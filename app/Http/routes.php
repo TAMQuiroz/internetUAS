@@ -916,11 +916,16 @@ $api->version('v1', function ($api) {
             $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
+            $api->get('obtenerDatosCitaConfirmada/{id_usuario}', 'Tutoria\TutTutorController@obtenerDatosCitaConfirmada');
+
+
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
             $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment'); 
+
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
             $api->post('refuseStudentAppointment', 'Tutoria\TutTutorController@refuseAppointmentList');
+            $api->post('atenderCita', 'Tutoria\TutTutorController@atenderCita');
             $api->post('filterStudentAppointment', 'Tutoria\TutStudentController@filterStudentAppointment');
 
 

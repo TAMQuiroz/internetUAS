@@ -45,18 +45,25 @@ class TutTutorController extends BaseController
 
 
 
-          if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1){
-           		$appointmentInfo[$i]['nombreEstado']  = "Pendiente";
+          
+          if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero <= $fechaCitaEntero)) {
+                $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
           }
-          else if  (2 == $appointInfo['estado'] ){
-           		$appointmentInfo[$i]['nombreEstado']  = "Confirmada";
+          else if  (4 == $appointInfo['estado'] and  $appointInfo['creador'] == 1 and ($fechaActualEntero > $fechaCitaEntero)  ){
+                $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+          }
+          else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
+                $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+          }
+          else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
+                $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
           }
           else if  (3 == $appointInfo['estado']){
               $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
           }
 
           else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero < $fechaCitaEntero) ){
-              $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+              $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
           }
           else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero >= $fechaCitaEntero) ) {
               $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
@@ -120,6 +127,21 @@ class TutTutorController extends BaseController
   
     }
 
+    public function obtenerDatosCitaConfirmada($id)
+    {
+      
+        // ME LLEGO AL PINCHO EL INGLES XDXDXDXDXDXDXDX
+        // ACA DEBERIAMOS OBTENER LOS DATOS DEL ALUMNO DEL TUTOR, ADEMAS DE OTRAS COSAS QUE SIRVAN DE INFORMACION PARA LAS CITAS  COMO CALENDARIO(AUN NO LO HE HECHO XD)
+
+         $tutMeetingInfo = TutMeeting::where('id',$id)->get();
+         $tutStudentInfo = Tutstudent::where('id',$tutMeetingInfo[0]['id_tutstudent'])->get();
+         $tutMeetingInfo[0]->studentInfo= $tutStudentInfo;
+         return $this->response->array($tutMeetingInfo->toArray());
+
+  
+    }
+
+ 
     public function postAppointment(Request $request)
     {
       
@@ -215,6 +237,9 @@ class TutTutorController extends BaseController
         //Guardar
         $groupTut = TutMeeting::find($idUser['idUser']);
         $groupTut->estado = 2;
+        $groupTut->lugar = "Oficina del tutor";
+        $groupTut->adicional = "-";
+
         $groupTut->save();
 
         //Retornar mensaje
@@ -250,6 +275,22 @@ class TutTutorController extends BaseController
 
     }
 
+    public function atenderCita(Request $request)
+    {
+      
+        $idUser = $request->only('idUser');
+        $cita =  $request->only('fecha');
+
+        //Guardar
+        $groupTut = TutMeeting::find($idUser['idUser']);
+        $groupTut->estado = 6;
+        $groupTut->observacion = $cita['fecha'];
+        $groupTut->save();
+
+        //Retornar mensaje
+        $mensaje = 'Se modifico correctamente';
+
+    }
 
 
 

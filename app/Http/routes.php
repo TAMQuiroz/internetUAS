@@ -919,6 +919,7 @@ $api->version('v1', function ($api) {
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
             $api->get('obtenerDatosCitaConfirmada/{id_usuario}', 'Tutoria\TutTutorController@obtenerDatosCitaConfirmada');
+            $api->get('obtenerInformacionNoCita/{id_usuario}', 'Tutoria\TutTutorController@obtenerInformacionNoCita');
 
 
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
@@ -1223,6 +1224,7 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/citas-alumnos', ['as' => 'reporte.tutstudentDate', 'uses' => 'Tutorship\Report\ReportController@tutstudentDateReport']);
             Route::get('/citas-canceladas', ['as' => 'reporte.cancelledMeeting', 'uses' => 'Tutorship\Report\ReportController@cancelledMeetingReport']);
             Route::get('/topic', ['as' => 'reporte.topic', 'uses' => 'Tutorship\Report\ReportController@topicReport']);
+            Route::get('/tutor', ['as' => 'reporte.tutor', 'uses' => 'Tutorship\Report\ReportController@tutorReport']);
         });
 
         /***   PARA EL ALUMNO DE TUTORÍA   ***/
@@ -1230,6 +1232,9 @@ Route::group(['prefix' => 'uas'], function(){
         //Mitutor
         Route::group(['prefix' => 'mitutor'], function(){    
             Route::get('/', ['as' => 'mitutor.index', 'uses' => 'Tutorship\MyTutor\MyTutorController@index']); 
+        });
+        Route::group(['prefix' => 'citas'], function(){    
+            Route::get('/', ['as' => 'miscitas.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesStudent']);
         });
 
         /***   PARA EL TUTOR DE TUTORÍA   ***/
@@ -1251,6 +1256,7 @@ Route::group(['prefix' => 'uas'], function(){
         //Mis Citas
         Route::group(['prefix' => 'miscitas'], function(){    
             Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDates']);
+            Route::get('/tabla', ['as' => 'cita_alumno.index_table', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesTable']);
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
             Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);

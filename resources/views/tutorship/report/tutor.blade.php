@@ -19,18 +19,16 @@
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas</li>
                     </div>
-                </a>
-                <a href="{{route('reporte.tutor')}}">
-                    <div class="tab-page-wrapper">
-                        <li class="tab-page">Citas por tutor</li>
-                    </div>
-                </a>
+                </a>                
+                <div class="tab-page-wrapper active">
+                    <li class="tab-page">Citas por tutor</li>
+                </div>                
                 <a href="{{route('reporte.tutstudentDate')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por alumno</li>
                     </div>
                 </a>                
-                <div class="tab-page-wrapper active">
+                <div class="tab-page-wrapper">
                     <li class="tab-page">Citas por tema</li>
                 </div>                
                 <a href="{{route('reporte.cancelledMeeting')}}">
@@ -51,7 +49,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
 
-                                <form method="GET" action="{{route('reporte.topic')}}">                                    
+                                <form method="GET" action="{{route('reporte.tutor')}}">                                    
 
                                     <div class="form-group">
                                         {{Form::label('Desde: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
@@ -98,15 +96,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($topicTutMeetings as $key => $t)
+                        
                         <tr class="even pointer">
-                            <td hidden class="group-id">{{$t->id}}</td>
-                            <td class=""></span>{{$topics_name_list[$key] }}</td>                            
-                            <td class=" ">{{ $topics_amount_list[$key] }}</td>                                                                  
-                            <td class=" ">{{ round($topics_amount_list[$key]/$topicTotalAsistidas*100,2) }}</td>  
-                            <td class=" ">{{ round($topics_percentage_list[$key],2) }}</td> 
+                            <td hidden class="group-id"></td>
+                            <td class=""></span></td>                            
+                            <td class=" "></td>                                                                  
+                            <td class=" "></td>  
+                            <td class=" "></td> 
                         </tr>
-                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>

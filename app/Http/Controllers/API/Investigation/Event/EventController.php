@@ -54,8 +54,10 @@ class EventController extends BaseController
         $evento->save();
 
         //Retornar mensaje
-        $mensaje = 'Se modifico correctamente';
+        //$mensaje = 'Se modifico correctamente';
 
-        return $mensaje;
+        $mensaje = ['mensaje' => 'Se modifico correctamente'];
+        return response()->json($mensaje);
+        //return $mensaje;
     }
 }

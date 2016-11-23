@@ -53,8 +53,7 @@
                                 <td>{{$meeting->hora_inicio}} - {{$meeting->hora_fin}}</td>
                                 <td>{{$meeting->status->nombre}}</td>                    
                                 <td>
-                                    <a href="{{route('meeting.edit',$meeting->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>          
-                                    <a href= "{{route('meeting.mail', $meeting->Student->IdAlumno)}}" class="btn btn-primary btn-xs" title="Email"><i class="fa fa-envelope"></i></a>
+                                    <a href="{{route('meeting.edit',$meeting->id)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></a>  
                                 </td>                                                        
                             </tr>                            
 

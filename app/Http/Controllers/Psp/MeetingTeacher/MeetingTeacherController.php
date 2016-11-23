@@ -26,7 +26,8 @@ class MeetingTeacherController extends Controller
     public function index()
     {
         $MeetingTeacher = MeetingTeacher::get();
-        $students = PspStudent::where('idsupervisor',NULL)->get();
+        $students = PspStudent::where('idsupervisor',NULL)->paginate(10);
+       // $students = PspStudent::orderby('idalumno','asc')->paginate(10);
 
         $data = [
             'MeetingTeacher'    =>  $MeetingTeacher,

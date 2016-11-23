@@ -181,7 +181,9 @@ class TutMeetingController extends Controller
     public function indexMyDatesStudent(Request $request)
     {
         $mayorId    = Session::get('faculty-code');
-        $user       = Session::get('user');
+        $user       = Session::get('user');        
+        $student    = Tutstudent::where('id_usuario',$user->id_usuario)->first();        
+        $id_tutstudent = $student->id;
         $id_docente = Session::get('user')->IdDocente;
         $dateOriginalFormat = $request['beginDate'];            
         if ( $dateOriginalFormat )
@@ -194,16 +196,12 @@ class TutMeetingController extends Controller
         else
             $endDate = "";
         $filters    = [
-            "code"           => $request->input('code'),
-            "name"           => $request->input('name'),
-            "lastName"       => $request->input('lastName'),
-            "secondLastName" => $request->input('secondLastName'),
+            "id_tutstudent"  => $id_tutstudent,            
             "beginDate"      => $beginDate,
             "endDate"        => $endDate,
-            "state"          => $request->input('state'),
-            "id_docente"     => $id_docente,
+            "state"          => $request->input('state'),            
         ];
-        $tutMeetings = TutMeeting::getFilteredTutMeetings($filters);
+        $tutMeetings = TutMeeting::getFilteredTutMeetingsByStudent($filters);
         $fecha = array();
         $hora_inicio = array();        
         $hora = array();        

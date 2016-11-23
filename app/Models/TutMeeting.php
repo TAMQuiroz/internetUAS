@@ -102,6 +102,25 @@ class TutMeeting extends Model {
         return $queryTutMeeting->orderBy("inicio", 'asc')->get();
     }
 
+    static public function getFilteredTutMeetingsByStudent($filters) {
+        $query = Tutstudent::query();
+        $queryTutMeeting = TutMeeting::query();
+        $stateFalse = 100;
+        
+        $queryTutMeeting->where('id_tutstudent', $filters["id_tutstudent"]);        
+
+        if (!empty($queryTutMeeting)) {
+            if ($filters["state"] != "") {
+                $queryTutMeeting = $queryTutMeeting->where("estado", $filters["state"]);
+            }            
+            if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
+                $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
+            }
+        }         
+        return $queryTutMeeting->orderBy("inicio", 'asc')->get();
+    }
+
+
     static public function getTutMeetingsByDates($filters) {
         $query = Tutstudent::query();
         $queryTutMeeting = TutMeeting::query();

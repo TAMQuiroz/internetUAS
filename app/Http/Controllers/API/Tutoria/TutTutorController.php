@@ -94,7 +94,6 @@ class TutTutorController extends BaseController
     {
       
 
-        // ACA DEBERIAMOS OBTENER LOS DATOS DEL ALUMNO DEL TUTOR, ADEMAS DE OTRAS COSAS QUE SIRVAN DE INFORMACION PARA LAS CITAS  COMO CALENDARIO(AUN NO LO HE HECHO XD)
 
          $docenteInfo = Teacher::where('idUsuario',$id)->get();
          $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
@@ -130,13 +129,37 @@ class TutTutorController extends BaseController
     public function obtenerDatosCitaConfirmada($id)
     {
       
-        // ME LLEGO AL PINCHO EL INGLES XDXDXDXDXDXDXDX
-        // ACA DEBERIAMOS OBTENER LOS DATOS DEL ALUMNO DEL TUTOR, ADEMAS DE OTRAS COSAS QUE SIRVAN DE INFORMACION PARA LAS CITAS  COMO CALENDARIO(AUN NO LO HE HECHO XD)
 
          $tutMeetingInfo = TutMeeting::where('id',$id)->get();
          $tutStudentInfo = Tutstudent::where('id',$tutMeetingInfo[0]['id_tutstudent'])->get();
          $tutMeetingInfo[0]->studentInfo= $tutStudentInfo;
          return $this->response->array($tutMeetingInfo->toArray());
+
+  
+    }
+
+
+    public function obtenerInformacionNoCita($id)
+    {
+      
+
+         $parametersInfo = Parameter::where('id_especialidad',1)->get();
+
+         $tutorInfo = Teacher::where('IdUsuario', $id)->get();  // obtenemos la informacion para conseguir el IDDocente
+         $idDocente = $tutorInfo[0]['IdDocente'];
+
+         $scheduleInfo = TutSchedule::where('id_docente',$idDocente)->get();
+         $scheduleMeeting = TutMeeting::where('id_docente',$idDocente)->get();
+
+         $LovingTheAlien;
+         $tutStudentInfo = Tutstudent::get();       
+         $LovingTheAlien[0]['duracionCita'] = $parametersInfo[0]['duracionCita'];  
+         $LovingTheAlien[0]['studentInfo'] = $tutStudentInfo;
+         $LovingTheAlien[0]['tutorInfo'] = $tutorInfo;
+         $LovingTheAlien[0]['scheduleInfo'] = $scheduleInfo;
+         $LovingTheAlien[0]['scheduleMeeting']= $scheduleMeeting;
+
+         return $this->response->array($LovingTheAlien);
 
   
     }

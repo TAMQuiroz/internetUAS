@@ -323,7 +323,7 @@
                         <li><a href="{{route('reportC.create')}}">Reporte de Criterios</a></li>
                         <li><a href="{{route('attendanceRate.create')}}">Reporte de Asistencias</a></li>
                         <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
-                        {{--<li><a href=""> Ver alumnos</a></li>--}}
+                        <li><a href="{{route('TeacherFinalScore.index')}}"> Visualizar Notas</a></li>
                         @endif
                         @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Disponibilidades</a></li>

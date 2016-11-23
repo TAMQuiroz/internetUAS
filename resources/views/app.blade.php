@@ -427,7 +427,7 @@
                     <!-- alumno  -->
                     @if(Auth::user()->IdPerfil == 0)
                     <li><a href="{{route('mitutor.index')}}"> Mi tutor</a></li>
-                    <li><a href="{{route('cita_alumno.index')}}"> Mis citas</a></li>
+                    <li><a href="{{route('miscitas.index')}}"> Mis citas</a></li>
                     @endif
                   </ul>
                 </div>

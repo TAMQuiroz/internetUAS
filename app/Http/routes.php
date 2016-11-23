@@ -457,6 +457,19 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/pending/', ['as' => 'pending.index', 'uses' => 'Consolidated\PendingController@index']);
 
         Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
+
+        Route::get('/report', ['as' => 'report.index', 'uses' => 'ReportController@index']);
+        Route::post('/report/view', ['as' => 'report.view', 'uses' => 'ReportController@view']);
+
+
+        //AJAX
+        Route::get ('/consultarResultados', ['as' =>'consultarResultados.consolidated', 'uses' => 'ReportController@consultarResultados']);
+
+        Route::get ('/consultarAspectosyCursos', ['as' =>'consultarAspectos.consolidated', 'uses' => 'ReportController@consultarAspectos']);
+
+        Route::get ('/consultarCriterios', ['as' =>'consultarCriterios.consolidated', 'uses' => 'ReportController@consultarCriterios']);
+
+        Route::get ('/consultarCursos', ['as' =>'consultarCursos.consolidated', 'uses' => 'ReportController@consultarCursos']);
         /*
         Route::group(['middleware' => 'action_permission'], function() {
             Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
@@ -760,6 +773,9 @@ $api->version('v1', function ($api) {
                 $api->get('/{id}/teachers', 'FacultyController@getTeachers');
                 $api->get('/{f_id}/semester/{s_id}/courses', 'FacultyController@getEvaluatedCoursesBySemester');
                 $api->get('/teacher/{teacher_id}/courses','FacultyController@getTeacherCourses');
+                $api->get('/schedule/{schedule_id}/students','FacultyController@getStudentsbySchedule');
+                $api->get('/effort_table/cycle/{academic_cycle_id}/course/{course_id}/schedule/{schedule_id}/student/{student_id}','FacultyController@getEffortTable');
+                $api->get('/course/{c_id}/{s_id}/contributions', 'FacultyController@getCourseContribution');
             });
 
             $api->group(['namespace' => 'Period','prefix'=>'periods'],function($api){
@@ -822,8 +838,25 @@ $api->version('v1', function ($api) {
                 $api->get('meeting/student/{id}','Meeting\PspMeetingController@getMeetingByStudent');
                 $api->post('update/meeting', 'Meeting\PspMeetingController@update');
                 $api->post('meeting/supervisor/student/store', "Meeting\PspMeetingController@store");
+                $api->post('supervisor/freehour/store',"FreeHour\PspFreeHourController@store");
+                $api->get('supervisor/freehour',"FreeHour\PspFreeHourController@showFreeHourForStudent");
+                $api->post('meetings/student/store',"Meeting\PspMeetingController@storeByStudent");
+                $api->post('meetings/notification/student/{id}',"Meeting\PspMeetingController@mail");      
+                 $api->get('student',"Students\PspStudentsController@getStudent");
+                 $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");      
 
 
+
+                $api->get('sup/getMetting','Ps\PsController@getAll');
+                $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');
+                $api->get('a/gm','Ps\PsController@getAllSutudentMetting');
+                $api->post('al/setM/{id}/sendNr', 'Ps\PsController@nuevaReunionAL');
+                //$api->get('h', 'Ps\PsController@nuevaReunionP');
+                $api->get('al/getfh', 'Ps\PsController@getAllFreeHours');
+                $api->get('pr/getN', 'Ps\NotasDelnscriptionFile@getAll');
+                $api->get('sup/getficha', 'Ps\NotasDelnscriptionFile@enviarRecomendaciones');
+                $api->post('sup/detf/{id}', 'Ps\NotasDelnscriptionFile@modificarFi');
+                $api->get('al/getD', 'Ps\DocumentosController@getAll');
             });
 
             //INVESTIGACION
@@ -848,16 +881,22 @@ $api->version('v1', function ($api) {
                 $api->post('/{id}/deliverable', 'Deliverable\DeliverableController@edit');
                 $api->get('/{id}/deliverables', 'Deliverable\DeliverableController@getByProjectId');
 
+                $api->get('/{id}/versions', 'Deliverable\DeliverableController@getAllVersions');
+                $api->get('/{id}/responsibles', 'Deliverable\DeliverableController@getResponsibles');
+                $api->get('/{id}/observation', 'Deliverable\DeliverableController@getObservation');
+                $api->post('/{id}/observation', 'Deliverable\DeliverableController@registerObservation');
+
                 $api->get('/{id}/event', 'Event\EventController@getById');
                 $api->post('/{id}/event', 'Event\EventController@edit');
                 $api->get('/{id}/events', 'Event\EventController@getByGroupId');
 
-            });
+            }); 
 
             
             //TUTORIA
             $api->get('getTopics', 'Tutoria\TopicController@getAll');
             $api->get('getAppointments', 'Tutoria\TopicController@getAppointments');
+            $api->get('getCoordinatorStudent','Tutoria\TopicController@getCoordinatorStudent');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
@@ -1161,6 +1200,7 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/citas-alumnos', ['as' => 'reporte.tutstudentDate', 'uses' => 'Tutorship\Report\ReportController@tutstudentDateReport']);
             Route::get('/citas-canceladas', ['as' => 'reporte.cancelledMeeting', 'uses' => 'Tutorship\Report\ReportController@cancelledMeetingReport']);
             Route::get('/topic', ['as' => 'reporte.topic', 'uses' => 'Tutorship\Report\ReportController@topicReport']);
+            Route::get('/tutor', ['as' => 'reporte.tutor', 'uses' => 'Tutorship\Report\ReportController@tutorReport']);
         });
 
         /***   PARA EL ALUMNO DE TUTORÍA   ***/
@@ -1168,6 +1208,9 @@ Route::group(['prefix' => 'uas'], function(){
         //Mitutor
         Route::group(['prefix' => 'mitutor'], function(){    
             Route::get('/', ['as' => 'mitutor.index', 'uses' => 'Tutorship\MyTutor\MyTutorController@index']); 
+        });
+        Route::group(['prefix' => 'citas'], function(){    
+            Route::get('/', ['as' => 'miscitas.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesStudent']);
         });
 
         /***   PARA EL TUTOR DE TUTORÍA   ***/
@@ -1189,9 +1232,15 @@ Route::group(['prefix' => 'uas'], function(){
         //Mis Citas
         Route::group(['prefix' => 'miscitas'], function(){    
             Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDates']);
+            Route::get('/tabla', ['as' => 'cita_alumno.index_table', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesTable']);
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
             Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);
+
+            Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
+            Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);
+            Route::post('/delete/{id}', ['as' => 'mis_citas.delete', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDate']);
+
         });
     });
     //MODULO DE TUTORIA - Fin de rutas
@@ -1412,4 +1461,8 @@ Route::group(['prefix' => 'uas'], function(){
     });
 
 
+});
+
+Route::get('dormammu', function (){
+    return 'He venido a negociar';
 });

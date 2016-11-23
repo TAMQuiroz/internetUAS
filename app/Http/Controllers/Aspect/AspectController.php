@@ -2,6 +2,7 @@
 namespace Intranet\Http\Controllers\Aspect;
 
 use View;
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -27,7 +28,8 @@ class AspectController extends BaseController {
 	public function index() {
 		$data['title'] = 'Aspectos';
 		try {			
-			$studentResults= $this->studentsResultService->findByFaculty();
+			$id=Session::get('faculty-code');
+			$studentResults= $this->studentsResultService->findByFaculty2($id);
 			$data['studentsResults'] = $studentResults;
 			$data['aspects'] = $this->aspectService->findByRE($studentResults);
 		} catch(\Exception $e) {

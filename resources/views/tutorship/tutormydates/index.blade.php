@@ -6,89 +6,111 @@
     </div>    
 </div>
 <div class="row">
-    <div class="col-sm-12 col-xs-12">
+    <div class="col-md-3 col-sm-12 col-xs-12">
         <div class="row">
-            <div class="col-sm-4 col-xs-4">
-                <a href="#filter-tutorDates" class="btn btn-warning"><i class="fa fa-filter"></i> Filtrar</a>                
-            </div>            
-            
-            <div class="col-sm-4 col-xs-4 pull-right">
-                @if(Auth::user()->student)
-                <a href="{{ route('cita_alumno.create', Auth::user()->student->id) }}" class="btn btn-submit pull-right"><i class="fa fa-plus"></i>  Nueva cita</a>
-                @else
-                <a href="{{ route('mis_alumnos.index') }}" class="btn btn-submit pull-right"><i class="fa fa-plus"></i>  Nueva cita</a>
-                @endif
+            <div class="col-md-12 col-sm-6 col-xs-12">
+                <div class="input-group date tutorship-tutor-mydates .prev .next" style="margin-left: auto; margin-right: auto">
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-6 col-xs-12">
+                <div class="row" style="margin-top: 30px;">          
+                    <div class="col-sm-12 col-xs-12 text-center">
+                        <a href="{{ route('cita_alumno.index_table')}}" class="btn btn-default">
+                            <i class="fa fa-eye"></i>  Cambiar vista
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-xs-12">
+                        <ul class="dates-guide">
+                            <li><i class="fa fa-square" style="color: #ff9800;"></i> Pendiente</li>
+                            <li><i class="fa fa-square" style="color: #26a69a;"></i> Confirmada</li>
+                            <li><i class="fa fa-square" style="color: #d9534f;"></i> Cancelada</li>
+                            <li><i class="fa fa-square" style="color: #ffeb3b;"></i> Sugerida</li>
+                            <li><i class="fa fa-square" style="color: #9e9e9e;"></i> Rechazada</li>
+                            <li><i class="fa fa-square" style="color: #4051b5;"></i> Asistida</li>
+                            <li><i class="fa fa-square" style="color: #4caf50;"></i> No asistida</li>
+                        </ul>
+                    </div>                
+                </div>
             </div>
         </div>
-
+    </div>
+    <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="table-responsive">
-        <table class="table table-striped responsive-utilities jambo_table bulk_action">
-            <thead>
-                <tr class="headings">
-                    <th class="column-title">Estado </th>
-                    <th class="column-title">Código </th>
-                    <th class="column-title">Hora inicio </th>                    
-                    <th class="column-title">Tema</th> 
-                    <th class="column-title">Accion</th> 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($tutMeetings as  $key => $tutMeeting)
-                <tr class="even pointer">
-                    <td hidden class="group-id">{{$tutMeeting->id}}</td>
-
-                    <td class="">
-                        @if($tutMeeting->estado == Config::get('constants.cancelada') || $tutMeeting->estado == Config::get('constants.rechazada') )
-                        <span class="label label-danger"> 
-                        @else
-                        <span class="label label-success"> 
-                        @endif
-                            @if($tutMeeting->estado == Config::get('constants.pendiente'))
-                                Pendiente
-                            @elseif($tutMeeting->estado == Config::get('constants.confirmada'))
-                                Confirmada
-                            @elseif($tutMeeting->estado == Config::get('constants.cancelada'))
-                                Cancelada
-                            @elseif($tutMeeting->estado == Config::get('constants.confirmada'))
-                                Confirmada
-                            @elseif($tutMeeting->estado == Config::get('constants.sugerida'))
-                                Sugerida
-                            @elseif($tutMeeting->estado == Config::get('constants.rechazada'))
-                                Rechazada
-                            @elseif($tutMeeting->estado == Config::get('constants.noasistida'))
-                                No asistida
+            <table class="table table-striped table-bordered responsive-utilities jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title text-center">Horas</th>
+                        <th class="column-title text-center">Lunes</th>
+                        <th class="column-title text-center">Martes</th>
+                        <th class="column-title text-center">Miércoles</th>
+                        <th class="column-title text-center">Jueves</th>
+                        <th class="column-title text-center">Viernes</th>
+                        <th class="column-title text-center">Sábado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for ($h=8; $h<22; $h++)
+                    <tr>
+                        <td class="text-center date-card-hour">
+                                {{$h}}:00 - {{$h+1}}:00
+                        </td>
+                        @for ($d=1; $d<7; $d++)
+                            <td class="dates-card-info-container">
+                            @if ($schedule[$h][$d] == 1)
+                                <div class="text-right">
+                                    <a href="#" class="btn btn-info btn-add-new-date">
+                                        <i class="fa fa-plus"></i> 
+                                    </a>
+                                </div>
                             @endif
-                        </span>
-                    </td>
-                    
-                    <td class=" ">{{ $tutMeeting->tutstudent->codigo }}</td>                                      
-
-                    <td class=" ">{{ $tutMeeting->inicio }}</td>
-
-                    <td class=" ">{{ $tutMeeting->topic->nombre }}</td>
-
-                    <td class=" ">
-                        <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ver{{$tutMeeting->id}}" title="Ver"><i class="fa fa-eye"></i></a>
-                        @if($tutMeeting->estado == Config::get('constants.pendiente') && Auth::user()->IdPerfil != Config::get('alumno'))
-                        <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#confirmar{{$tutMeeting->id}}" title="Confirmar"><i class="fa fa-check"></i></a>
-                        <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#rechazar{{$tutMeeting->id}}" title="Rechazar"><i class="fa fa-remove"></i></a>
-                        @elseif($tutMeeting->estado == Config::get('constants.confirmada') && Auth::user()->IdPerfil != Config::get('alumno'))
-                        <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelar{{$tutMeeting->id}}" title="Cancelar"><i class="fa fa-remove"></i></a>
-                        @endif
-                    </td>                    
-                </tr>
-
-                @include('tutorship.tutormydates.accept-cita', ['id'=> "confirmar".$tutMeeting->id, 'message' => 'Esta a punto de confirmar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.accept', $tutMeeting->id)])
-                @include('tutorship.tutormydates.refuse-cita', ['id'=> "rechazar".$tutMeeting->id, 'message' => 'Esta a punto de rechazar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.refuse', $tutMeeting->id)])
-                @include('tutorship.tutormydates.cancel-cita', ['id'=> "cancelar".$tutMeeting->id, 'message' => 'Si va a cancelar esta cita, indique el motivo', 'route' => route('mis_citas.delete', $tutMeeting->id)])
-                @include('tutorship.tutormydates.ver-cita', ['id'=> "ver".$tutMeeting->id, 'message' => 'Ver cita', 'cita' => $tutMeeting])
-                @endforeach
-            </tbody>
-        </table>
+                            @foreach($tutMeetings as $key => $meeting)
+                                @if ($fecha[$key] == $d && $hora[$key] == $h)
+                                    <a href="#" class="btn btn-primary color-status-{{$meeting->estado}} tutorship-dates"> 
+                                        <div class="dates-card-info text-left">
+                                            {{$hora_inicio[$key]}} - {{$hora_fin[$key]}} <br>
+                                            {{$students[$key]}}
+                                        </div>
+                                    </a>
+                                @endif
+                            @endforeach
+                            </td>
+                        @endfor
+                    </tr>
+                    @endfor
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function() {
+        var today = new Date();
 
-@include('tutorship.modals.filterTutorDates', ['title' => 'Filtrar', 'route' => route('cita_alumno.index')])
+        var calendarTutorDates = $(".input-group.date.tutorship-tutor-mydates");
+
+        calendarTutorDates.datepicker({
+            format: "dd-mm-yyyy",
+            startDate: "{{$startDay}}",
+            endDate: "{{$endDay}}",
+            language: "es",
+            autoclose: true,
+            todayHighlight: false,
+         });
+
+        calendarTutorDates.datepicker('setDate', "{{$currentDay}}");
+        calendarTutorDates.children('div').css({ display: 'block'});
+
+        calendarTutorDates.datepicker().on('changeDate', function (ev) {
+            curr = $(this).datepicker('getDate');
+            var first = curr.getDate() - curr.getDay();
+            var firstday = new Date(curr.setDate(first));
+            var dateBegin = firstday.getDate() + '-' + 
+                            (firstday.getMonth() + 1) + '-' + 
+                            firstday.getFullYear();
+            window.location     = "{{ route('cita_alumno.index') }}" + 
+                                '?beginDate=' + dateBegin;
+        });
+    });
+</script>
 
 @endsection

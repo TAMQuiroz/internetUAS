@@ -89,6 +89,6 @@
     </div>
 </div>
 
-@include('tutorship.modals.filterTutorDates', ['title' => 'Filtrar', 'route' => route('miscitas.index')])
+@include('tutorship.modals.filterTutstudentDates', ['title' => 'Filtrar', 'route' => route('miscitas.index')])
 
 @endsection

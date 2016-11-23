@@ -30,14 +30,18 @@
                 <tbody id=resultado-fc-table>
                     @foreach($studentsResults as $stdRslt)
                     <tr class="even pointer">
+                        @if($stdRslt->Estado == 1)
                         <td class="id" hidden >{{ $stdRslt->IdResultadoEstudiantil }}</td>
                         <td class="">{{ $stdRslt->Identificador }}</td>
                         <td class="">{{ str_limit($stdRslt->Descripcion, 60) }}</td>
-                        @if($stdRslt->Estado == 1)
                         <td class=""><span class="label label-success"> Activo </span></td>
-                        @else
+                        
+                    @elseif($stdRslt->Estado == 0)
+                        <td class="id" hidden >{{ $stdRslt->IdResultadoEstudiantil }}</td>
+                        <td class="">{{ $stdRslt->Identificador }}</td>
+                        <td class="">{{ str_limit($stdRslt->Descripcion, 60) }}</td>
                         <td class=""><span class="label label-danger"> Inactivo </span></td>
-                        @endif
+                    @endif
                     </tr>
                     @endforeach
                 </tbody>

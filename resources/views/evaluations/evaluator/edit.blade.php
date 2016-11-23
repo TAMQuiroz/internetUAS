@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-			<div class="title_left">
+			<div class="">
 				<h3>Editar evaluador</h3>
 			</div>
 		</div>
@@ -20,15 +20,15 @@
 			<div class="panel-body">
 				{{Form::open(['route' =>['evaluador.update',$teacher->IdDocente], 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}				
 				<div class="form-group">
-					{{Form::label('Profesor: ',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-4'])}}
-					<div class="col-md-5 col-sm-5 col-xs-5">
+					{{Form::label('Profesor: ',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-5 col-sm-5 col-xs-12">
 						{{Form::text('nombre',$teacher->ApellidoPaterno.' '.$teacher->ApellidoMaterno.', '.$teacher->Nombre ,['class'=>'form-control','id'=>'nombre', 'required','readonly' ])}}
 					</div>					
 				</div>
 
 				<div class="form-group">
-					{{Form::label('Competencias: ',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-4'])}}
-					<div class="col-md-6">
+					{{Form::label('Competencias: ',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
+					<div class="col-md-6 col-sm-6 col-xs-12 col-m-offset-0 col-sm-offset-0 col-xs-offset-2">
 						@foreach($competences as $competence)
 						@if( in_array($competence->id, $arrayRelations) )
 						<div class="checkbox">

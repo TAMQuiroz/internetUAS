@@ -22,5 +22,8 @@ class TimeTable extends Model{
         return $this->hasOne(Report::class, 'IdHorario');
     }
    
+    public function score(){
+        return $this->hasMany('Intranet\Models\Score', 'IdHorario');
+    }
 
 }

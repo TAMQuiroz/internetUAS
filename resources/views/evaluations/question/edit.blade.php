@@ -8,7 +8,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-title">
-			<div class="title_left">
+			<div class="">
 				<h3>Editar pregunta</h3>
 			</div>	        
 		</div>

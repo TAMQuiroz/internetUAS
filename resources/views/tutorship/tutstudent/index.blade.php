@@ -10,10 +10,11 @@
     <div class="x_panel">
         <div class="">            
             <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <a href="#filter-students" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-6">
+                
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="row">
                         <div class="col-md-6">
                             <a href="{{route('alumno.asignar')}}" class="btn btn-primary pull-left"><i class="fa fa-arrows-alt"></i> Asignar tutores</a>
@@ -36,59 +37,60 @@
 
                 </div>
             </div>
-        <div class="table-responsive">
-            <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                <thead>
-                    <tr class="headings">
-                        <th class="centered column-title">Estado </th>
-                        <th class="centered column-title">Código </th>
-                        <th class="column-title">Apellidos y Nombres </th> 
-                        <th class="column-title">Tutor </th>
-                        <th class="centered column-title last">Acciones</th>                
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($students as $student)
-                    <tr class="even pointer">
-                        <td hidden class="group-id">{{ $student->id }}</td>
+            
+            <div class="table-responsive">
+                <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="centered column-title">Estado </th>
+                            <th class="centered column-title">Código </th>
+                            <th class="column-title">Apellidos y Nombres </th> 
+                            <th class="column-title">Tutor </th>
+                            <th class="centered column-title last">Acciones</th>               
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($students as $student)
+                        <tr class="even pointer">
+                            <td hidden class="group-id">{{ $student->id }}</td>
 
-                        @if (!$student->trashed()) 
-                        <td class="centered"><span class="label label-success"> Activo </span></td>
-                        @else
-                        <td class="centered"><span class="label label-default"> Inactivo </span></td>
-                        @endif
-
-                        <td class="centered ">{{ $student->codigo }}</td>
-                        <td class=" ">{{ $student->ape_paterno.' '.$student->ape_materno.', '.$student->nombre }}</td>  
-                        @if($student->id_tutoria == null)
-                        <td class="centered ">-</td>
-                        @else
-                        <td class=" ">{{explode(' ',trim($student->tutorship->tutor->Nombre))[0]    .' '.$student->tutorship->tutor->ApellidoPaterno}}</td>
-                        @endif                          
-
-                        <td class="centered ">
-                            @if(!$student->trashed())
-                            <a href="{{route('alumno.show',$student->id)}}" title="Visualizar" class="btn btn-primary btn-xs view-group">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            <a href="{{route('alumno.edit',$student->id)}}" title="Editar" class="btn btn-primary btn-xs view-group">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                            <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$student->id}}">
-                                <i class="fa fa-remove"></i>
-                            </a>
+                            @if (!$student->trashed()) 
+                            <td class="centered"><span class="label label-success"> Activo </span></td>
                             @else
-                            <a href="{{route('alumno.restore', ['id' => $student->id])}}" title="Activar" class="btn btn-primary btn-xs delete-group">
-                                <i class="fa fa-check"></i>
-                            </a>
+                            <td class="centered"><span class="label label-default"> Inactivo </span></td>
                             @endif
-                        </td>
-                    </tr>
-                    @include('modals.delete', ['id'=> $student->id, 'message' => '¿Está seguro que desea desactivar este alumno?', 'route' => route('alumno.delete', $student->id)])
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+
+                            <td class="centered ">{{ $student->codigo }}</td>
+                            <td class=" ">{{ $student->ape_paterno.' '.$student->ape_materno.', '.$student->nombre }}</td>  
+                            @if($student->id_tutoria == null)
+                            <td class="centered ">-</td>
+                            @else
+                            <td class=" ">{{explode(' ',trim($student->tutorship->tutor->Nombre))[0]    .' '.$student->tutorship->tutor->ApellidoPaterno}}</td>
+                            @endif                          
+
+                            <td class="centered ">
+                                @if(!$student->trashed())
+                                <a href="{{route('alumno.show',$student->id)}}" title="Visualizar" class="btn btn-primary btn-xs view-group">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="{{route('alumno.edit',$student->id)}}" title="Editar" class="btn btn-primary btn-xs view-group">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$student->id}}">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                                @else
+                                <a href="{{route('alumno.restore', ['id' => $student->id])}}" title="Activar" class="btn btn-primary btn-xs delete-group">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                                @endif
+                            </td>
+                        </tr>
+                        @include('modals.delete', ['id'=> $student->id, 'message' => '¿Está seguro que desea desactivar este alumno?', 'route' => route('alumno.delete', $student->id)])
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>

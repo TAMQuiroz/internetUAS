@@ -51,15 +51,44 @@ class TutStudentController extends BaseController
            $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
            //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
            $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-           if (1 == $appointInfo['estado']){
+          $fechaCitaTotal = $appointInfo['inicio'];
+          $fechaCitaAux = substr($fechaCitaTotal,0,10);
+
+          $fechaCita = str_replace("-", "/", $fechaCitaAux);
+          $fechaActual= date('Y/m/d');
+
+
+          $fechaCitaEntero =  strtotime($fechaCita);
+          $fechaActualEntero =  strtotime($fechaActual);
+
+           if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0){
                 $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
            }
-           else if  (2 == $appointInfo['estado']){
+           else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
+                $appointmentInfo[$i]['nombreEstado']  = "Cancelada ";
+           }
+           else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
                 $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
            }
            else if  (3 == $appointInfo['estado']){
                 $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
            }
+           else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero >= $fechaCitaEntero) ){
+              $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+           }
+            else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero < $fechaCitaEntero) ) {
+              $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+            }
+           else if  (5 == $appointInfo['estado'] ){
+                $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+           }
+            else if  (6 == $appointInfo['estado'] ){
+              $appointmentInfo[$i]['nombreEstado']  = "Asistida";
+            }
+            else if  (7 == $appointInfo['estado'] ){
+              $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+            }
+
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());
@@ -82,6 +111,17 @@ class TutStudentController extends BaseController
         $format = "d/m/Y H:i:s";
         $dateTimeBegin= DateTime::createFromFormat($format, $dateHour); //dateTime para registrar a la base de datos
         //--------------END DATETIME------------------
+        //---------------BEGIN FINALDATETIME ---------
+        $dateStringAux = $request->only('fecha');
+        $dateString = $dateStringAux['fecha']; //fecha reserva 
+        $horaAux1 =  $request->only('horaF');  
+        $horaAux2 = $horaAux1['horaF']; 
+        $hora =  $horaAux2.":00"; // hora reserva ejem 12:00:00
+        $dateHour = $dateString." ".$hora;
+        $format = "d/m/Y H:i:s";
+        $dateTimeEnd= DateTime::createFromFormat($format, $dateHour); //dateTime para registrar a la base de datos
+        //---------------END FINALDATETIME------------
+
 
         //------------BEGIN MOTIVO--------------------
         $motivoAux = $request->only('motivo');
@@ -96,30 +136,32 @@ class TutStudentController extends BaseController
         //------FIN OBTENIENDO ID DEL TUTOR-----------
 
          $teacherInfo = Teacher::where('IdDocente',$idDocente)->get();
-
+         $duracionCitaAux = $request->only('duracionCita');
+         $duracionCita = $duracionCitaAux['duracionCita'];
 
         //-------------BEGIN DATABASE INSERT ---------------
         DB::table('tutmeetings')->insertGetId(
             [
                 'id_tutstudent' => $studentInfo[0]['id'],
                 'inicio' => $dateTimeBegin,
-                //'fin'  => $dateTimeFin,
-                //'duracion' => $dateTimeEnd,
+                'fin'  => $dateTimeEnd,
+                'duracion' => $duracionCita,
                 'id_docente' => $idDocente,
                 'id_topic' => $motivoInfo[0]['id'],
                 'creador' => 0,
                 'no_programada' => 0,
-                'estado' => 1
+                'estado' => 4
             ]
 
         );
         //-------------END DATABASE INSERT ---------------
 
-   
+   /*
 
         $fecha =  $dateString;
         $hora = $horaAux2;
         $mail = $studentInfo[0]['correo'];
+
 
         try
         {
@@ -132,7 +174,7 @@ class TutStudentController extends BaseController
         {
             dd($e->getMessage());
         }
-
+*/
         return "exito";    
 
 
@@ -182,6 +224,9 @@ class TutStudentController extends BaseController
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
                 }
+                else if  (4 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+                }
                 $i++;
             }
             return $this->response->array($appointmentInfo->toArray());
@@ -202,6 +247,9 @@ class TutStudentController extends BaseController
             else if  ("Cancelada" == $motivo){
                 $idMotivo  = 3;
             }
+            else if  ("Sugerida" == $motivo){
+                $idMotivo  = 1;
+            }
             $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->where('estado',$idMotivo)->get();
             $i = 0;
 
@@ -216,6 +264,9 @@ class TutStudentController extends BaseController
                 }
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+                }
+                else if  (4 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
                 }
                 $i++;
             }
@@ -247,6 +298,9 @@ class TutStudentController extends BaseController
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
                 }
+                else if  (4 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+                }
                 $i++;
             }
             return $this->response->array($appointmentInfo->toArray());
@@ -271,6 +325,9 @@ class TutStudentController extends BaseController
             else if  ("Cancelada" == $motivo){
                 $idMotivo  = 3;
             }
+            else if  ("Sugerida" == $motivo){
+                $idMotivo  = 1;
+            }
 
             $appointmentInfo = TutMeeting::where('estado',$idMotivo)->where('id_tutstudent',$studentInfo[0]['id'])->where('inicio','>=',$fechaInicioUsar)->where('inicio','<=',$fechaFinUsar)->get();
            // $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
@@ -288,6 +345,9 @@ class TutStudentController extends BaseController
                 }
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
+                }
+                else if  (4 == $appointInfo['estado']){
+                    $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
                 }
                 $i++;
             }

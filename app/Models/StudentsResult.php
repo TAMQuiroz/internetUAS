@@ -34,12 +34,17 @@ class StudentsResult extends Model
 
     public function aspect()
     {
-        return $this->hasMany('Intranet\Models\Aspect', 'IdResultadoEstudiantil')->orderBy("Nombre","ASC");
+        return $this->hasMany('Intranet\Models\Aspect', 'IdResultadoEstudiantil')->where('deleted_at',null)->orderBy("Nombre","ASC");
     }
 
     public function aspects()
     {
-        return $this->hasMany('Intranet\Models\Aspect', 'IdResultadoEstudiantil')->orderBy("Nombre","ASC");
+        return $this->hasMany('Intranet\Models\Aspect', 'IdResultadoEstudiantil')->where('deleted_at',null)->orderBy("Nombre","ASC");
+    }
+
+    public function relatedAspects()
+    {
+        return $this->hasMany('Intranet\Models\Aspect', 'IdResultadoEstudiantil')->where('deleted_at',null)->orderBy("Nombre","ASC");
     }
 
     public function contributions(){

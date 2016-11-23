@@ -60,8 +60,8 @@
 										@else
 											<td class=" ">{{$course->NivelAcademico}}</td>
 										@endif
-										@if($course->specialty!=null)
-											<td class=" ">{{$course->specialty->Nombre}}</td>
+										@if($course->faculty!=null)
+											<td class=" ">{{$course->faculty->Nombre}}</td>
 										@else
 											<td class=" ">-</td>
 										@endif
@@ -82,8 +82,8 @@
 									@else
 										<td class=" ">{{$course->NivelAcademico}}</td>
 									@endif
-									@if($course->specialty!=null)
-										<td class=" ">{{$course->specialty->Nombre}}</td>
+									@if($course->faculty!=null)
+										<td class=" ">{{$course->faculty->Nombre}}</td>
 									@else
 										<td class=" ">-</td>
 									@endif

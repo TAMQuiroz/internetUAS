@@ -44,9 +44,11 @@ class EnhacementController extends BaseController {
         $data['title'] = 'Nuevo Plan de Mejora';
 
         try {
+
             //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
             $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
+
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 

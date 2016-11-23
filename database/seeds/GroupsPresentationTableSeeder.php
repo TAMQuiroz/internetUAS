@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker; 
 
 class GroupsPresentationTableSeeder extends Seeder
 {
@@ -49,9 +50,9 @@ class GroupsPresentationTableSeeder extends Seeder
 	        DB::table('groups')->insert([
 	        	'id'				=> 1,
 		        'nombre'            => 'Grupo de prueba',
-		        'id_especialidad'   => 1,
+		        'id_especialidad'   => 5,
 		        'descripcion'       => $faker->text,
-		        'id_lider'          => 15,
+		        'id_lider'          => 6,
 	        ]);
         }
     }

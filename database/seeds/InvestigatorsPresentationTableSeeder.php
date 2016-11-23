@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker; 
 
 class InvestigatorsPresentationTableSeeder extends Seeder
 {
@@ -11,6 +12,7 @@ class InvestigatorsPresentationTableSeeder extends Seeder
      */
     public function run()
     {
+    	$faker = Faker::create();
         $usuario 		= DB::table('Usuario')->where('IdUsuario',51)->first();
     	$investigador 	= DB::table('investigators')->where('id',51)->first();
 

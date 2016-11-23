@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker; 
 
 class CompetencePresentationTableSeeder extends Seeder
 {
@@ -11,12 +12,54 @@ class CompetencePresentationTableSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+
         DB::table('competences')->insert([
-        	'id'				=> 1,
-	        'nombre'            => 'Grupo de prueba',
-	        'id_especialidad'   => 1,
-	        'descripcion'       => $faker->text,
-	        'id_lider'          => 15,
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
+        ]);
+
+        DB::table('competences')->insert([
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
+        ]);
+
+        DB::table('competences')->insert([
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
+        ]);
+
+        DB::table('competences')->insert([
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
+        ]);
+
+        DB::table('competences')->insert([
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
+        ]);
+
+        DB::table('competences')->insert([
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
+        ]);
+
+        DB::table('competences')->insert([
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
+        ]);
+
+        DB::table('competences')->insert([
+            'nombre'            =>  'Competencia '.$faker->randomNumber($nbDigits = 3,$strict = true),
+            'descripcion'       =>  $faker->text,
+            'id_especialidad'   =>  15,
         ]);
     }
 }

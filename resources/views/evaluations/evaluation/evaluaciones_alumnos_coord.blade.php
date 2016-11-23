@@ -47,8 +47,8 @@
                                     <i class="fa fa-eye"></i>
                                 </a>                               
                                 @elseif (is_null($tutstudentxevaluation->fecha_hora)  && ($tutstudentxevaluation->intentos == 0 ))
-                                <a href="{{route('evaluacion.dar_permiso',[$tutstudentxevaluation->id_tutstudent,$tutstudentxevaluation->id_evaluation] )}}" title="Otorgar permiso extra" class="btn btn-default btn-xs view-group"">
-                                    <i class="fa fa-check"></i>
+                                <a href="{{route('evaluacion.dar_permiso',[$tutstudentxevaluation->id_tutstudent,$tutstudentxevaluation->id_evaluation] )}}" title="Otorgar permiso extra" class="btn btn-primary btn-xs view-group">
+                                    <i class="fa fa-plus"></i>
                                 </a>                               
                                 @endif
                             </td>
@@ -59,11 +59,15 @@
             </div>                    
 
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">                    
+                
+                <div class="col-md-6 col-sm-6 col-xs-6"> 
+                    <a class="btn btn-default pull-left" href="{{ route('evaluacion.index') }}"><i class="fa fa-backward" aria-hidden="true"></i> Atrás</a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">                    
                     @if($completo == true)
                     <a class="btn btn-primary pull-right" href="{{ route('evaluacion_resultados.index',$evaluation->id) }}">Ver resultados <i class="fa fa-file-text"></i></a>
                     @endif
-                    <a class="btn btn-default pull-right" href="{{ route('evaluacion.index') }}"><i class="fa fa-backward" aria-hidden="true"></i> Regresar</a>
+                    
                 </div>
             </div>
         </div>

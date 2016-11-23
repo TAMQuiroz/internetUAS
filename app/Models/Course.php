@@ -39,7 +39,7 @@ class Course extends Model {
     }
 
     public function faculty(){
-        return $this->belongsTo('Intranet\Models\Faculty', 'IdEspecialidad');
+        return $this->belongsTo('Intranet\Models\Faculty', 'IdEspecialidad', 'IdEspecialidad');
     }
 
     public function getSchedulesAttribute(){

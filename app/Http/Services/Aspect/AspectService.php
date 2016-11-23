@@ -133,4 +133,10 @@ class AspectService {
 		$data['criteria'] = Criterion::where('IdAspecto', $aspectCode)->where('deleted_at', null)->get();
 		return $data;
 	}
+
+	public function retrieveAllByFacultyByPeriodByResult($resultId){
+		$aspect = Aspect::where('IdResultadoEstudiantil', $resultId)
+						->where('deleted_at', null)->get();
+		return $aspect;
+	}
 }

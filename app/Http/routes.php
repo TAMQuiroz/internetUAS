@@ -457,6 +457,19 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/pending/', ['as' => 'pending.index', 'uses' => 'Consolidated\PendingController@index']);
 
         Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);
+
+        Route::get('/report', ['as' => 'report.index', 'uses' => 'ReportController@index']);
+        Route::post('/report/view', ['as' => 'report.view', 'uses' => 'ReportController@view']);
+
+
+        //AJAX
+        Route::get ('/consultarResultados', ['as' =>'consultarResultados.consolidated', 'uses' => 'ReportController@consultarResultados']);
+
+        Route::get ('/consultarAspectosyCursos', ['as' =>'consultarAspectos.consolidated', 'uses' => 'ReportController@consultarAspectos']);
+
+        Route::get ('/consultarCriterios', ['as' =>'consultarCriterios.consolidated', 'uses' => 'ReportController@consultarCriterios']);
+
+        Route::get ('/consultarCursos', ['as' =>'consultarCursos.consolidated', 'uses' => 'ReportController@consultarCursos']);
         /*
         Route::group(['middleware' => 'action_permission'], function() {
             Route::get('/evidences', ['as' => 'evidences.index', 'uses' => 'Consolidated\EvidenceController@index']);

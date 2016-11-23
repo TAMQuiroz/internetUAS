@@ -35,13 +35,18 @@
                     <tbody id="objetivos-fc-table">
                     @foreach($objetivos as $objetivo)
                         <tr class="even pointer">
-                            <td class="id" hidden="true">{{$objetivo->IdObjetivoEducacional}}</td>
-                            <td class="">{{ str_limit($objetivo->Descripcion, 60) }}</td>
                             @if($objetivo->Estado == 1)
-                                    <td class=""><span class="label label-success"> Activo </span></td>
-                                @else
-                                    <td class=""><span class="label label-danger"> Inactivo </span></td>
-                                @endif
+                                <td class="id" hidden="true">{{$objetivo->IdObjetivoEducacional}}</td>
+                                <td class="">{{ str_limit($objetivo->Descripcion, 60) }}</td>
+                            
+                                <td class=""><span class="label label-success"> Activo </span></td>
+                            
+                                    
+                            @elseif($objetivo->Estado == 0)
+                                <td class="id" hidden="true">{{$objetivo->IdObjetivoEducacional}}</td>
+                                <td class="">{{ str_limit($objetivo->Descripcion, 60) }}</td>
+                                <td class=""><span class="label label-danger"> Inactivo </span></td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>

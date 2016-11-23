@@ -13,10 +13,15 @@
                 </div>
             </div>
             <div class="col-md-12 col-sm-6 col-xs-12">
-                <div class="row" style="margin-top: 30px;">          
-                    <div class="col-sm-12 col-xs-12 text-center">
+                <div class="row">      
+                    <div class="col-sm-12 col-xs-12 text-center" style="margin-top: 30px;">
                         <a href="{{ route('cita_alumno.index_table')}}" class="btn btn-default">
                             <i class="fa fa-eye"></i>  Cambiar vista
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 text-center" style="margin-top: 20px;">
+                        <a href="{{ route('atencion_sin_cita.create')}}" class="btn btn-success">
+                            <i class="fa fa-database"></i>  Atención sin cita
                         </a>
                     </div>
                     <div class="col-sm-12 col-xs-12">

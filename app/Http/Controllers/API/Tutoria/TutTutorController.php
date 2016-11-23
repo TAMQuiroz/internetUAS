@@ -33,16 +33,44 @@ class TutTutorController extends BaseController
 
           $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
 		      $studentInfo =  Tutstudent::where('id', $appointInfo['id_tutstudent'])->get();
+          $fechaCitaTotal = $appointInfo['inicio'];
+          $fechaCitaAux = substr($fechaCitaTotal,0,10);
 
-          if (1 == $appointInfo['estado']){
+          $fechaCita = str_replace("-", "/", $fechaCitaAux);
+          $fechaActual= date('Y/m/d');
+
+
+          $fechaCitaEntero =  strtotime($fechaCita);
+          $fechaActualEntero =  strtotime($fechaActual);
+
+
+
+          if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1){
            		$appointmentInfo[$i]['nombreEstado']  = "Pendiente";
           }
-          else if  (2 == $appointInfo['estado']){
+          else if  (2 == $appointInfo['estado'] ){
            		$appointmentInfo[$i]['nombreEstado']  = "Confirmada";
           }
           else if  (3 == $appointInfo['estado']){
               $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
           }
+
+          else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero < $fechaCitaEntero) ){
+              $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+          }
+          else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero >= $fechaCitaEntero) ) {
+              $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+          }
+          else if  (5 == $appointInfo['estado'] ){
+              $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+          }
+          else if  (6 == $appointInfo['estado'] ){
+              $appointmentInfo[$i]['nombreEstado']  = "Asistida";
+          }
+          else if  (7 == $appointInfo['estado'] ){
+              $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+          }
+
 
           $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
 		      $appointmentInfo[$i]['nombreAlumno'] = $studentInfo[0]['nombre']." ".$studentInfo[0]['ape_paterno']." ".$studentInfo[0]['ape_materno'];
@@ -149,7 +177,7 @@ class TutTutorController extends BaseController
                 'id_topic' => $motivoInfo[0]['id'],
                 'creador' => 1,
                 'no_programada' => 0,
-                'estado' => 1
+                'estado' => 4
             ]
 
         );
@@ -208,6 +236,19 @@ class TutTutorController extends BaseController
 
     }
 
+    public function refuseAppointmentList(Request $request)
+    {
+      
+        $idUser = $request->only('idUser');
+        //Guardar
+        $groupTut = TutMeeting::find($idUser['idUser']);
+        $groupTut->estado = 5;
+        $groupTut->save();
+
+        //Retornar mensaje
+        $mensaje = 'Se modifico correctamente';
+
+    }
 
 
 

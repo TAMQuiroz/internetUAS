@@ -51,18 +51,44 @@ class TutStudentController extends BaseController
            $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
            //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
            $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-           if (1 == $appointInfo['estado'] and $appointInfo['creador'] == 0){
+          $fechaCitaTotal = $appointInfo['inicio'];
+          $fechaCitaAux = substr($fechaCitaTotal,0,10);
+
+          $fechaCita = str_replace("-", "/", $fechaCitaAux);
+          $fechaActual= date('Y/m/d');
+
+
+          $fechaCitaEntero =  strtotime($fechaCita);
+          $fechaActualEntero =  strtotime($fechaActual);
+
+           if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0){
                 $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
            }
-           else if  (2 == $appointInfo['estado']){
+           else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
+                $appointmentInfo[$i]['nombreEstado']  = "Cancelada ";
+           }
+           else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
                 $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
            }
            else if  (3 == $appointInfo['estado']){
                 $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
            }
-            else if  (1 == $appointInfo['estado'] and $appointInfo['creador'] == 1 ){
-                $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+           else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero >= $fechaCitaEntero) ){
+              $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
            }
+            else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero < $fechaCitaEntero) ) {
+              $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+            }
+           else if  (5 == $appointInfo['estado'] ){
+                $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+           }
+            else if  (6 == $appointInfo['estado'] ){
+              $appointmentInfo[$i]['nombreEstado']  = "Asistida";
+            }
+            else if  (7 == $appointInfo['estado'] ){
+              $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+            }
+
            $i++;
         }
          return $this->response->array($appointmentInfo->toArray());
@@ -124,7 +150,7 @@ class TutStudentController extends BaseController
                 'id_topic' => $motivoInfo[0]['id'],
                 'creador' => 0,
                 'no_programada' => 0,
-                'estado' => 1
+                'estado' => 4
             ]
 
         );

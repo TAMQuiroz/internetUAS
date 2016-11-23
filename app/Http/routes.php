@@ -895,6 +895,7 @@ $api->version('v1', function ($api) {
             $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment'); 
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
+            $api->post('refuseStudentAppointment', 'Tutoria\TutTutorController@refuseAppointmentList');
             $api->post('filterStudentAppointment', 'Tutoria\TutStudentController@filterStudentAppointment');
 
 

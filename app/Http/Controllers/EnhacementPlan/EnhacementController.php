@@ -307,7 +307,19 @@ class EnhacementController extends BaseController {
 
     public function report() {
         try {
-            $data['improvementPlans'] = $this->improvementPlanService->findByFaculty();
+            $improvementPlans= $this->improvementPlanService->findByFaculty();
+            $data['improvementPlans'] = $improvementPlans;
+            /*$i=0;
+            //dd("hol");
+            $actions[];
+            foreach ($improvementPlans as $imp){
+                dd("1");
+                $actions[$i]= $this->improvementPlanService->retrieveAllActionsId($imp->IdPlanMejora);
+                dd("2")
+                $i=$i+1;
+            }
+            $data['actionplan']=$actions;
+            dd("hola");*/
         } catch(\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }

@@ -2,49 +2,51 @@
 @section('content')
     <div class="page-title">
         <div class="title_left">
-            <h3>Planes de Mejora</h3>
+            <h3>Reporte de Planes de Mejora</h3>
         </div>
-        <form action="{{ route('search.enhacementPlan')}}" method="POST" id="formSearch" name="formSearch">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Buscar" name="word" id="word">
-    					<span class="input-group-btn">
-    						<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-    					</span>
-                    </div>
-                </div>
-            </div>
-        </form>
+        
     </div>
     <div class="clearfix"></div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_content">
                 <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        @if(in_array(45,Session::get('actions')))
-                            <a href="{{ route('new.enhacementPlan') }}" class="btn btn-success pull-right">
-                                <i class="fa fa-plus"></i> Nuevo Plan de Mejora</a>
-                        @endif
-                    </div>
-                </div>
-                <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                
+                
+                    @foreach($improvementPlans as $iplan)
+                    <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                     <tr class="headings">
-                        <th class="column-title col-sm-1" style="vertical-align: middle">Estado</th>
+                        <th class="col-sm-3 text-center" style="vertical-align: middle">Nombre de plan de mejora</th>
+                        <th class="col-sm-1 text-center" style="vertical-align: middle">Fecha de implementación</th>
                         
-                        <th class="column-title" style="vertical-align: middle">Responsable</th>
-                        <th class="column-title col-sm-2" style="vertical-align: middle">Título</th>
+                        <th class="col-sm-2 text-center" style="vertical-align: middle">Responsable</th>
+                        <th class="col-sm-1 text-center" style="vertical-align: middle">Estado</th>
+                        <th class="col-sm-3 text-center" style="vertical-align: middle">Tipo plan de mejora</th>
+                        
+                        
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($improvementPlans as $iplan)
                         <tr class="even pointer">
                             <td class="improvementPlanId" hidden="true">{{$iplan->IdPlanMejora}}</td>
-                            <td class="state"><span <?php if ($iplan->Estado=="Pendiente"): ?>
+                            <td class="col-sm-3 text-center">{{$iplan->Descripcion}}</td>
+                            <td class="col-sm-1 text-center" >
+                                <?php
+                                $date = new DateTime($iplan->FechaImplementacion);
+                                echo date_format($date, "d-m-Y");
+                                ?>
+                            </td>
+
+                            <?php if ($iplan->IdDocente != null): ?>
+                            <td class="col-sm-2 text-center">{{$iplan->teacher->Nombre}} {{$iplan->teacher->ApellidoPaterno}}</td>
+                            <?php else: ?>
+                            <td class="col-sm-2 text-center">Todos</td>
+                            <?php endif ?>
+
+                            
+
+                            <td class="state col-sm-1 text-center"><span <?php if ($iplan->Estado=="Pendiente"): ?>
                                                     class="label label-warning"
                                                     <?php else: ?>
                                                     <?php if ($iplan->Estado=="En Ejecución"): ?>
@@ -58,17 +60,75 @@
                                 <?php endif ?>
                                         <?php endif ?> >{{$iplan->Estado}}</span></td>
                             
-                            <?php if ($iplan->IdDocente != null): ?>
-                            <td class=" ">{{$iplan->teacher->Nombre}} {{$iplan->teacher->ApellidoPaterno}}</td>
-                            <?php else: ?>
-                            <td class=" ">Todos</td>
-                            <?php endif ?>
-
-                            <td class=" ">{{$iplan->Descripcion}}</td>
+                            
+                            <td class="col-sm-3 text-center">{{$iplan->typeImprovementPlan->Codigo}} ({{$iplan->typeImprovementPlan->Tema}})</td>
+                            
                         </tr>
-                    @endforeach
+                        
                     </tbody>
-                </table>
+                    </table>
+
+                    <table class="table" >
+                            <thead>
+                            <tr class="headings" style="background-color:#337ab7;color:#ECF0F1;">
+                                
+                                <th class="col-sm-3 text-center" style="vertical-align: middle">Nombre de la Actividad</th>
+                                <th class="col-sm-1 text-center" style="vertical-align: middle">Ciclo</th>
+                                <th class="col-sm-2 text-center" style="vertical-align: middle">Responsable</th>
+                                <th class="col-sm-1 text-center" style="vertical-align: middle">Avance</th>
+                                
+                                <th class="col-sm-3 text-center" style="vertical-align: middle">Comentario</th>
+                            </tr>
+                            </thead>
+                            <tbody>  
+                            @foreach($iplan->actions as $act)
+                             
+                            <tr class="even pointer">
+                            
+                            <td class="col-sm-3 text-center">{{$act->Descripcion}}</td>
+                            <td class="col-sm-1 text-center">{{$act->cicle->Descripcion}}</td>
+                            <td scope="col" class="col-sm-2 text-center" style="vertical-align: middle;">
+                                    <?php if ($act->IdDocente != null): ?>
+                                        {{$act->teacher->Nombre}} {{$act->teacher->ApellidoPaterno}} {{$act->teacher->ApellidoMaterno}}
+                                    <?php else: ?>
+                                        Todos
+                                    <?php endif ?>      
+                                </td>
+                                                                  
+                            <td class="col-sm-1 text-center">   @if ($act->Porcentaje == 0)  0%
+                                        @elseif ($act->Porcentaje == 5)  5%
+                                        @elseif ($act->Porcentaje == 10) 10%
+                                        @elseif ($act->Porcentaje == 15) 15%
+                                        @elseif ($act->Porcentaje == 20) 20%
+                                        @elseif ($act->Porcentaje == 25) 25%
+                                        @elseif ($act->Porcentaje == 30) 30%
+                                        @elseif ($act->Porcentaje == 35) 35%
+                                        @elseif ($act->Porcentaje == 40) 40%
+                                        @elseif ($act->Porcentaje == 45) 45%
+                                        @elseif ($act->Porcentaje == 50) 50%
+                                        @elseif ($act->Porcentaje == 55) 55%
+                                        @elseif ($act->Porcentaje == 60) 60%
+                                        @elseif ($act->Porcentaje == 65) 65%
+                                        @elseif ($act->Porcentaje == 70) 70%
+                                        @elseif ($act->Porcentaje == 75) 75%
+                                        @elseif ($act->Porcentaje == 80) 80%
+                                        @elseif ($act->Porcentaje == 85) 85%
+                                        @elseif ($act->Porcentaje == 90) 90%
+                                        @elseif ($act->Porcentaje == 95) 95%
+                                        @elseif ($act->Porcentaje == 100) 100%
+                                        @endif
+                            </td>
+                            <td class="col-sm-3 text-center">
+                                    
+                                {{$act->Comentario}}</td>
+                            
+                            </tr>
+                            @endforeach
+                            </tbody>
+                    </table>
+                    <br>
+                    @endforeach
+                    
             </div>
         </div>
     </div>

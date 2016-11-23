@@ -30,10 +30,21 @@ class ReportController extends Controller {
         return view('tutorship.report.meeting', $data);
     }
 
-    public function reassingReport(Request $request) {
-        
+    public function reassignReport(Request $request) {
+        $data = [
+            'null' => null,            
+        ];
+        return view('tutorship.report.reassign', $data);
     }
 
+    public function tutorReport(Request $request) {
+        
+        $data = [
+            'null' => null,            
+        ];
+        return view('tutorship.report.tutor', $data);
+    }
+    
     public function topicReport(Request $request) {
         $dateOriginalFormat = $request['beginDate'];
         if ($dateOriginalFormat) {

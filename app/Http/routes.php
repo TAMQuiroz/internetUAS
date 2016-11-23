@@ -1187,6 +1187,7 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/citas-alumnos', ['as' => 'reporte.tutstudentDate', 'uses' => 'Tutorship\Report\ReportController@tutstudentDateReport']);
             Route::get('/citas-canceladas', ['as' => 'reporte.cancelledMeeting', 'uses' => 'Tutorship\Report\ReportController@cancelledMeetingReport']);
             Route::get('/topic', ['as' => 'reporte.topic', 'uses' => 'Tutorship\Report\ReportController@topicReport']);
+            Route::get('/tutor', ['as' => 'reporte.tutor', 'uses' => 'Tutorship\Report\ReportController@tutorReport']);
         });
 
         /***   PARA EL ALUMNO DE TUTORÍA   ***/

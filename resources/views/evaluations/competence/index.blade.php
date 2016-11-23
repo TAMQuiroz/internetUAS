@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-title">
     <div class="title_left">
-        <h3>Competencias a evaluar en la especialidad</h3>
+        <h3>Competencias</h3>
     </div>        
 </div>
 

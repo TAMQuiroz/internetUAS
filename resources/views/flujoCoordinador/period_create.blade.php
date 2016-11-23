@@ -153,7 +153,7 @@
                             <tbody>
                             
 
-                            @if ($studentsResults->isEmpty())
+                            @if ($studentsResults==null)
                             <tr>
                                 <td></td>
                                 <td><p style = "color: red;">Debe agregar almenos un resultado estudiantil. No podrá iniciar periodo</p></td>

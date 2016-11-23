@@ -17,6 +17,7 @@ class GroupsTableSeeder extends Seeder
 
     	$usuario = DB::table('Usuario')->where('IdUsuario',50)->first();
     	$docente = DB::table('Docente')->where('IdDocente',50)->first();
+    	$grupo   = DB::table('groups')->where('id',1)->first();
 
         if(!$usuario){
 	        DB::table('Usuario')->insert([
@@ -43,12 +44,14 @@ class GroupsTableSeeder extends Seeder
 	        ]);
         }
 
-        DB::table('groups')->insert([
-        	'id'				=> 1,
-	        'nombre'            => 'Grupo de prueba',
-	        'id_especialidad'   => 1,
-	        'descripcion'       => $faker->text,
-	        'id_lider'          => 50,
-        ]);
+        if(!$grupo){
+	        DB::table('groups')->insert([
+	        	'id'				=> 1,
+		        'nombre'            => 'Grupo de prueba',
+		        'id_especialidad'   => 1,
+		        'descripcion'       => $faker->text,
+		        'id_lider'          => 50,
+	        ]);
+        }
     }
 }

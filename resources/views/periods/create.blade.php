@@ -87,7 +87,6 @@
                             <thead>
                             <tr class="headings">
                                 <th class="column-title">Nombre</th>
-                                <th class="column-title">Acción</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -226,7 +225,7 @@
 </form>
 
 <script src="{{ URL::asset('js/myvalidations/confFaculty.js')}}"></script>
-<script src="{{ URL::asset('js/myvalidations/periods.js')}}"></script>
+<script src="{{ URL::asset('js/myvalidations/periods2.js')}}"></script>
 <script src="{{ URL::asset('js/intranetjs/period/edit-script.js')}}"></script>
 
 @include('periods.modals-measures')

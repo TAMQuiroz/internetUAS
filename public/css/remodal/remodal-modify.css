@@ -154,3 +154,96 @@ a.btn.btn-primary.tutorship-dates {
 a.btn.btn-success.btn-xs.delete-group {
 	height: inherit;
 }
+
+td.date-card-hour {
+	min-width: 95px;
+	vertical-align: middle !important; 
+}
+
+td.dates-card-info-container {
+	min-width: 123px;
+	width: 180px;
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+}
+
+.dates-card-info-container > a.btn.btn-primary.tutorship-dates {
+	width: 100% !important;
+	padding-left: 5px;
+	padding-right: 5px;
+	display: block;
+	margin-top: 5px;
+}
+
+.dates-card-info {
+	display: block;
+	font-size: 9px;
+}
+
+.btn-add-new-date {
+	margin: 0;
+	padding: 1px;
+	height: 23px;
+	width: 23px;
+	text-align: center;
+	border-radius: 50%;
+}
+
+/*
+    Para los estados de citas:
+        Pendiente   => 1
+        Confirmada  => 2
+        Cancelada   => 3
+        Sugerida    => 4
+        Rechazada   => 5
+        Asistida    => 6
+        No asistida => 7
+*/
+
+.btn.color-status-1, .color-status-1 { 
+	background-color: #ff9800;
+	border-color: #ff9800;
+}
+
+.btn.color-status-2, .color-status-2 {
+	background-color: #26a69a;
+	border-color: #26a69a;
+}
+
+.btn.color-status-3, .color-status-3 {
+	background-color: #d9534f;
+	border-color: #d9534f;
+}
+
+.btn.color-status-4, .color-status-4 { /*yellow*/
+	background-color: #ffeb3b;
+	border-color: #ffeb3b;
+	color: #333 !important;
+}
+
+.btn.color-status-5, .color-status-5 {
+	background-color: #9e9e9e;
+	border-color: #9e9e9e;
+}
+
+.btn.color-status-6, .color-status-6 {
+	background-color: #4051b5;
+	border-color: #4051b5;
+}
+
+.btn.color-status-7, .color-status-7 {
+	background-color: #4caf50;
+	border-color: #4caf50;
+}
+
+.dates-guide {
+	margin: auto;
+	margin-top: 10px;
+	width: 200px;
+	padding: 20px;
+	font-size: 14px;
+}
+
+.dates-guide .fa {
+	margin-right: 15px;
+}

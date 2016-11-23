@@ -179,8 +179,7 @@ class FreeHourTest extends TestCase
         //Aviso: si se testea despues de esta fecha, cambiarla por favor
         ->type('11-01-2017','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/show/'.$freeHour->id)
-        ->see('La disponibilidad se ha actualizado exitosamente');
+        ->seePageIs('psp/freeHour/show/'.$freeHour->id);
     }
 
     public function test_psp_ed_frh_02()

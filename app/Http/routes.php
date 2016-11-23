@@ -850,16 +850,28 @@ $api->version('v1', function ($api) {
                 $api->get('student/{id}/getDocumentsAll', "Students\PspStudentsInscriptionFiles@getPspDocumentsByStudent");
                 $api->get('getDocument/{id}/full', "Students\PspStudentsInscriptionFiles@getDocumentFullByStudent");
 
+                //iOS
                 $api->get('sup/getMetting','Ps\PsController@getAll');
                 $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');
                 $api->get('a/gm','Ps\PsController@getAllSutudentMetting');
+                
                 $api->post('al/setM/{id}/sendNr', 'Ps\PsController@nuevaReunionAL');
+
                 //$api->get('h', 'Ps\PsController@nuevaReunionP');
                 $api->get('al/getfh', 'Ps\PsController@getAllFreeHours');
                 $api->get('pr/getN', 'Ps\NotasDelnscriptionFile@getAll');
                 $api->get('sup/getficha', 'Ps\NotasDelnscriptionFile@enviarRecomendaciones');
                 $api->post('sup/detf/{id}', 'Ps\NotasDelnscriptionFile@modificarFi');
                 $api->get('al/getD', 'Ps\DocumentosController@getAll');
+                $api->get('sup/getStude','Ps\PsController@getAllStudentSuper');
+                $api->post('sup/newMet', 'Ps\PsController@nuevaReunionS');
+                $api->get('al/getIF', 'Ps\NotasDelnscriptionFile@getAllInscriById');
+                $api->get('getSS', 'Ps\DocumentosController@getAllStudentSuper');
+                $api->get('getDBI/{id}', 'Ps\DocumentosController@getDbyId');
+                $api->get('getINota/{id}', 'Ps\NotasDelnscriptionFile@getINota');
+                $api->get('autStud', 'Ps\Autenticar@authStudent');
+                $api->get('autSup', 'Ps\Autenticar@authSuper');
+                $api->get('autTea', 'Ps\Autenticar@authTeach');
             });
 
             //INVESTIGACION

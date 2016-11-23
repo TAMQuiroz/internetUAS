@@ -217,5 +217,39 @@ public function modificarFi(Request $request,$id)
 }
 
 
-   
+
+public function getAllInscriById(){
+
+$user =  JWTAuth::parseToken()->authenticate();
+$alumno = Student::where('IdUsuario',$user["IdUsuario"])->first();
+$pspAlumno = PspStudent::find($alumno ->IdAlumno);
+$pspSxI = Studentxinscriptionfiles::where('idpspstudents',$pspAlumno["id"])->get();
+$ins = array();
+$count = 0;
+foreach ($pspSxI as $value) {
+  $ins[$count] = Inscription::find($value['idinscriptionfile']);
+ $count = $count +1;
+}
+
+$array = array();
+$array["AlumnoPsp"]=$pspAlumno;
+$array["Alumno"]= $alumno;
+$array["pspSxI"]=$pspSxI;
+$array["ins"]=$ins;
+return $this->response->array($array);
 }   
+
+
+
+public function getINota($id){
+$array = array();
+$ins = Inscription::where('id',$id)->first();
+$array["ins"]=$ins;
+return $this->response->array($array);
+
+}   
+
+
+}
+
+

@@ -32,6 +32,7 @@
                         <tr class="headings"> 
                             <th>Numero</th> 
                             <th>Observacion</th> 
+                            <th>Curso</th>
                             <th colspan="2">Acciones</th>
                         </tr> 
                     </thead> 
@@ -40,6 +41,7 @@
                         <tr> 
                             <td>{{$pspGroup->numero}}</td> 
                             <td>{{$pspGroup->descripcion}}</td> 
+                            <td>{{$pspGroup->Nombre}}</td>
                             <td>
                                 <a href="{{route('pspGroup.edit', $pspGroup->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-pencil"></i></a>
                                 <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#{{$pspGroup->id}}" title="Eliminar"><i class="fa fa-remove"></i></a>
@@ -51,6 +53,7 @@
                         
                     </tbody> 
                 </table>
+                {{$pspGroups->links()}}
             </div>
         </div>
     </div>

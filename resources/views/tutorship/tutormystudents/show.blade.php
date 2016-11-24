@@ -55,12 +55,48 @@
                             @foreach($competenceResults as $competenceResult)                                                            
                             <tr class="even pointer">                                
                                 <td class=" ">{{$competenceResult->nombre}}</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva1/$competenceResult->puntajeMaxEva1)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva2/$competenceResult->puntajeMaxEva2)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva3/$competenceResult->puntajeMaxEva3)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva4/$competenceResult->puntajeMaxEva4)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva5/$competenceResult->puntajeMaxEva5)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva6/$competenceResult->puntajeMaxEva6)*100, 2)}}%</td>                                
+                                @if(count($tutstudentxevaluations) >  0)
+                                    @if(!$competenceResult->puntajeMaxEva1)
+                                        <td class=" ">0%</td>
+                                    @else
+                                        <td class=" ">{{round( ($competenceResult->puntajeEva1/$competenceResult->puntajeMaxEva1)*100, 2)}}%</td>
+                                    @endif
+                                @endif
+                                @if(count($tutstudentxevaluations) >  1)
+                                    @if(!$competenceResult->puntajeMaxEva2)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva2/$competenceResult->puntajeMaxEva2)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  2)
+                                    @if(!$competenceResult->puntajeMaxEva3)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva3/$competenceResult->puntajeMaxEva3)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  3)
+                                    @if(!$competenceResult->puntajeMaxEva4)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva4/$competenceResult->puntajeMaxEva4)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  4)
+                                    @if(!$competenceResult->puntajeMaxEva5)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva5/$competenceResult->puntajeMaxEva5)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  5)
+                                    @if(!$competenceResult->puntajeMaxEva5)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva6/$competenceResult->puntajeMaxEva6)*100, 2)}}%</td>                                
+                                    @endif   
+                                @endif   
                             </tr>
                             @endforeach                                
                                 

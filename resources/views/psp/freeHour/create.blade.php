@@ -18,29 +18,14 @@
                 <div class="clearfix"></div>
             </div>
             {{Form::open(['route' => 'freeHour.store','class' => ' form-horizontal','id'=>'formSuggestion'])}}
-            {{--
+            
             <div class="form-group">
                 {{Form::label('Fecha',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                 <div class="col-md-4">
-                    {{Form::date('fecha', \Carbon\Carbon::now(),['class'=>'form-control'])}}
+                    <input class="form-control" type="text" name="fecha" id="fecha" placeholder="dd-mm-aaaa" minlength="10" maxlength="10" value="" required/>
                 </div>
             </div>
-            --}}
-            <div class="form-group">
-                {{Form::label('Fecha',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                <div class="col-md-4">
-                    <input class="form-control" type="text" name="fecha" id="fecha" placeholder="dd/mm/aaaa" minlength="10" maxlength="10" value="" required/>
-                </div>
-            </div>
-                {{--
-                <div class="form-group">
-                    {{Form::label('Hora',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
-                    <div class="col-md-3">
-                        {{Form::number('hora_ini',null,['class'=>'form-control', 'required', 'min' => 8, 'max' => 21])}}    
-                    </div>
-                    {{Form::label('horas',null,['class'=>'col-md-1'])}}                     
-                </div>
-                --}}
+                
                 <div class="form-group">
                     {{Form::label('Disponibilidad *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
@@ -82,7 +67,7 @@
             var today = new Date();
 
             $("#fecha").datepicker({
-                format: "dd/mm/yyyy",                                                                
+                format: "dd-mm-yyyy",                                                                
                 startDate: "today",
                 language: "es",                
                 todayHighlight: true,

@@ -27,8 +27,8 @@ class MeetingTest extends TestCase
         	'user' => $user
         	])->visit('/psp/meeting/createSup')
     	->select(2,'tiporeunion') 
-    	->type('11/01/2017','fecha')
-    	->type('9','hora_inicio')
+    	->type('11-01-2017','fecha')
+    	->check('hora_inicio')
     	->select($student->IdAlumno,'alumno')
     	->type('av 123','lugar')
     	->press('Guardar')
@@ -50,8 +50,8 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('psp/meeting/createSup')
         ->select('','tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('9','hora_inicio')
+        ->type('11-01-2017','fecha')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
         ->type('av 123','lugar')
         ->press('Guardar')
@@ -73,8 +73,8 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
-        ->type('40/30/0001','fecha')
-        ->type('9','hora_inicio')
+        ->type('40-30-0001','fecha')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
         ->type('av 123','lugar')
         ->press('Guardar')
@@ -96,8 +96,8 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
-        ->type('01/01/1970','fecha')
-        ->type('9','hora_inicio')
+        ->type('01-01-1970','fecha')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
         ->type('av 123','lugar')
         ->press('Guardar')
@@ -120,7 +120,7 @@ class MeetingTest extends TestCase
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
         ->type('asgfjkl','fecha')
-        ->type('9','hora_inicio')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
         ->type('av 123','lugar')
         ->press('Guardar')
@@ -143,13 +143,14 @@ class MeetingTest extends TestCase
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
         ->type('','fecha')
-        ->type('9','hora_inicio')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
         ->type('av 123','lugar')
         ->press('Guardar')
         ->seePageIs('psp/meeting/createSup');
     }
 
+    //V2 No check
     public function test_psp_cr_met_07(){
         $user = factory(Intranet\Models\User::class)->create([
             'IdPerfil' => 6,
@@ -165,13 +166,14 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('100','hora_inicio')
+        ->type('11-01-2017','fecha')        
         ->select($student->IdAlumno,'alumno')
         ->type('av 123','lugar')
         ->press('Guardar')
         ->seePageIs('psp/meeting/createSup');
     }
+
+    //Pruebas del 8 al 10 eliminadas
 
     public function test_psp_cr_met_08(){
         $user = factory(Intranet\Models\User::class)->create([
@@ -188,9 +190,9 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('0','hora_inicio')
-        ->select($student->IdAlumno,'alumno')
+        ->type('11-01-2017','fecha')
+        ->check('hora_inicio')
+        ->select('','alumno')
         ->type('av 123','lugar')
         ->press('Guardar')
         ->seePageIs('psp/meeting/createSup');
@@ -211,10 +213,10 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('','hora_inicio')
+        ->type('11-01-2017','fecha')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
-        ->type('av 123','lugar')
+        ->type('','lugar')
         ->press('Guardar')
         ->seePageIs('psp/meeting/createSup');
     }
@@ -234,10 +236,10 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('kappa','hora_inicio')
+        ->type('11-01-2017','fecha')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
-        ->type('av 123','lugar')
+        ->type('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','lugar')
         ->press('Guardar')
         ->seePageIs('psp/meeting/createSup');
     }
@@ -257,77 +259,8 @@ class MeetingTest extends TestCase
             'user' => $user
             ])->visit('/psp/meeting/createSup')
         ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('10','hora_inicio')
-        ->select('','alumno')
-        ->type('av 123','lugar')
-        ->press('Guardar')
-        ->seePageIs('psp/meeting/createSup');
-    }
-
-    public function test_psp_cr_met_12(){
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-        $student = Student::get()->first();
-        //dd($student);
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/meeting/createSup')
-        ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('10','hora_inicio')
-        ->select($student->IdAlumno,'alumno')
-        ->type('','lugar')
-        ->press('Guardar')
-        ->seePageIs('psp/meeting/createSup');
-    }
-
-    public function test_psp_cr_met_13(){
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-        $student = Student::get()->first();
-        //dd($student);
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/meeting/createSup')
-        ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('10','hora_inicio')
-        ->select($student->IdAlumno,'alumno')
-        ->type('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','lugar')
-        ->press('Guardar')
-        ->seePageIs('psp/meeting/createSup');
-    }
-
-    public function test_psp_cr_met_14(){
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-        $student = Student::get()->first();
-        //dd($student);
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/meeting/createSup')
-        ->select(2,'tiporeunion') 
-        ->type('11/01/2017','fecha')
-        ->type('10','hora_inicio')
+        ->type('11-01-2017','fecha')
+        ->check('hora_inicio')
         ->select($student->IdAlumno,'alumno')
         ->type('!"·$%&/()=?¿','lugar')
         ->press('Guardar')

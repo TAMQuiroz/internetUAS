@@ -102,6 +102,60 @@ class TutMeeting extends Model {
         return $queryTutMeeting->orderBy("inicio", 'asc')->get();
     }
 
+    static public function getFilteredTutMeetingsTable($filters) {
+        $query = Tutstudent::query();
+        $queryTutMeeting = TutMeeting::query();
+        $stateFalse = 100;
+        if ($filters["code"] != "") {
+            $query = $query->where("codigo", $filters["code"]);
+        }
+        if ($filters["name"] != "") {
+            $query = $query->where("nombre", "like", "%" . $filters["name"] . "%");
+        }
+        if ($filters["lastName"] != "") {
+            $query = $query->where("ape_paterno", "like", "%" . $filters["lastName"] . "%");
+        }
+        if ($filters["secondLastName"] != "") {
+            $query = $query->where("ape_materno", "like", "%" . $filters["secondLastName"] . "%");
+        }
+
+        $students = $query->get();
+        if ($query->first()) {
+            if ($filters["state"] != "") {
+                if ($filters['state'] == '1') {
+                    $queryTutMeeting = $queryTutMeeting->where("estado", 4)->where('creador', 1);
+                } else if (($filters['state'] == '4')) {
+                    $queryTutMeeting = $queryTutMeeting->where("estado", 4)->where('creador', 0);
+                } else {
+                    $queryTutMeeting = $queryTutMeeting->where("estado", $filters["state"]);
+                }
+            }
+            if ($filters["id_docente"] != "") {
+                $queryTutMeeting = $queryTutMeeting->where("id_docente", $filters["id_docente"]);
+            }
+            if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
+                $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
+            }
+        } else {
+            //Como no encontró alumno luego de buscar, no debe regresar ninguna cita. Buscamos una cita que devuelva null
+            $queryTutMeeting = $queryTutMeeting->where("estado", $stateFalse);
+            return $queryTutMeeting->get();
+        }
+
+        $id_list = array();
+        foreach ($students as $student) {
+            if ($student) {
+                array_push($id_list, $student->id);
+            }
+        }
+
+
+        $queryTutMeeting = $queryTutMeeting->whereIn("id_tutstudent", $id_list);
+
+
+        return $queryTutMeeting->orderBy("inicio", 'asc')->paginate(10);
+    }
+
     static public function getFilteredTutMeetingsByStudent($filters) {
         $query = Tutstudent::query();
         $queryTutMeeting = TutMeeting::query();

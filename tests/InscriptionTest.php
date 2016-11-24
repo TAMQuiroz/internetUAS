@@ -79,15 +79,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo actividades formativas es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -116,15 +116,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo actividad economica es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -153,15 +153,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo condiciones de seguridad de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -190,15 +190,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo correo de jefe directo es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -227,15 +227,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo distrito de empresa es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -264,15 +264,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo dirección de empresa es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -301,15 +301,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo equipo del practicante es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -338,15 +338,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo fecha de inicio es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -375,15 +375,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo fecha de recepción de convenio es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -412,15 +412,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo fecha de término es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -450,15 +450,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo jefe directo auxiliar es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -487,15 +487,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo nombre de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -524,15 +524,15 @@ class InscriptionTest extends TestCase
             ->type('','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo personal de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -561,15 +561,15 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo puesto es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -598,19 +598,19 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('Practicante','puesto')
             ->type('','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo razon social es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
-        public function test_psp_cr_ins_17()
+    /*    public function test_psp_cr_ins_17()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -635,7 +635,7 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('Practicante','puesto')
             ->type('Razon social','razon_social')
-            ->type('','recomendaciones')
+            ->type('','recomendaciones') //ESTE CAMPO YA NO EXISTE
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
@@ -645,7 +645,7 @@ class InscriptionTest extends TestCase
             ->see('Inscripción de Empresa')
             ->see('El campo recomendaciones es obligatorio');
             
-    }
+    } */
 
       public function test_psp_cr_ins_18()
     {
@@ -672,15 +672,15 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('Practicante','puesto')
             ->type('Razon social','razon_social')
-            ->type('Recomendaciones','recomendaciones')
+            //->type('Recomendaciones','recomendaciones')
             ->type('','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo telefono comercial es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -709,15 +709,15 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('Practicante','puesto')
             ->type('Razon social','razon_social')
-            ->type('Recomendaciones','recomendaciones')
+            //->type('Recomendaciones','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Inscripción de Empresa')
-            ->see('El campo ubicación de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -733,12 +733,14 @@ class InscriptionTest extends TestCase
 
     public function test_psp_cr_ins_20()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        //$user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(41);
 
         $this->actingAs($user)
             ->withSession([
                 'actions' => [],
-                'user' => factory(Intranet\Models\Student::class)->make()
+                //'user' => factory(Intranet\Models\Student::class)->make()
+                'user' => $user
             ])->visit('/psp/inscription/create')
                          ->type('ar','activ_formativas')
             ->type('trabajar','actividad_economica')
@@ -756,14 +758,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             ->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription')
-            ->see('Editar Inscripción de Empresa')
-            ->see('La inscripción se ha registrado exitosamente');
+            //->see('Editar Inscripción de Empresa')
+            ->see('información de Empresa');
+            //->see('La inscripción se ha registrado exitosamente');
             
     }
 
@@ -792,15 +795,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo actividades formativas es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -829,15 +832,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo actividad economica es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -866,15 +869,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo condiciones de seguridad de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -903,15 +906,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo correo de jefe directo es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -940,15 +943,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo distrito de empresa es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -977,15 +980,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo dirección de empresa es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1014,15 +1017,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo equipo del practicante es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1051,15 +1054,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo fecha de inicio es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1088,15 +1091,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo fecha de recepción de convenio es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1125,15 +1128,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo fecha de término es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1163,15 +1166,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo jefe directo auxiliar es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1200,15 +1203,15 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo nombre de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1237,15 +1240,15 @@ class InscriptionTest extends TestCase
             ->type('','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo personal de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1274,15 +1277,15 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo puesto es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1311,19 +1314,19 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('Practicante','puesto')
             ->type('','razon_social')
-            ->type('mejora','recomendaciones')
+            //->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo razon social es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
-        public function test_psp_cr_ins_36()
+    /*    public function test_psp_cr_ins_36()
     {
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -1358,7 +1361,7 @@ class InscriptionTest extends TestCase
             ->see('Editar Inscripción de Empresa')
             ->see('El campo recomendaciones es obligatorio');
             
-    }
+    }*/
 
       public function test_psp_cr_ins_37()
     {
@@ -1385,15 +1388,15 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('Practicante','puesto')
             ->type('Razon social','razon_social')
-            ->type('Recomendaciones','recomendaciones')
+            //->type('Recomendaciones','recomendaciones')
             ->type('','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo telefono comercial es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 
@@ -1422,15 +1425,15 @@ class InscriptionTest extends TestCase
             ->type('Personal de area','personal_area')
             ->type('Practicante','puesto')
             ->type('Razon social','razon_social')
-            ->type('Recomendaciones','recomendaciones')
+            //->type('Recomendaciones','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('','ubicacion_area')
             //->check('terminos')
             ->press('Guardar')
             ->seePageIs('/psp/inscription/create')
              
-            ->see('Editar Inscripción de Empresa')
-            ->see('El campo ubicación de área es obligatorio');
+            ->see('Inscripción de información de Empresa');
+            //->see('El campo actividades formativas es obligatorio');
             
     }
 

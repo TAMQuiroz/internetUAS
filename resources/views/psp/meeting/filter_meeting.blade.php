@@ -17,10 +17,30 @@
 				{{Form::text('apellidoPat', null, ['class' => 'form-control input-modal', 'maxlength' => 30])}}
 			</div>			
 		</div>
+		
+		<div class="form-group">
+			<label class="control-label col-md-4 col-sm-4 col-xs-6 label-modal">Fecha Inicio</label>           
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <input class="form-control" type="text" name="fechaInicio" id="fechaInicio" placeholder="dd-mm-aaaa" minlength="10" maxlength="10" value=""/>
+            </div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-4 col-sm-4 col-xs-6 label-modal">Fecha Fin</label>            
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <input class="form-control" type="text" name="fechaFin" id="fechaFin" placeholder="dd-mm-aaaa" minlength="10" maxlength="10" value=""/>
+            </div>
+		</div>
+
 		<div class="form-group">
 			<label class="control-label col-md-4 col-sm-4 col-xs-6 label-modal">Estado</label>
 			<div class="col-md-6 col-sm-6 col-xs-6">
-				{{Form::text('estado', null, ['class' => 'form-control input-modal', 'maxlength' => 30])}}
+				<select class="form-control input-filter" name="estado">
+                <option value="">Todas</option>                 
+                <option value="Pendiente">Pendiente</option>                   
+                <option value="Realizada">Realizada</option>                 
+                <option value="Cancelada">Cancelada</option>
+            </select>
 			</div>			
 		</div>
 	
@@ -30,3 +50,21 @@
 		</div>
 	{{Form::close()}}
 </div>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            
+            $("#fechaInicio").datepicker({
+                format: "dd-mm-yyyy",                                                                                
+                language: "es",                
+                todayHighlight: true,
+            });
+            $("#fechaFin").datepicker({
+                format: "dd-mm-yyyy", 
+                language: "es",                
+                todayHighlight: true,
+            });
+        });
+    </script>

@@ -32,7 +32,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($meeting as $meeting)
+                        @foreach($meetings as $meeting)
                         <tr> 
                             <td>{{$meeting->id}}</td> 
                             <td>{{$meeting->fecha}}</td> 
@@ -46,6 +46,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{$meetings->links()}}
             </div>
         </div>
     </div>

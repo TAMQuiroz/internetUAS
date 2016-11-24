@@ -36,8 +36,8 @@ class PspProcessTableSeeder extends Seeder
             DB::table('Usuario')->insert([
                 'IdUsuario' => 40,
                 'IdPerfil'          => 6,
-                'Usuario'           => 20112188,
-                'Contrasena'        => bcrypt(20112188),
+                'Usuario'           => 20112189,
+                'Contrasena'        => bcrypt(20112189),
             ]);
         }
 
@@ -51,7 +51,7 @@ class PspProcessTableSeeder extends Seeder
                 'correo'            =>  $faker->email,
                 'direccion'         =>  'av 123',
                 'telefono'          => 123412341,
-                'codigo_trabajador' => 20112188,
+                'codigo_trabajador' => 20112189,
                 'idfaculty'         =>  1,
                 'iduser'            =>  40,
                 'idpspprocess'      =>  1,

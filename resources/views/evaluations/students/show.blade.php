@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="page-title">
-            <div class="title_left">
+            <div class="">
                 <h3>Ver alumno</h3>
             </div>
         </div>
@@ -19,13 +19,13 @@
             </div>
             <div class="panel-body">                
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label>Código</label>                             
                             <input class="form-control" readonly name="codigo" placeholder="Nombre" maxlength="50" value="{{$student->codigo}}">                                                                       
                         </div>                            
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6  col-xs-12">
                         <div class="form-group">
                             <label>Nombres</label> 
                             <input class="form-control" readonly name="nombres" placeholder="Nombre" maxlength="50" value="{{$student->nombre}}">                                                                                                                                          
@@ -33,24 +33,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6  col-xs-12">
                         <div class="form-group">
                             <label>Apellidos</label>                         
                             <input class="form-control" readonly name="Apellidos" placeholder="Nombre" maxlength="50" value="{{$student->ape_paterno}} {{$student->ape_materno}}">                                                                                                                                                                                                  
                         </div>
                     </div>  
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6  col-xs-12">
                         <div class="form-group">
                             <label>Correo</label>                                                     
                             <input class="form-control" readonly name="Correo" placeholder="Nombre" maxlength="50" value="{{$student->correo}}">                                                                                                                                                                                                                              
                         </div>
                     </div>
                 </div>                  
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">                        
-                        <a class="btn btn-default pull-right" href="{{ route('evstudent.index') }}">Regresar</a>
-                    </div>
-                </div>
+                
 
                 <div class="table-responsive">
                     <table class="table table-striped responsive-utilities jambo_table bulk_action">
@@ -66,12 +62,48 @@
                             @foreach($competenceResults as $competenceResult)                                                            
                             <tr class="even pointer">                                
                                 <td class=" ">{{$competenceResult->nombre}}</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva1/$competenceResult->puntajeMaxEva1)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva2/$competenceResult->puntajeMaxEva2)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva3/$competenceResult->puntajeMaxEva3)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva4/$competenceResult->puntajeMaxEva4)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva5/$competenceResult->puntajeMaxEva5)*100, 2)}}%</td>
-                                <td class=" ">{{round( ($competenceResult->puntajeEva6/$competenceResult->puntajeMaxEva6)*100, 2)}}%</td>                                
+                                @if(count($tutstudentxevaluations) >  0)
+                                    @if(!$competenceResult->puntajeMaxEva1)
+                                        <td class=" ">0%</td>
+                                    @else
+                                        <td class=" ">{{round( ($competenceResult->puntajeEva1/$competenceResult->puntajeMaxEva1)*100, 2)}}%</td>
+                                    @endif
+                                @endif
+                                @if(count($tutstudentxevaluations) >  1)
+                                    @if(!$competenceResult->puntajeMaxEva2)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva2/$competenceResult->puntajeMaxEva2)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  2)
+                                    @if(!$competenceResult->puntajeMaxEva3)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva3/$competenceResult->puntajeMaxEva3)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  3)
+                                    @if(!$competenceResult->puntajeMaxEva4)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva4/$competenceResult->puntajeMaxEva4)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  4)
+                                    @if(!$competenceResult->puntajeMaxEva5)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva5/$competenceResult->puntajeMaxEva5)*100, 2)}}%</td>
+                                    @endif   
+                                @endif   
+                                @if(count($tutstudentxevaluations) >  5)
+                                    @if(!$competenceResult->puntajeMaxEva5)
+                                        <td class=" ">0%</td>
+                                    @else
+                                    <td class=" ">{{round( ($competenceResult->puntajeEva6/$competenceResult->puntajeMaxEva6)*100, 2)}}%</td>                                
+                                    @endif   
+                                @endif   
                             </tr>
                             @endforeach                                
                                 
@@ -80,6 +112,11 @@
                     </table>
                 </div>
                 <div id="graphic" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">                        
+                        <a class="btn btn-default pull-left" href="{{ route('evstudent.index') }}"> <i class="fa fa-backward" aria-hidden="true"></i> Regresar</a>
+                    </div>
+                </div>
             </div>            
         </div>
     </div>

@@ -13,4 +13,12 @@ class Pspstudentsxcriterios extends Model{
     protected $primaryKey = "id";
     protected $fillable = ['idpspstudent', 'idcriterio', 'nota'];
 
+    public function pspcriterio(){
+        return $this->belongsTo('Intranet\Models\Pspcriterio', 'idcriterio');
+    }
+
+    public function pspStudent(){
+        return $this->belongsTo('Intranet\Models\PspStudent', 'idpspstudent');
+    }
+
 }

@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(UsersTableSeeder::class);
+        
         $this->call(StatusTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(InvestigatorsTableSeeder::class);
@@ -23,14 +23,33 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TopicsTableSeeder::class);
         $this->call(ReasonsTableSeeder::class);
+        $this->call(ParametersTableSeeder::class);
         
-        // $this->call(TutstudentsTableSeeder::class);
         $this->call(TeachersTableSeeder::class);
         $this->call(CompetenceTableSeeder::class);    
         $this->call(QuestionsTableSeeder::class);    
+
         //psp
-        //$this->call(CaseInscriptionFileSeeder::class);
         $this->call(PspProcessTableSeeder::class);
         $this->call(PspGroupTableSeeder::class);
+    
+
+        //Seeders solo para presentacion
+        /*
+        $this->call(StatusTableSeeder::class);
+        $this->call(AreasTableSeeder::class);
+        $this->call(InvestigatorsPresentationTableSeeder::class);
+        $this->call(GroupsPresentationTableSeeder::class);
+        $this->call(EventsTableSeeder::class);
+        $this->call(ProjectsTableSeeder::class);
+        $this->call(DeliverablesTableSeeder::class);
+
+        $this->call(TopicsTableSeeder::class);
+        $this->call(ReasonsTableSeeder::class);
+
+        $this->call(CompetencePresentationTableSeeder::class);    
+        $this->call(QuestionsPresentationTableSeeder::class);  
+        */
+
     }
 }

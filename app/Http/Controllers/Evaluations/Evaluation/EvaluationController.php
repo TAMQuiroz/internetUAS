@@ -71,11 +71,17 @@ class EvaluationController extends Controller
                 array_push($id_competences, $auxCompetence->id_competence);
             }
 
-            
+            $i = 1;
             foreach ($tutstudentxevaluations as $tutstudentxevaluation) {
-                array_push($id_tutstudentxevaluations, $tutstudentxevaluation->id);
+                array_push($id_tutstudentxevaluations, $tutstudentxevaluation->id_evaluation);
+                $i++;
+            }            
+            $j = $i;
+            while( $j < 7) {
+                array_push($id_tutstudentxevaluations, 0); 
+                $j++;
             }
-
+            
             //the beast
             $competenceResults = DB::table('competences')
                 ->select('nombre','Aux.*')
@@ -92,6 +98,7 @@ class EvaluationController extends Controller
                     FROM  `competencextutstudentxevaluations` A
                     LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
                     WHERE id_tutstudent =' . $id .'
+                    AND corregida = 1
                     )C
                     LEFT JOIN (
 
@@ -99,7 +106,7 @@ class EvaluationController extends Controller
                     FROM  `competencextutstudentxevaluations` A
                     LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
                     WHERE id_tutstudent =' . $id .'
-                    AND id_evaluation =' . $tutstudentxevaluations[0]->id_evaluation .'
+                    AND id_evaluation =' . $id_tutstudentxevaluations[0] .'
                     )D ON C.id_competence = D.id_competence
                     LEFT JOIN (
 
@@ -107,7 +114,7 @@ class EvaluationController extends Controller
                     FROM  `competencextutstudentxevaluations` A
                     LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
                     WHERE id_tutstudent =' . $id .'
-                    AND id_evaluation =' . $tutstudentxevaluations[1]->id_evaluation .'
+                    AND id_evaluation =' . $id_tutstudentxevaluations[1] .'
                     )E ON C.id_competence = E.id_competence
                     LEFT JOIN (
 
@@ -115,7 +122,7 @@ class EvaluationController extends Controller
                     FROM  `competencextutstudentxevaluations` A
                     LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
                     WHERE id_tutstudent =' . $id .'
-                    AND id_evaluation =' . $tutstudentxevaluations[2]->id_evaluation .'
+                    AND id_evaluation =' . $id_tutstudentxevaluations[2] .'
                     )F ON C.id_competence = F.id_competence
                     LEFT JOIN (
 
@@ -123,7 +130,7 @@ class EvaluationController extends Controller
                     FROM  `competencextutstudentxevaluations` A
                     LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
                     WHERE id_tutstudent =' . $id .'
-                    AND id_evaluation =' . $tutstudentxevaluations[3]->id_evaluation .'
+                    AND id_evaluation =' . $id_tutstudentxevaluations[3] .'
                     )G ON C.id_competence = G.id_competence
                     LEFT JOIN (
 
@@ -131,7 +138,7 @@ class EvaluationController extends Controller
                     FROM  `competencextutstudentxevaluations` A
                     LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
                     WHERE id_tutstudent =' . $id .'
-                    AND id_evaluation =' . $tutstudentxevaluations[4]->id_evaluation .'
+                    AND id_evaluation =' . $id_tutstudentxevaluations[4] .'
                     )H ON C.id_competence = H.id_competence
                     LEFT JOIN (
 
@@ -139,7 +146,7 @@ class EvaluationController extends Controller
                     FROM  `competencextutstudentxevaluations` A
                     LEFT JOIN  `tutstudentxevaluations` B ON A.id_tutev = B.id
                     WHERE id_tutstudent =' . $id .'
-                    AND id_evaluation =' . $tutstudentxevaluations[5]->id_evaluation .' 
+                    AND id_evaluation =' . $id_tutstudentxevaluations[5] .' 
                     )I ON C.id_competence = I.id_competence) Aux'), function($join)
                 {
                     $join->on('competences.id', '=', 'Aux.id_competence');
@@ -147,7 +154,7 @@ class EvaluationController extends Controller
         } else{
             $competenceResults = array();            
         }         
-
+        //dd($competenceResults);
         //end the beast            
         $data       = [
             'student'                => $student, 
@@ -198,7 +205,7 @@ class EvaluationController extends Controller
            array_push($evaluations,$tutstudentxevaluation->evaluation);
        }
 
-       // dd($evaluations);
+       
        $data = [
        'id_tutstudent'               =>  $id,
        'evaluations'               =>  $evaluations,
@@ -303,7 +310,7 @@ public function indexresults(Request $request,$id)
     $total_students = count(Tutstudentxevaluation::where('id_evaluation',$id)->get());
 
     $compxtutxevs = DB::table('tutstudentxevaluations')->join('competencextutstudentxevaluations', 'tutstudentxevaluations.id', '=', 'id_tutev')->join('competences','competences.id','=','competencextutstudentxevaluations.id_competence')->selectRaw('id_competence,nombre, count(*) as cantidad,avg(puntaje) as prom_punt,min(puntaje) as min,max(puntaje) as max ,AVG(puntaje_maximo) as maximo')->where('fecha_hora','<>',null)->where('id_evaluation',$id)->groupBy('id_competence')->get();
-    // dd($compxtutxevs);
+    
     
     $data = [
     'evaluation'               =>  $evaluation, 
@@ -371,7 +378,7 @@ public function sendresults(Request $request,$id)
      */
     public function store(EvaluationRequest $request)
     {
-        // dd($request);
+        
         $specialty = Session::get('faculty-code');  
 
         try {
@@ -543,7 +550,7 @@ public function sendresults(Request $request,$id)
     {//guarda las correcciones
         $id_docente = Session::get('user')->IdDocente;
         $tutstudentxevaluation = Tutstudentxevaluation::where('id_tutstudent',$id)->where('id_evaluation',$ev)->first();
-        // dd($request);
+        
         foreach ($request['arr_comentario'] as $key => $value) {
             $evaluation = Evquestionxstudentxdocente::find($key);
             $evaluation->comentario = $value;
@@ -589,7 +596,7 @@ public function sendresults(Request $request,$id)
             $tutstudentxevaluation->save(); //disminuyo la cantidad de intentos del alumno
 
             $evaluation   = Evaluation::find($id);//saco la evaluacion        
-            // dd($evaluation);
+            
             $data = [        
             'evaluation'   =>  $evaluation,        
             ];
@@ -677,7 +684,7 @@ public function sendresults(Request $request,$id)
 
         //avisar a todos los alumnos
         $students = DB::table('tutstudentxevaluations')->join('tutstudents', 'tutstudents.id', '=', 'id_tutstudent')->select('nombre','correo')->where('id_evaluation',$id)->get();
-        // dd($students);
+        
 
         $evaluacion = $evaluation->nombre;
         $fecha_inicio = $evaluation->fecha_inicio;
@@ -754,7 +761,7 @@ public function sendresults(Request $request,$id)
      */
     public function update(EvaluationRequest $request, $id)
     {
-        // dd($request);
+        
 
         $specialty = Session::get('faculty-code');  
 

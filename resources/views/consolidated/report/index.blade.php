@@ -23,7 +23,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="resultado" class="control-label col-sm-4 col-xs-12">Período<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="periodo" id="periodo" class="form-control">
+                                <select  required="true" name="periodo" id="periodo" class="form-control" required>
                                     <option value="0">--Seleccione--</option>
                                     @foreach($periodos as $periodo)
                                         <option value= "{{$periodo->IdPeriodo}}">
@@ -39,7 +39,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Resultado Estudiantil<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="resultado" id="resultado" class="form-control">
+                                <select name="resultado" id="resultado" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>
@@ -50,7 +50,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Aspecto<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="aspecto" id="aspecto" class="form-control">
+                                <select name="aspecto" id="aspecto" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>
@@ -61,7 +61,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Criterio<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="criterio" id="criterio" class="form-control">
+                                <select name="criterio" id="criterio" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>
@@ -72,7 +72,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Curso<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="curso" id="curso" class="form-control">
+                                <select name="curso" id="curso" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>
@@ -87,40 +87,9 @@
                                  <button class="btn btn-success pull-right" type="submit"><i class="fa fa-plus"></i> Generar Reporte</button>
                             </div>
                         </div>
-                    </div>   
+                    </div>  
                         
-                </form>
-
-
-                <div class="clearfix"></div>
-                <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                    <thead>
-                    <tr class="headings">
-                        <th class="column-title">Resultado Estudiantil</th>
-                        <th class="column-title">Aspecto</th>
-                        <th class="column-title">Criterio</th>
-                        <th class="column-title">Estado</th>
-                        
-                    </tr>
-                    </thead>
-                    <tbody id="criterio-fc-table">
-
-                    </tbody>
-                </table>
-
-
-                <br>
-                <br>
-                <div class="separator"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-
-                        <a href="#" class="btn btn-default">< Atras</a>
-                        <a id="criterio-siguiente-btn" href="#" class="btn btn-success pull-right">Siguiente ></a>
-                         
-                    </div>
-                </div>
-
+                </form>     
             </div>
 
         </div>

@@ -74,7 +74,7 @@
                                 </a>
                             @endif
                             @if($tutMeeting->estado == 2)
-                                <a href="" class="btn btn-warning btn-xs view-group" title="Atender" style="height: inherit;">
+                                <a href="{{ route('atencion_cita.attendMeeting', $tutMeeting->id) }}" class="btn btn-warning btn-xs view-group" title="Atender" style="height: inherit;">
                                     <i class="fa fa-database"></i>
                                 </a>
                             @endif

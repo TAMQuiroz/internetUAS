@@ -160,12 +160,19 @@ class TutorController extends Controller {
             $horas[$t->IdDocente] = $tutSchedule->count();
         }
 
+        $quantityStudents   = $students->count();
+        $quantityTutors     = $tutors->count();
+
+        $allQuantity        = Tutstudent::getQuantityPerTutor($quantityTutors, $quantityStudents);
+
+
         $data = [
             'tutor' => $tutor,
             'razones' => $razones,
             'students' => $students,
             'tutors' => $tutors,
             'horas' => $horas,
+            'quantities'    => $allQuantity,   
         ];
 
         return view('tutorship.tutor.reassign', $data);

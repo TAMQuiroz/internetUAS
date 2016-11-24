@@ -14,12 +14,7 @@
 
             <div class="clearfix"></div>
 
-            <ul class="tabs-page">  
-                <a href="{{route('reporte.meeting')}}">
-                <div class="tab-page-wrapper">
-                    <li class="tab-page">Citas</li>
-                </div>    
-                </a>
+            <ul class="tabs-page">                  
                 <a href="{{route('reporte.tutor')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por tutor</li>
@@ -37,12 +32,7 @@
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas canceladas</li>
                     </div>
-                </a>
-                <a href="{{route('reporte.reassign')}}">
-                    <div class="tab-page-wrapper">
-                        <li class="tab-page">Reasignación de tutores</li>
-                    </div>
-                </a>
+                </a>                
             </ul>
 
             <div class="tab-content-container">

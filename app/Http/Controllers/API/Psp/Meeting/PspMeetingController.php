@@ -38,7 +38,7 @@ class PspMeetingController extends BaseController
 
       foreach ($meetings as $meeting) {
 
-        $meeting['estado'] = Status::find($meeting->idtipoestado)->first();
+        $meeting['estado'] = Status::where('id', $meeting->idtipoestado)->first();
 
         # code...
       }
@@ -55,7 +55,7 @@ class PspMeetingController extends BaseController
 
  			foreach($meetings as $meeting ){
 
- 				$meeting['estado'] =  Status::find($meeting->idtipoestado)->first();
+ 				$meeting['estado'] =  Status::where('id',$meeting->idtipoestado)->first();
 
 
 
@@ -356,6 +356,10 @@ public function storeByStudent(Request $request){
           
         } 
     }
+
+
+
+
 
 
 

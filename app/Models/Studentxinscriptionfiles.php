@@ -14,7 +14,7 @@ class Studentxinscriptionfiles extends Model
     public function inscription(){
         return $this->belongsTo('Intranet\Models\Inscription', 'id');
     }
-    public function student(){
-        return $this->belongsTo('Intranet\Models\Student', 'IdAlumno');
+    public function pspStudent(){
+        return $this->belongsTo('Intranet\Models\PspStudent', 'id');
     }
 }

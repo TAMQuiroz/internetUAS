@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/addPlan',[ 'as' => 'addPentryA', 'uses' => 'EnhacementPlan\EnhacementController@addPlan']);
         Route::get('/delete', ['as' => 'delete.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@delete']);
         Route::post('/search', ['as' => 'search.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@search']);
+        Route::get('/enhacement', ['as' => 'report.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@report']);
 
         //AJAX routes
 
@@ -552,7 +553,22 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
                 Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
                 Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
+            });
+
+            //ReportC
+            Route::group(['prefix' => 'report'], function() {
+                Route::get('/', ['as' => 'reportC.index', 'uses' => 'Psp\Report\reportPspController@index']);
+                Route::get('create', ['as' => 'reportC.create', 'uses' => 'Psp\Report\reportPspController@create']);
+                Route::post('create', ['as' => 'reportC.generate', 'uses' => 'Psp\Report\reportPspController@generate']);
+                Route::post('genPDF', ['as' => 'reportC.genPDF', 'uses' => 'Psp\Report\reportPspController@genPDF']);
+                Route::get('show/{id}', ['as' => 'reportC.show', 'uses' => 'Psp\Report\reportPspController@show']);
+
             });                    
+
+            Route::group(['prefix' => 'attendanceReport'], function() {
+                Route::get('create',['as' => 'attendanceRate.create', 'uses' => 'Psp\Report\AttendanceRateController@create']);
+                Route::post('create',['as' => 'attendanceRate.generate', 'uses' => 'Psp\Report\AttendanceRateController@generate']);
+            });
 
             //PspGroups Luis Llanos
 
@@ -624,6 +640,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('mail/{id}', ['as' => 'MeetingTeacher.mail', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@mail']);
             });
 
+            //TeacherFinalScore
+            Route::group(['prefix' => 'TeacherFinalScore'], function() {
+                Route::get('/', ['as' => 'TeacherFinalScore.index', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@index']);
+                Route::get('create/{id}', ['as' => 'TeacherFinalScore.create', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@create']);
+                Route::post('create/{id}', ['as' => 'TeacherFinalScore.store', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@store']);
+                Route::get('show/{id}', ['as' => 'TeacherFinalScore.show', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@show']);
+                Route::get('edit/{id}', ['as' => 'TeacherFinalScore.edit', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@edit']);
+                Route::post('edit/{id}', ['as' => 'TeacherFinalScore.update', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@update']);
+                Route::get('delete/{id}', ['as' => 'TeacherFinalScore.delete', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@destroy']);   
+               
+            });
             //Inscription File
             Route::group(['prefix' => 'inscription'], function() {
                 Route::get('/', ['as' => 'inscription.index', 'uses' => 'Psp\Inscription\InscriptionController@index']);
@@ -658,6 +685,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
                 Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
                 Route::post('edit/{id}', ['as' => 'aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
+            });
+
+            //Final score
+             Route::group(['prefix' => 'finalscore'], function() {
+                Route::get('index/{id}', ['as' => 'finalscore.index', 'uses' => 'Psp\FinalScore\FinalScoreController@index']);
             });
             
 
@@ -927,6 +959,8 @@ $api->version('v1', function ($api) {
 
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
             $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment'); 
+            $api->post('atenderNoCita', 'Tutoria\TutTutorController@atenderNoCita'); 
+
 
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
@@ -1263,6 +1297,9 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
             Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);
+            Route::get('/atencion-sin-cita', ['as' => 'atencion_sin_cita.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createAttention']);
+            Route::post('/atencion-sin-cita', ['as' => 'atencion.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeAttention']);
+            Route::get('/buscar-alumno', ['as' => 'mis_alumnos.get_name', 'uses' => 'Tutorship\Tutstudent\TutstudentController@getEntireName']);
 
             Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
             Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);

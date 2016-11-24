@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Intranet\Models\Supervisor;
 use Intranet\Models\FreeHour;
 use Intranet\Models\User;
+use Carbon\Carbon;
 
 class FreeHourTest extends TestCase
 {
@@ -30,12 +31,11 @@ class FreeHourTest extends TestCase
         	'actions' => [],
         	'user' => $user
         	])->visit('/psp/freeHour/create')        
-        ->type('9','hora_ini')
+        ->check('hora_ini')
         //Aviso: si se testea despues de esta fecha, cambiarla por favor
-        ->type('11/01/2017','fecha')        
+        ->type('11-01-2017','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/')
-        ->see('La disponibilidad se ha registrado exitosamente');
+        ->seePageIs('psp/freeHour/');        
     }
 
     public function test_psp_cr_frh_02()
@@ -55,12 +55,10 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/create')        
-        ->type('9','hora_ini')
-        ->type('99/99/9999','fecha')        
+        ->check('hora_ini')
+        ->type('99-99-9999','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('fecha no es una fecha v&aacute;lida');
-        
+        ->seePageIs('psp/freeHour/create');
     }
 
     public function test_psp_cr_frh_03()
@@ -80,12 +78,10 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/create')        
-        ->type('9','hora_ini')
-        ->type('01/01/1970','fecha')        
+        ->check('hora_ini')
+        ->type('01-01-1970','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('fecha debe ser una fecha posterior a');
-        
+        ->seePageIs('psp/freeHour/create');
     }
 
     public function test_psp_cr_frh_04()
@@ -105,12 +101,10 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/create')        
-        ->type('9','hora_ini')
+        ->check('hora_ini')
         ->type('marcianito100realnofake','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('fecha no es una fecha v&aacute;lida');
-        
+        ->seePageIs('psp/freeHour/create');
     }
 
     public function test_psp_cr_frh_05()
@@ -130,14 +124,13 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/create')        
-        ->type('9','hora_ini')
+        ->check('hora_ini')
         ->type('','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('El campo fecha es obligatorio');
-        
+        ->seePageIs('psp/freeHour/create');
     }
 
+    //Hora INI Nuevo v2
     public function test_psp_cr_frh_06()
     {
         
@@ -154,84 +147,10 @@ class FreeHourTest extends TestCase
         ->withSession([
             'actions' => [],
             'user' => $user
-            ])->visit('/psp/freeHour/create')        
-        ->type('100','hora_ini')
-        ->type('11/01/2017','fecha')        
+            ])->visit('/psp/freeHour/create')
+        ->type('11-01-2017','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('hora ini no debe ser mayor a 21');
-    }
-
-    public function test_psp_cr_frh_07()
-    {
-        
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-
-
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/freeHour/create')        
-        ->type('1','hora_ini')
-        ->type('11/01/2017','fecha')        
-        ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('El tama&ntilde;o de hora ini debe ser de al menos 8');
-    }
-
-    public function test_psp_cr_frh_08()
-    {
-        
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-
-
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/freeHour/create')        
-        ->type('','hora_ini')
-        ->type('11/01/2017','fecha')        
-        ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('El campo hora ini es obligatorio');
-    }
-
-    public function test_psp_cr_frh_09()
-    {
-        
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-
-
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/freeHour/create')        
-        ->type('Kappa','hora_ini')
-        ->type('11/01/2017','fecha')        
-        ->press('Guardar')
-        ->seePageIs('psp/freeHour/create')
-        ->see('hora ini debe ser num&eacute;rico');
+        ->seePageIs('psp/freeHour/create');        
     }
 
     //Edit
@@ -256,12 +175,11 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('9','hora_ini')
+        ->check('hora_ini')
         //Aviso: si se testea despues de esta fecha, cambiarla por favor
-        ->type('11/01/2017','fecha')        
+        ->type('11-01-2017','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/show/'.$freeHour->id)
-        ->see('La disponibilidad se ha actualizado exitosamente');
+        ->seePageIs('psp/freeHour/show/'.$freeHour->id);
     }
 
     public function test_psp_ed_frh_02()
@@ -284,11 +202,11 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/edit/'.$freeHour->id)      
-        ->type('9','hora_ini')
-        ->type('99/99/9999','fecha')        
+        ->check('hora_ini')
+        ->type('','fecha')
+        ->type('99-99-9999','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('fecha no es una fecha v&aacute;lida');
+        ->seePageIs('psp/freeHour/edit/'.$freeHour->id);
         
     }
 
@@ -311,11 +229,10 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('9','hora_ini')
-        ->type('01/01/1970','fecha')        
+        ->check('hora_ini')
+        ->type('01-01-1970','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('fecha debe ser una fecha posterior a');
+        ->seePageIs('psp/freeHour/edit/'.$freeHour->id);
         
     }
 
@@ -338,11 +255,10 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('9','hora_ini')
+        ->check('hora_ini')
         ->type('marcianito100realnofake','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('fecha no es una fecha v&aacute;lida');
+        ->seePageIs('psp/freeHour/edit/'.$freeHour->id);
         
     }
 
@@ -365,116 +281,15 @@ class FreeHourTest extends TestCase
             'actions' => [],
             'user' => $user
             ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('9','hora_ini')
+        ->check('hora_ini')
         ->type('','fecha')        
         ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('El campo fecha es obligatorio');
+        ->seePageIs('psp/freeHour/edit/'.$freeHour->id);
         
     }
 
-    public function test_psp_ed_frh_06()
-    {
-        
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
+    //No hay hora vacia invalida (ya esta con check)
+    
 
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-        $freeHour = factory(Intranet\Models\FreeHour::class)->create([
-            'idSupervisor' => $supervisor->id,
-            ]);
-
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('100','hora_ini')
-        ->type('11/01/2017','fecha')        
-        ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('hora ini no debe ser mayor a 21');
-    }
-
-    public function test_psp_ed_frh_07()
-    {
-        
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-        $freeHour = factory(Intranet\Models\FreeHour::class)->create([
-            'idSupervisor' => $supervisor->id,
-            ]);
-
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('1','hora_ini')
-        ->type('11/01/2017','fecha')        
-        ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('El tama&ntilde;o de hora ini debe ser de al menos 8');
-    }
-
-    public function test_psp_ed_frh_08()
-    {
-        
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-        $freeHour = factory(Intranet\Models\FreeHour::class)->create([
-            'idSupervisor' => $supervisor->id,
-            ]);
-
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('','hora_ini')
-        ->type('11/01/2017','fecha')        
-        ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('El campo hora ini es obligatorio');
-    }
-
-    public function test_psp_ed_frh_09()
-    {
-        
-        $user = factory(Intranet\Models\User::class)->create([
-            'IdPerfil' => 6,
-            ]);
-
-        $supervisor = factory(Intranet\Models\Supervisor::class)->create([
-            'idUser' => $user->IdUsuario,
-            ]);
-        $freeHour = factory(Intranet\Models\FreeHour::class)->create([
-            'idSupervisor' => $supervisor->id,
-            ]);
-
-        $this->actingAs($user)
-        ->withSession([
-            'actions' => [],
-            'user' => $user
-            ])->visit('/psp/freeHour/edit/'.$freeHour->id)        
-        ->type('Kappa','hora_ini')
-        ->type('11/01/2017','fecha')        
-        ->press('Guardar')
-        ->seePageIs('psp/freeHour/edit/'.$freeHour->id)
-        ->see('hora ini debe ser num&eacute;rico');
-    }
 
 }

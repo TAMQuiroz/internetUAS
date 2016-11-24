@@ -843,7 +843,9 @@ $api->version('v1', function ($api) {
                 $api->post('meetings/student/store',"Meeting\PspMeetingController@storeByStudent");
                 $api->post('meetings/notification/student/{id}',"Meeting\PspMeetingController@mail");      
                  $api->get('student',"Students\PspStudentsController@getStudent");
-                 $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");      
+                 $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");  
+
+                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");    
 
 
 
@@ -922,6 +924,8 @@ $api->version('v1', function ($api) {
 
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
             $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment'); 
+            $api->post('atenderNoCita', 'Tutoria\TutTutorController@atenderNoCita'); 
+
 
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');

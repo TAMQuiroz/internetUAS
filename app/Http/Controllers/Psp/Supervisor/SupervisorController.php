@@ -32,10 +32,11 @@ class SupervisorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $supervisores = Supervisor::get();
+        $filters = $request->all();
+        
+        $supervisores = Supervisor::getFiltered($filters);
 
         $user = Auth::User()->professor;
         $proceso = DB::table('pspprocessesxdocente')->join('pspprocesses','idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso', '=', 'Curso.IdCurso')->select('pspprocesses.id','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$user->IdDocente)->where('pspprocessesxdocente.deleted_at',null)->lists('Nombre','id');

@@ -22,8 +22,16 @@ class FreeHourController extends Controller
     {
         $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
 
-        $freeHours = FreeHour::where('idsupervisor',$supervisor->id)->get();
+        $freeHours = FreeHour::where([
+            ['idsupervisor',$supervisor->id],
+            ['idpspprocess',$supervisor->idpspprocess],
+            ])->orderBy('fecha','asc')->orderBy('hora_ini','asc')->paginate(10);
 
+        foreach ($freeHours as $freeHour) {
+            $dt = new Carbon($freeHour->fecha);        
+            $freeHour->fecha = $dt->format('d-m-Y');
+        }
+        
         $data = [
             'freeHours'    =>  $freeHours,
         ];
@@ -50,11 +58,12 @@ class FreeHourController extends Controller
         $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
 
         $maxi = $this->maximum();
-
+        //return view('psp.freeHour.create'); 
+        
         if($cantDisp < $maxi){
             return view('psp.freeHour.create');    
         }else{
-            return redirect()->route('freeHour.index')->with('warning','Ha llegado al maximo de disponibildades a registrar. Maximo: '.$maxi);
+            return redirect()->route('freeHour.index')->with('warning','Ha llegado al maximo de disponibildades a registrar para eleccion del alumno. Maximo: '.$maxi);
         }
         
     }
@@ -65,17 +74,25 @@ class FreeHourController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FreeHourRequest $request)
     {
         //
-        try {
+        try {       
+
+            $dt = Carbon::createFromFormat('d-m-Y',$request['fecha']);     
+            $previousFH = FreeHour::where([
+                ['fecha',$dt->format('Y-m-d')],
+                ['hora_ini',$request['hora_ini']],
+                ])->get()->first();
+            
+            if($previousFH!=null){
+                return redirect()->route('freeHour.create')->with('warning','Ya registro previamente una reunion con fecha: '.$dt->format('d-m-Y').' a las '.$request['hora_ini'].' horas.');
+            }
 
             $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
-            
-            $freeHour = new FreeHour;
-            //dd($request['fecha_inicio']);
-            $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
-            //dd($freeHour->fecha);
+
+            $freeHour = new FreeHour;                
+            $freeHour->fecha = $dt;                
             $freeHour->hora_ini = $request['hora_ini'];
             $freeHour->cantidad = 1;
             $freeHour->idsupervisor = $supervisor->id;
@@ -85,8 +102,8 @@ class FreeHourController extends Controller
             $f = FreeHour::where('idsupervisor',$supervisor->id)->count();
             $m = $this->maximum();
 
-            return redirect()->route('freeHour.index')->with('success','La disponibilidad se ha registrado exitosamente. Tiene registrado '.$f.'/'.$m.' disponibilidades');
-
+            return redirect()->route('freeHour.index')->with('success','Su disponibilidad se ha registrado exitosamente.');
+            // Tiene registrado '.$f.'/'.$m.' disponibilidades para eleccion del alumno
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }
@@ -103,7 +120,7 @@ class FreeHourController extends Controller
         //
         $freeHour = FreeHour::find($id);
         $dt = new Carbon($freeHour->fecha);        
-        $freeHour->fecha = $dt->format('d/m/Y');
+        $freeHour->fecha = $dt->format('d-m-Y');
         
         $data = [
             'freeHour' => $freeHour,
@@ -123,13 +140,13 @@ class FreeHourController extends Controller
         $freeHour = FreeHour::find($id);
 
         $dt = new Carbon($freeHour->fecha);        
-        $freeHour->fecha = $dt->format('d/m/Y');
+        $freeHour->fecha = $dt->format('d-m-Y');
         //dd($freeHour->fecha);
 
         $data = [
             'freeHour' => $freeHour,
         ];
-
+        //dd($data);
         return view('psp.freeHour.edit',$data);
     }
 
@@ -140,16 +157,29 @@ class FreeHourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FreeHourRequest $request, $id)
     {
         //
         try {
+            $dt = Carbon::createFromFormat('d-m-Y',$request['fecha']);
+            $previousFH = FreeHour::where([
+                ['fecha',$dt->format('Y-m-d')],
+                ['hora_ini',$request['hora_ini']],
+                ])->get()->first();
+
+            if($previousFH!=null){
+                return redirect()->route('freeHour.edit',$id)->with('warning','Ya registro previamente una reunion con fecha: '.$dt->format('d-m-Y').' a las '.$request['hora_ini'].' horas.');
+                //
+            }
+
             $freeHour = FreeHour::find($id);
-            $freeHour->fecha = Carbon::createFromFormat('d/m/Y',$request['fecha']);
+            $freeHour->fecha = Carbon::createFromFormat('d-m-Y',$request['fecha']);
             $freeHour->hora_ini = $request['hora_ini'];
             $freeHour->save();
 
-            return redirect()->route('freeHour.show',$id)->with('success','La disponibilidad se ha actualizado exitosamente');
+            return redirect()->route('freeHour.show',$id)->with('success','Su disponibilidad se ha actualizado exitosamente');
+
+            
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }

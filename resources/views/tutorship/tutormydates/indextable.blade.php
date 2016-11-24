@@ -52,23 +52,23 @@
                             {{$hora_inicio[$key]}} - {{$hora_fin[$key]}}
                         </td>                       
                         <td class=" ">
-                            {{ $students[$key]->ape_paterno.' '.$students[$key]->ape_materno.', '.$students[$key]->nombre }}
+                            {{ $tutMeeting->tutstudent->ape_paterno.' '.$tutMeeting->tutstudent->ape_materno.', '.$tutMeeting->tutstudent->nombre }}
                         </td>
 
                         <td class=" ">
-                            {{ $topics[$key]->nombre }}
+                            {{ $tutMeeting->topic->nombre }}
                         </td> 
 
                         <td class="text-center">
                             @if($tutMeeting->estado != 1 && 
                                 $tutMeeting->estado != 2 && 
                                 $tutMeeting->estado != 4)
-                                <a href="" class="btn btn-primary btn-xs view-group" title="Ver" style="height: inherit;">
+                                <a href="#ver{{$tutMeeting->id}}" class="btn btn-primary btn-xs view-group" title="Ver" style="height: inherit;">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endif
                             @if($tutMeeting->estado == 1)
-                                <a href="" class="btn btn-success btn-xs view-group" title="Confirmar" style="height: inherit;">
+                                <a href="#confirmar{{$tutMeeting->id}}" class="btn btn-success btn-xs view-group" title="Confirmar" style="height: inherit;">
                                     <i class="fa fa-check"></i>
                                 </a>
                             @endif
@@ -85,6 +85,10 @@
                                 </a>
                             @endif
                         </td>
+                        @include('tutorship.modals.accept-date-tutor', ['id'=> "confirmar".$tutMeeting->id, 'message' => 'Esta a punto de confirmar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.acceptTutor'), 'cita' => $tutMeeting])
+                        @include('tutorship.tutormydates.refuse-cita', ['id'=> "rechazar".$tutMeeting->id, 'message' => 'Esta a punto de rechazar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.refuseTutor', $tutMeeting->id)])
+                        @include('tutorship.tutormydates.cancel-cita', ['id'=> "cancelar".$tutMeeting->id, 'message' => 'Si va a cancelar esta cita, indique el motivo', 'route' => 'mis_citas.delete', 'motivos' => $reasons])
+                        @include('tutorship.modals.show-info-date', ['id'=> "ver".$tutMeeting->id, 'message' => 'Ver cita', 'cita' => $tutMeeting, 'date' => $fecha[$key], 'hour' => $hora_inicio[$key]." - ".$hora_fin[$key], 'status' => $status[$tutMeeting->estado]])
                     </tr>
                     @endforeach
                 </tbody>
@@ -92,6 +96,7 @@
         </div>
     </div>
 </div>
+
 @include('tutorship.modals.filterTutorDates', ['title' => 'Filtrar', 'route' => route('cita_alumno.index_table')])
 
 @endsection

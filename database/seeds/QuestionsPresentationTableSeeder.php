@@ -18,9 +18,9 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'tiempo'             =>  1,
 	        'puntaje'            =>  1,
 	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
+	        'descripcion'        =>  '¿Cuál sería su enfoque para resolver un inconveniente con su profesor del curso?',
+	        'requisito'          =>  '',
+	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  1,
         ]);
@@ -30,11 +30,11 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'tiempo'             =>  1,
 	        'puntaje'            =>  1,
 	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
+	        'descripcion'        =>  '¿Que sugiere el estilo barroco y mencione tres representantes?',
+	        'requisito'          =>  '',
+	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
+	        'id_competence'      =>  2,
         ]);
 
         DB::table('questions')->insert([
@@ -42,11 +42,11 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'tiempo'             =>  1,
 	        'puntaje'            =>  1,
 	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
+	        'descripcion'        =>  '¿Cuál es el área territorial del Perú',
+	        'requisito'          =>  '',
+	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
+	        'id_competence'      =>  3,
         ]);
 
         DB::table('questions')->insert([
@@ -54,11 +54,11 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'tiempo'             =>  1,
 	        'puntaje'            =>  1,
 	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
+	        'descripcion'        =>  'A un árbol subí donde manzanas habían, manzanas no comí ni manzanas dejé. ¿Cúantas manzanas habían?',
+	        'requisito'          =>  '',
+	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
+	        'id_competence'      =>  4,
         ]);
 
         DB::table('questions')->insert([
@@ -66,11 +66,11 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'tiempo'             =>  1,
 	        'puntaje'            =>  1,
 	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
+	        'descripcion'        =>  'Escriba una analogía',
+	        'requisito'          =>  '',
+	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
+	        'id_competence'      =>  5,
         ]);
 
         DB::table('questions')->insert([
@@ -78,11 +78,11 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'tiempo'             =>  1,
 	        'puntaje'            =>  1,
 	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
+	        'descripcion'        =>  '¿Cuanto le gusta involucrarse en los problemas de los demás?',
+	        'requisito'          =>  '',
+	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
+	        'id_competence'      =>  6,
         ]);
 
         DB::table('questions')->insert([
@@ -90,227 +90,13 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'tiempo'             =>  1,
 	        'puntaje'            =>  1,
 	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
+	        'descripcion'        =>  '¿Como resuelve un conflicto entre miembros de un equipo de trabajo?',
+	        'requisito'          =>  '',
+	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  1,
         ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
-
-        DB::table('questions')->insert([
-	        'tipo'               =>  2,
-	        'tiempo'             =>  1,
-	        'puntaje'            =>  1,
-	        'dificultad'         =>  1,
-	        'descripcion'        =>  $faker->text,
-	        'requisito'          =>  $faker->text,
-	        'id_especialidad'    =>  15,
-	        'id_docente'         =>  6,
-	        'id_competence'      =>  1,
-        ]);
+        
+        
     }
 }

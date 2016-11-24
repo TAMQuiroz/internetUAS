@@ -116,5 +116,49 @@ class PspStudentsController extends BaseController
 
 
     }
+
+
+
+    public function getStudentsFinalScore(){
+
+            $user =  JWTAuth::parseToken()->authenticate();
+
+            $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->first();
+
+
+                
+            $pspstudents = PspStudent::where('idsupervisor',$supervisor->id)->get();
+
+
+
+
+            $data = array();
+                foreach ($pspstudents as $pspstudent) {
+
+                    
+
+                        $student = Student::where('IdAlumno',$pspstudent->idalumno)->get()->first();
+
+
+                        $inscriptionFile = Studentxinscriptionfiles::where('idpspstudents', $pspstudent->id)->first();
+
+                        if(count($inscriptionFile) > 0)
+                             $student['final_score']  = $inscriptionFile->nota_final;
+                         else 
+                               $student['final_score']  = -1;
+
+
+
+
+                        $data[] = $student;
+                    
+                }
+
+
+        return $this->response->array($data );
+
+
+
+    }
     
 }

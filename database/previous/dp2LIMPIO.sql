@@ -231,7 +231,7 @@ INSERT INTO `Aporte` (`IdAporte`, `IdResultadoEstudiantil`, `IdCurso`, `IdCicloA
 -- Estructura de tabla para la tabla `archivoentrada`
 --
 
-CREATE TABLE `Archivoentrada` (
+CREATE TABLE `ArchivoEntrada` (
   `IdArchivoEntrada` int(11) NOT NULL,
   `filename` varchar(500) DEFAULT NULL,
   `mime` varchar(500) DEFAULT NULL,
@@ -247,7 +247,7 @@ CREATE TABLE `Archivoentrada` (
 -- Estructura de tabla para la tabla `archivoentradaplan`
 --
 
-CREATE TABLE `Archivoentradaplan` (
+CREATE TABLE `ArchivoEntradaPlan` (
   `IdArchivoEntrada` int(11) NOT NULL,
   `filename` varchar(500) DEFAULT NULL,
   `mime` varchar(500) DEFAULT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE `Calificacion` (
 -- Estructura de tabla para la tabla `cicloacademico`
 --
 
-CREATE TABLE `Cicloacademico` (
+CREATE TABLE `CicloAcademico` (
   `Descripcion` varchar(200) DEFAULT NULL,
   `Numero` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) NOT NULL,
@@ -347,7 +347,7 @@ CREATE TABLE `Cicloacademico` (
 -- Volcado de datos para la tabla `cicloacademico`
 --
 
-INSERT INTO `Cicloacademico` (`Descripcion`, `Numero`, `IdCicloAcademico`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CicloAcademico` (`Descripcion`, `Numero`, `IdCicloAcademico`, `deleted_at`, `created_at`, `updated_at`) VALUES
 ('2016-2', 20162, 3, NULL, '2016-11-23 06:36:20', '2016-11-23 06:36:20'),
 ('2017-0', 20170, 4, NULL, '2016-11-23 06:36:26', '2016-11-23 06:36:26'),
 ('2017-1', 20171, 5, NULL, '2016-11-23 06:36:32', '2016-11-23 06:36:32'),
@@ -1488,7 +1488,7 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 -- Estructura de tabla para la tabla `nivelcriterio`
 --
 
-CREATE TABLE `Nivelcriterio` (
+CREATE TABLE `NivelCriterio` (
   `IdNivelCriterio` int(11) NOT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
   `IdPeriodo` int(11) DEFAULT NULL,
@@ -3002,13 +3002,13 @@ ALTER TABLE `Aporte`
 --
 -- Indices de la tabla `archivoentrada`
 --
-ALTER TABLE `Archivoentrada`
+ALTER TABLE `ArchivoEntrada`
   ADD PRIMARY KEY (`IdArchivoEntrada`);
 
 --
 -- Indices de la tabla `archivoentradaplan`
 --
-ALTER TABLE `Archivoentradaplan`
+ALTER TABLE `ArchivoEntradaPlan`
   ADD PRIMARY KEY (`IdArchivoEntrada`);
 
 --
@@ -3863,12 +3863,12 @@ ALTER TABLE `Aporte`
 --
 -- AUTO_INCREMENT de la tabla `archivoentrada`
 --
-ALTER TABLE `Archivoentrada`
+ALTER TABLE `ArchivoEntrada`
   MODIFY `IdArchivoEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `archivoentradaplan`
 --
-ALTER TABLE `Archivoentradaplan`
+ALTER TABLE `ArchivoEntradaPlan`
   MODIFY `IdArchivoEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `areas`

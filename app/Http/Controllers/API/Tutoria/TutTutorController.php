@@ -44,7 +44,6 @@ class TutTutorController extends BaseController
           $fechaActualEntero =  strtotime($fechaActual);
 
 
-
           
           if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero <= $fechaCitaEntero)) {
                 $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
@@ -62,10 +61,10 @@ class TutTutorController extends BaseController
               $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
           }
 
-          else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero < $fechaCitaEntero) ){
+          else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero > $fechaCitaEntero) ){
               $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
           }
-          else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero >= $fechaCitaEntero) ) {
+          else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero <= $fechaCitaEntero) ) {
               $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
           }
           else if  (5 == $appointInfo['estado'] ){
@@ -225,12 +224,14 @@ class TutTutorController extends BaseController
         //------FIN OBTENIENDO ID DEL ALUMNO-----------
     
 
+        $today = date("d/m/Y H:i:s");
+
         //-------------BEGIN DATABASE INSERT ---------------
         DB::table('tutmeetings')->insertGetId(
             [
                 'id_tutstudent' => $studentInfo[0]['id'],
                 'inicio' => $dateTimeBegin,
-                //  'fin'  => $dateTimeFin,
+                'fin'  => $today,
                 // 'duracion' => $dateTimeEnd,
                 'id_docente' => $idDocente,
                 'id_topic' => $motivoInfo[0]['id'],
@@ -305,11 +306,15 @@ public function atenderNoCita(Request $request)
         $obsAux = $request->only('observacion');
         $observacion = $obsAux['observacion'];
         //-------------BEGIN DATABASE INSERT ---------------
+
+        $todayAux = date("d/m/Y H:i:s");
+        $today= DateTime::createFromFormat($format, $todayAux); 
+
         DB::table('tutmeetings')->insertGetId(
             [
                 'id_tutstudent' => $idAlumno,
                 'inicio' => $dateTimeBegin,
-                //  'fin'  => $dateTimeFin,
+                'fin'  => $today,
                 'duracion' => $duracion,
                 'id_docente' => $idDocente,
                 'id_topic' => $motivoInfo[0]['id'],
@@ -379,9 +384,14 @@ public function atenderNoCita(Request $request)
         $idUser = $request->only('idUser');
         $cita =  $request->only('fecha');
 
+        $todayAux = date("d/m/Y H:i:s");
+        $format = "d/m/Y H:i:s";
+        $today= DateTime::createFromFormat($format, $todayAux); 
+
         //Guardar
         $groupTut = TutMeeting::find($idUser['idUser']);
         $groupTut->estado = 6;
+        $groupTut->fin = $today;
         $groupTut->observacion = $cita['fecha'];
         $groupTut->save();
 

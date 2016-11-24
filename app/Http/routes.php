@@ -845,7 +845,10 @@ $api->version('v1', function ($api) {
                  $api->get('student',"Students\PspStudentsController@getStudent");
                  $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");  
 
-                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");    
+                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");   
+
+                 $api->get('meeting/status',"Meeting\PspMeetingController@getMeetingStatus"); 
+
 
 
 

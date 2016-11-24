@@ -91,7 +91,8 @@
                             <th class="column-title">Citas sugeridas </th>
                             <th class="column-title">Citas rechazadas </th>
                             <th class="column-title">Citas asistidas </th>
-                            <th class="column-title">Citas noasistidas </th>
+                            <th class="column-title">Citas no asistidas </th>
+                            <th class="column-title">Citas no programadas</th>
                             <th class="column-title">Citas confirmadas </th>
                             <th class="column-title">Citas total </th>
                         </tr>
@@ -101,17 +102,16 @@
                         <tr class="even pointer">
                             <td hidden class="group-id">{{$tutMeetingsByTutstudent->id}} </td>
 
-                            <td class=""> {{ $tutMeetingsByTutstudent->tutstudent->nombre }} {{ $tutMeetingsByTutstudent->tutstudent->ape_paterno }} {{ $tutMeetingsByTutstudent->tutstudent->ape_materno }}</span></td>
-                            
+                            <td class=""> {{ $tutMeetingsByTutstudent->tutstudent->nombre }} {{ $tutMeetingsByTutstudent->tutstudent->ape_paterno }} {{ $tutMeetingsByTutstudent->tutstudent->ape_materno }}</span></td>                            
                             <td class=" ">{{ $tutstudentPendientes[$key] }}</td>
                             <td class=" ">{{ $tutstudentCanceladas[$key] }}</td>
                             <td class=" ">{{ $tutstudentSugeridas[$key] }}</td>
                             <td class=" ">{{ $tutstudentRechazadas[$key] }}</td>
                             <td class=" ">{{ $tutstudentAsistidas[$key] }}</td>
                             <td class=" ">{{ $tutstudentNoAsistidas[$key] }}</td>
+                            <td class=" ">{{ $tutstudentNoProgramadas[$key] }}</td>
                             <td class=" ">{{ $tutstudentConfirmadas[$key] }}</td>                                      
-                            <td class=" ">{{ $tutstudentTotal[$key] }}</td>                                      
-                            
+                            <td class=" ">{{ $tutstudentTotal[$key] }}</td>                                                                  
                             
                         </tr>
                         @endforeach
@@ -125,6 +125,7 @@
             <div id="rechazadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$rechazadas}}"></div>
             <div id="asistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$asistidas}}"></div>
             <div id="noasistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$no_asistidas}}"></div>
+            <div id="noprogramadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$no_programadas}}"></div>
             <div id="confirmadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$confirmadas}}"></div>
             <div id="citas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$citas}}"></div>
             <div id="graphics" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

@@ -37,6 +37,7 @@ $(function () {
     var rechazadas  = $("#rechazadas").attr("value");
     var asistidas   = $("#asistidas").attr("value");
     var noasistidas = $("#noasistidas").attr("value");
+    var noprogramadas = $("#noprogramadas").attr("value");
     var citas       = $("#citas").attr("value");    
     
 
@@ -92,7 +93,10 @@ $(function () {
                 selected: true
             }, {
                 name: 'No asistida',
-                y: noasistidas/citas * 100
+                y: noasistidas/citas *100
+            }, {
+                name: 'No programadas',
+                y: noprogramadas/citas * 100
             }]
         }]
     });

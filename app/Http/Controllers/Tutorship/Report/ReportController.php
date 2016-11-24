@@ -175,6 +175,7 @@ class ReportController extends Controller {
         $rechazadas_list = array();
         $asistidas_list = array();
         $no_asistidas_list = array();
+        $no_programadas_list = array();
         $total_list = array();
 
         /*
@@ -195,6 +196,7 @@ class ReportController extends Controller {
             $rechazadas = $tutMeetings->where('estado', 5)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
             $asistidas = $tutMeetings->where('estado', 6)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
             $no_asistidas = $tutMeetings->where('estado', 7)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $no_programadas = $tutMeetings->where('no_programada', 1)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
             $total = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas;
             if ($total > 0) {
                 array_push($pendientes_list, $pendientes);
@@ -204,6 +206,7 @@ class ReportController extends Controller {
                 array_push($rechazadas_list, $rechazadas);
                 array_push($asistidas_list, $asistidas);
                 array_push($no_asistidas_list, $no_asistidas);
+                array_push($no_programadas_list, $no_programadas);
                 array_push($total_list, $total);
             }
         }
@@ -215,7 +218,8 @@ class ReportController extends Controller {
         $rechazadas = $tutMeetings->where('estado', 5)->count();
         $asistidas = $tutMeetings->where('estado', 6)->count();
         $no_asistidas = $tutMeetings->where('estado', 7)->count();
-        $citas = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas;
+        $no_programadas = $tutMeetings->where('no_programada', 1)->count();
+        $citas = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas + $no_programadas;
 
         $data = [
             'tutMeetingsByTutstudents' => $tutMeetingsByTutstudents,
@@ -226,6 +230,7 @@ class ReportController extends Controller {
             'tutstudentRechazadas' => $rechazadas_list,
             'tutstudentAsistidas' => $asistidas_list,
             'tutstudentNoAsistidas' => $no_asistidas_list,
+            'tutstudentNoProgramadas' =>$no_programadas_list,
             'tutstudentTotal' => $total_list,
             'pendientes' => $pendientes,
             'confirmadas' => $confirmadas,
@@ -234,6 +239,7 @@ class ReportController extends Controller {
             'rechazadas' => $rechazadas,
             'asistidas' => $asistidas,
             'no_asistidas' => $no_asistidas,
+            'no_programadas' => $no_programadas,
             'citas' => $citas,
         ];
 

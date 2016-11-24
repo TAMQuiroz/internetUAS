@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Tutorship;
 use Intranet\Models\Tutstudent;
+use Intranet\Models\Teacher;
 use Intranet\Models\TutMeeting;
 use Intranet\Models\Reason;
 use Intranet\Models\Topic;
@@ -32,19 +33,66 @@ class ReportController extends Controller {
 
     public function reassignReport(Request $request) {
         $data = [
-            'null' => null,            
+            'null' => null,
         ];
         return view('tutorship.report.reassign', $data);
     }
 
     public function tutorReport(Request $request) {
-        
-        $data = [
-            'null' => null,            
+        $dateOriginalFormat = $request['beginDate'];
+        if ($dateOriginalFormat) {
+            $beginDate = date("Y-m-d", strtotime($dateOriginalFormat));
+        } else {
+            $beginDate = "";
+        }
+
+        $dateOriginalFormat = $request['endDate'];
+        if ($dateOriginalFormat) {
+            $endDate = date("Y-m-d", strtotime($dateOriginalFormat . '+1 day'));
+        } else {
+            $endDate = "";
+        }
+
+        $filters = [
+            "beginDate" => $beginDate,
+            "endDate" => $endDate,
         ];
+
+        $tutMeetings = TutMeeting::getTutMeetingsByDates($filters)->get();
+        $tutors = Teacher::where('rolTutoria', 1)->get();
+
+        $nombreTutores = [];
+        $cantAlumnos = [];
+        $cantCita = [];
+        $canceladas = [];
+        $asistidas = [];
+        $noAsistidas = [];
+        $sinCitas = [];
+        foreach ($tutors as $t) {
+            if ($t) {
+                $nombreTutores[$t->IdDocente] = $t->Nombre . ' ' . $t->ApellidoPaterno . ' ' . $t->ApellidoMaterno;
+                $cantAlumnos[$t->IdDocente] = Tutorship::where('id_tutor', $t->IdDocente)->count();
+                $cantCita[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->count();
+                $canceladas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('estado', 3)->count();
+                $asistidas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('estado', 6)->count();
+                $noAsistidas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('estado', 7)->count();
+                $sinCitas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('no_programada', 1)->count();
+            }
+        }
+
+        $data = [
+            'nombreTutores' => $nombreTutores,
+            'cantAlumnos' => $cantAlumnos,
+            'cantCita' => $cantCita,
+            'canceladas' => $canceladas,
+            'asistidas' => $asistidas,
+            'noAsistidas' => $noAsistidas,
+            'sinCitas' => $sinCitas,
+        ];
+        
         return view('tutorship.report.tutor', $data);
     }
-    
+
     public function topicReport(Request $request) {
         $dateOriginalFormat = $request['beginDate'];
         if ($dateOriginalFormat) {
@@ -75,13 +123,13 @@ class ReportController extends Controller {
         $topicTotalAsistidas = 0;
         foreach ($topics as $t) {
             if ($t) {
-                $tAux = $tutMeetings->where('id_topic', $t->id)->where('estado',6)->count();
-                if ($tAux > 0) {
+                $tAux = $tutMeetings->where('id_topic', $t->id)->where('estado', 6)->count();
+                
                     $topicTotalAsistidas += $tAux;
                     array_push($topics_name_list, $t->nombre);
                     array_push($topics_amount_list, $tAux);
                     array_push($topics_percentage_list, $tAux / $tutMeetings->count() * 100);
-                }
+                
             }
         }
 

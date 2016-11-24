@@ -388,8 +388,6 @@ class TutMeetingController extends Controller
         $fecha          = array();
         $hora_inicio    = array();      
         $hora_fin       = array();
-        $students       = array();
-        $topics         = array();
 
         foreach ($tutMeetings as $tutMeeting) {
             if ($tutMeeting) {
@@ -402,9 +400,6 @@ class TutMeetingController extends Controller
                 $horaF     = explode(':', $stringF[1]);        
                 $dateDay   = date('d-m-Y', strtotime($tutMeeting->inicio));
 
-                $student   = Tutstudent::where('id', $tutMeeting->id_tutstudent)->first();
-                $topic     = Topic::where('id', $tutMeeting->id_topic)->first();
-
                 $tutMeeting->estado = $tutMeeting->estado == 4 && 
                                         $tutMeeting->creador == 1 ? 
                                         1: $tutMeeting->estado;
@@ -412,8 +407,6 @@ class TutMeetingController extends Controller
                 array_push($fecha, $dateDay);                
                 array_push($hora_inicio, $horaI[0] . ':' . $horaI[1]);
                 array_push($hora_fin, $horaF[0] . ':' . $horaF[1]);
-                array_push($students, $student);
-                array_push($topics, $topic);
             }
         }
 
@@ -428,14 +421,15 @@ class TutMeetingController extends Controller
         array_push($status, 'Asistida');
         array_push($status, 'No asistida');
 
+        $reasons = Reason::all();
+
         $data       = [
             'tutMeetings' =>  $tutMeetings,
             'fecha'       =>  $fecha,
             'hora_inicio' =>  $hora_inicio,
             'hora_fin'    =>  $hora_fin,
-            'students'    =>  $students,
             'status'      =>  $status,
-            'topics'      =>  $topics,
+            'reasons'     =>  $reasons,
         ];
         return view('tutorship.tutormydates.indextable', $data);
     }
@@ -538,6 +532,7 @@ class TutMeetingController extends Controller
                         "inicio"        => $completedDate,
                         "duracion"      => $parameters->duracionCita,
                         "estado"        => 4,
+                        "no_programada" => 0,
                         "id_topic"      => $topic,
                         "id_docente"    => $iddocente,
                         "id_tutstudent" => $idStudent,
@@ -548,6 +543,7 @@ class TutMeetingController extends Controller
                         "inicio"        => $completedDate,
                         "duracion"      => $parameters->duracionCita,
                         "estado"        => 4,
+                        "no_programada" => 0,
                         "id_topic"      => $topic,
                         "id_docente"    => $user->IdDocente,
                         "id_tutstudent" => $idStudent,
@@ -638,6 +634,39 @@ class TutMeetingController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }
+    }
+
+    public function acceptDateTutor(Request $request)
+    {
+        $meeting = TutMeeting::find($request['id']);
+        $meeting->estado = Config::get('constants.confirmada');
+        $meeting->save();
+
+        $student = Tutstudent::where('id', $meeting->id_tutstudent)->first();
+
+        $nombre     = $student->nombre . ' ' . $student->ape_paterno . ' ' . $student->ape_materno;
+                    
+        $hour       = date("H:i", strtotime($meeting->inicio));
+        
+        $date       = date("d-m-Y", strtotime($meeting->inicio));
+        
+        $duration   = $meeting->duracion;
+        
+        $mail       = $student->correo;
+
+        $data   = [
+            'nombre'    => $nombre,
+            'hour'      => $hour,
+            'date'      => $date,
+            'duration'  => $duration,
+        ];
+                    
+        Mail::send('emails.acceptDateTutor', $data, function($m) use($mail) {
+            $m->subject('[TUTORÍA] Cita aceptada');
+            $m->to($mail);
+        });
+
+        return redirect()->back()->with('success', 'Se confirmo esta cita');
     }
 
     public function acceptDate($id)

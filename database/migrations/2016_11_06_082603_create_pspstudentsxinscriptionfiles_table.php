@@ -13,7 +13,7 @@ class CreatePspstudentsxinscriptionfilesTable extends Migration
     public function up()
     {
         Schema::create('pspstudentsxinscriptionfiles', function (Blueprint $table) {
-            //$table->increments('id');
+            $table->increments('id');
             $table->integer('idinscriptionfile')->unsigned();
             $table->foreign('idinscriptionfile')->references('id')->on('inscriptionfiles');
             $table->integer('idpspstudents')->unsigned();

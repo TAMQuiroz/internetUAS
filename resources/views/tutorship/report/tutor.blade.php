@@ -27,10 +27,12 @@
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por alumno</li>
                     </div>
-                </a>                
-                <div class="tab-page-wrapper">
-                    <li class="tab-page">Citas por tema</li>
-                </div>                
+                </a>          
+                <a href="{{route('reporte.topic')}}">
+                    <div class="tab-page-wrapper">
+                        <li class="tab-page">Citas por tema</li>
+                    </div>                
+                </a>
                 <a href="{{route('reporte.cancelledMeeting')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas canceladas</li>
@@ -89,22 +91,28 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">Tema</th>
-                            <th class="column-title">Cantidad de citas asistidas</th>
-                            <th class="column-title">Porcentaje del total de asistidas</th>   
-                            <th class="column-title">Porcentaje del total general</th>                                                
+                            <th class="column-title">Tutor</th>
+                            <th class="column-title">Cantidad de alumnos</th>
+                            <th class="column-title">Cantidad de citas</th>   
+                            <th class="column-title">Canceladas</th>
+                            <th class="column-title">Asistidas</th>
+                            <th class="column-title">No asistidas</th>
+                            <th class="column-title">Sin cita</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach($nombreTutores as $id => $nombreCompleto)
                         <tr class="even pointer">
-                            <td hidden class="group-id"></td>
-                            <td class=""></span></td>                            
-                            <td class=" "></td>                                                                  
-                            <td class=" "></td>  
-                            <td class=" "></td> 
+                            <td hidden class="group-id">{{$id}}</td>
+                            <td class=""></span>{{$nombreCompleto}}</td>                            
+                            <td class=" ">{{$cantAlumnos[$id]}}</td>                                                                  
+                            <td class=" ">{{$cantCita[$id]}}</td>  
+                            <td class=" ">{{$canceladas[$id]}}</td> 
+                            <td class=" ">{{$asistidas[$id]}}</td>                                                                  
+                            <td class=" ">{{$noAsistidas[$id]}}</td>  
+                            <td class=" ">{{$sinCitas[$id]}}</td> 
                         </tr>
-                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>

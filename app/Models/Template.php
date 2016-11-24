@@ -26,4 +26,24 @@ class Template extends Model
         return $this->belongsTo('Intranet\Models\Phase', 'idphase');
     }
 
+    static public function getFiltered($filters){
+    $query = Template::orderBy('titulo');
+
+    if(array_key_exists("titulo", $filters) && $filters["titulo"] != "") {
+        $query = $query->where('titulo', 'like', '%'.$filters['titulo'].'%');
+    }
+
+        return $query->paginate(10);
+    }
+
+    static public function getFiltered2($filters,$p){
+    $query = Template::where('idphase',$p);
+
+    if(array_key_exists("titulo", $filters) && $filters["titulo"] != "") {
+        $query = $query->where('titulo', 'like', '%'.$filters['titulo'].'%');
+    }
+
+        return $query->get();
+    }
+
 }

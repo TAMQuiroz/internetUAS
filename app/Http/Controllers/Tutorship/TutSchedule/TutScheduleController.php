@@ -71,7 +71,7 @@ class TutScheduleController extends Controller {
             $noDispTrash = NoAvailability::find($n->id);
             $noDispTrash->delete();
         }
-        
+
         $citas = TutMeeting::where('id_docente', $id)->where('estado', 2)->get();
         $fechasHasta = $request->input("fechaHasta", []);
         $fechasDesde = $request->input("fechaDesde", []);
@@ -81,21 +81,34 @@ class TutScheduleController extends Controller {
             $noDisp->fecha_fin = substr($fechasHasta[$num], 6, 4) . substr($fechasHasta[$num], 3, 2) . substr($fechasHasta[$num], 0, 2);
             $noDisp->id_docente = $id;
             $noDisp->save();
-            
-            $fDesde = intval(substr($fechaDesde, 6, 4))*10000 + intval(substr($fechaDesde, 3, 2))*100 + intval(substr($fechaDesde, 0, 2));
-            $fHasta = intval(substr($fechasHasta[$num], 6, 4))*10000 + intval(substr($fechasHasta[$num], 3, 2))*100 + intval(substr($fechasHasta[$num], 0, 2));
-            
-            foreach($citas as $c) {
-                $fCita = intval(substr($c->inicio,0,4))*10000 + intval(substr($c->inicio,5,2))*100 + intval(substr($c->inicio,8,2));
-                
-                if ($fCita>=$fDesde && $fCita<=$fHasta && $c->estado==2) {
+
+            $fDesde = intval(substr($fechaDesde, 6, 4)) * 10000 + intval(substr($fechaDesde, 3, 2)) * 100 + intval(substr($fechaDesde, 0, 2));
+            $fHasta = intval(substr($fechasHasta[$num], 6, 4)) * 10000 + intval(substr($fechasHasta[$num], 3, 2)) * 100 + intval(substr($fechasHasta[$num], 0, 2));
+
+            foreach ($citas as $c) {
+                $fCita = intval(substr($c->inicio, 0, 4)) * 10000 + intval(substr($c->inicio, 5, 2)) * 100 + intval(substr($c->inicio, 8, 2));
+
+                if ($fCita >= $fDesde && $fCita <= $fHasta && $c->estado == 2) {
                     $cita = TutMeeting::find($c->id);
-                    $cita->estado=3;
-                    $cita->id_reason=2;
+                    $cita->estado = 3;
+                    $cita->id_reason = 2;
                     $cita->save();
+
+                    $student = Tutstudent::find($cita->id_tutstudent);
+                    $mail = $student->correo;
+                    $tutor = Teacher::find($cita->id_docente);                    
+
+                    $data = [
+                        'nombreAlumno' => $student->nombre . ' ' . $student->ape_paterno . ' ' . $student->pae_materno,
+                        'nombreTutor' => $tutor->Nombre . ' ' . $tutor->ApellidoPaterno . ' ' . $tutor->ApellidoMaterno,                        
+                    ];
+
+                    Mail::send('emails.notifyCanceledMeeting', $data, function($m) use($mail) {
+                        $m->subject('[TUTORÍA] Citas canceladas');
+                        $m->to($mail);
+                    });
                 }
             }
-                        
         }
 
         return redirect()->route('miperfil.index')->with('success', 'Se guardaron los cambios exitosamente');

@@ -66,6 +66,8 @@ class ReportController extends Controller {
         $cantCita = [];
         $canceladas = [];
         $asistidas = [];
+        $noAsistidas = [];
+        $sinCitas = [];
         foreach ($tutors as $t) {
             if ($t) {
                 $nombreTutores[$t->IdDocente] = $t->Nombre . ' ' . $t->ApellidoPaterno . ' ' . $t->ApellidoMaterno;
@@ -73,7 +75,8 @@ class ReportController extends Controller {
                 $cantCita[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->count();
                 $canceladas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('estado', 3)->count();
                 $asistidas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('estado', 6)->count();
-                
+                $noAsistidas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('estado', 7)->count();
+                $sinCitas[$t->IdDocente] = $tutMeetings->where('id_docente', $t->IdDocente)->where('no_programada', 1)->count();
             }
         }
 
@@ -83,7 +86,10 @@ class ReportController extends Controller {
             'cantCita' => $cantCita,
             'canceladas' => $canceladas,
             'asistidas' => $asistidas,
+            'noAsistidas' => $noAsistidas,
+            'sinCitas' => $sinCitas,
         ];
+        
         return view('tutorship.report.tutor', $data);
     }
 
@@ -118,12 +124,12 @@ class ReportController extends Controller {
         foreach ($topics as $t) {
             if ($t) {
                 $tAux = $tutMeetings->where('id_topic', $t->id)->where('estado', 6)->count();
-                if ($tAux > 0) {
+                
                     $topicTotalAsistidas += $tAux;
                     array_push($topics_name_list, $t->nombre);
                     array_push($topics_amount_list, $tAux);
                     array_push($topics_percentage_list, $tAux / $tutMeetings->count() * 100);
-                }
+                
             }
         }
 

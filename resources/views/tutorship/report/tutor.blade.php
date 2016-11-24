@@ -109,8 +109,8 @@
                             <td class=" ">{{$cantCita[$id]}}</td>  
                             <td class=" ">{{$canceladas[$id]}}</td> 
                             <td class=" ">{{$asistidas[$id]}}</td>                                                                  
-                            <td class=" "></td>  
-                            <td class=" "></td> 
+                            <td class=" ">{{$noAsistidas[$id]}}</td>  
+                            <td class=" ">{{$sinCitas[$id]}}</td> 
                         </tr>
                         @endforeach
                     </tbody>

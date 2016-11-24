@@ -348,6 +348,15 @@ class FacultyController extends BaseController
     }
 
     public function getEffortTable($academic_cycle_id, $course_id, $schedule_id, $student_id){
+      if ($academic_cycle_id == -1){
+        $user = JWTAuth::parseToken()->authenticate();
+        //especialidad
+        $idEspecialidad = $this->getUserSpecialtyId($user);
+        //ciclo actual de la especialidad
+        $cicloxespecialidad = Cicle::where('IdEspecialidad',$idEspecialidad)
+                                   ->where('Vigente', 1)->first();
+        $academic_cycle_id = $cicloxespecialidad->IdCicloAcademico;
+      }
       //sacamos el cursoxciclo del curso que queremos ver sus resultados
       $coursexteachers = CoursexCycle::where('IdCicloAcademico',$academic_cycle_id)
                                      ->where('IdCurso',$course_id)

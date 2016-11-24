@@ -106,7 +106,7 @@
 
                     <div class="row">
                         <div class="col-md-8 col-sm-12 col-xs-12">							
-                            <a class="btn btn-primary pull-right" href="{{ route('cita_alumno.index') }}">Solicitar cita</a>
+                            <a class="btn btn-primary pull-right" href="{{ route('cita_alumno.create', Auth::user()->student->id) }}">Solicitar cita</a>
                         </div>
                     </div>
                 </div>

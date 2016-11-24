@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Intranet\Models\Traits\LastUpdatedTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Carbon\Carbon;
 
 class meeting extends Model
 {
@@ -43,7 +43,10 @@ class meeting extends Model
                 $q= $q->where('nombre','like','%'.$filters['estado'].'%');
             });            
         }
-        //dd($query);
+
+        if(array_key_exists("fechaInicio", $filters) && array_key_exists("fechaFin", $filters) && $filters["fechaInicio"] != "" && $filters["fechaFin"] != ""){            
+            $query = $query->whereBetween("fecha", array(Carbon::createFromFormat('d-m-Y',$filters['fechaInicio']), Carbon::createFromFormat('d-m-Y',$filters['fechaFin'])));
+        }
 
         return $query->paginate(10);
     }

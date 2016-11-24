@@ -10,6 +10,7 @@ use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
 use Intranet\Models\User;
 use Intranet\Models\PspStudent;
+use Intranet\Models\meeting;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspProcessxTeacher;
 use Illuminate\Routing\Controller as BaseController;
@@ -154,20 +155,40 @@ class PspFreeHourController extends BaseController
 
         $student = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
         $pspStudent  = PspStudent::where('idalumno', $student->IdAlumno)->get()->first();
-        $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->
-                        where('idpspprocess', $pspStudent->idpspprocess)->get();    
+        $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();	
+
+
+      $validFreeHour = array();
+
       
         foreach ($freeHours as $hour) {
 
-            $hour->supervisor;
 
-        }
+          $val  = meeting::where('idfreehour' , $hour->id)->count();
+         
+                    if($val == 0){
+
+                  $hour->supervisor;
+                  array_push($validFreeHour, $hour);
+          }
+      	
+
+      	}
+
+
+          return  $this->response->array($validFreeHour);
+
+
+ 
+       // ->where('idpspprocess', $pspStudent->idpspprocess);	
+
+  }
        // ->where('idpspprocess', $pspStudent->idpspprocess);   
 
 
         //return  $this->response->$message;
 
-       return  $this->response->array($freeHours->toArray());
+      
 /*
         $array= array();
 
@@ -178,11 +199,6 @@ class PspFreeHourController extends BaseController
 */
 
 
-
-
-
-
-    }
 
 
     public function showFreeHourForSupervisor(){

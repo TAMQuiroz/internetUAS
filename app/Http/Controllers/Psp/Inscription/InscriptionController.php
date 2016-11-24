@@ -35,8 +35,16 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-
-        $inscriptiones = Inscription::get();
+        $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first();
+        $psp = PspStudent::where('idalumno',$student->IdAlumno)->first(); 
+        $inscriptiofiles= Studentxinscriptionfiles::where('idpspstudents',$psp->id)->get();
+        $inscriptiones=null;
+        $inscriptiones = array(); 
+        foreach($inscriptiofiles as $p){
+            $ins=Inscription::find($p->idinscriptionfile);
+            if($ins!=null)$inscriptiones[]=$ins;
+        }
+        //if(count($inscriptiones)==0)$inscriptiones=null;
 
         $data = [
             'inscriptiones'    =>  $inscriptiones,

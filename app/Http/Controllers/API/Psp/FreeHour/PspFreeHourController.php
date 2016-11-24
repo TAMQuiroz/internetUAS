@@ -88,7 +88,7 @@ class PspFreeHourController extends BaseController
         $maxi = $this->maximum();
         if($cantDisp >= $maxi){
 
-             $mensaje = 'Ha llegado al maximo de disponibildades a registrar';
+             $mensaje = 'Ha llegado al maximo de disponibilidades a registrar';
 
              $array['message'] = $mensaje;
             return $this->response->array($array);
@@ -101,7 +101,7 @@ class PspFreeHourController extends BaseController
         
         $fecha = $request['fecha'];
     
-
+      
         $format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
 

@@ -877,7 +877,10 @@ $api->version('v1', function ($api) {
                  $api->get('student',"Students\PspStudentsController@getStudent");
                  $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");  
 
-                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");    
+                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");   
+
+                 $api->get('meeting/status',"Meeting\PspMeetingController@getMeetingStatus"); 
+
 
 
 
@@ -1269,6 +1272,9 @@ Route::group(['prefix' => 'uas'], function(){
         });
         Route::group(['prefix' => 'citas'], function(){    
             Route::get('/', ['as' => 'miscitas.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesStudent']);
+            Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
+            Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);
+            Route::post('/delete/{id}', ['as' => 'mis_citas.delete', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDate']);
         });
 
         /***   PARA EL TUTOR DE TUTORÍA   ***/
@@ -1294,13 +1300,16 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
             Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);
+            
+            Route::get('/atencion-cita/{id}', ['as' => 'atencion_cita.attendMeeting', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@attendMeeting']);
+            Route::post('/atencion-cita', ['as' => 'atencion.storeMeeting', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeMeeting']);
+            
             Route::get('/atencion-sin-cita', ['as' => 'atencion_sin_cita.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createAttention']);
             Route::post('/atencion-sin-cita', ['as' => 'atencion.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeAttention']);
             Route::get('/buscar-alumno', ['as' => 'mis_alumnos.get_name', 'uses' => 'Tutorship\Tutstudent\TutstudentController@getEntireName']);
 
-            Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
-            Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);
-            Route::post('/delete/{id}', ['as' => 'mis_citas.delete', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDate']);
+            Route::post('/accept', ['as' => 'mis_citas.acceptTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDateTutor']);
+            Route::post('/cancel', ['as' => 'mis_citas.deleteTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDateTutor']);
 
         });
     });

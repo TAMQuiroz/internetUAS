@@ -3,6 +3,7 @@
 namespace Intranet\Http\Controllers\Tutorship\Tutor;
 
 use Auth;
+use Mail;
 use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Illuminate\Support\Facades\DB;
@@ -120,6 +121,22 @@ class TutorController extends Controller {
                 $tutorshipNew->id_alumno = $tutorshipTrash->id_alumno;
                 $tutorshipNew->save();
 
+                $student = Tutstudent::find($tutorshipTrash->id_alumno);
+                $mail = $student->correo;
+                $nuevoT = Teacher::find($tutorshipTrash->id_profesor);
+                $antiguoT = Teacher::find($tutorshipTrash->id_tutor);
+
+                $data = [
+                    'nombreAlumno' => $student->nombre . ' ' . $student->ape_paterno . ' ' . $student->pae_materno,
+                    'nuevoTutor' => $nuevoT->Nombre . ' ' . $nuevoT->ApellidoPaterno . ' ' . $nuevoT->ApellidoMaterno,
+                    'antiguoTutor' => $antiguoT->Nombre . ' ' . $antiguoT->ApellidoPaterno . ' ' . $antiguoT->ApellidoMaterno,
+                ];
+
+                Mail::send('emails.notifyTutorActivate', $data, function($m) use($mail) {
+                    $m->subject('[TUTORÍA] Cambio de tutor');
+                    $m->to($mail);
+                });
+
                 $tutorshipTrash->delete();
             }
 
@@ -143,12 +160,19 @@ class TutorController extends Controller {
             $horas[$t->IdDocente] = $tutSchedule->count();
         }
 
+        $quantityStudents   = $students->count();
+        $quantityTutors     = $tutors->count();
+
+        $allQuantity        = Tutstudent::getQuantityPerTutor($quantityTutors, $quantityStudents);
+
+
         $data = [
             'tutor' => $tutor,
             'razones' => $razones,
             'students' => $students,
             'tutors' => $tutors,
             'horas' => $horas,
+            'quantities'    => $allQuantity,   
         ];
 
         return view('tutorship.tutor.reassign', $data);
@@ -179,6 +203,22 @@ class TutorController extends Controller {
                             $tutorshipNew->id_suplente = $idTeacher;
                             $tutorshipNew->id_alumno = $tutorshipTrash->id_alumno;
                             $tutorshipNew->save();
+
+                            $student = Tutstudent::find($tutorshipTrash->id_alumno);
+                            $mail = $student->correo;
+                            $nuevoT = Teacher::find($idTeacher);
+                            $antiguoT = Teacher::find($tutorshipTrash->id_profesor);
+
+                            $data = [
+                                'nombreAlumno' => $student->nombre . ' ' . $student->ape_paterno . ' ' . $student->pae_materno,
+                                'nuevoTutor' => $nuevoT->Nombre . ' ' . $nuevoT->ApellidoPaterno . ' ' . $nuevoT->ApellidoMaterno,
+                                'antiguoTutor' => $antiguoT->Nombre . ' ' . $antiguoT->ApellidoPaterno . ' ' . $antiguoT->ApellidoMaterno,
+                            ];
+
+                            Mail::send('emails.notifyTutorDeactivate', $data, function($m) use($mail) {
+                                $m->subject('[TUTORÍA] Cambio de tutor');
+                                $m->to($mail);
+                            });
 
                             $tutorshipTrash->delete();
 

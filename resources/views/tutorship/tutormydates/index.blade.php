@@ -20,9 +20,12 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-xs-12 text-center" style="margin-top: 20px;">
-                        <a href="{{ route('atencion_sin_cita.create')}}" class="btn btn-success">
+                        <a href="{{ route('atencion_sin_cita.create')}}" class="btn btn-primary">
                             <i class="fa fa-database"></i>  Atención sin cita
                         </a>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 text-center" style="margin-top: 20px;">
+                        <a href="{{ route('mis_alumnos.index') }}" class="btn btn-success"><i class="fa fa-plus"></i>  Nueva cita</a>
                     </div>
                     <div class="col-sm-12 col-xs-12">
                         <ul class="dates-guide">
@@ -61,21 +64,40 @@
                         </td>
                         @for ($d=1; $d<7; $d++)
                             <td class="dates-card-info-container">
-                            @if ($schedule[$h][$d] == 1)
+                            @if ($schedule[$h][$d] == -1)
                                 <div class="text-right">
                                     <a href="#" class="btn btn-info btn-add-new-date">
                                         <i class="fa fa-plus"></i> 
                                     </a>
                                 </div>
                             @endif
-                            @foreach($tutMeetings as $key => $meeting)
+                            @foreach($meetings as $key => $meeting)
                                 @if ($fecha[$key] == $d && $hora[$key] == $h)
-                                    <a href="#" class="btn btn-primary color-status-{{$meeting->estado}} tutorship-dates"> 
-                                        <div class="dates-card-info text-left">
-                                            {{$hora_inicio[$key]}} - {{$hora_fin[$key]}} <br>
-                                            {{$students[$key]}}
-                                        </div>
-                                    </a>
+                                    <div class="dropdown">
+                                        <button class="actions btn btn-primary color-status-{{$meeting->estado}} tutorship-dates" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+                                            <div class="dates-card-info text-left">
+                                                {{$hora_inicio[$key]}} - {{$hora_fin[$key]}} <br>
+                                                {{$students[$key]}}
+                                            </div>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a href="#ver{{$meeting->id}}">Ver cita</a></li>
+                                            @if($meeting->estado == 4)
+                                            <li><a href="#confirmar{{$meeting->id}}">Confirmar cita</a></li>
+                                            @endif
+                                            @if($meeting->estado == 2)
+                                            <li><a href="{{ route('atencion_cita.attendMeeting', $meeting->id) }}">Atender cita</a></li>
+                                            @endif
+                                            @if($meeting->estado == 1 || 
+                                                $meeting->estado == 2 || 
+                                                $meeting->estado == 4)
+                                            <li><a href="#eliminar{{$meeting->id}}">Cancelar/Rechazar cita</a></li>
+                                            @endif
+                                        </ul>
+                                        @include('tutorship.modals.accept-date-tutor', ['id'=> "confirmar".$meeting->id, 'message' => 'Esta a punto de confirmar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.acceptTutor'), 'cita' => $meeting])
+                                        @include('tutorship.modals.delete-date-tutor', ['id'=> "eliminar".$meeting->id, 'route' => route('mis_citas.deleteTutor'), 'cita' => $meeting,'motivos' => $reasons])
+                                        @include('tutorship.modals.show-info-date', ['id'=> "ver".$meeting->id, 'message' => 'Ver cita', 'cita' => $meeting, 'date' => $fecha[$key], 'hour' => $hora_inicio[$key]." - ".$hora_fin[$key], 'status' => $status[$meeting->estado]])
+                                    </div>
                                 @endif
                             @endforeach
                             </td>

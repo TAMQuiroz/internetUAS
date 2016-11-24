@@ -18,6 +18,8 @@ class TopicController extends BaseController
     
     public function getAll()
     {
+
+
         $topics = Topic::get();
         return $this->response->array($topics->toArray());
 

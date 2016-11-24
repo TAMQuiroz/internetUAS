@@ -14,6 +14,8 @@ class Tutstudent extends Model
 {
     use SoftDeletes;//delete logico
 
+    protected $table = 'tutstudents';
+    protected $primaryKey = 'id';
     protected $fillable = ['codigo','nombre','ape_paterno','ape_materno','correo', 'id_especialidad'];
 
     public function faculty(){

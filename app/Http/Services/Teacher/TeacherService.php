@@ -186,7 +186,7 @@ class TeacherService {
 
 	function searchByNameLastname($request)
 	{
-		$teachers_query = Teacher::where('Vigente', 1)->where('rolEvaluaciones',null);
+		$teachers_query = Teacher::where('Vigente', 1)->where('rolEvaluaciones',null)->where('IdEspecialidad',Session::get('faculty-code'));
 		if(trim($request['nombre']) != "") {
 			$teachers_query->where(DB::raw('CONCAT(Nombre, " ", ApellidoPaterno," ", ApellidoMaterno)'), 'like', "%{$request['nombre']}%");
 		}		

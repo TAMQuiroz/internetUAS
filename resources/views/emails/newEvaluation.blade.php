@@ -1,6 +1,9 @@
 
-Hola {{$nombre}}, se le informa que su especialidad publicará la evaluación "{{$evaluacion}}", la cual podrá rendir entre el {{date("d/m/Y", strtotime($fecha_inicio))}} y el {{date("d/m/Y", strtotime($fecha_fin))}}.
+Estimado {{$nombre}}, <br>
 <br>
-Atentamente <br>
+Se le informa que su especialidad publicará la evaluación "{{$evaluacion}}", la cual podrá rendir entre el {{date("d/m/Y", strtotime($fecha_inicio))}} y el {{date("d/m/Y", strtotime($fecha_fin))}}.<br>
+<br>
+Cordialmente,<br>
+<br>
 Evaluaciones <br>
 University Acreditation System - UAS

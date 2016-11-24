@@ -43,13 +43,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>         
-                                        @foreach($tutors as $t)
+                                        @foreach($tutors as $key => $t)
                                             <tr class="even pointer">                                        
                                                 <td class="">{{ $t->Codigo }}</td>
                                                 <td class="">{{ $t->ApellidoPaterno.' '.$t->ApellidoMaterno.', '.$t->Nombre }}</td>
                                                 <td class="">{{ $horas[$t->IdDocente] }}</td>
                                                 <td class="">{{ count($t->tutorships)}} </td>
-                                                <td class="">{{ Form::number('cant['.$t->IdDocente.']',0,['class'=>'form-control', 'required','min'=>'0', 'maxlength' => 50]) }}</td>                                                                    
+                                                <td class="">{{ Form::number('cant['.$t->IdDocente.']', $quantities[$key] ,['class'=>'form-control', 'required','min'=>'0', 'maxlength' => 50]) }}</td>                                                                    
                                             </tr>
                                         @endforeach
                                     </tbody>

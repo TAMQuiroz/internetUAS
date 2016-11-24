@@ -113,7 +113,7 @@
               <i class="material-icons center">account_circle</i>        
               <div id="info-user" class="bar-info">
                 <span class="white-text email">
-                @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+                @if( isset(Session::get('user')->user) && (Session::get('user')->user->IdPerfil == 5 || Session::get('user')->user->IdPerfil == Config::get('constants.alumno')))
                     {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
                 @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
                     {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
@@ -271,6 +271,8 @@
                     <li><a href="{{ route('index.measuring') }}">De medición</a></li>
                     @endif
 
+                    <li><a href="{{ route('report.index')}}">De medición consolidado</a></li>
+
                     @if(in_array(55,Session::get('actions')))
                     <li><a href="{{ route('index.evaluation') }}">De evaluación</a></li>
                     @endif
@@ -279,6 +281,8 @@
                     <li><a href="{{ route('pending.index')}}">De evaluación pendiente</a></li>
 
                     <li><a href="{{ route('report.enhacementPlan')}}">De plan de mejora</a></li>
+
+                    
                     
 
                     @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 4))
@@ -413,7 +417,7 @@
                       @if(Auth::user()->professor->rolTutoria == 2)
                       <li><a href="{{route('tutor.index')}}"> Tutores</a></li>
                       <li><a href="{{route('alumno.index')}}"> Alumnos</a></li>
-                      <li><a href="{{route('reporte.meeting')}}"> Reportes</a></li>
+                      <li><a href="{{route('reporte.tutor')}}"> Reportes</a></li>
                       <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
                       @endif
 

@@ -191,7 +191,28 @@
         $(".button-collapse").sideNav();      /*es para que boton de hamburgesa funcione*/
     });
 </script>
+<script type="text/javascript">
+  //Code for show success  messages
+  @if( @Session::has('success') )
+    toastr.success('{{ @Session::get('success') }}');
+  @endif
+</script>
 
+<script type="text/javascript">
+  //Code for show success  messages
+  @if( @Session::has('warning') )
+    toastr.error('{{ @Session::get('warning') }}');
+  @endif
+</script>
+
+<script type="text/javascript">
+  //Code for show back error messages
+  @if (@Session::has('errors'))
+    @foreach ($errors->all() as $error)
+        toastr.error('{{ @$error }}');
+    @endforeach
+  @endif
+</script>
 </body>
 
 </html>

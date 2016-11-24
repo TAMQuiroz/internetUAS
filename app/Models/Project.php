@@ -37,6 +37,10 @@ class Project extends Model
         return $this->hasMany('Intranet\Models\Deliverable', 'id_proyecto');
     }
 
+    public function lastdeliverable(){
+        return $this->hasMany('Intranet\Models\Deliverable', 'id_proyecto')->orderBy('fecha_limite','asc');
+    }
+
     static public function getFiltered($filters){
         $query = Project::orderBy('nombre', 'asc');
 

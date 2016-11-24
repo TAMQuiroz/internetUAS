@@ -38,11 +38,11 @@
 		    				{{Form::date('fecha_ini',$proyecto->fecha_ini,['id'=>'fecha_ini','class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString()])}}
 		    			</div>
 		    		</div>
-
+                    {{$proyecto->lastdeliverable->first()->fecha_limite}}
 		    		<div class="form-group">
 		    			{{Form::label('Fecha fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-6">
-		    				{{Form::date('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin','class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString()])}}
+		    				{{Form::date('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin','class'=>'form-control', 'required','min'=>$proyecto->lastdeliverable->first()->fecha_limite])}}
 		    			</div>
 		    		</div>
 

@@ -202,15 +202,17 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function indexSup()
+    public function indexSup(Request $request)
     {
-        $meetings = meeting::with('student','status')->orderBy('fecha','asc')->paginate(10);
+        $filters = $request->all();
+        
+        $meetings = meeting::getFiltered($filters);
 
         foreach ($meetings as $meeting) {
             $dt = new Carbon($meeting->fecha);        
             $meeting->fecha = $dt->format('d-m-Y');
         }
-        //dd($meetings);
+        
         $data = [
             'meetings'    =>  $meetings,
         ];

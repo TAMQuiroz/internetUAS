@@ -26,7 +26,7 @@ class ProjectController extends BaseController
     
     public function getById($id)
     {
-        $project = Project::where('id',$id)->with('area')->with('group')->with('status')->get();
+        $project = Project::where('id',$id)->with('area')->with('group')->with('status')->with('deliverables')->get();
         return $this->response->array($project->toArray());
     }
 

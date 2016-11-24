@@ -210,6 +210,12 @@ class PspStudentsInscriptionFiles extends BaseController
     {
 
             $pspstudents = meeting::get();
+        
+            foreach ($pspstudents as $pspstudent) {
+                $student = Student::where('IdAlumno', $pspstudent->idstudent )->get()->first();    
+                $pspstudent->nombrealumno=$student->Nombre . ' '  . $student->ApellidoPaterno ;
+            }
+
     return  $this->response->array($pspstudents->toArray());
     }
 

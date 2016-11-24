@@ -12,6 +12,8 @@ use Intranet\Http\Services\Investigation\Group\GroupService;
 use Intranet\Models\Event;
 use Intranet\Models\Group;
 
+use Auth;
+
 use Intranet\Http\Requests\EventRequest;
 
 class EventController extends Controller
@@ -117,7 +119,11 @@ class EventController extends Controller
             'estados'   =>  $estados,
         ];
 
-        return view('investigation.event.show', $data);
+        if($evento->tipo == 0 || ($evento->tipo == 1 && Auth::user())){
+            return view('investigation.event.show', $data);
+        }else{
+            return redirect()->back()->with('warning', 'Este evento es privado');
+        }
     }
 
     /**

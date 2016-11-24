@@ -182,7 +182,7 @@ class TutMeeting extends Model {
         if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
             $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
         }
-        $queryTutMeeting->where('no_programada', '=', 0);
+        //$queryTutMeeting->where('no_programada', '=', 0);
         //               ->groupBy('estado')
         //                ->groupBy('id_tutstudent');
         return $queryTutMeeting->orderBy("id_tutstudent", 'asc');
@@ -207,7 +207,7 @@ class TutMeeting extends Model {
         if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
             $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
         }
-        $queryTutMeeting->where('no_programada', '=', 0)
+        $queryTutMeeting//->where('no_programada', '=', 0)
                 ->where('estado', '=', 3)
                 ->groupBy('id_reason');
         //                ->groupBy('id_tutstudent');

@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `accion`
 --
 
-CREATE TABLE `accion` (
+CREATE TABLE `Accion` (
   `IdAccion` int(11) NOT NULL,
   `Nombre` varchar(100) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `accion` (
 -- Volcado de datos para la tabla `accion`
 --
 
-INSERT INTO `accion` (`IdAccion`, `Nombre`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `Accion` (`IdAccion`, `Nombre`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Editar Periodo', NULL, NULL, NULL),
 (2, 'Editar Ciclo', NULL, NULL, NULL),
 (3, 'Iniciar Ciclo', NULL, NULL, NULL),
@@ -125,7 +125,7 @@ INSERT INTO `accion` (`IdAccion`, `Nombre`, `deleted_at`, `created_at`, `updated
 -- Estructura de tabla para la tabla `acreditador`
 --
 
-CREATE TABLE `acreditador` (
+CREATE TABLE `Acreditador` (
   `IdAcreditador` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `IdUsuario` int(11) DEFAULT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE `alternatives` (
 -- Estructura de tabla para la tabla `alumno`
 --
 
-CREATE TABLE `alumno` (
+CREATE TABLE `Alumno` (
   `IdAlumno` int(11) NOT NULL,
   `IdHorario` int(11) DEFAULT NULL,
   `Nombre` varchar(100) DEFAULT NULL,
@@ -181,7 +181,7 @@ CREATE TABLE `alumno` (
 -- Estructura de tabla para la tabla `aporte`
 --
 
-CREATE TABLE `aporte` (
+CREATE TABLE `Aporte` (
   `IdAporte` int(11) NOT NULL,
   `IdResultadoEstudiantil` int(11) DEFAULT NULL,
   `IdCurso` int(11) DEFAULT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE `aporte` (
 -- Volcado de datos para la tabla `aporte`
 --
 
-INSERT INTO `aporte` (`IdAporte`, `IdResultadoEstudiantil`, `IdCurso`, `IdCicloAcademico`, `Valor`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `Aporte` (`IdAporte`, `IdResultadoEstudiantil`, `IdCurso`, `IdCicloAcademico`, `Valor`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (43, 35, 78, 2, 1, '2016-11-23 07:24:20', '2016-11-23 07:18:53', '2016-11-23 07:24:20'),
 (44, 44, 78, 2, 1, '2016-11-23 07:24:21', '2016-11-23 07:18:53', '2016-11-23 07:24:21'),
 (45, 46, 78, 2, 1, '2016-11-23 07:24:21', '2016-11-23 07:18:53', '2016-11-23 07:24:21'),
@@ -231,7 +231,7 @@ INSERT INTO `aporte` (`IdAporte`, `IdResultadoEstudiantil`, `IdCurso`, `IdCicloA
 -- Estructura de tabla para la tabla `archivoentrada`
 --
 
-CREATE TABLE `archivoentrada` (
+CREATE TABLE `Archivoentrada` (
   `IdArchivoEntrada` int(11) NOT NULL,
   `filename` varchar(500) DEFAULT NULL,
   `mime` varchar(500) DEFAULT NULL,
@@ -247,7 +247,7 @@ CREATE TABLE `archivoentrada` (
 -- Estructura de tabla para la tabla `archivoentradaplan`
 --
 
-CREATE TABLE `archivoentradaplan` (
+CREATE TABLE `Archivoentradaplan` (
   `IdArchivoEntrada` int(11) NOT NULL,
   `filename` varchar(500) DEFAULT NULL,
   `mime` varchar(500) DEFAULT NULL,
@@ -278,7 +278,7 @@ CREATE TABLE `areas` (
 -- Estructura de tabla para la tabla `aspecto`
 --
 
-CREATE TABLE `aspecto` (
+CREATE TABLE `Aspecto` (
   `IdAspecto` int(11) NOT NULL,
   `IdResultadoEstudiantil` int(11) NOT NULL,
   `Nombre` varchar(50) DEFAULT NULL,
@@ -292,7 +292,7 @@ CREATE TABLE `aspecto` (
 -- Volcado de datos para la tabla `aspecto`
 --
 
-INSERT INTO `aspecto` (`IdAspecto`, `IdResultadoEstudiantil`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
+INSERT INTO `Aspecto` (`IdAspecto`, `IdResultadoEstudiantil`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
 (18, 35, 'Ingeniería Informática', NULL, '2016-11-23 06:44:59', '2016-11-23 07:15:51', 1),
 (19, 35, 'Matemáticas', NULL, '2016-11-23 06:45:07', '2016-11-23 07:15:51', 1),
 (20, 36, 'Conduce e interpreta resultados', NULL, '2016-11-23 06:45:30', '2016-11-23 07:15:51', 1),
@@ -317,7 +317,7 @@ INSERT INTO `aspecto` (`IdAspecto`, `IdResultadoEstudiantil`, `Nombre`, `deleted
 -- Estructura de tabla para la tabla `calificacion`
 --
 
-CREATE TABLE `calificacion` (
+CREATE TABLE `Calificacion` (
   `IdCalificacion` int(11) NOT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
   `IdHorario` int(11) DEFAULT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE `calificacion` (
 -- Estructura de tabla para la tabla `cicloacademico`
 --
 
-CREATE TABLE `cicloacademico` (
+CREATE TABLE `Cicloacademico` (
   `Descripcion` varchar(200) DEFAULT NULL,
   `Numero` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) NOT NULL,
@@ -347,7 +347,7 @@ CREATE TABLE `cicloacademico` (
 -- Volcado de datos para la tabla `cicloacademico`
 --
 
-INSERT INTO `cicloacademico` (`Descripcion`, `Numero`, `IdCicloAcademico`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `Cicloacademico` (`Descripcion`, `Numero`, `IdCicloAcademico`, `deleted_at`, `created_at`, `updated_at`) VALUES
 ('2016-2', 20162, 3, NULL, '2016-11-23 06:36:20', '2016-11-23 06:36:20'),
 ('2017-0', 20170, 4, NULL, '2016-11-23 06:36:26', '2016-11-23 06:36:26'),
 ('2017-1', 20171, 5, NULL, '2016-11-23 06:36:32', '2016-11-23 06:36:32'),
@@ -359,7 +359,7 @@ INSERT INTO `cicloacademico` (`Descripcion`, `Numero`, `IdCicloAcademico`, `dele
 -- Estructura de tabla para la tabla `cicloxaspecto`
 --
 
-CREATE TABLE `cicloxaspecto` (
+CREATE TABLE `CicloxAspecto` (
   `IdCicloxAspecto` int(11) NOT NULL,
   `IdAspecto` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) DEFAULT NULL,
@@ -378,7 +378,7 @@ CREATE TABLE `cicloxaspecto` (
 -- Estructura de tabla para la tabla `cicloxcriterio`
 --
 
-CREATE TABLE `cicloxcriterio` (
+CREATE TABLE `CicloxCriterio` (
   `IdCicloxCriterio` int(11) NOT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) DEFAULT NULL,
@@ -397,7 +397,7 @@ CREATE TABLE `cicloxcriterio` (
 -- Estructura de tabla para la tabla `cicloxespecialidad`
 --
 
-CREATE TABLE `cicloxespecialidad` (
+CREATE TABLE `CicloxEspecialidad` (
   `IdCicloAcademico` int(11) NOT NULL,
   `IdCiclo` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
@@ -417,7 +417,7 @@ CREATE TABLE `cicloxespecialidad` (
 -- Volcado de datos para la tabla `cicloxespecialidad`
 --
 
-INSERT INTO `cicloxespecialidad` (`IdCicloAcademico`, `IdCiclo`, `IdEspecialidad`, `IdDocente`, `IdPeriodo`, `Numero`, `Vigente`, `Descripcion`, `FechaInicio`, `FechaFin`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CicloxEspecialidad` (`IdCicloAcademico`, `IdCiclo`, `IdEspecialidad`, `IdDocente`, `IdPeriodo`, `Numero`, `Vigente`, `Descripcion`, `FechaInicio`, `FechaFin`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (2, 3, 5, NULL, 2, NULL, 1, NULL, '2016-07-15 00:00:00', '2016-12-20 00:00:00', NULL, '2016-11-23 07:16:30', '2016-11-23 07:16:30');
 
 -- --------------------------------------------------------
@@ -426,7 +426,7 @@ INSERT INTO `cicloxespecialidad` (`IdCicloAcademico`, `IdCiclo`, `IdEspecialidad
 -- Estructura de tabla para la tabla `cicloxresultado`
 --
 
-CREATE TABLE `cicloxresultado` (
+CREATE TABLE `CicloxResultado` (
   `IdCicloxResultado` int(11) NOT NULL,
   `IdResultadoEstudiantil` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) DEFAULT NULL,
@@ -443,7 +443,7 @@ CREATE TABLE `cicloxresultado` (
 -- Volcado de datos para la tabla `cicloxresultado`
 --
 
-INSERT INTO `cicloxresultado` (`IdCicloxResultado`, `IdResultadoEstudiantil`, `IdCicloAcademico`, `TotalAlumnos`, `TotalCumplen`, `Promedio`, `Porcentaje`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CicloxResultado` (`IdCicloxResultado`, `IdResultadoEstudiantil`, `IdCicloAcademico`, `TotalAlumnos`, `TotalCumplen`, `Promedio`, `Porcentaje`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (13, 35, 2, NULL, NULL, NULL, NULL, NULL, '2016-11-23 07:16:30', '2016-11-23 07:16:30'),
 (14, 42, 2, NULL, NULL, NULL, NULL, NULL, '2016-11-23 07:16:30', '2016-11-23 07:16:30'),
 (15, 40, 2, NULL, NULL, NULL, NULL, NULL, '2016-11-23 07:16:30', '2016-11-23 07:16:30'),
@@ -495,7 +495,7 @@ CREATE TABLE `competencextutstudentxevaluations` (
 -- Estructura de tabla para la tabla `confespecialidad`
 --
 
-CREATE TABLE `confespecialidad` (
+CREATE TABLE `ConfEspecialidad` (
   `IdConfEspecialidad` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `IdPeriodo` int(11) DEFAULT NULL,
@@ -513,7 +513,7 @@ CREATE TABLE `confespecialidad` (
 -- Volcado de datos para la tabla `confespecialidad`
 --
 
-INSERT INTO `confespecialidad` (`IdConfEspecialidad`, `IdEspecialidad`, `IdPeriodo`, `IdCicloInicio`, `IdCicloFin`, `UmbralAceptacion`, `NivelEsperado`, `CantNivelCriterio`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ConfEspecialidad` (`IdConfEspecialidad`, `IdEspecialidad`, `IdPeriodo`, `IdCicloInicio`, `IdCicloFin`, `UmbralAceptacion`, `NivelEsperado`, `CantNivelCriterio`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (2, 5, 2, 3, 5, 75, 3, 4, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49');
 
 -- --------------------------------------------------------
@@ -522,7 +522,7 @@ INSERT INTO `confespecialidad` (`IdConfEspecialidad`, `IdEspecialidad`, `IdPerio
 -- Estructura de tabla para la tabla `criterio`
 --
 
-CREATE TABLE `criterio` (
+CREATE TABLE `Criterio` (
   `IdCriterio` int(11) NOT NULL,
   `IdAspecto` int(11) DEFAULT NULL,
   `Nombre` varchar(200) DEFAULT NULL,
@@ -536,7 +536,7 @@ CREATE TABLE `criterio` (
 -- Volcado de datos para la tabla `criterio`
 --
 
-INSERT INTO `criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
+INSERT INTO `Criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
 (30, NULL, 'Participación', NULL, NULL, NULL, NULL),
 (31, NULL, 'Manejo de Conflictos', NULL, NULL, NULL, NULL),
 (32, NULL, 'Feedback', NULL, NULL, NULL, NULL),
@@ -578,7 +578,7 @@ INSERT INTO `criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `crea
 -- Estructura de tabla para la tabla `curso`
 --
 
-CREATE TABLE `curso` (
+CREATE TABLE `Curso` (
   `IdCurso` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `NivelAcademico` int(11) DEFAULT NULL,
@@ -594,7 +594,7 @@ CREATE TABLE `curso` (
 -- Volcado de datos para la tabla `curso`
 --
 
-INSERT INTO `curso` (`IdCurso`, `IdEspecialidad`, `NivelAcademico`, `Codigo`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Especialidad_p`) VALUES
+INSERT INTO `Curso` (`IdCurso`, `IdEspecialidad`, `NivelAcademico`, `Codigo`, `Nombre`, `deleted_at`, `created_at`, `updated_at`, `Especialidad_p`) VALUES
 (78, 5, 10, 'INF227', 'DP2', NULL, '2016-11-23 07:10:58', '2016-11-23 07:10:58', NULL),
 (79, 5, 10, 'INF392', 'Tesis2', NULL, '2016-11-23 07:11:31', '2016-11-23 07:11:31', NULL),
 (80, 5, 9, 'INF226', 'DP1', NULL, '2016-11-23 07:12:12', '2016-11-23 07:12:12', NULL),
@@ -612,7 +612,7 @@ INSERT INTO `curso` (`IdCurso`, `IdEspecialidad`, `NivelAcademico`, `Codigo`, `N
 -- Estructura de tabla para la tabla `cursoxciclo`
 --
 
-CREATE TABLE `cursoxciclo` (
+CREATE TABLE `CursoxCiclo` (
   `IdCursoxCiclo` int(11) NOT NULL,
   `IdCurso` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) DEFAULT NULL,
@@ -627,7 +627,7 @@ CREATE TABLE `cursoxciclo` (
 -- Volcado de datos para la tabla `cursoxciclo`
 --
 
-INSERT INTO `cursoxciclo` (`IdCursoxCiclo`, `IdCurso`, `IdCicloAcademico`, `TotalAlumnos`, `Evaluado`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CursoxCiclo` (`IdCursoxCiclo`, `IdCurso`, `IdCicloAcademico`, `TotalAlumnos`, `Evaluado`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (43, 78, 2, NULL, '1', NULL, '2016-11-23 07:16:48', '2016-11-23 07:23:19'),
 (44, 79, 2, NULL, '1', NULL, '2016-11-23 07:16:48', '2016-11-23 07:23:20'),
 (45, 80, 2, NULL, '1', NULL, '2016-11-23 07:16:48', '2016-11-23 07:23:20'),
@@ -639,7 +639,7 @@ INSERT INTO `cursoxciclo` (`IdCursoxCiclo`, `IdCurso`, `IdCicloAcademico`, `Tota
 -- Estructura de tabla para la tabla `cursoxcicloxaspecto`
 --
 
-CREATE TABLE `cursoxcicloxaspecto` (
+CREATE TABLE `CursoxCicloxAspecto` (
   `IdCursoxCicloxAspecto` int(11) NOT NULL,
   `IdCursoxCiclo` int(11) DEFAULT NULL,
   `IdAspecto` int(11) DEFAULT NULL,
@@ -658,7 +658,7 @@ CREATE TABLE `cursoxcicloxaspecto` (
 -- Estructura de tabla para la tabla `cursoxcicloxcriterio`
 --
 
-CREATE TABLE `cursoxcicloxcriterio` (
+CREATE TABLE `CursoxCicloxCriterio` (
   `IdCursoxCicloxCriterio` int(11) NOT NULL,
   `IdCursoxCiclo` int(11) DEFAULT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
@@ -677,7 +677,7 @@ CREATE TABLE `cursoxcicloxcriterio` (
 -- Estructura de tabla para la tabla `cursoxcicloxresultado`
 --
 
-CREATE TABLE `cursoxcicloxresultado` (
+CREATE TABLE `CursoxCicloxResultado` (
   `IdCursoxCicloxResultado` int(11) NOT NULL,
   `IdCursoxCiclo` int(11) DEFAULT NULL,
   `IdResultadoEstudiantil` int(11) DEFAULT NULL,
@@ -696,7 +696,7 @@ CREATE TABLE `cursoxcicloxresultado` (
 -- Estructura de tabla para la tabla `cursoxdocente`
 --
 
-CREATE TABLE `cursoxdocente` (
+CREATE TABLE `CursoxDocente` (
   `IdCursoxDocente` int(11) NOT NULL,
   `IdDocente` int(11) DEFAULT NULL,
   `IdCurso` int(11) DEFAULT NULL,
@@ -709,7 +709,7 @@ CREATE TABLE `cursoxdocente` (
 -- Volcado de datos para la tabla `cursoxdocente`
 --
 
-INSERT INTO `cursoxdocente` (`IdCursoxDocente`, `IdDocente`, `IdCurso`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CursoxDocente` (`IdCursoxDocente`, `IdDocente`, `IdCurso`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (6, 6, 78, NULL, NULL, NULL),
 (7, 5, 79, NULL, NULL, NULL),
 (8, 6, 80, NULL, NULL, NULL),
@@ -761,7 +761,7 @@ CREATE TABLE `deliverables` (
 -- Estructura de tabla para la tabla `docente`
 --
 
-CREATE TABLE `docente` (
+CREATE TABLE `Docente` (
   `IdDocente` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `IdUsuario` int(11) DEFAULT NULL,
@@ -790,7 +790,7 @@ CREATE TABLE `docente` (
 -- Volcado de datos para la tabla `docente`
 --
 
-INSERT INTO `docente` (`IdDocente`, `IdEspecialidad`, `IdUsuario`, `Codigo`, `Nombre`, `ApellidoPaterno`, `ApellidoMaterno`, `Correo`, `Cargo`, `Vigente`, `rolTutoria`, `rolEvaluaciones`, `oficina`, `telefono`, `anexo`, `Descripcion`, `deleted_at`, `created_at`, `updated_at`, `direccion`, `es_adminpsp`, `es_supervisorpsp`) VALUES
+INSERT INTO `Docente` (`IdDocente`, `IdEspecialidad`, `IdUsuario`, `Codigo`, `Nombre`, `ApellidoPaterno`, `ApellidoMaterno`, `Correo`, `Cargo`, `Vigente`, `rolTutoria`, `rolEvaluaciones`, `oficina`, `telefono`, `anexo`, `Descripcion`, `deleted_at`, `created_at`, `updated_at`, `direccion`, `es_adminpsp`, `es_supervisorpsp`) VALUES
 (5, 5, 14, '19960275', 'Luis Alberto', 'Flores', 'García', 'luis.flores@pucp.edu.com', 'Profesor Contratado', 1, NULL, NULL, NULL, NULL, NULL, '', NULL, '2016-11-23 06:34:27', '2016-11-23 06:34:27', NULL, NULL, NULL),
 (6, 5, 15, '00009299', 'César Augusto', 'Aguilera', 'Serpa', 'cesar.aguilera@pucp.edu.com', 'Profesor Contratado', 1, NULL, NULL, NULL, NULL, NULL, '', NULL, '2016-11-23 06:35:24', '2016-11-23 06:35:24', NULL, NULL, NULL);
 
@@ -800,7 +800,7 @@ INSERT INTO `docente` (`IdDocente`, `IdEspecialidad`, `IdUsuario`, `Codigo`, `No
 -- Estructura de tabla para la tabla `especialidad`
 --
 
-CREATE TABLE `especialidad` (
+CREATE TABLE `Especialidad` (
   `IdEspecialidad` int(11) NOT NULL,
   `Codigo` varchar(20) DEFAULT NULL,
   `Nombre` varchar(100) DEFAULT NULL,
@@ -882,7 +882,7 @@ CREATE TABLE `events` (
 -- Estructura de tabla para la tabla `evidenciacurso`
 --
 
-CREATE TABLE `evidenciacurso` (
+CREATE TABLE `EvidenciaCurso` (
   `IdEvidenciaCurso` int(11) NOT NULL,
   `IdArchivoEntrada` int(11) DEFAULT NULL,
   `IdHorario` int(11) DEFAULT NULL,
@@ -899,7 +899,7 @@ CREATE TABLE `evidenciacurso` (
 -- Estructura de tabla para la tabla `evidenciamedicion`
 --
 
-CREATE TABLE `evidenciamedicion` (
+CREATE TABLE `EvidenciaMedicion` (
   `IdEvidenciaMedicion` int(11) NOT NULL,
   `IdArchivoEntrada` int(11) DEFAULT NULL,
   `IdFuentexCursoxCriterioxCiclo` int(11) DEFAULT NULL,
@@ -979,7 +979,7 @@ CREATE TABLE `freehours` (
 -- Estructura de tabla para la tabla `fuentemedicion`
 --
 
-CREATE TABLE `fuentemedicion` (
+CREATE TABLE `FuenteMedicion` (
   `IdFuenteMedicion` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `Nombre` varchar(200) DEFAULT NULL,
@@ -992,7 +992,7 @@ CREATE TABLE `fuentemedicion` (
 -- Volcado de datos para la tabla `fuentemedicion`
 --
 
-INSERT INTO `fuentemedicion` (`IdFuenteMedicion`, `IdEspecialidad`, `Nombre`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `FuenteMedicion` (`IdFuenteMedicion`, `IdEspecialidad`, `Nombre`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (6, 5, 'Documentación', NULL, '2016-11-23 07:09:14', '2016-11-23 07:09:14'),
 (7, 5, 'Rep. Exp. Numérica', NULL, '2016-11-23 07:09:32', '2016-11-23 07:09:32'),
 (8, 5, 'Doc. del Proyecto', NULL, '2016-11-23 07:09:43', '2016-11-23 07:09:43'),
@@ -1005,7 +1005,7 @@ INSERT INTO `fuentemedicion` (`IdFuenteMedicion`, `IdEspecialidad`, `Nombre`, `d
 -- Estructura de tabla para la tabla `fuentexcursoxcriterioxciclo`
 --
 
-CREATE TABLE `fuentexcursoxcriterioxciclo` (
+CREATE TABLE `FuentexCursoxCriterioxCiclo` (
   `IdFuentexCursoxCriterioxCiclo` int(11) NOT NULL,
   `IdFuenteMedicion` int(11) DEFAULT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
@@ -1020,7 +1020,7 @@ CREATE TABLE `fuentexcursoxcriterioxciclo` (
 -- Volcado de datos para la tabla `fuentexcursoxcriterioxciclo`
 --
 
-INSERT INTO `fuentexcursoxcriterioxciclo` (`IdFuentexCursoxCriterioxCiclo`, `IdFuenteMedicion`, `IdCriterio`, `IdCurso`, `IdCicloAcademico`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `FuentexCursoxCriterioxCiclo` (`IdFuentexCursoxCriterioxCiclo`, `IdFuenteMedicion`, `IdCriterio`, `IdCurso`, `IdCicloAcademico`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 6, 37, 78, 2, '2016-11-23 07:19:15', '2016-11-23 07:19:07', '2016-11-23 07:19:15'),
 (2, 10, 37, 78, 2, '2016-11-23 07:19:15', '2016-11-23 07:19:07', '2016-11-23 07:19:15'),
 (3, 7, 38, 78, 2, '2016-11-23 07:19:15', '2016-11-23 07:19:07', '2016-11-23 07:19:15'),
@@ -1129,7 +1129,7 @@ CREATE TABLE `groups` (
 -- Estructura de tabla para la tabla `horario`
 --
 
-CREATE TABLE `horario` (
+CREATE TABLE `Horario` (
   `IdHorario` int(11) NOT NULL,
   `IdCursoxCiclo` int(11) DEFAULT NULL,
   `Codigo` varchar(10) DEFAULT NULL,
@@ -1144,7 +1144,7 @@ CREATE TABLE `horario` (
 -- Volcado de datos para la tabla `horario`
 --
 
-INSERT INTO `horario` (`IdHorario`, `IdCursoxCiclo`, `Codigo`, `TotalAlumnos`, `deleted_at`, `created_at`, `updated_at`, `idPspProcess`) VALUES
+INSERT INTO `Horario` (`IdHorario`, `IdCursoxCiclo`, `Codigo`, `TotalAlumnos`, `deleted_at`, `created_at`, `updated_at`, `idPspProcess`) VALUES
 (7, 43, '1081', NULL, NULL, '2016-11-23 07:17:27', '2016-11-23 07:17:27', NULL),
 (8, 44, '1082', NULL, NULL, '2016-11-23 07:17:52', '2016-11-23 07:17:52', NULL),
 (9, 45, '1083', NULL, NULL, '2016-11-23 07:18:04', '2016-11-23 07:18:04', NULL),
@@ -1156,7 +1156,7 @@ INSERT INTO `horario` (`IdHorario`, `IdCursoxCiclo`, `Codigo`, `TotalAlumnos`, `
 -- Estructura de tabla para la tabla `horarioxaspecto`
 --
 
-CREATE TABLE `horarioxaspecto` (
+CREATE TABLE `HorarioxAspecto` (
   `IdHorarioxAspecto` int(11) NOT NULL,
   `IdHorario` int(11) DEFAULT NULL,
   `IdAspecto` int(11) DEFAULT NULL,
@@ -1175,7 +1175,7 @@ CREATE TABLE `horarioxaspecto` (
 -- Estructura de tabla para la tabla `horarioxcriterio`
 --
 
-CREATE TABLE `horarioxcriterio` (
+CREATE TABLE `HorarioxCriterio` (
   `IdHorarioxCriterio` int(11) NOT NULL,
   `IdHorario` int(11) DEFAULT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
@@ -1194,7 +1194,7 @@ CREATE TABLE `horarioxcriterio` (
 -- Estructura de tabla para la tabla `horarioxdocente`
 --
 
-CREATE TABLE `horarioxdocente` (
+CREATE TABLE `HorarioxDocente` (
   `IdHorarioxDocente` int(11) NOT NULL,
   `IdDocente` int(11) DEFAULT NULL,
   `IdHorario` int(11) DEFAULT NULL,
@@ -1207,7 +1207,7 @@ CREATE TABLE `horarioxdocente` (
 -- Volcado de datos para la tabla `horarioxdocente`
 --
 
-INSERT INTO `horarioxdocente` (`IdHorarioxDocente`, `IdDocente`, `IdHorario`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `HorarioxDocente` (`IdHorarioxDocente`, `IdDocente`, `IdHorario`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (7, 6, 7, NULL, '2016-11-23 07:17:27', '2016-11-23 07:17:27'),
 (8, 5, 8, NULL, '2016-11-23 07:17:52', '2016-11-23 07:17:52'),
 (9, 6, 9, NULL, '2016-11-23 07:18:04', '2016-11-23 07:18:04'),
@@ -1219,7 +1219,7 @@ INSERT INTO `horarioxdocente` (`IdHorarioxDocente`, `IdDocente`, `IdHorario`, `d
 -- Estructura de tabla para la tabla `horarioxresultado`
 --
 
-CREATE TABLE `horarioxresultado` (
+CREATE TABLE `HorarioxResultado` (
   `IdHorarioxResultado` int(11) NOT NULL,
   `IdHorario` int(11) DEFAULT NULL,
   `IdResultadoEstudiantil` int(11) DEFAULT NULL,
@@ -1238,7 +1238,7 @@ CREATE TABLE `horarioxresultado` (
 -- Estructura de tabla para la tabla `informe`
 --
 
-CREATE TABLE `informe` (
+CREATE TABLE `Informe` (
   `IdInforme` int(11) NOT NULL,
   `IdHorario` int(11) DEFAULT NULL,
   `Titulo` varchar(50) DEFAULT NULL,
@@ -1488,7 +1488,7 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 -- Estructura de tabla para la tabla `nivelcriterio`
 --
 
-CREATE TABLE `nivelcriterio` (
+CREATE TABLE `Nivelcriterio` (
   `IdNivelCriterio` int(11) NOT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
   `IdPeriodo` int(11) DEFAULT NULL,
@@ -1521,7 +1521,7 @@ CREATE TABLE `noavailabilitys` (
 -- Estructura de tabla para la tabla `objetivoeducacional`
 --
 
-CREATE TABLE `objetivoeducacional` (
+CREATE TABLE `ObjetivoEducacional` (
   `IdObjetivoEducacional` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `Numero` int(11) DEFAULT NULL,
@@ -1537,7 +1537,7 @@ CREATE TABLE `objetivoeducacional` (
 -- Volcado de datos para la tabla `objetivoeducacional`
 --
 
-INSERT INTO `objetivoeducacional` (`IdObjetivoEducacional`, `IdEspecialidad`, `Numero`, `Descripcion`, `CicloRegistro`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
+INSERT INTO `ObjetivoEducacional` (`IdObjetivoEducacional`, `IdEspecialidad`, `Numero`, `Descripcion`, `CicloRegistro`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
 (14, 5, 1, 'Conducir el análisis de procesos de negocio y necesidades de información de la organización', NULL, NULL, '2016-11-23 06:37:39', '2016-11-23 07:15:51', 1),
 (15, 5, 2, 'Dirigir las actividades del ciclo de vida de proyectos informáticos, utilizando tecnología, estándares y herramientas adecuadas.', NULL, NULL, '2016-11-23 06:38:15', '2016-11-23 07:15:51', 1);
 
@@ -1565,7 +1565,7 @@ CREATE TABLE `parameters` (
 -- Estructura de tabla para la tabla `passwordresets`
 --
 
-CREATE TABLE `passwordresets` (
+CREATE TABLE `PasswordResets` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -1575,19 +1575,7 @@ CREATE TABLE `passwordresets` (
 -- Volcado de datos para la tabla `passwordresets`
 --
 
-INSERT INTO `passwordresets` (`user_id`, `token`, `created_at`) VALUES
-(2, '84e4ea1ec9e6605a7c971dbfbf4cbc9fe87cec037c15f211fedc80c4f19cdc70', '2016-06-18 17:24:00'),
-(3, '8e5ca56be3bb11596e6bcbab6c00c4dd6ffe8bdece697e145e7eff7753e61710', '2016-06-18 17:52:40'),
-(4, 'f3190fddc2ca4a89c6964c48095102e26c127ca5647e126d977cf90881ed24b6', '2016-06-18 17:55:02'),
-(5, '6d0c1aff957edce1f35b492e79e723d932ad1d6449f8350db12d384bdd68e84b', '2016-06-19 06:07:14'),
-(6, '690c2febf6fbd6daea61e173bced9e8d19ed682519d6d4f8934cd5bb0a8c845e', '2016-06-19 15:36:04'),
-(7, '7282e96cbe3e71258191260751e2fe020391d856ba1fa1a1ad941e17d3352f3f', '2016-06-19 15:47:11'),
-(8, '8c2edda6f5ef7dfcffbe425f324e62bdca53f8ce02c680ecdfbe59996292c0a1', '2016-06-19 16:22:40'),
-(9, '0a1cce0a347c5fd7aaa0727f9158477af89c18bced175891c3ee10a147236b40', '2016-06-20 21:35:34'),
-(10, 'ad698abba86fc0b83deac41e7c010a2831b53566b103fda16f518d5b370d7c09', '2016-06-20 21:35:34'),
-(11, '4f6f1ab33e00bc44c8239a996bf04b73e22af1f4753361d705e4c61b20f6b640', '2016-06-20 21:35:37'),
-(12, '1f0af9fc01744156b4e392459b1820cf9bd49e8b6cbf38cedebe5644a76d7548', '2016-06-20 21:37:04'),
-(13, 'dddb4aaa3f24ef075b882210b468d54dee745555104ff26a00be962bd793625e', '2016-06-23 18:54:30'),
+INSERT INTO `PasswordResets` (`user_id`, `token`, `created_at`) VALUES
 (14, '04d26f744f02822b789741803459958688e0a63a96a18d56166d550e9a2180ac', '2016-11-23 06:34:27'),
 (15, '914946a0a393f80cc63bdeccfff62e055f5f2205cc8ea16952d7a35a9005caaf', '2016-11-23 06:35:24');
 
@@ -1597,7 +1585,7 @@ INSERT INTO `passwordresets` (`user_id`, `token`, `created_at`) VALUES
 -- Estructura de tabla para la tabla `perfil`
 --
 
-CREATE TABLE `perfil` (
+CREATE TABLE `Perfil` (
   `IdPerfil` int(11) NOT NULL,
   `Nombre` varchar(50) DEFAULT NULL,
   `Descripcion` varchar(100) DEFAULT NULL,
@@ -1610,7 +1598,7 @@ CREATE TABLE `perfil` (
 -- Volcado de datos para la tabla `perfil`
 --
 
-INSERT INTO `perfil` (`IdPerfil`, `Nombre`, `Descripcion`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `Perfil` (`IdPerfil`, `Nombre`, `Descripcion`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (0, 'Alumno', 'Alumno de la facultad', NULL, '2016-05-28 02:56:00', '2016-06-24 12:01:17'),
 (1, 'Coordinador', 'Coordinador de la Especialidad', NULL, '2016-05-28 02:56:00', '2016-06-24 18:05:44'),
 (2, 'Profesor', 'Profesor de una Especialidad', NULL, '2016-05-28 02:56:00', '2016-06-24 20:15:18'),
@@ -1625,7 +1613,7 @@ INSERT INTO `perfil` (`IdPerfil`, `Nombre`, `Descripcion`, `deleted_at`, `create
 -- Estructura de tabla para la tabla `perfilxaccion`
 --
 
-CREATE TABLE `perfilxaccion` (
+CREATE TABLE `PerfilxAccion` (
   `IdPerfilxAccion` int(11) NOT NULL,
   `IdPerfil` int(11) DEFAULT NULL,
   `IdAccion` int(11) DEFAULT NULL,
@@ -1638,7 +1626,7 @@ CREATE TABLE `perfilxaccion` (
 -- Volcado de datos para la tabla `perfilxaccion`
 --
 
-INSERT INTO `perfilxaccion` (`IdPerfilxAccion`, `IdPerfil`, `IdAccion`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `PerfilxAccion` (`IdPerfilxAccion`, `IdPerfil`, `IdAccion`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, NULL, '2016-05-28 02:56:00', '2016-05-28 02:56:00'),
 (2, 3, 2, NULL, '2016-05-28 02:56:00', '2016-05-28 02:56:00'),
 (5, 3, 5, NULL, '2016-05-28 02:56:00', '2016-05-28 02:56:00'),
@@ -1943,7 +1931,7 @@ INSERT INTO `perfilxaccion` (`IdPerfilxAccion`, `IdPerfil`, `IdAccion`, `deleted
 -- Estructura de tabla para la tabla `periodo`
 --
 
-CREATE TABLE `periodo` (
+CREATE TABLE `Periodo` (
   `IdPeriodo` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `Vigente` int(11) DEFAULT NULL,
@@ -1956,7 +1944,7 @@ CREATE TABLE `periodo` (
 -- Volcado de datos para la tabla `periodo`
 --
 
-INSERT INTO `periodo` (`IdPeriodo`, `IdEspecialidad`, `Vigente`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `Periodo` (`IdPeriodo`, `IdEspecialidad`, `Vigente`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (2, 5, 1, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49');
 
 -- --------------------------------------------------------
@@ -1965,7 +1953,7 @@ INSERT INTO `periodo` (`IdPeriodo`, `IdEspecialidad`, `Vigente`, `deleted_at`, `
 -- Estructura de tabla para la tabla `periodoxaspecto`
 --
 
-CREATE TABLE `periodoxaspecto` (
+CREATE TABLE `PeriodoxAspecto` (
   `IdPeriodoxAspecto` int(11) NOT NULL,
   `IdPeriodo` int(11) DEFAULT NULL,
   `IdAspecto` int(11) DEFAULT NULL,
@@ -1978,7 +1966,7 @@ CREATE TABLE `periodoxaspecto` (
 -- Volcado de datos para la tabla `periodoxaspecto`
 --
 
-INSERT INTO `periodoxaspecto` (`IdPeriodoxAspecto`, `IdPeriodo`, `IdAspecto`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `PeriodoxAspecto` (`IdPeriodoxAspecto`, `IdPeriodo`, `IdAspecto`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (18, 2, 18, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49'),
 (19, 2, 19, NULL, '2016-11-23 07:15:50', '2016-11-23 07:15:50'),
 (20, 2, 29, NULL, '2016-11-23 07:15:50', '2016-11-23 07:15:50'),
@@ -2003,7 +1991,7 @@ INSERT INTO `periodoxaspecto` (`IdPeriodoxAspecto`, `IdPeriodo`, `IdAspecto`, `d
 -- Estructura de tabla para la tabla `periodoxcriterio`
 --
 
-CREATE TABLE `periodoxcriterio` (
+CREATE TABLE `PeriodoxCriterio` (
   `IdPeriodoxCriterio` int(11) NOT NULL,
   `IdPeriodo` int(11) DEFAULT NULL,
   `IdCriterio` int(11) DEFAULT NULL,
@@ -2016,7 +2004,7 @@ CREATE TABLE `periodoxcriterio` (
 -- Volcado de datos para la tabla `periodoxcriterio`
 --
 
-INSERT INTO `periodoxcriterio` (`IdPeriodoxCriterio`, `IdPeriodo`, `IdCriterio`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `PeriodoxCriterio` (`IdPeriodoxCriterio`, `IdPeriodo`, `IdCriterio`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (28, 2, 37, NULL, '2016-11-23 07:15:50', '2016-11-23 07:15:50'),
 (29, 2, 38, NULL, '2016-11-23 07:15:50', '2016-11-23 07:15:50'),
 (30, 2, 39, NULL, '2016-11-23 07:15:50', '2016-11-23 07:15:50'),
@@ -2051,7 +2039,7 @@ INSERT INTO `periodoxcriterio` (`IdPeriodoxCriterio`, `IdPeriodo`, `IdCriterio`,
 -- Estructura de tabla para la tabla `periodoxfuente`
 --
 
-CREATE TABLE `periodoxfuente` (
+CREATE TABLE `PeriodoxFuente` (
   `IdPeriodo` int(11) NOT NULL,
   `IdFuenteMedicion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2060,7 +2048,7 @@ CREATE TABLE `periodoxfuente` (
 -- Volcado de datos para la tabla `periodoxfuente`
 --
 
-INSERT INTO `periodoxfuente` (`IdPeriodo`, `IdFuenteMedicion`) VALUES
+INSERT INTO `PeriodoxFuente` (`IdPeriodo`, `IdFuenteMedicion`) VALUES
 (2, 6),
 (2, 7),
 (2, 8),
@@ -2073,7 +2061,7 @@ INSERT INTO `periodoxfuente` (`IdPeriodo`, `IdFuenteMedicion`) VALUES
 -- Estructura de tabla para la tabla `periodoxobjetivo`
 --
 
-CREATE TABLE `periodoxobjetivo` (
+CREATE TABLE `PeriodoxObjetivo` (
   `IdPeriodoxObjetivo` int(11) NOT NULL,
   `IdPeriodo` int(11) DEFAULT NULL,
   `IdObjetivoEducacional` int(11) DEFAULT NULL,
@@ -2086,7 +2074,7 @@ CREATE TABLE `periodoxobjetivo` (
 -- Volcado de datos para la tabla `periodoxobjetivo`
 --
 
-INSERT INTO `periodoxobjetivo` (`IdPeriodoxObjetivo`, `IdPeriodo`, `IdObjetivoEducacional`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `PeriodoxObjetivo` (`IdPeriodoxObjetivo`, `IdPeriodo`, `IdObjetivoEducacional`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (4, 2, 14, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49'),
 (5, 2, 15, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49');
 
@@ -2096,7 +2084,7 @@ INSERT INTO `periodoxobjetivo` (`IdPeriodoxObjetivo`, `IdPeriodo`, `IdObjetivoEd
 -- Estructura de tabla para la tabla `periodoxresultado`
 --
 
-CREATE TABLE `periodoxresultado` (
+CREATE TABLE `PeriodoxResultado` (
   `IdPeriodoxResultado` int(11) NOT NULL,
   `IdPeriodo` int(11) DEFAULT NULL,
   `IdResultadoEstudiantil` int(11) DEFAULT NULL,
@@ -2109,7 +2097,7 @@ CREATE TABLE `periodoxresultado` (
 -- Volcado de datos para la tabla `periodoxresultado`
 --
 
-INSERT INTO `periodoxresultado` (`IdPeriodoxResultado`, `IdPeriodo`, `IdResultadoEstudiantil`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `PeriodoxResultado` (`IdPeriodoxResultado`, `IdPeriodo`, `IdResultadoEstudiantil`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (13, 2, 35, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49'),
 (14, 2, 42, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49'),
 (15, 2, 40, NULL, '2016-11-23 07:15:49', '2016-11-23 07:15:49'),
@@ -2147,7 +2135,7 @@ CREATE TABLE `phases` (
 -- Estructura de tabla para la tabla `planaccion`
 --
 
-CREATE TABLE `planaccion` (
+CREATE TABLE `PlanAccion` (
   `IdPlanAccion` int(11) NOT NULL,
   `IdPlanMejora` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) DEFAULT NULL,
@@ -2168,7 +2156,7 @@ CREATE TABLE `planaccion` (
 -- Estructura de tabla para la tabla `planmejora`
 --
 
-CREATE TABLE `planmejora` (
+CREATE TABLE `PlanMejora` (
   `IdPlanMejora` int(11) NOT NULL,
   `IdTipoPlanMejora` int(11) DEFAULT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
@@ -2458,7 +2446,7 @@ CREATE TABLE `reasons` (
 -- Estructura de tabla para la tabla `resultadoestudiantil`
 --
 
-CREATE TABLE `resultadoestudiantil` (
+CREATE TABLE `ResultadoEstudiantil` (
   `IdResultadoEstudiantil` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `Identificador` char(1) DEFAULT NULL,
@@ -2474,7 +2462,7 @@ CREATE TABLE `resultadoestudiantil` (
 -- Volcado de datos para la tabla `resultadoestudiantil`
 --
 
-INSERT INTO `resultadoestudiantil` (`IdResultadoEstudiantil`, `IdEspecialidad`, `Identificador`, `Descripcion`, `CicloRegistro`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
+INSERT INTO `ResultadoEstudiantil` (`IdResultadoEstudiantil`, `IdEspecialidad`, `Identificador`, `Descripcion`, `CicloRegistro`, `deleted_at`, `created_at`, `updated_at`, `Estado`) VALUES
 (35, 5, 'A', 'Aplicar los conocimientos relacionados con las matemáticas, ciencias e ingeniería.', NULL, NULL, '2016-11-23 06:38:44', '2016-11-23 07:15:51', 1),
 (36, 5, 'B', 'Diseñar y conducir experimentos y analizar e interpretar los datos.', NULL, NULL, '2016-11-23 06:39:08', '2016-11-23 07:15:51', 1),
 (37, 5, 'C', 'Diseñar sistemas, componentes o procesos que satisfagan las necesidades presentadas.', NULL, NULL, '2016-11-23 06:39:33', '2016-11-23 07:15:51', 1),
@@ -2494,7 +2482,7 @@ INSERT INTO `resultadoestudiantil` (`IdResultadoEstudiantil`, `IdEspecialidad`, 
 -- Estructura de tabla para la tabla `resultadoxobjetivo`
 --
 
-CREATE TABLE `resultadoxobjetivo` (
+CREATE TABLE `ResultadoxObjetivo` (
   `IdResultadoxObjetivo` int(11) NOT NULL,
   `IdResultadoEstudiantil` int(11) DEFAULT NULL,
   `IdObjetivoEducacional` int(11) DEFAULT NULL,
@@ -2508,7 +2496,7 @@ CREATE TABLE `resultadoxobjetivo` (
 -- Volcado de datos para la tabla `resultadoxobjetivo`
 --
 
-INSERT INTO `resultadoxobjetivo` (`IdResultadoxObjetivo`, `IdResultadoEstudiantil`, `IdObjetivoEducacional`, `IdPeriodo`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ResultadoxObjetivo` (`IdResultadoxObjetivo`, `IdResultadoEstudiantil`, `IdObjetivoEducacional`, `IdPeriodo`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (78, 35, 15, NULL, NULL, '2016-11-23 06:38:44', '2016-11-23 06:38:44'),
 (79, 36, 14, NULL, NULL, '2016-11-23 06:39:09', '2016-11-23 06:39:09'),
 (80, 36, 15, NULL, NULL, '2016-11-23 06:39:09', '2016-11-23 06:39:09'),
@@ -2563,7 +2551,7 @@ CREATE TABLE `schedule_meetings` (
 -- Estructura de tabla para la tabla `seguimiento`
 --
 
-CREATE TABLE `seguimiento` (
+CREATE TABLE `Seguimiento` (
   `IdSeguimiento` int(11) NOT NULL,
   `IdPlanMejora` int(11) DEFAULT NULL,
   `IdCicloAcademico` int(11) DEFAULT NULL,
@@ -2671,7 +2659,7 @@ CREATE TABLE `studentxprojects` (
 -- Estructura de tabla para la tabla `sugerencia`
 --
 
-CREATE TABLE `sugerencia` (
+CREATE TABLE `Sugerencia` (
   `IdSugerencia` int(11) NOT NULL,
   `IdPlanMejora` int(11) DEFAULT NULL,
   `IdDocente` int(11) DEFAULT NULL,
@@ -2809,7 +2797,7 @@ CREATE TABLE `templates` (
 -- Estructura de tabla para la tabla `tipoplanmejora`
 --
 
-CREATE TABLE `tipoplanmejora` (
+CREATE TABLE `TipoPlanMejora` (
   `IdTipoPlanMejora` int(11) NOT NULL,
   `IdEspecialidad` int(11) DEFAULT NULL,
   `Codigo` varchar(10) DEFAULT NULL,
@@ -2950,7 +2938,7 @@ CREATE TABLE `usersxprofiles` (
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuario` (
+CREATE TABLE `Usuario` (
   `IdUsuario` int(11) NOT NULL,
   `IdPerfil` int(11) DEFAULT NULL,
   `Usuario` varchar(20) DEFAULT NULL,
@@ -2964,7 +2952,7 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`IdUsuario`, `IdPerfil`, `Usuario`, `Contrasena`, `deleted_at`, `created_at`, `updated_at`) VALUES
+INSERT INTO `Usuario` (`IdUsuario`, `IdPerfil`, `Usuario`, `Contrasena`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 3, 'admin', '$2y$10$Lr3YPtN8NaNBVNHtrK0MBO5Yf6ZiyMJicGTYDASKXrSrnnBWgFz/.', NULL, '2016-05-28 02:56:00', '2016-06-07 10:30:17'),
 (14, 1, '19960275', '$2y$10$xbZpkd3MctO6JgT9uhnnBO33dOCsrUAtt6z8DnhGeW2VaQmxe1tY.', NULL, '2016-11-23 06:34:27', '2016-11-23 06:36:04'),
 (15, 2, '00009299', '$2y$10$ubgaveiu8G/9OI2fxN33Ye9j16mWnsDzgMv53GH3yN8z2yeTSsh.m', NULL, '2016-11-23 06:35:24', '2016-11-23 06:35:24');
@@ -2976,13 +2964,13 @@ INSERT INTO `usuario` (`IdUsuario`, `IdPerfil`, `Usuario`, `Contrasena`, `delete
 --
 -- Indices de la tabla `accion`
 --
-ALTER TABLE `accion`
+ALTER TABLE `Accion`
   ADD PRIMARY KEY (`IdAccion`);
 
 --
 -- Indices de la tabla `acreditador`
 --
-ALTER TABLE `acreditador`
+ALTER TABLE `Acreditador`
   ADD PRIMARY KEY (`IdAcreditador`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`),
   ADD KEY `IdUsuario` (`IdUsuario`);
@@ -2997,7 +2985,7 @@ ALTER TABLE `alternatives`
 --
 -- Indices de la tabla `alumno`
 --
-ALTER TABLE `alumno`
+ALTER TABLE `Alumno`
   ADD PRIMARY KEY (`IdAlumno`),
   ADD KEY `IdHorario` (`IdHorario`),
   ADD KEY `IdUsuario` (`IdUsuario`);
@@ -3005,7 +2993,7 @@ ALTER TABLE `alumno`
 --
 -- Indices de la tabla `aporte`
 --
-ALTER TABLE `aporte`
+ALTER TABLE `Aporte`
   ADD PRIMARY KEY (`IdAporte`),
   ADD KEY `IdResultadoEstudiantil` (`IdResultadoEstudiantil`),
   ADD KEY `IdCurso` (`IdCurso`),
@@ -3014,13 +3002,13 @@ ALTER TABLE `aporte`
 --
 -- Indices de la tabla `archivoentrada`
 --
-ALTER TABLE `archivoentrada`
+ALTER TABLE `Archivoentrada`
   ADD PRIMARY KEY (`IdArchivoEntrada`);
 
 --
 -- Indices de la tabla `archivoentradaplan`
 --
-ALTER TABLE `archivoentradaplan`
+ALTER TABLE `Archivoentradaplan`
   ADD PRIMARY KEY (`IdArchivoEntrada`);
 
 --
@@ -3032,14 +3020,14 @@ ALTER TABLE `areas`
 --
 -- Indices de la tabla `aspecto`
 --
-ALTER TABLE `aspecto`
+ALTER TABLE `Aspecto`
   ADD PRIMARY KEY (`IdAspecto`),
   ADD KEY `IdResultadoEstudiantil` (`IdResultadoEstudiantil`);
 
 --
 -- Indices de la tabla `calificacion`
 --
-ALTER TABLE `calificacion`
+ALTER TABLE `Calificacion`
   ADD PRIMARY KEY (`IdCalificacion`),
   ADD KEY `IdAlumno` (`IdAlumno`),
   ADD KEY `IdHorario` (`IdHorario`),
@@ -3048,13 +3036,13 @@ ALTER TABLE `calificacion`
 --
 -- Indices de la tabla `cicloacademico`
 --
-ALTER TABLE `cicloacademico`
+ALTER TABLE `CicloAcademico`
   ADD PRIMARY KEY (`IdCicloAcademico`);
 
 --
 -- Indices de la tabla `cicloxaspecto`
 --
-ALTER TABLE `cicloxaspecto`
+ALTER TABLE `CicloxAspecto`
   ADD PRIMARY KEY (`IdCicloxAspecto`),
   ADD KEY `IdCicloAcademico` (`IdCicloAcademico`),
   ADD KEY `IdAspecto` (`IdAspecto`);
@@ -3062,7 +3050,7 @@ ALTER TABLE `cicloxaspecto`
 --
 -- Indices de la tabla `cicloxcriterio`
 --
-ALTER TABLE `cicloxcriterio`
+ALTER TABLE `CicloxCriterio`
   ADD PRIMARY KEY (`IdCicloxCriterio`),
   ADD KEY `IdCriterio` (`IdCriterio`),
   ADD KEY `IdCicloAcademico` (`IdCicloAcademico`);
@@ -3070,7 +3058,7 @@ ALTER TABLE `cicloxcriterio`
 --
 -- Indices de la tabla `cicloxespecialidad`
 --
-ALTER TABLE `cicloxespecialidad`
+ALTER TABLE `CicloxEspecialidad`
   ADD PRIMARY KEY (`IdCicloAcademico`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`),
   ADD KEY `IdPeriodo` (`IdPeriodo`),
@@ -3080,7 +3068,7 @@ ALTER TABLE `cicloxespecialidad`
 --
 -- Indices de la tabla `cicloxresultado`
 --
-ALTER TABLE `cicloxresultado`
+ALTER TABLE `CicloxResultado`
   ADD PRIMARY KEY (`IdCicloxResultado`),
   ADD KEY `IdCicloAcademico` (`IdCicloAcademico`),
   ADD KEY `IdResultadoEstudiantil` (`IdResultadoEstudiantil`);
@@ -3103,7 +3091,7 @@ ALTER TABLE `competencextutstudentxevaluations`
 --
 -- Indices de la tabla `confespecialidad`
 --
-ALTER TABLE `confespecialidad`
+ALTER TABLE `ConfEspecialidad`
   ADD PRIMARY KEY (`IdConfEspecialidad`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`),
   ADD KEY `IdPeriodo` (`IdPeriodo`),
@@ -3113,21 +3101,21 @@ ALTER TABLE `confespecialidad`
 --
 -- Indices de la tabla `criterio`
 --
-ALTER TABLE `criterio`
+ALTER TABLE `Criterio`
   ADD PRIMARY KEY (`IdCriterio`),
   ADD KEY `IdAspecto` (`IdAspecto`);
 
 --
 -- Indices de la tabla `curso`
 --
-ALTER TABLE `curso`
+ALTER TABLE `Curso`
   ADD PRIMARY KEY (`IdCurso`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`);
 
 --
 -- Indices de la tabla `cursoxciclo`
 --
-ALTER TABLE `cursoxciclo`
+ALTER TABLE `CursoxCiclo`
   ADD PRIMARY KEY (`IdCursoxCiclo`),
   ADD KEY `IdCurso` (`IdCurso`),
   ADD KEY `IdCicloAcademico` (`IdCicloAcademico`);
@@ -3135,7 +3123,7 @@ ALTER TABLE `cursoxciclo`
 --
 -- Indices de la tabla `cursoxcicloxaspecto`
 --
-ALTER TABLE `cursoxcicloxaspecto`
+ALTER TABLE `CursoxCicloxAspecto`
   ADD PRIMARY KEY (`IdCursoxCicloxAspecto`),
   ADD KEY `IdCursoxCiclo` (`IdCursoxCiclo`),
   ADD KEY `IdAspecto` (`IdAspecto`);
@@ -3143,7 +3131,7 @@ ALTER TABLE `cursoxcicloxaspecto`
 --
 -- Indices de la tabla `cursoxcicloxcriterio`
 --
-ALTER TABLE `cursoxcicloxcriterio`
+ALTER TABLE `CursoxCicloxCriterio`
   ADD PRIMARY KEY (`IdCursoxCicloxCriterio`),
   ADD KEY `IdCursoxCiclo` (`IdCursoxCiclo`),
   ADD KEY `IdCriterio` (`IdCriterio`);
@@ -3151,7 +3139,7 @@ ALTER TABLE `cursoxcicloxcriterio`
 --
 -- Indices de la tabla `cursoxcicloxresultado`
 --
-ALTER TABLE `cursoxcicloxresultado`
+ALTER TABLE `CursoxCicloxResultado`
   ADD PRIMARY KEY (`IdCursoxCicloxResultado`),
   ADD KEY `IdResultadoEstudiantil` (`IdResultadoEstudiantil`),
   ADD KEY `IdCursoxCiclo` (`IdCursoxCiclo`);
@@ -3159,7 +3147,7 @@ ALTER TABLE `cursoxcicloxresultado`
 --
 -- Indices de la tabla `cursoxdocente`
 --
-ALTER TABLE `cursoxdocente`
+ALTER TABLE `CursoxDocente`
   ADD PRIMARY KEY (`IdCursoxDocente`),
   ADD KEY `IdDocente` (`IdDocente`),
   ADD KEY `IdCurso` (`IdCurso`);
@@ -3181,7 +3169,7 @@ ALTER TABLE `deliverables`
 --
 -- Indices de la tabla `docente`
 --
-ALTER TABLE `docente`
+ALTER TABLE `Docente`
   ADD PRIMARY KEY (`IdDocente`,`Vigente`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`),
   ADD KEY `IdUsuario` (`IdUsuario`);
@@ -3189,7 +3177,7 @@ ALTER TABLE `docente`
 --
 -- Indices de la tabla `especialidad`
 --
-ALTER TABLE `especialidad`
+ALTER TABLE `Especialidad`
   ADD PRIMARY KEY (`IdEspecialidad`),
   ADD KEY `Especialidad_ibfk_1` (`IdDocente`);
 
@@ -3217,7 +3205,7 @@ ALTER TABLE `events`
 --
 -- Indices de la tabla `evidenciacurso`
 --
-ALTER TABLE `evidenciacurso`
+ALTER TABLE `EvidenciaCurso`
   ADD PRIMARY KEY (`IdEvidenciaCurso`),
   ADD KEY `IdHorario` (`IdHorario`),
   ADD KEY `IdArchivoEntrada` (`IdArchivoEntrada`);
@@ -3225,7 +3213,7 @@ ALTER TABLE `evidenciacurso`
 --
 -- Indices de la tabla `evidenciamedicion`
 --
-ALTER TABLE `evidenciamedicion`
+ALTER TABLE `EvidenciaMedicion`
   ADD PRIMARY KEY (`IdEvidenciaMedicion`),
   ADD KEY `IdHorario` (`IdHorario`),
   ADD KEY `IdArchivoEntrada` (`IdArchivoEntrada`),
@@ -3261,14 +3249,14 @@ ALTER TABLE `freehours`
 --
 -- Indices de la tabla `fuentemedicion`
 --
-ALTER TABLE `fuentemedicion`
+ALTER TABLE `FuenteMedicion`
   ADD PRIMARY KEY (`IdFuenteMedicion`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`);
 
 --
 -- Indices de la tabla `fuentexcursoxcriterioxciclo`
 --
-ALTER TABLE `fuentexcursoxcriterioxciclo`
+ALTER TABLE `FuentexCursoxCriterioxCiclo`
   ADD PRIMARY KEY (`IdFuentexCursoxCriterioxCiclo`),
   ADD KEY `IdFuenteMedicion` (`IdFuenteMedicion`),
   ADD KEY `IdCriterio` (`IdCriterio`),
@@ -3286,14 +3274,14 @@ ALTER TABLE `groups`
 --
 -- Indices de la tabla `horario`
 --
-ALTER TABLE `horario`
+ALTER TABLE `Horario`
   ADD PRIMARY KEY (`IdHorario`),
   ADD KEY `IdCursoxCiclo` (`IdCursoxCiclo`);
 
 --
 -- Indices de la tabla `horarioxaspecto`
 --
-ALTER TABLE `horarioxaspecto`
+ALTER TABLE `HorarioxAspecto`
   ADD PRIMARY KEY (`IdHorarioxAspecto`),
   ADD KEY `IdHorario` (`IdHorario`),
   ADD KEY `IdAspecto` (`IdAspecto`);
@@ -3301,7 +3289,7 @@ ALTER TABLE `horarioxaspecto`
 --
 -- Indices de la tabla `horarioxcriterio`
 --
-ALTER TABLE `horarioxcriterio`
+ALTER TABLE `HorarioxCriterio`
   ADD PRIMARY KEY (`IdHorarioxCriterio`),
   ADD KEY `IdHorario` (`IdHorario`),
   ADD KEY `IdCriterio` (`IdCriterio`);
@@ -3309,7 +3297,7 @@ ALTER TABLE `horarioxcriterio`
 --
 -- Indices de la tabla `horarioxdocente`
 --
-ALTER TABLE `horarioxdocente`
+ALTER TABLE `HorarioxDocente`
   ADD PRIMARY KEY (`IdHorarioxDocente`),
   ADD KEY `IdHorario` (`IdHorario`),
   ADD KEY `IdDocente` (`IdDocente`);
@@ -3317,7 +3305,7 @@ ALTER TABLE `horarioxdocente`
 --
 -- Indices de la tabla `horarioxresultado`
 --
-ALTER TABLE `horarioxresultado`
+ALTER TABLE `HorarioxResultado`
   ADD PRIMARY KEY (`IdHorarioxResultado`),
   ADD KEY `IdHorario` (`IdHorario`),
   ADD KEY `IdResultadoEstudiantil` (`IdResultadoEstudiantil`);
@@ -3325,7 +3313,7 @@ ALTER TABLE `horarioxresultado`
 --
 -- Indices de la tabla `informe`
 --
-ALTER TABLE `informe`
+ALTER TABLE `Informe`
   ADD PRIMARY KEY (`IdInforme`),
   ADD KEY `IdHorario` (`IdHorario`);
 
@@ -3378,7 +3366,7 @@ ALTER TABLE `investigatorxprojects`
 --
 -- Indices de la tabla `nivelcriterio`
 --
-ALTER TABLE `nivelcriterio`
+ALTER TABLE `NivelCriterio`
   ADD PRIMARY KEY (`IdNivelCriterio`),
   ADD KEY `IdCriterio` (`IdCriterio`),
   ADD KEY `IdPeriodo` (`IdPeriodo`);
@@ -3393,7 +3381,7 @@ ALTER TABLE `noavailabilitys`
 --
 -- Indices de la tabla `objetivoeducacional`
 --
-ALTER TABLE `objetivoeducacional`
+ALTER TABLE `ObjetivoEducacional`
   ADD PRIMARY KEY (`IdObjetivoEducacional`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`);
 
@@ -3406,20 +3394,20 @@ ALTER TABLE `parameters`
 --
 -- Indices de la tabla `passwordresets`
 --
-ALTER TABLE `passwordresets`
+ALTER TABLE `PasswordResets`
   ADD KEY `PasswordResets_token_index` (`token`),
   ADD KEY `user_id` (`user_id`);
 
 --
 -- Indices de la tabla `perfil`
 --
-ALTER TABLE `perfil`
+ALTER TABLE `Perfil`
   ADD PRIMARY KEY (`IdPerfil`);
 
 --
 -- Indices de la tabla `perfilxaccion`
 --
-ALTER TABLE `perfilxaccion`
+ALTER TABLE `PerfilxAccion`
   ADD PRIMARY KEY (`IdPerfilxAccion`),
   ADD KEY `IdPerfil` (`IdPerfil`),
   ADD KEY `IdAccion` (`IdAccion`);
@@ -3427,14 +3415,14 @@ ALTER TABLE `perfilxaccion`
 --
 -- Indices de la tabla `periodo`
 --
-ALTER TABLE `periodo`
+ALTER TABLE `Periodo`
   ADD PRIMARY KEY (`IdPeriodo`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`);
 
 --
 -- Indices de la tabla `periodoxaspecto`
 --
-ALTER TABLE `periodoxaspecto`
+ALTER TABLE `PeriodoxAspecto`
   ADD PRIMARY KEY (`IdPeriodoxAspecto`),
   ADD KEY `IdAspecto` (`IdAspecto`),
   ADD KEY `IdPeriodo` (`IdPeriodo`);
@@ -3442,7 +3430,7 @@ ALTER TABLE `periodoxaspecto`
 --
 -- Indices de la tabla `periodoxcriterio`
 --
-ALTER TABLE `periodoxcriterio`
+ALTER TABLE `PeriodoxCriterio`
   ADD PRIMARY KEY (`IdPeriodoxCriterio`),
   ADD KEY `IdCriterio` (`IdCriterio`),
   ADD KEY `IdPeriodo` (`IdPeriodo`);
@@ -3450,14 +3438,14 @@ ALTER TABLE `periodoxcriterio`
 --
 -- Indices de la tabla `periodoxfuente`
 --
-ALTER TABLE `periodoxfuente`
+ALTER TABLE `PeriodoxFuente`
   ADD KEY `IdFuenteMedicion` (`IdFuenteMedicion`),
   ADD KEY `IdPeriodo` (`IdPeriodo`);
 
 --
 -- Indices de la tabla `periodoxobjetivo`
 --
-ALTER TABLE `periodoxobjetivo`
+ALTER TABLE `PeriodoxObjetivo`
   ADD PRIMARY KEY (`IdPeriodoxObjetivo`),
   ADD KEY `IdObjetivoEducacional` (`IdObjetivoEducacional`),
   ADD KEY `IdPeriodo` (`IdPeriodo`);
@@ -3465,7 +3453,7 @@ ALTER TABLE `periodoxobjetivo`
 --
 -- Indices de la tabla `periodoxresultado`
 --
-ALTER TABLE `periodoxresultado`
+ALTER TABLE `PeriodoxResultado`
   ADD PRIMARY KEY (`IdPeriodoxResultado`),
   ADD KEY `IdResultadoEstudiantil` (`IdResultadoEstudiantil`),
   ADD KEY `IdPeriodo` (`IdPeriodo`);
@@ -3480,7 +3468,7 @@ ALTER TABLE `phases`
 --
 -- Indices de la tabla `planaccion`
 --
-ALTER TABLE `planaccion`
+ALTER TABLE `PlanAccion`
   ADD PRIMARY KEY (`IdPlanAccion`),
   ADD KEY `IdPlanMejora` (`IdPlanMejora`),
   ADD KEY `IdDocente` (`IdDocente`),
@@ -3490,7 +3478,7 @@ ALTER TABLE `planaccion`
 --
 -- Indices de la tabla `planmejora`
 --
-ALTER TABLE `planmejora`
+ALTER TABLE `PlanMejora`
   ADD PRIMARY KEY (`IdPlanMejora`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`),
   ADD KEY `IdTipoPlanMejora` (`IdTipoPlanMejora`),
@@ -3622,14 +3610,14 @@ ALTER TABLE `reasons`
 --
 -- Indices de la tabla `resultadoestudiantil`
 --
-ALTER TABLE `resultadoestudiantil`
+ALTER TABLE `ResultadoEstudiantil`
   ADD PRIMARY KEY (`IdResultadoEstudiantil`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`);
 
 --
 -- Indices de la tabla `resultadoxobjetivo`
 --
-ALTER TABLE `resultadoxobjetivo`
+ALTER TABLE `ResultadoxObjetivo`
   ADD PRIMARY KEY (`IdResultadoxObjetivo`),
   ADD KEY `IdResultadoEstudiantil` (`IdResultadoEstudiantil`),
   ADD KEY `IdPeriodo` (`IdPeriodo`),
@@ -3653,7 +3641,7 @@ ALTER TABLE `schedule_meetings`
 --
 -- Indices de la tabla `seguimiento`
 --
-ALTER TABLE `seguimiento`
+ALTER TABLE `Seguimiento`
   ADD PRIMARY KEY (`IdSeguimiento`),
   ADD KEY `IdPlanMejora` (`IdPlanMejora`),
   ADD KEY `IdDocente` (`IdDocente`),
@@ -3705,7 +3693,7 @@ ALTER TABLE `studentxprojects`
 --
 -- Indices de la tabla `sugerencia`
 --
-ALTER TABLE `sugerencia`
+ALTER TABLE `Sugerencia`
   ADD PRIMARY KEY (`IdSugerencia`),
   ADD KEY `IdDocente` (`IdDocente`),
   ADD KEY `IdPlanMejora` (`IdPlanMejora`),
@@ -3776,7 +3764,7 @@ ALTER TABLE `templates`
 --
 -- Indices de la tabla `tipoplanmejora`
 --
-ALTER TABLE `tipoplanmejora`
+ALTER TABLE `TipoPlanMejora`
   ADD PRIMARY KEY (`IdTipoPlanMejora`),
   ADD KEY `IdEspecialidad` (`IdEspecialidad`);
 
@@ -3839,7 +3827,7 @@ ALTER TABLE `usersxprofiles`
 --
 -- Indices de la tabla `usuario`
 --
-ALTER TABLE `usuario`
+ALTER TABLE `Usuario`
   ADD PRIMARY KEY (`IdUsuario`),
   ADD KEY `IdPerfil` (`IdPerfil`);
 
@@ -3850,12 +3838,12 @@ ALTER TABLE `usuario`
 --
 -- AUTO_INCREMENT de la tabla `accion`
 --
-ALTER TABLE `accion`
+ALTER TABLE `Accion`
   MODIFY `IdAccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 --
 -- AUTO_INCREMENT de la tabla `acreditador`
 --
-ALTER TABLE `acreditador`
+ALTER TABLE `Acreditador`
   MODIFY `IdAcreditador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `alternatives`
@@ -3865,22 +3853,22 @@ ALTER TABLE `alternatives`
 --
 -- AUTO_INCREMENT de la tabla `alumno`
 --
-ALTER TABLE `alumno`
+ALTER TABLE `Alumno`
   MODIFY `IdAlumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 --
 -- AUTO_INCREMENT de la tabla `aporte`
 --
-ALTER TABLE `aporte`
+ALTER TABLE `Aporte`
   MODIFY `IdAporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- AUTO_INCREMENT de la tabla `archivoentrada`
 --
-ALTER TABLE `archivoentrada`
+ALTER TABLE `Archivoentrada`
   MODIFY `IdArchivoEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `archivoentradaplan`
 --
-ALTER TABLE `archivoentradaplan`
+ALTER TABLE `Archivoentradaplan`
   MODIFY `IdArchivoEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `areas`
@@ -3890,37 +3878,37 @@ ALTER TABLE `areas`
 --
 -- AUTO_INCREMENT de la tabla `aspecto`
 --
-ALTER TABLE `aspecto`
+ALTER TABLE `Aspecto`
   MODIFY `IdAspecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT de la tabla `calificacion`
 --
-ALTER TABLE `calificacion`
+ALTER TABLE `Calificacion`
   MODIFY `IdCalificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT de la tabla `cicloacademico`
 --
-ALTER TABLE `cicloacademico`
+ALTER TABLE `CicloAcademico`
   MODIFY `IdCicloAcademico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `cicloxaspecto`
 --
-ALTER TABLE `cicloxaspecto`
+ALTER TABLE `CicloxAspecto`
   MODIFY `IdCicloxAspecto` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `cicloxcriterio`
 --
-ALTER TABLE `cicloxcriterio`
+ALTER TABLE `CicloxCriterio`
   MODIFY `IdCicloxCriterio` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `cicloxespecialidad`
 --
-ALTER TABLE `cicloxespecialidad`
+ALTER TABLE `CicloxEspecialidad`
   MODIFY `IdCicloAcademico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `cicloxresultado`
 --
-ALTER TABLE `cicloxresultado`
+ALTER TABLE `CicloxResultado`
   MODIFY `IdCicloxResultado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT de la tabla `competences`
@@ -3935,42 +3923,42 @@ ALTER TABLE `competencextutstudentxevaluations`
 --
 -- AUTO_INCREMENT de la tabla `confespecialidad`
 --
-ALTER TABLE `confespecialidad`
+ALTER TABLE `ConfEspecialidad`
   MODIFY `IdConfEspecialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `criterio`
 --
-ALTER TABLE `criterio`
+ALTER TABLE `Criterio`
   MODIFY `IdCriterio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT de la tabla `curso`
 --
-ALTER TABLE `curso`
+ALTER TABLE `Curso`
   MODIFY `IdCurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 --
 -- AUTO_INCREMENT de la tabla `cursoxciclo`
 --
-ALTER TABLE `cursoxciclo`
+ALTER TABLE `CursoxCiclo`
   MODIFY `IdCursoxCiclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT de la tabla `cursoxcicloxaspecto`
 --
-ALTER TABLE `cursoxcicloxaspecto`
+ALTER TABLE `CursoxCicloxAspecto`
   MODIFY `IdCursoxCicloxAspecto` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `cursoxcicloxcriterio`
 --
-ALTER TABLE `cursoxcicloxcriterio`
+ALTER TABLE `CursoxCicloxCriterio`
   MODIFY `IdCursoxCicloxCriterio` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `cursoxcicloxresultado`
 --
-ALTER TABLE `cursoxcicloxresultado`
+ALTER TABLE `CursoxCicloxResultado`
   MODIFY `IdCursoxCicloxResultado` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `cursoxdocente`
 --
-ALTER TABLE `cursoxdocente`
+ALTER TABLE `CursoxDocente`
   MODIFY `IdCursoxDocente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `cycles`
@@ -3985,12 +3973,12 @@ ALTER TABLE `deliverables`
 --
 -- AUTO_INCREMENT de la tabla `docente`
 --
-ALTER TABLE `docente`
+ALTER TABLE `Docente`
   MODIFY `IdDocente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `especialidad`
 --
-ALTER TABLE `especialidad`
+ALTER TABLE `Especialidad`
   MODIFY `IdEspecialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `evalternatives`
@@ -4010,12 +3998,12 @@ ALTER TABLE `events`
 --
 -- AUTO_INCREMENT de la tabla `evidenciacurso`
 --
-ALTER TABLE `evidenciacurso`
+ALTER TABLE `EvidenciaCurso`
   MODIFY `IdEvidenciaCurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `evidenciamedicion`
 --
-ALTER TABLE `evidenciamedicion`
+ALTER TABLE `EvidenciaMedicion`
   MODIFY `IdEvidenciaMedicion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `evquestions`
@@ -4035,12 +4023,12 @@ ALTER TABLE `freehours`
 --
 -- AUTO_INCREMENT de la tabla `fuentemedicion`
 --
-ALTER TABLE `fuentemedicion`
+ALTER TABLE `FuenteMedicion`
   MODIFY `IdFuenteMedicion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `fuentexcursoxcriterioxciclo`
 --
-ALTER TABLE `fuentexcursoxcriterioxciclo`
+ALTER TABLE `FuentexCursoxCriterioxCiclo`
   MODIFY `IdFuentexCursoxCriterioxCiclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 --
 -- AUTO_INCREMENT de la tabla `groups`
@@ -4050,32 +4038,32 @@ ALTER TABLE `groups`
 --
 -- AUTO_INCREMENT de la tabla `horario`
 --
-ALTER TABLE `horario`
+ALTER TABLE `Horario`
   MODIFY `IdHorario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `horarioxaspecto`
 --
-ALTER TABLE `horarioxaspecto`
+ALTER TABLE `HorarioxAspecto`
   MODIFY `IdHorarioxAspecto` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `horarioxcriterio`
 --
-ALTER TABLE `horarioxcriterio`
+ALTER TABLE `HorarioxCriterio`
   MODIFY `IdHorarioxCriterio` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `horarioxdocente`
 --
-ALTER TABLE `horarioxdocente`
+ALTER TABLE `HorarioxDocente`
   MODIFY `IdHorarioxDocente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `horarioxresultado`
 --
-ALTER TABLE `horarioxresultado`
+ALTER TABLE `HorarioxResultado`
   MODIFY `IdHorarioxResultado` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `informe`
 --
-ALTER TABLE `informe`
+ALTER TABLE `Informe`
   MODIFY `IdInforme` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `inscriptionfiles`
@@ -4110,7 +4098,7 @@ ALTER TABLE `investigatorxprojects`
 --
 -- AUTO_INCREMENT de la tabla `nivelcriterio`
 --
-ALTER TABLE `nivelcriterio`
+ALTER TABLE `NivelCriterio`
   MODIFY `IdNivelCriterio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 --
 -- AUTO_INCREMENT de la tabla `noavailabilitys`
@@ -4120,7 +4108,7 @@ ALTER TABLE `noavailabilitys`
 --
 -- AUTO_INCREMENT de la tabla `objetivoeducacional`
 --
-ALTER TABLE `objetivoeducacional`
+ALTER TABLE `ObjetivoEducacional`
   MODIFY `IdObjetivoEducacional` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `parameters`
@@ -4130,37 +4118,37 @@ ALTER TABLE `parameters`
 --
 -- AUTO_INCREMENT de la tabla `perfil`
 --
-ALTER TABLE `perfil`
+ALTER TABLE `Perfil`
   MODIFY `IdPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `perfilxaccion`
 --
-ALTER TABLE `perfilxaccion`
+ALTER TABLE `PerfilxAccion`
   MODIFY `IdPerfilxAccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 --
 -- AUTO_INCREMENT de la tabla `periodo`
 --
-ALTER TABLE `periodo`
+ALTER TABLE `Periodo`
   MODIFY `IdPeriodo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `periodoxaspecto`
 --
-ALTER TABLE `periodoxaspecto`
+ALTER TABLE `PeriodoxAspecto`
   MODIFY `IdPeriodoxAspecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT de la tabla `periodoxcriterio`
 --
-ALTER TABLE `periodoxcriterio`
+ALTER TABLE `PeriodoxCriterio`
   MODIFY `IdPeriodoxCriterio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT de la tabla `periodoxobjetivo`
 --
-ALTER TABLE `periodoxobjetivo`
+ALTER TABLE `PeriodoxObjetivo`
   MODIFY `IdPeriodoxObjetivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `periodoxresultado`
 --
-ALTER TABLE `periodoxresultado`
+ALTER TABLE `PeriodoxResultado`
   MODIFY `IdPeriodoxResultado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT de la tabla `phases`
@@ -4170,12 +4158,12 @@ ALTER TABLE `phases`
 --
 -- AUTO_INCREMENT de la tabla `planaccion`
 --
-ALTER TABLE `planaccion`
+ALTER TABLE `PlanAccion`
   MODIFY `IdPlanAccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `planmejora`
 --
-ALTER TABLE `planmejora`
+ALTER TABLE `PlanMejora`
   MODIFY `IdPlanMejora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `projects`
@@ -4240,12 +4228,12 @@ ALTER TABLE `reasons`
 --
 -- AUTO_INCREMENT de la tabla `resultadoestudiantil`
 --
-ALTER TABLE `resultadoestudiantil`
+ALTER TABLE `ResultadoEstudiantil`
   MODIFY `IdResultadoEstudiantil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT de la tabla `resultadoxobjetivo`
 --
-ALTER TABLE `resultadoxobjetivo`
+ALTER TABLE `ResultadoxObjetivo`
   MODIFY `IdResultadoxObjetivo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 --
 -- AUTO_INCREMENT de la tabla `schedule_meetings`
@@ -4255,7 +4243,7 @@ ALTER TABLE `schedule_meetings`
 --
 -- AUTO_INCREMENT de la tabla `seguimiento`
 --
-ALTER TABLE `seguimiento`
+ALTER TABLE `Seguimiento`
   MODIFY `IdSeguimiento` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `skills`
@@ -4285,7 +4273,7 @@ ALTER TABLE `studentxprojects`
 --
 -- AUTO_INCREMENT de la tabla `sugerencia`
 --
-ALTER TABLE `sugerencia`
+ALTER TABLE `Sugerencia`
   MODIFY `IdSugerencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `supervisors`
@@ -4325,7 +4313,7 @@ ALTER TABLE `templates`
 --
 -- AUTO_INCREMENT de la tabla `tipoplanmejora`
 --
-ALTER TABLE `tipoplanmejora`
+ALTER TABLE `TipoPlanMejora`
   MODIFY `IdTipoPlanMejora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `topics`
@@ -4360,7 +4348,7 @@ ALTER TABLE `tutstudentxevaluations`
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
-ALTER TABLE `usuario`
+ALTER TABLE `Usuario`
   MODIFY `IdUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- Restricciones para tablas volcadas
@@ -4369,214 +4357,214 @@ ALTER TABLE `usuario`
 --
 -- Filtros para la tabla `acreditador`
 --
-ALTER TABLE `acreditador`
-  ADD CONSTRAINT `Acreditador_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `especialidad` (`IdEspecialidad`),
-  ADD CONSTRAINT `Acreditador_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `usuario` (`IdUsuario`);
+ALTER TABLE `Acreditador`
+  ADD CONSTRAINT `Acreditador_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
+  ADD CONSTRAINT `Acreditador_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`);
 
 --
 -- Filtros para la tabla `alumno`
 --
-ALTER TABLE `alumno`
-  ADD CONSTRAINT `Alumno_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `usuario` (`IdUsuario`);
+ALTER TABLE `Alumno`
+  ADD CONSTRAINT `Alumno_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `Alumno_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`);
 
 --
 -- Filtros para la tabla `aporte`
 --
-ALTER TABLE `aporte`
-  ADD CONSTRAINT `Aporte_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `resultadoestudiantil` (`IdResultadoEstudiantil`),
-  ADD CONSTRAINT `Aporte_ibfk_2` FOREIGN KEY (`IdCurso`) REFERENCES `curso` (`IdCurso`),
-  ADD CONSTRAINT `Aporte_ibfk_3` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `cicloxespecialidad` (`IdCicloAcademico`);
+ALTER TABLE `Aporte`
+  ADD CONSTRAINT `Aporte_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `Resultadoestudiantil` (`IdResultadoEstudiantil`),
+  ADD CONSTRAINT `Aporte_ibfk_2` FOREIGN KEY (`IdCurso`) REFERENCES `Curso` (`IdCurso`),
+  ADD CONSTRAINT `Aporte_ibfk_3` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`);
 
 --
 -- Filtros para la tabla `aspecto`
 --
-ALTER TABLE `aspecto`
-  ADD CONSTRAINT `Aspecto_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `resultadoestudiantil` (`IdResultadoEstudiantil`);
+ALTER TABLE `Aspecto`
+  ADD CONSTRAINT `Aspecto_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `Resultadoestudiantil` (`IdResultadoEstudiantil`);
 
 --
 -- Filtros para la tabla `calificacion`
 --
-ALTER TABLE `calificacion`
-  ADD CONSTRAINT `Calificacion_ibfk_1` FOREIGN KEY (`IdAlumno`) REFERENCES `alumno` (`IdAlumno`),
-  ADD CONSTRAINT `Calificacion_ibfk_2` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `Calificacion_ibfk_3` FOREIGN KEY (`IdCriterio`) REFERENCES `criterio` (`IdCriterio`);
+ALTER TABLE `Calificacion`
+  ADD CONSTRAINT `Calificacion_ibfk_1` FOREIGN KEY (`IdAlumno`) REFERENCES `Alumno` (`IdAlumno`),
+  ADD CONSTRAINT `Calificacion_ibfk_2` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `Calificacion_ibfk_3` FOREIGN KEY (`IdCriterio`) REFERENCES `Criterio` (`IdCriterio`);
 
 --
 -- Filtros para la tabla `cicloxaspecto`
 --
-ALTER TABLE `cicloxaspecto`
-  ADD CONSTRAINT `CicloxAspecto_ibfk_1` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `cicloxespecialidad` (`IdCicloAcademico`),
-  ADD CONSTRAINT `CicloxAspecto_ibfk_2` FOREIGN KEY (`IdAspecto`) REFERENCES `aspecto` (`IdAspecto`);
+ALTER TABLE `Cicloxaspecto`
+  ADD CONSTRAINT `CicloxAspecto_ibfk_1` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`),
+  ADD CONSTRAINT `CicloxAspecto_ibfk_2` FOREIGN KEY (`IdAspecto`) REFERENCES `Aspecto` (`IdAspecto`);
 
 --
 -- Filtros para la tabla `cicloxcriterio`
 --
-ALTER TABLE `cicloxcriterio`
-  ADD CONSTRAINT `CicloxCriterio_idfk_1` FOREIGN KEY (`IdCriterio`) REFERENCES `criterio` (`IdCriterio`),
-  ADD CONSTRAINT `CicloxCriterio_idfk_2` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `cicloxespecialidad` (`IdCicloAcademico`);
+ALTER TABLE `CicloxCriterio`
+  ADD CONSTRAINT `CicloxCriterio_idfk_1` FOREIGN KEY (`IdCriterio`) REFERENCES `Criterio` (`IdCriterio`),
+  ADD CONSTRAINT `CicloxCriterio_idfk_2` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`);
 
 --
 -- Filtros para la tabla `cicloxespecialidad`
 --
-ALTER TABLE `cicloxespecialidad`
-  ADD CONSTRAINT `CicloAcademico_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `especialidad` (`IdEspecialidad`),
-  ADD CONSTRAINT `CicloAcademico_ibfk_2` FOREIGN KEY (`IdPeriodo`) REFERENCES `periodo` (`IdPeriodo`),
-  ADD CONSTRAINT `CicloAcademico_ibfk_3` FOREIGN KEY (`IdDocente`) REFERENCES `docente` (`IdDocente`),
-  ADD CONSTRAINT `CicloAcademico_ibfk_4` FOREIGN KEY (`IdCiclo`) REFERENCES `cicloacademico` (`IdCicloAcademico`);
+ALTER TABLE `CicloxEspecialidad`
+  ADD CONSTRAINT `CicloAcademico_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
+  ADD CONSTRAINT `CicloAcademico_ibfk_2` FOREIGN KEY (`IdPeriodo`) REFERENCES `Periodo` (`IdPeriodo`),
+  ADD CONSTRAINT `CicloAcademico_ibfk_3` FOREIGN KEY (`IdDocente`) REFERENCES `Docente` (`IdDocente`),
+  ADD CONSTRAINT `CicloAcademico_ibfk_4` FOREIGN KEY (`IdCiclo`) REFERENCES `CicloAcademico` (`IdCicloAcademico`);
 
 --
 -- Filtros para la tabla `cicloxresultado`
 --
-ALTER TABLE `cicloxresultado`
-  ADD CONSTRAINT `CicloxResultado_ibfk_1` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `cicloxespecialidad` (`IdCicloAcademico`),
-  ADD CONSTRAINT `CicloxResultado_ibfk_2` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `resultadoestudiantil` (`IdResultadoEstudiantil`);
+ALTER TABLE `CicloxResultado`
+  ADD CONSTRAINT `CicloxResultado_ibfk_1` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`),
+  ADD CONSTRAINT `CicloxResultado_ibfk_2` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `ResultadoEstudiantil` (`IdResultadoEstudiantil`);
 
 --
 -- Filtros para la tabla `confespecialidad`
 --
-ALTER TABLE `confespecialidad`
-  ADD CONSTRAINT `ConfEspecialidad_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `especialidad` (`IdEspecialidad`),
-  ADD CONSTRAINT `ConfEspecialidad_ibfk_2` FOREIGN KEY (`IdPeriodo`) REFERENCES `periodo` (`IdPeriodo`),
-  ADD CONSTRAINT `ConfEspecialidad_ibfk_3` FOREIGN KEY (`IdCicloInicio`) REFERENCES `cicloacademico` (`IdCicloAcademico`),
-  ADD CONSTRAINT `ConfEspecialidad_ibfk_4` FOREIGN KEY (`IdCicloFin`) REFERENCES `cicloacademico` (`IdCicloAcademico`);
+ALTER TABLE `ConfEspecialidad`
+  ADD CONSTRAINT `ConfEspecialidad_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
+  ADD CONSTRAINT `ConfEspecialidad_ibfk_2` FOREIGN KEY (`IdPeriodo`) REFERENCES `Periodo` (`IdPeriodo`),
+  ADD CONSTRAINT `ConfEspecialidad_ibfk_3` FOREIGN KEY (`IdCicloInicio`) REFERENCES `CicloAcademico` (`IdCicloAcademico`),
+  ADD CONSTRAINT `ConfEspecialidad_ibfk_4` FOREIGN KEY (`IdCicloFin`) REFERENCES `CicloAcademico` (`IdCicloAcademico`);
 
 --
 -- Filtros para la tabla `criterio`
 --
-ALTER TABLE `criterio`
-  ADD CONSTRAINT `Criterio_ibfk_1` FOREIGN KEY (`IdAspecto`) REFERENCES `aspecto` (`IdAspecto`);
+ALTER TABLE `Criterio`
+  ADD CONSTRAINT `Criterio_ibfk_1` FOREIGN KEY (`IdAspecto`) REFERENCES `Aspecto` (`IdAspecto`);
 
 --
 -- Filtros para la tabla `curso`
 --
-ALTER TABLE `curso`
-  ADD CONSTRAINT `Curso_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `especialidad` (`IdEspecialidad`);
+ALTER TABLE `Curso`
+  ADD CONSTRAINT `Curso_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`);
 
 --
 -- Filtros para la tabla `cursoxciclo`
 --
-ALTER TABLE `cursoxciclo`
-  ADD CONSTRAINT `CursoEvaluado_ibfk_1` FOREIGN KEY (`IdCurso`) REFERENCES `curso` (`IdCurso`),
-  ADD CONSTRAINT `CursoEvaluado_ibfk_2` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `cicloxespecialidad` (`IdCicloAcademico`);
+ALTER TABLE `CursoxCiclo`
+  ADD CONSTRAINT `CursoEvaluado_ibfk_1` FOREIGN KEY (`IdCurso`) REFERENCES `Curso` (`IdCurso`),
+  ADD CONSTRAINT `CursoEvaluado_ibfk_2` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`);
 
 --
 -- Filtros para la tabla `cursoxcicloxaspecto`
 --
-ALTER TABLE `cursoxcicloxaspecto`
-  ADD CONSTRAINT `CursoxCicloxAspecto_idfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `cursoxciclo` (`IdCursoxCiclo`),
-  ADD CONSTRAINT `CursoxCicloxAspecto_idfk_2` FOREIGN KEY (`IdAspecto`) REFERENCES `aspecto` (`IdAspecto`);
+ALTER TABLE `CursoxCicloxAspecto`
+  ADD CONSTRAINT `CursoxCicloxAspecto_idfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`),
+  ADD CONSTRAINT `CursoxCicloxAspecto_idfk_2` FOREIGN KEY (`IdAspecto`) REFERENCES `Aspecto` (`IdAspecto`);
 
 --
 -- Filtros para la tabla `cursoxcicloxcriterio`
 --
-ALTER TABLE `cursoxcicloxcriterio`
-  ADD CONSTRAINT `CursoxCicloxCriterio_idfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `cursoxciclo` (`IdCursoxCiclo`),
-  ADD CONSTRAINT `CursoxCicloxCriterio_idfk_2` FOREIGN KEY (`IdCriterio`) REFERENCES `criterio` (`IdCriterio`);
+ALTER TABLE `CursoxCicloxCriterio`
+  ADD CONSTRAINT `CursoxCicloxCriterio_idfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`),
+  ADD CONSTRAINT `CursoxCicloxCriterio_idfk_2` FOREIGN KEY (`IdCriterio`) REFERENCES `Criterio` (`IdCriterio`);
 
 --
 -- Filtros para la tabla `cursoxcicloxresultado`
 --
-ALTER TABLE `cursoxcicloxresultado`
-  ADD CONSTRAINT `CursoxCicloxResultado_idfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `resultadoestudiantil` (`IdResultadoEstudiantil`),
-  ADD CONSTRAINT `CursoxCicloxResultado_idfk_2` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `cursoxciclo` (`IdCursoxCiclo`);
+ALTER TABLE `CursoxCicloxResultado`
+  ADD CONSTRAINT `CursoxCicloxResultado_idfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `ResultadoEstudiantil` (`IdResultadoEstudiantil`),
+  ADD CONSTRAINT `CursoxCicloxResultado_idfk_2` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`);
 
 --
 -- Filtros para la tabla `cursoxdocente`
 --
-ALTER TABLE `cursoxdocente`
-  ADD CONSTRAINT `CursoxDocente_idfk_1` FOREIGN KEY (`IdDocente`) REFERENCES `docente` (`IdDocente`),
-  ADD CONSTRAINT `CursoxDocente_idfk_2` FOREIGN KEY (`IdCurso`) REFERENCES `curso` (`IdCurso`);
+ALTER TABLE `CursoxDocente`
+  ADD CONSTRAINT `CursoxDocente_idfk_1` FOREIGN KEY (`IdDocente`) REFERENCES `Docente` (`IdDocente`),
+  ADD CONSTRAINT `CursoxDocente_idfk_2` FOREIGN KEY (`IdCurso`) REFERENCES `Curso` (`IdCurso`);
 
 --
 -- Filtros para la tabla `docente`
 --
-ALTER TABLE `docente`
-  ADD CONSTRAINT `Docente_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `especialidad` (`IdEspecialidad`),
-  ADD CONSTRAINT `Docente_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `usuario` (`IdUsuario`);
+ALTER TABLE `Docente`
+  ADD CONSTRAINT `Docente_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`),
+  ADD CONSTRAINT `Docente_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`);
 
 --
 -- Filtros para la tabla `especialidad`
 --
-ALTER TABLE `especialidad`
-  ADD CONSTRAINT `Especialidad_ibfk_1` FOREIGN KEY (`IdDocente`) REFERENCES `docente` (`IdDocente`);
+ALTER TABLE `Especialidad`
+  ADD CONSTRAINT `Especialidad_ibfk_1` FOREIGN KEY (`IdDocente`) REFERENCES `Docente` (`IdDocente`);
 
 --
 -- Filtros para la tabla `evidenciacurso`
 --
-ALTER TABLE `evidenciacurso`
-  ADD CONSTRAINT `EvidenciaCurso_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `EvidenciaCurso_ibfk_2` FOREIGN KEY (`IdArchivoEntrada`) REFERENCES `archivoentrada` (`IdArchivoEntrada`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `EvidenciaCurso`
+  ADD CONSTRAINT `EvidenciaCurso_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `EvidenciaCurso_ibfk_2` FOREIGN KEY (`IdArchivoEntrada`) REFERENCES `ArchivoEntrada` (`IdArchivoEntrada`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `evidenciamedicion`
 --
-ALTER TABLE `evidenciamedicion`
-  ADD CONSTRAINT `EvidenciaMedicion_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `EvidenciaMedicion_ibfk_2` FOREIGN KEY (`IdArchivoEntrada`) REFERENCES `archivoentrada` (`IdArchivoEntrada`),
-  ADD CONSTRAINT `EvidenciaMedicion_ibfk_3` FOREIGN KEY (`IdFuentexCursoxCriterioxCiclo`) REFERENCES `fuentexcursoxcriterioxciclo` (`IdFuentexCursoxCriterioxCiclo`);
+ALTER TABLE `EvidenciaMedicion`
+  ADD CONSTRAINT `EvidenciaMedicion_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `EvidenciaMedicion_ibfk_2` FOREIGN KEY (`IdArchivoEntrada`) REFERENCES `ArchivoEntrada` (`IdArchivoEntrada`),
+  ADD CONSTRAINT `EvidenciaMedicion_ibfk_3` FOREIGN KEY (`IdFuentexCursoxCriterioxCiclo`) REFERENCES `FuentexCursoxCriterioxCiclo` (`IdFuentexCursoxCriterioxCiclo`);
 
 --
 -- Filtros para la tabla `fuentemedicion`
 --
-ALTER TABLE `fuentemedicion`
-  ADD CONSTRAINT `FuenteMedicion_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `especialidad` (`IdEspecialidad`);
+ALTER TABLE `FuenteMedicion`
+  ADD CONSTRAINT `FuenteMedicion_ibfk_1` FOREIGN KEY (`IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`);
 
 --
 -- Filtros para la tabla `fuentexcursoxcriterioxciclo`
 --
-ALTER TABLE `fuentexcursoxcriterioxciclo`
-  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_1` FOREIGN KEY (`IdFuenteMedicion`) REFERENCES `fuentemedicion` (`IdFuenteMedicion`),
-  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_2` FOREIGN KEY (`IdCriterio`) REFERENCES `criterio` (`IdCriterio`),
-  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_3` FOREIGN KEY (`IdCurso`) REFERENCES `curso` (`IdCurso`),
-  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_4` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `cicloxespecialidad` (`IdCicloAcademico`);
+ALTER TABLE `FuentexCursoxCriterioxCiclo`
+  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_1` FOREIGN KEY (`IdFuenteMedicion`) REFERENCES `FuenteMedicion` (`IdFuenteMedicion`),
+  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_2` FOREIGN KEY (`IdCriterio`) REFERENCES `Criterio` (`IdCriterio`),
+  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_3` FOREIGN KEY (`IdCurso`) REFERENCES `Curso` (`IdCurso`),
+  ADD CONSTRAINT `FuentexCursoxCriterioxCiclo_ibfk_4` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`);
 
 --
 -- Filtros para la tabla `horario`
 --
-ALTER TABLE `horario`
-  ADD CONSTRAINT `Horario_ibfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `cursoxciclo` (`IdCursoxCiclo`);
+ALTER TABLE `Horario`
+  ADD CONSTRAINT `Horario_ibfk_1` FOREIGN KEY (`IdCursoxCiclo`) REFERENCES `CursoxCiclo` (`IdCursoxCiclo`);
 
 --
 -- Filtros para la tabla `horarioxaspecto`
 --
-ALTER TABLE `horarioxaspecto`
-  ADD CONSTRAINT `HorarioxAspecto_idfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `HorarioxAspecto_idfk_2` FOREIGN KEY (`IdAspecto`) REFERENCES `aspecto` (`IdAspecto`);
+ALTER TABLE `HorarioxAspecto`
+  ADD CONSTRAINT `HorarioxAspecto_idfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `HorarioxAspecto_idfk_2` FOREIGN KEY (`IdAspecto`) REFERENCES `Aspecto` (`IdAspecto`);
 
 --
 -- Filtros para la tabla `horarioxcriterio`
 --
-ALTER TABLE `horarioxcriterio`
-  ADD CONSTRAINT `HorarioxCriterio_idfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `HorarioxCriterio_idfk_2` FOREIGN KEY (`IdCriterio`) REFERENCES `criterio` (`IdCriterio`);
+ALTER TABLE `HorarioxCriterio`
+  ADD CONSTRAINT `HorarioxCriterio_idfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `HorarioxCriterio_idfk_2` FOREIGN KEY (`IdCriterio`) REFERENCES `Criterio` (`IdCriterio`);
 
 --
 -- Filtros para la tabla `horarioxdocente`
 --
-ALTER TABLE `horarioxdocente`
-  ADD CONSTRAINT `HorarioxDocente_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `HorarioxDocente_ibfk_2` FOREIGN KEY (`IdDocente`) REFERENCES `docente` (`IdDocente`);
+ALTER TABLE `HorarioxDocente`
+  ADD CONSTRAINT `HorarioxDocente_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `HorarioxDocente_ibfk_2` FOREIGN KEY (`IdDocente`) REFERENCES `Docente` (`IdDocente`);
 
 --
 -- Filtros para la tabla `horarioxresultado`
 --
-ALTER TABLE `horarioxresultado`
-  ADD CONSTRAINT `HorarioxResultado_idfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`),
-  ADD CONSTRAINT `HorarioxResultado_idfk_2` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `resultadoestudiantil` (`IdResultadoEstudiantil`);
+ALTER TABLE `HorarioxResultado`
+  ADD CONSTRAINT `HorarioxResultado_idfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`),
+  ADD CONSTRAINT `HorarioxResultado_idfk_2` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `ResultadoEstudiantil` (`IdResultadoEstudiantil`);
 
 --
 -- Filtros para la tabla `informe`
 --
-ALTER TABLE `informe`
-  ADD CONSTRAINT `Informe_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `horario` (`IdHorario`);
+ALTER TABLE `Informe`
+  ADD CONSTRAINT `Informe_ibfk_1` FOREIGN KEY (`IdHorario`) REFERENCES `Horario` (`IdHorario`);
 
 --
 -- Filtros para la tabla `nivelcriterio`
 --
-ALTER TABLE `nivelcriterio`
-  ADD CONSTRAINT `NivelCriterio_ibfk_1` FOREIGN KEY (`IdCriterio`) REFERENCES `criterio` (`IdCriterio`),
-  ADD CONSTRAINT `NivelCriterio_ibfk_2` FOREIGN KEY (`IdPeriodo`) REFERENCES `periodo` (`IdPeriodo`);
+ALTER TABLE `NivelCriterio`
+  ADD CONSTRAINT `NivelCriterio_ibfk_1` FOREIGN KEY (`IdCriterio`) REFERENCES `Criterio` (`IdCriterio`),
+  ADD CONSTRAINT `NivelCriterio_ibfk_2` FOREIGN KEY (`IdPeriodo`) REFERENCES `Periodo` (`IdPeriodo`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

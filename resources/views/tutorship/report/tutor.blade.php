@@ -117,11 +117,13 @@
                 </table>
             </div>
 
+            
+            
         </div>
     </div>
 </div>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="{{ URL::asset('js/tutorship/reportDatesByCancelledMeeting.js')}}"></script>
+<script src="{{ URL::asset('js/tutorship/reportDatesByTutor.js')}}"></script>
 @endsection

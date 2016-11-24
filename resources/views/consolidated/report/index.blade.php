@@ -23,7 +23,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="resultado" class="control-label col-sm-4 col-xs-12">Período<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="periodo" id="periodo" class="form-control">
+                                <select  required="true" name="periodo" id="periodo" class="form-control" required>
                                     <option value="0">--Seleccione--</option>
                                     @foreach($periodos as $periodo)
                                         <option value= "{{$periodo->IdPeriodo}}">
@@ -39,7 +39,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Resultado Estudiantil<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="resultado" id="resultado" class="form-control">
+                                <select name="resultado" id="resultado" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>
@@ -50,7 +50,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Aspecto<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="aspecto" id="aspecto" class="form-control">
+                                <select name="aspecto" id="aspecto" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>
@@ -61,7 +61,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Criterio<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="criterio" id="criterio" class="form-control">
+                                <select name="criterio" id="criterio" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>
@@ -72,7 +72,7 @@
                             <div  class="col-sm-2"></div>
                             <label for="aspecto" class="control-label col-sm-4 col-xs-12">Curso<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
-                                <select  required="true" name="curso" id="curso" class="form-control">
+                                <select name="curso" id="curso" class="form-control">
                                     <option value="0">--Seleccione--</option>
                                 </select>
                             </div>

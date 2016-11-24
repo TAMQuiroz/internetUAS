@@ -107,9 +107,9 @@
                             <td class=""></span>{{$nombreCompleto}}</td>                            
                             <td class=" ">{{$cantAlumnos[$id]}}</td>                                                                  
                             <td class=" ">{{$cantCita[$id]}}</td>  
-                            <td class=" ">{{$canceladas[$id]}}</td> 
-                            <td class=" ">{{$asistidas[$id]}}</td>                                                                  
-                            <td class=" ">{{$noAsistidas[$id]}}</td>  
+                            <td class=" ">{{$canceladasTutor[$id]}}</td> 
+                            <td class=" ">{{$asistidasTutor[$id]}}</td>                                                                  
+                            <td class=" ">{{$noAsistidasTutor[$id]}}</td>  
                             <td class=" ">{{$sinCitas[$id]}}</td> 
                         </tr>
                         @endforeach
@@ -117,8 +117,17 @@
                 </table>
             </div>
 
-            
-            
+            <div id="pendientes" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$pendientes}}"></div>
+            <div id="canceladas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$canceladas}}"></div>
+            <div id="sugeridas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$sugeridas}}"></div>
+            <div id="rechazadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$rechazadas}}"></div>
+            <div id="asistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$asistidas}}"></div>
+            <div id="noasistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$no_asistidas}}"></div>            
+            <div id="confirmadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$confirmadas}}"></div>
+            <div id="noprogramadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$no_programadas}}"></div>
+            <div id="citas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$citas}}"></div>
+            <div id="graphics" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
         </div>
     </div>
 </div>

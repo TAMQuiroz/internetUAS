@@ -54,6 +54,11 @@ class ImprovementPlanService {
         return $actionplan;
     }
 
+    public function retrieveAllActionsId($id) {
+        $actionplan = ActionPlan::where('IdPlanMejora', $id)->get();
+        return $actionplan;
+    }
+
     public function retrieveAllCicles(){
         $cicles = AcademicCycle::get();
         return $cicles;

@@ -25,8 +25,8 @@ class MeetingRequest extends Request
     {
         return [
             'tiporeunion' => 'required',
-            'fecha' => 'required|date|after:'.\Carbon\Carbon::yesterday(),
-            'hora_inicio' => 'required|numeric|min:8|max:21',
+            'fecha' => 'required|date|after:'.\Carbon\Carbon::yesterday()->format('d-m-Y'),
+            'hora_inicio' => 'required',
             'alumno' => 'required',
             'lugar' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
         ];

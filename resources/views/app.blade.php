@@ -271,6 +271,8 @@
                     <li><a href="{{ route('index.measuring') }}">De medición</a></li>
                     @endif
 
+                    <li><a href="{{ route('report.index')}}">De medición consolidado</a></li>
+
                     @if(in_array(55,Session::get('actions')))
                     <li><a href="{{ route('index.evaluation') }}">De evaluación</a></li>
                     @endif
@@ -279,6 +281,8 @@
                     <li><a href="{{ route('pending.index')}}">De evaluación pendiente</a></li>
 
                     <li><a href="{{ route('report.enhacementPlan')}}">De plan de mejora</a></li>
+
+                    
                     
 
                     @if(Auth::user() && (Auth::user()->IdPerfil == 1 || Auth::user()->IdPerfil == 4))

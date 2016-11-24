@@ -26,6 +26,7 @@ class PspGroupRequest extends Request
         return [
             'numero' => 'required|numeric|min:1|max:9',
             'descripcion' => 'regex:/^[A-Za-zá-úä-üÁ-Ú0-9\-.,!¡¿?; ]+$/u|required|max:100',
+            'Proceso_de_Psp' => 'required',
             //
         ];
     }

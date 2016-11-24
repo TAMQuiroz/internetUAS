@@ -10,7 +10,10 @@ use Intranet\Models\Student;
 use Intranet\Models\Inscription;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Tutstudent;
+use Intranet\Models\PspDocument;
+use Intranet\Models\Supervisor;
 use Intranet\Models\meeting;
+use Intranet\Models\Studentxinscriptionfiles;
 use Illuminate\Routing\Controller as BaseController;
 use Dingo\Api\Routing\Helpers;
 
@@ -53,19 +56,25 @@ class PspStudentsInscriptionFiles extends BaseController
     }
 
 
-  public function getInscriptionsByStudent(Request $request, $id )
+  public function getInscriptionsByStudent( $idAlumno )
     {
-       
-$inscription = array();
-     foreach ($pspstudents as $pspstudent) {
-            $inscription = Inscription::where('IdAlumno',  $id )->get()->first();
-            array_push($inscriptions, $inscription);
 
+        try
+            {
+            $pspstudent = PspStudent::where('id', $idAlumno )->get()->first();
+            $idPspStudent = $pspstudent->id ; 
+            $pspstudentsxinscriptionfiles = Studentxinscriptionfiles::where('idpspstudents',  $idPspStudent )->get()->first();
+            $idinscriptionfile =  $pspstudentsxinscriptionfiles->idinscriptionfile; 
+            $inscription = Inscription::where('id',  $idinscriptionfile )->get();
             }
 
- return $this->response->array($inscriptions);
+        catch (\Exception $e)
+            {
+            $inscription = Inscription::get();
+            return $this->response->array($inscription->toArray());
+            }
 
-
+        return $this->response->array($inscription->toArray()) ;
     }
 
    public function edit(Request $request, $id ){
@@ -77,7 +86,17 @@ $inscription = array();
         $inscription->recomendaciones  = $recomendaciones['recomendaciones'];
         $inscription->save();
         $recomendacion  =  $inscription->recomendaciones ; 
-        $mail = 'jemarroquin@pucp.edu.pe';
+
+        //ubicamos el correo del alumno
+        $pspstudentsxinscriptionfiles = Studentxinscriptionfiles::where('idinscriptionfile',  $inscription->id )->get()->first();
+        $idPspStudent=    $pspstudentsxinscriptionfiles->idpspstudents;
+        $pspstudent = PspStudent::where('id', $idPspStudent )->get()->first();
+        $idStudent = $pspstudent->idalumno;
+        $student = Student::where('IdAlumno', $idStudent )->get()->first();
+        $tutstudent = Tutstudent::where('codigo', $student->Codigo )->get()->first();
+        $mail =   $tutstudent->correo ;
+
+        //envimos el correo
         try
         {
             Mail::send('emails.notifyObservationForInscriptionFilePSP', compact('recomendacion'), function($m) use($mail) {
@@ -117,9 +136,12 @@ $inscription = array();
         $idUserAux = $request->only('idUser'); //idSupervisor
         $idUser = $idUserAux['idUser']; 
 
+        $supervisor = Supervisor::where('iduser',  $idUser )->get()->first();
+        $idSupervisor=  $supervisor->id; 
+
         DB::table('pspmeetings')->insertGetId(
             [
-                'idtipoestado' => 12, //id del estado pendiente
+               'idtipoestado' => 12, //id del estado pendiente
                'hora_inicio' => $hora,
                'hora_fin' => $horaFin ,
                'fecha' => $fecha,
@@ -128,19 +150,21 @@ $inscription = array();
                'asistencia' =>  'No se ha registrado',
                'lugar' => $lugar,
                'observaciones' =>'No se han registrado observaciones',
+               'retroalimentacion' =>'No se han registrado recomendaciones',
                'tiporeunion' =>   2, //Reunion tipo supervisor - jefe
 
             ]
 
         );
 
+            //ubicamos el correo del jefe
+        $pspstudent = PspStudent::where('id', $idAlumno )->get()->first();
+        $idPspStudent = $pspstudent->id ; 
+        $pspstudentsxinscriptionfiles = Studentxinscriptionfiles::where('idpspstudents',  $idPspStudent )->get()->first();
+        $idinscriptionfile =  $pspstudentsxinscriptionfiles->idinscriptionfile; 
+        $inscription = Inscription::where('id',  $idinscriptionfile )->get()->first();
+        $mail =  $inscription->Correo_jefe_directo  ;
             //enviamos el correo al jefe
-
-
-
-
-    $recomendacion  = 'hola'  ; 
-        $mail = 'jemarroquin@pucp.edu.pe';
         try
         {
             Mail::send('emails.notifyDateEmployer', compact('fecha','lugar','hora'), function($m) use($mail) {
@@ -152,8 +176,7 @@ $inscription = array();
         {
             dd($e->getMessage());
         }
-        //Ret
-
+  
         return "exito";    
 
     }
@@ -188,6 +211,20 @@ $inscription = array();
 
             $pspstudents = meeting::get();
     return  $this->response->array($pspstudents->toArray());
+    }
+
+  public function getPspDocumentsByStudent($idStudent)
+    {
+        $student = PspDocument::where('idstudent', $idStudent )->get();
+        return  $this->response->array($student->toArray());
+  
+    }
+
+
+      public function getDocumentFullByStudent( $idDocument )
+    {
+        $inscription = PspDocument::where('id',  $idDocument )->get();
+        return $this->response->array($inscription->toArray()) ;
     }
 
 }

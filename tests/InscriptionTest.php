@@ -4,6 +4,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Intranet\Models\User;
+
 class InscriptionTest extends TestCase
 {
     use DatabaseMigrations;
@@ -19,12 +21,12 @@ class InscriptionTest extends TestCase
 
     public function test_psp_cr_ins_01()
     {
-        $user = factory(Intranet\Models\User::class)->make();
+        $user = User::find(41);
 
     	$this->actingAs($user)
             ->withSession([
 	    		'actions' => [],
-	    		'user' => factory(Intranet\Models\Student::class)->make()
+	    		'user' => $user
     		])->visit('/psp/inscription/create')
                          ->type('ar','activ_formativas')
     		->type('trabajar','actividad_economica')
@@ -42,14 +44,13 @@ class InscriptionTest extends TestCase
             ->type('personal','personal_area')
             ->type('nuevo','puesto')
             ->type('razon','razon_social')
-            ->type('mejora','recomendaciones')
             ->type('123456789','telef_jefe_directo')
             ->type('sala','ubicacion_area')
             ->check('terminos')
     		->press('Guardar')
     		->seePageIs('/psp/inscription')
-            ->see('Inscripción de Empresa')
-            ->see('La inscripción se ha registrado exitosamente');
+            ->see('información de Empresa')
+            ->see('La información se ha registrado exitosamente');
     		
     }
 

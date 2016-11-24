@@ -111,11 +111,14 @@
                 </table>
             </div>
 
+            <div id="topicTotalAsistidasReport" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$topicTotalAsistidas}}"></div>            
+            <div id="graphics_asistidas" style="min-width: 310px; height: 400px; margin: 0 auto"></div>            
+            
         </div>
     </div>
 </div>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="{{ URL::asset('js/tutorship/reportDatesByCancelledMeeting.js')}}"></script>
+<script src="{{ URL::asset('js/tutorship/reportDatesByTopic.js')}}"></script>
 @endsection

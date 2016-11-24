@@ -27,8 +27,8 @@
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">Alumno: </label>
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<input type="text" id="name" disabled value="Sin resultado" style="color: #8487ae;">
-						<input type="text" id="id" name="alumno" style="display: none;" value="">
-						<input type="text" id="hour" name="startHour" style="display: none;" value="">
+						<input type="hidden" id="id" name="alumno" value="">
+						<input type="hidden" id="hour" name="startHour" value="">
 					</div>
 				</div>
 				<div class="form-group">

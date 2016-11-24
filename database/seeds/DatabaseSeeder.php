@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EventsTableSeeder::class);
         $this->call(ProjectsTableSeeder::class);
         $this->call(DeliverablesTableSeeder::class);
-
+        $this->call(ParametersTableSeeder::class);
         $this->call(TopicsTableSeeder::class);
         $this->call(ReasonsTableSeeder::class);
 

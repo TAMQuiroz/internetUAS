@@ -20,9 +20,12 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-xs-12 text-center" style="margin-top: 20px;">
-                        <a href="{{ route('atencion_sin_cita.create')}}" class="btn btn-success">
+                        <a href="{{ route('atencion_sin_cita.create')}}" class="btn btn-primary">
                             <i class="fa fa-database"></i>  Atención sin cita
                         </a>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 text-center" style="margin-top: 20px;">
+                        <a href="{{ route('mis_alumnos.index') }}" class="btn btn-success"><i class="fa fa-plus"></i>  Nueva cita</a>
                     </div>
                     <div class="col-sm-12 col-xs-12">
                         <ul class="dates-guide">
@@ -61,7 +64,7 @@
                         </td>
                         @for ($d=1; $d<7; $d++)
                             <td class="dates-card-info-container">
-                            @if ($schedule[$h][$d] == 1)
+                            @if ($schedule[$h][$d] == -1)
                                 <div class="text-right">
                                     <a href="#" class="btn btn-info btn-add-new-date">
                                         <i class="fa fa-plus"></i> 

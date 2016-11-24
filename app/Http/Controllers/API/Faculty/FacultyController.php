@@ -332,6 +332,8 @@ class FacultyController extends BaseController
           if($coursexteacer){
             $course = Course::where('IdCurso',$coursexteacer->IdCurso)->first();
             $schedules = Schedule::where('IdCursoxCiclo',$value->IdCursoxCiclo)->get();
+            $schedules->load('professors');
+            $schedules->load('courseEvidences');
             $course['schedule'] = $schedules;
             array_push($courses, $course);
           }

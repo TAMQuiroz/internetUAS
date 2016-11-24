@@ -880,6 +880,7 @@ $api->version('v1', function ($api) {
                  $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");   
 
                  $api->get('meeting/status',"Meeting\PspMeetingController@getMeetingStatus"); 
+                 $api->post('student/notification/score', "Students\PspStudentsController@mailScore");
 
 
 

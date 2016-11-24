@@ -38,6 +38,13 @@ $status = Status::get();
 
 foreach ($documentosActual as $value) {
     $value["idtipoestado"] = Status::where("id",$value->idtipoestado)->first()->nombre;
+	if ($value["ruta"]!=""){
+	$value["idtipoestado"] = "Subido";
+    }
+    else
+    {
+    	$value["idtipoestado"] = "No Subido";
+    }
 }
 
 $array['Documentos']=$documentosActual;
@@ -92,6 +99,13 @@ $array['Documentos']=$documentosActual;
 */
 foreach ($documentosActual as $value) {
     $value["idtipoestado"] = Status::where("id",$value->idtipoestado)->first()->nombre;
+	if ($value["ruta"]!=""){
+	$value["idtipoestado"] = "Subido";
+    }
+    else
+    {
+    	$value["idtipoestado"] = "No Subido";
+    }
 }
 $array['Documentos']=$documentosActual;
 return $this->response->array($array);

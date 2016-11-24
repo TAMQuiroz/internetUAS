@@ -88,7 +88,7 @@ class PspFreeHourController extends BaseController
         $maxi = $this->maximum();
         if($cantDisp >= $maxi){
 
-             $mensaje = 'Ha llegado al maximo de disponibildades a registrar';
+             $mensaje = 'Ha llegado al maximo de disponibilidades a registrar';
 
              $array['message'] = $mensaje;
             return $this->response->array($array);
@@ -101,7 +101,7 @@ class PspFreeHourController extends BaseController
         
         $fecha = $request['fecha'];
     
-
+      
         $format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
 
@@ -155,13 +155,21 @@ class PspFreeHourController extends BaseController
 
         $student = Student::where('IdUsuario',$user->IdUsuario)->get()->first();
         $pspStudent  = PspStudent::where('idalumno', $student->IdAlumno)->get()->first();
-        $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();	
+
+
+        if(is_null($pspStudent->idsupervisor))
+            $freeHours = FreeHour::get();
+       
+        else 
+            $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();	
 
 
       $validFreeHour = array();
 
       
         foreach ($freeHours as $hour) {
+
+           
 
 
           $val  = meeting::where('idfreehour' , $hour->id)->count();

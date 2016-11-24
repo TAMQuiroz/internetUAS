@@ -113,7 +113,7 @@
               <i class="material-icons center">account_circle</i>        
               <div id="info-user" class="bar-info">
                 <span class="white-text email">
-                @if( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 5)
+                @if( isset(Session::get('user')->user) && (Session::get('user')->user->IdPerfil == 5 || Session::get('user')->user->IdPerfil == Config::get('constants.alumno')))
                     {{Session::get('user')->nombre}} {{Session::get('user')->ape_paterno}} {{Session::get('user')->ape_materno}}
                 @elseif( isset(Session::get('user')->user) && Session::get('user')->user->IdPerfil == 6)
                     {{Session::get('user')->nombres}} {{Session::get('user')->apellido_paterno}} {{Session::get('user')->apellido_materno}}
@@ -417,7 +417,7 @@
                       @if(Auth::user()->professor->rolTutoria == 2)
                       <li><a href="{{route('tutor.index')}}"> Tutores</a></li>
                       <li><a href="{{route('alumno.index')}}"> Alumnos</a></li>
-                      <li><a href="{{route('reporte.meeting')}}"> Reportes</a></li>
+                      <li><a href="{{route('reporte.tutor')}}"> Reportes</a></li>
                       <li><a href="{{route('parametro.index.duration')}}"> Configuraciones</a></li>
                       @endif
 

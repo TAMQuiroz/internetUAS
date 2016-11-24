@@ -14,7 +14,7 @@ class EventsTableSeeder extends Seeder
 
         $event   = DB::table('events')->where('id',1)->first();
 
-        if($event){
+        if(!$event){
             DB::table('events')->insert([
             	'id'				=> 1,
     	        'nombre'            => 'Evento de prueba',

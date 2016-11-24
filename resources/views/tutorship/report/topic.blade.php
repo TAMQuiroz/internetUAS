@@ -14,12 +14,7 @@
 
             <div class="clearfix"></div>
 
-            <ul class="tabs-page">   
-                <a href="{{route('reporte.meeting')}}">
-                    <div class="tab-page-wrapper">
-                        <li class="tab-page">Citas</li>
-                    </div>
-                </a>
+            <ul class="tabs-page">                   
                 <a href="{{route('reporte.tutor')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por tutor</li>
@@ -37,12 +32,7 @@
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas canceladas</li>
                     </div>
-                </a>
-                <a href="{{route('reporte.reassign')}}">
-                    <div class="tab-page-wrapper">
-                        <li class="tab-page">Reasignación de tutores</li>
-                    </div>
-                </a>
+                </a>                
             </ul>
 
             <div class="tab-content-container">
@@ -111,11 +101,14 @@
                 </table>
             </div>
 
+            <div id="topicTotalAsistidasReport" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$topicTotalAsistidas}}"></div>            
+            <div id="graphics_asistidas" style="min-width: 310px; height: 400px; margin: 0 auto"></div>            
+            
         </div>
     </div>
 </div>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="{{ URL::asset('js/tutorship/reportDatesByCancelledMeeting.js')}}"></script>
+<script src="{{ URL::asset('js/tutorship/reportDatesByTopic.js')}}"></script>
 @endsection

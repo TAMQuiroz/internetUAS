@@ -146,7 +146,8 @@ class TimeTableService {
     public function saveTable($request) {
 
         //$idTimeTable = $request['idTimeTable'];
-
+        $fix = array_shift($request);
+        
         foreach ($request as $key => $value){
             $posS = strrpos($key, '/');
             $posG = strrpos($key, '-');

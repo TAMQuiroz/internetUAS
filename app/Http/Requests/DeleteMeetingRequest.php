@@ -4,7 +4,7 @@ namespace Intranet\Http\Requests;
 
 use Intranet\Http\Requests\Request;
 
-class AttentionRequest extends Request
+class DeleteMeetingRequest extends Request
 {
     public function authorize()
     {
@@ -15,8 +15,8 @@ class AttentionRequest extends Request
     public function rules()
     {
         return [
-            'alumno'     => 'required',
-            'tema'       => 'required',          
+            'id'        => 'required',
+            'motivo'     => 'required',          
         ];
     }
 }

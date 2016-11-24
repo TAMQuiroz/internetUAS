@@ -16,8 +16,11 @@
                 <h3 class="panel-title">Reunion</h3>
             </div>
             <div class="panel-body">
-                <div class="row">   
-                    <div class="col-md-12">
+                <div class="row"> 
+                    <div class="col-md-6">
+                        <a href="#filter" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                    </div>  
+                    <div class="col-md-6">
                         <a href="{{route('meeting.createSup')}}">
                             {{Form::button('<i class="fa fa-plus"></i> Nueva Reunion',['class'=>'btn btn-success pull-right'])}}
                         </a>
@@ -65,5 +68,5 @@
         </div>
     </div>
 </div>
-
+@include('psp.meeting.filter_meeting', ['title' => 'Filtrar', 'route' => 'meeting.indexSup'])
 @endsection

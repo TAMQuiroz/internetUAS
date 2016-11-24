@@ -34,11 +34,11 @@ class PspMeetingController extends BaseController
  		if($user->IdPerfil==0){
 
  			$student = Student::where('IdUsuario',$user->IdUsuario)->first();
- 			$meetings =  meeting::where('idstudent', $student->IdAlumno)->get();
+ 			$meetings =  meeting::where('idstudent', $student->IdAlumno)->where('tiporeunion',1)->get();
 
       foreach ($meetings as $meeting) {
 
-        $meeting['estado'] = Status::find($meeting->idtipoestado)->first();
+        $meeting['estado'] = Status::where('id', $meeting->idtipoestado)->first();
 
         # code...
       }
@@ -51,11 +51,11 @@ class PspMeetingController extends BaseController
  		}else if($user->IdPerfil == 6){
 
  			$supervisor =	Supervisor::where('iduser',$user->IdUsuario)->first();
- 			$meetings = 	meeting::where('idsupervisor', $supervisor->id)->get();
+ 			$meetings = 	meeting::where('idsupervisor', $supervisor->id)->where('tiporeunion',1)->get();
 
  			foreach($meetings as $meeting ){
 
- 				$meeting['estado'] =  Status::find($meeting->idtipoestado)->first();
+ 				$meeting['estado'] =  Status::where('id',$meeting->idtipoestado)->first();
 
 
 
@@ -91,7 +91,7 @@ class PspMeetingController extends BaseController
 
  			foreach($meetings as $meeting ){
 
- 				$meeting['estado'] =  Status::find($meeting->idtipoestado)->first();
+ 				$meeting['estado'] =  Status::where('id',$meeting->idtipoestado)->first();
 
 
 
@@ -114,6 +114,7 @@ class PspMeetingController extends BaseController
  	 $feedback = $request['retroalimentacion'];
  	 $place =  $request['lugar'];
  	 $id = $request['id'];
+   $status = $request['estado'];
 
 
 
@@ -123,6 +124,7 @@ class PspMeetingController extends BaseController
  	 $meeting->observaciones = $observation;
  	 $meeting->lugar = $place;
  	 $meeting->retroalimentacion = $feedback;
+   $meeting->idtipoestado = $status['id'];
  	 $meeting->save();
  	 $mensaje = "Actualizacion satisfactoria";
         $array['message'] = $mensaje;
@@ -358,6 +360,10 @@ public function storeByStudent(Request $request){
 
 
 
+
+
+
+
   public function getStudentsMeetings(){
 
 
@@ -377,6 +383,20 @@ public function storeByStudent(Request $request){
 
 
         return $this->response->array($data );
+
+
+    }
+
+    public function getMeetingStatus(){
+
+       $user =  JWTAuth::parseToken()->authenticate();
+       $status = Status::where('tipo_estado',3)->get();  
+
+       
+
+       return $this->response->array( $status->toArray());
+
+
 
 
     }

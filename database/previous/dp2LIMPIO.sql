@@ -562,7 +562,7 @@ INSERT INTO `Criterio` (`IdCriterio`, `IdAspecto`, `Nombre`, `deleted_at`, `crea
 (52, 27, 'Reconoce la responsabilidad ética con la sociedad en relación a la seguridad en el trabajo (1)', NULL, '2016-11-23 07:00:05', '2016-11-23 07:15:51', 1),
 (53, 27, 'Reconoce la responsabilidad ética con la sociedad en relación al respeto a sus compañeros de trabajo', NULL, '2016-11-23 07:00:27', '2016-11-23 07:15:51', 1),
 (54, 27, 'Reconoce la responsabilidad ética con la sociedad en relación con la satisfacción del cliente (2).', NULL, '2016-11-23 07:01:04', '2016-11-23 07:15:51', 1),
-(55, 28, 'Comunicación en español	Comprende la idea principal plasmada en un texto.', NULL, '2016-11-23 07:01:31', '2016-11-23 07:15:52', 1),
+(55, 28, 'Comunicación en español Comprende la idea principal plasmada en un texto.', NULL, '2016-11-23 07:01:31', '2016-11-23 07:15:52', 1),
 (56, 28, 'Expone adecuadamente utilizando un vocabulario adecuado.', NULL, '2016-11-23 07:02:05', '2016-11-23 07:15:52', 1),
 (57, 28, 'Redacta textos utilizando estructuras sintácticas adecuadas.', NULL, '2016-11-23 07:02:21', '2016-11-23 07:15:52', 1),
 (58, 29, 'Comprende el impacto de la tecnología en la solución de problemas', NULL, '2016-11-23 07:03:09', '2016-11-23 07:15:52', 1),
@@ -815,7 +815,7 @@ CREATE TABLE `Especialidad` (
 -- Volcado de datos para la tabla `especialidad`
 --
 
-INSERT INTO `especialidad` (`IdEspecialidad`, `Codigo`, `Nombre`, `Descripcion`, `deleted_at`, `created_at`, `updated_at`, `IdDocente`) VALUES
+INSERT INTO `Especialidad` (`IdEspecialidad`, `Codigo`, `Nombre`, `Descripcion`, `deleted_at`, `created_at`, `updated_at`, `IdDocente`) VALUES
 (5, 'INF', 'Ingeniería Informática', 'Tendrás una excelente base tecnológica y científica para la automatización de la información en cualquier organización.', NULL, '2016-11-23 06:29:28', '2016-11-23 06:36:04', 5);
 
 -- --------------------------------------------------------
@@ -4372,7 +4372,7 @@ ALTER TABLE `Alumno`
 -- Filtros para la tabla `aporte`
 --
 ALTER TABLE `Aporte`
-  ADD CONSTRAINT `Aporte_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `Resultadoestudiantil` (`IdResultadoEstudiantil`),
+  ADD CONSTRAINT `Aporte_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `ResultadoEstudiantil` (`IdResultadoEstudiantil`),
   ADD CONSTRAINT `Aporte_ibfk_2` FOREIGN KEY (`IdCurso`) REFERENCES `Curso` (`IdCurso`),
   ADD CONSTRAINT `Aporte_ibfk_3` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`);
 
@@ -4380,7 +4380,7 @@ ALTER TABLE `Aporte`
 -- Filtros para la tabla `aspecto`
 --
 ALTER TABLE `Aspecto`
-  ADD CONSTRAINT `Aspecto_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `Resultadoestudiantil` (`IdResultadoEstudiantil`);
+  ADD CONSTRAINT `Aspecto_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `ResultadoEstudiantil` (`IdResultadoEstudiantil`);
 
 --
 -- Filtros para la tabla `calificacion`
@@ -4393,7 +4393,7 @@ ALTER TABLE `Calificacion`
 --
 -- Filtros para la tabla `cicloxaspecto`
 --
-ALTER TABLE `Cicloxaspecto`
+ALTER TABLE `CicloxAspecto`
   ADD CONSTRAINT `CicloxAspecto_ibfk_1` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`),
   ADD CONSTRAINT `CicloxAspecto_ibfk_2` FOREIGN KEY (`IdAspecto`) REFERENCES `Aspecto` (`IdAspecto`);
 

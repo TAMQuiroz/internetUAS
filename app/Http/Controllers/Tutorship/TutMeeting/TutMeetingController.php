@@ -335,8 +335,21 @@ class TutMeetingController extends Controller
 
         $currentDay = date("d-m-Y", strtotime($beginDate));
 
+        $reasons = Reason::all();
+
+        $status = array();
+
+        array_push($status, '');
+        array_push($status, 'Pendiente');
+        array_push($status, 'Confirmada');
+        array_push($status, 'Cancelada');
+        array_push($status, 'Sugerida');
+        array_push($status, 'Rechazada');
+        array_push($status, 'Asistida');
+        array_push($status, 'No asistida');
+
         $data       = [
-            'tutMeetings' =>  $tutMeetings,
+            'meetings' =>  $tutMeetings,
             'fecha'       =>  $fecha,
             'hora'        =>  $hora,
             'hora_inicio' =>  $hora_inicio,
@@ -346,6 +359,8 @@ class TutMeetingController extends Controller
             'startDay'    =>  $startDay,
             'currentDay'  =>  $currentDay,
             'endDay'      =>  $endDay,
+            'status'      =>  $status,
+            'reasons'     =>  $reasons,
         ];
         
         return view('tutorship.tutormydates.index', $data);
@@ -592,6 +607,44 @@ class TutMeetingController extends Controller
 
     }
 
+    public function attendMeeting($id)
+    {
+        $meeting = TutMeeting::find($id);
+        $data = [
+            'meeting' => $meeting,
+        ];
+        return view('tutorship.tutormydates.attend-meeting', $data);
+    }
+
+    public function storeMeeting(Request $request)
+    {
+        try {
+            $meeting = TutMeeting::find($request['code']);
+
+            $startHour = $request['startHour'];
+
+            $nowFormat = date('Y-m-d H:i:s');
+            $nowSec = strtotime($nowFormat);
+            $startSec = strtotime($startHour);
+            $seconds = $nowSec - $startSec;
+            $startFormat = date('Y-m-d H:i:s', $startSec);
+           
+            $duration = number_format($seconds/60, 0);
+
+            $meeting->inicio = $startFormat;
+            $meeting->fin = $nowFormat;
+            $meeting->duracion = $duration;
+            $meeting->observacion = $request['observations'];
+            $meeting->estado = 6;
+
+            $meeting->save();
+
+            return redirect()->route('cita_alumno.index_table')->with('success', 'La reunión se ha registrado exitosamente');
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+    }
+
     public function createAttention()
     {
         $topics     = Topic::get();
@@ -633,7 +686,7 @@ class TutMeetingController extends Controller
                     "id_docente"    => $tutor->IdDocente,
                 ]);
 
-            return redirect()->route('cita_alumno.index')->with('success', 'La cita se ha registrado exitosamente');
+            return redirect()->route('cita_alumno.index_table')->with('success', 'La reunión se ha registrado exitosamente');
         } catch (Exception $e) {
             return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
         }

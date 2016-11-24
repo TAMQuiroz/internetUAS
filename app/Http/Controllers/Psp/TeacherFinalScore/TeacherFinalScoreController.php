@@ -1,6 +1,5 @@
 <?php
-
-namespace Intranet\Http\Controllers\Psp\Student;
+namespace Intranet\Http\Controllers\Psp\TeacherFinalScore;
 
 use Illuminate\Http\Request;
 use Intranet\Models\Student;
@@ -12,7 +11,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspStudent;
 use Auth;
 
-class StudentController extends Controller
+class TeacherFinalScoreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,13 +20,12 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $supervisor = Supervisor::where('idUser',Auth::User()->IdUsuario)->first();
-        $students = PspStudent::where('idsupervisor',$supervisor->id)->paginate(10);
+        $students = PspStudent::paginate(10);
 
         $data = [
             'students'    =>  $students,
         ];
-        return view('psp.student.index', $data);
+        return view('psp.TeacherFinalScore.index', $data);
     }
 
     /**

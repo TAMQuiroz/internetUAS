@@ -58,7 +58,7 @@
                             @if($pspdocument->es_obligatorio=='s')
                             <td>obligatorio</td> 
                             @else
-                            <td>no obligatorio</td> 
+                            <td>opcional</td> 
                             @endif
                             @if($pspdocument->idtipoestado==3)
                             <td>No Subido</td>
@@ -95,6 +95,7 @@
                         @endforeach 
                     </tbody>
                 </table>
+                {{$pspdocuments->links()}}
             </div>
         </div>
     </div>

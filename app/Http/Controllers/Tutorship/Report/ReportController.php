@@ -197,7 +197,7 @@ class ReportController extends Controller {
             $asistidas = $tutMeetings->where('estado', 6)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
             $no_asistidas = $tutMeetings->where('estado', 7)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
             $no_programadas = $tutMeetings->where('no_programada', 1)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $total = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas;
+            $total = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas + $no_programadas;
             if ($total > 0) {
                 array_push($pendientes_list, $pendientes);
                 array_push($confirmadas_list, $confirmadas);

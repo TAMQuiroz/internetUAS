@@ -4372,7 +4372,7 @@ ALTER TABLE `Alumno`
 -- Filtros para la tabla `aporte`
 --
 ALTER TABLE `Aporte`
-  ADD CONSTRAINT `Aporte_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `Resultadoestudiantil` (`IdResultadoEstudiantil`),
+  ADD CONSTRAINT `Aporte_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `ResultadoEstudiantil` (`IdResultadoEstudiantil`),
   ADD CONSTRAINT `Aporte_ibfk_2` FOREIGN KEY (`IdCurso`) REFERENCES `Curso` (`IdCurso`),
   ADD CONSTRAINT `Aporte_ibfk_3` FOREIGN KEY (`IdCicloAcademico`) REFERENCES `CicloxEspecialidad` (`IdCicloAcademico`);
 
@@ -4380,7 +4380,7 @@ ALTER TABLE `Aporte`
 -- Filtros para la tabla `aspecto`
 --
 ALTER TABLE `Aspecto`
-  ADD CONSTRAINT `Aspecto_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `Resultadoestudiantil` (`IdResultadoEstudiantil`);
+  ADD CONSTRAINT `Aspecto_ibfk_1` FOREIGN KEY (`IdResultadoEstudiantil`) REFERENCES `ResultadoEstudiantil` (`IdResultadoEstudiantil`);
 
 --
 -- Filtros para la tabla `calificacion`

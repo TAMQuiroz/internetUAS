@@ -1,0 +1,60 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class TutorshipRolesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('Docente')->where('IdDocente', 5)->update(['rolTutoria' => 2]);
+        DB::table('Docente')->where('IdDocente', 6)->update(['rolTutoria' => 1]);
+        DB::table('parameters')->insert([
+        		'id' 				=> 1,
+        		'duracionCita'		=> 15,
+        		'created_at'		=> '2016-11-24 07:34:28',
+        		'updated_at'		=> '2016-11-24 07:34:28',
+        		'id_especialidad'	=> 5,
+        		'deleted_at'		=> null,
+        		'start_date'		=> '2016-11-24 07:34:28',
+        		'end_date'			=> '2016-12-30 07:34:28',
+        		'number_days'		=> 1,
+    	]);
+
+        //crear alumno
+        $userAlumno = DB::table('Usuario')->where('IdUsuario',1)->first();
+        if(!$userAlumno){
+            DB::table('Usuario')->insert(['IdUsuario' => 1, 'IdPerfil' => 0, 'Usuario' => 45674567, 'Contrasena' => bcrypt(45674567)]);
+        }
+
+        $alumno = DB::table('tutstudents')->where('id',1)->first();
+        if(!$alumno){
+            DB::table('tutstudents')->insert(['id' => 1, 'id_usuario' => 1, 'codigo' => 45674567,'nombre' => 'Frodo', 'ape_paterno' => 'Bolson', 'ape_materno' => 'Comarca', 'correo' => 'shire@middleearth.com', 'id_especialidad' => 5]);
+        }
+
+        $userAlumno = DB::table('Usuario')->where('IdUsuario',2)->first();
+        if(!$userAlumno){
+            DB::table('Usuario')->insert(['IdUsuario' => 2, 'IdPerfil' => 0, 'Usuario' => 45674568, 'Contrasena' => bcrypt(45674568)]);
+        }
+
+        $alumno = DB::table('tutstudents')->where('id',2)->first();
+        if(!$alumno){
+            DB::table('tutstudents')->insert(['id' => 2, 'id_usuario' => 2, 'codigo' => 45674568,'nombre' => 'Elliot', 'ape_paterno' => 'Anderson', 'ape_materno' => 'Wes', 'correo' => 'hello@friend.com', 'id_especialidad' => 5]);
+        }
+
+        $userAlumno = DB::table('Usuario')->where('IdUsuario',3)->first();
+        if(!$userAlumno){
+            DB::table('Usuario')->insert(['IdUsuario' => 3, 'IdPerfil' => 0, 'Usuario' => 45674569, 'Contrasena' => bcrypt(45674569)]);
+        }
+
+        $alumno = DB::table('tutstudents')->where('id',3)->first();
+        if(!$alumno){
+            DB::table('tutstudents')->insert(['id' => 3, 'id_usuario' => 3, 'codigo' => 45674569,'nombre' => 'Tyrell', 'ape_paterno' => 'Wellick', 'ape_materno' => 'Bonsoir', 'correo' => 'bonsoir@net.com', 'id_especialidad' => 5]);
+        }
+
+    }
+}

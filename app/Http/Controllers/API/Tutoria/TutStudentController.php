@@ -207,29 +207,59 @@ class TutStudentController extends BaseController
         $fechaInicio1 = date("Y/m/d ", strtotime(str_replace("/","-",$fechaInicioChangeFormat)));
         $fechaFin1 = date("Y/m/d", strtotime(str_replace("/","-",$fechaFinChangeFormat)));
 
-
         if (empty($fechaInicio) && empty($fechaFin) && empty($motivo)){
-
 
             $studentInfo = Tutstudent::where('id_usuario', $id)->get();
             $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
             $i = 0;
 
+       
+        
+
+
             foreach ($appointmentInfo as $appointInfo) {
                 $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
                 //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
                 $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-                if (1 == $appointInfo['estado']){
+
+                $fechaCitaTotal = $appointInfo['inicio'];
+                $fechaCitaAux = substr($fechaCitaTotal,0,10);
+                $fechaCita = str_replace("-", "/", $fechaCitaAux);
+                $fechaActual= date('Y/m/d');
+                $fechaCitaEntero =  strtotime($fechaCita);
+                $fechaActualEntero =  strtotime($fechaActual);
+
+
+                if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero <= $fechaCitaEntero)) {
                     $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
                 }
-                else if  (2 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and  $appointInfo['creador'] == 0 and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+                }
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
                     $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
                 }
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
                 }
-                else if  (4 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero > $fechaCitaEntero) ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero <= $fechaCitaEntero) ) {
                     $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+                }
+                else if  (5 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (6 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Asistida";
+                }
+                else if  (7 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
                 }
                 $i++;
             }
@@ -237,13 +267,13 @@ class TutStudentController extends BaseController
 
         }
 
-        else if (empty($fechaInicio) && empty($fechaFin) && !empty($motivo)) {
 
+        else if (empty($fechaInicio) && empty($fechaFin) && !empty($motivo)) {
 
             $studentInfo = Tutstudent::where('id_usuario', $id)->get();
             //$motivoInformation =  Topic::where('nombre', $motivo)->get();
             if ("Pendiente" == $motivo){
-                $idMotivo  = 1;
+                $idMotivo  = 4;
             }
             else if  ("Confirmada" == $motivo){
                 $idMotivo  = 2;
@@ -252,31 +282,70 @@ class TutStudentController extends BaseController
                 $idMotivo  = 3;
             }
             else if  ("Sugerida" == $motivo){
-                $idMotivo  = 1;
+                $idMotivo  = 4;
             }
+            else if  ("Rechazada" == $motivo){
+                $idMotivo  = 4;
+            }
+            else if  ("Asistida" == $motivo){
+                $idMotivo  = 6;
+            }
+            else if  ("No asistida" == $motivo){
+                $idMotivo  = 2;
+            }
+
             $appointmentInfo = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->where('estado',$idMotivo)->get();
             $i = 0;
 
             foreach ($appointmentInfo as $appointInfo) {
                 $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
                 $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-                if (1 == $appointInfo['estado']){
+
+                $fechaCitaTotal = $appointInfo['inicio'];
+                $fechaCitaAux = substr($fechaCitaTotal,0,10);
+                $fechaCita = str_replace("-", "/", $fechaCitaAux);
+                $fechaActual= date('Y/m/d');
+                $fechaCitaEntero =  strtotime($fechaCita);
+                $fechaActualEntero =  strtotime($fechaActual);
+
+
+                if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero <= $fechaCitaEntero)) {
                     $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
                 }
-                else if  (2 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and  $appointInfo['creador'] == 0 and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+                }
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
                     $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
                 }
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
                 }
-                else if  (4 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero > $fechaCitaEntero) ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero <= $fechaCitaEntero) ) {
                     $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+                }
+                else if  (5 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (6 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Asistida";
+                }
+                else if  (7 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
                 }
                 $i++;
             }
             return $this->response->array($appointmentInfo->toArray());
 
         }
+
 
 
         else if (!empty($fechaInicio) && !empty($fechaFin) && empty($motivo)) {
@@ -293,22 +362,52 @@ class TutStudentController extends BaseController
                 $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
                 //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
                 $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-                if (1 == $appointInfo['estado']){
+
+                $fechaCitaTotal = $appointInfo['inicio'];
+                $fechaCitaAux = substr($fechaCitaTotal,0,10);
+                $fechaCita = str_replace("-", "/", $fechaCitaAux);
+                $fechaActual= date('Y/m/d');
+                $fechaCitaEntero =  strtotime($fechaCita);
+                $fechaActualEntero =  strtotime($fechaActual);
+
+
+
+                if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero <= $fechaCitaEntero)) {
                     $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
                 }
-                else if  (2 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and  $appointInfo['creador'] == 0 and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+                }
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
                     $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
                 }
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
                 }
-                else if  (4 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero > $fechaCitaEntero) ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero <= $fechaCitaEntero) ) {
                     $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
                 }
-                $i++;
+                else if  (5 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (6 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Asistida";
+                }
+                else if  (7 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+                }
             }
             return $this->response->array($appointmentInfo->toArray());
         }
+
+        //holas
 
 
         else if (!empty($fechaInicio) && !empty($fechaFin) && !empty($motivo)) {
@@ -320,8 +419,8 @@ class TutStudentController extends BaseController
             $studentInfo = Tutstudent::where('id_usuario', $id)->get();
 
 
-            if ("Pendiente" == $motivo){
-                $idMotivo  = 1;
+             if ("Pendiente" == $motivo){
+                $idMotivo  = 4;
             }
             else if  ("Confirmada" == $motivo){
                 $idMotivo  = 2;
@@ -330,7 +429,16 @@ class TutStudentController extends BaseController
                 $idMotivo  = 3;
             }
             else if  ("Sugerida" == $motivo){
-                $idMotivo  = 1;
+                $idMotivo  = 4;
+            }
+            else if  ("Rechazada" == $motivo){
+                $idMotivo  = 4;
+            }
+            else if  ("Asistida" == $motivo){
+                $idMotivo  = 6;
+            }
+            else if  ("No asistida" == $motivo){
+                $idMotivo  = 2;
             }
 
             $appointmentInfo = TutMeeting::where('estado',$idMotivo)->where('id_tutstudent',$studentInfo[0]['id'])->where('inicio','>=',$fechaInicioUsar)->where('inicio','<=',$fechaFinUsar)->get();
@@ -341,17 +449,46 @@ class TutStudentController extends BaseController
                 $motivoInfo =  Topic::where('id', $appointInfo['id_topic'])->get();
                 //$statusInfo =  Status::where('id', $appointInfo['estado'])->get();
                 $appointmentInfo[$i]['nombreTema'] = $motivoInfo[0]['nombre'];
-                if (1 == $appointInfo['estado']){
+
+                $fechaCitaTotal = $appointInfo['inicio'];
+                $fechaCitaAux = substr($fechaCitaTotal,0,10);
+                $fechaCita = str_replace("-", "/", $fechaCitaAux);
+                $fechaActual= date('Y/m/d');
+                $fechaCitaEntero =  strtotime($fechaCita);
+                $fechaActualEntero =  strtotime($fechaActual);
+
+
+
+                if (4 == $appointInfo['estado'] and $appointInfo['creador'] == 0 and ($fechaActualEntero <= $fechaCitaEntero)) {
                     $appointmentInfo[$i]['nombreEstado']  = "Pendiente";
                 }
-                else if  (2 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and  $appointInfo['creador'] == 0 and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero > $fechaCitaEntero)  ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
+                }
+                else if  (2 == $appointInfo['estado'] and ($fechaActualEntero <= $fechaCitaEntero) ){
                     $appointmentInfo[$i]['nombreEstado']  = "Confirmada";
                 }
                 else if  (3 == $appointInfo['estado']){
                     $appointmentInfo[$i]['nombreEstado']  = "Cancelada";
                 }
-                else if  (4 == $appointInfo['estado']){
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero > $fechaCitaEntero) ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (4 == $appointInfo['estado'] and $appointInfo['creador'] == 1 and ($fechaActualEntero <= $fechaCitaEntero) ) {
                     $appointmentInfo[$i]['nombreEstado']  = "Sugerida";
+                }
+                else if  (5 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Rechazada";
+                }
+                else if  (6 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "Asistida";
+                }
+                else if  (7 == $appointInfo['estado'] ){
+                    $appointmentInfo[$i]['nombreEstado']  = "No asistida";
                 }
                 $i++;
             }

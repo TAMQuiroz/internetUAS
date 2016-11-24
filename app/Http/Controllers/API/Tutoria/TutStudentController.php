@@ -502,12 +502,14 @@ class TutStudentController extends BaseController
     {        
 
         
-        $studentInfo = Tutstudent::where('id_usuario',$id_usuario)->get(); //deberia darme 5
-        $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();
-        $teacherInfo = Teacher::where('idDocente',$tutorshipInfo[0]['id_profesor'])->get();
+        $studentInfo = Tutstudent::where('id_usuario',$id_usuario)->get(); //deberia darme 5 //aca no se cae
+        $tutorshipInfo = Tutorship::where('id',$studentInfo[0]['id_tutoria'])->get();   //  aca no se cae
+        $teacherInfo = Teacher::where('idDocente',$tutorshipInfo[0]['id_profesor'])->get(); //aca no se cae
         $scheduleInfo = TutSchedule::where('id_docente',$tutorshipInfo[0]['id_profesor'])->get();
         $scheduleMeeting = TutMeeting::where('id_tutstudent',$studentInfo[0]['id'])->get();
-        $parametersInfo = Parameter::where('id_especialidad',1)->get();     
+
+
+        $parametersInfo = Parameter::where('id_especialidad',$studentInfo[0]['id_especialidad'])->get();     
         $teacherInfo[0]['numberDays'] = $parametersInfo[0]['number_days'];
         $teacherInfo[0]['duracionCita'] = $parametersInfo[0]['duracionCita'];
 

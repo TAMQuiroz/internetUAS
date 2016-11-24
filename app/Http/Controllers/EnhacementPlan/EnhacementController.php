@@ -44,9 +44,11 @@ class EnhacementController extends BaseController {
         $data['title'] = 'Nuevo Plan de Mejora';
 
         try {
+
             //$data['cicles'] = $this->improvementPlanService->retrieveAllCicles();
             $data['cicles'] = $this->improvementPlanService->retrieveCicleAcademic();
             $data['teachers'] = $this->improvementPlanService->retrieveAllTeacher();
+
             $data['typeImprovementPlans'] = $this->typeImprovementPlanService->findByFaculty();
         } catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
@@ -301,5 +303,26 @@ class EnhacementController extends BaseController {
             redirect()->back()->with('warning','Ha ocurrido un error'); 
         }
         return view('enhacementPlan.index', $data);
+    }
+
+    public function report() {
+        try {
+            $improvementPlans= $this->improvementPlanService->findByFaculty();
+            $data['improvementPlans'] = $improvementPlans;
+            /*$i=0;
+            //dd("hol");
+            $actions[];
+            foreach ($improvementPlans as $imp){
+                dd("1");
+                $actions[$i]= $this->improvementPlanService->retrieveAllActionsId($imp->IdPlanMejora);
+                dd("2")
+                $i=$i+1;
+            }
+            $data['actionplan']=$actions;
+            dd("hola");*/
+        } catch(\Exception $e) {
+            redirect()->back()->with('warning','Ha ocurrido un error'); 
+        }
+        return view('enhacementPlan.report', $data);
     }
 }

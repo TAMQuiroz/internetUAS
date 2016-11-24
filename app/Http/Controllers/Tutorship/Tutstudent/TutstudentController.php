@@ -25,6 +25,35 @@ class TutstudentController extends Controller
         $this->passwordService = new PasswordService;
     }
 
+    public function getEntireName(Request $request)
+    {
+        if ($request['code']) {
+            $student = Tutstudent::where('codigo', $request['code'])->first();
+
+            if ($student) {
+                $response   = [
+                    'html'  => $student->ape_paterno . ' ' . $student->ape_materno . ', ' . $student->nombre,
+                    'id'    => $student->id,
+                    'code'  => 1,
+                ];
+            } else {
+                $response   = [
+                    'html'  => 'No se encontraron coincidencias',
+                    'id'    => '',
+                    'code'  => 0,
+                ];
+            }
+        } else {
+            $response   = [
+                'html'  => 'Ingrese código del alumno',
+                'id'    => '',
+                'code'  => -1,
+            ];
+        }
+
+        return $response;
+    }
+
     public function downLoadExample() {
         return response()->download(public_path() . "/uploads/alumnos.xlsx");
     }

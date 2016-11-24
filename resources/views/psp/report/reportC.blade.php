@@ -3,7 +3,7 @@
 
 <div class="page-title">
 	<div class="title_left">
-		<h3>Reporte de Alumnos por criterios de psp por nota </h3>
+		<h3>Reporte de Alumnos por Criterios de PSP</h3>
 	</div>
 </div>
 
@@ -30,9 +30,10 @@
                             @endif
                         </select>                             
                     </div>
-                    {{Form::submit('Generar Reporte', ['class'=>'btn btn-success pull-right'])}}
-                </div>
 
+                     {{Form::submit('Generar Reporte', ['class'=>'btn btn-success pull-right'])}}
+                </div>
+ 
                 {{Form::close()}}
 
             </div>

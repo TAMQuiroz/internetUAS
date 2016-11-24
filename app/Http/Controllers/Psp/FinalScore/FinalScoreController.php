@@ -42,12 +42,12 @@ class FinalScoreController extends Controller
         $pspProceso = PspProcess::find($supervisor->idpspprocess);
         $criterios  = $pspProceso->criterios;
         $psp=PspStudent::where('idalumno',$idAlumno)->first(); 
-        
+        //dd($psp);
         //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
         //echo " idcurso ".$pspProceso->idcurso;
         //$criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
         //echo " idcursoxciclo ".$cursoxciclo->IdCursoxCiclo;
-        $criteriosAlumnos = Pspstudentsxcriterios::where('idpspstudent',$psp->id)->get();
+        $criteriosAlumnos = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->get();
         $finalScore=0;
         $finalWeight=0;
         //dd($inscriptiofile);
@@ -58,7 +58,8 @@ class FinalScoreController extends Controller
             $finalScore=$crit->nota*$weightCriterio->peso + $finalScore;
             $finalWeight=$weightCriterio->peso + $finalWeight;            
         }
-           $finalScore = $finalScore/$finalWeight;
+            if($finalWeight!=0) $finalScore = $finalScore/$finalWeight;
+            else $finalScore =0;
            $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$psp->id)->first();
            //dd($inscriptiofile->id);
            $inscriptiofile->nota_final=$finalScore;

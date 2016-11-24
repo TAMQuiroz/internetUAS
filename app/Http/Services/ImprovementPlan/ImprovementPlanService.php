@@ -54,6 +54,11 @@ class ImprovementPlanService {
         return $actionplan;
     }
 
+    public function retrieveAllActionsId($id) {
+        $actionplan = ActionPlan::where('IdPlanMejora', $id)->get();
+        return $actionplan;
+    }
+
     public function retrieveAllCicles(){
         $cicles = AcademicCycle::get();
         return $cicles;
@@ -62,9 +67,14 @@ class ImprovementPlanService {
     public function retrieveCicleAcademic(){
         if(Session::get('academic-cycle')!=null){
             $vigente = "1";
-            $cicle = AcademicCycle::where('IdCicloAcademico', Session::get('academic-cycle')->IdCicloAcademico)->first();
+            $cicle = AcademicCycle::where('IdCicloAcademico', Session::get('academic-cycle')->IdCiclo)->first();
+            if($cicle==null)
+                return null;
             $cyclesAcademic=AcademicCycle::where('Numero','>=',$cicle->Numero)->get();
-            return $cyclesAcademic;
+            if($cyclesAcademic!=null)
+                return $cyclesAcademic;
+            else
+                return $null;
         }
         else{
             return null;
@@ -266,12 +276,39 @@ class ImprovementPlanService {
     }
 
     public function comment($request) {
+        $flag=0;
+        $flag2=0;
+        $flag3=0;
+
+        $i=0;
+        $plan = ActionPlan::where('IdPlanAccion', intval($_REQUEST['actionPlanId'][$i],10))
+                ->first();
+
         for ($i=0; $i<count($_REQUEST['actionPlanId']); $i++)
         {
             $ActionPlan = ActionPlan::where('IdPlanAccion', $_REQUEST['actionPlanId'][$i])
                 ->update(array(	'Comentario' => $_REQUEST['comment'][$i] , 'Porcentaje' => $_REQUEST['porcent'][$i]));
+
+            if($_REQUEST['porcent'][$i]>0)
+                $flag=1;
+            if($_REQUEST['porcent'][$i]==100)
+                $flag2=$flag2+1;
+            if($_REQUEST['porcent'][$i]==0)
+                $flag3=$flag3+1;
         }
 
+        if($flag==1){
+            $ImprovementPlan = ImprovementPlan::where('IdPlanMejora', $plan->IdPlanMejora)
+                ->update(array( 'Estado' => "En Ejecución", ));
+        }
+        if($flag2==count($_REQUEST['actionPlanId'])){
+            $ImprovementPlan = ImprovementPlan::where('IdPlanMejora', $plan->IdPlanMejora)
+                ->update(array( 'Estado' => "Terminado", ));
+        }
+        if($flag3==count($_REQUEST['actionPlanId'])){
+            $ImprovementPlan = ImprovementPlan::where('IdPlanMejora', $plan->IdPlanMejora)
+                ->update(array( 'Estado' => "Pendiente", ));
+        }
     }
 
     public function delete($request) {

@@ -20,7 +20,7 @@
                         <li class="tab-page">Citas</li>
                     </div>
                 </a>
-                <a href="">
+                <a href="{{route('reporte.tutor')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por tutor</li>
                     </div>
@@ -38,7 +38,7 @@
                         <li class="tab-page">Citas canceladas</li>
                     </div>
                 </a>
-                <a href="">
+                <a href="{{route('reporte.reassign')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Reasignación de tutores</li>
                     </div>
@@ -50,9 +50,9 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                
+
                                 <form method="GET" action="{{route('reporte.topic')}}">                                    
-                                    
+
                                     <div class="form-group">
                                         {{Form::label('Desde: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
                                         <div class="col-md-3 col-sm-3 col-xs-8">                        
@@ -62,7 +62,7 @@
                                             </div>                      
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         {{Form::label('Hasta: *',null,['class'=>'control-label col-md-2 col-sm-2 col-xs-4'])}}
                                         <div class="col-md-3 col-sm-3 col-xs-8">                        
@@ -72,13 +72,13 @@
                                             </div>                      
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12 col-xs-12">                                        
-                                             <button class="btn btn-submit pull-right" type="submit"><i class="fa fa-search"></i> Buscar</button>
+                                            <button class="btn btn-submit pull-right" type="submit"><i class="fa fa-search"></i> Buscar</button>
                                         </div>
                                     </div>
-                                    
+
                                 </form>
 
                             </div>                                                                                    
@@ -86,29 +86,31 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">Tema </th>
-                            <th class="column-title">Total citas asistidas</th>
-                            <th class="column-title">Porcentaje del total</th>                                                
+                            <th class="column-title">Tema</th>
+                            <th class="column-title">Cantidad de citas asistidas</th>
+                            <th class="column-title">Porcentaje del total de asistidas</th>   
+                            <th class="column-title">Porcentaje del total general</th>                                                
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach($topicTutMeetings as $key => $t)
                         <tr class="even pointer">
-                            <td hidden class="group-id"> </td>
-                            <td class=""></span></td>                            
-                            <td class=" "></td>                                                                  
-                            <td class=" "></td>                                                              
+                            <td hidden class="group-id">{{$t->id}}</td>
+                            <td class=""></span>{{$topics_name_list[$key] }}</td>                            
+                            <td class=" ">{{ $topics_amount_list[$key] }}</td>                                                                  
+                            <td class=" ">{{ round($topics_amount_list[$key]/$topicTotalAsistidas*100,2) }}</td>  
+                            <td class=" ">{{ round($topics_percentage_list[$key],2) }}</td> 
                         </tr>
-                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-            
+
         </div>
     </div>
 </div>

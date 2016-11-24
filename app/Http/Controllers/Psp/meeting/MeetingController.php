@@ -25,7 +25,7 @@ class MeetingController extends Controller
     //Vista alumno
     public function index()
     {
-        $meetings = meeting::paginate(10);
+        $meetings = meeting::orderby('fecha','asc')->paginate(10);
 
         $data = [
             'meetings'    =>  $meetings,
@@ -202,15 +202,17 @@ class MeetingController extends Controller
     }
 
     //Vista supervisor
-    public function indexSup()
+    public function indexSup(Request $request)
     {
-        $meetings = meeting::with('student','status')->paginate(10);
+        $filters = $request->all();
+        
+        $meetings = meeting::getFiltered($filters);
 
         foreach ($meetings as $meeting) {
             $dt = new Carbon($meeting->fecha);        
             $meeting->fecha = $dt->format('d-m-Y');
         }
-        //dd($meetings);
+        
         $data = [
             'meetings'    =>  $meetings,
         ];
@@ -234,12 +236,30 @@ class MeetingController extends Controller
     {
         try {
 
+            //Verificar si no esta ocupado en esa hora
+            $dt = Carbon::createFromFormat('d-m-Y',$request['fecha']);
+            $tt = Carbon::createFromFormat('H',$request['hora_inicio']);
+
+            $previousMeet = meeting::where([
+                ['fecha',$dt->format('Y-m-d')],
+                ['hora_inicio',$tt->format('H:i:s')],
+                ]);
+
+             $previousFH = FreeHour::where([
+                ['fecha',$dt->format('Y-m-d')],
+                ['hora_ini',$request['hora_inicio']],
+                ])->get()->first();
+
+            if($previousFH!=null && $previousMeet!=null){
+                return redirect()->route('meeting.createSup')->with('warning','Ya registro previamente una reunion con fecha: '.$dt->format('d-m-Y').' a las '.$request['hora_inicio'].' horas.');
+            }
+
             //Iniciacion
-            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
-            //dd($supervisor);
+            $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();            
             $pspstudent =PspStudent::where('IdAlumno',$request['alumno'])->first(); 
             $meeting = new meeting;
             $freeHour = new FreeHour;
+            
             //Crear freehour si la reunion es con supervisor
             //Se pueden crear disponibilidades excepcionales solo en esta pantalla (sin contar el maximo posible)
             if($request['tiporeunion']==1){
@@ -253,17 +273,9 @@ class MeetingController extends Controller
             }
             $meeting->tiporeunion = $request['tiporeunion'];
             $meeting->idtipoestado = 12;
-            $meeting->hora_inicio = Carbon::createFromFormat('H',$request['hora_inicio']);
-            $meeting->hora_fin = Carbon::createFromFormat('H',$request['hora_inicio'] + 1);
-            /*
-            $timestamp = mktime($request['hora_inicio'],0,0, 0,0,0);
-            $time = date('H:i:s', $timestamp);
-            $meeting->hora_inicio=$time;            
-            $timestamp = strtotime($request['hora_inicio']) + 60*60;
-            $time = date('H:i:s', $timestamp);
-            $meeting->hora_fin=$time;
-            */
-            $meeting->fecha=Carbon::createFromFormat('d-m-Y',$request['fecha']);
+            $meeting->hora_inicio = $tt;
+            $meeting->hora_fin = Carbon::createFromFormat('H',$request['hora_inicio'] + 1);            
+            $meeting->fecha=$dt;
             $meeting->idstudent=$request['alumno'];
             $meeting->idsupervisor=$supervisor->id;
             $meeting->asistencia='o';

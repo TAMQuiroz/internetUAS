@@ -20,7 +20,7 @@
                     <li class="tab-page">Citas</li>
                 </div>    
                 </a>                
-                <a href="">
+                <a href="{{route('reporte.tutor')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por tutor</li>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="tab-page-wrapper active">
                     <li class="tab-page">Citas canceladas</li>
                 </div>                
-                <a href="">
+                <a href="{{route('reporte.reassign')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Reasignación de tutores</li>
                     </div>

@@ -17,71 +17,71 @@
     <div class="x_panel">
         <div class="">
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <a href="#filter-tutors" class="btn btn-warning pull-left"><i class="fa fa-filter"></i> Filtrar</a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <a href="{{ route('tutor.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo tutor</a>
                 </div>
             </div>
-
-            <div class="x_content">
-                <div class="clearfix"></div>
-            </div>
-            <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                <thead>
-                    <tr class="headings">
-                        <th class="centered column-title">Estado </th>
-                        <th class="centered column-title">Código </th>
-                        <th class="column-title">Apellidos y Nombres </th>                        
-                        <th class="column-title">Correo </th>
-                        <th class="centered column-title">Horas Semanales </th>
-                        <th class="centered column-title">Alumnos </th>
-                        <th class="centered column-title last">Acciones</th>                            
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($tutors as $tutor)
-                        <tr class="even pointer">
-                            <td hidden class="group-id">{{ $tutor->IdDocente }}</td>
-
-                            @if ($tutor->rolTutoria == 1) 
-                                <td class="centered"><span class="label label-success"> Activo </span></td>
-                            @elseif ($tutor->rolTutoria == 3) 
-                                <td class="centered"><span class="label label-default"> Inactivo </span></td>
-                            @endif
-
-                            <td class="centered ">{{ $tutor->Codigo }}</td>
-                            <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
-                            <td class=" ">{{ $tutor->Correo }}</td>
-                            <td class="centered ">{{ $horas[$tutor->IdDocente] }}</td>                            
-                            <td class="centered ">{{ $alumnos[$tutor->IdDocente] }}</td> 
-                            <td class="centered ">
-                                <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Visualizar" class="btn btn-primary btn-xs view-group">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                @if ($tutor->rolTutoria == 1)
-                                    <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
-                                        <i class="fa fa-remove"></i>
-                                    </a>
-                                @elseif ($tutor->rolTutoria == 3) 
-                                    <a href="" class="btn btn-primary btn-xs delete-group" title="Activar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                @endif
-                            </td>
+            <div class="table-responsive">
+                <table class="table table-striped responsive-utilities jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="centered column-title">Estado </th>
+                            <th class="centered column-title">Código </th>
+                            <th class="column-title">Apellidos y Nombres </th>                        
+                            <th class="column-title">Correo </th>
+                            <th class="centered column-title">Horas Semanales </th>
+                            <th class="centered column-title">Alumnos </th>
+                            <th class="centered column-title last">Acciones</th>                            
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($tutors as $tutor)
+                            <tr class="even pointer">
+                                <td hidden class="group-id">{{ $tutor->IdDocente }}</td>
 
-                        @if ($alumnos[$tutor->IdDocente]==0 && $tutor->rolTutoria == 1)                        
-                            @include('modals.delete', ['id' => $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este tutor?', 'route' => route('tutor.delete', $tutor->IdDocente)])
-                        @endif
-                        @if ($alumnos[$tutor->IdDocente]>0 && $tutor->rolTutoria == 1)
-                            @include('modals.reassign', ['id' => $tutor->IdDocente, 'message' => 'Este tutor tiene asignado '.$alumnos[$tutor->IdDocente].' alumnos. Es necesario hacer una reasignación.', 'route' => route('tutor.reassign', $tutor->IdDocente)])
-                        @endif
-                        @if ($tutor->rolTutoria == 3)
-                            @include('modals.activate', ['id' => $tutor->IdDocente, 'message' => 'Se reasignarán los alumnos que tenía este tutor. ¿Desea activarlo?', 'route' => route('tutor.activate', $tutor->IdDocente)])
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
+                                @if ($tutor->rolTutoria == 1) 
+                                    <td class="centered"><span class="label label-success"> Activo </span></td>
+                                @elseif ($tutor->rolTutoria == 3) 
+                                    <td class="centered"><span class="label label-default"> Inactivo </span></td>
+                                @endif
+
+                                <td class="centered ">{{ $tutor->Codigo }}</td>
+                                <td class=" ">{{ $tutor->ApellidoPaterno.' '.$tutor->ApellidoMaterno.', '.$tutor->Nombre }}</td>
+                                <td class=" ">{{ $tutor->Correo }}</td>
+                                <td class="centered ">{{ $horas[$tutor->IdDocente] }}</td>                            
+                                <td class="centered ">{{ $alumnos[$tutor->IdDocente] }}</td> 
+                                <td class="centered ">
+                                    <a href="{{route('tutor.show',$tutor->IdDocente)}}" title="Visualizar" class="btn btn-primary btn-xs view-group">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    @if ($tutor->rolTutoria == 1)
+                                        <a href="" class="btn btn-danger btn-xs delete-group" title="Desactivar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    @elseif ($tutor->rolTutoria == 3) 
+                                        <a href="" class="btn btn-primary btn-xs delete-group" title="Activar" data-toggle="modal" data-target="#{{$tutor->IdDocente}}">
+                                            <i class="fa fa-check"></i>
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+
+                            @if ($alumnos[$tutor->IdDocente]==0 && $tutor->rolTutoria == 1)                        
+                                @include('modals.delete', ['id' => $tutor->IdDocente, 'message' => '¿Está seguro que desea desactivar este tutor?', 'route' => route('tutor.delete', $tutor->IdDocente)])
+                            @endif
+                            @if ($alumnos[$tutor->IdDocente]>0 && $tutor->rolTutoria == 1)
+                                @include('modals.reassign', ['id' => $tutor->IdDocente, 'message' => 'Este tutor tiene asignado '.$alumnos[$tutor->IdDocente].' alumnos. Es necesario hacer una reasignación.', 'route' => route('tutor.reassign', $tutor->IdDocente)])
+                            @endif
+                            @if ($tutor->rolTutoria == 3)
+                                @include('modals.activate', ['id' => $tutor->IdDocente, 'message' => 'Se reasignarán los alumnos que tenía este tutor. ¿Desea activarlo?', 'route' => route('tutor.activate', $tutor->IdDocente)])
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             {{ $tutors->links() }}
         </div>
     </div>

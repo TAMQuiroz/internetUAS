@@ -92,7 +92,7 @@
 						<div class="file-field input-field">
 							<div class="btn">
 								<span>Archivo</span>
-								{{Form::file($pregunta->id, ['id'=>'file','class'=>'file form-control', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Solo ingresar archivo con formato .'.$pregunta->extension_arch, 'accept'=>'.'.$pregunta->extension_arch])}}
+								{{Form::file($pregunta->id, ['id'=>'file','class'=>'file form-control', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Solo ingresar archivo con formato .'.$pregunta->extension_arch])}}
 							</div>
 							<div class="file-path-wrapper">
 								<input class="file-path validate" name="arrQuestion[{{$pregunta->id}}]" type="text">

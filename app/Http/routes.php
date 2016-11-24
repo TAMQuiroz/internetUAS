@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/addPlan',[ 'as' => 'addPentryA', 'uses' => 'EnhacementPlan\EnhacementController@addPlan']);
         Route::get('/delete', ['as' => 'delete.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@delete']);
         Route::post('/search', ['as' => 'search.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@search']);
+        Route::get('/enhacement', ['as' => 'report.enhacementPlan', 'uses' => 'EnhacementPlan\EnhacementController@report']);
 
         //AJAX routes
 

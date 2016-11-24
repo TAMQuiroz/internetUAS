@@ -23,6 +23,7 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  1,
+	        'updated_at'         =>  '2016-11-08 07:24:36',
         ]);
 
 		DB::table('questions')->insert([
@@ -35,6 +36,7 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  2,
+	        'updated_at'         =>  '2016-11-08 07:24:36',
         ]);
 
         DB::table('questions')->insert([
@@ -47,6 +49,7 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  3,
+	        'updated_at'         =>  '2016-11-08 07:24:36',
         ]);
 
         DB::table('questions')->insert([
@@ -59,6 +62,7 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  4,
+	        'updated_at'         =>  '2016-11-08 07:24:36',
         ]);
 
         DB::table('questions')->insert([
@@ -71,6 +75,7 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  5,
+	        'updated_at'         =>  '2016-11-08 07:24:36',
         ]);
 
         DB::table('questions')->insert([
@@ -83,6 +88,7 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  6,
+	        'updated_at'         =>  '2016-11-08 07:24:36',
         ]);
 
         DB::table('questions')->insert([
@@ -95,6 +101,7 @@ class QuestionsPresentationTableSeeder extends Seeder
 	        'id_especialidad'    =>  5,
 	        'id_docente'         =>  6,
 	        'id_competence'      =>  1,
+	        'updated_at'         =>  '2016-11-08 07:24:36',
         ]);
         
         

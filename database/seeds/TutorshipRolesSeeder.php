@@ -13,17 +13,6 @@ class TutorshipRolesSeeder extends Seeder
     {
         DB::table('Docente')->where('IdDocente', 5)->update(['rolTutoria' => 2]);
         DB::table('Docente')->where('IdDocente', 6)->update(['rolTutoria' => 1]);
-        DB::table('parameters')->insert([
-        		'id' 				=> 1,
-        		'duracionCita'		=> 15,
-        		'created_at'		=> '2016-11-24 07:34:28',
-        		'updated_at'		=> '2016-11-24 07:34:28',
-        		'id_especialidad'	=> 5,
-        		'deleted_at'		=> null,
-        		'start_date'		=> '2016-11-24 07:34:28',
-        		'end_date'			=> '2016-12-30 07:34:28',
-        		'number_days'		=> 1,
-    	]);
 
         //crear alumno
         $userAlumno = DB::table('Usuario')->where('IdUsuario',2)->first();

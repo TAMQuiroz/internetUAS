@@ -22,7 +22,7 @@ class EventController extends BaseController
 
     public function getById($id)
     {
-        $event = Event::find($id)->with('group')->get();
+        $event = Event::where('id',$id)->with('group')->get();
         return $this->response->array($event->toArray());
         //return $event;
     }

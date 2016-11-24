@@ -11,6 +11,9 @@ use Intranet\Models\Teacher;
 use Intranet\Models\PspProcessxTeacher;
 use Intranet\Models\PspProcess;
 use Intranet\Http\Requests\PspGroupRequest;
+use Intranet\Http\Requests\PspGroupEditRequest;
+
+use Illuminate\Support\Facades\DB;
 
 class PspGroupController extends Controller
 {
@@ -21,8 +24,19 @@ class PspGroupController extends Controller
      */
     public function index()
     {
-        $pspGroups = PspGroup::orderBy('numero','asc')->get();
+        $pspGroups=null;
+        
+        if(Auth::User()->IdPerfil==3){  
+                $pspGroups = PspGroup::orderBy('numero','asc')->get();
+                $pspGroups = DB::table('pspgroups')->join('pspprocesses','pspgroups.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('pspgroups.id', 'pspgroups.idpspprocess','pspgroups.numero','pspgroups.descripcion','Curso.Nombre')->where('pspgroups.deleted_at',null)->orderBy('Curso.Nombre','asc')->orderBy('numero','asc')->paginate(10);
+            } 
+        else {
+            $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
 
+            $pspGroups = DB::table('pspgroups')->join('pspprocessesxdocente','pspprocessesxdocente.idpspprocess','=','pspgroups.idpspprocess')->join('pspprocesses','pspprocessesxdocente.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('pspgroups.id', 'pspgroups.idpspprocess','pspgroups.numero','pspgroups.descripcion','Curso.Nombre')->where('pspprocessesxdocente.iddocente',$teacher->IdDocente)->where('pspgroups.deleted_at',null)->orderBy('numero','asc')->paginate(10);
+
+
+        }
         $data = [
             'pspGroups' => $pspGroups,
         ];
@@ -37,10 +51,29 @@ class PspGroupController extends Controller
      */
     public function create()
     {
-        //   
-        $groupNum = pspGroup::count() + 1;
-        $data['groupNum']  = $groupNum;        
-        //dd($procesos);
+        $proc=null;
+        if(Auth::User()->IdPerfil==3){  
+                $proc = PspProcess::get();
+        } 
+        else {
+            $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+            $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+            $proc = array(); 
+            $r = count($procxt);   
+            if($r>0){
+                foreach($procxt as $p){
+                    $proc[]=PspProcess::find($p->idpspprocess);
+                }
+            }
+        }
+
+        //$groupNum = pspGroup::count() + 1;
+
+        $data =[
+            //'groupNum' => $groupNum,
+            'pspproc'    =>  $proc,
+            ];        
+        //dd($data);
         return view('psp.pspGroup.create',$data);
     }
 
@@ -54,20 +87,19 @@ class PspGroupController extends Controller
     {
         //
         try {            
-            $pspGroup = new pspGroup; 
-            //dd(Auth::User()->IdPerfil);           
-            if(Auth::User()->IdPerfil==2){
-                $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();                
-                $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get()->first(); 
-                //dd($procxt);
-                if($procxt!=null){
-                    $pspGroup->idpspprocess = $procxt->idpspprocess;    
-                }
-                
-            }
-            
+            $pspGroup = new pspGroup;
             $pspGroup->numero = $request['numero'];
             $pspGroup->descripcion = $request['descripcion'];
+            $pspGroup->idpspprocess = $request['Proceso_de_Psp'];    
+
+            $pspGroups = PspGroup::where('idpspprocess',$request['Proceso_de_Psp'])->get();
+            if($pspGroups!=null){
+                foreach($pspGroups as $group){
+                    if($group->numero==$pspGroup->numero && $group->idpspprocess==$pspGroup->idpspprocess){
+                        return redirect()->back()->with('warning', 'Ya existe una grupo con el mismo número dentro del Proceso');
+                    }
+                }       
+            }     
             $pspGroup->save();
 
             return redirect()->route('pspGroup.index')->with('success','El grupo se ha registrado exitosamente');
@@ -119,12 +151,12 @@ class PspGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PspGroupRequest $request, $id)
+    public function update(PspGroupEditRequest $request, $id)
     {
         //
         try {
             $pspGroup = PspGroup::find($id);
-            $pspGroup->numero = $request['numero'];
+            //$pspGroup->numero = $request['numero'];
             $pspGroup->descripcion = $request['descripcion'];
             $pspGroup->save();
 
@@ -175,7 +207,7 @@ class PspGroupController extends Controller
         
 
         if($pspStudent->idpspgroup==NULL){
-            $pspGroups = PspGroup::get();
+            $pspGroups = PspGroup::where('idpspprocess',$pspStudent->idpspprocess)->get();
             $data = [
                 'pspGroups' => $pspGroups,
                 'idFaculty' => $pspStudent->idespecialidad,

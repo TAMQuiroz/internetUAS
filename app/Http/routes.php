@@ -553,7 +553,22 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('edit/{id}', ['as' => 'template.edit', 'uses' => 'Psp\Template\TemplateController@edit']);
                 Route::post('edit/{id}', ['as' => 'template.update', 'uses' => 'Psp\Template\TemplateController@update']);
                 Route::get('delete/{id}', ['as' => 'template.delete', 'uses' => 'Psp\Template\TemplateController@destroy']);    
+            });
+
+            //ReportC
+            Route::group(['prefix' => 'report'], function() {
+                Route::get('/', ['as' => 'reportC.index', 'uses' => 'Psp\Report\reportPspController@index']);
+                Route::get('create', ['as' => 'reportC.create', 'uses' => 'Psp\Report\reportPspController@create']);
+                Route::post('create', ['as' => 'reportC.generate', 'uses' => 'Psp\Report\reportPspController@generate']);
+                Route::post('genPDF', ['as' => 'reportC.genPDF', 'uses' => 'Psp\Report\reportPspController@genPDF']);
+                Route::get('show/{id}', ['as' => 'reportC.show', 'uses' => 'Psp\Report\reportPspController@show']);
+
             });                    
+
+            Route::group(['prefix' => 'attendanceReport'], function() {
+                Route::get('create',['as' => 'attendanceRate.create', 'uses' => 'Psp\Report\AttendanceRateController@create']);
+                Route::post('create',['as' => 'attendanceRate.generate', 'uses' => 'Psp\Report\AttendanceRateController@generate']);
+            });
 
             //PspGroups Luis Llanos
 
@@ -625,6 +640,17 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('mail/{id}', ['as' => 'MeetingTeacher.mail', 'uses' => 'Psp\MeetingTeacher\MeetingTeacherController@mail']);
             });
 
+            //TeacherFinalScore
+            Route::group(['prefix' => 'TeacherFinalScore'], function() {
+                Route::get('/', ['as' => 'TeacherFinalScore.index', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@index']);
+                Route::get('create/{id}', ['as' => 'TeacherFinalScore.create', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@create']);
+                Route::post('create/{id}', ['as' => 'TeacherFinalScore.store', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@store']);
+                Route::get('show/{id}', ['as' => 'TeacherFinalScore.show', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@show']);
+                Route::get('edit/{id}', ['as' => 'TeacherFinalScore.edit', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@edit']);
+                Route::post('edit/{id}', ['as' => 'TeacherFinalScore.update', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@update']);
+                Route::get('delete/{id}', ['as' => 'TeacherFinalScore.delete', 'uses' => 'Psp\TeacherFinalScore\TeacherFinalScoreController@destroy']);   
+               
+            });
             //Inscription File
             Route::group(['prefix' => 'inscription'], function() {
                 Route::get('/', ['as' => 'inscription.index', 'uses' => 'Psp\Inscription\InscriptionController@index']);
@@ -659,6 +685,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::post('create/{id}', ['as' => 'aspecto.store', 'uses' => 'Psp\Aspecto\AspectoController@store']);
                 Route::get('edit/{id}', ['as' => 'aspecto.edit', 'uses' => 'Psp\Aspecto\AspectoController@edit']);  
                 Route::post('edit/{id}', ['as' => 'aspecto.update', 'uses' => 'Psp\Aspecto\AspectoController@update']);
+            });
+
+            //Final score
+             Route::group(['prefix' => 'finalscore'], function() {
+                Route::get('index/{id}', ['as' => 'finalscore.index', 'uses' => 'Psp\FinalScore\FinalScoreController@index']);
             });
             
 
@@ -822,7 +853,7 @@ $api->version('v1', function ($api) {
 
 
                 $api->post('date/supervisor/employer', 'Students\PspStudentsInscriptionFiles@postAppointmentSuperEmployer');
-                $api->get('getInscriptions/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
+                $api->get('getInscriptions/{id}/byStudent','Students\PspStudentsInscriptionFiles@getInscriptionsByStudent');
                 $api->get('students/all','Students\PspStudentsInscriptionFiles@getAll');
                 $api->get('studentsPSP/all','Students\PspStudentsInscriptionFiles@getAllPspStudents');
                 $api->get('students/inscriptioFile','Students\PspStudentsInscriptionFiles@getInscriptions');
@@ -844,20 +875,37 @@ $api->version('v1', function ($api) {
                 $api->post('meetings/student/store',"Meeting\PspMeetingController@storeByStudent");
                 $api->post('meetings/notification/student/{id}',"Meeting\PspMeetingController@mail");      
                  $api->get('student',"Students\PspStudentsController@getStudent");
-                 $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");      
+                 $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");  
+
+                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");    
 
 
 
+                $api->get('student/{id}/getDocumentsAll', "Students\PspStudentsInscriptionFiles@getPspDocumentsByStudent");
+                $api->get('getDocument/{id}/full', "Students\PspStudentsInscriptionFiles@getDocumentFullByStudent");
+
+                //iOS
                 $api->get('sup/getMetting','Ps\PsController@getAll');
                 $api->post('sup/asistio/{id}/sendE', 'Ps\PsController@asistioReunion');
                 $api->get('a/gm','Ps\PsController@getAllSutudentMetting');
+                
                 $api->post('al/setM/{id}/sendNr', 'Ps\PsController@nuevaReunionAL');
+
                 //$api->get('h', 'Ps\PsController@nuevaReunionP');
                 $api->get('al/getfh', 'Ps\PsController@getAllFreeHours');
                 $api->get('pr/getN', 'Ps\NotasDelnscriptionFile@getAll');
                 $api->get('sup/getficha', 'Ps\NotasDelnscriptionFile@enviarRecomendaciones');
                 $api->post('sup/detf/{id}', 'Ps\NotasDelnscriptionFile@modificarFi');
                 $api->get('al/getD', 'Ps\DocumentosController@getAll');
+                $api->get('sup/getStude','Ps\PsController@getAllStudentSuper');
+                $api->post('sup/newMet', 'Ps\PsController@nuevaReunionS');
+                $api->get('al/getIF', 'Ps\NotasDelnscriptionFile@getAllInscriById');
+                $api->get('getSS', 'Ps\DocumentosController@getAllStudentSuper');
+                $api->get('getDBI/{id}', 'Ps\DocumentosController@getDbyId');
+                $api->get('getINota/{id}', 'Ps\NotasDelnscriptionFile@getINota');
+                $api->get('autStud', 'Ps\Autenticar@authStudent');
+                $api->get('autSup', 'Ps\Autenticar@authSuper');
+                $api->get('autTea', 'Ps\Autenticar@authTeach');
             });
 
             //INVESTIGACION
@@ -899,13 +947,22 @@ $api->version('v1', function ($api) {
             $api->get('getAppointments', 'Tutoria\TopicController@getAppointments');
             $api->get('getCoordinatorStudent','Tutoria\TopicController@getCoordinatorStudent');
             $api->get('getTutorInfo/{id_usuario}','Tutoria\TutStudentController@getTutorById');
+            $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
             $api->get('getTutorAppoints/{id_usuario}','Tutoria\TutTutorController@getTutorAppoints');
             $api->get('getAppointmentList/{id_usuario}', 'Tutoria\TutStudentController@getAppointmentList');
-            $api->get('getAppointInformationTuto/{id_usuario}', 'Tutoria\TutTutorController@getAppointInformationTuto');
+            $api->get('obtenerDatosCitaConfirmada/{id_usuario}', 'Tutoria\TutTutorController@obtenerDatosCitaConfirmada');
+            $api->get('obtenerInformacionNoCita/{id_usuario}', 'Tutoria\TutTutorController@obtenerInformacionNoCita');
+
+
             $api->post('registerStudentAppointment', 'Tutoria\TutStudentController@postAppointment');
             $api->post('registerTutorAppointment', 'Tutoria\TutTutorController@postAppointment'); 
+            $api->post('atenderNoCita', 'Tutoria\TutTutorController@atenderNoCita'); 
+
+
             $api->post('updateStudentAppointment', 'Tutoria\TutTutorController@updatePendienteAppointmentList');
             $api->post('cancelStudentAppointment', 'Tutoria\TutTutorController@cancelAppointmentList');
+            $api->post('refuseStudentAppointment', 'Tutoria\TutTutorController@refuseAppointmentList');
+            $api->post('atenderCita', 'Tutoria\TutTutorController@atenderCita');
             $api->post('filterStudentAppointment', 'Tutoria\TutStudentController@filterStudentAppointment');
 
 
@@ -1237,6 +1294,9 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
             Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);
+            Route::get('/atencion-sin-cita', ['as' => 'atencion_sin_cita.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createAttention']);
+            Route::post('/atencion-sin-cita', ['as' => 'atencion.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeAttention']);
+            Route::get('/buscar-alumno', ['as' => 'mis_alumnos.get_name', 'uses' => 'Tutorship\Tutstudent\TutstudentController@getEntireName']);
 
             Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
             Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);

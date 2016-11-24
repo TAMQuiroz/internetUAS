@@ -24,8 +24,8 @@ class FreeHourRequest extends Request
     public function rules()
     {
         return [
-            'fecha' => 'required|date|after:'.\Carbon\Carbon::yesterday(),
-            'hora_ini' => 'required|numeric|min:8|max:21',
+            'fecha' => 'required|date|after:'.\Carbon\Carbon::yesterday()->format('d-m-Y'),
+            'hora_ini' => 'required',
         ];
     }
 

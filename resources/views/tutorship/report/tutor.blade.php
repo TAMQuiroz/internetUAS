@@ -27,10 +27,12 @@
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas por alumno</li>
                     </div>
-                </a>                
-                <div class="tab-page-wrapper">
-                    <li class="tab-page">Citas por tema</li>
-                </div>                
+                </a>          
+                <a href="{{route('reporte.topic')}}">
+                    <div class="tab-page-wrapper">
+                        <li class="tab-page">Citas por tema</li>
+                    </div>                
+                </a>
                 <a href="{{route('reporte.cancelledMeeting')}}">
                     <div class="tab-page-wrapper">
                         <li class="tab-page">Citas canceladas</li>
@@ -89,25 +91,42 @@
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">Tema</th>
-                            <th class="column-title">Cantidad de citas asistidas</th>
-                            <th class="column-title">Porcentaje del total de asistidas</th>   
-                            <th class="column-title">Porcentaje del total general</th>                                                
+                            <th class="column-title">Tutor</th>
+                            <th class="column-title">Cantidad de alumnos</th>
+                            <th class="column-title">Cantidad de citas</th>   
+                            <th class="column-title">Canceladas</th>
+                            <th class="column-title">Asistidas</th>
+                            <th class="column-title">No asistidas</th>
+                            <th class="column-title">Sin cita</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach($nombreTutores as $id => $nombreCompleto)
                         <tr class="even pointer">
-                            <td hidden class="group-id"></td>
-                            <td class=""></span></td>                            
-                            <td class=" "></td>                                                                  
-                            <td class=" "></td>  
-                            <td class=" "></td> 
+                            <td hidden class="group-id">{{$id}}</td>
+                            <td class=""></span>{{$nombreCompleto}}</td>                            
+                            <td class=" ">{{$cantAlumnos[$id]}}</td>                                                                  
+                            <td class=" ">{{$cantCita[$id]}}</td>  
+                            <td class=" ">{{$canceladasTutor[$id]}}</td> 
+                            <td class=" ">{{$asistidasTutor[$id]}}</td>                                                                  
+                            <td class=" ">{{$noAsistidasTutor[$id]}}</td>  
+                            <td class=" ">{{$sinCitas[$id]}}</td> 
                         </tr>
-                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+
+            <div id="pendientes" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$pendientes}}"></div>
+            <div id="canceladas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$canceladas}}"></div>
+            <div id="sugeridas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$sugeridas}}"></div>
+            <div id="rechazadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$rechazadas}}"></div>
+            <div id="asistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$asistidas}}"></div>
+            <div id="noasistidas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$no_asistidas}}"></div>            
+            <div id="confirmadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$confirmadas}}"></div>
+            <div id="noprogramadas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$no_programadas}}"></div>
+            <div id="citas" style="min-width: 310px; height: 400px; margin: 0 auto" class="hidden" value="{{$citas}}"></div>
+            <div id="graphics" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
         </div>
     </div>
@@ -115,5 +134,5 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="{{ URL::asset('js/tutorship/reportDatesByCancelledMeeting.js')}}"></script>
+<script src="{{ URL::asset('js/tutorship/reportDatesByTutor.js')}}"></script>
 @endsection

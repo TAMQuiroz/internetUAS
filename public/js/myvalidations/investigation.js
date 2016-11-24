@@ -139,8 +139,16 @@ jQuery(function(){
      });
 
     $('#fecha_ini').change(function(){
-        fecha_ini = $(this).val();
-        $('#fecha_fin').attr('min',fecha_ini);
+        fecha_ini       = $(this).val();
+        fecha_limite    = $('#fecha_limite').val();
+
+        if(fecha_ini < fecha_limite){
+            //console.log('ini menor a fecha limte');
+            $('#fecha_fin').attr('min',fecha_ini);
+        }else{
+            //console.log('ini mayor a fecha limte');
+            $('#fecha_fin').attr('min',fecha_limite);
+        }
     });
 
 });
@@ -164,7 +172,7 @@ function getProjectDates(){
             type: "GET",
             url: url_proyecto + '/' + project_id,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('#fecha_ini').attr('min',data.fecha_ini);               
             },
             error: function (data) {

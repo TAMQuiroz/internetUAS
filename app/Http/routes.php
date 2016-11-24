@@ -877,7 +877,10 @@ $api->version('v1', function ($api) {
                  $api->get('student',"Students\PspStudentsController@getStudent");
                  $api->get('supervisor/freehours',"FreeHour\PspFreeHourController@showFreeHourForSupervisor");  
 
-                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");    
+                 $api->get('students/finalScore',"Students\PspStudentsController@getStudentsFinalScore");   
+
+                 $api->get('meeting/status',"Meeting\PspMeetingController@getMeetingStatus"); 
+
 
 
 
@@ -1269,6 +1272,9 @@ Route::group(['prefix' => 'uas'], function(){
         });
         Route::group(['prefix' => 'citas'], function(){    
             Route::get('/', ['as' => 'miscitas.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesStudent']);
+            Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
+            Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);
+            Route::post('/delete/{id}', ['as' => 'mis_citas.delete', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDate']);
         });
 
         /***   PARA EL TUTOR DE TUTORÍA   ***/
@@ -1298,9 +1304,8 @@ Route::group(['prefix' => 'uas'], function(){
             Route::post('/atencion-sin-cita', ['as' => 'atencion.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeAttention']);
             Route::get('/buscar-alumno', ['as' => 'mis_alumnos.get_name', 'uses' => 'Tutorship\Tutstudent\TutstudentController@getEntireName']);
 
-            Route::get('/accept/{id}', ['as' => 'mis_citas.accept', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDate']);
-            Route::get('/refuse/{id}', ['as' => 'mis_citas.refuse', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDate']);
-            Route::post('/delete/{id}', ['as' => 'mis_citas.delete', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDate']);
+            Route::post('/accept', ['as' => 'mis_citas.acceptTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDateTutor']);
+            Route::post('/cancel', ['as' => 'mis_citas.deleteTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDateTutor']);
 
         });
     });

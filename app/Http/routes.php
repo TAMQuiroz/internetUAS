@@ -1302,8 +1302,7 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/buscar-alumno', ['as' => 'mis_alumnos.get_name', 'uses' => 'Tutorship\Tutstudent\TutstudentController@getEntireName']);
 
             Route::post('/accept', ['as' => 'mis_citas.acceptTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDateTutor']);
-            Route::get('/refuse/{id}', ['as' => 'mis_citas.refuseTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@refuseDateTutor']);
-            Route::post('/delete/{id}', ['as' => 'mis_citas.deleteTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDateTutor']);
+            Route::post('/cancel', ['as' => 'mis_citas.deleteTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDateTutor']);
 
         });
     });

@@ -12,13 +12,13 @@
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <col width="15%" >
-                    <col width="80%">
-                    <col width="15%">
+                    <col width="70%">
+                    <col width="25%">
                     <thead>
                         <tr class="headings">                            
                             <th class="centered column-title">N° de referencia</th>
-                            <th class="centered column-title">Fecha de registro </th>                           
-                            <th class="centered column-title last">Acciones</th>                                
+                            <th class="centered column-title">Fecha de registro </th>
+                            <th class="centered column-title last">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="page-title">
-            <div class="title_left">
+            <div class="">
                 <h3>Ver alumno</h3>
             </div>
         </div>
@@ -19,13 +19,13 @@
             </div>
             <div class="panel-body">                
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label>Código</label>                             
                             <input class="form-control" readonly name="codigo" placeholder="Nombre" maxlength="50" value="{{$student->codigo}}">                                                                       
                         </div>                            
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6  col-xs-12">
                         <div class="form-group">
                             <label>Nombres</label> 
                             <input class="form-control" readonly name="nombres" placeholder="Nombre" maxlength="50" value="{{$student->nombre}}">                                                                                                                                          
@@ -33,24 +33,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6  col-xs-12">
                         <div class="form-group">
                             <label>Apellidos</label>                         
                             <input class="form-control" readonly name="Apellidos" placeholder="Nombre" maxlength="50" value="{{$student->ape_paterno}} {{$student->ape_materno}}">                                                                                                                                                                                                  
                         </div>
                     </div>  
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6  col-xs-12">
                         <div class="form-group">
                             <label>Correo</label>                                                     
                             <input class="form-control" readonly name="Correo" placeholder="Nombre" maxlength="50" value="{{$student->correo}}">                                                                                                                                                                                                                              
                         </div>
                     </div>
                 </div>                  
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">                        
-                        <a class="btn btn-default pull-right" href="{{ route('evstudent.index') }}">Regresar</a>
-                    </div>
-                </div>
+                
 
                 <div class="table-responsive">
                     <table class="table table-striped responsive-utilities jambo_table bulk_action">
@@ -116,6 +112,11 @@
                     </table>
                 </div>
                 <div id="graphic" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">                        
+                        <a class="btn btn-default pull-left" href="{{ route('evstudent.index') }}"> <i class="fa fa-backward" aria-hidden="true"></i> Regresar</a>
+                    </div>
+                </div>
             </div>            
         </div>
     </div>

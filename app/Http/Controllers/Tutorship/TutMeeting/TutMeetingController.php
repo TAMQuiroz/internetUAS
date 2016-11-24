@@ -335,8 +335,21 @@ class TutMeetingController extends Controller
 
         $currentDay = date("d-m-Y", strtotime($beginDate));
 
+        $reasons = Reason::all();
+
+        $status = array();
+
+        array_push($status, '');
+        array_push($status, 'Pendiente');
+        array_push($status, 'Confirmada');
+        array_push($status, 'Cancelada');
+        array_push($status, 'Sugerida');
+        array_push($status, 'Rechazada');
+        array_push($status, 'Asistida');
+        array_push($status, 'No asistida');
+
         $data       = [
-            'tutMeetings' =>  $tutMeetings,
+            'meetings' =>  $tutMeetings,
             'fecha'       =>  $fecha,
             'hora'        =>  $hora,
             'hora_inicio' =>  $hora_inicio,
@@ -346,6 +359,8 @@ class TutMeetingController extends Controller
             'startDay'    =>  $startDay,
             'currentDay'  =>  $currentDay,
             'endDay'      =>  $endDay,
+            'status'      =>  $status,
+            'reasons'     =>  $reasons,
         ];
         
         return view('tutorship.tutormydates.index', $data);

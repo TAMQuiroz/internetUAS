@@ -255,3 +255,23 @@ td.dates-card-info-container {
 .dates-guide .fa {
 	margin-right: 15px;
 }
+
+.dates-card-info-container > .dropdown {
+	height: inherit;
+}
+
+.dropdown > button.actions.btn.btn-primary.tutorship-dates {
+	max-width: 123px !important;
+	width: 123px !important;
+	padding-left: 5px;
+	padding-right: 5px;
+	display: block;
+	margin-top: 5px;
+	height: inherit !important;
+	white-space: normal;
+}
+
+.dates-card-info.text-left {
+	width: 123px !important;
+	height: inherit !important;
+}

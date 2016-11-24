@@ -103,7 +103,8 @@ class ReportController extends Controller
 											$resultadosMedicion['cursos'] = [];
 											foreach ($cursosxCiclo as $cxc) {
 
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curso['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
 												$curso['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
 												
@@ -195,7 +196,8 @@ class ReportController extends Controller
 											$resultadosMedicion['cursos'] = [];
 
 											foreach ($cursosxCiclo as $cxc) {
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curso['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
 												$curso['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
 												
@@ -286,7 +288,8 @@ class ReportController extends Controller
 											$resultadosMedicion['criterio'] = $criterio->Nombre;
 											$resultadosMedicion['cursos'] = [];
 											foreach ($cursosxCiclo as $cxc) {
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curso['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
 												$curso['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
 												
@@ -377,8 +380,8 @@ class ReportController extends Controller
 											$resultadosMedicion['criterio'] = $criterio->Nombre;
 											$resultadosMedicion['cursos'] = [];
 											foreach ($cursosxCiclo as $cxc) {
-
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curso['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
 												$curso['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
 												
@@ -475,8 +478,8 @@ class ReportController extends Controller
 								$resultadosMedicion['criterio'] = $criterio->Nombre;
 								$resultadosMedicion['cursos'] = [];
 								foreach ($cursosxCiclo as $cxc) {
-
-									$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
+									$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+									$curso['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
 									$curso['resultadoxciclo'] = [];
 									foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
 									

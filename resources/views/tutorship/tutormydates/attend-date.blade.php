@@ -52,7 +52,7 @@
 				<div class="row">
 					<div class="col-md-8 col-sm-12 col-xs-12">
 						{{Form::submit('Guardar', ['class'=>'btn btn-success pull-right'])}}
-						<a class="btn btn-default pull-right" href="{{ route('cita_alumno.index') }}">Cancelar</a>
+						<a class="btn btn-default pull-right" href="{{ URL::previous() }}">Cancelar</a>
 					</div>
 				</div>
 				{{Form::close()}}

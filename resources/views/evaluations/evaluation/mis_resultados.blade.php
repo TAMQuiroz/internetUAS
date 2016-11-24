@@ -10,25 +10,25 @@
     <div class="x_panel">
         <div class="x_title">   
             <h4>Competencias evaluadas: {{count($compxtutxevs)}}</h4>
-            <h4>Puntaje total: {{$total_puntaje}}</h4>                         
+            <h4>Puntaje total: {{$total_puntaje}} puntos</h4>                         
             <div class="table-responsive">
                 <table class="table table-striped responsive-utilities jambo_table bulk_action">                    
                     <col width="40%" >                                        
                     <col width="20%">
                     <col width="20%">                    
                     <thead>
-                        <tr class="headings">                                                        
+                        <tr class="headings">                                                       
                             <th class="column-title">Competencia</th>          
-                            <th class="column-title">Puntaje obtenido</th>
-                            <th class="column-title">Puntaje (%)</th>                            
+                            <th class="centered column-title">Puntaje obtenido</th>
+                            <th class="centered column-title">Puntaje (%)</th>                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($compxtutxevs as $compxtutxev)                        
                         <tr class="even pointer">                            
                             <td class=" ">{{$compxtutxev->competencia->nombre }}</td>          
-                            <td class=" ">{{$compxtutxev->puntaje }}/{{$compxtutxev->puntaje_maximo }}</td>
-                            <td class=" ">{{ ($compxtutxev->puntaje / $compxtutxev->puntaje_maximo)*100 }} %</td>
+                            <td class="centered ">{{$compxtutxev->puntaje }}/{{$compxtutxev->puntaje_maximo }}</td>
+                            <td class="centered ">{{ ($compxtutxev->puntaje / $compxtutxev->puntaje_maximo)*100 }} %</td>
                         </tr>                                           
                         @endforeach
                     </tbody>

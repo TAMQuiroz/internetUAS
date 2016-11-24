@@ -24,7 +24,7 @@
                     <thead>
                         <tr class="headings">
                             <th class="centered column-title">Código </th>
-                            <th class="column-title">Apellidos y Nombres </th>                             
+                            <th class="column-title">Apellidos y Nombres </th>
                             <th class="centered column-title last">Acciones</th>               
                         </tr>
                     </thead>
@@ -32,8 +32,7 @@
                         @foreach($students as $student)
                         @if(!$student->trashed())
                         <tr class="even pointer">
-                            <td hidden class="group-id">{{ $student->id }}</td>                           
-
+                            <td hidden class="group-id">{{ $student->id }}</td>
                             <td class="centered ">{{ $student->codigo }}</td>
                             <td class=" ">{{ $student->ape_paterno.' '.$student->ape_materno.', '.$student->nombre }}</td>
                             <td class="centered ">                                
@@ -46,6 +45,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $students->links() }}
             </div>
 
         </div>

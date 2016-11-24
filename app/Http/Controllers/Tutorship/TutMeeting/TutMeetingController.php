@@ -675,7 +675,30 @@ class TutMeetingController extends Controller
         $meeting->estado = Config::get('constants.confirmada');
         $meeting->save();
 
-        //Enviar correo a alumno
+        //Enviar correo a tutor
+        $tutor = Teacher::find($meeting->id_docente);
+
+        $nombre     = $tutor->Nombre . ' ' . $tutor->ApellidoPaterno . ' ' . $tutor->ApellidoMaterno;
+                    
+        $hour       = date("H:i", strtotime($meeting->inicio));
+        
+        $date       = date("d-m-Y", strtotime($meeting->inicio));
+        
+        $duration   = $meeting->duracion;
+        
+        $mail       = $tutor->Correo;
+
+        $data   = [
+            'nombre'    => $nombre,
+            'hour'      => $hour,
+            'date'      => $date,
+            'duration'  => $duration,
+        ];
+                    
+        Mail::send('emails.acceptDateStudent', $data, function($m) use($mail) {
+            $m->subject('[TUTORÍA] Cita aceptada');
+            $m->to($mail);
+        });
 
         return redirect()->back()->with('success', 'Se confirmo esta cita');
     }
@@ -686,7 +709,30 @@ class TutMeetingController extends Controller
         $meeting->estado = Config::get('constants.rechazada');
         $meeting->save();
 
-        //Enviar correo a alumno
+        //Enviar correo a tutor
+        $tutor = Teacher::find($meeting->id_docente);
+
+        $nombre     = $tutor->Nombre . ' ' . $tutor->ApellidoPaterno . ' ' . $tutor->ApellidoMaterno;
+                    
+        $hour       = date("H:i", strtotime($meeting->inicio));
+        
+        $date       = date("d-m-Y", strtotime($meeting->inicio));
+        
+        $duration   = $meeting->duracion;
+        
+        $mail       = $tutor->Correo;
+
+        $data   = [
+            'nombre'    => $nombre,
+            'hour'      => $hour,
+            'date'      => $date,
+            'duration'  => $duration,
+        ];
+                    
+        Mail::send('emails.refuseDateStudent', $data, function($m) use($mail) {
+            $m->subject('[TUTORÍA] Cita Rechazada');
+            $m->to($mail);
+        });
 
         return redirect()->back()->with('success', 'Se rechazó esta cita');
     }
@@ -697,7 +743,30 @@ class TutMeetingController extends Controller
         $meeting->estado = Config::get('constants.cancelada');
         $meeting->save();
 
-        //Enviar correo a alumno
+        //Enviar correo a tutor
+        $tutor = Teacher::find($meeting->id_docente);
+
+        $nombre     = $tutor->Nombre . ' ' . $tutor->ApellidoPaterno . ' ' . $tutor->ApellidoMaterno;
+                    
+        $hour       = date("H:i", strtotime($meeting->inicio));
+        
+        $date       = date("d-m-Y", strtotime($meeting->inicio));
+        
+        $duration   = $meeting->duracion;
+        
+        $mail       = $tutor->Correo;
+
+        $data   = [
+            'nombre'    => $nombre,
+            'hour'      => $hour,
+            'date'      => $date,
+            'duration'  => $duration,
+        ];
+                    
+        Mail::send('emails.cancelDateStudent', $data, function($m) use($mail) {
+            $m->subject('[TUTORÍA] Cita Cancelada');
+            $m->to($mail);
+        });
 
         return redirect()->back()->with('success', 'Se canceló esta cita');
     }

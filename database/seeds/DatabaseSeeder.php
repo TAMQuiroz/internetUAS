@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         //psp
         $this->call(PspProcessTableSeeder::class);
         $this->call(PspGroupTableSeeder::class);
-    
+        
 
         //Seeders solo para presentacion
         /*
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CompetencePresentationTableSeeder::class);    
         $this->call(QuestionsPresentationTableSeeder::class);  
+        $this->call(TutorshipRolesSeeder::class);  
         */
-
     }
 }

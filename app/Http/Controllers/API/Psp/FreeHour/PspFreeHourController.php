@@ -182,7 +182,7 @@ class PspFreeHourController extends BaseController
  
        // ->where('idpspprocess', $pspStudent->idpspprocess);	
 
-        }
+  }
        // ->where('idpspprocess', $pspStudent->idpspprocess);   
 
 

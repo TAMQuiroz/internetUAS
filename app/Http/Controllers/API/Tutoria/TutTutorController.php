@@ -94,9 +94,11 @@ class TutTutorController extends BaseController
       
 
 
-         $docenteInfo = Teacher::where('idUsuario',$id)->get();
+
+         $docenteInfo = Teacher::where('IdUsuario', $id)->get();  // obtenemos la informacion para conseguir el IDDocente
          $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
-         $parametersInfo = Parameter::where('id_especialidad',1)->get();
+         $parametersInfo = Parameter::where('id_especialidad', $docenteInfo[0]['IdEspecialidad'])->get();
+
 
        
 

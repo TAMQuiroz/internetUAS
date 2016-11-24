@@ -142,17 +142,26 @@ class ReportController extends Controller {
         $topics_name_list = array();
         $topics_percentage_list = array();
         $topicTotalAsistidas = 0;
-        foreach ($topics as $t) {
-            if ($t) {
-                $tAux = $tutMeetings->where('id_topic', $t->id)->where('estado', 6)->count();
-                
-                    $topicTotalAsistidas += $tAux;
-                    array_push($topics_name_list, $t->nombre);
-                    array_push($topics_amount_list, $tAux);
-                    array_push($topics_percentage_list, $tAux / $tutMeetings->count() * 100);
-                
+
+        if($tutMeetings->count() > 0 ){
+
+            foreach ($topics as $t) {
+                if ($t) {
+                    $tAux = $tutMeetings->where('id_topic', $t->id)->where('estado', 6)->count();
+                    
+                        $topicTotalAsistidas += $tAux;
+                        array_push($topics_name_list, $t->nombre);
+                        array_push($topics_amount_list, $tAux);
+                        array_push($topics_percentage_list, $tAux / $tutMeetings->count() * 100);
+                    
+                }
             }
+
         }
+        else{
+            $topicTotalAsistidas = 0;
+        }
+
 
         $data = [
             'topicTutMeetings' => $topicTutMeetings,

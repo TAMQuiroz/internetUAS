@@ -32,7 +32,7 @@ class ImprovementPlan extends Model {
 
     public function actions()
     {
-        return $this->hasMany(ActionPlan::class, 'IdPlanMejora');
+        return $this->hasMany(ActionPlan::class, 'IdPlanMejora')->where('deleted_at',null);
     }
 
     public function getFileUrlAttribute()

@@ -87,40 +87,9 @@
                                  <button class="btn btn-success pull-right" type="submit"><i class="fa fa-plus"></i> Generar Reporte</button>
                             </div>
                         </div>
-                    </div>   
+                    </div>  
                         
-                </form>
-
-
-                <div class="clearfix"></div>
-                <table class="table table-striped responsive-utilities jambo_table bulk_action">
-                    <thead>
-                    <tr class="headings">
-                        <th class="column-title">Resultado Estudiantil</th>
-                        <th class="column-title">Aspecto</th>
-                        <th class="column-title">Criterio</th>
-                        <th class="column-title">Estado</th>
-                        
-                    </tr>
-                    </thead>
-                    <tbody id="criterio-fc-table">
-
-                    </tbody>
-                </table>
-
-
-                <br>
-                <br>
-                <div class="separator"></div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-
-                        <a href="#" class="btn btn-default">< Atras</a>
-                        <a id="criterio-siguiente-btn" href="#" class="btn btn-success pull-right">Siguiente ></a>
-                         
-                    </div>
-                </div>
-
+                </form>     
             </div>
 
         </div>

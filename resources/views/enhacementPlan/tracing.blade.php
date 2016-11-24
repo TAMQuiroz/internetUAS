@@ -87,7 +87,7 @@
 									</select>
 								</td>
 								<td class="col-sm-1 text-center" style="vertical-align: middle">
-									<a class="btn btn-primary btn-xs" href="{{ route('uploadAction.enhacementPlan' , ['actionPlanId' => $act->IdPlanAccion, 'improvementPlanId' => $improvementPlan->IdPlanMejora] )}}" title="Subir Archivo"><i class="fa fa-upload"></i></a>
+									<a class="btn btn-primary btn-xs" href="{{ route('uploadAction.enhacementPlan' , ['actionPlanId' => $act->IdPlanAccion, 'improvementPlanId' => $improvementPlan->IdPlanMejora] )}}" title="Subir o Bajar Archivo"><i class="fa fa-upload"></i></a>
 
 								</td>
 							</tr>

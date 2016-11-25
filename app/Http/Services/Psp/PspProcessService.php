@@ -13,6 +13,7 @@ use Intranet\Models\CoursexCycle;
 use Intranet\Models\Schedule;
 use Intranet\Models\SchedulexTeacher;
 use Intranet\Models\Student;
+use Intranet\Models\FacultyxCycle;
 
 use Intranet\Http\Services\Cicle\CicleService;
 use Intranet\Http\Services\Course\CourseService;
@@ -78,8 +79,8 @@ class PspProcessService{
 	public function haveStudents($request){
 		$IdDocente =    $request['idProfesor'];
 		$proceso = PspProcess::where('id',$request['idProceso'])->first();
-		
-		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$proceso->idCiclo)->first();
+		$ciclo = FacultyxCycle::where('IdCiclo',$proceso->idCiclo)->first();
+		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$ciclo->IdCicloAcademico)->first();
 		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
 		$horarioAct = null;
 		foreach ($horarios as $horario) {

@@ -50,7 +50,9 @@
 		<div class="form-group">
 			<label class="show control-label col-md-4 col-sm-4 col-xs-12">Motivo</label>
 			<div class="col-md-6 col-sm-6 col-xs-12">
+			@if($cita->reason)
 				<input class="input-filter input-modal" type="text" disabled value="{{ $cita->reason->nombre }}" style="color: #8487ae;">
+			@endif
 			</div>			
 		</div>
 		<div class="form-group">

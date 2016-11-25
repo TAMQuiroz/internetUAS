@@ -6,7 +6,7 @@ use Response;
 use DB;
 use DateTime;
 use Illuminate\Http\Request;
-use Intranet\Models\FreeHour;
+use Intranet\Models\freeHour;
 use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
 use Intranet\Models\User;
@@ -154,7 +154,7 @@ public function storeByStudent(Request $request){
   try{
 
     $meeting = new meeting;
-    $freeHour =  FreeHour::find($request['id']);
+    $freeHour =  freeHour::find($request['id']);
 
     $student = Student::where('IdUsuario',$user->IdUsuario)->first();
 

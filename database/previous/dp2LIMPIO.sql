@@ -2380,6 +2380,7 @@ CREATE TABLE `pspstudentsxcriterios` (
 --
 
 CREATE TABLE `pspstudentsxinscriptionfiles` (
+  `id` int(10) UNSIGNED NOT NULL,
   `idinscriptionfile` int(10) UNSIGNED NOT NULL,
   `idpspstudents` int(10) UNSIGNED NOT NULL,
   `acepta_terminos` int(11) NOT NULL,

@@ -226,7 +226,7 @@ class InscriptionController extends Controller
         ];
         $data['student'] = $pspstudent;
 
-        return view('psp.Inscription.search', $data); 
+        return view('psp.inscription.search', $data); 
     }
 
     public function check($id)

@@ -53,7 +53,7 @@ class PspProcessService{
 				$proc->nomCurso = $this->courseService->findCourseById($proc->idcurso)->Nombre;
 				$proc['codCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Codigo;
 				$request['cicle_code'] = $proc['idCiclo'];
-				$ciclo = $this->cicleService->findCicle2($request)->IdCiclo; //idciclo de cicloxespecialidad
+				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
 				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
 		}
 		return $proc;

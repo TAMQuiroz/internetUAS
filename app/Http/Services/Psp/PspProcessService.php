@@ -13,7 +13,7 @@ use Intranet\Models\CoursexCycle;
 use Intranet\Models\Schedule;
 use Intranet\Models\SchedulexTeacher;
 use Intranet\Models\Student;
-use Intranet\Models\FacultyxCycle;
+use Intranet\Models\Cicle;
 
 use Intranet\Http\Services\Cicle\CicleService;
 use Intranet\Http\Services\Course\CourseService;
@@ -33,7 +33,8 @@ class PspProcessService{
 				$proc['nomCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Nombre;
 				$proc['codCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Codigo;
 				$request['cicle_code'] = $proc['idCiclo'];
-				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
+				$ciclo = $this->cicleService->findCicle2($request);
+				$ciclo = $ciclo->IdCiclo; //idciclo de cicloxespecialidad
 				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
 				array_push($proceso, $proc);
 				$cont++;
@@ -52,7 +53,7 @@ class PspProcessService{
 				$proc->nomCurso = $this->courseService->findCourseById($proc->idcurso)->Nombre;
 				$proc['codCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Codigo;
 				$request['cicle_code'] = $proc['idCiclo'];
-				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
+				$ciclo = $this->cicleService->findCicle2($request)->IdCiclo; //idciclo de cicloxespecialidad
 				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
 		}
 		return $proc;
@@ -79,8 +80,8 @@ class PspProcessService{
 	public function haveStudents($request){
 		$IdDocente =    $request['idProfesor'];
 		$proceso = PspProcess::where('id',$request['idProceso'])->first();
-		$ciclo = FacultyxCycle::where('IdCiclo',$proceso->idCiclo)->first();
-		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$ciclo->IdCicloAcademico)->first();
+		$procesox = Cicle::where('IdCiclo', $proceso->idCiclo)->first();
+		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$procesox->IdCicloAcademico)->first();
 		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
 		$horarioAct = null;
 		foreach ($horarios as $horario) {

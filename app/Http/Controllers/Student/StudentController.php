@@ -10,6 +10,7 @@ use Intranet\Models\User;
 use Intranet\Http\Services\TimeTable\TimeTableService;
 use Intranet\Models\Score;
 use DB;
+use Session;
 use Excel;
 use Intranet\Http\Services\User\PasswordService;
 
@@ -112,6 +113,7 @@ class StudentController extends BaseController {
 									$alumnoTut['nombre'] = $insert['Nombre'];
 									$alumnoTut['ape_paterno'] = $insert['ApellidoPaterno'];
 									$alumnoTut['ape_materno'] = $insert['ApellidoMaterno'];
+									$alumnoTut['id_especialidad'] = Session::get('academic-cycle')->IdEspecialidad;
 
 									if($value[5] != null){
 										$alumnoTut['correo'] = $value[5];
@@ -196,7 +198,7 @@ class StudentController extends BaseController {
             $student->ape_paterno      = $alumnoTut['ape_paterno'];
             $student->ape_materno      = $alumnoTut['ape_materno'];
             $student->correo           = $alumnoTut['correo'];
-            $student->id_especialidad  = null;
+            $student->id_especialidad  = $alumnoTut['id_especialidad'];
             $student->id_usuario       = $usuario->IdUsuario;
 
             //se guarda en la tabla Alumnos

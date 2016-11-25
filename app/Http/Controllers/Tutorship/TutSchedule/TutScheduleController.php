@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Session;
 
 class TutScheduleController extends Controller {
 
+     public function index() {
+        $user = Session::get('user');
+        $teacher = Teacher::find($user->IdDocente);
+        $tutSchedule = TutSchedule::where('id_docente', $teacher->IdDocente)->get();
+        $horas = $tutSchedule->count();
+
+        $data = [
+            'teacher' => $teacher,
+            'horas' => $horas,
+        ];
+
+        return view('tutorship.tutschedule.index', $data);
+    }
+
     public function edit($id) {
         $teacher = Teacher::find($id);
         $tutSchedule = TutSchedule::where('id_docente', $id)->get();

@@ -145,7 +145,12 @@ class FacultyController extends BaseController
 
 
     public function getCourseSchedule($course_id,$academic_cycle_id){
-        $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_cycle_id)->first();
+        $course = Course::where('IdCurso',$course_id)->first();
+        $academic_semester = Cicle::where('IdCiclo',$academic_cycle_id)
+                                  ->where('IdEspecialidad',$course->IdEspecialidad)
+                                  ->where('Vigente' , 1)
+                                  ->first();
+        $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_semester->IdCicloAcademico)->first();
         $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)
                              ->with('professors')
                              ->with('courseEvidences')
@@ -168,8 +173,9 @@ class FacultyController extends BaseController
 
     public function getEvaluatedCoursesBySemester($faculty_id, $semester_id)
     {
-      $academic_semester = Cicle::where('IdCicloAcademico',$semester_id)
+      $academic_semester = Cicle::where('IdCiclo',$semester_id)
                                 ->where('IdEspecialidad',$faculty_id)
+                                ->where('Vigente' , 1)
                                 ->first();
       $courses = [];
       if ($academic_semester) {

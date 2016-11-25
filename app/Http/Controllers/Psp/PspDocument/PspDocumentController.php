@@ -176,7 +176,7 @@ class PspDocumentController extends Controller
     {        
         try {
             $pspDocument = PspDocument::find($id);
-            $stud = Student::where('IdUsuario',$pspDocument->idstudent)->first();
+            $stud = Student::where('IdAlumno',$pspDocument->idstudent)->first();
             $student = Tutstudent::where('id_usuario',$stud->IdUsuario)->first();
 
             $now = Carbon::now();

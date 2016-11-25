@@ -7,8 +7,10 @@ use Intranet\Models\Student;
 use Intranet\Models\PspDocument;
 use Intranet\Models\Supervisor;
 use Dingo\Api\Routing\Helpers;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Studentxinscriptionfiles;
+use Mail;
 use Illuminate\Routing\Controller as BaseController;
 //Tested
 class PspStudentsController extends BaseController
@@ -159,6 +161,39 @@ class PspStudentsController extends BaseController
 
 
 
+    }
+
+    public function mailScore(Request $request)
+    {        
+        try {
+
+            $id =  $request['IdAlumno'];
+            $notaFinal = $request['final_score'];
+
+            $stud = Student::find($id);
+            $student = Tutstudent::where('id_usuario',$stud->IdUsuario)->first();
+
+            
+                $mail = $student->correo;
+                Mail::send('emails.notifyScore', compact('notaFinal'), function($m) use($mail){
+                    $m->subject('Notificacion de Nota');
+                    $m->to($mail);
+                });
+
+
+
+               $mensaje = "Notificacion Enviada";
+               $array['message'] = $mensaje;
+               return $this->response->array($array);
+          
+        } catch (Exception $e){
+
+            $mensaje = "Ocurrió un error al hacer esta acción";
+            $array['message'] = $mensaje;
+            return $this->response->array($array);
+
+          
+        } 
     }
     
 }

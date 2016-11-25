@@ -159,7 +159,7 @@ class ReportController extends Controller {
 
         }
         else{
-            $topicTotalAsistidas = 2;
+            $topicTotalAsistidas = 0;
         }
 
 

@@ -117,9 +117,13 @@
                             @foreach($stdRslt->aspects as $asp)
                                 @foreach($asp->criterion as $crt)
                                     <td class="center text-center aspect {{$asp->IdAspecto}}" hidden>
-                                        <button type="button" class="score btn btn-primary btn-xs minusGrade pull-left">
+                                        
+                                      <div class="col-xs-2 ">
+                                        <button type="button" class="score btn btn-primary btn-xs minusGrade">
                                             <span class="fa fa-minus"></span>
                                         </button>
+                                      </div>
+                                        
 
                                         <?php $nota = 0; ?>
                                         @foreach($scores as $score)
@@ -127,11 +131,18 @@
                                                 <?php $nota = $score->Nota; ?>
                                             @endif
                                         @endforeach
-
-                                        <input id="stuGrade" name="{{$timeTable->IdHorario}}/{{$stu->IdAlumno}}-{{$crt->IdCriterio}}" class="studentsTableGridInput" value="{{$nota}}" readonly=""  />
-                                        <button type="button" class="score btn btn-primary btn-xs plusGrade pull-right">
-                                            <span class="fa fa-plus"></span>
+                                        
+                                        <div class="col-xs-8">
+                                          <input id="stuGrade" name="{{$timeTable->IdHorario}}/{{$stu->IdAlumno}}-{{$crt->IdCriterio}}" class="studentsTableGridInput" value="{{$nota}}" readonly=""  />
+                                        </div>
+                                        
+                                        
+                                      <div class="col-xs-2 ">
+                                        <button type="button" class="score btn btn-primary btn-xs plusGrade">
+                                          <span class="fa fa-plus"></span>
                                         </button>
+                                      </div>
+
                                     </td>
                                 @endforeach
                             @endforeach

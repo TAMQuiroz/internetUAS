@@ -61,7 +61,7 @@ class FinalScoreController extends Controller
             if($finalWeight!=0) $finalScore = $finalScore/$finalWeight;
             else $finalScore =0;
            $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$psp->id)->first();
-           dd($inscriptiofile);
+           //dd($inscriptiofile);
            $inscriptiofile->nota_final=$finalScore;
            //dd($inscriptiofile);
            $inscriptiofile->save();

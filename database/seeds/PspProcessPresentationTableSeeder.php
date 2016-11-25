@@ -128,5 +128,43 @@ class PspProcessPresentationTableSeeder extends Seeder
             'idpspprocess'  =>  1,
         ]);
 
+        DB::table('inscriptionfiles')->insert([
+            'id'                    => 1,
+            'tiene_convenio'        =>  0,
+            'fecha_recep_convenio'  =>  '2016-11-25',
+            'fecha_inicio'          =>  '2016-11-08',
+            'fecha_termino'         =>  '2016-12-03',
+            'activ_formativas'      =>  'asd',
+            'razon_social'          =>  'asd',
+            'actividad_economica'   =>  'asd',
+            'direccion_empresa'     =>  'asd',
+            'distrito_empresa'      =>  'asd',
+            'nombre_area'           =>  1,
+            'ubicacion_area'        =>  1,
+            'equipamiento_area'     =>  1,
+            'equi_del_practicante'  =>  1,
+            'personal_area'         =>  1,
+            'cond_seguridad_area'   =>  1,
+            'Correo_jefe_directo'   =>  'asd@qwe.com',
+            'telef_jefe_directo'    =>  '999999999',
+            'jefe_directo_aux'      =>  'sad',
+            'puesto'                =>  'asd',
+            'recomendaciones'       =>  '',
+            'deleted_at'            =>  NULL,
+            'created_at'            =>  '2016-11-25 13:18:22',
+            'updated_at'            =>  '2016-11-25 13:18:22',
+        ]);
+
+        DB::table('pspstudentsxinscriptionfiles')->insert([
+            'id'                    =>  0,
+            'idinscriptionfile'     =>  1,
+            'idpspstudents'         =>  42,
+            'acepta_terminos'       =>  1,
+            'nota_final'            =>  0,
+            'deleted_at'            =>  NULL,
+            'created_at'            =>  '2016-11-25 13:48:22',
+            'updated_at'            =>  '2016-11-25 13:48:22',
+        ]);
+
     }
 }

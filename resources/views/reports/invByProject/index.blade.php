@@ -291,23 +291,69 @@
     </div>
     </div>
 
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
+    <div class="graphs">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráfico de Barras</h3>
+        </div>
+          <div class="panel-body">
+          <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+          <button id="plain" class="btn btn-default">Plano</button>
+          <button id="inverted" class="btn btn-default">Invertido</button>
+        </div>
+        </div>
+      </div>
+
+      <div>
+        <br><br>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráficos Circulares</h3>
+        </div>
+          <div class="panel-body">
+        <div class="col-md-6 col-sm-6 col-xs-6" id="pieI" style="height: 400px; margin: 0 auto"></div>
+
+        <div class="col-md-6 col-sm-6 col-xs-6" id="pieP" style="height: 400px; margin: 0 auto"></div>
+        </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráfico de Barras con Ejes dobles</h3>
+        </div>
+          <div class="panel-body">
+          <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+        </div>
+      </div>
+
+      <div>
+        <br><br>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráfico de Área</h3>
+        </div>
+          <div class="panel-body">
+          <div id="areaChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        </div>
+        </div>
+      </div>
     </div>
-    <div id="pieI" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
-    </div>
-    <div id="pieP" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
-    </div>
-    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
-    </div>
-    <div id="areaChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+    
 
 </div>
 

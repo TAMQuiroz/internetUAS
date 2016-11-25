@@ -1,3 +1,4 @@
+
 <?php
 
 namespace Intranet\Http\Controllers\API\Tutoria;
@@ -95,24 +96,19 @@ class TutTutorController extends BaseController
       
 
 
-
          $docenteInfo = Teacher::where('IdUsuario', $id)->get();  // obtenemos la informacion para conseguir el IDDocente
          $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
-         $parametersInfo = Parameter::where('id_especialidad', $docenteInfo[0]['IdEspecialidad'])->get();
-
-
-        
-
-         $i=0;
-         $LovingTheAlien;
-
-        if ($tutorshipInfo){
+        if (count($tutorshipInfo) == 0 ){
 
           $LovingTheAlien  = [];
           return $this->response->array($LovingTheAlien);
 
         } 
         else{
+
+         $LovingTheAlien;
+         $i=0;
+         $parametersInfo = Parameter::where('id_especialidad', $docenteInfo[0]['IdEspecialidad'])->get();
 
          foreach ($tutorshipInfo as $ttshipInfo) {
 
@@ -165,8 +161,7 @@ class TutTutorController extends BaseController
 
 
          $valor = [];
-         if ($tutorShipInfo)   return $this->response->array($valor);
-
+         if (count($tutorShipInfo) == 0)   return $this->response->array($valor);
 
          $alumnosTutor;
          $i = 0;

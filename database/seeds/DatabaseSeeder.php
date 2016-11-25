@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
+        /*
         $this->call(StatusTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(InvestigatorsTableSeeder::class);
@@ -32,11 +32,10 @@ class DatabaseSeeder extends Seeder
         //psp
         $this->call(PspProcessTableSeeder::class);
         $this->call(PspGroupTableSeeder::class);
-        
+        */
 
         //Seeders solo para presentacion
         
-        /*
         $this->call(StatusTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(InvestigatorsPresentationTableSeeder::class);
@@ -54,6 +53,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PspProcessPresentationTableSeeder::class);
         $this->call(PspGroupTableSeeder::class);
-        */
+        
     }
 }

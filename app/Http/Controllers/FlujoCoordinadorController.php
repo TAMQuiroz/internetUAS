@@ -600,7 +600,7 @@ class FlujoCoordinadorController extends Controller
         return view('flujoCoordinador.cursosCiclo_index', $data);
     }
     public function cursosCiclo_edit($id){
-        $idAcademicCycle = Session::get('id-academic-cycle');
+        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
         //dd($idAcademicCycle);
         $data['title'] = 'Seleccionar Cursos';
         $data['idEspecialidad'] = $id;
@@ -614,7 +614,7 @@ class FlujoCoordinadorController extends Controller
         return view('flujoCoordinador.cursosCiclo_edit', $data);
     }
     public function cursosCiclo_update(Request $request, $id){
-        $idAcademicCycle = Session::get('id-academic-cycle');
+        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
         if(sizeof($request['check']) == 1){
             return redirect()->back()->with('warning','Debe haber al menos un curso dictado en el ciclo');
         }
@@ -632,20 +632,24 @@ class FlujoCoordinadorController extends Controller
         }
     }
     public function cursosCicloHorario_index($id, $idCourse){
-        $idAcademicCycle = Session::get('id-academic-cycle');
+        $academicCycle = Session::get('academic-cycle');
+       
         $data['title'] = 'Asignar Horario al Curso';
         $data['idEspecialidad'] = $id;
-        try {
+        try{
             $data['course'] = $this->dictatedCoursesService->findCourseById($idCourse);
-            $data['timetable'] = $this->dictatedCoursesService->retrieveTimeTablesByCourse($idCourse, $idAcademicCycle);
-            $data['timetablexteacher'] = $this->dictatedCoursesService->retrieveAllTeachersByCourse($idCourse, $idAcademicCycle);
-        } catch (\Exception $e) {
+            
+            $data['timetable'] = $this->dictatedCoursesService->retrieveTimeTablesByCourse($idCourse, $academicCycle->IdCicloAcademico);
+            
+            $data['timetablexteacher'] = $this->dictatedCoursesService->retrieveAllTeachersByCourse($idCourse, $academicCycle->IdCicloAcademico);
+        }
+        catch (\Exception $e) {
             redirect()->back()->with('warning','Ha ocurrido un error');
         }
         return view('flujoCoordinador.cursosCicloHorario_index', $data);    
     }
     public function cursosCicloHorario_create($id,$idCourse){
-        $idAcademicCycle = Session::get('id-academic-cycle');
+        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
         $data['title'] = 'Nuevo Horario';
         $data['idEspecialidad'] = $id;
         try {
@@ -666,7 +670,7 @@ class FlujoCoordinadorController extends Controller
         return redirect()->route('cursosCicloHorario_index.flujoCoordinador', ['id' => $id, 'idCourse' => $idCourse])->with('success', 'Se registró el horario con éxito');
     }
     public function cursosCicloHorario_edit($id, $idCurso, $idHorario){
-        $idAcademicCycle = Session::get('id-academic-cycle');
+        $idAcademicCycle = Session::get('academic-cycle')->IdCicloAcademico;
         $data['idEspecialidad'] = $id;
         try {
             $data['courseId'] = $idCurso;             

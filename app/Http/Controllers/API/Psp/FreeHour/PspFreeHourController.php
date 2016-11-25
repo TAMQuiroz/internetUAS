@@ -5,7 +5,7 @@ use JWTAuth;
 use Response;
 use DateTime;
 use Illuminate\Http\Request;
-use Intranet\Models\freeHour;
+use Intranet\Models\FreeHour;
 use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
 use Intranet\Models\User;

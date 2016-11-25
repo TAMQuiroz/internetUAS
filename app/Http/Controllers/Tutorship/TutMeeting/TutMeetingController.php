@@ -293,11 +293,13 @@ class TutMeetingController extends Controller
         ];
 
         $tutMeetings    = TutMeeting::getFilteredTutMeetings($filters);
-        $fecha          = array();
+        $fecha1          = array();
         $hora_inicio    = array();        
         $hora           = array();        
         $hora_fin       = array();
         $students       = array();     
+
+        $fecha          = array();
 
         foreach ($tutMeetings as $tutMeeting) {
             if ($tutMeeting) {
@@ -316,8 +318,12 @@ class TutMeetingController extends Controller
                                         $tutMeeting->creador == 1 ? 
                                         1: $tutMeeting->estado;
 
+                $dateDay1   = date('d-m-Y', strtotime($tutMeeting->inicio));
+
+                array_push($fecha, $dateDay1);
+
                 array_push($hora, intval( $horaI[0]) );
-                array_push($fecha, intval($dateDay) );                
+                array_push($fecha1, intval($dateDay) );                
                 array_push($hora_inicio, $horaI[0] . ':' . $horaI[1]);
                 array_push($hora_fin, $horaF[0] . ':' . $horaF[1]);
                 array_push($students, $student->ape_paterno . ' ' . 
@@ -349,7 +355,8 @@ class TutMeetingController extends Controller
         array_push($status, 'No asistida');
 
         $data       = [
-            'meetings' =>  $tutMeetings,
+            'meetings'    =>  $tutMeetings,
+            'dia'         =>  $fecha1,
             'fecha'       =>  $fecha,
             'hora'        =>  $hora,
             'hora_inicio' =>  $hora_inicio,

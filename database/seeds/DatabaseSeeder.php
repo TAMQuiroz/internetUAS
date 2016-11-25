@@ -51,9 +51,9 @@ class DatabaseSeeder extends Seeder
         $this->call(QuestionsPresentationTableSeeder::class);  
         $this->call(TutorshipRolesSeeder::class);  
 
-        $this->call(PspProcessPresentationTableSeeder::class);
-        $this->call(PspGroupTableSeeder::class);
-        $this->call(PspCriteriosPresentationTableSeeder::class);
+        //$this->call(PspProcessPresentationTableSeeder::class);
+        //$this->call(PspGroupTableSeeder::class);
+        //$this->call(PspCriteriosPresentationTableSeeder::class);
         
     }
 }

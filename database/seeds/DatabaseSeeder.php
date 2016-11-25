@@ -54,5 +54,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PspProcessPresentationTableSeeder::class);
         $this->call(PspGroupTableSeeder::class);
         $this->call(PspCriteriosPresentationTableSeeder::class);
+        
     }
 }

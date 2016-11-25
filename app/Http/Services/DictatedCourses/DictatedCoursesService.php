@@ -368,17 +368,20 @@ class DictatedCoursesService {
 	public function retrieveTimeTablesByCourse($idCourse, $idAcademicCycle) {
 		$coursesxcicle = DictatedCourses::where('IdCurso', $idCourse)
 										->where('IdCicloAcademico', $idAcademicCycle)->first();
-
+								
 		$timetable = TimeTable:: where('IdCursoxCiclo', $coursesxcicle->IdCursoxCiclo)->get();
 
 		return $timetable;
 	}
 
 	public function retrieveAllTeachersByCourse($idCourse, $idAcademicCycle) {
+
 		$coursesxcicle = DictatedCourses::where('IdCurso', $idCourse)
 										->where('IdCicloAcademico', $idAcademicCycle)->first();
+
 		$timetable = TimeTable:: where('IdCursoxCiclo', $coursesxcicle->IdCursoxCiclo)->get();
 		$horarioxProfe = array();
+
 		foreach ($timetable as $time) {
 			$timetablexteacher = TimeTablexTeacher:: where('IdHorario', $time->IdHorario)->get();
 			array_push($horarioxProfe, $timetablexteacher);

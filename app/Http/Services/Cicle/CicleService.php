@@ -16,7 +16,7 @@ class CicleService
     }
 
     public function findCicle($request) {
-        $cicle = Cicle::where('IdCicloAcademico', $request['cicle_code'])->first();
+        $cicle = Cicle::where('IdCiclo', $request['cicle_code'])->first();
         return $cicle;
     }
 

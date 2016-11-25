@@ -154,7 +154,7 @@ public function storeByStudent(Request $request){
   try{
 
     $meeting = new meeting;
-    $freeHour =  freeHour::find($request['id']);
+    $freeHour =  FreeHour::find($request['id']);
 
     $student = Student::where('IdUsuario',$user->IdUsuario)->first();
 

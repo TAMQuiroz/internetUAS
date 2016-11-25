@@ -42,7 +42,7 @@ class PspFreeHourController extends BaseController
 
 
         $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->get()->first();
-        $cantDisp = freeHour::where('idsupervisor',$supervisor->id)->count();
+        $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
         $maxi =  $this->maximum();
 
         if($cantDisp < $maxi){
@@ -83,7 +83,7 @@ class PspFreeHourController extends BaseController
         $supervisor =   Supervisor::where('iduser',$user->IdUsuario)->first();
 
 
-        $cantDisp = freeHour::where('idsupervisor',$supervisor->id)->count();
+        $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
 
         $maxi = $this->maximum();
         if($cantDisp >= $maxi){
@@ -105,7 +105,7 @@ class PspFreeHourController extends BaseController
         $format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
 
-        $freeHour =  new freeHour;
+        $freeHour =  new FreeHour;
         $freeHour->fecha = $date;
         $freeHour->hora_ini = $horaAux;
         $freeHour->cantidad = 1;
@@ -115,7 +115,7 @@ class PspFreeHourController extends BaseController
 
 
 
-        $f = freeHour::where('idsupervisor',$supervisor->id)->count();
+        $f = FreeHour::where('idsupervisor',$supervisor->id)->count();
         $m = $this->maximum();
 
 
@@ -158,10 +158,10 @@ class PspFreeHourController extends BaseController
 
 
         if(is_null($pspStudent->idsupervisor))
-            $freeHours = freeHour::get();
+            $freeHours = FreeHour::get();
        
         else 
-            $freeHours = freeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();	
+            $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();	
 
 
       $validFreeHour = array();
@@ -218,7 +218,7 @@ class PspFreeHourController extends BaseController
 
         $supervisor = Supervisor::where('iduser',$user->IdUsuario)->get()->first();
 
-        $freeHours = freeHour::where('idsupervisor',$supervisor->id)->get();
+        $freeHours = FreeHour::where('idsupervisor',$supervisor->id)->get();
 
         return $this->response->array($freeHours->toArray());
 

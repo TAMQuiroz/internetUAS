@@ -11,6 +11,8 @@ class PspProcessPresentationTableSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+        
 		DB::table('pspprocesses')->insert([
             'id'        =>  1,
             'numero_Fases' => 0,

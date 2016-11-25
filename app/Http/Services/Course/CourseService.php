@@ -411,7 +411,7 @@ class CourseService
 
     public function findCourseByStudentResult($idResultadoEstudiantil){
 
-        $idCourses = DB::table("aporte")->where("IdResultadoEstudiantil", $idResultadoEstudiantil)->pluck('IdCurso');
+        $idCourses = DB::table("Aporte")->where("IdResultadoEstudiantil", $idResultadoEstudiantil)->pluck('IdCurso');
 
         $courses = Course::whereIn('IdCurso', $idCourses)->get();
 

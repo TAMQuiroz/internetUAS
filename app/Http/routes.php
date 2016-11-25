@@ -1303,6 +1303,8 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/atencion-sin-cita', ['as' => 'atencion_sin_cita.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createAttention']);
             Route::post('/atencion-sin-cita', ['as' => 'atencion.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeAttention']);
             Route::get('/buscar-alumno', ['as' => 'mis_alumnos.get_name', 'uses' => 'Tutorship\Tutstudent\TutstudentController@getEntireName']);
+            Route::get('/atencion-cita/{id}', ['as' => 'atencion_cita.attendMeeting', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@attendMeeting']);
+            Route::post('/atencion-cita', ['as' => 'atencion.storeMeeting', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeMeeting']);
 
             Route::post('/accept', ['as' => 'mis_citas.acceptTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@acceptDateTutor']);
             Route::post('/cancel', ['as' => 'mis_citas.deleteTutor', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@deleteDateTutor']);

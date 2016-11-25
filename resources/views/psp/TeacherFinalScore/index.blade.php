@@ -31,13 +31,13 @@
                             <td>{{$student->Student->ApellidoPaterno}}</td> 
                             <td>{{$student->Student->ApellidoMaterno}}</td>
                             <td>
-                                <a href= "{{route('finalscore.index', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Nota final de alumno"><i class="fa fa-list-ol"></i></a>
+                                <a href= "{{route('TeacherFinalScore.show', $student->id)}}" class="btn btn-primary btn-xs" title="Nota final de alumno"><i class="fa fa-list-ol"></i></a>
                          </td>               
                         </tr> 
                         @endforeach
                     </tbody>
                 </table>
-            //    {{$students->links()}}
+                {{$students->links()}}
             </div>
         </div>
     </div>

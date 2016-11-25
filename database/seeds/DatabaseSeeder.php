@@ -36,7 +36,8 @@ class DatabaseSeeder extends Seeder
 
         //Seeders solo para presentacion
         
-        /*$this->call(StatusTableSeeder::class);
+        /*
+        $this->call(StatusTableSeeder::class);
         $this->call(AreasTableSeeder::class);
         $this->call(InvestigatorsPresentationTableSeeder::class);
         $this->call(GroupsPresentationTableSeeder::class);
@@ -49,9 +50,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CompetencePresentationTableSeeder::class);    
         $this->call(QuestionsPresentationTableSeeder::class);  
-        $this->call(TutorshipRolesSeeder::class);  */
+        $this->call(TutorshipRolesSeeder::class);  
 
         $this->call(PspProcessPresentationTableSeeder::class);
         $this->call(PspGroupTableSeeder::class);
+        */
     }
 }

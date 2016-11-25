@@ -108,7 +108,6 @@ class MeetingTeacherController extends Controller
             $stud = Student::find($id);
             $student = Tutstudent::where('id_usuario',$stud->IdUsuario)->first();
 
-            
                 $mail = $student->correo;
                 Mail::send('emails.notifyEndFase',['user' => $mail], function($m) use($mail){
                     $m->subject('Notificacion de fin de Fase de Reuniones');

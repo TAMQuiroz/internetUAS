@@ -63,7 +63,7 @@ class AttendanceRateController extends Controller
             			['idsupervisor',$supervisor->id],
             			])->count();
                     $attendanceRate = $attendanceNum/$attendanceDen;                
-                    $attendanceRates[] = number_format($attendanceRate,2);
+                    $attendanceRates[] = number_format($attendanceRate*100,2);
             }
 
         //}

@@ -118,5 +118,15 @@ class PspProcessPresentationTableSeeder extends Seeder
                 'idpspprocess'  =>  1,
             ]);
         }
+
+        DB::table('phases')->insert([
+            'id'            => 1,
+            'numero'        =>  1,
+            'descripcion'   =>  'test',
+            'fecha_inicio'  =>  '2016-11-16',
+            'fecha_fin'     =>  '2016-12-09',
+            'idpspprocess'  =>  1,
+        ]);
+
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker; 
 
 class PspProcessPresentationTableSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class PspProcessPresentationTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        
+
 		DB::table('pspprocesses')->insert([
             'id'        =>  1,
             'numero_Fases' => 0,
@@ -76,7 +77,7 @@ class PspProcessPresentationTableSeeder extends Seeder
             ]);
         }
 
-        $alumno = DB::table('tutstudents')->where('id',41)->first();
+        $alumno = DB::table('tutstudents')->where('codigo',45674567)->first();
 
         if(!$alumno){
             DB::table('tutstudents')->insert([

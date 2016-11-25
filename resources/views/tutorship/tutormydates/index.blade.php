@@ -72,7 +72,7 @@
                                 </div>
                             @endif
                             @foreach($meetings as $key => $meeting)
-                                @if ($fecha[$key] == $d && $hora[$key] == $h)
+                                @if ($dia[$key] == $d && $hora[$key] == $h)
                                     <div class="dropdown">
                                         <button class="actions btn btn-primary color-status-{{$meeting->estado}} tutorship-dates" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
                                             <div class="dates-card-info text-left">

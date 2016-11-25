@@ -89,6 +89,7 @@ class TutTutorController extends BaseController
 
     }
 
+    //REGISTRAR UNA NEUVA ATENCION DE CITA
     public function getAppointInformationTuto($id)
     {
       
@@ -100,10 +101,19 @@ class TutTutorController extends BaseController
          $parametersInfo = Parameter::where('id_especialidad', $docenteInfo[0]['IdEspecialidad'])->get();
 
 
-       
+        
 
          $i=0;
          $LovingTheAlien;
+
+        if ($tutorshipInfo){
+
+          $LovingTheAlien  = [];
+          return $this->response->array($LovingTheAlien);
+
+        } 
+        else{
+
          foreach ($tutorshipInfo as $ttshipInfo) {
 
             $idAlumno = $ttshipInfo['id_alumno'];
@@ -119,9 +129,11 @@ class TutTutorController extends BaseController
 
             $i++;
          } 
-      
 
          return $this->response->array($LovingTheAlien);
+
+        }  
+
   
 
   
@@ -140,14 +152,20 @@ class TutTutorController extends BaseController
     }
 
 
+    //REGISTRAR UAN CITA NO CONFIRMADA
     public function obtenerInformacionNoCita($id)
     {
       
+
 
          $tutorInfo = Teacher::where('IdUsuario', $id)->get();  // obtenemos la informacion para conseguir el IDDocente
          $parametersInfo = Parameter::where('id_especialidad', $tutorInfo[0]['IdEspecialidad'])->get();
          $idDocente = $tutorInfo[0]['IdDocente'];
          $tutorShipInfo =  Tutorship::where('id_profesor',$idDocente)->get();
+
+
+         $valor = [];
+         if ($tutorShipInfo)   return $this->response->array($valor);
 
 
          $alumnosTutor;

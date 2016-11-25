@@ -63,10 +63,10 @@ class ReportController extends Controller
 
 			if($request['periodo'] != 0){	
 				// obtener ciclos del periodo
-				$idCiclos = FacultyxCycle::where('IdPeriodo', $request['periodo'])->get()->pluck('IdCicloAcademico');
+				$idCiclos = FacultyxCycle::where('IdPeriodo', $request['periodo'])->get()->pluck('IdCiclo');
 				$ciclos = AcademicCycle::whereIn('IdCicloAcademico',$idCiclos)->get();
 				$data['ciclos'] = $ciclos;
-
+				//dd($data);
 				if($request['resultado'] != 0){
 
 					if($request['aspecto'] != 0){
@@ -103,11 +103,12 @@ class ReportController extends Controller
 											$resultadosMedicion['cursos'] = [];
 											foreach ($cursosxCiclo as $cxc) {
 
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
-												$curso['resultadoxciclo'] = [];
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curs['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
+												$curs['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
-												
-													if($cxc->IdCicloAcademico == $ciclo->IdCicloAcademico){ //
+													$idCicloAcademico = FacultyxCycle::where('IdCiclo',$ciclo->IdCicloAcademico)->first();
+													if($cxc->IdCicloAcademico == $idCicloAcademico->IdCicloAcademico){
 														$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
 														$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
 
@@ -135,10 +136,10 @@ class ReportController extends Controller
 
 														$resM['resultado'] = $resultado;
 														
-														array_push($curso['resultadoxciclo'], $resM);	
+														array_push($curs['resultadoxciclo'], $resM);	
 													}	
 												}
-												array_push($resultadosMedicion['cursos'], $curso);
+												array_push($resultadosMedicion['cursos'], $curs);
 											}
 											$nrows = count($resultadosMedicion['cursos']);
 											if($nrows == 0){
@@ -195,11 +196,12 @@ class ReportController extends Controller
 											$resultadosMedicion['cursos'] = [];
 
 											foreach ($cursosxCiclo as $cxc) {
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
-												$curso['resultadoxciclo'] = [];
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curs['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
+												$curs['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
-												
-													if($cxc->IdCicloAcademico == $ciclo->IdCicloAcademico){ //
+													$idCicloAcademico = FacultyxCycle::where('IdCiclo',$ciclo->IdCicloAcademico)->first();
+													if($cxc->IdCicloAcademico == $idCicloAcademico->IdCicloAcademico){
 														$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
 														$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
 
@@ -227,10 +229,10 @@ class ReportController extends Controller
 
 														$resM['resultado'] = $resultado;
 														
-														array_push($curso['resultadoxciclo'], $resM);	
+														array_push($curs['resultadoxciclo'], $resM);	
 													}	
 												}
-												array_push($resultadosMedicion['cursos'], $curso);
+												array_push($resultadosMedicion['cursos'], $curs);
 											}
 											$nrows = count($resultadosMedicion['cursos']);
 											if($nrows == 0){
@@ -286,11 +288,12 @@ class ReportController extends Controller
 											$resultadosMedicion['criterio'] = $criterio->Nombre;
 											$resultadosMedicion['cursos'] = [];
 											foreach ($cursosxCiclo as $cxc) {
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
-												$curso['resultadoxciclo'] = [];
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curs['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
+												$curs['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
-												
-													if($cxc->IdCicloAcademico == $ciclo->IdCicloAcademico){ //
+													$idCicloAcademico = FacultyxCycle::where('IdCiclo',$ciclo->IdCicloAcademico)->first();
+													if($cxc->IdCicloAcademico == $idCicloAcademico->IdCicloAcademico){
 														$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
 														$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
 
@@ -316,10 +319,10 @@ class ReportController extends Controller
 															$resultado = 'No se midio';
 														}	
 														$resM['resultado'] = $resultado;														
-														array_push($curso['resultadoxciclo'], $resM);	
+														array_push($curs['resultadoxciclo'], $resM);	
 													}	
 												}
-												array_push($resultadosMedicion['cursos'], $curso);
+												array_push($resultadosMedicion['cursos'], $curs);
 											}
 											$nrows = count($resultadosMedicion['cursos']);
 											if($nrows == 0){
@@ -377,12 +380,12 @@ class ReportController extends Controller
 											$resultadosMedicion['criterio'] = $criterio->Nombre;
 											$resultadosMedicion['cursos'] = [];
 											foreach ($cursosxCiclo as $cxc) {
-
-												$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
-												$curso['resultadoxciclo'] = [];
+												$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+												$curs['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
+												$curs['resultadoxciclo'] = [];
 												foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
-												
-													if($cxc->IdCicloAcademico == $ciclo->IdCicloAcademico){ //
+													$idCicloAcademico = FacultyxCycle::where('IdCiclo',$ciclo->IdCicloAcademico)->first();
+													if($cxc->IdCicloAcademico == $idCicloAcademico->IdCicloAcademico){
 														$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
 														$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
 
@@ -410,10 +413,10 @@ class ReportController extends Controller
 
 														$resM['resultado'] = $resultado;
 														
-														array_push($curso['resultadoxciclo'], $resM);	
+														array_push($curs['resultadoxciclo'], $resM);	
 													}	
 												}
-												array_push($resultadosMedicion['cursos'], $curso);
+												array_push($resultadosMedicion['cursos'], $curs);
 											}
 											$nrows = count($resultadosMedicion['cursos']);
 											if($nrows == 0){
@@ -475,12 +478,12 @@ class ReportController extends Controller
 								$resultadosMedicion['criterio'] = $criterio->Nombre;
 								$resultadosMedicion['cursos'] = [];
 								foreach ($cursosxCiclo as $cxc) {
-
-									$curso['nombre'] = $cxc->IdCurso;// con ese id curso deberia sacar nombre del curso
-									$curso['resultadoxciclo'] = [];
+									$curso = Course::where('IdCurso', $cxc->IdCurso)->first();
+									$curs['nombre'] = $curso->Codigo.' - '.$curso->Nombre;
+									$curs['resultadoxciclo'] = [];
 									foreach ($ciclos as $ciclo) { //compara el ciclo del cursoxciclo con cada ciclo del periodo elegido
-									
-										if($cxc->IdCicloAcademico == $ciclo->IdCicloAcademico){ //
+										$idCicloAcademico = FacultyxCycle::where('IdCiclo',$ciclo->IdCicloAcademico)->first();
+										if($cxc->IdCicloAcademico == $idCicloAcademico->IdCicloAcademico){
 											$horarios = TimeTable::where('IdCursoxCiclo', $cxc->IdCursoxCiclo)->get()->pluck('IdHorario');
 											$calificiones = Score::whereIn('IdHorario',$horarios)->where('IdCriterio', $criterio->IdCriterio)->get();
 											
@@ -505,10 +508,10 @@ class ReportController extends Controller
 
 											$resM['resultado'] = $resultado;
 											
-											array_push($curso['resultadoxciclo'], $resM);	
+											array_push($curs['resultadoxciclo'], $resM);	
 										}	
 									}
-									array_push($resultadosMedicion['cursos'], $curso);
+									array_push($resultadosMedicion['cursos'], $curs);
 								}
 								$nrows = count($resultadosMedicion['cursos']);
 								if($nrows == 0){

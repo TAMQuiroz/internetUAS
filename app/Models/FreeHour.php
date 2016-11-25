@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FreeHour extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes; 
     use LastUpdatedTrait;
     protected $table = 'freehours';
 

@@ -80,7 +80,7 @@ class PspProcessService{
 	public function haveStudents($request){
 		$IdDocente =    $request['idProfesor'];
 		$proceso = PspProcess::where('id',$request['idProceso'])->first();
-		$procesox = Cicle::where('IdCiclo', $proceso->idCiclo)->first();
+		$procesox = Cicle::where('IdCicloAcademico', $proceso->idCiclo)->first();
 		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$procesox->IdCicloAcademico)->first();
 		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
 		$horarioAct = null;

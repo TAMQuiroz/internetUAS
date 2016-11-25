@@ -76,7 +76,7 @@ class PspProcessPresentationTableSeeder extends Seeder
                 'Contrasena'        => bcrypt(45674567),
             ]);
         }
-
+        
         $alumno = DB::table('tutstudents')->where('codigo',45674567)->first();
 
         if(!$alumno){
@@ -107,7 +107,7 @@ class PspProcessPresentationTableSeeder extends Seeder
                 'lleva_psp'     =>  1,
             ]);
         }
-
+        
         $alumnoPSP = DB::table('pspstudents')->where('id',41)->first();
 
         if(!$alumnoPSP){

@@ -157,7 +157,7 @@ class PspProcessPresentationTableSeeder extends Seeder
 
         DB::table('pspstudentsxinscriptionfiles')->insert([
             'id'                    =>  0,
-            'idinscriptionfile'     =>  2,
+            'idinscriptionfile'     =>  1,
             'idpspstudents'         =>  42,
             'acepta_terminos'       =>  1,
             'nota_final'            =>  0,

@@ -33,7 +33,7 @@ class PspProcessService{
 				$proc['nomCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Nombre;
 				$proc['codCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Codigo;
 				$request['cicle_code'] = $proc['idCiclo'];
-				$ciclo = $this->cicleService->findCicle2($request);
+				$ciclo = $this->cicleService->findCicle($request);
 				$ciclo = $ciclo->IdCiclo; //idciclo de cicloxespecialidad
 				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
 				array_push($proceso, $proc);
@@ -53,7 +53,7 @@ class PspProcessService{
 				$proc->nomCurso = $this->courseService->findCourseById($proc->idcurso)->Nombre;
 				$proc['codCurso'] = $this->courseService->findCourseById($proc['idcurso'])->Codigo;
 				$request['cicle_code'] = $proc['idCiclo'];
-				$ciclo = $this->cicleService->findCicle2($request)->IdCiclo; //idciclo de cicloxespecialidad
+				$ciclo = $this->cicleService->findCicle($request)->IdCiclo; //idciclo de cicloxespecialidad
 				$proc['ciclo']=AcademicCycle::where('IdCicloAcademico',$ciclo)->first()->Descripcion;
 		}
 		return $proc;
@@ -80,7 +80,7 @@ class PspProcessService{
 	public function haveStudents($request){
 		$IdDocente =    $request['idProfesor'];
 		$proceso = PspProcess::where('id',$request['idProceso'])->first();
-		$procesox = Cicle::where('IdCiclo', $proceso->idCiclo)->first();
+		$procesox = Cicle::where('IdCicloAcademico', $proceso->idCiclo)->first();
 		$cursoxciclo = CoursexCycle::where('IdCurso',$proceso->idcurso)->where('IdCicloAcademico',$procesox->IdCicloAcademico)->first();
 		$horarios = Schedule::where('IdCursoxCiclo',$cursoxciclo->IdCursoxCiclo)->get();
 		$horarioAct = null;

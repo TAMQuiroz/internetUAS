@@ -9,6 +9,7 @@ use Intranet\Models\PspDocument;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Studentxinscriptionfiles;
 use Auth;
 
 class TeacherFinalScoreController extends Controller
@@ -57,7 +58,15 @@ class TeacherFinalScoreController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$id)->first();
+        $finalScore= $inscriptiofile->nota_final;
+
+        $data = [
+                    'finalScore'    => $finalScore,
+                ];
+
+        return view('psp.TeacherFinalScore.show', $data);
     }
 
     /**

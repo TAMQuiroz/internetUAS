@@ -40,34 +40,46 @@ class FinalScoreController extends Controller
         $user = Session::get('user');
         $supervisor = Supervisor::find($user->id);
         $pspProceso = PspProcess::find($supervisor->idpspprocess);
-        $criterios  = $pspProceso->criterios;
-        $psp=PspStudent::where('idalumno',$idAlumno)->first(); 
-        //dd($psp);
-        //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
-        //echo " idcurso ".$pspProceso->idcurso;
-        //$criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
-        //echo " idcursoxciclo ".$cursoxciclo->IdCursoxCiclo;
-        $criteriosAlumnos = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->get();
-        $finalScore=0;
-        $finalWeight=0;
-        //dd($inscriptiofile);
-        //dd($criteriosAlumnos);
-        foreach ($criteriosAlumnos as $crit) {
-            $weightCriterio=Pspcriterio::find($crit->idcriterio);
-                    //dd($weightCriterio);
-            $finalScore=$crit->nota*$weightCriterio->peso + $finalScore;
-            $finalWeight=$weightCriterio->peso + $finalWeight;            
-        }
-            if($finalWeight!=0) $finalScore = $finalScore/$finalWeight;
-            else $finalScore =0;
-           $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$psp->id)->first();
-           //dd($inscriptiofile);
-           $inscriptiofile->nota_final=$finalScore;
-           //dd($inscriptiofile);
-           $inscriptiofile->save();
+        if($pspProceso!=null){
+            $criterios  = $pspProceso->criterios;
+            $psp=PspStudent::where('idalumno',$idAlumno)->first(); 
+            //dd($psp);
+            //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
+            //echo " idcurso ".$pspProceso->idcurso;
+            //$criterios = CoursexCyclexCriterion::where('IdCursoxCiclo', $cursoxciclo->IdCursoxCiclo)->get();
+            //echo " idcursoxciclo ".$cursoxciclo->IdCursoxCiclo;
+            $criteriosAlumnos = Pspstudentsxcriterios::where('idpspstudent',$idAlumno)->get();
+            $finalScore=0;
+            $finalWeight=0;
+            //dd($inscriptiofile);
+            //dd($criteriosAlumnos);
+            foreach ($criteriosAlumnos as $crit) {
+                $weightCriterio=Pspcriterio::find($crit->idcriterio);
+                        //dd($weightCriterio);
+                if($weightCriterio!=null){
+                    $finalScore=$crit->nota*$weightCriterio->peso + $finalScore;
+                    $finalWeight=$weightCriterio->peso + $finalWeight;      
+                }      
+            }
+                if($finalWeight!=0) $finalScore = $finalScore/$finalWeight;
+                else $finalScore =0;
+               $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$psp->id)->first();
+               if($inscriptiofile!=null){
+               //dd($inscriptiofile);
+                   $inscriptiofile->nota_final=$finalScore;
+                   //dd($inscriptiofile);
+                   $inscriptiofile->save();
+                }else{
+                    $finalScore=21;
+               }
+           }else{
+                $finalScore=22;
+           }
+
            $data = [
                     'finalScore'    => $finalScore,
                 ];
+       
         return view('psp.finalscorestudent.index', $data);
     }
 

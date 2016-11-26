@@ -19,7 +19,7 @@
                 <h3 class="panel-title">Grupos</h3>
             </div>
             <div class="panel-body">
-            	{{Form::open(['route' => 'meeting.index', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+            	{{Form::open(['route' => 'pspGroup.selectGroupStore', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 
                 <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
                     <thead> 

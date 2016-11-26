@@ -243,7 +243,7 @@ public function storeByStudent(Request $request){
           
           
            $m = meeting::where([['fecha',$dt->format('Y-m-d')],['hora_inicio',$tt->format('H:i:s')]])->get()->first();
-           $f = freeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh]])->get()->first();
+           $f = FreeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh]])->get()->first();
           
            if($m != null && $f != null){
               $mensaje = "Ya registro previamente una reunion con fecha";
@@ -255,7 +255,7 @@ public function storeByStudent(Request $request){
 
      $pspstudent =PspStudent::where('IdAlumno',$idAlumno)->first(); 
 
-     $freeHour = new freeHour;
+     $freeHour = new FreeHour;
       $meeting =  new meeting;
 
       $freeHour->fecha = $date;
@@ -356,7 +356,7 @@ public function storeByStudent(Request $request){
 
             
                 $mail = $student->correo;
-                Mail::send('emails.notifyNearMeeting',['user' => $mail], function($m) use($mail){
+                Mail::send('emails.notifyNearMeeting', function($m) use($mail){
                     $m->subject('Notificacion de Reunión con Supervisor');
                     $m->to($mail);
                 });

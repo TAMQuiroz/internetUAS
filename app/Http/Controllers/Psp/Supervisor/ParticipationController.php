@@ -36,7 +36,7 @@ class ParticipationController extends Controller
         $primerProc = PspProcess::find($id);
         
         $supActivos = DB::table('pspprocessesxsupervisors')->join('pspprocesses','pspprocesses.id','=','pspprocessesxsupervisors.idpspprocess')->join('supervisors','pspprocessesxsupervisors.idsupervisor','=','supervisors.id')->select('supervisors.id','supervisors.nombres','supervisors.apellido_paterno','supervisors.codigo_trabajador','pspprocessesxsupervisors.id as idpsp')->where('pspprocesses.id',$id)->where('pspprocessesxsupervisors.deleted_at',null)->get();
-
+        
         $ids = [];
         foreach ($supActivos as $sup) {
             array_push($ids, $sup->id);

@@ -101,19 +101,14 @@ class SupervisorController extends Controller
             //si idperfil 1 o 2
             switch ($profileId) {
                 case 1:
-                    $teacher       = Teacher::find($userId);
+                    $teacher       = Teacher::where('IdUsuario',$userId)->first();
                     break;
                 case 2:
-                    $teacher       = Teacher::find($userId);
+                    $teacher       = Teacher::where('IdUsuario',$userId)->first();
                     break;
-                default: $supervisor->IdFaculty       = 1;
             }
-
-            if($teacher==null){
-                $supervisor->IdFaculty       = 1;    
-            }else{
-                $supervisor->IdFaculty       = $teacher->IdEspecialidad;
-            }
+            $supervisor->IdFaculty       = $teacher->IdEspecialidad;
+            
             $supervisor->save();
 
             //Enviar correo

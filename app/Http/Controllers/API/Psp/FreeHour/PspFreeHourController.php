@@ -13,6 +13,7 @@ use Intranet\Models\PspStudent;
 use Intranet\Models\meeting;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspProcessxTeacher;
+use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 
 
@@ -104,6 +105,21 @@ class PspFreeHourController extends BaseController
       
         $format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
+        $dt = Carbon::createFromFormat('d/m/Y',$fecha);
+        $hh  = str_replace(":00","", $horaAux);
+
+        $var = freeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh]]) ->get()->first();
+        if($var != null){
+
+
+                 $mensaje = 'Ya se registro previamente una reunion con fecha'.$fecha;
+
+                 $array['message'] = $mensaje;
+                 return $this->response->array($array);
+
+        }
+             
+
 
         $freeHour =  new FreeHour;
         $freeHour->fecha = $date;

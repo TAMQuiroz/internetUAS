@@ -16,6 +16,7 @@ use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspProcessxTeacher;
 use Intranet\Models\Tutstudent;
+use Carbon\Carbon;
 use Mail;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -233,9 +234,28 @@ public function storeByStudent(Request $request){
     //POR SER DE TIPO REUNION  == 1
 
 
+
+
+           $dt = Carbon::createFromFormat('d/m/Y',$fecha);
+           $hh  = str_replace(":00","", $horaAux);
+           $tt = Carbon::createFromFormat('H',$hh);
+
+          
+          
+           $m = meeting::where([['fecha',$dt->format('Y-m-d')],['hora_inicio',$tt->format('H:i:s')]])->get()->first();
+           $f = freeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh]])->get()->first();
+          
+           if($m != null && $f != null){
+              $mensaje = "Ya registro previamente una reunion con fecha";
+              $array['message'] = $mensaje;
+              return $this->response->array($array);
+
+           }
+
+
      $pspstudent =PspStudent::where('IdAlumno',$idAlumno)->first(); 
 
-     $freeHour = new FreeHour;
+     $freeHour = new freeHour;
       $meeting =  new meeting;
 
       $freeHour->fecha = $date;

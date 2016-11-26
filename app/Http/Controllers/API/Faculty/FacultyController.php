@@ -362,6 +362,13 @@ class FacultyController extends BaseController
         $cicloxespecialidad = Cicle::where('IdEspecialidad',$idEspecialidad)
                                    ->where('Vigente', 1)->first();
         $academic_cycle_id = $cicloxespecialidad->IdCicloAcademico;
+      }else{
+        $course = Course::where('IdCurso',$course_id)->first();
+        $academic_semester = Cicle::where('IdCiclo',$academic_cycle_id)
+                                  ->where('IdEspecialidad',$course->IdEspecialidad)
+                                  ->where('Vigente' , 1)
+                                  ->first();
+        $academic_cycle_id = $academic_semester->IdCicloAcademico;
       }
       //sacamos el cursoxciclo del curso que queremos ver sus resultados
       $coursexteachers = CoursexCycle::where('IdCicloAcademico',$academic_cycle_id)

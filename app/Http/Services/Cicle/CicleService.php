@@ -20,6 +20,11 @@ class CicleService
         return $cicle;
     }
 
+    public function findCicle2($request) {
+        $cicle = Cicle::where('IdCiclo', $request['cicle_code'])->first();
+        return $cicle;
+    }
+
     public function findActualCicle() {
         $cicle = Cicle::where('Vigente', '1')->first();
         return $cicle;

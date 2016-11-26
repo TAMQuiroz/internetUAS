@@ -251,17 +251,18 @@ class StudentsResultService {
     // obtener todos los resultados estudiantiles evaluados de acuerdo al curso
     public function findREByCourse($idCurso) {
 
-        //$studentResultsByPeriod = $this->findByFacultyPeriod();
         $course = Course::where('IdCurso',$idCurso)->where('deleted_at', null)->first();
-        $studentResultsByCourse = $course->studentsResults;
+        $aportes = Contribution::where('IdCurso', $course->IdCurso)->get();     
 
-        $ar =  array();
-        foreach($studentResultsByCourse as $sr){
-            if($sr->Estado == 1){
-                array_push($ar, $sr);
-            }
+        $idsResultadoEstudiantil =  array();
+        foreach($aportes as $ap){
+            if($ap->deleted_at == null){               
+                array_push($idsResultadoEstudiantil, $ap->IdResultadoEstudiantil);
+            }            
         }
-        return $ar;
+        $res = StudentsResult::whereIn('IdResultadoEstudiantil', $idsResultadoEstudiantil)->get();
+        
+        return $res;
     }
 
     public function updateEvaluated($request) {

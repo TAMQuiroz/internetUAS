@@ -145,7 +145,12 @@ class FacultyController extends BaseController
 
 
     public function getCourseSchedule($course_id,$academic_cycle_id){
-        $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_cycle_id)->first();
+        $course = Course::where('IdCurso',$course_id)->first();
+        $academic_semester = Cicle::where('IdCiclo',$academic_cycle_id)
+                                  ->where('IdEspecialidad',$course->IdEspecialidad)
+                                  ->where('Vigente' , 1)
+                                  ->first();
+        $coursexcycle = CoursexCycle::where('IdCurso',$course_id)->where('IdCicloAcademico',$academic_semester->IdCicloAcademico)->first();
         $schedules = Schedule::where('IdCursoxCiclo',$coursexcycle->IdCursoxCiclo)
                              ->with('professors')
                              ->with('courseEvidences')
@@ -168,8 +173,9 @@ class FacultyController extends BaseController
 
     public function getEvaluatedCoursesBySemester($faculty_id, $semester_id)
     {
-      $academic_semester = Cicle::where('IdCicloAcademico',$semester_id)
+      $academic_semester = Cicle::where('IdCiclo',$semester_id)
                                 ->where('IdEspecialidad',$faculty_id)
+                                ->where('Vigente' , 1)
                                 ->first();
       $courses = [];
       if ($academic_semester) {
@@ -332,6 +338,8 @@ class FacultyController extends BaseController
           if($coursexteacer){
             $course = Course::where('IdCurso',$coursexteacer->IdCurso)->first();
             $schedules = Schedule::where('IdCursoxCiclo',$value->IdCursoxCiclo)->get();
+            $schedules->load('professors');
+            $schedules->load('courseEvidences');
             $course['schedule'] = $schedules;
             array_push($courses, $course);
           }
@@ -346,6 +354,15 @@ class FacultyController extends BaseController
     }
 
     public function getEffortTable($academic_cycle_id, $course_id, $schedule_id, $student_id){
+      if ($academic_cycle_id == -1){
+        $user = JWTAuth::parseToken()->authenticate();
+        //especialidad
+        $idEspecialidad = $this->getUserSpecialtyId($user);
+        //ciclo actual de la especialidad
+        $cicloxespecialidad = Cicle::where('IdEspecialidad',$idEspecialidad)
+                                   ->where('Vigente', 1)->first();
+        $academic_cycle_id = $cicloxespecialidad->IdCicloAcademico;
+      }
       //sacamos el cursoxciclo del curso que queremos ver sus resultados
       $coursexteachers = CoursexCycle::where('IdCicloAcademico',$academic_cycle_id)
                                      ->where('IdCurso',$course_id)

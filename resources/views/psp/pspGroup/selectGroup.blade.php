@@ -19,7 +19,7 @@
                 <h3 class="panel-title">Grupos</h3>
             </div>
             <div class="panel-body">
-            	{{Form::open(['route' => 'pspGroup.selectGroupStore', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+            	{{Form::open(['route' => 'meeting.index', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
 
                 <table class="table table-striped responsive-utilities jambo_table bulk_action"> 
                     <thead> 
@@ -45,7 +45,7 @@
                 <div class="row">
 					<div class="col-md-8 col-sm-12 col-xs-12">						
 						{{Form::submit('Seleccionar', ['class'=>'btn btn-success pull-right'])}}
-						<a class="btn btn-default pull-right" href="{{ route('index.ourFaculty',$idFaculty) }}">Cancelar</a>
+						<a class="btn btn-default pull-right" href="{{ route('meeting.index') }}">Cancelar</a>
 					</div>
 				</div>
                 {{Form::close()}}

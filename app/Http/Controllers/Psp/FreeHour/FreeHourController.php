@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Auth;
 use Intranet\Http\Requests;
-use Intranet\Models\freeHour;
+use Intranet\Models\FreeHour;
 use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
 use Intranet\Models\PspStudent;

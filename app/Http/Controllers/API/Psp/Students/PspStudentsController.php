@@ -128,13 +128,19 @@ class PspStudentsController extends BaseController
             $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->first();
 
 
-                
-            $pspstudents = PspStudent::where('idsupervisor',$supervisor->id)->get();
+
+            $pspprocess = PspProcess::find($supervisor->idpspprocess);
+
+          
+
+            if($pspprocess != null){
 
 
+                      $pspstudents = PspStudent::where('idsupervisor',$supervisor->id)->get();
 
 
-            $data = array();
+                          $data = array();
+
                 foreach ($pspstudents as $pspstudent) {
 
                     
@@ -157,7 +163,27 @@ class PspStudentsController extends BaseController
                 }
 
 
-        return $this->response->array($data );
+                return $this->response->array($data );
+
+
+
+
+
+
+
+        }else{
+
+
+            $mensaje = "No pertence a un proceso";
+            $array['message'] = $mensaje;
+            return $this->response->array($array);
+
+
+        }
+
+
+                
+          
 
 
 
@@ -175,7 +201,7 @@ class PspStudentsController extends BaseController
 
             
                 $mail = $student->correo;
-                Mail::send('emails.notifyScore', compact('notaFinal'), function($m) use($mail){
+                Mail::send('emails.notifyScore', $notaFinal, function($m) use($mail){
                     $m->subject('Notificacion de Nota');
                     $m->to($mail);
                 });

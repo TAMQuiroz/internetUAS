@@ -52,8 +52,8 @@
                     <tbody>
                     @foreach($reporte as $rep)
                         <tr> 
-                            <td>{{$rep->PspStudent->Student->Codigo}}</td>
-                            <td>{{$rep->PspStudent->Student->Nombre.' '.$rep->PspStudent->Student->ApellidoPaterno.' '.$rep->PspStudent->Student->ApellidoMaterno}}</td> 
+                            <td>{{$rep->Student->Codigo}}</td>
+                            <td>{{$rep->Student->Nombre.' '.$rep->Student->ApellidoPaterno.' '.$rep->Student->ApellidoMaterno}}</td> 
                             <td>{{$rep->Pspcriterio->nombre}}</td> 
                             <td>{{$rep->nota}}
                         </tr> 

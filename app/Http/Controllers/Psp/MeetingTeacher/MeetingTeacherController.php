@@ -50,8 +50,10 @@ class MeetingTeacherController extends Controller
     {
 
         $arr = array(); 
-        $horas = FreeHour::get();
-        $student = Student::find($id);        
+        $student = Student::find($id); 
+        $pspstudent =PspStudent::where('IdAlumno',$student->IdAlumno)->first(); 
+        $horas = FreeHour::where('idpspprocess',$pspstudent->idpspprocess)->get();
+        //$horas = FreeHour::get();   
         foreach ($horas as $hora) {
             $m=null;            
             $m=MeetingTeacher::where('idfreehour',$hora->id)->get();

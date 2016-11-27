@@ -40,7 +40,9 @@ class MeetingController extends Controller
     {
         $arr = array(); 
         $meet=meeting::get();
-        $horas = FreeHour::get();
+        $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first();
+        $pspstudent =PspStudent::where('IdAlumno',$student->IdAlumno)->first(); 
+        $horas = FreeHour::where('idpspprocess',$pspstudent->idpspprocess)->get();
         foreach ($horas as $hora) {
             $m=null;            
             $m=meeting::where('idfreehour',$hora->id)->get();

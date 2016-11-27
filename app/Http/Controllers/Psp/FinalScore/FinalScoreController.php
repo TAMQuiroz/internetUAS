@@ -38,11 +38,12 @@ class FinalScoreController extends Controller
     public function index($idAlumno)
     {
         $user = Session::get('user');
-        $supervisor = Supervisor::find($user->id);
-        $pspProceso = PspProcess::find($supervisor->idpspprocess);
-        if($pspProceso!=null){
-            $criterios  = $pspProceso->criterios;
-            $psp=PspStudent::where('idalumno',$idAlumno)->first(); 
+        $supervisor = Supervisor::where('iduser',$user->id)->first(); 
+        $psp=PspStudent::where('idalumno',$idAlumno)->first(); 
+        if($psp!=null)$pspProceso = PspProcess::find($psp->idpspprocess);
+        else $pspProceso=null;
+        if($pspProceso!=null && $supervisor!=null){
+            $criterios  = $pspProceso->criterios;            
             //dd($psp);
             //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
             //echo " idcurso ".$pspProceso->idcurso;
@@ -65,6 +66,7 @@ class FinalScoreController extends Controller
                 else $finalScore =0;
                $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$psp->id)->first();
                if($inscriptiofile!=null){
+                    $finalScore =number_format($finalScore, 2, '.', '');
                //dd($inscriptiofile);
                    $inscriptiofile->nota_final=$finalScore;
                    //dd($inscriptiofile);

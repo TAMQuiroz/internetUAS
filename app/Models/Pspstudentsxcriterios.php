@@ -17,8 +17,8 @@ class Pspstudentsxcriterios extends Model{
         return $this->belongsTo('Intranet\Models\Pspcriterio', 'idcriterio');
     }
 
-    public function pspStudent(){
-        return $this->belongsTo('Intranet\Models\PspStudent', 'idpspstudent');
+    public function student(){
+        return $this->belongsTo('Intranet\Models\Student', 'idpspstudent');
     }
 
 }

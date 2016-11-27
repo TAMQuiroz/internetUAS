@@ -90,7 +90,7 @@ class reportPspController extends Controller
         //if($r>0){
             foreach($students as $p){
                     $proc2=null;                
-                    $proc2=Pspstudentsxcriterios::where('idpspstudent',$p->id)->get();
+                    $proc2=Pspstudentsxcriterios::where('idpspstudent',$p->idalumno)->get();
                     //dd($proc2);
                     $r2 = count($proc2);  
                     if($proc2!=null && $r2>0){

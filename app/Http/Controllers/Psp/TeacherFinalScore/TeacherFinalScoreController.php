@@ -60,7 +60,13 @@ class TeacherFinalScoreController extends Controller
     {
         
         $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$id)->first();
-        $finalScore= $inscriptiofile->nota_final;
+        if($inscriptiofile!=null)
+        {
+            $finalScore= $inscriptiofile->nota_final;
+        }else{
+            $finalScore= 21;
+        }
+        
 
         $data = [
                     'finalScore'    => $finalScore,

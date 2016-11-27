@@ -8,7 +8,7 @@ use Intranet\Models\Status;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Http\Requests\MeetingEditRequest;
-use Intranet\Models\freeHour;
+use Intranet\Models\FreeHour;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
 use Intranet\Models\User;

@@ -189,6 +189,10 @@ class ReportController extends Controller
                     return redirect()->back()->with('warning', 'Debe seleccionar un rango completo de numero de proyectos');
                 }
                 
+                if (($fechaI == null && $fechaF != null) || ($fechaI !=null && $fechaF == null)){
+                    return redirect()->back()->with('warning', 'Debe seleccionar un rango adecuado de fechas');   
+                }
+
             }
 
         $data = ['comboEspecialidades' => $comboEspecialidades,

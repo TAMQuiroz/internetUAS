@@ -13,6 +13,7 @@ use Intranet\Models\PspStudent;
 use Intranet\Models\meeting;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspProcessxTeacher;
+use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 
 
@@ -104,6 +105,21 @@ class PspFreeHourController extends BaseController
       
         $format = "d/m/Y";
         $date= DateTime::createFromFormat($format, $fecha);
+        $dt = Carbon::createFromFormat('d/m/Y',$fecha);
+        $hh  = str_replace(":00","", $horaAux);
+
+        $var = FreeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh]]) ->get()->first();
+        if($var != null){
+
+
+                 $mensaje = 'Ya se registro previamente una reunion con fecha'.$fecha;
+
+                 $array['message'] = $mensaje;
+                 return $this->response->array($array);
+
+        }
+             
+
 
         $freeHour =  new FreeHour;
         $freeHour->fecha = $date;
@@ -149,6 +165,10 @@ class PspFreeHourController extends BaseController
     public function showFreeHourForStudent(){
 
 
+        try{
+
+
+
         $user =  JWTAuth::parseToken()->authenticate();
         
 
@@ -161,7 +181,7 @@ class PspFreeHourController extends BaseController
             $freeHours = FreeHour::get();
        
         else 
-            $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();	
+            $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();   
 
 
       $validFreeHour = array();
@@ -179,12 +199,28 @@ class PspFreeHourController extends BaseController
                   $hour->supervisor;
                   array_push($validFreeHour, $hour);
           }
-      	
+        
 
-      	}
+        }
 
 
           return  $this->response->array($validFreeHour);
+
+
+
+
+
+        }catch(Exception $ex){
+
+                $mensaje = "Error";
+                $array['message'] = $mensaje;
+                return $this->response->array($array);
+
+
+
+
+        }
+       
 
 
  
@@ -214,13 +250,29 @@ class PspFreeHourController extends BaseController
 
         $user =  JWTAuth::parseToken()->authenticate();
 
-
-
+    try{
         $supervisor = Supervisor::where('iduser',$user->IdUsuario)->get()->first();
 
-        $freeHours = FreeHour::where('idsupervisor',$supervisor->id)->get();
+        $freeHours = FreeHour::where([
+            ['idsupervisor',$supervisor->id],
+            ['idpspprocess',$supervisor->idpspprocess]])->get();
 
         return $this->response->array($freeHours->toArray());
+
+
+
+
+    }catch(Exception $ex){
+                $mensaje = "Error";
+                $array['message'] = $mensaje;
+                return $this->response->array($array);
+
+
+
+
+    }
+
+        
 
     }
 
@@ -229,10 +281,22 @@ class PspFreeHourController extends BaseController
 
 
     private function maximum(){
-        $a = PspStudent::count();
-        $s = Supervisor::count();
-        $maximum = $a/$s;
 
-        return $maximum;
+        try{
+
+            $a = PspStudent::count();
+            $s = Supervisor::count();
+            $maximum = $a/$s;
+
+            return $maximum;
+
+
+
+        }catch(Exception $ex){
+
+
+
+        }
+        
     }
 }

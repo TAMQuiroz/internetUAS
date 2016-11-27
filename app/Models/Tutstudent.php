@@ -190,36 +190,19 @@ class Tutstudent extends Model
 
     static public function getQuantityPerTutor($quantityTutors, $quantityStudents) {
         
-        $quantity = $quantityStudents / $quantityTutors;
-
-        $quantity = ceil($quantity);
-
-        $count = 0;
-
-        $numberStudent = 0;
-
-        $default = 0;
-
         $allQuantity = array();
 
-        while ($numberStudent + $quantity <= $quantityStudents) {
-            array_push($allQuantity, $quantity);
-
-            $numberStudent += $quantity;
-
-            $count += 1;
+        for ($i=0; $i < $quantityTutors; $i++) { 
+            array_push($allQuantity, 0);
         }
 
-        if ($quantityStudents - $numberStudent) {
-            array_push($allQuantity, $quantityStudents - $numberStudent);
-
-            $count += 1;
-        }
-
-        while ($count != $quantityTutors) {
-            array_push($allQuantity, $default);
-
-            $count += 1;
+        while ($quantityStudents) {
+            for ($i=0; $i < $quantityTutors; $i++) { 
+                if ($quantityStudents != 0) {
+                    $allQuantity[$i] += 1;
+                    $quantityStudents -= 1;
+                }
+            }
         }
 
         return $allQuantity;

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\ParameterRequest;
 use Intranet\Models\Parameter;
+use Intranet\Models\FacultyxCycle;
 use Illuminate\Support\Facades\Session;
 use Intranet\Http\Services\User\PasswordService;
 use DateTime;
@@ -22,14 +23,18 @@ class ParameterController extends Controller
     {
         $mayorId    = Session::get('faculty-code');
         $parameters = Parameter::where('id_especialidad', $mayorId)->first();
+        $cycle = FacultyxCycle::where('IdEspecialidad', $mayorId)->first();
 
         $today = date('d-m-Y'); 
-        $futureDay = date('d-m-Y', strtotime($today . '+185 day'));
+        $futureDay = date('d-m-Y', strtotime($cycle->FechaFin));
+        $firstDay = date('d-m-Y', strtotime($cycle->FechaInicio));
+
         $data = [
             'duration'      => 0,
             'startDate'     => $today,
             'endDate'       => $today,
             'numberDays'    => 1,
+            'firstDay'      => $firstDay,
             'futureDay'     => $futureDay,
         ];
 
@@ -48,6 +53,7 @@ class ParameterController extends Controller
                 'startDate'     => $startDate,
                 'endDate'       => $endDate,
                 'numberDays'    => $numberDays,
+                'firstDay'      => $firstDay,
                 'futureDay'     => $futureDay,
             ];
         }

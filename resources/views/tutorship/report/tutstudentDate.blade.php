@@ -96,47 +96,47 @@
                             @if($tutstudentPendientes)
                             <td class=" ">{{ $tutstudentPendientes[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentCanceladas)
                             <td class=" ">{{ $tutstudentCanceladas[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentSugeridas)
                             <td class=" ">{{ $tutstudentSugeridas[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentRechazadas)
                             <td class=" ">{{ $tutstudentRechazadas[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentAsistidas)
                             <td class=" ">{{ $tutstudentAsistidas[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentNoAsistidas)
                             <td class=" ">{{ $tutstudentNoAsistidas[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentNoProgramadas)
                             <td class=" ">{{ $tutstudentNoProgramadas[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentConfirmadas)
                             <td class=" ">{{ $tutstudentConfirmadas[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                             @if($tutstudentTotal)
                             <td class=" ">{{ $tutstudentTotal[$key] }}</td>
                             @else
-                            0
+                            <td class=" ">0</td>
                             @endif
                         </tr>
                         @endforeach

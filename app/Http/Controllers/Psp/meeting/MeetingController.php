@@ -25,7 +25,8 @@ class MeetingController extends Controller
     //Vista alumno
     public function index()
     {
-        $meetings = meeting::orderby('fecha','asc')->paginate(10);
+        $student = Student::where('IdUsuario',Auth::User()->IdUsuario)->first();
+        $meetings = meeting::where('idstudent',$student->IdAlumno)->orderby('fecha','asc')->paginate(10);
 
         $data = [
             'meetings'    =>  $meetings,
@@ -39,7 +40,7 @@ class MeetingController extends Controller
     {
         $arr = array(); 
         $meet=meeting::get();
-        $horas = freeHour::get();
+        $horas = FreeHour::get();
         foreach ($horas as $hora) {
             $m=null;            
             $m=meeting::where('idfreehour',$hora->id)->get();

@@ -150,9 +150,9 @@ class ReportController extends Controller {
                     $tAux = TutMeeting::getTutMeetingsByDates($filters)->where('id_topic', $t->id)->where('estado', 6)->count();
                     
                         $topicTotalAsistidas += $tAux;
-                        $topics_name_list[$t->id] = $t->nombre;
-                        $topics_amount_list[$t->id] = $tAux;
-                        $topics_percentage_list[$t->id] = $tAux / $tutMeetings->count() * 100;
+                        array_push($topics_name_list, $t->nombre);
+                        array_push($topics_amount_list, $tAux);
+                        array_push($topics_percentage_list, $tAux / $tutMeetings->count() * 100);
                     
                 }
             }

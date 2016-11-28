@@ -147,7 +147,7 @@ class ReportController extends Controller {
 
             foreach ($topics as $t) {
                 if ($t) {
-                    $tAux = $tutMeetings->where('id_topic', $t->id)->where('estado', 6)->count();
+                    $tAux = TutMeeting::getTutMeetingsByDates($filters)->where('id_topic', $t->id)->where('estado', 6)->count();
                     
                         $topicTotalAsistidas += $tAux;
                         array_push($topics_name_list, $t->nombre);
@@ -310,13 +310,13 @@ class ReportController extends Controller {
           Asistida    => 6
           No asistida => 7
          */
-        $pendientes = $tutMeetings->where('estado', 1)->count();
-        $confirmadas = $tutMeetings->where('estado', 2)->count();
-        $canceladas = $tutMeetings->where('estado', 3)->count();
-        $sugeridas = $tutMeetings->where('estado', 4)->count();
-        $rechazadas = $tutMeetings->where('estado', 5)->count();
-        $asistidas = $tutMeetings->where('estado', 6)->count();
-        $no_asistidas = $tutMeetings->where('estado', 7)->count();
+        $pendientes = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 1)->count();
+        $confirmadas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 2)->count();
+        $canceladas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 3)->count();
+        $sugeridas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 4)->count();
+        $rechazadas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 5)->count();
+        $asistidas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 6)->count();
+        $no_asistidas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 7)->count();
         $citas = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas;
 
         $reasons_amount_list = array();
@@ -325,7 +325,7 @@ class ReportController extends Controller {
         $cancelledTotal = 0;
         foreach ($reasons as $reason) {
             if ($reason) {
-                $reasonAux = $tutMeetings->where('estado', 3)
+                $reasonAux = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 3)
                         ->where('id_reason', $reason->id)
                         ->count();
                 if ($reasonAux > 0) {

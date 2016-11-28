@@ -9,6 +9,8 @@ use Intranet\Models\PspDocument;
 use Intranet\Http\Requests;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Models\PspStudent;
+use Intranet\Models\Teacher;
+use Intranet\Models\PspProcessxTeacher;
 use Intranet\Models\Studentxinscriptionfiles;
 use Auth;
 
@@ -21,7 +23,23 @@ class TeacherFinalScoreController extends Controller
      */
     public function index()
     {
-        $students = PspStudent::paginate(10);
+        //$students = PspStudent::paginate(10);
+        $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first(); 
+        $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+        $proc = array(); 
+        $r = count($procxt);   
+        //dd($procxt);
+        //if($r>0){
+            foreach($procxt as $p){ 
+                //dd($p);                    
+                $stud = PspStudent::where('idpspprocess',$p->idpspprocess)->get(); 
+                //dd($stud);               
+                foreach($stud as $s){
+                    $proc[]=PspStudent::find($s->id);
+                }
+            }
+        //}
+        $students=$proc;
 
         $data = [
             'students'    =>  $students,
@@ -60,7 +78,13 @@ class TeacherFinalScoreController extends Controller
     {
         
         $inscriptiofile= Studentxinscriptionfiles::where('idpspstudents',$id)->first();
-        $finalScore= $inscriptiofile->nota_final;
+        if($inscriptiofile!=null)
+        {
+            $finalScore= $inscriptiofile->nota_final;
+        }else{
+            $finalScore= 21;
+        }
+        
 
         $data = [
                     'finalScore'    => $finalScore,

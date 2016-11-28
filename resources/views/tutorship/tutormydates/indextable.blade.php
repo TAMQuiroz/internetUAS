@@ -80,8 +80,13 @@
                             @endif
                             @if($tutMeeting->estado == 1 || 
                                 $tutMeeting->estado == 2 || 
-                                $tutMeeting->estado == 4)
+                                ($tutMeeting->estado == Config::get('constants.pendiente')))
                                 <a href="#eliminar{{$tutMeeting->id}}" class="btn btn-danger btn-xs view-group" title="Cancelar" style="height: inherit;">
+                                    <i class="fa fa-close"></i>
+                                </a>
+                            @endif
+                            @if($tutMeeting->estado == Config::get('constants.sugerida'))
+                                <a href="#eliminar{{$tutMeeting->id}}" class="btn btn-danger btn-xs view-group" title="Rechazar" style="height: inherit;">
                                     <i class="fa fa-close"></i>
                                 </a>
                             @endif

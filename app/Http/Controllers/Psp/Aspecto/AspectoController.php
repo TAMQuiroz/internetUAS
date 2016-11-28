@@ -47,7 +47,8 @@ class AspectoController extends Controller
     {
         $user = Session::get('user');
         $supervisor = Supervisor::find($user->id);
-        $pspProceso = PspProcess::find($supervisor->idpspprocess);
+        $psp=PspStudent::where('idalumno',$idAlumno)->first();         
+        $pspProceso = PspProcess::find($psp->idpspprocess);
         $criterios  = $pspProceso->criterios;
         //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();
         //echo " idcurso ".$pspProceso->idcurso;

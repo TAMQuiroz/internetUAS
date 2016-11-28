@@ -23,7 +23,7 @@
                     {{Form::label('Tamaño Maximo de Archivo *',null,['class'=>'control-label col-md-4 col-sm-3 col-xs-12'])}}
                     <div class="col-md-4">
                         {{Form::text('Tamaño_Maximo_de_Archivo',$psp->max_tam_plantilla,['class'=>'form-control', 'required'])}}
-                    </div>
+                    </div>MB
 				</div>
 
                 <div class="form-group">

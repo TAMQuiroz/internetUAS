@@ -225,10 +225,10 @@ class MeetingController extends Controller
     //Vista supervisor
     public function createSup()
     {
-        $students = Student::get();
+        $pspStudents = PspStudent::with('student')->get();
         $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
         $data = [
-            'students'    =>  $students,
+            'pspStudents'    =>  $pspStudents,
         ];
         $data['lugar'] = $supervisor->direccion;
         return view('psp.meeting.createSup',$data);

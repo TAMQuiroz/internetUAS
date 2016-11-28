@@ -202,7 +202,7 @@ class PspStudentsController extends BaseController
 
             
                 $mail = $student->correo;
-                Mail::send('emails.notifyScore', $notaFinal, function($m) use($mail){
+                Mail::send('emails.notifyScore',['notaFinal' =>$notaFinal], function($m) use($mail){
                     $m->subject('Notificacion de Nota');
                     $m->to($mail);
                 });

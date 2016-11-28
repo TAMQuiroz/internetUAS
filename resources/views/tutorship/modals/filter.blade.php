@@ -26,7 +26,8 @@
   		<div class="form-group" style="margin-bottom: 30px;">
 			<label class="control-label col-md-4 col-sm-4 col-xs-6 label-modal">Estado</label>
 			<div class="col-md-6 col-sm-6 col-xs-6">
-				<select name="estado" class="form-control">					
+				<select name="estado" class="form-control">	
+					<option value="">Seleccione estado</option>				
 					<option value="1">Activo</option>
 					<option value="3">Inactivo</option>					                        
 				</select> 

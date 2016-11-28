@@ -219,14 +219,14 @@ class ReportController extends Controller {
           No asistida => 7
          */
         foreach ($tutMeetingsByTutstudents as $tutMeetingsByTutstudent) {
-            $pendientes = $tutMeetings->where('estado', 1)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $confirmadas = $tutMeetings->where('estado', 2)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $canceladas = $tutMeetings->where('estado', 3)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $sugeridas = $tutMeetings->where('estado', 4)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $rechazadas = $tutMeetings->where('estado', 5)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $asistidas = $tutMeetings->where('estado', 6)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $no_asistidas = $tutMeetings->where('estado', 7)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
-            $no_programadas = $tutMeetings->where('no_programada', 1)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $pendientes = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 1)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $confirmadas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 2)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $canceladas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 3)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $sugeridas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 4)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $rechazadas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 5)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $asistidas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 6)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $no_asistidas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 7)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
+            $no_programadas = TutMeeting::getTutMeetingsByDates($filters)->where('no_programada', 1)->where('id_tutstudent', $tutMeetingsByTutstudent->tutstudent->id)->count();
             $total = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas + $no_programadas;
             if ($total > 0) {
                 array_push($pendientes_list, $pendientes);
@@ -241,14 +241,14 @@ class ReportController extends Controller {
             }
         }
 
-        $pendientes = $tutMeetings->where('estado', 1)->count();
-        $confirmadas = $tutMeetings->where('estado', 2)->count();
-        $canceladas = $tutMeetings->where('estado', 3)->count();
-        $sugeridas = $tutMeetings->where('estado', 4)->count();
-        $rechazadas = $tutMeetings->where('estado', 5)->count();
-        $asistidas = $tutMeetings->where('estado', 6)->count();
-        $no_asistidas = $tutMeetings->where('estado', 7)->count();
-        $no_programadas = $tutMeetings->where('no_programada', 1)->count();
+        $pendientes = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 1)->count();
+        $confirmadas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 2)->count();
+        $canceladas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 3)->count();
+        $sugeridas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 4)->count();
+        $rechazadas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 5)->count();
+        $asistidas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 6)->count();
+        $no_asistidas = TutMeeting::getTutMeetingsByDates($filters)->where('estado', 7)->count();
+        $no_programadas = TutMeeting::getTutMeetingsByDates($filters)->where('no_programada', 1)->count();
         $citas = $pendientes + $confirmadas + $canceladas + $sugeridas + $rechazadas + $asistidas + $no_asistidas + $no_programadas;
 
         $data = [

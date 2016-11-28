@@ -208,9 +208,14 @@ class PspGroupController extends Controller
 
         if($pspStudent->idpspgroup==NULL){
             $pspGroups = PspGroup::where('idpspprocess',$pspStudent->idpspprocess)->get();
+            if(count($pspGroups)==0)
+                $noGroups = 0;
+            else
+                $noGroups = 1;
             $data = [
                 'pspGroups' => $pspGroups,
                 'idFaculty' => $pspStudent->idespecialidad,
+                'groups'    => $noGroups,
             ];
             //dd($data);
             return view('psp.pspGroup.selectGroup',$data);

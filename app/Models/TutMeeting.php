@@ -80,7 +80,7 @@ class TutMeeting extends Model {
                 $queryTutMeeting = $queryTutMeeting->where("id_docente", $filters["id_docente"]);
             }
             if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
-                $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
+                $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", [$filters["beginDate"], $filters["endDate"]]);
             }
         } else {
             //Como no encontró alumno luego de buscar, no debe regresar ninguna cita. Buscamos una cita que devuelva null

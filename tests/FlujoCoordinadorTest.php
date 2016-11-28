@@ -25,13 +25,12 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
 	    		'actions' => [],
 	    		'user' => $coord
-    		])->visit('/flujoCoordinador/1/courses/create')
+    		])->visit('/flujoCoordinador/5/courses/create')
     		->type('INF666','coursecode')
     		->type('Del diablo','coursename')
     		->select('10','courseacademicLevel')
-    		->select('1','facultycode')
     		->press('Guardar')
-    		->seePageIs('/flujoCoordinador/1/courses/')
+    		->seePageIs('/flujoCoordinador/5/courses')
     		->see('El curso se ha registrado exitosamente');
     }
 
@@ -42,13 +41,12 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $coord
-            ])->visit('/flujoCoordinador/1/courses/create')
+            ])->visit('/flujoCoordinador/5/courses/create')
             ->type('','coursecode')
             ->type('Del diablo','coursename')
-            ->select('13','courseacademicLevel')
-            ->select('1','facultycode')
+            ->select('3','courseacademicLevel')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/courses/create');
+            ->seePageIs('/flujoCoordinador/5/courses/create');
     }
 
     public function test_acr_crear_curso_03(){
@@ -58,13 +56,12 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $coord
-            ])->visit('/flujoCoordinador/1/courses/create')
+            ])->visit('/flujoCoordinador/5/courses/create')
             ->type('INF666','coursecode')
             ->type('','coursename')
-            ->select('13','courseacademicLevel')
-            ->select('1','facultycode')
+            ->select('8','courseacademicLevel')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/courses/create');
+            ->seePageIs('/flujoCoordinador/5/courses/create');
     }
     /*
     public function test_acr_crear_curso_04(){
@@ -85,7 +82,7 @@ class FlujoCoordinadorTest extends TestCase
     */
 
     //De BlackFlyff
-    public function test_uas_crear_profesor2_01(){ //Correcto
+    public function test_acr_crear_profesor2_01(){ //Correcto
 
         $user = factory(Intranet\Models\User::class)->make();
         //$facultad = factory(Intranet\Models\Faculty::class)->make();
@@ -94,7 +91,7 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/flujoCoordinador/1/profesor/create')
+            ])->visit('/flujoCoordinador/5/profesor/create')
             ->select('22222222','teachercode')
             ->select('Nombre','teachername')
             ->select('Apellido1','teacherlastname')
@@ -103,11 +100,11 @@ class FlujoCoordinadorTest extends TestCase
             ->select('Profesor Asociado','teacherposition')
             ->select('algo','teacherdescription')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/profesor')
+            ->seePageIs('/flujoCoordinador/5/profesor')
             ->see('El profesor se ha registrado exitosamente');
     } //FUNCIONA BIEN
 
-    public function test_uas_crear_profesor2_02(){ //Codigo muy largo
+    public function test_acr_crear_profesor2_02(){ //Codigo muy largo
 
         $user = factory(Intranet\Models\User::class)->make();
         //$facultad = factory(Intranet\Models\Faculty::class)->make();
@@ -116,7 +113,7 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/flujoCoordinador/1/profesor/create')
+            ])->visit('/flujoCoordinador/5/profesor/create')
             ->select('222222222222','teachercode')
             ->select('Nombre','teachername')
             ->select('Apellido1','teacherlastname')
@@ -125,10 +122,10 @@ class FlujoCoordinadorTest extends TestCase
             ->select('Profesor Asociado','teacherposition')
             ->select('algo','teacherdescription')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/profesor/create');
+            ->seePageIs('/flujoCoordinador/5/profesor/create');
     } //FALLA, FALTA VALIDAR POR BACK LA CANT DE CARACTERES
 
-    public function test_uas_crear_profesor2_03(){ //Correo no tiene formato
+    public function test_acr_crear_profesor2_03(){ //Correo no tiene formato
 
         $user = factory(Intranet\Models\User::class)->make();
         //$facultad = factory(Intranet\Models\Faculty::class)->make();
@@ -137,7 +134,7 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/flujoCoordinador/1/profesor/create')
+            ])->visit('/flujoCoordinador/5/profesor/create')
             ->select('22222222','teachercode')
             ->select('Nombre','teachername')
             ->select('Apellido1','teacherlastname')
@@ -146,10 +143,10 @@ class FlujoCoordinadorTest extends TestCase
             ->select('Profesor Asociado','teacherposition')
             ->select('algo','teacherdescription')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/profesor/create');
+            ->seePageIs('/flujoCoordinador/5/profesor/create');
     } //FALLA, FALTA VALIDAR POR BACK EL CORREO
     
-    public function test_uas_crear_objetivo_01(){
+    public function test_acr_crear_objetivo_01(){
 
         $user = factory(Intranet\Models\User::class)->make();
 
@@ -157,30 +154,29 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/flujoCoordinador/1/objetivoEducacional/create')
+            ])->visit('/flujoCoordinador/5/objetivoEducacional/create')
             ->select('ObjetivoCreado','descripcion')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/objetivoEducacional')
+            ->seePageIs('/flujoCoordinador/5/objetivoEducacional')
             ->see('El objetivo educacional se ha registrado exitosamente');
     } //FUNCIONA BIEN
 
-    public function test_uas_crear_objetivo_02(){
+    public function test_acr_crear_objetivo_02(){
         $user = factory(Intranet\Models\User::class)->make();
 
         $this->actingAs($user)
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/flujoCoordinador/1/objetivoEducacional/create')
+            ])->visit('/flujoCoordinador/5/objetivoEducacional/create')
             ->select('','descripcion')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/objetivoEducacional/create');
+            ->seePageIs('/flujoCoordinador/5/objetivoEducacional/create');
     } //FUNCIONA BIEN
     //De BlackFlyff
 
-    ////de melgar01 flujo Coordinador ---no funciona todavia
 
-    public function test_uas_crear_aspecto_01(){
+    public function test_acr_crear_resultado_01(){
 
         $user = factory(Intranet\Models\User::class)->make();
         //$facultad = factory(Intranet\Models\Faculty::class)->make();
@@ -189,16 +185,64 @@ class FlujoCoordinadorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/flujoCoordinador/1/aspect/create')
-            ->select("J - Conocer temas de actualidad",'aspect_id')
-            ->select('Super aspecto','aspect_new_name')
+            ])->visit('/flujoCoordinador/5/studentResult/create')
+            ->select("Z",'identifier')
+            ->select('Res1','description')
             ->press('Guardar')
-            ->seePageIs('/flujoCoordinador/1/aspect')
-            ->see('El aspecto se ha registrado exitosamente');
+            ->seePageIs('/flujoCoordinador/5/studentResult');
     }
 
-    //////hasta aca es de melgar01
 
+
+    public function test_acr_crear_instrumento_01(){
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/5/instrumento/create')
+            ->select("instrumento1",'nombre')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/5/instrumento')
+            ->see('El instrumento se ha registrado exitosamente');
+    }
+
+    public function test_acr_crear_instrumento_02(){
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$facultad = factory(Intranet\Models\Faculty::class)->make();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/5/instrumento/create')
+            ->select('','nombre')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/5/instrumento/create');
+    }
+
+    public function test_acr_crear_cursoDelCiclo_01(){  //no sale
+
+        $user = factory(Intranet\Models\User::class)->make();
+        //$docente  = factory(Intranet\Models\Teacher::class)->create();
+
+        $this->actingAs($user)
+            ->withSession([
+                'actions' => [],
+                'user' => $user
+            ])->visit('/flujoCoordinador/5/horario/78/create')
+            ->select(15,'idT')
+            ->select(78,'courseId')
+            ->type('h122','codeT')
+            ->type(6,'teacher[]')
+            ->press('Guardar')
+            ->seePageIs('/flujoCoordinador/5/horario/78')
+            ->see('Se registró el horario con éxito');
+    }
 
     
 }

@@ -36,8 +36,6 @@ $pspPxS = PspProcessxSupervisor::get();
 $numeroProceso = array();
 $idProcess = array();
 $count = 0;
-
-
 $IdDocente = Teacher::where('IdUsuario',$user ["IdUsuario"])->first();
 $idProcess = PspProcessxTeacher::where('iddocente',$IdDocente["IdDocente"])->get();
 $idSupervisors =  array();
@@ -131,7 +129,7 @@ $array["Notas"]=$alumnoFinalesXnotaInscriptionFile;
 
 
 
-
+//Get all FI, supervisor
 
     public function enviarRecomendaciones()
     {
@@ -139,7 +137,8 @@ $array["Notas"]=$alumnoFinalesXnotaInscriptionFile;
          // $supervisor = array();
        // $supervisor = PspProcessxSupervisor::where('idpspprocess')->get();
 $user =  JWTAuth::parseToken()->authenticate();
-$supervisor = Supervisor::find($user->IdUsuario);
+//$supervisor = Supervisor::find($user->IdUsuario);
+$supervisor = Supervisor::where('iduser',$user['IdUsuario'])->first(); 
 $array = array();
 
 $Process = PspProcessxSupervisor::where('idsupervisor',$supervisor["id"])->get();
@@ -151,12 +150,10 @@ $alumnosDelSupervisor = array();
 $count = 0;
 foreach ($pspAlSupervisor as $value)
 {
-  $alumnosDelSupervisor[$count] = Student::find($value["idalumno"]);
+  //$alumnosDelSupervisor[$count] = Student::find($value["idalumno"]);
+  $alumnosDelSupervisor[$count] = Student::where('IdAlumno',$value["idalumno"])->first(); 
   $count= $count+1;
 }
-
-
-
 
 $pspSxI = Studentxinscriptionfiles::get();
 $studentXinscription = array();
@@ -192,14 +189,18 @@ return $this->response->array($array);
 }
 
 
-
+//Modificar F.I, supervisor
 public function modificarFi(Request $request,$id)
 {
 
         try{
         $user =  JWTAuth::parseToken()->authenticate();
-        $supervisor = Supervisor::find($user->IdUsuario);
-        $ins = Inscription::find($id);
+
+        //$supervisor = Supervisor::find($user->IdUsuario);
+        $supervisor = Supervisor::where('iduser',$user['IdUsuario'])->first(); 
+        $ins = Inscription::where('id',$id)->first(); 
+        //$ins = Inscription::find($id);
+        
         $recomendaciones = $request->only('recomendaciones');
         $ins->recomendaciones =  $recomendaciones['recomendaciones'];
         $ins->save();
@@ -222,12 +223,14 @@ public function getAllInscriById(){
 
 $user =  JWTAuth::parseToken()->authenticate();
 $alumno = Student::where('IdUsuario',$user["IdUsuario"])->first();
-$pspAlumno = PspStudent::find($alumno ->IdAlumno);
+$pspAlumno   = PspStudent::where('idalumno',$alumno ->IdAlumno)->first();
+//$pspAlumno = PspStudent::find($alumno ->IdAlumno);
 $pspSxI = Studentxinscriptionfiles::where('idpspstudents',$pspAlumno["id"])->get();
 $ins = array();
 $count = 0;
 foreach ($pspSxI as $value) {
-  $ins[$count] = Inscription::find($value['idinscriptionfile']);
+  //$ins[$count] = Inscription::find($value['idinscriptionfile']);  
+  $ins[$count] = Inscription::where('id',$value['idinscriptionfile'])->first();
  $count = $count +1;
 }
 

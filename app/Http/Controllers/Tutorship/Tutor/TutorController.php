@@ -151,7 +151,8 @@ class TutorController extends Controller {
         $tutor = Teacher::find($id);
         $razones = Reason::where('tipo', 2)->get();
         $idEspecialidad = Session::get('faculty-code');
-        $students = Tutstudent::where('id_especialidad', $idEspecialidad)->where('id_tutoria', '!=', null)->get();
+        $students = Tutorship::where('id_tutor', $id)
+                    ->get();
         $tutors = Teacher::where('IdEspecialidad', $idEspecialidad)->where('rolTutoria', 1)->where('IdDocente', '!=', $id)->get();
 
         $horas = [];
@@ -169,7 +170,6 @@ class TutorController extends Controller {
         $data = [
             'tutor' => $tutor,
             'razones' => $razones,
-            'students' => $students,
             'tutors' => $tutors,
             'horas' => $horas,
             'quantities'    => $allQuantity,   

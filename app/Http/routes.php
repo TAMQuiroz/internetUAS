@@ -1294,7 +1294,9 @@ Route::group(['prefix' => 'uas'], function(){
         Route::group(['prefix' => 'misalumnos'], function(){    
             Route::get('/', ['as' => 'mis_alumnos.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyStudents']);
             Route::get('show/{id}', ['as' => 'mis_alumnos.show', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showMyStudent']);
-            
+            //Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
+            Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
+            Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
         });
 
         //Mis Citas
@@ -1302,7 +1304,8 @@ Route::group(['prefix' => 'uas'], function(){
             Route::get('/', ['as' => 'cita_alumno.index', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDates']);
             Route::get('/tabla', ['as' => 'cita_alumno.index_table', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@indexMyDatesTable']);
             Route::get('/create/{id}', ['as' => 'cita_alumno.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createDate']);
-            Route::post('/create', ['as' => 'cita_alumno.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDate']);
+            
+            Route::post('/create', ['as' => 'cita_alumno_to_tutor.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeDateToTutor']);
             Route::get('/schedule', ['as' => 'mis_citas.showSchedule', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@showSchedule']);
             Route::get('/atencion-sin-cita', ['as' => 'atencion_sin_cita.create', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@createAttention']);
             Route::post('/atencion-sin-cita', ['as' => 'atencion.store', 'uses' => 'Tutorship\TutMeeting\TutMeetingController@storeAttention']);

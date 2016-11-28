@@ -44,63 +44,79 @@ class TutSchedule extends Model
                                         $date, 
                                         $parameters)
     {
-        $durationMinutes    = $parameters->duracionCita;
+        $noAvailabilities = NoAvailability::where('id_docente', $idDocente)->get();
 
-        $durationSeconds    = $durationMinutes * 60;
-
-        $day            = TutMeeting::getNumberDay($date);
-
-        $hours          = TutSchedule::
-                                select(array('hora_inicio', 'hora_fin'))
-                                ->where('id_docente', $idDocente)
-                                ->where('dia', $day)
-                                ->get();
+        $available = true;
 
         $schedule       = [];
-
-        $allHours       = [];
-
-        foreach ($hours as $hour) {
-
-            $startSec   = strtotime($hour->hora_inicio) - strtotime('TODAY');
-            $endSec     = strtotime($hour->hora_fin)    - strtotime('TODAY');
-
-            for ($i = $startSec; $i < $endSec; $i += $durationSeconds) {
-                array_push($allHours, $i);
+        
+        foreach ($noAvailabilities as $noAvailability) {
+            $start = strtotime($noAvailability->fecha_inicio);
+            $end = strtotime($noAvailability->fecha_fin);
+            $now = strtotime($date);
+            if ($now >= $start && $now<=$end) {
+                $available = false;
             }
         }
 
-        $formatDate     = date("Y-m-d", strtotime($date)) ;
-        $ih             = $formatDate . ' ' . '00:00:00';
-        $fh             = $formatDate . ' ' . '23:00:00';
+        if ($available) {
 
-        $queryBusyHours = TutMeeting::where('inicio', '>', $ih)
-                                    ->where('inicio', '<', $fh)
+            $durationMinutes    = $parameters->duracionCita;
+
+            $durationSeconds    = $durationMinutes * 60;
+
+            $day            = TutMeeting::getNumberDay($date);
+
+            $hours          = TutSchedule::
+                                    select(array('hora_inicio', 'hora_fin'))
                                     ->where('id_docente', $idDocente)
+                                    ->where('dia', $day)
                                     ->get();
 
-        $busyHours      = [];
+            $allHours       = [];
 
-        foreach ($queryBusyHours as $queryBusyHour) {
+            foreach ($hours as $hour) {
 
-            $iniHour    = date('H:i:s', strtotime($queryBusyHour->inicio));
-            $iniSec     = strtotime($iniHour) - strtotime('TODAY');
+                $startSec   = strtotime($hour->hora_inicio) - strtotime('TODAY');
+                $endSec     = strtotime($hour->hora_fin)    - strtotime('TODAY');
 
-            array_push($busyHours, $iniSec);
-        }
-        
-        $freeHours      = array_diff($allHours, $busyHours);
+                for ($i = $startSec; $i < $endSec; $i += $durationSeconds) {
+                    array_push($allHours, $i);
+                }
+            }
 
-        foreach ($freeHours as $freeHour) {
+            $formatDate     = date("Y-m-d", strtotime($date)) ;
+            $ih             = $formatDate . ' ' . '00:00:00';
+            $fh             = $formatDate . ' ' . '23:00:00';
 
-            $startHour  = gmdate("H:i", $freeHour);
-            $endHour    = gmdate("H:i", $freeHour + $durationSeconds);
-            $element    = [
-                'id'    => $freeHour,
-                'value' => $startHour . ' - ' . $endHour
-            ];
+            $queryBusyHours = TutMeeting::where('inicio', '>', $ih)
+                                        ->where('inicio', '<', $fh)
+                                        ->where('id_docente', $idDocente)
+                                        ->get();
 
-            array_push($schedule, $element);
+            $busyHours      = [];
+
+            foreach ($queryBusyHours as $queryBusyHour) {
+
+                $iniHour    = date('H:i:s', strtotime($queryBusyHour->inicio));
+                $iniSec     = strtotime($iniHour) - strtotime('TODAY');
+
+                array_push($busyHours, $iniSec);
+            }
+            
+            $freeHours      = array_diff($allHours, $busyHours);
+
+            foreach ($freeHours as $freeHour) {
+
+                $startHour  = gmdate("H:i", $freeHour);
+                $endHour    = gmdate("H:i", $freeHour + $durationSeconds);
+                $element    = [
+                    'id'    => $freeHour,
+                    'value' => $startHour . ' - ' . $endHour
+                ];
+
+                array_push($schedule, $element);
+            }
         }
 
         return $schedule;

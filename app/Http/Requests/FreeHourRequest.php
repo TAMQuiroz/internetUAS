@@ -26,6 +26,7 @@ class FreeHourRequest extends Request
         return [
             'fecha' => 'required|date|after:'.\Carbon\Carbon::yesterday()->format('d-m-Y'),
             'hora_ini' => 'required',
+            'Proceso_de_Psp' => 'required',
         ];
     }
 

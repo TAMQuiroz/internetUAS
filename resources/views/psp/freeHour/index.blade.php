@@ -29,7 +29,8 @@
                         <thead> 
                             <tr class="headings"> 
                                 <th>Fecha</th>
-                                <th>Hora</th>                             
+                                <th>Hora</th> 
+                                <th>Curso</th>                            
                                 <th colspan="2">Acciones</th>
                             </tr> 
                         </thead> 
@@ -38,6 +39,7 @@
                             <tr> 
                                 <td>{{$freeHour->fecha}}</td>
                                 <td>{{$freeHour->hora_ini}}:00 horas</td>                             
+                                <td>{{$freeHour->Nombre}}</td>
                                 <td>
                                 
                                     <a href="{{route('freeHour.edit', $freeHour->id)}}" class="btn btn-primary btn-xs" title="Visualizar"><i class="fa fa-pencil"></i></a>

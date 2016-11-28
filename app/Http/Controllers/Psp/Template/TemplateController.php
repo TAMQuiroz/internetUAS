@@ -151,6 +151,9 @@ class TemplateController extends Controller
             $proc = array(); 
             $pspproc=PspProcess::find($phase->idpspprocess);
             $size = $request['ruta']->getSize();
+            if($size==false){
+                return redirect()->back()->with('warning', 'La plantilla que se quiere subir no se ha reconocido');
+            }
             if($pspproc->max_tam_plantilla!=0){
                 if($size > ($pspproc->max_tam_plantilla*1024*1024+10486)){
                     return redirect()->back()->with('warning', 'La plantilla que se quiere subir supera el tamaño maximo permitido');

@@ -165,8 +165,14 @@ class TutMeeting extends Model {
 
         if (!empty($queryTutMeeting)) {
             if ($filters["state"] != "") {
-                $queryTutMeeting = $queryTutMeeting->where("estado", $filters["state"]);
-            }            
+                if ($filters['state'] == '1') {
+                    $queryTutMeeting = $queryTutMeeting->where("estado", 4)->where('creador', 0);
+                } else if (($filters['state'] == '4')) {
+                    $queryTutMeeting = $queryTutMeeting->where("estado", 4)->where('creador', 1);
+                } else {
+                    $queryTutMeeting = $queryTutMeeting->where("estado", $filters["state"]);
+                }
+            }           
             if ($filters["beginDate"] != "" && $filters["endDate"] != "") {
                 $queryTutMeeting = $queryTutMeeting->whereBetween("inicio", array($filters["beginDate"], $filters["endDate"]));
             }

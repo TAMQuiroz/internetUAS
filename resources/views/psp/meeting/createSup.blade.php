@@ -66,8 +66,8 @@
                     <div class="col-md-4">
                         <select name="alumno" id="alumno" class="form-control" required="required">
                             <option value="" selected>-- Seleccione --</option>
-                            @foreach( $students as $student)                                
-                                <option value="{{$student->IdAlumno}}">{{$student->Nombre.' '.$student->ApellidoPaterno.' '.$student->ApellidoMaterno}}</option>                                
+                            @foreach( $pspStudents as $pspStudent)                                
+                                <option value="{{$pspStudent->student->IdAlumno}}">{{$pspStudent->student->Nombre.' '.$pspStudent->student->ApellidoPaterno.' '.$pspStudent->student->ApellidoMaterno}}</option>                                
                             @endforeach
                         </select>     
                     </div>                    

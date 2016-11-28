@@ -49,7 +49,7 @@
 								<td>{{$proyecto->fecha_fin}}</td> 
 								<td>{{$proyecto->area->nombre}}</td> 
 								<td>{{$proyecto->group->nombre}}</td>
-								<td>{{count($proyecto->investigators) + count($proyecto->teachers)}}</td>
+								<td>{{count($proyecto->investigators) + count($proyecto->teachers)  + count($proyecto->students) }}</td>
 								<td>
 								@if($proyecto->status)
 									{{$proyecto->status->nombre}}

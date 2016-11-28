@@ -97,7 +97,7 @@
                 <div class="col-md-12">
                     <hr>
                 </div>
-
+                <!--
                 <div class="col-md-6">
                     <div class="panel panel-success">
                         <div class="panel-heading">
@@ -164,6 +164,7 @@
                         </div>
                     </div>
                 </div>
+                -->
             </div>
         </div>
 

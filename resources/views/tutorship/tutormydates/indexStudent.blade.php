@@ -72,11 +72,16 @@
                     <td class=" ">{{ $tutMeeting->topic->nombre }}</td>
 
                     <td class=" ">
+
+                        @if(($tutMeeting->estado == Config::get('constants.pendiente') && Auth::user()->IdPerfil == Config::get('alumno')) || ($tutMeeting->estado == Config::get('constants.sugerida') && Auth::user()->IdPerfil == Config::get('alumno')))
                         <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ver{{$tutMeeting->id}}" title="Ver"><i class="fa fa-eye"></i></a>
+                        @endif
                         @if(($tutMeeting->estado == Config::get('constants.pendiente') && Auth::user()->IdPerfil != Config::get('alumno')) || ($tutMeeting->estado == Config::get('constants.sugerida') && Auth::user()->IdPerfil == Config::get('alumno')))
                         <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#confirmar{{$tutMeeting->id}}" title="Confirmar"><i class="fa fa-check"></i></a>
+                        @if($tutMeeting->estado == Config::get('constants.sugerida') && Auth::user()->IdPerfil == Config::get('alumno'))
                         <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#rechazar{{$tutMeeting->id}}" title="Rechazar"><i class="fa fa-remove"></i></a>
-                        @elseif($tutMeeting->estado == Config::get('constants.confirmada'))
+                        @endif
+                        @elseif($tutMeeting->estado == Config::get('constants.confirmada') || (($tutMeeting->estado == Config::get('constants.pendiente') && Auth::user()->IdPerfil == Config::get('alumno'))))
                         <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelar{{$tutMeeting->id}}" title="Cancelar"><i class="fa fa-remove"></i></a>
                         @endif
                     </td>                    

@@ -13,8 +13,11 @@
 				<h3 class="panel-title">Información</h3>
 			</div>
 			<div class="panel-body">
-
-				{{Form::open(['route' => 'cita_alumno.store', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+				@if(Auth::user()->IdPerfil == Config::get('constants.alumno'))
+					{{Form::open(['route' => 'cita_alumno_to_tutor.store', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+				@else
+					{{Form::open(['route' => 'cita_alumno.store', 'class'=>'form-horizontal', 'id'=>'formSuggestion'])}}
+				@endif
 				<div class="form-group">
 					{{Form::label('Alumno: ',null,['class'=>'control-label col-md-4 col-sm-4 col-xs-12'])}}
 					<div class="col-sm-4 col-xs-12">

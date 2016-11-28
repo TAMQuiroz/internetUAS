@@ -27,7 +27,7 @@ class DeliverableController extends BaseController
     public function getById($id)
     {
         
-        $entregable = Deliverable::where('id',$id)->with('project')->with('versions')->with('investigators')->get();
+        $entregable = Deliverable::where('id',$id)->with('project')->with('versions')->with('investigators')->with('students')->with('teachers')->get();
 
         return $this->response->array($entregable->toArray());
         //return $entregable;
@@ -92,11 +92,13 @@ class DeliverableController extends BaseController
         $deliverable = $invDoc->deliverable;
         //dd($deliverable);
         $responsibles = $deliverable->investigators;
+        $responsibles2=$deliverable->teachers;
+        $nombreEntregable = $deliverable->nombre;
+        $numVersion = $invDoc->version;
+        $observacion = $invDoc->observacion;
         try
         { 
-            $nombreEntregable = $deliverable->nombre;
-            $numVersion = $invDoc->version;
-            $observacion = $invDoc->observacion;
+        
             /*$mail = 'cdongo@pucp.edu.pe';
             Mail::send('emails.notifyObservation', compact('nombreEntregable', 'numVersion', 'observacion'), function($m) use($mail){
                     $m->subject('Registro de observación');
@@ -110,6 +112,13 @@ class DeliverableController extends BaseController
                     $m->to($mail);
                 });
 
+            }
+            foreach($responsibles2 as $key => $value){
+                $mail = $value->Correo;
+                Mail::send('emails.notifyObservation', compact('nombreEntregable', 'numVersion', 'observacion'), function($m) use($mail){
+                    $m->subject('Registro de observación');
+                    $m->to($mail);
+                });
             }
 
         }

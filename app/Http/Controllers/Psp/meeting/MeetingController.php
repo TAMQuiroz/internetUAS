@@ -225,7 +225,6 @@ class MeetingController extends Controller
     //Vista supervisor
     public function createSup()
     {
-        $students = Student::get();
         $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
         $data = [
             'students'    =>  $students,

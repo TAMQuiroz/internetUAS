@@ -8,9 +8,11 @@ use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
 use Intranet\Models\PspStudent;
 use Intranet\Models\PspProcess;
+use Intranet\Models\PspProcessxSupervisor;
 use Intranet\Http\Controllers\Controller;
 use Intranet\Http\Requests\FreeHourRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FreeHourController extends Controller
 {
@@ -23,10 +25,7 @@ class FreeHourController extends Controller
     {
         $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->get()->first();
 
-        $freeHours = FreeHour::where([
-            ['idsupervisor',$supervisor->id],
-            ['idpspprocess',$supervisor->idpspprocess],
-            ])->orderBy('fecha','asc')->orderBy('hora_ini','asc')->paginate(10);
+        $freeHours = DB::table('freehours')->join('pspprocessesxsupervisors','pspprocessesxsupervisors.idpspprocess','=','freehours.idpspprocess')->join('pspprocesses','pspprocessesxsupervisors.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('freehours.id', 'freehours.idpspprocess','freehours.fecha','freehours.hora_ini','Curso.Nombre')->where('pspprocessesxsupervisors.idsupervisor',$supervisor->id)->where('freehours.deleted_at',null)->orderBy('fecha','asc')->orderBy('hora_ini','asc')->paginate(10);
 
         foreach ($freeHours as $freeHour) {
             $dt = new Carbon($freeHour->fecha);        

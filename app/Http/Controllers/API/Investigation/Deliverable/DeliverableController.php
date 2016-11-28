@@ -27,7 +27,7 @@ class DeliverableController extends BaseController
     public function getById($id)
     {
         
-        $entregable = Deliverable::where('id',$id)->with('project')->with('versions')->with('investigators')->get();
+        $entregable = Deliverable::where('id',$id)->with('project')->with('versions')->with('investigators')->with('students')->with('teachers')->get();
 
         return $this->response->array($entregable->toArray());
         //return $entregable;

@@ -7,7 +7,7 @@ use Intranet\Models\Student;
 use Intranet\Models\meeting;
 use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
-use Intranet\Models\freeHour;
+use Intranet\Models\FreeHour;
 use Intranet\Models\PspStudent;
 use Intranet\Models\Supervisor;
 use Intranet\Models\Tutstudent;
@@ -50,8 +50,10 @@ class MeetingTeacherController extends Controller
     {
 
         $arr = array(); 
-        $horas = freeHour::get();
-        $student = Student::find($id);        
+        $student = Student::find($id); 
+        $pspstudent =PspStudent::where('IdAlumno',$student->IdAlumno)->first(); 
+        $horas = FreeHour::where('idpspprocess',$pspstudent->idpspprocess)->get();
+        //$horas = FreeHour::get();   
         foreach ($horas as $hora) {
             $m=null;            
             $m=MeetingTeacher::where('idfreehour',$hora->id)->get();

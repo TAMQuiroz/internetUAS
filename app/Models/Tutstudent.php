@@ -46,15 +46,15 @@ class Tutstudent extends Model
 
             $excel_file = Excel::load($csv_path, function($reader){})->get();
 
-            if (!empty($excel_file) && $excel_file->count()) {
-                
+            if (!empty($excel_file) && $excel_file->count() > 1) {
+
                 $count = 0;
 
                 foreach ($excel_file as $row) {
                     
-                    if ($count) {
+                    if ($count && $row[1]) {
                         $register = [
-                            'codigo'    => $row[1],
+                            'codigo'    => intval($row[1]),
                             'nombre'    => $row[2],
                             'app'       => $row[3],
                             'apm'       => $row[4],
@@ -80,8 +80,8 @@ class Tutstudent extends Model
                         }
 
                         Tutstudent::createTutStudent($register, $mayor);
+                        
                     }
-                    
                     $count += 1;
                 }
                 
@@ -190,36 +190,19 @@ class Tutstudent extends Model
 
     static public function getQuantityPerTutor($quantityTutors, $quantityStudents) {
         
-        $quantity = $quantityStudents / $quantityTutors;
-
-        $quantity = ceil($quantity);
-
-        $count = 0;
-
-        $numberStudent = 0;
-
-        $default = 0;
-
         $allQuantity = array();
 
-        while ($numberStudent + $quantity <= $quantityStudents) {
-            array_push($allQuantity, $quantity);
-
-            $numberStudent += $quantity;
-
-            $count += 1;
+        for ($i=0; $i < $quantityTutors; $i++) { 
+            array_push($allQuantity, 0);
         }
 
-        if ($quantityStudents - $numberStudent) {
-            array_push($allQuantity, $quantityStudents - $numberStudent);
-
-            $count += 1;
-        }
-
-        while ($count != $quantityTutors) {
-            array_push($allQuantity, $default);
-
-            $count += 1;
+        while ($quantityStudents) {
+            for ($i=0; $i < $quantityTutors; $i++) { 
+                if ($quantityStudents != 0) {
+                    $allQuantity[$i] += 1;
+                    $quantityStudents -= 1;
+                }
+            }
         }
 
         return $allQuantity;

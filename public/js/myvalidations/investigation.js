@@ -138,17 +138,26 @@ jQuery(function(){
         minDate: 0,
      });
 
-    $('#fecha_ini').change(function(){
-        fecha_ini       = $(this).val();
-        fecha_limite    = $('#fecha_limite').val();
+   $('#fecha_ini').change(function(){
+        fecha_ini = $(this).val();
+        $('#fecha_fin').attr('min',fecha_ini);
+    });
 
-        if(fecha_ini < fecha_limite){
-            //console.log('ini menor a fecha limte');
-            $('#fecha_fin').attr('min',fecha_ini);
-        }else{
-            //console.log('ini mayor a fecha limte');
-            $('#fecha_fin').attr('min',fecha_limite);
-        }
+    $('#fecha_fin').change(function(){
+        fecha_fin = $(this).val();
+        $('#fecha_ini').attr('max',fecha_fin);
+    });
+
+    $('#fecha_ini_edit').change(function(){
+        fecha_fin_ultimo_entregable = $('#fecha_limite').val();
+        fecha_ini = $(this).val();
+        $('#fecha_fin_edit').attr('min',fecha_fin_ultimo_entregable);
+    });
+
+    $('#fecha_fin_edit').change(function(){
+        fecha_ini_primer_entregable = $('#fecha_inicio').val();
+        fecha_fin = $(this).val();
+        $('#fecha_ini_edit').attr('max',fecha_ini_primer_entregable);
     });
 
 });

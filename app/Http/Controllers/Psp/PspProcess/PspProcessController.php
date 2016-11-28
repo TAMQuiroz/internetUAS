@@ -69,9 +69,11 @@ class PspProcessController extends Controller
 
     	if($academicCycle!=null){
             $faculty_id = Session::get('faculty-code');
-            $cycle_id = $this->facultyService->findCycle($faculty_id)->IdCicloAcademico; 
+            $cyclexcurso = $this->facultyService->findCycle($faculty_id);
+            $idCicloAcademico = $cyclexcurso->IdCicloAcademico;
+            $idCiclo = $cyclexcurso->IdCiclo; 
             $order='asc';
-            $courses =  $this->courseService->findCoursesBySemester($faculty_id,$cycle_id,$order)->lists('Nombre','IdCurso');
+            $courses =  $this->courseService->findCoursesBySemester($faculty_id,$idCicloAcademico,$order)->lists('Nombre','IdCurso');
             $var=count($courses);
             if($var==0){
                 $array=null;
@@ -86,7 +88,7 @@ class PspProcessController extends Controller
 
             $data = [
                 'courses' => $array,
-                'cycle' => $cycle_id
+                'cycle' => $idCiclo
             ];
 	    	return view('psp.pspProcess.create',$data);
     	}

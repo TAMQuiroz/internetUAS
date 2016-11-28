@@ -93,16 +93,51 @@
                             <td hidden class="group-id">{{$tutMeetingsByTutstudent->id}} </td>
 
                             <td class=""> {{ $tutMeetingsByTutstudent->tutstudent->nombre }} {{ $tutMeetingsByTutstudent->tutstudent->ape_paterno }} {{ $tutMeetingsByTutstudent->tutstudent->ape_materno }}</span></td>                            
+                            @if($tutstudentPendientes)
                             <td class=" ">{{ $tutstudentPendientes[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentCanceladas)
                             <td class=" ">{{ $tutstudentCanceladas[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentSugeridas)
                             <td class=" ">{{ $tutstudentSugeridas[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentRechazadas)
                             <td class=" ">{{ $tutstudentRechazadas[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentAsistidas)
                             <td class=" ">{{ $tutstudentAsistidas[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentNoAsistidas)
                             <td class=" ">{{ $tutstudentNoAsistidas[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentNoProgramadas)
                             <td class=" ">{{ $tutstudentNoProgramadas[$key] }}</td>
-                            <td class=" ">{{ $tutstudentConfirmadas[$key] }}</td>                                      
-                            <td class=" ">{{ $tutstudentTotal[$key] }}</td>                                                                  
-                            
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentConfirmadas)
+                            <td class=" ">{{ $tutstudentConfirmadas[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
+                            @if($tutstudentTotal)
+                            <td class=" ">{{ $tutstudentTotal[$key] }}</td>
+                            @else
+                            <td class=" ">0</td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

@@ -29,7 +29,8 @@
                         <thead> 
                             <tr class="headings"> 
                                 <th>Fecha</th>
-                                <th>Hora</th>                             
+                                <th>Hora</th> 
+                                <th>Curso</th>                            
                                 <th colspan="2">Acciones</th>
                             </tr> 
                         </thead> 

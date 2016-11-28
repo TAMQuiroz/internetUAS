@@ -28,7 +28,7 @@
                         <tr class="even pointer">                            
                             <td class=" ">{{$compxtutxev->competencia->nombre }}</td>          
                             <td class="centered ">{{$compxtutxev->puntaje }}/{{$compxtutxev->puntaje_maximo }}</td>
-                            <td class="centered ">{{ ($compxtutxev->puntaje / $compxtutxev->puntaje_maximo)*100 }} %</td>
+                            <td class="centered ">{{round(($compxtutxev->puntaje / $compxtutxev->puntaje_maximo)*100,2)}} %</td>
                         </tr>                                           
                         @endforeach
                     </tbody>

@@ -356,14 +356,13 @@ public function storeByStudent(Request $request){
 
             
                 $mail = $student->correo;
-                Mail::send('emails.notifyNearMeeting', function($m) use($mail){
+               Mail::send('emails.notifyNearMeeting',['user' => $mail], function($m) use($mail){
                     $m->subject('Notificacion de Reunión con Supervisor');
                     $m->to($mail);
                 });
 
 
-
-               $mensaje = "Notificacon Enviada";
+               $mensaje = "Notificacion Enviada";
                $array['message'] = $mensaje;
                return $this->response->array($array);
           

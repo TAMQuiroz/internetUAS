@@ -9,10 +9,15 @@ use Intranet\Models\FreeHour;
 use Intranet\Models\Supervisor;
 use Intranet\Models\Student;
 use Intranet\Models\User;
+use Intranet\Models\Course;
 use Intranet\Models\PspStudent;
+use Intranet\Models\PspProcess;
+use Intranet\Models\PspProcessxSupervisor;
 use Intranet\Models\meeting;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspProcessxTeacher;
+use Illuminate\Support\Facades\DB;
+
 use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -23,37 +28,7 @@ class PspFreeHourController extends BaseController
 
 
 
-    public function create(){
 
-        $user =  JWTAuth::parseToken()->authenticate();
-        $nStudent =     PspStudent::count();
-
-        if($nStudent == 0){
-
-            $array = array();
-            $mensaje = "Registrar lista de alumnos";
-
-            $array['message'] = $mensaje;
-            return $this->Response->array($array);
-
-
-
-
-        }
-
-
-        $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->get()->first();
-        $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
-        $maxi =  $this->maximum();
-
-        if($cantDisp < $maxi){
-
-
-        }
-
-
-
-    }
 
     public function store(Request $request){
 
@@ -107,8 +82,9 @@ class PspFreeHourController extends BaseController
         $date= DateTime::createFromFormat($format, $fecha);
         $dt = Carbon::createFromFormat('d/m/Y',$fecha);
         $hh  = str_replace(":00","", $horaAux);
+        $idpspprocess = $request['idpspprocess'];
 
-        $var = FreeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh]]) ->get()->first();
+        $var = FreeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh],['idpspprocess',$idpspprocess]])->get()->first();
         if($var != null){
 
 
@@ -126,7 +102,7 @@ class PspFreeHourController extends BaseController
         $freeHour->hora_ini = $horaAux;
         $freeHour->cantidad = 1;
         $freeHour->idsupervisor = $idUser;
-        $freeHour->idpspprocess = $supervisor->idpspprocess;
+        $freeHour->idpspprocess = $idpspprocess;
         $freeHour->save();
 
 
@@ -162,6 +138,61 @@ class PspFreeHourController extends BaseController
 
     }
 
+
+    //Vista para guardar disponibilidad
+    public function create(){
+
+
+
+        $user =  JWTAuth::parseToken()->authenticate();
+      
+
+
+        $a = PspStudent::count();
+        if($a == 0){
+
+             $mensaje = "Para registrar una disponibilidad, ingrese previamente al sistema una lista de alumnos";
+             $array['message'] = $mensaje;
+             return $this->response->array($array);
+        }        
+
+
+        $supervisor =   Supervisor::where('iduser',$user->IdUsuario)->first();
+        
+        //ver si hay procesos
+        $procxs = PspProcessxSupervisor::where('idsupervisor',$supervisor->id)->get();
+        $proc = array(); 
+            $r = count($procxs);   
+            if($r>0){
+                foreach($procxs as $p){
+
+                    $pro = PspProcess::find($p->idpspprocess);
+                    $pro['curso'] = Course::where("IdCurso", $pro->idcurso)->first()->Nombre;
+                    $proc[]= $pro;
+                }
+            }
+        $cantDisp = FreeHour::where('idsupervisor',$supervisor->id)->count();
+        $maxi = $this->maximum();
+        
+        
+        
+        if($cantDisp < $maxi){
+            return  $this->response->array($proc);
+        }else{
+
+
+             $mensaje = 'Ha llegado al maximo de disponibildades a registrar para eleccion del alumno. Maximo: '.$maxi;
+             $array['message'] = $mensaje;
+             return $this->response->array($array);
+          
+        }
+
+
+
+    }
+
+
+
     public function showFreeHourForStudent(){
 
 
@@ -178,7 +209,7 @@ class PspFreeHourController extends BaseController
 
 
         if(is_null($pspStudent->idsupervisor))
-            $freeHours = FreeHour::get();
+            $freeHours = FreeHour::where('idpspprocess',$pspStudent->idpspprocess)->get();
        
         else 
             $freeHours = FreeHour::where('idsupervisor', $pspStudent->idsupervisor)->where('idpspprocess', $pspStudent->idpspprocess)->get();   
@@ -253,11 +284,15 @@ class PspFreeHourController extends BaseController
     try{
         $supervisor = Supervisor::where('iduser',$user->IdUsuario)->get()->first();
 
+        $freeHours = DB::table('freehours')->join('pspprocessesxsupervisors','pspprocessesxsupervisors.idpspprocess','=','freehours.idpspprocess')->join('pspprocesses','pspprocessesxsupervisors.idpspprocess','=','pspprocesses.id')->join('Curso','pspprocesses.idcurso','=','Curso.IdCurso')->select('freehours.id', 'freehours.idpspprocess','freehours.fecha','freehours.hora_ini','Curso.Nombre')->where('pspprocessesxsupervisors.idsupervisor',$supervisor->id)->where('freehours.deleted_at',null)->orderBy('fecha','asc')->orderBy('hora_ini','asc')->get();
+
+       /*
+
         $freeHours = FreeHour::where([
             ['idsupervisor',$supervisor->id],
-            ['idpspprocess',$supervisor->idpspprocess]])->get();
+            ['idpspprocess',$supervisor->idpspprocess]])->get();*/
 
-        return $this->response->array($freeHours->toArray());
+        return $this->response->array($freeHours);
 
 
 

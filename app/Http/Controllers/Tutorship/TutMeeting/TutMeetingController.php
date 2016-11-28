@@ -850,8 +850,8 @@ class TutMeetingController extends Controller
         try {
             $meeting = TutMeeting::find($request['id']);
 
-            if ($request['estado'] == Config::get('constants.sugerida') &&
-                $meeting->creador == 1) {
+            if ($meeting->estado == 4 &&
+                $meeting->creador == 0) {
                 $meeting->estado = Config::get('constants.rechazada');
                 $message = 'Se rechazó cita';
                 $sentence = 'Se le informa que su tutor ha rechazado su solicitud de cita:';

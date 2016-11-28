@@ -279,8 +279,8 @@ class TutMeetingController extends Controller
         }
 
         $day = date('w', strtotime($beginDate));
-        $endDate = date('Y-m-d', strtotime($beginDate .'+'.(6-$day).' days'));
-
+        $endDate = date('Y-m-d', strtotime($beginDate .'+'.(7-$day).' days'));
+    
         $filters    = [
             "code"           => $request->input('code'),
             "name"           => $request->input('name'),

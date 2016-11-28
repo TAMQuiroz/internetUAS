@@ -292,6 +292,11 @@
                                                     <li> {{$teacher->Nombre}} {{$teacher->ApePaterno}} </li>
                                                 @endforeach
                                             @endif
+                                            @if(count($deliverable->students))
+                                                @foreach($deliverable->students as $student)
+                                                    <li> {{$student->nombre}} {{$student->ape_paterno}} </li>
+                                                @endforeach
+                                            @endif
                                         @else
                                             <li> No hay asignados </li>
                                         @endif

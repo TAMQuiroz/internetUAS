@@ -38,11 +38,12 @@ class FinalScoreController extends Controller
     public function index($idAlumno)
     {
         $user = Session::get('user');
-        $supervisor = Supervisor::where('iduser',$user->id)->first(); 
+        //dd($user);
+        $supervisor = Supervisor::find($user->id);
         $psp=PspStudent::where('idalumno',$idAlumno)->first(); 
         if($psp!=null)$pspProceso = PspProcess::find($psp->idpspprocess);
         else $pspProceso=null;
-        if($pspProceso!=null && $supervisor!=null){
+        if($pspProceso!=null){
             $criterios  = $pspProceso->criterios;            
             //dd($psp);
             //$cursoxciclo = CoursexCycle::where('IdCurso',$pspProceso->idcurso)->first();

@@ -237,7 +237,7 @@ class TutMeetingController extends Controller
             }
         } 
         
-        $motivos = Reason::where('tipo',1)->get();
+        $motivos = Reason::where('tipo',1)->where('id','>',2)->get();
         $data       = [
             'tutMeetings' =>  $tutMeetings,
             'fecha'       =>  $fecha,
@@ -932,10 +932,12 @@ class TutMeetingController extends Controller
         return redirect()->back()->with('success', 'Se confirmo esta cita');
     }
 
-    public function refuseDate($id)
+    public function refuseDate($id, DeleteMeetingRequest $request)
     {
         $meeting = TutMeeting::find($id);
         $meeting->estado = Config::get('constants.rechazada');
+        $meeting->id_reason = $request['motivo'];
+        $meeting->adicional = $request['observations'];
         $meeting->save();
 
         //Enviar correo a tutor
@@ -966,10 +968,12 @@ class TutMeetingController extends Controller
         return redirect()->back()->with('success', 'Se rechazó esta cita');
     }
 
-    public function deleteDate($id)
+    public function deleteDate($id, DeleteMeetingRequest $request)
     {
         $meeting = TutMeeting::find($id);
         $meeting->estado = Config::get('constants.cancelada');
+        $meeting->id_reason = $request['motivo'];
+        $meeting->adicional = $request['observations'];
         $meeting->save();
 
         //Enviar correo a tutor

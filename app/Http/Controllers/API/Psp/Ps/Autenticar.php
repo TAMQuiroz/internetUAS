@@ -55,7 +55,8 @@ public function authSuper()
 
 $array = array();
 $user =  JWTAuth::parseToken()->authenticate();
-$supervisor = Supervisor::find($user->IdUsuario);
+$supervisor = Supervisor::where('iduser',$user['IdUsuario'])->first();  
+//$supervisor = Supervisor::find($user->IdUsuario);
 $PsP = PspProcessxSupervisor::where('idsupervisor',$supervisor['id'])->first();
 
         //if($supervisor["idpspprocess"]!=null){ 

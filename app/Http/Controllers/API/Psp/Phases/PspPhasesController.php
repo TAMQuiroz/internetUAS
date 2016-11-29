@@ -21,11 +21,13 @@ class PspPhasesController extends BaseController
 
 
         $user =  JWTAuth::parseToken()->authenticate();
+        $Phases = null;
 
         if($user->IdPerfil == 3){
 
            $Phases = Phase::get();
-            } else if ($user->IdPerfil==2 || $user->IdPerfil==1){
+
+            } else{
                 $teacher = Teacher::where('IdUsuario',$user->IdUsuario)->first(); 
                 //if($teacher!=null){
                     $procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
@@ -39,7 +41,9 @@ class PspPhasesController extends BaseController
                         if($proc2!=null && $r2>0){
                             foreach($proc2 as $p2){ 
                                 if($p2!=null){
-                                    $proc[]=Phase::find($p2->id);
+                                    $pro = Phase::find($p2->id);
+                                    $pro['curso'] = $pro->PspProcess->Course->Nombre;
+                                    $proc[]=$pro;
                                 }
                             }
                         }

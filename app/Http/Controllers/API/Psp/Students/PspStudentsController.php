@@ -9,6 +9,7 @@ use Intranet\Models\Supervisor;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\Tutstudent;
 use Intranet\Models\PspStudent;
+use Intranet\Models\PspProcess;
 use Intranet\Models\Studentxinscriptionfiles;
 use Mail;
 use Illuminate\Routing\Controller as BaseController;
@@ -201,7 +202,7 @@ class PspStudentsController extends BaseController
 
             
                 $mail = $student->correo;
-                Mail::send('emails.notifyScore', $notaFinal, function($m) use($mail){
+                Mail::send('emails.notifyScore',['notaFinal' =>$notaFinal], function($m) use($mail){
                     $m->subject('Notificacion de Nota');
                     $m->to($mail);
                 });

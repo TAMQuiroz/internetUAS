@@ -71,6 +71,12 @@ class FlujoCoordinadorController extends Controller
         $faculty = Faculty::where('IdDocente', Session::get('user')->IdDocente)->first();
         Session::put('faculty-code',$faculty->IdEspecialidad);
 
+        $period = $this->facultyService->findPeriod($faculty->IdEspecialidad);
+        $cycle = $this->facultyService->findCycle($faculty->IdEspecialidad);
+        Session::set('period-code',$period->IdPeriodo);
+        Session::set('academic-cycle',$cycle);
+        Session::set('id-academic-cycle',$cycle->IdCicloAcademico);
+
       	return view('flujoCoordinador.index',$data);
     }
     public function aspect_index($id) {
@@ -467,7 +473,9 @@ class FlujoCoordinadorController extends Controller
             $data['idEspecialidad']=$id; 
             $periodo = Period::where('Vigente',1)->where('IdEspecialidad',$id)->first();
             //dd($periodo);
-            if($periodo!=null){
+            $idPeriodo=Session::get('period-code');
+            //dd($idPeriodo);
+            if($idPeriodo!=null){
                 return $this->viewPeriod($id);
             }else{
                 return $this->createPeriod($id);
@@ -495,7 +503,9 @@ class FlujoCoordinadorController extends Controller
             Session::forget('crtCheck');
             $cycle = Cicle::where('Vigente',1)->where('IdEspecialidad',$id)->first();
             //dd($cycle);
-            if($cycle!=null){
+            $idCiclo=Session::get('academic-cycle');
+            //dd($idCiclo);
+            if($idCiclo!=null){
                 return $this->viewAcademicCycle($id);
             }else{
                 return $this->createAcademicCycle($id);

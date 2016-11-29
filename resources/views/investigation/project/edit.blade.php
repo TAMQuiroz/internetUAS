@@ -35,14 +35,25 @@
 		    		<div class="form-group">
 		    			{{Form::label('Fecha de inicio *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-6">
-		    				{{Form::date('fecha_ini',$proyecto->fecha_ini,['id'=>'fecha_ini','class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString(), 'max' => $proyecto->firstdeliverable->first()->fecha_inicio])}}
+                            @if(count($proyecto->firstdeliverable) != 0)
+		    				{{Form::date('fecha_ini',$proyecto->fecha_ini,['id'=>'fecha_ini_edit','class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString(), 'max' => $proyecto->firstdeliverable->first()->fecha_inicio])}}
+                            @else
+                            {{Form::date('fecha_ini',$proyecto->fecha_ini,['id'=>'fecha_ini','class'=>'form-control', 'required','min'=>\Carbon\Carbon::today()->toDateString(), 'max' => $proyecto->fecha_fin])}}
+                            @endif
 		    			</div>
 		    		</div>
+                    @if(count($proyecto->lastdeliverable) != 0)
+                    {{Form::hidden('fecha_inicio', $proyecto->firstdeliverable->first()->fecha_inicio, ['id'=>'fecha_inicio'])}}
                     {{Form::hidden('fecha_limite', $proyecto->lastdeliverable->first()->fecha_limite, ['id'=>'fecha_limite'])}}
+                    @endif
 		    		<div class="form-group">
 		    			{{Form::label('Fecha fin *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-6">
-		    				{{Form::date('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin','class'=>'form-control', 'required','min'=>$proyecto->lastdeliverable->first()->fecha_limite])}}
+                            @if(count($proyecto->lastdeliverable) != 0)
+		    				{{Form::date('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin_edit','class'=>'form-control', 'required','min'=>$proyecto->lastdeliverable->first()->fecha_limite])}}
+                            @else
+                            {{Form::date('fecha_fin',$proyecto->fecha_fin,['id'=>'fecha_fin','class'=>'form-control', 'required','min'=>$proyecto->fecha_ini])}}
+                            @endif
 		    			</div>
 		    		</div>
 

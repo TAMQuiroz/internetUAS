@@ -83,7 +83,7 @@
 
         startDateTutorship.datepicker({
             format: "dd-mm-yyyy",
-            startDate: "{{$startDate}}",
+            startDate: "{{$firstDay}}",
             endDate: "{{$futureDay}}",
             language: "es",
             autoclose: true,

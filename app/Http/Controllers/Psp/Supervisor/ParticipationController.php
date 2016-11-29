@@ -77,6 +77,10 @@ class ParticipationController extends Controller
             $faculty_id = Session::get('faculty-code'); 
             $process = PspProcess::find($request['idproceso']);
 
+            $supervisor = Supervisor::find($request['idSupervisor']);
+            $supervisor->idpspprocess = $process->id;
+            $supervisor->save(); 
+
             $relation = new PspProcessxSupervisor;
             $relation->idPspProcess = $process->id;
             $relation->idSupervisor = $request['idSupervisor'];

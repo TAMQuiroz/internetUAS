@@ -93,6 +93,7 @@ class DeliverableController extends BaseController
         //dd($deliverable);
         $responsibles = $deliverable->investigators;
         $responsibles2=$deliverable->teachers;
+        $responsibles3=$deliverable->students;
         $nombreEntregable = $deliverable->nombre;
         $numVersion = $invDoc->version;
         $observacion = $invDoc->observacion;
@@ -115,6 +116,13 @@ class DeliverableController extends BaseController
             }
             foreach($responsibles2 as $key => $value){
                 $mail = $value->Correo;
+                Mail::send('emails.notifyObservation', compact('nombreEntregable', 'numVersion', 'observacion'), function($m) use($mail){
+                    $m->subject('Registro de observación');
+                    $m->to($mail);
+                });
+            }
+            foreach($responsibles3 as $key => $value){
+                $mail = $value->correo;
                 Mail::send('emails.notifyObservation', compact('nombreEntregable', 'numVersion', 'observacion'), function($m) use($mail){
                     $m->subject('Registro de observación');
                     $m->to($mail);

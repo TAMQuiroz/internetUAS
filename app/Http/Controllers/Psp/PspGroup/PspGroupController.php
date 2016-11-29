@@ -194,7 +194,7 @@ class PspGroupController extends Controller
             $pspStudent = PspStudent::where('idalumno',$student->IdAlumno)->get()->first();            
             $pspStudent->idPspGroup = $request['id'];            
             $pspStudent->save();
-            return redirect()->route('index.ourFaculty',$pspStudent->idespecialidad)->with('success','Elegiste el grupo: '.$pspGroup->numero.' '.$pspGroup->descripcion);
+            return redirect()->route('meeting.index')->with('success','Elegiste el grupo: '.$pspGroup->numero.' '.$pspGroup->descripcion);
         } catch (Exception $e) {
             return redirect()->back()->with('warning','Ocurrio un error al realizar la accion');
         }
@@ -208,9 +208,14 @@ class PspGroupController extends Controller
 
         if($pspStudent->idpspgroup==NULL){
             $pspGroups = PspGroup::where('idpspprocess',$pspStudent->idpspprocess)->get();
+            if(count($pspGroups)==0)
+                $noGroups = 0;
+            else
+                $noGroups = 1;
             $data = [
                 'pspGroups' => $pspGroups,
                 'idFaculty' => $pspStudent->idespecialidad,
+                'groups'    => $noGroups,
             ];
             //dd($data);
             return view('psp.pspGroup.selectGroup',$data);

@@ -279,8 +279,8 @@ class TutMeetingController extends Controller
         }
 
         $day = date('w', strtotime($beginDate));
-        $endDate = date('Y-m-d', strtotime($beginDate .'+'.(6-$day).' days'));
-
+        $endDate = date('Y-m-d', strtotime($beginDate .'+'.(7-$day).' days'));
+    
         $filters    = [
             "code"           => $request->input('code'),
             "name"           => $request->input('name'),
@@ -293,11 +293,13 @@ class TutMeetingController extends Controller
         ];
 
         $tutMeetings    = TutMeeting::getFilteredTutMeetings($filters);
-        $fecha          = array();
+        $fecha1          = array();
         $hora_inicio    = array();        
         $hora           = array();        
         $hora_fin       = array();
         $students       = array();     
+
+        $fecha          = array();
 
         foreach ($tutMeetings as $tutMeeting) {
             if ($tutMeeting) {
@@ -316,8 +318,12 @@ class TutMeetingController extends Controller
                                         $tutMeeting->creador == 1 ? 
                                         1: $tutMeeting->estado;
 
+                $dateDay1   = date('d-m-Y', strtotime($tutMeeting->inicio));
+
+                array_push($fecha, $dateDay1);
+
                 array_push($hora, intval( $horaI[0]) );
-                array_push($fecha, intval($dateDay) );                
+                array_push($fecha1, intval($dateDay) );                
                 array_push($hora_inicio, $horaI[0] . ':' . $horaI[1]);
                 array_push($hora_fin, $horaF[0] . ':' . $horaF[1]);
                 array_push($students, $student->ape_paterno . ' ' . 
@@ -349,7 +355,8 @@ class TutMeetingController extends Controller
         array_push($status, 'No asistida');
 
         $data       = [
-            'meetings' =>  $tutMeetings,
+            'meetings'    =>  $tutMeetings,
+            'dia'         =>  $fecha1,
             'fecha'       =>  $fecha,
             'hora'        =>  $hora,
             'hora_inicio' =>  $hora_inicio,
@@ -607,6 +614,111 @@ class TutMeetingController extends Controller
 
     }
 
+    public function storeDateToTutor(DateTutorRequest $request)
+    {
+        //Esto es cuando el alumno solicita cita al tutor
+        try {
+
+            $mayorId            = Session::get('faculty-code');
+            
+            $parameters         = Parameter::where('id_especialidad', $mayorId)->first();
+
+            $user               = Session::get('user');
+
+            $idStudent          = $request['id'];
+
+            $student            = Tutstudent::where('id', $idStudent)->first();
+
+            $topic              = $request['topicId'];
+
+            $startHourSec       = intval($request['hourId']);
+
+            $startHourString    = gmdate("H:i:s", $startHourSec);
+
+            $dateOriginalFormat = $request['dayDate'];
+            
+            $newDate            = date("Y-m-d", strtotime($dateOriginalFormat));
+
+            $completedDate      = $newDate . ' ' . $startHourString;
+
+            $meeting            = TutMeeting::where('inicio', $completedDate)->first();
+
+            if (!$meeting) {
+
+                if(Auth::user()->IdPerfil == 0){
+                    $iddocente  = $user->tutorship->id_tutor;
+                    $newMeeting     = TutMeeting::create([
+                        "inicio"        => $completedDate,
+                        "duracion"      => $parameters->duracionCita,
+                        "no_programada" => 0,
+                        "estado"        => 4,
+                        "id_topic"      => $topic,
+                        "id_docente"    => $iddocente,
+                        "id_tutstudent" => $idStudent,
+                        "creador"       => 0,
+                    ]);
+                }else{
+                    $teacher = Teacher::where('IdDocente', $user->IdDocente)->first();
+                    $newMeeting     = TutMeeting::create([
+                        "inicio"        => $completedDate,
+                        "duracion"      => $parameters->duracionCita,
+                        "no_programada" => 0,
+                        "lugar"         => $teacher->oficina,
+                        "creador"       => 1,
+                        "estado"        => 4,
+                        "id_topic"      => $topic,
+                        "id_tutstudent" => $idStudent,
+                        "id_docente"    => $user->IdDocente,
+                    ]);
+                }
+
+                try {
+
+
+                    //$nombre     = $student->nombre . ' ' . $student->ape_paterno . ' ' . $student->ape_materno;
+                    //$iddocente  = $user->tutorship->id_tutor;
+                    $tutor = Teacher::where('IdDocente', $iddocente)->first();
+                    $nombre     = $tutor->Nombre . ' ' . $tutor->ApellidoPaterno . ' ' . $tutor->ApellidoMaterno;
+                    //$nombre     = "Aguilera";
+                    $alumnoNombre = $student->nombre . ' ' . $student->ape_paterno . ' ' . $student->ape_materno;   
+                    
+                    $hour       = gmdate("H:i", $startHourSec);
+                    
+                    $date       = $dateOriginalFormat;
+                    
+                    $duration   = $parameters->duracionCita;
+                    
+                    $mail       = $tutor->Correo;
+                    //$mail       = "luis.soto@pucp.pe";
+
+                    $data       = [
+                        'nombre'    => $nombre,
+                        'hour'      => $hour,
+                        'date'      => $date,
+                        'duration'  => $duration,
+                        'alumnoNombre' => $alumnoNombre,
+                    ];
+                    
+                    Mail::send('emails.newEmailDateTutor', $data, function($m) use($mail) {
+                        $m->subject('[TUTORÍA] Solicitud de cita');
+                        $m->to($mail);
+                    });
+                } catch (Exception $e) {
+                    return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+                }
+                if(Auth::user()->IdPerfil == 0)
+                {
+                    return redirect()->route('miscitas.index')->with('success', 'La cita se ha registrado exitosamente');
+                } else {
+                    return redirect()->route('cita_alumno.index')->with('success', 'La cita se ha registrado exitosamente');
+                }
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('warning', 'Ocurrió un error al hacer esta acción');
+        }
+
+    }
+
     public function attendMeeting($id)
     {
         $meeting = TutMeeting::find($id);
@@ -738,7 +850,7 @@ class TutMeetingController extends Controller
         try {
             $meeting = TutMeeting::find($request['id']);
 
-            if ($request['estado'] == Config::get('constants.sugerida') &&
+            if ($meeting->estado == 4 &&
                 $meeting->creador == 0) {
                 $meeting->estado = Config::get('constants.rechazada');
                 $message = 'Se rechazó cita';

@@ -16,6 +16,7 @@ use Intranet\Models\Status;
 use Dingo\Api\Routing\Helpers;
 use Intranet\Models\PspProcessxTeacher;
 use Intranet\Models\Tutstudent;
+use Carbon\Carbon;
 use Mail;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -38,7 +39,7 @@ class PspMeetingController extends BaseController
 
       foreach ($meetings as $meeting) {
 
-        $meeting['estado'] = Status::find($meeting->idtipoestado)->first();
+        $meeting['estado'] = Status::where('id', $meeting->idtipoestado)->first();
 
         # code...
       }
@@ -55,7 +56,7 @@ class PspMeetingController extends BaseController
 
  			foreach($meetings as $meeting ){
 
- 				$meeting['estado'] =  Status::find($meeting->idtipoestado)->first();
+ 				$meeting['estado'] =  Status::where('id',$meeting->idtipoestado)->first();
 
 
 
@@ -233,6 +234,25 @@ public function storeByStudent(Request $request){
     //POR SER DE TIPO REUNION  == 1
 
 
+
+
+           $dt = Carbon::createFromFormat('d/m/Y',$fecha);
+           $hh  = str_replace(":00","", $horaAux);
+           $tt = Carbon::createFromFormat('H',$hh);
+
+          
+          
+           $m = meeting::where([['fecha',$dt->format('Y-m-d')],['hora_inicio',$tt->format('H:i:s')]])->get()->first();
+           $f = FreeHour::where([['fecha',$dt->format('Y-m-d')],['hora_ini',$hh]])->get()->first();
+          
+           if($m != null && $f != null){
+              $mensaje = "Ya registro previamente una reunion con fecha";
+              $array['message'] = $mensaje;
+              return $this->response->array($array);
+
+           }
+
+
      $pspstudent =PspStudent::where('IdAlumno',$idAlumno)->first(); 
 
      $freeHour = new FreeHour;
@@ -336,14 +356,13 @@ public function storeByStudent(Request $request){
 
             
                 $mail = $student->correo;
-                Mail::send('emails.notifyNearMeeting',['user' => $mail], function($m) use($mail){
+               Mail::send('emails.notifyNearMeeting',['user' => $mail], function($m) use($mail){
                     $m->subject('Notificacion de Reunión con Supervisor');
                     $m->to($mail);
                 });
 
 
-
-               $mensaje = "Notificacon Enviada";
+               $mensaje = "Notificacion Enviada";
                $array['message'] = $mensaje;
                return $this->response->array($array);
           
@@ -356,6 +375,10 @@ public function storeByStudent(Request $request){
           
         } 
     }
+
+
+
+
 
 
 

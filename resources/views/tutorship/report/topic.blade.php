@@ -91,10 +91,29 @@
                         @foreach($topicTutMeetings as $key => $t)
                         <tr class="even pointer">
                             <td hidden class="group-id">{{$t->id}}</td>
-                            <td class=""></span>{{$topics_name_list[$key] }}</td>                            
-                            <td class=" ">{{ $topics_amount_list[$key] }}</td>                                                                  
-                            <td class=" ">{{ round($topics_amount_list[$key]/$topicTotalAsistidas*100,2) }}</td>  
-                            <td class=" ">{{ round($topics_percentage_list[$key],2) }}</td> 
+                            @if($topics_name_list)
+                            <td class=""></span>{{$topics_name_list[$t->id_topic] }}</td>
+                            @else
+                            <td class="">0</td>
+                            @endif
+
+                            @if($topics_amount_list)
+                            <td class=" ">{{ $topics_amount_list[$t->id_topic] }}</td>
+                            @else
+                            <td class="">0</td>
+                            @endif
+
+                            @if($topics_amount_list && $topicTotalAsistidas != 0)
+                            <td class=" ">{{ round($topics_amount_list[$t->id_topic]/$topicTotalAsistidas*100,2) }}</td>  
+                            @else
+                            <td class="">0</td>
+                            @endif
+
+                            @if($topics_percentage_list)
+                            <td class=" ">{{ round($topics_percentage_list[$t->id_topic],2) }}</td> 
+                            @else
+                            <td class="">0</td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

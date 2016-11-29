@@ -61,7 +61,7 @@ class PspStudentsInscriptionFiles extends BaseController
 
         try
             {
-            $pspstudent = PspStudent::where('id', $idAlumno )->get()->first();
+            $pspstudent = PspStudent::where('idalumno', $idAlumno )->get()->first();
             $idPspStudent = $pspstudent->id ; 
             $pspstudentsxinscriptionfiles = Studentxinscriptionfiles::where('idpspstudents',  $idPspStudent )->get()->first();
             $idinscriptionfile =  $pspstudentsxinscriptionfiles->idinscriptionfile; 

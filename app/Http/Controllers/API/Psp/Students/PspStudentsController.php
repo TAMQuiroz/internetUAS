@@ -7,8 +7,11 @@ use Intranet\Models\Student;
 use Intranet\Models\PspDocument;
 use Intranet\Models\Supervisor;
 use Dingo\Api\Routing\Helpers;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\PspStudent;
+use Intranet\Models\PspProcess;
 use Intranet\Models\Studentxinscriptionfiles;
+use Mail;
 use Illuminate\Routing\Controller as BaseController;
 //Tested
 class PspStudentsController extends BaseController
@@ -126,13 +129,19 @@ class PspStudentsController extends BaseController
             $supervisor =  Supervisor::where('iduser', $user->IdUsuario)->first();
 
 
-                
-            $pspstudents = PspStudent::where('idsupervisor',$supervisor->id)->get();
+
+            $pspprocess = PspProcess::find($supervisor->idpspprocess);
+
+          
+
+            if($pspprocess != null){
 
 
+                      $pspstudents = PspStudent::where('idsupervisor',$supervisor->id)->get();
 
 
-            $data = array();
+                          $data = array();
+
                 foreach ($pspstudents as $pspstudent) {
 
                     
@@ -155,10 +164,63 @@ class PspStudentsController extends BaseController
                 }
 
 
-        return $this->response->array($data );
+                return $this->response->array($data );
 
 
 
+
+
+
+
+        }else{
+
+
+            $mensaje = "No pertence a un proceso";
+            $array['message'] = $mensaje;
+            return $this->response->array($array);
+
+
+        }
+
+
+                
+          
+
+
+
+    }
+
+    public function mailScore(Request $request)
+    {        
+        try {
+
+            $id =  $request['IdAlumno'];
+            $notaFinal = $request['final_score'];
+
+            $stud = Student::find($id);
+            $student = Tutstudent::where('id_usuario',$stud->IdUsuario)->first();
+
+            
+                $mail = $student->correo;
+                Mail::send('emails.notifyScore',['notaFinal' =>$notaFinal], function($m) use($mail){
+                    $m->subject('Notificacion de Nota');
+                    $m->to($mail);
+                });
+
+
+
+               $mensaje = "Notificacion Enviada";
+               $array['message'] = $mensaje;
+               return $this->response->array($array);
+          
+        } catch (Exception $e){
+
+            $mensaje = "Ocurrió un error al hacer esta acción";
+            $array['message'] = $mensaje;
+            return $this->response->array($array);
+
+          
+        } 
     }
     
 }

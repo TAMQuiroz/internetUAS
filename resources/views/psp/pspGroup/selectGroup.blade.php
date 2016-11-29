@@ -43,9 +43,11 @@
                 </table>
 
                 <div class="row">
-					<div class="col-md-8 col-sm-12 col-xs-12">						
+					<div class="col-md-8 col-sm-12 col-xs-12">
+                        @if($groups!=0)						
 						{{Form::submit('Seleccionar', ['class'=>'btn btn-success pull-right'])}}
-						<a class="btn btn-default pull-right" href="{{ route('index.ourFaculty',$idFaculty) }}">Cancelar</a>
+                        @endif
+						<a class="btn btn-default pull-right" href="{{ route('meeting.index') }}">Cancelar</a>
 					</div>
 				</div>
                 {{Form::close()}}

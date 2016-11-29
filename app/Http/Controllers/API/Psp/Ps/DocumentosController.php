@@ -38,6 +38,13 @@ $status = Status::get();
 
 foreach ($documentosActual as $value) {
     $value["idtipoestado"] = Status::where("id",$value->idtipoestado)->first()->nombre;
+	if ($value["ruta"]!=""){
+	$value["idtipoestado"] = "Subido";
+    }
+    else
+    {
+    	$value["idtipoestado"] = "No Subido";
+    }
 }
 
 $array['Documentos']=$documentosActual;
@@ -51,7 +58,8 @@ public function getAllStudentSuper()
 
 
 $user =  JWTAuth::parseToken()->authenticate();
-$supervisor = Supervisor::find($user->IdUsuario);          
+//$supervisor = Supervisor::find($user->IdUsuario);          
+$supervisor = Supervisor::where('iduser',$user['IdUsuario'])->first();    
 $todosProcesos = PspProcess::get();
 $procesosDelSupervisor = PspProcessxSupervisor::where('idsupervisor',$supervisor['id'])->get(); //Sentencia depende si pspProcessXsupervisor esta llena
 $pspSudentDelSupervisor = PspStudent::where('idsupervisor',$supervisor['id'])->get();
@@ -59,7 +67,8 @@ $alumnosDePspStudent = array();
 $count = 0;
 foreach ($pspSudentDelSupervisor as $value)
 {
-  $alumnosDePspStudent[$count] = Student::find($value["idalumno"]);
+  //$alumnosDePspStudent[$count] = Student::find($value["idalumno"]);
+   $alumnosDePspStudent[$count] = Student::where('IdAlumno',$value["idalumno"])->first(); 
   $count= $count+1;
 }
 
@@ -92,6 +101,13 @@ $array['Documentos']=$documentosActual;
 */
 foreach ($documentosActual as $value) {
     $value["idtipoestado"] = Status::where("id",$value->idtipoestado)->first()->nombre;
+	if ($value["ruta"]!=""){
+	$value["idtipoestado"] = "Subido";
+    }
+    else
+    {
+    	$value["idtipoestado"] = "No Subido";
+    }
 }
 $array['Documentos']=$documentosActual;
 return $this->response->array($array);

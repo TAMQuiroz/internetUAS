@@ -160,7 +160,7 @@
                     <tbody>
                       @foreach($investigador->projects as $proyecto)
                         @if($opcion == 'No')
-                          @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                          @if(($fechaIni == null && $fechaFin == null) || ($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
                             @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
                               @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
                               <tr>
@@ -255,7 +255,7 @@
                     <tbody>
                       @foreach($profesor->projects as $proyecto)
                         @if($opcion == 'No')
-                          @if($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
+                          @if(($fechaIni == null && $fechaFin == null) || ($proyecto->fecha_ini >= $fechaIni && $proyecto->fecha_ini <= $fechaFin))
                             @if($idEstado == 0 || ($idEstado!=0 && ($proyecto->status->id == $idEstado)))
                               @if($idAreaP == 0 || ($idAreaP!=0 && ($proyecto->area->id == $idAreaP)))
                               <tr>
@@ -291,23 +291,79 @@
     </div>
     </div>
 
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
+    <div class="graphs">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráfico de Barras</h3>
+        </div>
+          <div class="panel-body">
+          <p>En el presente gráfico se muestra la cantidad de proyectos asignados agrupados de acuerdo a la especialidad para investigadores y profesores. El gráfico se puede aprecar de manera plana como invertido.</p>
+          <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+          <button id="plain" class="btn btn-default">Plano</button>
+          <button id="inverted" class="btn btn-default">Invertido</button>
+        </div>
+        </div>
+      </div>
+
+      <div>
+        <br><br>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráficos Circulares</h3>
+        </div>
+          <div class="panel-body">
+
+          <p>En el presente gráfico se muestra tanto para investigadores como profesores el porcentaje total de proyectos que tienen asignados por especialidad. Además, para cada especialidad se puede apreciar el estado de los proyectos de manera porcentual con respecto al total por especialidad.</p>
+
+        <div class="col-md-6 col-sm-6 col-xs-12" id="pieI" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12" id="pieP" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
+        </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráfico de Barras con Ejes dobles</h3>
+        </div>
+          <div class="panel-body">
+
+          <p>En el presente gráfico se muestra por especialidad la cantidad de proyectos asignados asi como el total de investigadores y profesores pertenecientes a cada especialidad.</p>
+
+          <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+        </div>
+      </div>
+
+      <div>
+        <br><br>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gráfico de Área</h3>
+        </div>
+          <div class="panel-body">
+
+          <p>En el presente gráfico se aprecia de acuerdo al área bajo cada curva cuánto han contribuido los profesores e investigadores en base al número de proyectos asignados</p>
+
+          <div id="areaChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        </div>
+        </div>
+      </div>
     </div>
-    <div id="pieI" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
-    </div>
-    <div id="pieP" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
-    </div>
-    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div>
-      <br><br>
-    </div>
-    <div id="areaChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+    
 
 </div>
 

@@ -9,6 +9,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\Models\Teacher;
 use Intranet\Models\TutSchedule;
 use Intranet\Models\TutMeeting;
+use Intranet\Models\Tutstudent;
 use Intranet\Models\NoAvailability;
 use Illuminate\Support\Facades\Session;
 

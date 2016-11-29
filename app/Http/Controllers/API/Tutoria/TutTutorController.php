@@ -89,38 +89,50 @@ class TutTutorController extends BaseController
 
     }
 
+    //REGISTRAR UNA NEUVA ATENCION DE CITA
     public function getAppointInformationTuto($id)
     {
       
 
 
-         $docenteInfo = Teacher::where('idUsuario',$id)->get();
-         $tutorshipInfo = Tutorship::where('id_profesor',$docenteInfo[0]['IdDocente'])->get();
-         $parametersInfo = Parameter::where('id_especialidad',1)->get();
 
-       
 
-         $i=0;
+         $tutorInfo = Teacher::where('IdUsuario', $id)->get();  // obtenemos la informacion para conseguir el IDDocente
+         $parametersInfo = Parameter::where('id_especialidad', $tutorInfo[0]['IdEspecialidad'])->get();
+
+         $idDocente = $tutorInfo[0]['IdDocente'];
+         $tutorShipInfo =  Tutorship::where('id_profesor',$idDocente)->get();
+
+
+         $valor = [];
+         if (count($tutorShipInfo) == 0)   return $this->response->array($valor);
+
+         $alumnosTutor;
+         $i = 0;
+
+          foreach ($tutorShipInfo as $ttshipInfo) {
+
+              $idAlumno = $ttshipInfo['id_alumno'];
+              $valor =  Tutstudent::where('id',$idAlumno)->get();     
+              $alumnosTutor[$i] = $valor[0];
+              $i = $i + 1 ;
+          }
+
+         $scheduleInfo = TutSchedule::where('id_docente',$idDocente)->get();
+         $scheduleMeeting = TutMeeting::where('id_docente',$idDocente)->get();
+
          $LovingTheAlien;
-         foreach ($tutorshipInfo as $ttshipInfo) {
 
-            $idAlumno = $ttshipInfo['id_alumno'];
-            $infoStudent = Tutstudent::where('id', $idAlumno)->get();
-            $scheduleInfo = TutSchedule::where('id_docente',$tutorshipInfo[0]['id_profesor'])->get();
-            $scheduleMeeting = TutMeeting::where('id_docente',$docenteInfo[0]['IdDocente'])->get();
-            $LovingTheAlien[$i] = $infoStudent[0];
-            $LovingTheAlien[$i]['fullName'] = $infoStudent[0]['ape_paterno']." ".$infoStudent[0]['ape_materno']." ".$infoStudent[0]['nombre'];
-            $LovingTheAlien[$i]['duracionCita'] = $parametersInfo[0]['duracionCita'];
-            $LovingTheAlien[$i]['numberDays'] = $parametersInfo[0]['number_days'];
-            $LovingTheAlien[$i]->scheduleInfo = $scheduleInfo;
-            $LovingTheAlien[$i]->scheduleMeeting= $scheduleMeeting;
-
-            $i++;
-         } 
-      
+         $tutStudentInfo = Tutstudent::get();       
+         $LovingTheAlien[0]['numberDays'] = $parametersInfo[0]['number_days'];  
+         $LovingTheAlien[0]['duracionCita'] = $parametersInfo[0]['duracionCita'];  
+         $LovingTheAlien[0]['studentInfo'] = $alumnosTutor;
+         $LovingTheAlien[0]['tutorInfo'] = $tutorInfo;
+         $LovingTheAlien[0]['scheduleInfo'] = $scheduleInfo;
+         $LovingTheAlien[0]['scheduleMeeting']= $scheduleMeeting;
 
          return $this->response->array($LovingTheAlien);
-  
+
 
   
     }
@@ -138,16 +150,20 @@ class TutTutorController extends BaseController
     }
 
 
+    //REGISTRAR UAN CITA NO CONFIRMADA
     public function obtenerInformacionNoCita($id)
     {
       
 
-         $parametersInfo = Parameter::where('id_especialidad',1)->get();
 
          $tutorInfo = Teacher::where('IdUsuario', $id)->get();  // obtenemos la informacion para conseguir el IDDocente
+         $parametersInfo = Parameter::where('id_especialidad', $tutorInfo[0]['IdEspecialidad'])->get();
          $idDocente = $tutorInfo[0]['IdDocente'];
          $tutorShipInfo =  Tutorship::where('id_profesor',$idDocente)->get();
 
+
+         $valor = [];
+         if (count($tutorShipInfo) == 0)   return $this->response->array($valor);
 
          $alumnosTutor;
          $i = 0;
@@ -184,7 +200,9 @@ class TutTutorController extends BaseController
  
 
  
- 
+
+
+
         //------------BEGIN DATETIME------------------
         $dateStringAux = $request->only('fecha');
         $dateString = $dateStringAux['fecha']; //fecha reserva 
@@ -197,8 +215,8 @@ class TutTutorController extends BaseController
         //--------------END DATETIME------------------
 
         //------------BEGIN MOTIVO--------------------
-        $motivoAux = $request->only('motivo');
-        $motivoString = $motivoAux['motivo'];
+        $motivoAux = $request->only('tema');
+        $motivoString = $motivoAux['tema'];
         $motivoInfo =  Topic::where('nombre', $motivoString)->get();
         //--------------END MOTIVO--------------------
 
@@ -208,42 +226,37 @@ class TutTutorController extends BaseController
         $tutorInfo = Teacher::where('IdUsuario', $idUserAux['idUser'])->get();  // obtenemos la informacion para conseguir el IDDocente
         $idDocente = $tutorInfo[0]['IdDocente'];
         //------FIN OBTENIENDO ID DEL TUTOR-----------
-        //------INICIO OBTENIENDO ID DEL ALUMNO--------
-       
-        $fullNameAux = $request->only('studentFullName');
-        $fullName = $fullNameAux['studentFullName'];
-        $pos = strpos($fullName, " ");
-        $apePaterno = substr($fullName,0,$pos);
-        $nameAux1 =  substr($fullName,$pos+1);
-        $pos1 = strpos($nameAux1, " ");
-        $apeMaterno = substr($nameAux1,0,$pos1);
-        $nombre =  substr($nameAux1,$pos1+1);
-        //$studentInfo = Tutstudent::where('ape_paterno',$apePaterno)->where('ape_materno',$apeMaterno)->where('nombre',$nombre)->get();
-        $studentInfo = Tutstudent::where('ape_paterno',$apePaterno)->where('ape_materno',$apeMaterno)->where('nombre',$nombre)->get();
 
+        //------INICIO OBTENIENDO ID DEL ALUMNO--------
+        $idAlumnoAux = $request->only('idAlumno');
+        $idAlumno = $idAlumnoAux['idAlumno'];
         //------FIN OBTENIENDO ID DEL ALUMNO-----------
     
+        $duracionAux = $request->only('duracionCita');
+        $duracion = $duracionAux['duracionCita'];
 
-        $today = date("d/m/Y H:i:s");
-
+    
         //-------------BEGIN DATABASE INSERT ---------------
+
+        $todayAux = date("d/m/Y H:i:s");
+        $today= DateTime::createFromFormat($format, $todayAux); 
+
         DB::table('tutmeetings')->insertGetId(
             [
-                'id_tutstudent' => $studentInfo[0]['id'],
+                'id_tutstudent' => $idAlumno,
                 'inicio' => $dateTimeBegin,
                 'fin'  => $today,
-                // 'duracion' => $dateTimeEnd,
+                'duracion' => $duracion,
                 'id_docente' => $idDocente,
                 'id_topic' => $motivoInfo[0]['id'],
                 'creador' => 1,
                 'no_programada' => 0,
+                'lugar' => "oficina del tutor",
                 'estado' => 4
             ]
 
         );
         //-------------END DATABASE INSERT ---------------
-
-
 
         $fecha =  $dateString;
         $hora = $horaAux2;
@@ -314,7 +327,7 @@ public function atenderNoCita(Request $request)
             [
                 'id_tutstudent' => $idAlumno,
                 'inicio' => $dateTimeBegin,
-                'fin'  => $today,
+                //'fin'  => ,
                 'duracion' => $duracion,
                 'id_docente' => $idDocente,
                 'id_topic' => $motivoInfo[0]['id'],

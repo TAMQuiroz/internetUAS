@@ -14,16 +14,12 @@
 
             <div class="x_content">
                 <div class="clearfix"></div>
-                @if($finalScore==21)                    
+                @if($finalScore!=21)
+                    {{$finalScore}}
+                @else
                     <div class="alert alert-warning">
                             <strong>Advertencia: </strong> El Alumno aun no ha registrado su ficha de inscripcion.
                     </div>
-                @elseif($finalScore==22)
-                    <div class="alert alert-warning">
-                            <strong>Advertencia: </strong> El Supervisor no tiene asignado un proceso de PSP.
-                    </div>
-                @else 
-                    {{$finalScore}}
                 @endif
 
             </div>

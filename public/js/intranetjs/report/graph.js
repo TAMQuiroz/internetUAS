@@ -1,3 +1,5 @@
+$('.graphs').hide();
+
 
 $("#radioB").click(function() {      
         $('#especialidad').prop('disabled', 'true');
@@ -22,6 +24,8 @@ $("#radioB2").click(function() {
 
 
 $("#btnGraficos").click(function () {
+    //Muestro los graficos
+    $('.graphs').show();
     //Datos para Bar Chart
     var especialidades = document.getElementById("especialidad");
     var estadoP = document.getElementById("estadoP");
@@ -219,7 +223,7 @@ $("#btnGraficos").click(function () {
       }
     }
 
-    Highcharts.chart('container', {
+    var chart = Highcharts.chart('container', {
 
         chart: {
             type: 'column'
@@ -246,8 +250,7 @@ $("#btnGraficos").click(function () {
         tooltip: {
             formatter: function () {
                 return '<b>' + this.x + '</b><br/>' +
-                    this.series.name + ': ' + this.y + '<br/>' +
-                    'Total: ' + this.point.stackTotal;
+                    'Proyectos por ' + this.series.name + ': ' + this.y + '<br/>';
             }
         },
 
@@ -267,6 +270,30 @@ $("#btnGraficos").click(function () {
             data: arrayProyXProfXEsp,
             stack: 'male'
         }]
+    });
+
+    $('#plain').click(function () {
+        chart.update({
+            chart: {
+                inverted: false,
+                polar: false
+            },
+            subtitle: {
+                text: 'Plano'
+            }
+        });
+    });
+
+    $('#inverted').click(function () {
+        chart.update({
+            chart: {
+                inverted: true,
+                polar: false
+            },
+            subtitle: {
+                text: 'Invertido'
+            }
+        });
     });
 
     //DAtos para PIE INV
@@ -514,6 +541,7 @@ $("#btnGraficos").click(function () {
                 }
             }
         }, { // Secondary yAxis
+            allowDecimals: false,
             title: {
                 text: 'Numero de Proyectos Asignados',
                 style: {
@@ -529,6 +557,15 @@ $("#btnGraficos").click(function () {
             opposite: true
         }],
         tooltip: {
+            formatter: function () {
+                var s = '<b>' + this.x + '</b>';
+
+                $.each(this.points, function(){
+                    s += '<br/>' + 'Total de ' + this.series.name + ': ' +
+                        this.y;
+                });
+                return s;
+            },
             shared: true
         },
         legend: {
@@ -536,12 +573,12 @@ $("#btnGraficos").click(function () {
             align: 'left',
             x: 120,
             verticalAlign: 'top',
-            y: 100,
+            y: 12,
             floating: true,
             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
         },
         series: [{
-            name: 'Numero de Proyectos Asignados',
+            name: 'Proyectos Asignados',
             type: 'column',
             yAxis: 1,
             data: arrayTotalProyXEsp,
@@ -574,15 +611,14 @@ $("#btnGraficos").click(function () {
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'top',
-            x: -50,
+            x: -150,
             y: 100,
-            floating: false,
+            floating: true,
             borderWidth: 1,
             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
         },
         xAxis: {
             categories: arrayEsp,
-
         },
         yAxis: {
             title: {
@@ -593,7 +629,14 @@ $("#btnGraficos").click(function () {
                     return this.value;
                 }
             },
-            min: 0
+            min: 0,
+            allowDecimals: false,
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.x + '</b><br/>' +
+                    'Proyectos por ' + this.series.name + ': ' + this.y + '<br/>';
+            }
         },
         plotOptions: {
             area: {

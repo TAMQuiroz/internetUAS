@@ -75,7 +75,7 @@ class FlujoAdministradorTest extends TestCase
             ->withSession([
                 'actions' => [],
                 'user' => $user
-            ])->visit('/flujoAdministrador/facultad/2/profesor/create')
+            ])->visit('/flujoAdministrador/facultad/5/profesor/create')
             ->select('11111111','teachercode')
             ->select('Papu test','teachername')
             ->select('app','teacherlastname')
@@ -84,7 +84,7 @@ class FlujoAdministradorTest extends TestCase
             ->select('Profesor Asociado','teacherposition')
             ->select('algo','teacherdescription')
             ->press('Guardar')
-            ->seePageIs('/flujoAdministrador/facultad/2/profesor')
+            ->seePageIs('/flujoAdministrador/facultad/5/profesor')
             ->see('El profesor se ha registrado exitosamente');
     }
 
@@ -102,7 +102,7 @@ class FlujoAdministradorTest extends TestCase
             ->select('Diseño','name')
             ->select('holi','description')
             ->press('Siguiente')
-            ->seePageIs('/flujoAdministrador/facultad/5/profesor');
+            ->seePageIs('/flujoAdministrador/facultad/6/profesor');
     }
 
 }

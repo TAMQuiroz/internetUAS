@@ -150,20 +150,20 @@
                 <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.ourFaculty', ['faculty-code' => Session::get('faculty-code')] ) }}"><i class="material-icons">store</i>Inicio</a>  
               </li>
               <li class="bold">
-                  <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.subindex') }}"><i class="material-icons">assessment</i>Mis Especialidades</a>
+                  <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.subindex') }}"><i class="material-icons">class</i>Seleccionar Especialidad</a>
                 </li>
 
               @if(in_array(70,Session::get('actions')))
                 @if(Auth::user() && Auth::user()->IdPerfil != 5)
                 <li class="bold">
-                  <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.faculty') }}"><i class="material-icons">assessment</i>Especialidad</a>                
+                  <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.faculty') }}"><i class="material-icons">work</i>Especialidades disponibles</a>                
                 </li>
                 @endif
               @endif
 
               @if(in_array(11,Session::get('actions')) || in_array(6,Session::get('actions')) || in_array(1,Session::get('actions')) || in_array(2,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Mi especialidad</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">list</i>Datos de la especialidad</a>
 
                 <div class="collapsible-body">
                   <ul>
@@ -186,55 +186,49 @@
 
               @if(in_array(16,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.educationalObjectives') }}"><i class="material-icons">assessment</i>Objetivos educacionales</a>                
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.educationalObjectives') }}"><i class="material-icons">work</i>Objetivos educacionales</a>                
               </li>
               @endif
 
               @if(in_array(21,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.studentsResult') }}"><i class="material-icons">assessment</i>Resultados estudiantiles</a>
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.studentsResult') }}"><i class="material-icons">work</i>Resultados estudiantiles</a>
               </li>
               @endif
 
               @if(in_array(25,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.aspects') }}"><i class="material-icons">assessment</i>Aspectos</a>
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.aspects') }}"><i class="material-icons">work</i>Aspectos</a>
               </li>
               @endif
 
               @if(in_array(31,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.measurementSource') }}"><i class="material-icons">assessment</i>Instrumentos de medición</a>
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.measurementSource') }}"><i class="material-icons">work</i>Instrumentos de medición</a>
               </li>
               @endif
 
               @if(in_array(28,Session::get('actions')) || in_array(29,Session::get('actions')) || in_array(67,Session::get('actions')) )
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Evaluación</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">list</i>Aporte de cursos</a>
 
                 <div class="collapsible-body">
                   <ul>
-                    @if(in_array(28,Session::get('actions')))
-                     <li><a href="{{ route('contributions.studentsResult') }}">Matriz de aporte</a></li>
-                    @endif
                     @if(in_array(67,Session::get('actions')))
                     <li><a href="{{ route('index.dictatedCourses') }}">Cursos dictados</a></li>
+                    @endif
+                    @if(in_array(28,Session::get('actions')))
+                     <li><a href="{{ route('contributions.studentsResult') }}">Matriz de aporte</a></li>
                     @endif
                   </ul>
                 </div>
               </li>
               @endif
 
-              @if(in_array(67,Session::get('actions')))
-              <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.myCourses') }}"><i class="material-icons">settings</i>Mis cursos</a>
-              </li>   
-              @endif
-
               @if(in_array(41,Session::get('actions')) || in_array(44,Session::get('actions')) ||
               in_array(68,Session::get('actions')) || in_array(50,Session::get('actions')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Mejora continua</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">list</i>Mejora continua</a>
 
                 <div class="collapsible-body">
                   <ul>
@@ -254,12 +248,20 @@
                 </div>
               </li> 
               @endif
+              
+              @if(in_array(67,Session::get('actions')))
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal" href="{{ route('index.myCourses') }}"><i class="material-icons">settings</i>Mis cursos</a>
+              </li>   
+              @endif
+
+              
 
               @if(Auth::user() && Auth::user()->IdPerfil != 5)
                 @if(in_array(53,Session::get('actions')) || in_array(54,Session::get('actions'))
                 || in_array(55,Session::get('actions')) || in_array(56,Session::get('actions')) )
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Consolidados</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">assessment</i>Consolidados</a>
 
                 <div class="collapsible-body">
                   <ul>
@@ -296,7 +298,7 @@
 
               @if(in_array(58,Session::get('actions')) || in_array(63,Session::get('actions')) || in_array(64,Session::get('actions'))  )
                 <li class="bold">
-                  <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Configuación sistema</a>
+                  <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">list</i>Configuación sistema</a>
 
                   <div class="collapsible-body">
                     <ul>
@@ -315,7 +317,7 @@
 
               @if(Auth::user() && ((Auth::user()->professor && count(Auth::user()->professor->pspProcesses)>0) || Auth::user()->IdPerfil == 3 || Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1) || (Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp))) 
                 <li class="bold">
-                  <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>PSP</a>
+                  <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">list</i>PSP</a>
                   <div class="collapsible-body">
                     <ul>
                         @if(Auth::user()->professor && count(Auth::user()->professor->pspProcesses!=null)>0) <!--si es profesor o coordinador-->
@@ -357,7 +359,7 @@
 
               @if(Auth::user() && (Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin') || Auth::user()->IdPerfil == Config::get('constants.alumno')))
               <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">settings</i>Investigación</a>
+                <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">list</i>Investigación</a>
                 <div class="collapsible-body">
                   <ul>
                     @if(Auth::user()->IdPerfil == Config::get('constants.docente') || Auth::user()->IdPerfil == Config::get('constants.investigador') || Auth::user()->IdPerfil == Config::get('constants.admin') || Auth::user()->IdPerfil == Config::get('constants.alumno'))

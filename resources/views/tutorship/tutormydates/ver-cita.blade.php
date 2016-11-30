@@ -53,10 +53,12 @@
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('Informacion extra',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
+                        {{Form::label('Motivo',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
                             <div class="form-control no-border">
-                                {{$cita->adicional}}
+                                @if($cita->reason)
+                                    {{ $cita->reason->nombre }}
+                                 @endif
                             </div>
                         </div>
                     </div>
@@ -65,7 +67,7 @@
                         {{Form::label('Observacion',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
                         <div class="col-xs-12 col-md-8">
                             <div class="form-control no-border">
-                                {{$cita->observacion}}
+                                {{$cita->adicional}}
                             </div>
                         </div>
                     </div>

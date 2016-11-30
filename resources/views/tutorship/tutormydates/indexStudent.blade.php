@@ -79,17 +79,17 @@
                         @if((($tutMeeting->estado == Config::get('constants.sugerida')) && ($tutMeeting->creador == 1)))
                         <a href="" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#confirmar{{$tutMeeting->id}}" title="Confirmar"><i class="fa fa-check"></i></a>
                         @if(($tutMeeting->estado == Config::get('constants.sugerida')) && ($tutMeeting->creador == 1))
-                        <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#rechazar{{$tutMeeting->id}}" title="Rechazar"><i class="fa fa-remove"></i></a>
+                        <a href="#rechazar{{$tutMeeting->id}}" class="btn btn-danger btn-xs" title="Rechazar"><i class="fa fa-remove"></i></a>
                         @endif
                         @elseif(($tutMeeting->estado == Config::get('constants.confirmada')) || (($tutMeeting->estado == Config::get('constants.pendiente')) && ($tutMeeting->creador == 0)))
-                        <a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelar{{$tutMeeting->id}}" title="Cancelar"><i class="fa fa-remove"></i></a>
+                        <a href="#cancelar{{$tutMeeting->id}}" class="btn btn-danger btn-xs" title="Cancelar"><i class="fa fa-remove"></i></a>
                         @endif
                     </td>                    
                 </tr>
 
                 @include('tutorship.tutormydates.accept-cita', ['id'=> "confirmar".$tutMeeting->id, 'message' => 'Esta a punto de confirmar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.accept', $tutMeeting->id)])
-                @include('tutorship.tutormydates.refuse-cita', ['id'=> "rechazar".$tutMeeting->id, 'message' => 'Esta a punto de rechazar esta cita, ¿Desea continuar?', 'route' => route('mis_citas.refuse', $tutMeeting->id)])
-                @include('tutorship.tutormydates.cancel-cita', ['id'=> "cancelar".$tutMeeting->id, 'message' => 'Si va a cancelar esta cita, indique el motivo', 'route' => route('mis_citas.delete', $tutMeeting->id)])
+                @include('tutorship.tutormydates.refuse-cita', ['id'=> "rechazar".$tutMeeting->id, 'route' => route('mis_citas.refuse', $tutMeeting->id), 'cita' => $tutMeeting, 'motivos' => $motivos])
+                @include('tutorship.tutormydates.cancel-cita', ['id'=> "cancelar".$tutMeeting->id, 'route' => route('mis_citas.delete', $tutMeeting->id), 'cita' => $tutMeeting, 'motivos' => $motivos])
                 @include('tutorship.tutormydates.ver-cita', ['id'=> "ver".$tutMeeting->id, 'message' => 'Ver cita', 'cita' => $tutMeeting])
                 @endforeach
             </tbody>
@@ -99,5 +99,6 @@
 </div>
 
 @include('tutorship.modals.filterTutstudentDates', ['title' => 'Filtrar', 'route' => route('miscitas.index')])
+
 
 @endsection

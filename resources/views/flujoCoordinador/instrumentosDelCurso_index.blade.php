@@ -11,6 +11,10 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
+                    <p> Se asignará los instrumentos con los cuales serán evaluados cada curso en el presente ciclo académico.</p>
+                        <p> Para ello, primero se seleccionarán los resultados que se van a evaluar según la matriz de aporte (Paso Anterior). Luego, se seleccionarán sus aspectos y criterios que va a servir para la evaluación de los cursos en el presente ciclo académico.</p>
+                        <p>Para ello, debe seleccionar el botón de acciones.</p>
+                        <br>
                     @if(Session::get('academic-cycle')!=null)
                         @if(count($cursos) !=0 )
                             <table class="table table-striped responsive-utilities jambo_table bulk_action" name="table-objs">

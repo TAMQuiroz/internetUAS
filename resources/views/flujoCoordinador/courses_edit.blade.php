@@ -63,12 +63,16 @@
                                 <div class="col-md-10">
                                     <h2> Profesores Asociados </h2>
                                 </div>
+
                                 <div class="col-md-2 col-sm-12 col-xs-12">
+                                    
+
                                     <div class="btn btn-success" data-toggle="modal" data-target="#modal-regular-professor">
                                         <i class="fa fa-plus"></i> Asignar Profesor
                                     </div>
                                 </div>
                             </div>
+                            <p> Cuando se seleccionan a los profesores, estos están habilitados para dictar este curso en los ciclos académicos próximos.</p>
                             <div class="row">
                                 <table class="table table-striped responsive-utilities jambo_table bulk_action" id="prof_table"  name="table-objs">
                                     <thead>

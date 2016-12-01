@@ -17,6 +17,10 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
+                <p>Cuando un ciclo académico esta áctivo, no podrá finalizarse el periodo.</p>
+                <p>Para finalizar el periodo, antes debe finalizar el ciclo académico.</p>
+                <p>Se recomienda cuando finalice un ciclo académico o periodo, seguir el flujo de la pantalla de inicio.</p>
+                    <br>
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">

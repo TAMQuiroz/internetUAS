@@ -16,7 +16,9 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                    
+                        <p> La creación de profesores es la agregación de nuevos profesores a la facultad.</p>
+                        <p> La adición de profesores a un determinado ciclo académico se realizará más adelante en el flujo.</p>
+                        <br>
                         <a href="{{ route('profesor_create.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Profesor</a>
                       
                     </div>

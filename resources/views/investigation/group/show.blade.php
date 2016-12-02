@@ -60,7 +60,7 @@
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción </label>
                         <div class="col-md-8 col-sm-6 col-xs-12">
                             @if(Auth::user())
-                            <textarea class="resizable_textarea form-control" id="groupDescription" maxlength="200" readonly="" name="groupDescription" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;">{{$group->descripcion}}</textarea>
+                            <textarea class="resizable_textarea form-control" id="groupDescription" maxlength="200" readonly="" name="groupDescription" rows="5" >{{$group->descripcion}}</textarea>
                             @else
                             <div class="no-border">
                                 {{$group->descripcion}}

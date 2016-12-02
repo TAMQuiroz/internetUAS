@@ -14,8 +14,8 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
-            $table->text('descripcion');
+            $table->string('nombre',200);
+            $table->text('descripcion',4000);
             $table->integer('num_entregables');
             $table->date('fecha_ini');
             $table->date('fecha_fin');

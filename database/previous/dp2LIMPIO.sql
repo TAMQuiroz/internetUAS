@@ -254,7 +254,7 @@ CREATE TABLE `ArchivoEntradaPlan` (
 CREATE TABLE `areas` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` varchar(2000) COLLATE utf8_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -852,7 +852,7 @@ CREATE TABLE `events` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ubicacion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` text(2000) COLLATE utf8_unicode_ci NOT NULL,
   `fecha` date NOT NULL,
   `hora` datetime NOT NULL,
   `duracion` int(11) NOT NULL,
@@ -1103,7 +1103,7 @@ CREATE TABLE `groups` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_especialidad` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` varchar(2000) COLLATE utf8_unicode_ci NOT NULL,
   `imagen` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_lider` int(11) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -2170,7 +2170,7 @@ CREATE TABLE `PlanMejora` (
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` text(4000) COLLATE utf8_unicode_ci NOT NULL,
   `num_entregables` int(11) NOT NULL,
   `fecha_ini` date NOT NULL,
   `fecha_fin` date NOT NULL,

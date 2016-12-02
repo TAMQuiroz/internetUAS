@@ -24,8 +24,8 @@ class AreaRequest extends Request
     public function rules()
     {
         return [
-            'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-            'descripcion'   => 'regex:/^[\pL\s\-]+$/u|required|max:100',
+            'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:200',
+            'descripcion'   => 'regex:/^[\pL\s\-]+$/u|required|max:2000',
         ];
     }
 }

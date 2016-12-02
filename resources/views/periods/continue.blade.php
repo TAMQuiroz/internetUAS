@@ -55,57 +55,65 @@
           <p>Nivel de criterio: {{$criteriaLevel}}</p>
           <p>Aceptación %: {{$facultyAgreement}}</p>
           <br>
+          <?php $a = 0; ?>
           <p>INSTRUMENTOS</p>
           <p>Los instrumentos seleccionados para este periodo son los siguientes:</p>
           @if($measuresAll!=null)
           @foreach($measuresAll as $mes)
             @if (in_array($mes->IdFuenteMedicion, $measures))
-            <p>{{$mes->Nombre}}</p>
+            <?php $a++; ?>  
+            <p>{{$a}}. {{$mes->Nombre}}</p>
             @endif
           @endforeach
           @endif
           <br>
+          <?php $b = 0; ?>
           <p> OBJETIVOS</p>
           @if($educationalObjetivesAll!=null)
           @foreach($educationalObjetivesAll as $obj)
             @if (in_array($obj->IdObjetivoEducacional, $educationalObjetives)) 
-              <p>{{$obj->Descripcion}}</p>
+            <?php $b++; ?> 
+              <p>{{$b}}. {{$obj->Descripcion}}</p>
             @endif
           @endforeach
           @endif
           <br>
           <p>RESULTADOS-CRITERIOS-ASPECTOS</p>
           <p> Los resultados, aspectos y criterios seleccionados para este periodo son los siguientes:</p>
-          
+          <?php $l = 0; ?>
+          <?php $m = 0; ?> 
+          <?php $n = 0; ?>  
           <ul id="menu_arbol"> 
           @if($studentResultAll!=null)
           @foreach($studentResultAll as $strst)
             @if(in_array($strst->IdResultadoEstudiantil, $studentsResults))
-
+              <?php $l++; ?> 
                
-             <li><a href="#" title="No hacer click">{{$strst->Descripcion}}</a>
+             <li><a href="#" title="No hacer click">{{$l}}. {{$strst->Descripcion}}</a>
                 <ul id="menu_arbol2">
                 @if($strst->aspects!=null)
                 @foreach ($strst->aspects as $asp)
                   @if(in_array($asp->IdAspecto, $aspects))
-                  
+                  <?php $m++; ?>
 
                   
-                  <li><a href="#" title="No hacer click">{{$asp->Nombre}}</a>
+                  <li><a href="#" title="No hacer click">{{$l}}.{{$m}}. {{$asp->Nombre}}</a>
                   <ul>
                     @if($asp->criterion!=null)
                     @foreach ($asp->criterion as $crt)
                       @if(in_array($crt->IdCriterio, $criterions))
+                      <?php $n++; ?>
                       
-                      
-                      <li><a href="#" title="No hacer click">{{$crt->Nombre}}</a></li>
+                      <li><a href="#" title="No hacer click">{{$l}}.{{$m}}.{{$n}}. {{$crt->Nombre}}</a></li>
                       @endif
                     @endforeach
+                    <?php $n=0; ?>
                     @endif
                   </ul>
                   </li>
                   @endif
                 @endforeach
+                <?php $m=0; ?>
                 @endif
                 </ul>
              </li>

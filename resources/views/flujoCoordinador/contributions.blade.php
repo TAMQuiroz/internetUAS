@@ -16,6 +16,8 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="clearfix"></div>
         <div class="col-md-12 col-sm-12 col-xs-12">
+            <p> Se selecciona aquellos cursos que van a ser evaluados en el presente ciclo académico Además, se colocará que resultado deberá tener dicho curso.</p>
+                <br>
             <div class="x_panel">
 
                 <div class="x_content">

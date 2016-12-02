@@ -13,6 +13,8 @@
 
             <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <p> La creación de resultados estudiantiles es la agregación de nuevos resultados a la facultad.</p>
+                    <br>
                     @if(in_array(20,Session::get('actions')))
                     <a href="{{ route('studentResult_create.flujoCoordinador', $id) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Resultado Estudiantil</a>
                     @endif

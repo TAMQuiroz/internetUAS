@@ -31,7 +31,7 @@
                         <div class="col-md-8 col-sm-6 col-xs-12">
                             <input id="nombre" class="form-control col-md-7 col-xs-12" type="text"
                                    name="nombre" value="{{ $group->nombre }}"
-                                   maxlength="100" required="required" onkeypress="return isNumberKey(event)">
+                                   maxlength="200" required="required" onkeypress="return isNumberKey(event)">
                         </div>
                     </div>
 
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Descripción *</label>
                         <div class="col-md-8 col-sm-6 col-xs-12">
-                            <textarea class="resizable_textarea form-control" id="descripcion" maxlength="200" name="descripcion" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;">{{$group->descripcion}}</textarea>
+                            <textarea class="resizable_textarea form-control" id="descripcion" maxlength="2000" name="descripcion" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;">{{$group->descripcion}}</textarea>
                         </div>
                     </div>
 

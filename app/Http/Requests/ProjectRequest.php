@@ -24,13 +24,13 @@ class ProjectRequest extends Request
     public function rules()
     {
         return [
-            'nombre'            =>  'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'nombre'            =>  'regex:/[a-zA-Z0-9,.!-?áéíóú ]+$/u|required|max:200',
             'num_entregables'   =>  'required|numeric|min:1',
             'fecha_ini'         =>  'required|date|after:today',
             'fecha_fin'         =>  'required|date|after:fecha_ini',
             'grupo'             =>  'required|numeric',
             'area'              =>  'required|numeric',
-            'descripcion'       =>  'required|max:100',
+            'descripcion'       =>  'required|max:4000',
         ];
     }
 }

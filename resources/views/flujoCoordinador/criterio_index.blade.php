@@ -18,7 +18,11 @@
 
                     <div class="form-group">
                         <div class="row">
+                            <p> La creación de criterios es la agregación de nuevos criterios a la facultad.</p>
+                            <p> Para agregar criterios se debe seleccionar primero un resultado estudiantil y un aspecto afiliado al criterio a crear.</p>
+                             <br>
                             <div  class="col-sm-2"></div>
+
                             <label for="resultado" class="control-label col-sm-4 col-xs-12">Resultado estudiantil<span class="error">*</span></label>
                             <div class="col-sm-4 col-xs-12">
                                 <select  required="true" name="resultado" id="resultado" class="form-control">

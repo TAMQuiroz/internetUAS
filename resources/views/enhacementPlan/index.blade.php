@@ -21,6 +21,7 @@
     <div class="clearfix"></div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
+            <p>Para crear un nuevo periodo, se debe crear primero un nuevo tipo de plan de mejora. Asegúrese que haya al menos un tipo de plan de mejora.</p>
             <div class="x_content">
                 <div class="clearfix"></div>
                 <div class="row">

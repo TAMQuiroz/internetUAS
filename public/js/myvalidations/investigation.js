@@ -1,7 +1,7 @@
 jQuery(function(){
 
     $.validator.addMethod("names", function(value, element) {
-        return this.optional(element) || /^[a-zA-Zá-ź ]+$/i.test(value);
+        return this.optional(element) || /^[a-zA-Zá-ź:/ ]+$/i.test(value);
     }, "Solo puede ingresar letras");
 
     $.validator.addMethod("numbers", function(value, element) {
@@ -18,8 +18,7 @@ jQuery(function(){
         rules: {
             nombre: {
                 required: true,
-                maxlength: 50,
-                names: true,
+                lettersAndNumber: true,
             },
             apellido_paterno: {
                 required: true,
@@ -49,7 +48,6 @@ jQuery(function(){
             },
             descripcion: {
                 required: true,
-                maxlength: 200,
             },
             lider: {
                 required: true,

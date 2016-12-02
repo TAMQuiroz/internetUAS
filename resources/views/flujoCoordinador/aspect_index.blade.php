@@ -15,6 +15,9 @@
         
         <div class="form-horizontal">
             <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+              <p> La creación de aspectos es la agregación de nuevos aspectos a la facultad.</p>
+                <p> Para agregar aspectos se debe seleccionar primero un resultado estudiantil afiliado al aspecto a crear.</p>
+                 <br>
               <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Resultado Estudiantil (RE)</label>
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <select id="studentsResult" class="form-control col-md-7 col-xs-12" type="text" name="resultado-estudiantil" >
@@ -30,8 +33,7 @@
               </div>
             </div>
             <div class="row">
-              
-                 <button class="btn btn-success pull-right" type="submit"> Nuevo Aspecto</button>
+                <button class="btn btn-success pull-right" type="submit"> Nuevo Aspecto</button>
               
             </div>
         </div>

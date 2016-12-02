@@ -16,6 +16,8 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p> La creación de objetivos educacionales es la agregación de nuevos objetivos a la facultad.</p>
+                        <br>
                         <a href="{{ route('objetivoEducacional_create.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Objetivo Educacional</a>
                     </div>
                 </div>

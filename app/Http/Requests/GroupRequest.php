@@ -24,8 +24,8 @@ class GroupRequest extends Request
     public function rules()
     {
         return [
-            'nombre'        => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-            'descripcion'   => 'regex:/^[\pL\s\-]+$/u|required|max:200',
+            'nombre'        => 'regex:/[a-zA-Z0-9,.!-?áéíóú ]+$/u|required|max:100',
+            'descripcion'   => 'regex:/[a-zA-Z0-9,.!-?áéíóú ]+$/u|required|max:500',
             'lider'         => 'required|numeric',
             'imagen'        => 'image',
         ];

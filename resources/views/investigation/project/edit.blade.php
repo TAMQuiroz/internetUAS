@@ -21,7 +21,7 @@
 					<div class="form-group">
 		    			{{Form::label('Nombre *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-6">
-		    				{{Form::text('nombre',$proyecto->nombre,['class'=>'form-control', 'required', 'maxlength' => 50])}}
+		    				{{Form::text('nombre',$proyecto->nombre,['class'=>'form-control', 'required', 'maxlength' => 200])}}
 		    			</div>
 		    		</div>
 
@@ -74,7 +74,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Descripcion *',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-6">
-		    				{{Form::textarea('descripcion', $proyecto->descripcion, ['class' => 'form-control', 'required', 'rows'=>'5', 'maxlength'=>200])}}
+		    				{{Form::textarea('descripcion', $proyecto->descripcion, ['class' => 'form-control', 'required', 'rows'=>'5', 'maxlength'=>4000])}}
 		    			</div>
 		    		</div>
 

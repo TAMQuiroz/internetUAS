@@ -49,9 +49,9 @@ class GroupsPresentationTableSeeder extends Seeder
         if(!$grupo){
 	        DB::table('groups')->insert([
 	        	'id'				=> 1,
-		        'nombre'            => 'Grupo de prueba',
+		        'nombre'            => 'GRUPO DE RECONOCIMIENTO DE PATRONES E INTELIGENCIA ARTIFICIAL APLICADA',
 		        'id_especialidad'   => 5,
-		        'descripcion'       => $faker->text,
+		        'descripcion'       => 'El GRPIAA-PUCP busca desarrollar aplicaciones e investigaciones en el área de reconocimiento de patrones e inteligencia artificial aplicada, orientados a la solución de problemas de la sociedad, buscando contribuir con el conocimiento especializado que se forma en la universidad para desarrollar proyectos interdisciplinarios entre la universidad y la empresa, contribuyendo en la formación de recurso especializado para la generación de conocimiento científico en el área.',
 		        'id_lider'          => 6,
 	        ]);
         }

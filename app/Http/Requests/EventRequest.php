@@ -24,12 +24,12 @@ class EventRequest extends Request
     public function rules()
     {
         return [
-            'nombre' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
-            'ubicacion' => 'regex:/^[\pL\s\-]+$/u|required|max:50',
+            'nombre' => 'regex:/[a-zA-Z0-9,.!-?áéíóú ]+$/u|required|max:200',
+            'ubicacion' => 'regex:/[a-zA-Z0-9,.!-?áéíóú ]+$/u|required|max:100',
             'fecha' => 'required|date|after:today',
             'hora' => 'required',
             'duracion' => 'required|numeric',
-            'descripcion' => 'required|max:200',
+            'descripcion' => 'regex:/[a-zA-Z0-9,.!-?áéíóú ]+$/u|required|max:2000',
             'tipo' => 'required|numeric',
             'grupo' => 'required|numeric',
             'imagen' => 'image',

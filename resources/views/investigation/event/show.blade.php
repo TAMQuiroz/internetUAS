@@ -66,7 +66,7 @@
 		    				{{Form::time('hora',date("H:i", strtotime( $evento->hora )),['class'=>'form-control', 'readonly'])}}
 		    				@else
 		    				<div class="form-control no-border">
-		    					{{$evento->hora}}
+		    					{{date("H:i", strtotime( $evento->hora ))}}
 		    				</div>
 		    				@endif
 		    			</div>
@@ -114,13 +114,7 @@
 		    		<div class="form-group">
 		    			{{Form::label('Descripcion',null,['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])}}
 		    			<div class="col-xs-12 col-md-8">
-		    				@if(Auth::user())
 		    				{{Form::textarea('descripcion', $evento->descripcion, ['class' => 'form-control', 'rows'=>'5', 'readonly', 'maxlength'=>200])}}
-    						@else
-		    				<div class="form-control no-border">
-		    					{{$evento->descripcion}}
-		    				</div>
-		    				@endif
 		    			</div>
 		    		</div>
 

@@ -20,6 +20,9 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p> La creación de cursos es la agregación de nuevos cursos a la facultad (Cursos históricos de la facultad que pueden dictarse en algun momento en la facultad).</p>
+                        <p> La adición de cursos a un determinado ciclo académico se realizará más adelante en el flujo.</p>
+                        <br>
                         @if(in_array(5,Session::get('actions')))
                             <a href="{{ route('courses_create.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">
                                 <i class="fa fa-plus"></i> Nuevo Curso</a>

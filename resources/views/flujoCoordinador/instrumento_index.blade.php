@@ -13,6 +13,8 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p> La creación de instrumentos de medición es la agregación de nuevos instrumentos a la facultad.</p>
+                        <br>
                             <a href="{{ route('instrumento_create.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nuevo Instrumento de Medición</a>
                     </div>
                 </div>

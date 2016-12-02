@@ -73,9 +73,17 @@ class FlujoCoordinadorController extends Controller
 
         $period = $this->facultyService->findPeriod($faculty->IdEspecialidad);
         $cycle = $this->facultyService->findCycle($faculty->IdEspecialidad);
-        Session::set('period-code',$period->IdPeriodo);
-        Session::set('academic-cycle',$cycle);
-        Session::set('id-academic-cycle',$cycle->IdCicloAcademico);
+        if($period!=null)
+            Session::set('period-code',$period->IdPeriodo);
+        else
+            Session::set('period-code',null);
+        if($cycle!=null){
+            Session::set('academic-cycle',$cycle);
+            Session::set('id-academic-cycle',$cycle->IdCicloAcademico);
+        }else{
+            Session::set('academic-cycle',null);
+            Session::set('id-academic-cycle',null);
+        }
 
       	return view('flujoCoordinador.index',$data);
     }

@@ -11,6 +11,9 @@
 
     <div class="row">
         <div class="col-md-9 col-sm-12 col-xs-12">
+            <p> Se asignan los cursos que se dictarán en el ciclo académico creado anteriormente.</p>
+                        <p> En el botón de acciones, se agregarán los horarios que se dictarán en el presente ciclo académico.</p>
+                        <br>
             @if(in_array(34,Session::get('actions')))
                 <a href="{{ route('cursosCiclo_edit.flujoCoordinador', $idEspecialidad) }}" class="btn btn-success pull-right">
                     <i class="fa fa-plus"></i> Agregar Cursos</a>

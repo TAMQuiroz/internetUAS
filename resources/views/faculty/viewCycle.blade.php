@@ -6,11 +6,15 @@
 		<h3>{{$title}}</h3>
 	</div>
 </div>
-
+<div>
+	<p>Se recomienda cuando finalice un ciclo académico o periodo, seguir el flujo de la pantalla de inicio.</p>
+                    <br>
+</div>
+<div>
 @if(Session::get('academic-cycle')!=null)
 	<a class="btn btn-primary pull-right final" href="{{ route('desactivate.faculty') }}">Finalizar Ciclo</a>
 @endif
-
+</div>
 <div class="clearfix"></div>
 
 <div class="row">

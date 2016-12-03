@@ -47,7 +47,8 @@ class OurFacultyController extends BaseController {
             Session::put('faculty-code',$data['fac']->IdEspecialidad);
             Session::put('faculty-name',$data['fac']->Nombre);
         } catch (\Exception $e) {
-            dd($e);
+            //dd($e);
+            return redirect()->back()->with('warning','Ocurrio un error');
         }
         return view('ourFaculty.index', $data);
     }

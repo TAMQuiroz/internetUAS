@@ -14,6 +14,7 @@ use Intranet\Models\TutMeeting;
 use Intranet\Models\Parameter;
 use Intranet\Models\Topic;
 use Intranet\Models\Status;
+use Intranet\Models\Reason;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Routing\Controller as BaseController;
 //Tested
@@ -257,6 +258,7 @@ class TutTutorController extends BaseController
 
         );
         //-------------END DATABASE INSERT ---------------
+        /*
 
         $fecha =  $dateString;
         $hora = $horaAux2;
@@ -273,6 +275,8 @@ class TutTutorController extends BaseController
         {
             dd($e->getMessage());
         }
+
+        */
 
         return "exito";    
 
@@ -369,6 +373,9 @@ public function atenderNoCita(Request $request)
         $idUser = $request->only('idUser');
         //Guardar
         $groupTut = TutMeeting::find($idUser['idUser']);
+        //aca se hace lo de otros para el id_reason.
+        $reasonInfo = Reason::where('tipo', 1)->where('nombre',"Otros")->get();  // obtenemos la informacion para conseguir el IDDocente
+        $groupTut->id_reason = $reasonInfo[0]['id'];
         $groupTut->estado = 3;
         $groupTut->save();
 
@@ -383,6 +390,9 @@ public function atenderNoCita(Request $request)
         $idUser = $request->only('idUser');
         //Guardar
         $groupTut = TutMeeting::find($idUser['idUser']);
+        //aca se hace lo de otros para el id_reason. 
+        $reasonInfo = Reason::where('tipo', 1)->where('nombre',"Otros")->get();  // obtenemos la informacion para conseguir el IDDocente
+        $groupTut->id_reason = $reasonInfo[0]['id'];
         $groupTut->estado = 5;
         $groupTut->save();
 

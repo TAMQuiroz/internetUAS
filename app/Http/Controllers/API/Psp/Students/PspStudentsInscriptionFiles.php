@@ -59,20 +59,12 @@ class PspStudentsInscriptionFiles extends BaseController
   public function getInscriptionsByStudent( $idAlumno )
     {
 
-        try
-            {
-            $pspstudent = PspStudent::where('id', $idAlumno )->get()->first();
+ 
+            $pspstudent = PspStudent::where('idalumno', $idAlumno )->get()->first();
             $idPspStudent = $pspstudent->id ; 
             $pspstudentsxinscriptionfiles = Studentxinscriptionfiles::where('idpspstudents',  $idPspStudent )->get()->first();
             $idinscriptionfile =  $pspstudentsxinscriptionfiles->idinscriptionfile; 
             $inscription = Inscription::where('id',  $idinscriptionfile )->get();
-            }
-
-        catch (\Exception $e)
-            {
-            $inscription = Inscription::get();
-            return $this->response->array($inscription->toArray());
-            }
 
         return $this->response->array($inscription->toArray()) ;
     }
@@ -158,7 +150,7 @@ class PspStudentsInscriptionFiles extends BaseController
         );
 
             //ubicamos el correo del jefe
-        $pspstudent = PspStudent::where('id', $idAlumno )->get()->first();
+        $pspstudent = PspStudent::where('idalumno', $idAlumno )->get()->first();
         $idPspStudent = $pspstudent->id ; 
         $pspstudentsxinscriptionfiles = Studentxinscriptionfiles::where('idpspstudents',  $idPspStudent )->get()->first();
         $idinscriptionfile =  $pspstudentsxinscriptionfiles->idinscriptionfile; 

@@ -14,7 +14,13 @@
 
             <div class="x_content">
                 <div class="clearfix"></div>
-                {{$finalScore}}
+                @if($finalScore!=21)
+                    {{$finalScore}}
+                @else
+                    <div class="alert alert-warning">
+                            <strong>Advertencia: </strong> El Alumno aun no ha registrado su ficha de inscripcion.
+                    </div>
+                @endif
 
             </div>
         </div>

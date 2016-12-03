@@ -21,6 +21,15 @@ use Intranet\Models\PspProcessxSupervisor;
 use Intranet\Models\Teacher;
 use Intranet\Models\CoursexTeacher;
 
+use Intranet\Models\PspGroup;
+use Intranet\Models\Phase;
+use Intranet\Models\FreeHour;
+use Intranet\Models\Schedule_meetings;
+use Intranet\Models\meeting;
+use Intranet\Models\Template;
+use Intranet\Models\Pspcriterio;
+use Intranet\Models\PspDocument;
+
 use Carbon\Carbon;
 use Auth;
 use Session;
@@ -227,6 +236,48 @@ class PspProcessController extends Controller
             $supervisors = PspProcessxSupervisor::where('idpspprocess',$id)->get();
             foreach ($supervisors as $supervisor) {
                 $supervisor->delete();
+            }
+
+            $groups = PspGroup::where('idpspprocess',$id)->get();
+            foreach ($groups as $group) {
+                $group->delete();
+            }
+
+            $phases = Phase::where('idpspprocess',$id)->get();
+            foreach ($phases as $phase) {
+                $templates = Template::where('idphase',$phase->id)->get();
+                foreach ($templates as $template) {
+                    $docs = PspDocument::where('idtemplate',$template->id)->get();
+                    foreach ($docs as $doc) {
+                        $doc->delete();
+                    }
+                    $template->delete();
+                }
+                $phase->delete();
+            }
+
+            $freehours = FreeHour::where('idpspprocess',$id)->get();
+            foreach ($freehours as $freehour) {
+                $meets = meeting::where('idfreehour',$freehour->id)->get();
+                foreach ($meets as $meet) {
+                    $meet->delete();
+                }
+                $freehour->delete();
+            }
+
+            $criterios = Pspcriterio::where('id_pspprocess',$id)->get();
+            foreach ($criterios as $criterio) {
+                $criterio->delete();
+            }
+
+            $pspSs = PspStudent::where('idpspprocess',$id)->get();
+            foreach ($pspSs as $pspS) {
+                $pspS->delete();
+            }
+
+            $schedules = Schedule_meetings::where('idpspprocess',$id)->get();
+            foreach ($schedules as $schedule) {
+                $schedule->delete();
             }
 
             $proceso->delete();

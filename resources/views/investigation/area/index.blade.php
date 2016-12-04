@@ -32,7 +32,7 @@
 					<table class="table table-list-search table-striped responsive-utilities jambo_table bulk_action"> 
 						<thead> 
 							<tr class="headings"> 
-								<th>Nombre</th> 
+								<th class="two_columns">Nombre</th> 
 								<th>Descripcion</th> 
 								<th colspan="2">Acciones</th>
 							</tr> 

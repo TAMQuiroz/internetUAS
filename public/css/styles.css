@@ -217,3 +217,7 @@ input[type="radio"] {
 .centered{
   text-align: center;
 }
+
+.two_columns{
+  width: 20%;
+}

@@ -64,36 +64,42 @@
                                         <tbody>
                                             @foreach($resultadosMedicion['resultados'] as $resultado) 
                                                 <tr>
-                                                    <td rowspan = "{{ $resultado['cantRows']}}"> {{ $resultado['resultadoEstudiantil'] }} </td> <!-- {{count($resultado['aspectos'])}} -->
+                                                    <td rowspan = "{{ $resultado['cantRows']}}"> {{ $resultado['resultadoEstudiantil'] }} </td>
                                                     @foreach($resultado['aspectos'] as $aspecto) 
-                                                        <td rowspan = "{{ $aspecto['cantRows']}}"> {{ $aspecto['aspecto'] }}</td>  <!-- {{count($aspecto['criterios'] )}} -->
-                                                        @if(!empty($aspecto['criterios']))
+                                                        <td rowspan = "{{ $aspecto['cantRows']}}"> {{ $aspecto['aspecto'] }}</td>  
+                                                        @if(!empty($aspecto['criterios'])) <!-- tiene criterios -->
                                                             @foreach($aspecto['criterios'] as $criterio)                                                                 
-                                                                <td rowspan = "{{ $criterio['cantRows']}}"> {{ $criterio['criterio'] }} </td> <!-- {{count($criterio['cursos'] )}} -->
-                                                                @if(!empty($criterio['cursos']))
+                                                                <td rowspan = "{{ $criterio['cantRows']}}"> {{ $criterio['criterio'] }} </td> 
+                                                                @if(!empty($criterio['cursos'])) <!-- tiene cursos -->
                                                                     @foreach($criterio['cursos'] as $curso) 
                                                                         <td > {{$curso['nombre']}} </td>
-                                                                        @foreach($curso['resultadoxciclo'] as $res)
-                                                                                <td>
-                                                                                    {{$res['resultado']}}
-                                                                                </td>                                                                        
-                                                                        @endforeach   
-                                                                        </tr>
+                                                                        @if(!empty($curso['resultadoxciclo'])) <!-- tiene resultados -->
+                                                                            @foreach($curso['resultadoxciclo'] as $res)
+                                                                                    <td>
+                                                                                        {{$res['resultado']}}
+                                                                                    </td>                                                                        
+                                                                            @endforeach   
+                                                                            </tr>
+                                                                        @else
+                                                                            @foreach($ciclos as $ciclo)
+                                                                                <td>No se midió</td>
+                                                                            @endforeach
+                                                                            </tr>
+                                                                        @endif
                                                                     @endforeach  
                                                                 @else
-                                                                    <td></td>  
+                                                                    <td>No se midió</td>  
                                                                     @foreach($ciclos as $ciclo)
-                                                                        <td> </td>
+                                                                        <td>No se midió</td>
                                                                     @endforeach
                                                                     </tr>
                                                                 @endif                                                                                        
                                                             @endforeach
-
                                                         @else
-                                                            <td></td> 
-                                                            <td></td>  
+                                                            <td>No se midió</td> 
+                                                            <td>No se midió</td>  
                                                             @foreach($ciclos as $ciclo)
-                                                                <td> </td>
+                                                                <td>No se midió</td>
                                                             @endforeach
                                                             </tr> 
                                                         @endif  

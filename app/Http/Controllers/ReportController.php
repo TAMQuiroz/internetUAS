@@ -128,7 +128,7 @@ class ReportController extends Controller
 															$cantTotal++;
 														}
 														if($cantTotal > 0){
-															$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+															$resultado = round(($cantAprobados*1.0/$cantTotal)*100, 2, PHP_ROUND_HALF_DOWN);
 														}
 														else{
 															$resultado = 'No se midio';
@@ -221,7 +221,7 @@ class ReportController extends Controller
 															$cantTotal++;
 														}
 														if($cantTotal > 0){
-															$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+															$resultado = round(($cantAprobados*1.0/$cantTotal)*100, 2, PHP_ROUND_HALF_DOWN);
 														}
 														else{
 															$resultado = 'No se midio';
@@ -313,7 +313,7 @@ class ReportController extends Controller
 															$cantTotal++;
 														}
 														if($cantTotal > 0){
-															$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+															$resultado = round(($cantAprobados*1.0/$cantTotal)*100, 2, PHP_ROUND_HALF_DOWN);
 														}
 														else{
 															$resultado = 'No se midio';
@@ -405,7 +405,7 @@ class ReportController extends Controller
 															$cantTotal++;
 														}
 														if($cantTotal > 0){
-															$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+															$resultado = round(($cantAprobados*1.0/$cantTotal)*100, 2, PHP_ROUND_HALF_DOWN);
 														}
 														else{
 															$resultado = 'No se midio';
@@ -500,7 +500,7 @@ class ReportController extends Controller
 												$cantTotal++;
 											}
 											if($cantTotal > 0){
-												$resultado = ($cantAprobados*1.0/$cantTotal)*100;
+												$resultado = round(($cantAprobados*1.0/$cantTotal)*100, 2, PHP_ROUND_HALF_DOWN);												
 											}
 											else{
 												$resultado = 'No se midio';

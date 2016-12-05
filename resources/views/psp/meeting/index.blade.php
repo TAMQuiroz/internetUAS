@@ -15,9 +15,11 @@
             <div class="x_content">
                 <div class="clearfix"></div>
                 <div class="row">
+                @if($meetings->count()==NULL)
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <a href="{{ route('meeting.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Nueva Cita</a>
                     </div>
+                @endif
                 </div>
                 <div class="clearfix"></div>
 

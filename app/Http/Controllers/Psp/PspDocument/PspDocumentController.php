@@ -14,6 +14,9 @@ use Intranet\Models\PspStudent;
 use Intranet\Models\Phase;
 use Intranet\Models\Student;
 use Intranet\Models\Tutstudent;
+use Intranet\Models\PspProcessxSupervisor;
+use Intranet\Models\PspProcess;
+use Intranet\Models\Supervisor;
 use Carbon\Carbon;
 use Auth;
 use Mail;
@@ -55,7 +58,29 @@ class PspDocumentController extends Controller
         $data = [
         'student' => $student,
         ];
-        $data['phases'] = Phase::get();
+        $supervisor = Supervisor::where('iduser',Auth::User()->IdUsuario)->first(); 
+        //dd($supervisor);
+        $procxs= PspProcessxSupervisor::where('idsupervisor',$supervisor->id)->get();
+        //dd($procxs); 
+        $proc = array(); 
+        
+        $r = count($procxs);   
+        if($r>0){
+            foreach($procxs as $p){
+                $proc2=null;                
+                $proc2=Phase::where('idpspprocess',$p->idpspprocess)->get();
+                $r2 = count($proc2);  
+                if($proc2!=null && $r2>0){
+                    foreach($proc2 as $p2){ 
+                        if($p2!=null){
+                            $proc[]=Phase::find($p2->id);
+                        }
+                    }
+                }
+            }
+        }
+        $Phaseses=$proc;
+        $data['phases'] = $Phaseses;
         return view('psp.pspDocument.create',$data);
     }
 

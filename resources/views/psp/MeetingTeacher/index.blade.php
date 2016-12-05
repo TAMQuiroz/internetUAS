@@ -30,9 +30,10 @@
                         <th colspan="2">Acciones</th>               
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody>                        
                         @foreach($students as $student)
-                        <tr> 
+                        <tr>        
+                            @if($student->Student!=NULL)                     
                             <td>{{$student->Student->Codigo}}</td> 
                             <td>{{$student->Student->Nombre}}</td> 
                             <td>{{$student->Student->ApellidoPaterno}}</td> 
@@ -42,12 +43,12 @@
                             <td>
                                 <a href= "{{route('MeetingTeacher.create', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-search"></i></a>
                                  <a href= "{{route('MeetingTeacher.mail', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Email"><i class="fa fa-envelope"></i></a>
-                            </td>               
-                        </tr> 
-                        @endforeach
+                            </td>  
+                            @endif                                         
+                        </tr>                         
+                        @endforeach                        
                     </tbody>
                 </table>
-             {{$students->links()}}
             </div>
         </div>
     </div>

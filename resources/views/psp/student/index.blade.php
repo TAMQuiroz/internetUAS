@@ -31,11 +31,11 @@
                             <td>{{$student->Student->ApellidoPaterno}}</td> 
                             <td>{{$student->Student->ApellidoMaterno}}</td>
                             <td>
+                                <a href= "{{route('inscription.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Fichas de Inscripcion"><i class="fa fa-file-text-o"></i></a>
+                                <a href= "{{route('meeting.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Reuniones"><i class="fa fa-clock-o"></i></a>
                                 <a href= "{{route('pspDocument.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Documentos"><i class="fa fa-files-o"></i></a>
                                 <a href= "{{route('aspecto.create', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Asignar notas por criterio al alumno"><i class="fa fa-list-ol"></i></a>
-                                <a href= "{{route('finalscore.index', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Nota final de alumno"><i class="fa fa-list-ol"></i></a>
-                                <a href= "{{route('meeting.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Reuniones"><i class="fa fa-clock-o"></i></a>
-                                <a href= "{{route('inscription.search', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Fichas de Inscripcion"><i class="fa fa-file-text-o"></i></a>
+                                <a href= "{{route('finalscore.index', $student->idalumno)}}" class="btn btn-primary btn-xs" title="Nota final de alumno"><i class="fa fa-list-ol"></i></a>          
                             </td>               
                         </tr> 
                         @endforeach

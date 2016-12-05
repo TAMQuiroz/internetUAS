@@ -9,8 +9,11 @@ use Intranet\Http\Requests;
 use Intranet\Http\Requests\MeetingRequest;
 use Intranet\Models\FreeHour;
 use Intranet\Models\PspStudent;
-use Intranet\Models\Supervisor;
 use Intranet\Models\Tutstudent;
+use Intranet\Models\PspProcessxTeacher;
+use Intranet\Models\Supervisor;
+use Intranet\Models\Teacher;
+use Intranet\Models\PspProcess;
 use Auth;
 use Carbon\Carbon;
 use Mail;
@@ -26,7 +29,23 @@ class MeetingTeacherController extends Controller
     public function index()
     {
         $MeetingTeacher = MeetingTeacher::get();
-        $students = PspStudent::where('idsupervisor',NULL)->paginate(10);
+        $teacher = Teacher::where('IdUsuario',Auth::User()->IdUsuario)->first();         
+        if($teacher!=null)$procxt= PspProcessxTeacher::where('iddocente',$teacher->IdDocente)->get(); 
+        $students = array(); 
+        $r = count($procxt);   
+        if($r>0){
+            foreach($procxt as $p){
+                $proc2=PspProcess::find($p->idpspprocess);
+                $studs = PspStudent::where('idpspprocess',$proc2->id)->get();
+                //dd($studs);
+                foreach($studs as $st){
+                    //dd($st);
+                    if($st->idsupervisor==NULL)$students[]=$st;
+                }
+            }
+        }
+
+        //$students = PspStudent::where('idsupervisor',NULL)->paginate(10);
        // $students = PspStudent::orderby('idalumno','asc')->paginate(10);
 
         $data = [

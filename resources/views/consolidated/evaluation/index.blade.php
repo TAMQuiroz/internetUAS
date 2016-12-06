@@ -40,18 +40,7 @@
 
 @if($cyclexresult != null)
 
-<div class="row">
-<div class="col-md-12 col-sm-12 col-xs-12">
-	<div class="x_panel">
-		<div class="x_content">
-			<div class="col-md-12 col-sm-12 col-xs-12" id="downloadButton">
-				<a href="#" class=""><button class="btn btn-primary pull-right no-print" onclick="" style="margin-right: 5px;"><i class="fa fa-download"></i> Exportar como PDF</button></a>
-			</div>
 
-		</div>
-	</div>
-</div>
-</div>
 
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">

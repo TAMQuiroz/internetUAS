@@ -1,23 +1,5 @@
 
 
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="x_panel">
-			<div class="x_content">
-
-				<div class="form-horizontal">
-					<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
-						<form action="{{ route('downloadAsPdf.measuring') }}" method="POST" name="formMeasuring" novalidate="true" class="form-horizontal form-label-left">
-							<input type="hidden" name="_token" value="{{ csrf_token() }}">
-							<input type="hidden" name="period" id="period" value="{{$period->IdPeriodo}}}" />
-							<button class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-download"></i> Exportar como PDF</button>
-						</form>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
 
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">

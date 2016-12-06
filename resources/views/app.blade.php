@@ -321,36 +321,36 @@
                   <div class="collapsible-body">
                     <ul>
                         @if(Auth::user()->professor && count(Auth::user()->professor->pspProcesses!=null)>0) <!--si es profesor o coordinador-->
-                        <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
-                        <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('supervisor.index')}}"> Administrar Supervisores</a></li>
+                        <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
+                        <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
+                        <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
+                        <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         <li><a href="{{route('pspCriterio.index')}}"> Administrar Criterios</a></li>
-                        <li><a href="{{route('scheduleMeeting.index')}}"> Cronograma de reunión</a></li>
                         <li><a href="{{route('MeetingTeacher.index')}}">Reservar Reunión</a></li>
+                        <li><a href="{{route('TeacherFinalScore.index')}}"> Visualizar Notas</a></li>
                         <li><a href="{{route('reportC.create')}}">Reporte de Criterios</a></li>
                         <li><a href="{{route('attendanceRate.create')}}">Reporte de Asistencias</a></li>
-                        <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
-                        <li><a href="{{route('TeacherFinalScore.index')}}"> Visualizar Notas</a></li>
                         @endif
                         @if(Auth::user()->IdPerfil == 6 || (Auth::user()->professor && Auth::user()->professor->es_supervisorpsp == 1)) <!--si es supervisor-->
                         <li><a href="{{route('freeHour.index')}}"> Disponibilidades</a></li>
-                        <li><a href="{{route('meeting.indexSup')}}"> Reuniones</a></li>
                         <li><a href="{{route('student.index')}}"> Administrar Alumnos</a></li>
+                        <li><a href="{{route('meeting.indexSup')}}"> Reuniones</a></li>
                         @endif
                         @if(Auth::user()->IdPerfil == 3) <!--si es admin-->
                         <li><a href="{{route('pspProcess.index')}}"> Activar Módulo Psp</a></li>
+                        <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
                         <li><a href="{{route('phase.index')}}"> Administrar Fases</a></li>
                         <li><a href="{{route('pspGroup.index')}}"> Administrar Grupos</a></li>
                         <li><a href="{{route('template.index')}}"> Administrar Documentos</a></li>
                         <li><a href="{{route('pspCriterio.index')}}"> Administrar Criterios</a></li>
-                        <li><a href="{{route('pspProcess.conf')}}"> Configuración</a></li>
                         @endif
                         @if(Auth::user()->pspStudent && Auth::user()->pspStudent->lleva_psp) <!--si es alumno y lleva psp-->
                         <li><a href="{{route('inscription.index')}}"> Información de Empresa</a></li>
                         <li><a href="{{route('pspGroup.selectGroupCreate')}}"> Seleccionar Grupo</a></li>
-                        <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
                         <li><a href="{{route('meeting.index')}}"> Reservar Cita</a></li>
+                        <li><a href="{{route('pspDocument.index')}}"> Documentos</a></li>
                         @endif
                     </ul>
                   </div>

@@ -25,4 +25,5 @@
             </div>
         </div>
     </div>
+<a class="btn btn-default pull-right" href="{{ route('TeacherFinalScore.index') }}">Regresar</a>    
 @endsection

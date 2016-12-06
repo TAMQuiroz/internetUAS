@@ -22,6 +22,14 @@ class EvaluationService {
         return $ciclesAcademics;
     }
 
+    public function getAllAcademicCycles2() {
+        $cicles = DB::table('CicloxEspecialidad')->where('deleted_at', null)->where('IdEspecialidad', Session::get('faculty-code'))->first();
+        //dd($cicles);
+        $ciclesAcademics =  DB::table('CicloAcademico')->where('deleted_at', null)->where('IdCicloAcademico',$cicles->IdCiclo)->get();
+        //dd($ciclesAcademics);
+        return $ciclesAcademics;
+    }
+
     public function getCycles() {
 
         /*

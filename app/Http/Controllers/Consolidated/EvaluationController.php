@@ -27,7 +27,7 @@ class EvaluationController extends BaseController {
 
     public function index() {
         try {
-            $data['academicCycle'] = $this->evaluationService->getAllAcademicCycles();
+            $data['academicCycle'] = $this->evaluationService->getAllAcademicCycles2();
             $data['cycle']= null;
             $data['cyclexresult']= null;
             $data['dictatedcourses']= null;
